@@ -43,10 +43,21 @@ const Donation = ({ setopendashboard }) => {
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
+    getall_donation1();
   }, []);
 
   const getall_donation = () => {
     serverInstance("admin/donation-list", "get").then((res) => {
+      if (res.status) {
+        setisData(res.data);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+    });
+  };
+
+  const getall_donation1 = () => {
+    serverInstance("user/add-elecDonation", "get").then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {

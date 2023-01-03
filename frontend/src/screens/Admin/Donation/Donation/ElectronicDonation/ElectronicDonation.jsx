@@ -99,36 +99,9 @@ const CashDonation = ({ setOpen, setshowalert }) => {
         <div className="cash-donation-container-innser">
           <h2>Electronic Donation</h2>
           <div>
-            <p>Voucher No:</p>
-            <div className="form-input-div">
-              <div className="inner-input-div2">
-                <label>Phone No:</label>
-                <input
-                  text="text"
-                  className="forminput"
-                  placeholder="Enter phone no"
-                />
-                <label>Donation Date:</label>
-                <input
-                  type="text"
-                  value={currentDate}
-                  className="forminput"
-                  name="todaydate"
-                  onChange={(e) => settodaydate(e.target.value)}
-                />
-              </div>
-
-              <div className="inner-input-div2">
-                <label>Name:</label>
-                <input
-                  type="text"
-                  className="forminput"
-                  placeholder="Full name"
-                />
-                <label>Donation Time:</label>
-                <input type="text" value={time} className="forminput" />
-              </div>
-              <div className="inner-input-div3">
+            <form onSubmit={addelectronicdonation}>
+              <p>Voucher No:</p>
+              <div className="form-input-div">
                 <div className="inner-input-div2">
                   <label>Phone No:</label>
                   <input
@@ -204,6 +177,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                   Cancel
                 </button>
               </div>
+              </form>
             </div>
 
             <div className="table_scrol_barrr">
@@ -341,7 +315,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
             </div>
           </div>
         </div>
-      </div>
+      
     </>
   );
 };

@@ -30,6 +30,12 @@ const addelecDonation = async(req)=>{
   return ElecDonation;
 }
 
+const delElecDonation = async (req)=>{
+  const ElecDonation = await DonationCollection.delElecDonation(req)
+  console.log(ElecDonation)
+  return ElecDonation;
+}
+
 const getElecDonation = async(req)=>{
   const data = await DonationCollection.getElecDonation(req)
   return data
@@ -64,5 +70,6 @@ module.exports = {
   allList,
   addNewDonation,
   addelecDonation,
-  getElecDonation
+  getElecDonation,
+  delElecDonation
 };

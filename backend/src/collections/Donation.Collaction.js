@@ -1,5 +1,6 @@
 const { sequelize, QueryTypes, query } = require("sequelize");
 const db = require("../models");
+const electricDonation = require("../models/electricDonation.model");
 db.donationModel.hasMany(db.donationItem, {
   foreignKey: "donationId",
   as: "itemDetails",
@@ -64,10 +65,10 @@ class DonationCollaction {
       REMARK,
       DATE_OF_DAAN,
       ADDED_BY: userId,
-    }).catch((err)=>{
-      console.log(err)
-    })
-    console.log(result)
+    }).catch((err) => {
+      console.log(err);
+    });
+    console.log(result);
     if (!result) {
       return null;
     }
@@ -124,10 +125,37 @@ class DonationCollaction {
     return result;
   };
 
+  delElecDonation = async (req)=>{
 
+   let id = req.query.id;
+   console.log(id)
 
-  addElecDonation = async (req,voucherNo) => {
- 
+    let deleteReq =  await TblelecDonation.destroy({
+      where:{
+        id: id
+      }
+    }).then(async(res)=>{
+      await TblelecDonationItem.destroy({
+        where:{
+          donationId: id
+        }
+      })
+      return {
+        status: 1,
+        message: "deleted successfully",
+    
+      };
+    
+    }).catch((err)=>{
+      return {
+        status: 1,
+        message: "Something went wrong",
+      };
+    })
+    return deleteReq
+console.log(deleteReq)
+  }
+  addElecDonation = async (req, voucherNo) => {
     try {
       const {
         name,
@@ -139,7 +167,7 @@ class DonationCollaction {
         donation_time,
         donation_item,
       } = req.body;
-      console.log(req.body)
+      console.log(req.body);
       const userId = req.user.id;
 
       const result = await TblelecDonation.create({
@@ -191,19 +219,19 @@ class DonationCollaction {
     }
   };
 
-  getElecDonation = async (req) =>{
+  getElecDonation = async (req) => {
     const userId = req.user.id;
     let data = await TblelecDonation.findAll({
       where: { created_by: userId },
-include:[
-  {
-    model:TblelecDonationItem,
-    as:'elecItemDetails'
-  }
-]
-    })
-    return data
-  }
+      include: [
+        {
+          model: TblelecDonationItem,
+          as: "elecItemDetails",
+        },
+      ],
+    });
+    return data;
+  };
 
   getLastID = async () => {
     const lastID = await TblDonation.findOne({
@@ -245,8 +273,6 @@ include:[
     });
     return record;
   };
-
-  
 
   newDonationRecord = async (req) => {
     const userId = req.user.id;

@@ -41,6 +41,19 @@ const getElecDonation = catchAsync(async(req,res)=>{
   });
 })
 
+const deleteElecDonation = catchAsync(async(req,res)=>{
+  const data = await donationService.delElecDonation(req)
+
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+  res.status(httpStatus.CREATED).send({
+    status: true,
+    msg: "Success",
+  });
+})
+
+
 const addCashDonation = catchAsync(async (req, res) => {
   const data = await donationService.cashDonation(req);
   res.status(httpStatus.CREATED).send(data);
@@ -69,5 +82,6 @@ module.exports = {
   itemList,
   addNewDonation,
   addelecDonation,
-  getElecDonation
+  getElecDonation,
+  deleteElecDonation
 };

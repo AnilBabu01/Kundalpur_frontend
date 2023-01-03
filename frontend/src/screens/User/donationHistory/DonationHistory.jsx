@@ -22,7 +22,7 @@ function DonationHistory() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const dispatch = useDispatch();
   const navigation = useNavigate();
-
+  console.log(isrow);
   React.useEffect(() => {
     gettable();
   }, []);

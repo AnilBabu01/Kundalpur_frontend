@@ -5,6 +5,7 @@ import { serverInstance } from "../../../../API/ServerInstance";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -42,26 +43,32 @@ const Donation = ({ setopendashboard }) => {
 
   useEffect(() => {
     setopendashboard(true);
+    getall_donation();
+  }, [showalert]);
 
-    getall_donation1();
-  }, []);
-
-  const getall_donation1 = () => {
+  const getall_donation = () => {
     serverInstance("user/add-elecDonation", "get").then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
-      console.log(res);
     });
   };
 
-  const downloadrecept = (row) => {
-    navigation("/reciept", {
-      state: {
-        userdata: row,
-      },
+  const deletedonation = (id) => {
+    serverInstance(`user/add-elecDonation?id=${id}`, "delete").then((res) => {
+      if (res.status === true) {
+        Swal.fire(
+          "Great!",
+          "Eletronic donation delete successfully",
+          "success"
+        );
+        setshowalert(true);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+      console.log(res);
     });
   };
 
@@ -74,17 +81,6 @@ const Donation = ({ setopendashboard }) => {
     setPage(0);
   };
 
-  if (showalert) {
-    Swal.fire("Great!", msg, "success");
-  }
-
-  const viewdetails = (row) => {
-    navigation("/admin-panel/infoElectronic", {
-      state: {
-        data: row,
-      },
-    });
-  };
   return (
     <>
       <Modal
@@ -144,7 +140,7 @@ const Donation = ({ setopendashboard }) => {
                   : isData
                 ).map((row, index) => (
                   <TableRow
-                    key={index}
+                    key={row.id}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
@@ -162,11 +158,14 @@ const Donation = ({ setopendashboard }) => {
 
                     <TableCell>
                       <RemoveRedEyeIcon
-                        onClick={() => {
-                          viewdetails(row, index);
-                        }}
+                        onClick={() =>
+                          navigation(`/admin-panel/infoElectronic/${row.id}`)
+                        }
                       />
-                      <DeleteForeverIcon />
+
+                      <DeleteForeverIcon
+                        onClick={() => deletedonation(row.id)}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

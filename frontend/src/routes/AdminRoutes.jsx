@@ -55,7 +55,7 @@ function AdminRoutes({ setopendashboard }) {
         />
 
         <Route
-          path="/admin-panel/infoElectronic"
+          path="/admin-panel/infoElectronic/:id"
           element={<InfoElectronic setopendashboard={setopendashboard} />}
         />
       </Routes>

@@ -17,6 +17,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import Logout from "@mui/icons-material/Logout";
 
 const Navbar = () => {
@@ -99,6 +100,13 @@ const Navbar = () => {
             <BookmarkAddedIcon fontSize="small" />
           </ListItemIcon>
           Room Booking History
+        </MenuItem>
+
+        <MenuItem onClick={() => navigate("/admin-panel/dashboard")}>
+          <ListItemIcon>
+            <DashboardIcon fontSize="small" />
+          </ListItemIcon>
+          Dashboard
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => logout()}>

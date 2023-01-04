@@ -20,7 +20,6 @@ const VivekPLogin = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
-
   const auth = useAuth();
 
   const handleSubmit = (e) => {
@@ -38,8 +37,8 @@ const VivekPLogin = () => {
     setMobileNo(mobileNo);
     dispatch(
       LoginwithOtp({ mobile_no: mobileNo }, (res) => {
+        console.log(res);
         if (res.status === 1) {
-
           Swal.fire("Great!", res.msg, "success");
           setVerify(true);
           setMobileNo(mobileNo);
@@ -55,11 +54,9 @@ const VivekPLogin = () => {
       VerifyOtp({ username: mobileNo, otp: otp }, (res) => {
         console.log(res);
         if (res) {
-        
-         
           sessionStorage.setItem("token", res.tokens.access.token);
-          auth.setUser(res.tokens.access.token)
-          
+          auth.setUser(res.tokens.access.token);
+
           navigation("/donation");
           Swal.fire("Great!", res.msg, "success");
           setMobileNo("");

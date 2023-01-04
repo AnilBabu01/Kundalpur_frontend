@@ -42,19 +42,9 @@ const Donation = ({ setopendashboard }) => {
 
   useEffect(() => {
     setopendashboard(true);
-    getall_donation();
+
     getall_donation1();
   }, []);
-
-  const getall_donation = () => {
-    serverInstance("admin/donation-list", "get").then((res) => {
-      if (res.status) {
-        setisData(res.data);
-      } else {
-        Swal("Error", "somthing went  wrong", "error");
-      }
-    });
-  };
 
   const getall_donation1 = () => {
     serverInstance("user/add-elecDonation", "get").then((res) => {
@@ -87,6 +77,14 @@ const Donation = ({ setopendashboard }) => {
   if (showalert) {
     Swal.fire("Great!", msg, "success");
   }
+
+  const viewdetails = (row) => {
+    navigation("/admin-panel/infoElectronic", {
+      state: {
+        data: row,
+      },
+    });
+  };
   return (
     <>
       <Modal
@@ -155,16 +153,19 @@ const Donation = ({ setopendashboard }) => {
                     <TableCell>{row.phoneNo}</TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>
-                      {/* {" "}
-                      {row.elecItemDetails[0].amount
-                        ? row.elecItemDetails[0].amount
-                        : "122"} */}
-                      111111
+                      {row.elecItemDetails.reduce(
+                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
+                        0
+                      )}
                     </TableCell>
                     <TableCell> {row.address}</TableCell>
 
                     <TableCell>
-                      <RemoveRedEyeIcon />
+                      <RemoveRedEyeIcon
+                        onClick={() => {
+                          viewdetails(row, index);
+                        }}
+                      />
                       <DeleteForeverIcon />
                     </TableCell>
                   </TableRow>

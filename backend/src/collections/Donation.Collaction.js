@@ -40,7 +40,8 @@ class DonationCollaction {
       PAYMENT_ID,
       DATE_OF_DAAN,
       TYPE,
-      REMARK
+      REMARK,
+      ADDRESS
     } = req.body;
 
     const count = await TblNewDonation.count();
@@ -62,6 +63,7 @@ class DonationCollaction {
       NAME_OF_BANK,
       PAYMENT_ID,
       TYPE,
+      ADDRESS,
       REMARK,
       DATE_OF_DAAN,
       ADDED_BY: userId,
@@ -155,6 +157,7 @@ class DonationCollaction {
     return deleteReq
 console.log(deleteReq)
   }
+
   addElecDonation = async (req, voucherNo) => {
     try {
       const {
@@ -219,6 +222,8 @@ console.log(deleteReq)
     }
   };
 
+
+
   getElecDonation = async (req) => {
     const userId = req.user.id;
     let data = await TblelecDonation.findAll({
@@ -232,6 +237,24 @@ console.log(deleteReq)
     });
     return data;
   };
+
+  getElecDonationbyId = async (req) => {
+    let id = req.query.id;
+    const userID = req.user.id;
+    let data = await TblelecDonation.findOne({
+      where: { created_by: userID ,id:id},
+      include: [
+        {
+          model: TblelecDonationItem,
+          as: "elecItemDetails",
+        },
+      ],
+    });
+    console.log(data)
+    return data;
+  };
+
+
 
   getLastID = async () => {
     const lastID = await TblDonation.findOne({

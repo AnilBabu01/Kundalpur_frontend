@@ -25,7 +25,7 @@ const addNewDonation = async(req)=>{
 
 const addelecDonation = async(req)=>{
   const lastID = await DonationCollection.getElecLastID();
-  const receiptNo = generateReceiptNo(lastID);
+  const receiptNo = generateElcReceiptNo(lastID);
   const ElecDonation = await DonationCollection.addElecDonation(req,receiptNo)
   return ElecDonation;
 }
@@ -38,6 +38,11 @@ const delElecDonation = async (req)=>{
 
 const getElecDonation = async(req)=>{
   const data = await DonationCollection.getElecDonation(req)
+  return data
+}
+
+const getElecDonationbyID = async(req)=>{
+  const data = await DonationCollection.getElecDonationbyId(req)
   return data
 }
 
@@ -71,5 +76,6 @@ module.exports = {
   addNewDonation,
   addelecDonation,
   getElecDonation,
-  delElecDonation
+  delElecDonation,
+  getElecDonationbyID
 };

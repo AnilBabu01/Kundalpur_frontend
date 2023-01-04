@@ -129,17 +129,12 @@ const Donation = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
-                  <TableCell>S.No.</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Name </TableCell>
-                  <TableCell>Donation Type</TableCell>
+                  <TableCell>Receipt No</TableCell>
+                  <TableCell>Phone No</TableCell>
+                  <TableCell>Name</TableCell>
                   <TableCell>Amount</TableCell>
-                  <TableCell>Cheque No.</TableCell>
-                  <TableCell>Date Of submission</TableCell>
-                  <TableCell>Name of Bank</TableCell>
-                  <TableCell>Payment id</TableCell>
-                  <TableCell>certificate</TableCell>
-                  <TableCell>Edit/Delete</TableCell>
+                  <TableCell>Address</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -157,36 +152,17 @@ const Donation = ({ setopendashboard }) => {
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>{row.phoneNo}</TableCell>
+                    <TableCell>{row.name}</TableCell>
                     <TableCell>
-                      {" "}
-                      {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
+                      {/* {" "}
+                      {row.elecItemDetails[0].amount
+                        ? row.elecItemDetails[0].amount
+                        : "122"} */}
+                      111111
                     </TableCell>
-                    <TableCell>{row.NAME}</TableCell>
-                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.CHEQUE_NO ? row.CHEQUE_NO : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : "-"}
-                    </TableCell>
+                    <TableCell> {row.address}</TableCell>
 
-                    <TableCell> {row.PAYMENT_ID}</TableCell>
-                    <TableCell
-                      onClick={() => {
-                        downloadrecept(row);
-                      }}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {" "}
-                      downolod
-                    </TableCell>
                     <TableCell>
                       <RemoveRedEyeIcon />
                       <DeleteForeverIcon />

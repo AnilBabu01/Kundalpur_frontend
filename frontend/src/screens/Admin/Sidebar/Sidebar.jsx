@@ -45,9 +45,9 @@ const Sidebar = ({ setshowsidebar }) => {
                   className={({ isActive }) =>
                     isActive ? "active-nav-link" : "nav-link"
                   }
-                  to="/admin-panel/alldonation"
+                  to="/admin-panel/donation"
                 >
-                  Reports
+                  Electronic Donation
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -55,9 +55,9 @@ const Sidebar = ({ setshowsidebar }) => {
                   className={({ isActive }) =>
                     isActive ? "active-nav-link" : "nav-link"
                   }
-                  to="/admin-panel/donation"
+                  to="/admin-panel/alldonation"
                 >
-                  Electronic Donation
+                  Reports
                 </NavLink>
               </li>
             </div>

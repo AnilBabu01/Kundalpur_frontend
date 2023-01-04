@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -16,7 +16,7 @@ import "./DonationHistory.css";
 import { useNavigate } from "react-router-dom";
 import { User_AllDonation } from "../../../Redux/redux/action/AuthAction";
 import { serverInstance } from "../../../API/ServerInstance";
-function DonationHistory() {
+function DonationHistory({ setopendashboard, setshowreciept }) {
   const [isrow, setisrow] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -25,6 +25,9 @@ function DonationHistory() {
   console.log(isrow);
   React.useEffect(() => {
     gettable();
+  }, []);
+  useEffect(() => {
+    setshowreciept(false);
   }, []);
 
   const gettable = () => {

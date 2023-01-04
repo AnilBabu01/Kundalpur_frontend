@@ -31,8 +31,6 @@ function App() {
         <AdminRoutes setopendashboard={setopendashboard} />
         {!opendashboard && !showreciept ? <Footer /> : ""}
       </Router>
-
-      <button onClick={gett()}>get info</button>
     </>
   );
 }

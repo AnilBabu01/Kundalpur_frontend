@@ -65,12 +65,13 @@ const loginWithEmail = catchAsync(async (req, res) => {
 
 const verifyOTP = catchAsync(async (req, res) => {
   const { username, otp } = req.body;
+ 
+
   const data = await userService.verifyOTP(username, otp);
-  console.log(data,"data");
+
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
-  console.log(data);
   const tokens = await generateAuthTokens(data);
   res.status(200).send({
     user: {

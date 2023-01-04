@@ -18,14 +18,14 @@ db.usersRolesModel.belongsTo(db.userModel, {
   as: "userRole",
 });
 
-db.roleModel.hasMany(db.usersRolesModel, {
-  foreignKey: "role_id",
-  as: "usersRoles",
-});
-db.usersRolesModel.belongsTo(db.roleModel, {
-  foreignKey: "role_id",
-  as: "roles",
-});
+// db.roleModel.hasMany(db.usersRolesModel, {
+//   foreignKey: "role_id",
+//   as: "usersRoles",
+// });
+// db.usersRolesModel.belongsTo(db.roleModel, {
+//   foreignKey: "role_id",
+//   as: "roles",
+// });
 
 const bcrypt = require("bcryptjs");
 
@@ -42,19 +42,17 @@ class UserCollaction {
     return result;
   };
 
-  getUserDetails = async(identity) => {
-    // console.log(identity,"identity");
-    // const query = await sequelize.query(`SELECT u.id,u.username,u.name,u.email,u.password,u.gender,r.role_name,r.id role_id FROM tbl_users
-    // where (u.username = '${identity}' OR mobileNo = '${identity}' OR email = '${identity}') `,
-    // {
-    //   nest: true,
-    //   type: QueryTypes.SELECT,
-    // }
-    // ).catch((err)=>{
-    //   console.log(err)
-    // })
-    // console.log(query,"query");
-    // return query
+  getUserDetails = async(identity,id) => {
+
+    const userId  = await TblUser.findOne({
+      where:{
+        [Op.or]: [
+          { username: identity },
+          { email: identity },
+          { mobileNo: identity },
+        ]
+      }})
+   
 
     let data = await TblUser.findOne({
       where:{
@@ -64,6 +62,16 @@ class UserCollaction {
           { mobileNo: identity },
         ]
       }
+      ,
+      include:[
+        {
+          model:TblUsersRoles,
+          as: "roleDetails",
+          where: {
+            user_id:userId.id
+          },
+        }
+      ]
     })
 
   return data
@@ -77,7 +85,7 @@ class UserCollaction {
           { email: username },
           { mobileNo: username },
         ],
-      },
+      }
     });
     return query;
   };

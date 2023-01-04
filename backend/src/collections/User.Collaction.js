@@ -46,20 +46,30 @@ class UserCollaction {
       username: body.mobile_no,
       mobileNo: body.mobile_no,
       password: hashencrypt,
+  
     })
-      .then((res) => {
-        TblUsersRoles.create({
+      .then(async (res) => {
+
+      await TblUsersRoles.create({
           user_id: res.id,
           role_id: 2,
         }).then((resp) => {
+
           res.dataValues["item_details"] = resp;
-        });
+        }).catch((err)=>{
+          console.log("err entered",err)
+          return{
+            msg:err
+          }
+        })
         return res.id;
       })
       .catch((err) => {
-        return null;
+        return {
+          msg:err
+        }
       });
-
+  
     return addNew;
   };
 

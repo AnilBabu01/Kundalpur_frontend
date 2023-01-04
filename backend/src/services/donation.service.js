@@ -25,7 +25,7 @@ const addNewDonation = async(req)=>{
 
 const addelecDonation = async(req)=>{
   const lastID = await DonationCollection.getElecLastID();
-  const receiptNo = generateReceiptNo(lastID);
+  const receiptNo = generateElcReceiptNo(lastID);
   const ElecDonation = await DonationCollection.addElecDonation(req,receiptNo)
   return ElecDonation;
 }

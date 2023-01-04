@@ -19,6 +19,11 @@ const NewDonation = sequelize.define(tbl.TBL_NEW_DONATION, {
     trim: true,
     allowNull: true,
   },
+  ADDRESS:{
+    type: Sequelize.STRING(510),
+    trim: true,
+    allowNull: true,
+  },
   MODE_OF_DONATION: {
     type: Sequelize.STRING(50),
     trim: true,

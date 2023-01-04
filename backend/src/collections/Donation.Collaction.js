@@ -40,7 +40,8 @@ class DonationCollaction {
       PAYMENT_ID,
       DATE_OF_DAAN,
       TYPE,
-      REMARK
+      REMARK,
+      ADDRESS
     } = req.body;
 
     const count = await TblNewDonation.count();
@@ -62,6 +63,7 @@ class DonationCollaction {
       NAME_OF_BANK,
       PAYMENT_ID,
       TYPE,
+      ADDRESS,
       REMARK,
       DATE_OF_DAAN,
       ADDED_BY: userId,

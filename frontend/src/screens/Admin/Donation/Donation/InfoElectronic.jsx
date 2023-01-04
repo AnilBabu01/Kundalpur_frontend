@@ -19,6 +19,18 @@ function InfoElectronic({ setopendashboard }) {
     getinfo();
     setopendashboard(true);
   }, []);
+  var d = new Date(isData ? isData.donation_date : "");
+
+  var hours = d.getUTCHours();
+  var minutes = d.getUTCMinutes();
+  var ampm = hours >= 12 ? "AM" : "PM";
+  let day = d.getDate();
+  let month = d.getMonth() + 1;
+  let year = d.getFullYear();
+  const time = `${hours}:${minutes}${ampm}`;
+
+  const date = `${day}-${month}-${year}`;
+  console.log(`${day}-${month}-${year}`); // Hours
 
   return (
     <>
@@ -27,11 +39,11 @@ function InfoElectronic({ setopendashboard }) {
           <div className="main_content_info">
             <div>
               <p style={{ marginBottom: "1rem" }}>Personal Details</p>
-              <p>name: {isData ? isData.name : ""}</p>
-              <p>Phone No: {isData ? isData.phoneNo : ""}</p>
+              <p>Name: {isData ? isData.name : ""}</p>
+              <p>Phone No: {isData ? isData.phoneNo.slice(3) : ""}</p>
               <p>Donation Time: {isData ? isData.address : ""}</p>
-              <p>Donation Date: {isData ? isData.donation_date : ""}</p>
-              <p>Donation Time: {isData ? isData.donation_time : ""}</p>
+              <p>Donation Date: {isData ? date : ""}</p>
+              <p>Donation Time: {isData ? time : ""}</p>
             </div>
             <div>
               <p style={{ marginTop: "2rem", marginBottom: "1rem" }}>

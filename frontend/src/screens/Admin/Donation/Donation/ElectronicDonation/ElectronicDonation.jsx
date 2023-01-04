@@ -44,6 +44,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
+
   let hour = date.getHours();
   let min = date.getMinutes();
   const time = `${hour}:${min}`;

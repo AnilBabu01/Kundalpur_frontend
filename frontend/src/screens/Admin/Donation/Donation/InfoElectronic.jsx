@@ -41,7 +41,7 @@ function InfoElectronic({ setopendashboard }) {
               <p style={{ marginBottom: "1rem" }}>Personal Details</p>
               <p>Name: {isData ? isData.name : ""}</p>
               <p>Phone No: {isData ? isData.phoneNo.slice(3) : ""}</p>
-              <p>Donation Time: {isData ? isData.address : ""}</p>
+              <p>Address: {isData ? isData.address : ""}</p>
               <p>Donation Date: {isData ? date : ""}</p>
               <p>Donation Time: {isData ? time : ""}</p>
             </div>

@@ -51,7 +51,7 @@ function Donation() {
   const handleClose1 = () => setOpen1(false);
   const auth = useAuth();
   const { user } = useSelector((state) => state.userReducer);
-
+  console.log(user);
   console.log(user.name);
   if (donationdata.selected === "yes1" && !user.name) {
     nagivate("/profile");

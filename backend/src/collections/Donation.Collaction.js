@@ -43,13 +43,15 @@ class DonationCollaction {
       REMARK,
       ADDRESS
     } = req.body;
-
+    let active = ''
     const count = await TblNewDonation.count();
     const currentYear = new Date().getFullYear();
     let donationType = "ONLINE";
     if (MODE_OF_DONATION == 2) {
       donationType = "CHEQUE";
+      active = '0'
     }
+
     const receiptId = count + 1;
     let RECEIPT_NO = `${donationType}-${currentYear}-000${receiptId}`;
     const userId = req.user.id;
@@ -65,6 +67,7 @@ class DonationCollaction {
       TYPE,
       ADDRESS,
       REMARK,
+      active,
       DATE_OF_DAAN,
       ADDED_BY: userId,
     }).catch((err) => {

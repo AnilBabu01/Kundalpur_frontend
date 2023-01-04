@@ -19,6 +19,7 @@ const NewDonation = sequelize.define(tbl.TBL_NEW_DONATION, {
     trim: true,
     allowNull: true,
   },
+
   ADDRESS:{
     type: Sequelize.STRING(510),
     trim: true,
@@ -76,8 +77,8 @@ const NewDonation = sequelize.define(tbl.TBL_NEW_DONATION, {
     allowNull: true,
   },
   active: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: 1,
+    type: Sequelize.STRING,
+    defaultValue: '',
     trim: true,
     allowNull: true,
   },

@@ -155,6 +155,7 @@ class DonationCollaction {
     return deleteReq
 console.log(deleteReq)
   }
+
   addElecDonation = async (req, voucherNo) => {
     try {
       const {
@@ -219,6 +220,8 @@ console.log(deleteReq)
     }
   };
 
+
+
   getElecDonation = async (req) => {
     const userId = req.user.id;
     let data = await TblelecDonation.findAll({
@@ -232,6 +235,24 @@ console.log(deleteReq)
     });
     return data;
   };
+
+  getElecDonationbyId = async (req) => {
+    let id = req.query.id;
+    const userID = req.user.id;
+    let data = await TblelecDonation.findOne({
+      where: { created_by: userID ,id:id},
+      include: [
+        {
+          model: TblelecDonationItem,
+          as: "elecItemDetails",
+        },
+      ],
+    });
+    console.log(data)
+    return data;
+  };
+
+
 
   getLastID = async () => {
     const lastID = await TblDonation.findOne({

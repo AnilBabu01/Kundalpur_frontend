@@ -20,6 +20,7 @@ const login = catchAsync(async (req, res) => {
   }
   const tokens = await generateAuthTokens(data);
   res.send({
+    status: true,
     user: {
       id: data.id,
       username: data.username,
@@ -56,8 +57,8 @@ const loginWithEmail = catchAsync(async (req, res) => {
       name: data.name,
       email: data.email,
       gender: data.gender,
-      role:data.role_name,
-      role_id:data.role_id
+      role: data.role_name,
+      role_id: data.role_id,
     },
     tokens,
   });
@@ -65,7 +66,6 @@ const loginWithEmail = catchAsync(async (req, res) => {
 
 const verifyOTP = catchAsync(async (req, res) => {
   const { username, otp } = req.body;
- 
 
   const data = await userService.verifyOTP(username, otp);
 
@@ -80,8 +80,8 @@ const verifyOTP = catchAsync(async (req, res) => {
       name: data.name,
       email: data.email,
       gender: data.gender,
-      role:data.role_name,
-      role_id:data.role_id
+      role: data.role_name,
+      role_id: data.role_id,
     },
     tokens,
   });
@@ -141,16 +141,16 @@ const profileList = catchAsync(async (req, res) => {
   });
 });
 
-const createAccount = catchAsync(async(req,res)=>{
+const createAccount = catchAsync(async (req, res) => {
   const create = await userService.createAccount(req);
-  if(!create){
+  if (!create) {
     throw new ApiError(httpStatus.NOT_FOUND, "Something wrong!");
   }
   res.status(200).send({
-    status:true,
-    msg:'Account created successfully.' 
-  })
-})
+    status: true,
+    msg: "Account created successfully.",
+  });
+});
 
 module.exports = {
   createUser,
@@ -163,5 +163,5 @@ module.exports = {
   forgotPasswordThird,
   updateProfile,
   profileList,
-  createAccount
+  createAccount,
 };

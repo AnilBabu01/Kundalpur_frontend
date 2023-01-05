@@ -45,17 +45,20 @@ class DonationCollaction {
       ADDRESS,
     } = req.body;
 
-    const { chequeImg } = req.files;
-    let IMG 
+   
 
-    let active = ''
+    let active = "";
     const count = await TblNewDonation.count();
     const currentYear = new Date().getFullYear();
     let donationType = "ONLINE";
+    
     if (MODE_OF_DONATION == 2) {
+      const { chequeImg } = req?.files;
+      let IMG;
       donationType = "CHEQUE";
-      active = '0'
+      active = "0";
       IMG = uploadimage(chequeImg);
+      
     }
 
     const receiptId = count + 1;
@@ -137,36 +140,35 @@ class DonationCollaction {
     return result;
   };
 
-  delElecDonation = async (req)=>{
+  delElecDonation = async (req) => {
+    let id = req.query.id;
+    console.log(id);
 
-   let id = req.query.id;
-   console.log(id)
-
-    let deleteReq =  await TblelecDonation.destroy({
-      where:{
-        id: id
-      }
-    }).then(async(res)=>{
-      await TblelecDonationItem.destroy({
-        where:{
-          donationId: id
-        }
-      })
-      return {
-        status: 1,
-        message: "deleted successfully",
-    
-      };
-    
-    }).catch((err)=>{
-      return {
-        status: 1,
-        message: "Something went wrong",
-      };
+    let deleteReq = await TblelecDonation.destroy({
+      where: {
+        id: id,
+      },
     })
-    return deleteReq
-console.log(deleteReq)
-  }
+      .then(async (res) => {
+        await TblelecDonationItem.destroy({
+          where: {
+            donationId: id,
+          },
+        });
+        return {
+          status: 1,
+          message: "deleted successfully",
+        };
+      })
+      .catch((err) => {
+        return {
+          status: 1,
+          message: "Something went wrong",
+        };
+      });
+    return deleteReq;
+    console.log(deleteReq);
+  };
 
   addElecDonation = async (req, voucherNo) => {
     try {
@@ -232,8 +234,6 @@ console.log(deleteReq)
     }
   };
 
-
-
   getElecDonation = async (req) => {
     const userId = req.user.id;
     let data = await TblelecDonation.findAll({
@@ -252,7 +252,7 @@ console.log(deleteReq)
     let id = req.query.id;
     const userID = req.user.id;
     let data = await TblelecDonation.findOne({
-      where: { created_by: userID ,id:id},
+      where: { created_by: userID, id: id },
       include: [
         {
           model: TblelecDonationItem,
@@ -260,11 +260,9 @@ console.log(deleteReq)
         },
       ],
     });
-    console.log(data)
+    console.log(data);
     return data;
   };
-
-
 
   getLastID = async () => {
     const lastID = await TblDonation.findOne({

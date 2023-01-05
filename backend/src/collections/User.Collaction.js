@@ -228,6 +228,7 @@ class UserCollaction {
     const query = await TblUser.create({
       username:mobileno,mobileNo:mobileno,name:fullname,email,password: hashencrypt
     });
+    
     if(query){
       const addRole = await TblUsersRoles.create({
         user_id: query.id,

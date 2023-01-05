@@ -45,14 +45,18 @@ class DonationCollaction {
       ADDRESS,
     } = req.body;
 
-    const { chequeImg } = req.files;
     let IMG 
+
+
+
 
     let active = ''
     const count = await TblNewDonation.count();
     const currentYear = new Date().getFullYear();
     let donationType = "ONLINE";
     if (MODE_OF_DONATION == 2) {
+      const { chequeImg } = req.files;
+    
       donationType = "CHEQUE";
       active = '0'
       IMG = uploadimage(chequeImg);

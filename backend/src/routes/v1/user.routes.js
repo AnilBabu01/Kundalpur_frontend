@@ -13,7 +13,7 @@ router.route('/forgot-password-first').post(validate(userValidation.forgotPass),
 router.route('/forgot-password-second').post(validate(userValidation.forgotPassSecond),userController.forgotPasswordSecond);
 router.route('/forgot-password-third').post(validate(userValidation.forgotPassThird),userController.forgotPasswordThird);
 
-router.route('/create-account').get(userController.createAccount);
+router.route('/create-account').post(userController.createAccount);
 
 router.route('/profile-list').get(auth(),userController.profileList);
 router.route('/update-profile').post(auth(),userController.updateProfile);

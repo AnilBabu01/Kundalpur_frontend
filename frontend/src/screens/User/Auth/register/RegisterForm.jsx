@@ -2,12 +2,14 @@ import { useState } from "react";
 import VerifyMobile from "./VerifyMobile";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/sideimg.jpeg";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { backendApiUrl } from "../../../../config/config";
 import "./registerform.scss";
 const Register = () => {
   const navigate = useNavigate();
-  const [verify, setVerify] = useState(false);
-  const [mobileNo, setMobileNo] = useState("");
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, fullName, password, mobileNumber } = Object.fromEntries(
       new FormData(e.currentTarget)
@@ -20,18 +22,24 @@ const Register = () => {
       typeof mobileNumber === "string"
     ) {
       console.log({ email, fullName, password, mobileNumber });
-      setVerify(true);
+      const { data } = await axios.post(`${backendApiUrl}user/create-account`, {
+        fullname: fullName,
+        mobileno: mobileNumber,
+        email: email,
+        password: password,
+      });
+      if (data.status === true) {
+        Swal.fire("Great!", data.msg, "success");
+        navigate("/login");
+      } else {
+        Swal.fire("Error!", "", "error");
+      }
+      console.log(data);
     }
   };
 
-  const handleVerify = (otp) => {
-    console.log({ otp });
-    setVerify(false);
-    navigate("/");
-  };
-
-  const RegisterInputs = () => {
-    return (
+  return (
+    <>
       <div className="mainlogin-div">
         <img className="img-container" src={logo} alt="logo " />
         <form onSubmit={handleSubmit} className="register-form">
@@ -81,25 +89,11 @@ const Register = () => {
           </div>
           <div className="input-group">
             <button type="submit" className="register-btn">
-              Continue
+              Register
             </button>
           </div>
         </form>
       </div>
-    );
-  };
-  return (
-    <>
-      {!verify ? (
-        <RegisterInputs />
-      ) : (
-        <VerifyMobile
-          title={"Verify Mobile Number"}
-          description={"We have send the OTP to your mobile number"}
-          handleVerify={handleVerify}
-          mobileNo={mobileNo || "0123456878"}
-        />
-      )}
     </>
   );
 };

@@ -5,6 +5,7 @@ import { displayRazorpay } from "../../../RazorPay/RazorPay";
 import PaymentSuccessfull from "./PaymentSuccessfull/PaymentSuccessfull";
 import ChequeSuccessfull from "./chequeSuccessfull/ChequeSuccessfull";
 import { TypesOfDonation } from "./TypesOfDonation";
+import { backendApiUrl } from "../../../config/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -54,8 +55,7 @@ function Donation() {
   const handleClose1 = () => setOpen1(false);
   const auth = useAuth();
   const { user } = useSelector((state) => state.userReducer);
-  console.log(user);
-  console.log(user.name);
+
   if (donationdata.selected === "yes1" && !user.name) {
     nagivate("/profile");
   }
@@ -129,7 +129,7 @@ function Donation() {
       ] = `Bearer ${sessionStorage.getItem("token")}`;
 
       const res = await axios.post(
-        `http://localhost:4543/api/user/add-donation`,
+        `${backendApiUrl}user/add-donation`,
 
         formData
       );
@@ -138,7 +138,7 @@ function Donation() {
       if (res.data.status === true) {
         handleOpen1();
       } else {
-        Swal.fire("Error!", "Somthing went wrong!!", "error");
+        Swal.fire("Error!", "Mobile number already exist!!", "error");
       }
     }
   };
@@ -191,6 +191,9 @@ function Donation() {
               handleClose={handleClose}
               name={donationdata.name}
               amount={amount}
+              address={donationdata.address}
+              mat={donationdata.donationtype}
+              remark={donationdata.Remark}
               recieptno={"1"}
             />
           </Box>

@@ -45,7 +45,7 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
   };
 
   const downloadrecept = (row) => {
-    if (row.active) {
+    if (row.active === "0") {
     } else {
       navigation("/reciept", {
         state: {
@@ -131,7 +131,7 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                         align="left"
                         style={{
                           cursor: "pointer",
-                          color: status ? "red" : "",
+                          color: status === "0" ? "red" : "",
                         }}
                       >
                         downolod

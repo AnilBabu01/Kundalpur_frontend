@@ -6,6 +6,8 @@ const Reciept = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
   const [isData, setisData] = React.useState(null);
   const navigation = useNavigate();
+
+  console.log("data form", isData);
   useEffect(() => {
     setshowreciept(true);
     setopendashboard(false);

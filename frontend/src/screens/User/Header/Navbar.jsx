@@ -149,7 +149,7 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to="/paymenthistory"
+              to="/about"
               className={({ isActive }) =>
                 isActive ? style.active : style.about
               }

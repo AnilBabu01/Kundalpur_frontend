@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { serverInstance } from "../../../../../API/ServerInstance";
+import { backendApiUrl } from "../../../../../config/config";
 import { typesOfDonation } from "./Data";
 import axios from "axios";
 
@@ -71,18 +71,15 @@ const CashDonation = ({ setOpen, setshowalert }) => {
       "Authorization"
     ] = `Bearer ${sessionStorage.getItem("token")}`;
 
-    const res = await axios.post(
-      `http://localhost:4543/api/user/add-elecDonation`,
-      {
-        name: name,
-        phoneNo: phoneNo,
-        address: address,
-        new_member: new_member,
-        donation_date: currentDate,
-        donation_time: time,
-        donation_item: data ? data : item,
-      }
-    );
+    const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
+      name: name,
+      phoneNo: phoneNo,
+      address: address,
+      new_member: new_member,
+      donation_date: currentDate,
+      donation_time: time,
+      donation_item: data ? data : item,
+    });
 
     console.log(res.data.status);
 

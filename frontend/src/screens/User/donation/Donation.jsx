@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Swal from "sweetalert2";
+const formData = new FormData();
 import "./Donation.css";
 import { useJwt } from "react-jwt";
 import { useAuth } from "../../../Context/AuthContext";
@@ -34,6 +35,7 @@ function Donation() {
   const [open1, setOpen1] = useState(false);
   const [formerror, setFormerror] = useState({});
   const [fordonatoin, setfordonatoin] = useState("");
+  const [cheqing, setcheqing] = useState("");
   const [donationdata, setDonationdata] = useState({
     name: "",
     chequeno: "",
@@ -43,6 +45,7 @@ function Donation() {
     donationtype: "Please Select",
     selected: "",
     amount: "",
+    address: "",
   });
 
   const handleOpen = () => setOpen(true);
@@ -62,6 +65,25 @@ function Donation() {
 
   const handlesubmit = async (e) => {
     setFormerror(validate(donationdata));
+    formData.set(
+      "NAME",
+      donationdata.selected === "yes1" && user.name
+        ? user.name
+        : donationdata.name
+    );
+    formData.set("MODE_OF_DONATION", mode === "Onilne" ? 1 : 2);
+    formData.set("AMOUNT", amount);
+    // formData.set("CHEQUE_NO", donationdata?.chequeno);
+    formData.set("DATE_OF_CHEQUE", donationdata?.date_of_sub);
+    formData.set("NAME_OF_BANK", donationdata?.name_of_bank);
+    formData.set("DATE_OF_DAAN", new Date());
+    formData.set("TYPE", donationdata?.donationtype);
+    formData.set("REMARK", donationdata?.Remark);
+    formData.set("ADDRESS", donationdata?.address);
+    formData.set("chequeImg", cheqing);
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
 
     if (!sessionStorage.getItem("token")) {
       nagivate("/login");
@@ -74,6 +96,7 @@ function Donation() {
           userid: 1,
         },
         (data) => {
+          formData.set("PAYMENT_ID", data.razorpay_order_id);
           serverInstance("user/add-donation", "POST", {
             NAME: donationdata.name,
             MODE_OF_DONATION: 1,
@@ -96,33 +119,15 @@ function Donation() {
       );
     }
 
-    if (
-      mode === "Cheque" &&
-      donationdata.name &&
-      donationdata.chequeno &&
-      amount &&
-      donationdata.date_of_sub &&
-      donationdata.donationtype &&
-      donationdata.name_of_bank
-    ) {
+    if (mode === "Cheque") {
       axios.defaults.headers.post[
         "Authorization"
       ] = `Bearer ${sessionStorage.getItem("token")}`;
 
       const res = await axios.post(
         `http://localhost:4543/api/user/add-donation`,
-        {
-          NAME: donationdata.name,
-          MODE_OF_DONATION: 2,
-          AMOUNT: amount,
-          CHEQUE_NO: donationdata?.chequeno,
-          DATE_OF_CHEQUE: donationdata?.date_of_sub,
-          NAME_OF_BANK: donationdata?.name_of_bank,
-          DATE_OF_DAAN: new Date(),
-          PAYMENT_ID: "",
-          TYPE: donationdata?.donationtype,
-          REMARK: donationdata?.Remark,
-        }
+
+        formData
       );
       console.log(donationdata);
 
@@ -138,7 +143,7 @@ function Donation() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.name) {
+    if (!values.name && !user.name) {
       errors.name = "Please enter name";
     }
 
@@ -233,7 +238,7 @@ function Donation() {
                 </p>
               </div>
               <div
-                style={{ marginRight: "5.3rem" }}
+                style={{ marginRight: "4.3rem" }}
                 className="inner-checkbox-div"
               >
                 Mode :
@@ -352,10 +357,10 @@ function Donation() {
                         <label>Address</label>
                         <input
                           type="text"
-                          name="Remark"
+                          name="address"
                           placeholder="Address"
-                          // value={donationdata.Remark}
-                          // onChange={onChange}
+                          value={donationdata.address}
+                          onChange={onChange}
                         />
                         <label style={{ marginTop: "1rem" }}>Remark</label>
                         <input
@@ -448,9 +453,12 @@ function Donation() {
                       </p>
                       <div
                         className="donation-money-div-main"
-                        style={{ marginTop: "10px" }}
+                        style={{ marginTop: "3px" }}
                       >
-                        <div className="btn-recharge-div">
+                        <div
+                          className="btn-recharge-div"
+                          style={{ arginBottom: "-8px" }}
+                        >
                           <button onClick={() => setamount("1111")}>
                             ₹1111
                           </button>
@@ -486,23 +494,35 @@ function Donation() {
                       <label>Upload Chueqe</label>
                       <input
                         type="file"
-                        name="name_of_bank"
+                        accept="image/*"
+                        name="chqque_img"
                         placeholder="Bank Name"
-                        // value={donationdata.name_of_bank}
-                        // onChange={onChange}
+                        onChange={(e) => {
+                          setcheqing(e.target.files[0]);
+                          console.log(e.target.files[0]);
+                        }}
                       />
-
                       <p style={{ color: "red", marginTop: "5px" }}>
                         {formerror.name_of_bank}
                       </p>
                       <div className="inner-input-div">
-                        <label style={{ marginTop: "1rem" }}>Address</label>
+                        <label style={{ marginTop: "1rem" }}>Bank</label>
                         <input
                           type="text"
                           name="name_of_bank"
+                          placeholder="name_of_bank"
+                          value={donationdata.name_of_bank}
+                          onChange={onChange}
+                        />
+                      </div>
+                      <div className="inner-input-div">
+                        <label style={{ marginTop: "1rem" }}>Address</label>
+                        <input
+                          type="text"
+                          name="address"
                           placeholder="Address"
-                          // value={donationdata.name_of_bank}
-                          // onChange={onChange}
+                          value={donationdata.address}
+                          onChange={onChange}
                         />
                       </div>
                     </div>

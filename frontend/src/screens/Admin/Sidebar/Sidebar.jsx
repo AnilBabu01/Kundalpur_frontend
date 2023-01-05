@@ -78,9 +78,9 @@ const Sidebar = ({ setshowsidebar }) => {
                   className={({ isActive }) =>
                     isActive ? "active-nav-link" : "nav-link"
                   }
-                  to="/admin-panel/rolemanagement"
+                  to="/admin-panel/usermanagement"
                 >
-                  Role Management
+                  User Management
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -88,11 +88,12 @@ const Sidebar = ({ setshowsidebar }) => {
                   className={({ isActive }) =>
                     isActive ? "active-nav-link" : "nav-link"
                   }
-                  to="/admin-panel/usermanagement"
+                  to="/admin-panel/rolemanagement"
                 >
-                  User Management
+                  Role Management
                 </NavLink>
               </li>
+
               <li className="nav-item">
                 <NavLink
                   className={({ isActive }) =>

@@ -19,6 +19,10 @@ const NewDonation = sequelize.define(tbl.TBL_NEW_DONATION, {
     trim: true,
     allowNull: true,
   },
+  IMG:{
+    type:Sequelize.STRING(150),
+    defaultValue:''
+  },
 
   ADDRESS:{
     type: Sequelize.STRING(510),

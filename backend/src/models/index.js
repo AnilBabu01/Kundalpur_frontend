@@ -10,6 +10,8 @@ module.exports.donationItem = require('./donationItem.model');
 module.exports.ElecDonationModel = require('./electricDonation.model');
 module.exports.itemList = require('./item.model');
 module.exports.ElecDonationItem = require('./electricDonationItem.model');
+module.exports.Vouchers = require('./voucher.model')
+
 sequelize.sync().then((result) => {
     console.log('data synced')
 }).catch((e) => {

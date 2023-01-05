@@ -1,5 +1,5 @@
 const express = require('express');
-const { userController,donationController } = require('../../controllers');
+const { userController,donationController,voucherController } = require('../../controllers');
 const validate = require('../../middlewares/validate');
 const { userValidation } = require('../../validations');
 const router = express.Router();
@@ -26,4 +26,5 @@ router.route('/add-elecDonation').post(auth(),donationController.addelecDonation
 router.route('/add-elecDonation').get(auth(),donationController.getElecDonation);
 router.route('/add-elecDonation').delete(auth(),donationController.deleteElecDonation);
 router.route('/get-elecDonation').get(auth(),donationController.getElecDonationbyID);
+router.route('/add-voucher-user').post(auth(),voucherController.GenerateVoucher)
 module.exports = router;

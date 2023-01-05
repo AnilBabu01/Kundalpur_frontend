@@ -1,4 +1,5 @@
 const { sequelize, QueryTypes, query } = require("sequelize");
+const uploadimage = require("../middlewares/imageupload");
 const db = require("../models");
 const electricDonation = require("../models/electricDonation.model");
 db.donationModel.hasMany(db.donationItem, {
@@ -41,15 +42,22 @@ class DonationCollaction {
       DATE_OF_DAAN,
       TYPE,
       REMARK,
-      ADDRESS
+      ADDRESS,
     } = req.body;
 
+    const { chequeImg } = req.files;
+    let IMG 
+
+    let active = ''
     const count = await TblNewDonation.count();
     const currentYear = new Date().getFullYear();
     let donationType = "ONLINE";
     if (MODE_OF_DONATION == 2) {
       donationType = "CHEQUE";
+      active = '0'
+      IMG = uploadimage(chequeImg);
     }
+
     const receiptId = count + 1;
     let RECEIPT_NO = `${donationType}-${currentYear}-000${receiptId}`;
     const userId = req.user.id;
@@ -65,6 +73,8 @@ class DonationCollaction {
       TYPE,
       ADDRESS,
       REMARK,
+      IMG,
+      active,
       DATE_OF_DAAN,
       ADDED_BY: userId,
     }).catch((err) => {

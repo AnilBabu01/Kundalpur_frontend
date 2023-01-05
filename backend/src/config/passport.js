@@ -17,13 +17,6 @@ const jwtVerify = async (payload, done) => {
           model:usersRolesModel,
           as:'roleDetails',
           attributes:['user_id','role_id'],
-          include:[
-            {
-              model:roleModel,
-              as:'roles',
-              attributes:['role_name']
-            }
-          ]
         }
       ],
     });

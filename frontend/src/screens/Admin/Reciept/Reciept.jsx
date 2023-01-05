@@ -86,7 +86,7 @@ const Reciept = ({ setopendashboard, setshowreciept }) => {
               </div>
               <div className="recipt-info-div">
                 <h2>स्थान :</h2>
-                <p>अमरकंटक</p>
+                <p>{isData?.ADDRESS}</p>
               </div>
               <div className="recipt-info-div">
                 <h2>दान का मदः:</h2>

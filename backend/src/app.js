@@ -17,6 +17,7 @@ const path = require('path');
 
 require('./db/db-connection');
 const app = express();
+
 if (config.env !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
@@ -40,9 +41,9 @@ passport.use('jwt', jwtStrategy);
 // }
 // v1 api routes
 app.use('/api', routes);
-app.use((req, res, next) => {
-  next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
-});
+// app.use((req, res, next) => {
+//   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
+// });
 app.use(errorConverter);
 app.use(errorHandler);
 

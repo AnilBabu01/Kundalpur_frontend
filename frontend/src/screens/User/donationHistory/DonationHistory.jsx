@@ -11,11 +11,11 @@ import TablePagination from "@mui/material/TablePagination";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import moment from "moment";
-
 import "./DonationHistory.css";
 import { useNavigate } from "react-router-dom";
-import { User_AllDonation } from "../../../Redux/redux/action/AuthAction";
 import { serverInstance } from "../../../API/ServerInstance";
+
+let status;
 function DonationHistory({ setopendashboard, setshowreciept }) {
   const [isrow, setisrow] = useState([]);
   const [page, setPage] = useState(0);
@@ -45,11 +45,14 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
   };
 
   const downloadrecept = (row) => {
-    navigation("/reciept", {
-      state: {
-        userdata: row,
-      },
-    });
+    if (row.active) {
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -100,6 +103,9 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                         "&:last-child td, &:last-child th": { border: 0 },
                       }}
                     >
+                      <div style={{ display: "none" }}>
+                        {(status = row.active)}
+                      </div>
                       <TableCell align="left">
                         {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
                       </TableCell>
@@ -119,10 +125,13 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                         {row.PAYMENT_ID ? row.PAYMENT_ID : "-"}
                       </TableCell>
                       <TableCell
-                        align="left"
-                        style={{ cursor: "pointer" }}
                         onClick={() => {
                           downloadrecept(row);
+                        }}
+                        align="left"
+                        style={{
+                          cursor: "pointer",
+                          color: status ? "red" : "",
                         }}
                       >
                         downolod

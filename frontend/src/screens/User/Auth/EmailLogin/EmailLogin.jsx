@@ -42,6 +42,7 @@ const EmailLogin = () => {
         <div className="input-group">
           <label htmlFor="email">Email</label>
           <input
+            className="remove_underline"
             required
             type="email"
             id="email"
@@ -54,6 +55,7 @@ const EmailLogin = () => {
         <div className="input-group">
           <label htmlFor="password">Password</label>
           <input
+            className="remove_underline"
             required
             type="password"
             id="password"

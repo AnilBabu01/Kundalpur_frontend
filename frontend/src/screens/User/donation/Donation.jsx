@@ -98,7 +98,10 @@ function Donation() {
         (data) => {
           formData.set("PAYMENT_ID", data.razorpay_order_id);
           serverInstance("user/add-donation", "POST", {
-            NAME: donationdata.name,
+            NAME:
+              donationdata.selected === "yes1" && user.name
+                ? user.name
+                : donationdata.name,
             MODE_OF_DONATION: 1,
             AMOUNT: amount,
             CHEQUE_NO: donationdata?.chequeno,
@@ -108,6 +111,7 @@ function Donation() {
             PAYMENT_ID: data.razorpay_order_id,
             TYPE: donationdata?.donationtype,
             REMARK: donationdata?.Remark,
+            ADDRESS: donationdata?.address,
           }).then((res) => {
             if (res.status === true) {
               handleOpen();
@@ -376,11 +380,14 @@ function Donation() {
 
                   <div className="save-div-btn">
                     <button
-                      // disabled={
-                      //   name && Remark && donationtype && selected
-                      //     ? false
-                      //     : true
-                      // }
+                      disabled={
+                        donationdata.donationtype &&
+                        donationdata.selected &&
+                        donationdata.address &&
+                        donationdata.Remark
+                          ? false
+                          : true
+                      }
                       className="save-btn"
                       onClick={handlesubmit}
                     >
@@ -533,7 +540,22 @@ function Donation() {
                   ></div>
 
                   <div className="save-div-btn">
-                    <button onClick={handlesubmit} className="save-btn">
+                    <button
+                      onClick={handlesubmit}
+                      className="save-btn"
+                      disabled={
+                        donationdata.donationtype &&
+                        donationdata.selected &&
+                        donationdata.address &&
+                        donationdata.Remark &&
+                        donationdata.date_of_sub &&
+                        donationdata.chequeno &&
+                        donationdata.name_of_bank &&
+                        cheqing
+                          ? false
+                          : true
+                      }
+                    >
                       Submit
                     </button>
                   </div>

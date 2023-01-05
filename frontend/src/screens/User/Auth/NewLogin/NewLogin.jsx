@@ -89,6 +89,7 @@ const VivekPLogin = () => {
           <div className="input-group">
             <label htmlFor="mobileNo">Phone</label>
             <input
+              className="remove_underline"
               required
               type="text"
               id="mobileNo"

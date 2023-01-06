@@ -46,6 +46,7 @@ const loginWithMobile = catchAsync(async (req, res) => {
 const loginWithEmail = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   let data = await userService.loginuser(email, password);
+  
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
@@ -144,7 +145,7 @@ const profileList = catchAsync(async (req, res) => {
 const createAccount = catchAsync(async (req, res) => {
   const create = await userService.createAccount(req);
   console.log(create)
-  if (create.status === 0) {
+  if (create?.status === 0) {
     res.status(401).send({
       status:create.status,
       message:create.error
@@ -155,6 +156,23 @@ const createAccount = catchAsync(async (req, res) => {
     msg: "Account created successfully.",
   });
 });
+
+
+const getUsers = catchAsync(async (req, res) => {
+  const create = await userService.getUsers(req);
+  console.log(create)
+  if (create?.status === 0) {
+    res.status(401).send({
+      status:create.status,
+      message:create.error
+    })
+  }
+  res.status(200).send({
+    status: true,
+    data: create
+  });
+});
+
 
 module.exports = {
   createUser,
@@ -168,4 +186,5 @@ module.exports = {
   updateProfile,
   profileList,
   createAccount,
+  getUsers
 };

@@ -12,14 +12,19 @@ const sequelize = require('../db/db-connection')
         username: {
             type: Sequelize.STRING(100),     
             trim: true,
+            
         },
         mobileNo: {
             type: Sequelize.STRING(15),     
             trim: true,
+            unique: true,
+            allowNull:false,
         },
         email:{
             type:Sequelize.STRING(150),
             trim: true,
+            unique: true,
+            allowNull:false,
         },
         password: {
             type: Sequelize.STRING(255),     

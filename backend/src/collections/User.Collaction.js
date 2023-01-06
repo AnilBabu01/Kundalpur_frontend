@@ -104,7 +104,7 @@ class UserCollaction {
     if (query) {
       const addRole = await TblUsersRoles.create({
         user_id: query.id,
-        role_id: 2,
+        role_id: 1,
       });
       return query;
     }

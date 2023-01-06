@@ -89,6 +89,22 @@ const itemList = catchAsync(async (req, res) => {
   res.status(200).send(data);
 });
 
+const addDonationType = catchAsync(async (req, res) => {
+  const data = await donationService.addDonationType(req);
+  res.status(httpStatus.CREATED).send({
+    status: true,
+    msg: "Success",
+  });
+});
+
+const getDonationType = catchAsync(async (req, res) => {
+  const data = await donationService.getDonationType(req);
+  res.status(httpStatus.CREATED).send({
+    status: true,
+    data: data
+  });
+});
+
 module.exports = {
   addCashDonation,
   donationList,
@@ -97,5 +113,7 @@ module.exports = {
   addelecDonation,
   getElecDonation,
   deleteElecDonation,
-  getElecDonationbyID
+  getElecDonationbyID,
+  addDonationType,
+  getDonationType
 };

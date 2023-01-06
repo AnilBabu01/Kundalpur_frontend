@@ -11,4 +11,6 @@ router.route('/donation-list').get(adminController.allList);
 router.route('/donation-list/:id').get(adminController.allList);
 router.route('/get-users').get(auth(),userController.getUsers)
 router.route('/del-users').delete(auth(),adminController.delUser)
+router.route('/donation-type').post(auth(),adminController.addDonationType)
+router.route('/donation-type').get(auth(),adminController.getDonationType)
 module.exports = router;

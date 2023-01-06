@@ -28,6 +28,7 @@ const itemList = db.itemList;
 const TblNewDonation = db.newDonationModel;
 const TblelecDonation = db.ElecDonationModel;
 const TblelecDonationItem = db.ElecDonationItem;
+const TblDonationTypes = db.donationTypes
 
 class DonationCollaction {
   addNewDonation = async (req) => {
@@ -324,6 +325,26 @@ class DonationCollaction {
     });
     return list;
   };
+
+  addDonationType = async (req)=>{
+
+    const {type_en,type_hi} = req.body
+
+
+    const data = await TblDonationTypes.create({
+      type_en,
+      type_hi
+    })
+    return data;
+  }
+
+  getDonationType = async ()=>{
+    const data = await TblDonationTypes.findAll()
+    return data
+  }
+
 }
+
+
 
 module.exports = new DonationCollaction();

@@ -68,6 +68,19 @@ const allList = async(req)=>{
   return record;
 }
 
+
+const getDonationType = async(req)=>{
+  const donationType = await DonationCollection.getDonationType(req);
+  return donationType;
+
+}
+
+const addDonationType = async(req)=>{
+  const donationType = await DonationCollection.addDonationType(req);
+  return donationType;
+
+}
+
 module.exports = {
   cashDonation,
   list,
@@ -77,5 +90,7 @@ module.exports = {
   addelecDonation,
   getElecDonation,
   delElecDonation,
-  getElecDonationbyID
+  getElecDonationbyID,
+  getDonationType,
+  addDonationType
 };

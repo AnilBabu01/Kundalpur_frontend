@@ -62,16 +62,8 @@ function UserMaster() {
                 <CloseIcon onClick={() => handleClose()} />
               </div>
               <hr />
-              <div className="main-input-div1">
-                <div className="inner-input-div1">
-                  <label>Name</label>
-                  <input text="text" />
-                </div>
-                <div className="inner-input-div1">
-                  <label>Email</label>
-                  <input text="text" />
-                </div>
-              </div>
+              <div></div>
+
               <div className="main-input-div1">
                 <div className="inner-input-div1">
                   <label>Phone No</label>

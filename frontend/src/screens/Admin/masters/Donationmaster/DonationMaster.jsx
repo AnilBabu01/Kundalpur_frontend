@@ -65,25 +65,15 @@ function DonationMaster() {
               <hr />
               <div className="main-input-div1">
                 <div className="inner-input-div1">
-                  <label>Type of donation </label>
-                  <select
-                    className="selection_text"
-                    id="type"
-                    name="mode"
-                    value={donationtype}
-                    onChange={(e) => setdonationtype(e.target.value)}
-                  >
-                    {typesOfDonation.map((mode) => (
-                      <option key={mode} value={mode}>
-                        {mode}
-                      </option>
-                    ))}
-                  </select>
+                  <label>Enter donation type in hindi </label>
+                  <input type="text" />
+                  <label>Enter donation type in english </label>
+                  <input type="text" />
                 </div>
               </div>
 
               <div className="save-div-btn">
-                <button className="save-btn1">Add Donation</button>
+                <button className="save-btn1">Add </button>
                 <button onClick={() => handleClose()} className="calcel-btn">
                   Cancel
                 </button>

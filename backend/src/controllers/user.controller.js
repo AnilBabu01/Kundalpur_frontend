@@ -143,6 +143,7 @@ const profileList = catchAsync(async (req, res) => {
 
 const createAccount = catchAsync(async(req,res)=>{
   const create = await userService.createAccount(req);
+  console.log(create)
   if(!create){
     throw new ApiError(httpStatus.NOT_FOUND, "Something wrong!");
   }

@@ -159,6 +159,7 @@ const createAccount = async(req)=>{
   }
   //-----check email exist or not ------
   const create = await  UserCollection.createAccount(req);
+
   return create;
 }
 

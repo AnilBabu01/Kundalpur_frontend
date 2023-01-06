@@ -14,7 +14,8 @@ const createuser = async (userBody, file) => {
   if (user) {
     return null;
   }
-  const result = await UserCollection.createuser(userBody, file);
+  console.log(user)
+  const result = await UserCollection.createuser(userBody, file,);
   return result;
 };
 
@@ -149,17 +150,25 @@ const profileList = async(req)=>{
 const createAccount = async(req)=>{
   //-----check mobile exist or not ------
   const mobile = await UserCollection.checkMobile(req.body.mobileno);
-  console.log(mobile);
+
   if(mobile.length > 0){
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Mobile number already exist.");
+  
+    return{
+      status:0,
+      error : "Mobile number already exist."
+    }
+
   }
   const email = await UserCollection.checkEmail(req.body.email);
   if(email.length > 0){
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Email already exist.");
+    return{
+      status:0,
+      error : "Email already exist"
+    }
   }
   //-----check email exist or not ------
   const create = await  UserCollection.createAccount(req);
-
+  console.log(create)
   return create;
 }
 

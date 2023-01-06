@@ -10,12 +10,12 @@ const adminLogin = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
   const tokens = await generateAuthTokens(data);
+  console.log(data)
   res.send({
     user: {
       id: data.id,
       username: data.username,
       name: data.name,
-      roles: data.roles,
       profile_image: data.profile_image,
     },
     tokens,
@@ -30,6 +30,7 @@ const userRegister = async (req, res) => {
   //   });
   // }
   const userdata = await userService.createuser(req.body, req.files);
+  console.log(userdata);
     if (!userdata) {
       res.status(httpStatus.CONFLICT).send({
         status: false,

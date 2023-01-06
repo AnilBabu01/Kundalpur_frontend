@@ -2,7 +2,15 @@ import React from "react";
 import images from "../../../../assets/images.png";
 import { useNavigate } from "react-router-dom";
 import "./PaymentSuccessfull.css";
-function PaymentSuccessfull({ handleClose, name, amount, recieptno }) {
+function PaymentSuccessfull({
+  handleClose,
+  name,
+  amount,
+  recieptno,
+  address,
+  mat,
+  remark,
+}) {
   const navigate = useNavigate();
   return (
     <>
@@ -18,6 +26,9 @@ function PaymentSuccessfull({ handleClose, name, amount, recieptno }) {
                     NAME: name,
                     AMOUNT: amount,
                     RECEIPT_NO: recieptno,
+                    ADDRESS: address,
+                    TYPE: mat,
+                    REMARK: remark,
                   },
                 },
               });

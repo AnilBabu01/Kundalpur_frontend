@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { serverInstance } from "../../../../../API/ServerInstance";
+import { backendApiUrl } from "../../../../../config/config";
 import { typesOfDonation } from "./Data";
 import axios from "axios";
 
@@ -44,6 +44,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
+
   let hour = date.getHours();
   let min = date.getMinutes();
   const time = `${hour}:${min}`;
@@ -70,18 +71,15 @@ const CashDonation = ({ setOpen, setshowalert }) => {
       "Authorization"
     ] = `Bearer ${sessionStorage.getItem("token")}`;
 
-    const res = await axios.post(
-      `http://localhost:4543/api/user/add-elecDonation`,
-      {
-        name: name,
-        phoneNo: phoneNo,
-        address: address,
-        new_member: new_member,
-        donation_date: currentDate,
-        donation_time: time,
-        donation_item: data ? data : item,
-      }
-    );
+    const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
+      name: name,
+      phoneNo: phoneNo,
+      address: address,
+      new_member: new_member,
+      donation_date: currentDate,
+      donation_time: time,
+      donation_item: data ? data : item,
+    });
 
     console.log(res.data.status);
 
@@ -177,145 +175,142 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                   Cancel
                 </button>
               </div>
-              </form>
-            </div>
+            </form>
+          </div>
 
-            <div className="table_scrol_barrr">
-              <table class="styled-table">
-                <thead>
-                  <tr>
-                    <th style={{ textAlign: "center", width: "21rem" }}>
-                      Type of donation
-                    </th>
-                    <th style={{ textAlign: "center", width: "27rem" }}>
-                      Amout
-                    </th>
-                    <th colspan="2" style={{ textAlign: "center" }}>
-                      Remark
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <select
-                        className="inner-input-div1-select "
-                        id="type"
-                        name="donationtype"
-                        value={donationtype}
-                        onChange={(e) => setdonationtype(e.target.value)}
-                      >
-                        {typesOfDonation.map((mode) => (
-                          <option key={mode} value={mode}>
-                            {mode}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        className="forminput1"
-                        placeholder="Amout"
-                        name="amount"
-                        value={amount}
-                        onChange={(e) => {
-                          setamount(e.target.value);
+          <div className="table_scrol_barrr">
+            <table class="styled-table">
+              <thead>
+                <tr>
+                  <th style={{ textAlign: "center", width: "21rem" }}>
+                    Type of donation
+                  </th>
+                  <th style={{ textAlign: "center", width: "27rem" }}>Amout</th>
+                  <th colspan="2" style={{ textAlign: "center" }}>
+                    Remark
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <select
+                      className="inner-input-div1-select "
+                      id="type"
+                      name="donationtype"
+                      value={donationtype}
+                      onChange={(e) => setdonationtype(e.target.value)}
+                    >
+                      {typesOfDonation.map((mode) => (
+                        <option key={mode} value={mode}>
+                          {mode}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      className="forminput1"
+                      placeholder="Amout"
+                      name="amount"
+                      value={amount}
+                      onChange={(e) => {
+                        setamount(e.target.value);
 
-                          console.log(e.target.value);
-                        }}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        className="forminput1"
-                        placeholder="remark"
-                        name="remark"
-                        value={remark}
-                        onChange={(e) => setremark(e.target.value)}
-                      />
-                    </td>
-                    <td style={{ width: "8rem" }}></td>
-                  </tr>
-                  {rowsData.length > 1 &&
-                    rowsData.slice(1).map((item, index) => {
-                      return (
-                        <tr key={item.id}>
-                          <td>
-                            {" "}
-                            <select
-                              className="inner-input-div1-select "
-                              id="type"
-                              name="mode"
-                              value={donationtype}
-                              onChange={(e) => setdonationtype(e.target.value)}
-                            >
-                              {typesOfDonation.map((mode) => (
-                                <option key={mode} value={mode}>
-                                  {mode}
-                                </option>
-                              ))}
-                            </select>
-                          </td>
-                          <td>
-                            {" "}
-                            <input
-                              type="text"
-                              className="forminput1"
-                              placeholder="Amout"
-                              name="amount"
-                              value={amount}
-                              onChange={(e) => {
-                                setamount(e.target.value);
-
-                                console.log(e.target.value);
-                              }}
-                            />
-                          </td>
-                          <td>
-                            {" "}
-                            <input
-                              type="text"
-                              className="forminput1"
-                              placeholder="remark"
-                              name="remark"
-                              value={remark}
-                              onChange={(e) => setremark(e.target.value)}
-                            />
-                          </td>
-                          <td
-                            onClick={() => RemoveRow(item.id)}
-                            style={{ width: "8rem" }}
+                        console.log(e.target.value);
+                      }}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      className="forminput1"
+                      placeholder="remark"
+                      name="remark"
+                      value={remark}
+                      onChange={(e) => setremark(e.target.value)}
+                    />
+                  </td>
+                  <td style={{ width: "8rem" }}></td>
+                </tr>
+                {rowsData.length > 1 &&
+                  rowsData.slice(1).map((item, index) => {
+                    return (
+                      <tr key={item.id}>
+                        <td>
+                          {" "}
+                          <select
+                            className="inner-input-div1-select "
+                            id="type"
+                            name="mode"
+                            value={donationtype}
+                            onChange={(e) => setdonationtype(e.target.value)}
                           >
-                            Remove
-                          </td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td>Total</td>
-                    <td>0.00</td>
-                    <td colspan="2"></td>
-                  </tr>
-                </tfoot>
-              </table>
-              <button
-                onClick={() => {
-                  setNoOfRows({ id: noOfRows.id + 1 });
-                  rowsData.push(noOfRows);
-                  itemClick();
-                }}
-                className="add_itrm_btn"
-              >
-                Add Dontion Item
-              </button>
-            </div>
+                            {typesOfDonation.map((mode) => (
+                              <option key={mode} value={mode}>
+                                {mode}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td>
+                          {" "}
+                          <input
+                            type="text"
+                            className="forminput1"
+                            placeholder="Amout"
+                            name="amount"
+                            value={amount}
+                            onChange={(e) => {
+                              setamount(e.target.value);
+
+                              console.log(e.target.value);
+                            }}
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <input
+                            type="text"
+                            className="forminput1"
+                            placeholder="remark"
+                            name="remark"
+                            value={remark}
+                            onChange={(e) => setremark(e.target.value)}
+                          />
+                        </td>
+                        <td
+                          onClick={() => RemoveRow(item.id)}
+                          style={{ width: "8rem" }}
+                        >
+                          Remove
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td>0.00</td>
+                  <td colspan="2"></td>
+                </tr>
+              </tfoot>
+            </table>
+            <button
+              onClick={() => {
+                setNoOfRows({ id: noOfRows.id + 1 });
+                rowsData.push(noOfRows);
+                itemClick();
+              }}
+              className="add_itrm_btn"
+            >
+              Add Dontion Item
+            </button>
           </div>
         </div>
-      
+      </div>
     </>
   );
 };

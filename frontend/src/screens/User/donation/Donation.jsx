@@ -5,6 +5,7 @@ import { displayRazorpay } from "../../../RazorPay/RazorPay";
 import PaymentSuccessfull from "./PaymentSuccessfull/PaymentSuccessfull";
 import ChequeSuccessfull from "./chequeSuccessfull/ChequeSuccessfull";
 import { TypesOfDonation } from "./TypesOfDonation";
+import { backendApiUrl } from "../../../config/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -12,6 +13,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Swal from "sweetalert2";
+const formData = new FormData();
 import "./Donation.css";
 import { useJwt } from "react-jwt";
 import { useAuth } from "../../../Context/AuthContext";
@@ -34,6 +36,7 @@ function Donation() {
   const [open1, setOpen1] = useState(false);
   const [formerror, setFormerror] = useState({});
   const [fordonatoin, setfordonatoin] = useState("");
+  const [cheqing, setcheqing] = useState("");
   const [donationdata, setDonationdata] = useState({
     name: "",
     chequeno: "",
@@ -43,23 +46,44 @@ function Donation() {
     donationtype: "Please Select",
     selected: "",
     amount: "",
+    address: "",
   });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
-const auth = useAuth()
+  const auth = useAuth();
   const { user } = useSelector((state) => state.userReducer);
 
-  console.log("user", user.name);
+  if (donationdata.selected === "yes1" && !user.name) {
+    nagivate("/profile");
+  }
   const onChange = (e) => {
     setDonationdata({ ...donationdata, [e.target.name]: e.target.value });
   };
 
-  
   const handlesubmit = async (e) => {
     setFormerror(validate(donationdata));
+    formData.set(
+      "NAME",
+      donationdata.selected === "yes1" && user.name
+        ? user.name
+        : donationdata.name
+    );
+    formData.set("MODE_OF_DONATION", mode === "Onilne" ? 1 : 2);
+    formData.set("AMOUNT", amount);
+    // formData.set("CHEQUE_NO", donationdata?.chequeno);
+    formData.set("DATE_OF_CHEQUE", donationdata?.date_of_sub);
+    formData.set("NAME_OF_BANK", donationdata?.name_of_bank);
+    formData.set("DATE_OF_DAAN", new Date());
+    formData.set("TYPE", donationdata?.donationtype);
+    formData.set("REMARK", donationdata?.Remark);
+    formData.set("ADDRESS", donationdata?.address);
+    formData.set("chequeImg", cheqing);
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
 
     if (!sessionStorage.getItem("token")) {
       nagivate("/login");
@@ -72,8 +96,12 @@ const auth = useAuth()
           userid: 1,
         },
         (data) => {
+          formData.set("PAYMENT_ID", data.razorpay_order_id);
           serverInstance("user/add-donation", "POST", {
-            NAME: donationdata.name,
+            NAME:
+              donationdata.selected === "yes1" && user.name
+                ? user.name
+                : donationdata.name,
             MODE_OF_DONATION: 1,
             AMOUNT: amount,
             CHEQUE_NO: donationdata?.chequeno,
@@ -83,6 +111,7 @@ const auth = useAuth()
             PAYMENT_ID: data.razorpay_order_id,
             TYPE: donationdata?.donationtype,
             REMARK: donationdata?.Remark,
+            ADDRESS: donationdata?.address,
           }).then((res) => {
             if (res.status === true) {
               handleOpen();
@@ -100,69 +129,54 @@ const auth = useAuth()
       ] = `Bearer ${sessionStorage.getItem("token")}`;
 
       const res = await axios.post(
-        `http://localhost:4543/api/user/add-donation`,
-        {
-          NAME: donationdata.name,
-          MODE_OF_DONATION: 2,
-          AMOUNT: amount,
-          CHEQUE_NO: donationdata?.chequeno,
-          DATE_OF_CHEQUE: donationdata?.date_of_sub,
-          NAME_OF_BANK: donationdata?.name_of_bank,
-          DATE_OF_DAAN: new Date(),
-          PAYMENT_ID: "",
-          TYPE: donationdata?.donationtype,
-          REMARK: donationdata?.Remark,
-        }
+        `${backendApiUrl}user/add-donation`,
+
+        formData
       );
       console.log(donationdata);
 
       if (res.data.status === true) {
         handleOpen1();
       } else {
-        Swal.fire("Error!", "Somthing went wrong!!", "error");
+        Swal.fire("Error!", "Mobile number already exist!!", "error");
       }
     }
   };
   useEffect(() => {}, [formerror, donationdata]);
-  console.log(useJwt(sessionStorage.getItem("token")))
+  console.log(useJwt(sessionStorage.getItem("token")));
   const validate = (values) => {
     const errors = {};
 
-    if (!values.name) {
-      errors.name = " name is required";
+    if (!values.name && !user.name) {
+      errors.name = "Please enter name";
     }
 
     if (!amount) {
-      errors.amount = "amount is required";
-    }
-
-    if (!values.Remark) {
-      errors.Remark = "Remark is required";
+      errors.amount = "Please enter amount";
     }
 
     if (values.donationtype === "Please Select") {
-      errors.donationtype = "Donation type is required";
+      errors.donationtype = "Please selection donation type";
     }
 
     if (!values.selected) {
       errors.selected = "Please donation for";
     }
     if (!values.chequeno) {
-      errors.chequeno = "cheque no is required";
+      errors.chequeno = "Please enter cheque no";
     }
     if (!values.date_of_sub) {
-      errors.date_of_sub = "date submission is required";
+      errors.date_of_sub = "Plase enter date submission";
     }
 
     if (!values.name_of_bank) {
-      errors.name_of_bank = "name of bank is required";
+      errors.name_of_bank = "Please enter name of bank";
     }
 
     return errors;
   };
 
-  return (
-    auth.verify ?
+  return auth.verify ? (
     <>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -177,6 +191,9 @@ const auth = useAuth()
               handleClose={handleClose}
               name={donationdata.name}
               amount={amount}
+              address={donationdata.address}
+              mat={donationdata.donationtype}
+              remark={donationdata.Remark}
               recieptno={"1"}
             />
           </Box>
@@ -227,7 +244,10 @@ const auth = useAuth()
                   {formerror.selected}
                 </p>
               </div>
-              <div className="inner-checkbox-div">
+              <div
+                style={{ marginRight: "4.3rem" }}
+                className="inner-checkbox-div"
+              >
                 Mode :
                 <input
                   type="radio"
@@ -258,7 +278,11 @@ const auth = useAuth()
                   type="text"
                   name="name"
                   placeholder="Full name"
-                  value={donationdata.name}
+                  value={
+                    donationdata.selected === "yes1" && user.name
+                      ? user.name
+                      : donationdata.name
+                  }
                   onChange={onChange}
                 />
                 <p style={{ color: "red", marginTop: "5px" }}>
@@ -336,14 +360,16 @@ const auth = useAuth()
                       </div>
                     </div>
                     <div>
-                      <div
-                        className={
-                          formerror.Remark
-                            ? "inner-input-div-input-red"
-                            : "inner-input-div"
-                        }
-                      >
-                        <label>Remark</label>
+                      <div className="inner-input-div">
+                        <label>Address</label>
+                        <input
+                          type="text"
+                          name="address"
+                          placeholder="Address"
+                          value={donationdata.address}
+                          onChange={onChange}
+                        />
+                        <label style={{ marginTop: "1rem" }}>Remark</label>
                         <input
                           type="text"
                           name="Remark"
@@ -351,20 +377,20 @@ const auth = useAuth()
                           value={donationdata.Remark}
                           onChange={onChange}
                         />
-                        <p style={{ color: "red", marginTop: "5px" }}>
-                          {formerror.Remark}
-                        </p>
                       </div>
                     </div>
                   </div>
 
                   <div className="save-div-btn">
                     <button
-                      // disabled={
-                      //   name && Remark && donationtype && selected
-                      //     ? false
-                      //     : true
-                      // }
+                      disabled={
+                        donationdata.donationtype &&
+                        donationdata.selected &&
+                        donationdata.address &&
+                        donationdata.Remark
+                          ? false
+                          : true
+                      }
                       className="save-btn"
                       onClick={handlesubmit}
                     >
@@ -437,9 +463,12 @@ const auth = useAuth()
                       </p>
                       <div
                         className="donation-money-div-main"
-                        style={{ marginTop: "10px" }}
+                        style={{ marginTop: "3px" }}
                       >
-                        <div className="btn-recharge-div">
+                        <div
+                          className="btn-recharge-div"
+                          style={{ arginBottom: "-8px" }}
+                        >
                           <button onClick={() => setamount("1111")}>
                             ₹1111
                           </button>
@@ -461,33 +490,6 @@ const auth = useAuth()
                             ₹51,511
                           </button>
                         </div>
-                      </div>
-                    </div>
-                    <div
-                      className={
-                        formerror.name_of_bank
-                          ? "inner-input-div-input-red"
-                          : "inner-input-div"
-                      }
-                    >
-                      <label> Bank Name</label>
-                      <input
-                        type="text"
-                        name="name_of_bank"
-                        placeholder="Bank Name"
-                        value={donationdata.name_of_bank}
-                        onChange={onChange}
-                      />
-                      <p style={{ color: "red", marginTop: "5px" }}>
-                        {formerror.name_of_bank}
-                      </p>
-                      <div
-                        className={
-                          formerror.Remark
-                            ? "inner-input-div-input-red"
-                            : "inner-input-div"
-                        }
-                      >
                         <label>Remark</label>
                         <input
                           type="text"
@@ -496,9 +498,42 @@ const auth = useAuth()
                           value={donationdata.Remark}
                           onChange={onChange}
                         />
-                        <p style={{ color: "red", marginTop: "5px" }}>
-                          {formerror.Remark}
-                        </p>
+                      </div>
+                    </div>
+                    <div className="inner-input-div">
+                      <label>Upload Chueqe</label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        name="chqque_img"
+                        placeholder="Bank Name"
+                        onChange={(e) => {
+                          setcheqing(e.target.files[0]);
+                          console.log(e.target.files[0]);
+                        }}
+                      />
+                      <p style={{ color: "red", marginTop: "5px" }}>
+                        {formerror.name_of_bank}
+                      </p>
+                      <div className="inner-input-div">
+                        <label style={{ marginTop: "1rem" }}>Bank</label>
+                        <input
+                          type="text"
+                          name="name_of_bank"
+                          placeholder="name_of_bank"
+                          value={donationdata.name_of_bank}
+                          onChange={onChange}
+                        />
+                      </div>
+                      <div className="inner-input-div">
+                        <label style={{ marginTop: "1rem" }}>Address</label>
+                        <input
+                          type="text"
+                          name="address"
+                          placeholder="Address"
+                          value={donationdata.address}
+                          onChange={onChange}
+                        />
                       </div>
                     </div>
                   </div>
@@ -509,9 +544,20 @@ const auth = useAuth()
 
                   <div className="save-div-btn">
                     <button
-                      type="button"
                       onClick={handlesubmit}
                       className="save-btn"
+                      disabled={
+                        donationdata.donationtype &&
+                        donationdata.selected &&
+                        donationdata.address &&
+                        donationdata.Remark &&
+                        donationdata.date_of_sub &&
+                        donationdata.chequeno &&
+                        donationdata.name_of_bank &&
+                        cheqing
+                          ? false
+                          : true
+                      }
                     >
                       Submit
                     </button>
@@ -523,7 +569,8 @@ const auth = useAuth()
         </div>
       </div>
     </>
-    : <div>Loading ...</div>
+  ) : (
+    <div>Loading ...</div>
   );
 }
 

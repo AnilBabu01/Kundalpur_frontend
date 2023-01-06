@@ -5,6 +5,7 @@ import { serverInstance } from "../../../../API/ServerInstance";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -43,35 +44,31 @@ const Donation = ({ setopendashboard }) => {
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
-    getall_donation1();
-  }, []);
+  }, [showalert]);
 
   const getall_donation = () => {
-    serverInstance("admin/donation-list", "get").then((res) => {
-      if (res.status) {
-        setisData(res.data);
-      } else {
-        Swal("Error", "somthing went  wrong", "error");
-      }
-    });
-  };
-
-  const getall_donation1 = () => {
     serverInstance("user/add-elecDonation", "get").then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
-      console.log(res);
     });
   };
 
-  const downloadrecept = (row) => {
-    navigation("/reciept", {
-      state: {
-        userdata: row,
-      },
+  const deletedonation = (id) => {
+    serverInstance(`user/add-elecDonation?id=${id}`, "delete").then((res) => {
+      if (res.status === true) {
+        Swal.fire(
+          "Great!",
+          "Eletronic donation delete successfully",
+          "success"
+        );
+        setshowalert(true);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+      console.log(res);
     });
   };
 
@@ -84,9 +81,6 @@ const Donation = ({ setopendashboard }) => {
     setPage(0);
   };
 
-  if (showalert) {
-    Swal.fire("Great!", msg, "success");
-  }
   return (
     <>
       <Modal
@@ -129,17 +123,12 @@ const Donation = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
-                  <TableCell>S.No.</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Name </TableCell>
-                  <TableCell>Donation Type</TableCell>
+                  <TableCell>Receipt No</TableCell>
+                  <TableCell>Phone No</TableCell>
+                  <TableCell>Name</TableCell>
                   <TableCell>Amount</TableCell>
-                  <TableCell>Cheque No.</TableCell>
-                  <TableCell>Date Of submission</TableCell>
-                  <TableCell>Name of Bank</TableCell>
-                  <TableCell>Payment id</TableCell>
-                  <TableCell>certificate</TableCell>
-                  <TableCell>Edit/Delete</TableCell>
+                  <TableCell>Address</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -151,45 +140,32 @@ const Donation = ({ setopendashboard }) => {
                   : isData
                 ).map((row, index) => (
                   <TableRow
-                    key={index}
+                    key={row.id}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>{row.phoneNo}</TableCell>
+                    <TableCell>{row.name}</TableCell>
                     <TableCell>
-                      {" "}
-                      {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
+                      {row.elecItemDetails.reduce(
+                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
+                        0
+                      )}
                     </TableCell>
-                    <TableCell>{row.NAME}</TableCell>
-                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.CHEQUE_NO ? row.CHEQUE_NO : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : "-"}
-                    </TableCell>
+                    <TableCell> {row.address}</TableCell>
 
-                    <TableCell> {row.PAYMENT_ID}</TableCell>
-                    <TableCell
-                      onClick={() => {
-                        downloadrecept(row);
-                      }}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {" "}
-                      downolod
-                    </TableCell>
                     <TableCell>
-                      <RemoveRedEyeIcon />
-                      <DeleteForeverIcon />
+                      <RemoveRedEyeIcon
+                        onClick={() =>
+                          navigation(`/admin-panel/infoElectronic/${row.id}`)
+                        }
+                      />
+
+                      <DeleteForeverIcon
+                        onClick={() => deletedonation(row.id)}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

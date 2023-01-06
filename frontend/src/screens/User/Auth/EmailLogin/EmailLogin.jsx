@@ -1,6 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import logo from "../../../../assets/sideimg.jpeg";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { backendApiUrl } from "../../../../config/config";
 import "./emaillogin.scss";
 
 const initialState = {
@@ -19,13 +22,24 @@ const EmailLogin = () => {
     setState({ ...state, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(state);
-    // if ((email, password)) {
-    //   localStorage.setItem("nowtoken", true);
-    //   navigate("/");
-    // }
+    const res = await axios.post(`${backendApiUrl}user/login`, {
+      identity: email,
+      password: password,
+    });
+
+    console.log(res.data.tokens.access.token);
+    if (res.data.status) {
+      navigate("/");
+      Swal.fire("Great!", "You Have Loginn Successfully", "success");
+
+      sessionStorage.setItem("token", res.data.tokens.access.token);
+      auth.setUser(res.data.tokens.access.token);
+    } else {
+      Swal.fire("Error!", "", "error");
+    }
   };
   return (
     <div className="mainlogin-div">
@@ -42,6 +56,7 @@ const EmailLogin = () => {
         <div className="input-group">
           <label htmlFor="email">Email</label>
           <input
+            className="remove_underline"
             required
             type="email"
             id="email"
@@ -54,6 +69,7 @@ const EmailLogin = () => {
         <div className="input-group">
           <label htmlFor="password">Password</label>
           <input
+            className="remove_underline"
             required
             type="password"
             id="password"

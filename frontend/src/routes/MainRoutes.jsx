@@ -13,6 +13,7 @@ import Reciept from "../screens/Admin/Reciept/Reciept";
 import DonationHistory from "../screens/User/donationHistory/DonationHistory";
 import ChangePassword from "../screens/User/ChangePassword/ChangePassword";
 import PrivateRoutes from "../components/PrivateRoutes/PrivateRoutes";
+import AboutUs from "../screens/User/Aboutus/AboutUs";
 function MainRoutes({ setopendashboard, setshowreciept }) {
   return (
     <>
@@ -23,6 +24,7 @@ function MainRoutes({ setopendashboard, setshowreciept }) {
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/create" element={<CreatePassword />} />
         <Route path="/register" element={<Auth />} />
+        <Route path="/about" element={<AboutUs />} />
 
         <Route
           path="/profile"
@@ -35,8 +37,8 @@ function MainRoutes({ setopendashboard, setshowreciept }) {
         <Route
           path="/donation"
           element={
-      // route is protected  
-      <PrivateRoutes>      
+            // route is protected
+            <PrivateRoutes>
               <Donation />
             </PrivateRoutes>
           }
@@ -45,7 +47,10 @@ function MainRoutes({ setopendashboard, setshowreciept }) {
           path="/donationhistory"
           element={
             <PrivateRoutes>
-              <DonationHistory />
+              <DonationHistory
+                setopendashboard={setopendashboard}
+                setshowreciept={setshowreciept}
+              />
             </PrivateRoutes>
           }
         />

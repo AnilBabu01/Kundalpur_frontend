@@ -9,6 +9,7 @@ import AllDonationTap from "../screens/Admin/Donation/Alldonations/AllDonationTa
 import RoleManagement from "../screens/Admin/SystemManagement/RoleManagement/RoleManagement";
 import UserManagement from "../screens/Admin/SystemManagement/UserManagement/UserManagement";
 import VoucherManagement from "../screens/Admin/SystemManagement/VoucherManagement/VoucherManagement";
+import InfoElectronic from "../screens/Admin/Donation/Donation/InfoElectronic";
 function AdminRoutes({ setopendashboard }) {
   return (
     <>
@@ -51,6 +52,11 @@ function AdminRoutes({ setopendashboard }) {
         <Route
           path="/admin-panel/vouchermanagement"
           element={<VoucherManagement setopendashboard={setopendashboard} />}
+        />
+
+        <Route
+          path="/admin-panel/infoElectronic/:id"
+          element={<InfoElectronic setopendashboard={setopendashboard} />}
         />
       </Routes>
     </>

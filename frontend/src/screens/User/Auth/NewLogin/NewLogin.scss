@@ -137,7 +137,9 @@
       border-radius: 7px;
     }
   }
-
+  .input-group:focus{
+    outline: none;
+  }
   .input-group {
     display: flex;
     flex-direction: column;
@@ -155,7 +157,7 @@
         color: $input-placeholder-color;
       }
     }
-
+    
     &>div {
       font-size: 10px;
       line-height: 15px;
@@ -257,4 +259,7 @@
     padding: 0.5rem;
     border-radius: 0.5rem;
   }
+}
+.remove_underline:focus{
+  outline: none;
 }

@@ -233,13 +233,14 @@
 
 .btn-recharge-div {
   display: flex;
-  justify-content: space-between;
+ 
 }
 .btn-recharge-div button {
   width: 84px;
   height: 40px;
   border-radius: 5px;
   margin-bottom: 1rem;
+  margin-right: 5px;
   border: none;
   background-color: rgb(245, 177, 89);
 }
@@ -274,7 +275,12 @@
   width: 90px;
   margin: 10px;
 }
-
+.main-input-div1{
+  display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    flex-direction: column;
+}
 @media screen and (max-width: 780px) {
   .help-div {
     width: 360px;

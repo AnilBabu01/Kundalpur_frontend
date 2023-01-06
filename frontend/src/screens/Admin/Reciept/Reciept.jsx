@@ -6,8 +6,11 @@ const Reciept = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
   const [isData, setisData] = React.useState(null);
   const navigation = useNavigate();
+
+  console.log("data form", isData);
   useEffect(() => {
     setshowreciept(true);
+    setopendashboard(false);
   }, []);
 
   const down = () => {
@@ -37,7 +40,7 @@ const Reciept = ({ setopendashboard, setshowreciept }) => {
       navigation("/");
     }
   }, []);
-
+  console.log(isData);
   return (
     <>
       <div className="receipt-main-div">
@@ -85,22 +88,19 @@ const Reciept = ({ setopendashboard, setshowreciept }) => {
               </div>
               <div className="recipt-info-div">
                 <h2>स्थान :</h2>
-                <p>अमरकंटक</p>
+                <p>{isData?.ADDRESS}</p>
               </div>
               <div className="recipt-info-div">
                 <h2>दान का मदः:</h2>
-                <p>1-बड़े बाबा मंदिर निर्माण दान दान (3000) </p>
+                <p>{isData?.TYPE} </p>
               </div>
               <div className="recipt-info-div">
                 <h2>विवरण :</h2>
-                <p>
-                  अमरकंटक हेतु जाने वाली मूर्तियों की ट्रक लोडिंग एवं अनलोडिंग
-                  की राशि
-                </p>
+                <p>{isData?.REMARK}</p>
               </div>
               <div className="recipt-info-div">
                 <h2>राशि अंको में :</h2>
-                <p>R{" " + isData?.AMOUNT}/-</p>
+                <p>₹{" " + isData?.AMOUNT}</p>
               </div>
             </div>
           </div>

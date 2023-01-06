@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,12 +11,12 @@ import TablePagination from "@mui/material/TablePagination";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import moment from "moment";
-
 import "./DonationHistory.css";
 import { useNavigate } from "react-router-dom";
-import { User_AllDonation } from "../../../Redux/redux/action/AuthAction";
 import { serverInstance } from "../../../API/ServerInstance";
-function DonationHistory() {
+
+let status;
+function DonationHistory({ setopendashboard, setshowreciept }) {
   const [isrow, setisrow] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -25,6 +25,9 @@ function DonationHistory() {
   console.log(isrow);
   React.useEffect(() => {
     gettable();
+  }, []);
+  useEffect(() => {
+    setshowreciept(false);
   }, []);
 
   const gettable = () => {
@@ -42,11 +45,14 @@ function DonationHistory() {
   };
 
   const downloadrecept = (row) => {
-    navigation("/reciept", {
-      state: {
-        userdata: row,
-      },
-    });
+    if (row.active === "0") {
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -97,6 +103,9 @@ function DonationHistory() {
                         "&:last-child td, &:last-child th": { border: 0 },
                       }}
                     >
+                      <div style={{ display: "none" }}>
+                        {(status = row.active)}
+                      </div>
                       <TableCell align="left">
                         {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
                       </TableCell>
@@ -116,10 +125,13 @@ function DonationHistory() {
                         {row.PAYMENT_ID ? row.PAYMENT_ID : "-"}
                       </TableCell>
                       <TableCell
-                        align="left"
-                        style={{ cursor: "pointer" }}
                         onClick={() => {
                           downloadrecept(row);
+                        }}
+                        align="left"
+                        style={{
+                          cursor: "pointer",
+                          color: status === "0" ? "red" : "",
                         }}
                       >
                         downolod

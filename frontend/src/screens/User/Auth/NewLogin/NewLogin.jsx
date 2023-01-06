@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../assets/sideimg.jpeg";
 import OtpVerify from "./OtpVerify";
 import { useDispatch } from "react-redux";
+
 import {
   LoginwithOtp,
   VerifyOtp,
@@ -19,7 +20,6 @@ const VivekPLogin = () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigate();
-
 
   const auth = useAuth();
 
@@ -38,8 +38,8 @@ const VivekPLogin = () => {
     setMobileNo(mobileNo);
     dispatch(
       LoginwithOtp({ mobile_no: mobileNo }, (res) => {
+        console.log(res);
         if (res.status === 1) {
-
           Swal.fire("Great!", res.msg, "success");
           setVerify(true);
           setMobileNo(mobileNo);
@@ -55,11 +55,9 @@ const VivekPLogin = () => {
       VerifyOtp({ username: mobileNo, otp: otp }, (res) => {
         console.log(res);
         if (res) {
-        
-         
           sessionStorage.setItem("token", res.tokens.access.token);
-          auth.setUser(res.tokens.access.token)
-          
+          auth.setUser(res.tokens.access.token);
+
           navigation("/donation");
           Swal.fire("Great!", res.msg, "success");
           setMobileNo("");
@@ -92,6 +90,7 @@ const VivekPLogin = () => {
           <div className="input-group">
             <label htmlFor="mobileNo">Phone</label>
             <input
+              className="remove_underline"
               required
               type="text"
               id="mobileNo"

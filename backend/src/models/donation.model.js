@@ -35,9 +35,9 @@ const NewDonation = sequelize.define(tbl.TBL_NEW_DONATION, {
     allowNull: true,
   },
   TYPE: {
-    type: Sequelize.STRING(150),
-    trim: true,
+    type: Sequelize.TEXT,
     allowNull: false,
+    
   },
   REMARK: {
     type: Sequelize.STRING(150),

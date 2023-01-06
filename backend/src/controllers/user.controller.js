@@ -144,13 +144,13 @@ const profileList = catchAsync(async (req, res) => {
 
 const createAccount = catchAsync(async (req, res) => {
   const create = await userService.createAccount(req);
-  console.log(create)
   if (create?.status === 0) {
     res.status(401).send({
       status:create.status,
       message:create.error
     })
   }
+
   res.status(200).send({
     status: true,
     msg: "Account created successfully.",

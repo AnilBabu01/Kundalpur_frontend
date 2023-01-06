@@ -172,6 +172,11 @@ const createAccount = async(req)=>{
   return create;
 }
 
+const getUsers = async (req)=>{
+  
+  const users = await UserCollection.getUsers(req);
+  return users;
+}
 module.exports = {
   createuser,
   loginuser,
@@ -183,5 +188,6 @@ module.exports = {
   forgotPasswordThird,
   profileUpdate,
   profileList,
-  createAccount
+  createAccount,
+  getUsers
 };

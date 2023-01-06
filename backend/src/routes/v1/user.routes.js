@@ -27,4 +27,5 @@ router.route('/add-elecDonation').get(auth(),donationController.getElecDonation)
 router.route('/add-elecDonation').delete(auth(),donationController.deleteElecDonation);
 router.route('/get-elecDonation').get(auth(),donationController.getElecDonationbyID);
 router.route('/add-voucher-user').post(auth(),voucherController.GenerateVoucher)
+router.route('/get-users').get(auth(),userController.getUsers)
 module.exports = router;

@@ -45,7 +45,7 @@ class DonationCollaction {
       ADDRESS,
     } = req.body;
 
-    let IMG;
+    let IMG = ''
 
     let active = "";
     const count = await TblNewDonation.count();
@@ -54,7 +54,6 @@ class DonationCollaction {
 
     if (MODE_OF_DONATION == 2) {
       const { chequeImg } = req.files;
-
       donationType = "CHEQUE";
       active = "0";
       IMG = uploadimage(chequeImg);

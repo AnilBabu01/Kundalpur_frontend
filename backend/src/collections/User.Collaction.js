@@ -238,6 +238,68 @@ class UserCollaction {
     }
     return null;
   }
+
+
+  getUsers = async (req)=>{
+    const {id} = req.query;
+    let users
+    if (!id ){
+       users = await TblUser.findAll({
+        attributes:[
+          "id",
+          "username",
+          "mobileNo",
+          "email",
+          "verified_by",
+          "veification_status",
+          "name",
+          "dob"
+        ],
+        include:[
+          {
+            model: TblUsersRoles,
+            as: 'roleDetails',
+            where:{
+              role_id: 2
+            }
+          }
+
+        ]
+      })
+    }else{
+      users = await TblUser.findAll({
+        where:{
+          id:id,
+        },
+        attributes:[
+          "id",
+          "username",
+          "mobileNo",
+          "email",
+          "verified_by",
+          "veification_status",
+          "name",
+          "dob"
+        ],
+        include:[
+          {
+            model: TblUsersRoles,
+            as: 'roleDetails',
+            where:{
+              role_id: 2
+            }
+          }
+        ]
+      })
+  
+    }
+
+   
+   return users
+  }
+
 }
+
+
 
 module.exports = new UserCollaction();

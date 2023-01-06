@@ -99,7 +99,6 @@ function Donation({ setshowreciept }) {
           userid: 1,
         },
         (data) => {
-          formData.set("PAYMENT_ID", data.razorpay_order_id);
           serverInstance("user/add-donation", "POST", {
             NAME:
               donationdata.selected === "yes1" && user.name

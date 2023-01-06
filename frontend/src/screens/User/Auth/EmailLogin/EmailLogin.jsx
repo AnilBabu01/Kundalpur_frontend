@@ -34,7 +34,7 @@ const EmailLogin = () => {
     if (res.data.status) {
       navigate("/");
       Swal.fire("Great!", "You Have Loginn Successfully", "success");
-
+      console.log("ttttttttttttt", res.data.tokens.access.token);
       sessionStorage.setItem("token", res.data.tokens.access.token);
       auth.setUser(res.data.tokens.access.token);
     } else {

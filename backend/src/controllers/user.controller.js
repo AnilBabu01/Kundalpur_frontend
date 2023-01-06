@@ -46,7 +46,7 @@ const loginWithMobile = catchAsync(async (req, res) => {
 const loginWithEmail = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   let data = await userService.loginuser(email, password);
-  
+  console.log(data)
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }

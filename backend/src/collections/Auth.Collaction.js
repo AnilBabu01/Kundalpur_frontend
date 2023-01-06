@@ -1,6 +1,6 @@
 const db = require("../models");
-const { Op,QueryTypes } = require("sequelize");
-const sequelize = require('../db/db-connection');
+const { Op, QueryTypes } = require("sequelize");
+const sequelize = require("../db/db-connection");
 const TblUser = db.userModel;
 const TblUsersRoles = db.usersRolesModel;
 const TblOTP = db.otpModel;
@@ -42,41 +42,42 @@ class UserCollaction {
     return result;
   };
 
-  getUserDetails = async(identity,id) => {
-
-    const userId  = await TblUser.findOne({
-      where:{
+  getUserDetails = async (identity) => {
+    const userId = await TblUser.findOne({
+      where: {
         [Op.or]: [
           { username: identity },
           { email: identity },
           { mobileNo: identity },
-        ]
-      }})
-   
+        ],
+      },
+    });
 
-    let data = await TblUser.findOne({
-      where:{
-        [Op.or]: [
-          { username: identity },
-          { email: identity },
-          { mobileNo: identity },
-        ]
-      }
-      ,
-      include:[
-        {
-          model:TblUsersRoles,
-          as: "roleDetails",
-          where: {
-            user_id:userId.id
+    if (userId) {
+      let data = await TblUser.findOne({
+        where: {
+          [Op.or]: [
+            { username: identity },
+            { email: identity },
+            { mobileNo: identity },
+          ],
+        },
+        include: [
+          {
+            model: TblUsersRoles,
+            as: "roleDetails",
+            where: {
+              user_id: userId.id,
+            },
           },
-        }
-      ]
-    })
+        ],
+      });
+      return data;
+    }
 
-  return data
-  }
-   
+    return null;
+  };
+
   getUserName = async (username) => {
     const query = await TblUser.findOne({
       where: {
@@ -85,7 +86,7 @@ class UserCollaction {
           { email: username },
           { mobileNo: username },
         ],
-      }
+      },
     });
     return query;
   };

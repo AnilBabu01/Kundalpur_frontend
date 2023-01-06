@@ -5,9 +5,10 @@ const { userValidation } = require('../../validations');
 const router = express.Router();
 const auth = require('../../middlewares/auth');
 
+
 router.route('/login').post(validate(userValidation.login),userController.login);
-router.route('/login-with-mobile').post(validate(userValidation.loginMobile),userController.loginWithMobile);
 router.route('/login-with-email').post(validate(userValidation.loginEmail),userController.loginWithEmail);
+router.route('/login-with-mobile').post(validate(userValidation.loginMobile),userController.loginWithMobile);
 router.route('/verify-opt').post(userController.verifyOTP); 
 router.route('/forgot-password-first').post(validate(userValidation.forgotPass),userController.forgotPassword);
 router.route('/forgot-password-second').post(validate(userValidation.forgotPassSecond),userController.forgotPasswordSecond);
@@ -27,5 +28,6 @@ router.route('/add-elecDonation').get(auth(),donationController.getElecDonation)
 router.route('/add-elecDonation').delete(auth(),donationController.deleteElecDonation);
 router.route('/get-elecDonation').get(auth(),donationController.getElecDonationbyID);
 router.route('/add-voucher-user').post(auth(),voucherController.GenerateVoucher)
-router.route('/get-users').get(auth(),userController.getUsers)
+
+
 module.exports = router;

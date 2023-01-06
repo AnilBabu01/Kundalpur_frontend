@@ -298,7 +298,29 @@ class UserCollaction {
    return users
   }
 
+
+  delUser = async (req)=>{
+    const {id} = req.query;
+    const user = await TblUser.destroy({
+      where:{
+        id:id
+      },
+      include:[
+        {
+          model: TblUsersRoles,
+          as: 'roleDetails',
+          where:{
+                    role_id: 2
+                  }
+                }
+      ]
+    })
+    return user;
+  }
+
+  //end of user collection
 }
+
 
 
 

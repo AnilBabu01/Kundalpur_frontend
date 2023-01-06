@@ -55,8 +55,18 @@ const allList = catchAsync(async(req,res)=>{
   })
 })
 
+const delUser = catchAsync(async(req,res)=>{
+
+  const list = await userService.delUser(req);
+  res.status(200).send({
+    status:true,
+    msg:'User deleted successfully',
+  })
+})
+
 module.exports = {
   adminLogin,
   userRegister,
-  allList
+  allList,
+  delUser
 };

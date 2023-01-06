@@ -4,6 +4,7 @@ const AuthCollaction = require("../collections/Auth.Collaction");
 const crypto = require('crypto');
 const ApiError = require("../utils/ApiError");
 
+
 /**
  * Create a user
  * @param {Object} userBody
@@ -177,6 +178,11 @@ const getUsers = async (req)=>{
   const users = await UserCollection.getUsers(req);
   return users;
 }
+
+const delUser = async (req)=>{
+  const users = await UserCollection.delUser(req);
+  return users;
+}
 module.exports = {
   createuser,
   loginuser,
@@ -189,5 +195,6 @@ module.exports = {
   profileUpdate,
   profileList,
   createAccount,
-  getUsers
+  getUsers,
+  delUser
 };

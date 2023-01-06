@@ -10,5 +10,5 @@ router.route('/user-register').post(validate(userValidation.register), adminCont
 router.route('/donation-list').get(adminController.allList);
 router.route('/donation-list/:id').get(adminController.allList);
 router.route('/get-users').get(auth(),userController.getUsers)
-
+router.route('/del-users').delete(auth(),adminController.delUser)
 module.exports = router;

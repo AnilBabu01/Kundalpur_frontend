@@ -39,7 +39,7 @@ function MainRoutes({ setopendashboard, setshowreciept }) {
           element={
             // route is protected
             <PrivateRoutes>
-              <Donation />
+              <Donation setshowreciept={setshowreciept} />
             </PrivateRoutes>
           }
         />

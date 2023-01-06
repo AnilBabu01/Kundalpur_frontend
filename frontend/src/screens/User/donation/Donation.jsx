@@ -7,7 +7,9 @@ import ChequeSuccessfull from "./chequeSuccessfull/ChequeSuccessfull";
 import { TypesOfDonation } from "./TypesOfDonation";
 import { backendApiUrl } from "../../../config/config";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { loadUser } from "../../../Redux/redux/action/AuthAction";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -28,7 +30,8 @@ const style = {
   boxShadow: 24,
   p: 2,
 };
-function Donation() {
+function Donation({ setshowreciept }) {
+  const dispatch = useDispatch();
   const nagivate = useNavigate();
   const [mode, setmode] = useState("");
   const [amount, setamount] = useState("");
@@ -175,7 +178,14 @@ function Donation() {
 
     return errors;
   };
+  const gett = () => {
+    dispatch(loadUser());
+  };
 
+  useEffect(() => {
+    gett();
+    setshowreciept(false);
+  }, []);
   return auth.verify ? (
     <>
       <Modal
@@ -189,7 +199,11 @@ function Donation() {
           <Box sx={style}>
             <PaymentSuccessfull
               handleClose={handleClose}
-              name={donationdata.name}
+              name={
+                donationdata.selected === "yes1" && user.name
+                  ? user.name
+                  : donationdata.name
+              }
               amount={amount}
               address={donationdata.address}
               mat={donationdata.donationtype}
@@ -546,18 +560,18 @@ function Donation() {
                     <button
                       onClick={handlesubmit}
                       className="save-btn"
-                      disabled={
-                        donationdata.donationtype &&
-                        donationdata.selected &&
-                        donationdata.address &&
-                        donationdata.Remark &&
-                        donationdata.date_of_sub &&
-                        donationdata.chequeno &&
-                        donationdata.name_of_bank &&
-                        cheqing
-                          ? false
-                          : true
-                      }
+                      // disabled={
+                      //   donationdata.donationtype &&
+                      //   donationdata.selected &&
+                      //   donationdata.address &&
+                      //   donationdata.Remark &&
+                      //   donationdata.date_of_sub &&
+                      //   donationdata.chequeno &&
+                      //   donationdata.name_of_bank &&
+                      //   cheqing
+                      //     ? false
+                      //     : true
+                      // }
                     >
                       Submit
                     </button>

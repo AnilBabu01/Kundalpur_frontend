@@ -43,7 +43,6 @@ const EmailLogin = () => {
       }
     } catch (error) {
       Swal.fire("Error!", error.response.data.message, "error");
-      console.log(error.response.data.message);
     }
   };
   return (

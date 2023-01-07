@@ -92,7 +92,7 @@ function Donation({ setshowreciept }) {
       nagivate("/login");
       return false;
     }
-    if (mode === "Onilne") {
+    if (mode === "Onilne" && amount) {
       displayRazorpay(
         {
           ammount: amount,
@@ -125,7 +125,14 @@ function Donation({ setshowreciept }) {
       );
     }
 
-    if (mode === "Cheque") {
+    if (
+      mode === "Cheque" &&
+      donationdata.chequeno &&
+      cheqing &&
+      amount &&
+      donationdata.date_of_sub &&
+      donationdata.name_of_bank
+    ) {
       axios.defaults.headers.post[
         "Authorization"
       ] = `Bearer ${sessionStorage.getItem("token")}`;

@@ -15,6 +15,7 @@ import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import PrintIcon from "@mui/icons-material/Print";
 import Fade from "@mui/material/Fade";
 import CloseIcon from "@mui/icons-material/Close";
 import CashDonation from "./ElectronicDonation/ElectronicDonation";
@@ -81,6 +82,16 @@ const Donation = ({ setopendashboard }) => {
     setPage(0);
   };
 
+  const printreceipt = (row) => {
+    if (row.active === "0") {
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
+  };
   return (
     <>
       <Modal
@@ -165,6 +176,11 @@ const Donation = ({ setopendashboard }) => {
 
                       <DeleteForeverIcon
                         onClick={() => deletedonation(row.id)}
+                      />
+                      <PrintIcon
+                        onClick={() => {
+                          printreceipt(row);
+                        }}
                       />
                     </TableCell>
                   </TableRow>

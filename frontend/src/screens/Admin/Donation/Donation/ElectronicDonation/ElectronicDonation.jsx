@@ -70,16 +70,24 @@ const CashDonation = ({ setOpen, setshowalert }) => {
     axios.defaults.headers.post[
       "Authorization"
     ] = `Bearer ${sessionStorage.getItem("token")}`;
-
-    const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
-      name: name,
-      phoneNo: phoneNo,
-      address: address,
-      new_member: new_member,
-      donation_date: currentDate,
-      donation_time: time,
-      donation_item: data ? data : item,
-    });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.post(
+      `${backendApiUrl}user/add-elecDonation`,
+      {
+        name: name,
+        phoneNo: phoneNo,
+        address: address,
+        new_member: new_member,
+        donation_date: currentDate,
+        donation_time: time,
+        donation_item: data ? data : item,
+      },
+      config
+    );
 
     console.log(res.data.status);
 

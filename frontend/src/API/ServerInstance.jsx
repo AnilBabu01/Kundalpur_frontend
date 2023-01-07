@@ -1,15 +1,10 @@
 import { backendApiUrl } from "../config/config";
 
-let token = "";
-if (sessionStorage.getItem("token")) {
-  token = sessionStorage.getItem("token");
-}
-let headers = {
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${token}`,
-};
-
 export const serverInstance = (path, method = "get", payload, token) => {
+  let headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+  };
   return new Promise((resolve, reject) => {
     let fetchOptions = {
       method,

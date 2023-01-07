@@ -149,10 +149,12 @@ function Donation({ setshowreciept }) {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.name && !user.name) {
+    if (!values.name) {
       errors.name = "Please enter name";
     }
-
+    if (donationdata.selected === "yes1" && !user.name) {
+      errors.namesecond = "Please enter name";
+    }
     if (!amount) {
       errors.amount = "Please enter amount";
     }
@@ -253,15 +255,10 @@ function Donation({ setshowreciept }) {
                   onChange={onChange}
                 />
                 Someone
-                <p style={{ color: "red", marginTop: "5px" }}>
-                  {formerror.selected}
-                </p>
+                <p style={{ color: "red" }}>{formerror.selected}</p>
               </div>
-              <div
-                style={{ marginRight: "4.3rem" }}
-                className="inner-checkbox-div"
-              >
-                Mode :
+              <div className="inner-checkbox-div">
+                Donation Mode :
                 <input
                   type="radio"
                   value="Onilne"
@@ -276,12 +273,19 @@ function Donation({ setshowreciept }) {
                   onChange={(e) => setmode(e.target.value)}
                 />
                 Cheque
+                <p style={{ color: "red", marginTop: "5px" }}>
+                  {donationdata.selected &&
+                    !mode &&
+                    "Please select donation mode"}
+                </p>
               </div>
             </div>
             <div className="main-input-div">
               <div
                 className={
-                  formerror.name
+                  donationdata.selected === "yes1" && user.name
+                    ? "inner-input-div"
+                    : formerror.name
                     ? "inner-input-div-input-red"
                     : "inner-input-div"
                 }
@@ -298,9 +302,13 @@ function Donation({ setshowreciept }) {
                   }
                   onChange={onChange}
                 />
-                <p style={{ color: "red", marginTop: "5px" }}>
-                  {formerror.name}
-                </p>
+                {donationdata.selected === "yes1" && user.name ? (
+                  ""
+                ) : (
+                  <p style={{ color: "red", marginTop: "5px" }}>
+                    {formerror.name}
+                  </p>
+                )}
               </div>
               <div
                 className={
@@ -396,14 +404,14 @@ function Donation({ setshowreciept }) {
 
                   <div className="save-div-btn">
                     <button
-                      disabled={
-                        donationdata.donationtype &&
-                        donationdata.selected &&
-                        donationdata.address &&
-                        donationdata.Remark
-                          ? false
-                          : true
-                      }
+                      // disabled={
+                      //   donationdata.donationtype &&
+                      //   donationdata.selected &&
+                      //   donationdata.address &&
+                      //   donationdata.Remark
+                      //     ? false
+                      //     : true
+                      // }
                       className="save-btn"
                       onClick={handlesubmit}
                     >
@@ -513,7 +521,13 @@ function Donation({ setshowreciept }) {
                         />
                       </div>
                     </div>
-                    <div className="inner-input-div">
+                    <div
+                      className={
+                        formerror.name_of_bank
+                          ? "inner-input-div-input-red"
+                          : "inner-input-div"
+                      }
+                    >
                       <label>Upload Chueqe</label>
                       <input
                         type="file"
@@ -537,6 +551,9 @@ function Donation({ setshowreciept }) {
                           value={donationdata.name_of_bank}
                           onChange={onChange}
                         />
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formerror.name_of_bank}
+                        </p>
                       </div>
                       <div className="inner-input-div">
                         <label style={{ marginTop: "1rem" }}>Address</label>

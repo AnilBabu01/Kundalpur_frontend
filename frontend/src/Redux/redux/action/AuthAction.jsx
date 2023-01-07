@@ -18,7 +18,6 @@ export const LoginwithOtp = (data, response) => {
   serverInstance("user/login-with-mobile", "POST", data).then((res) => {
     try {
       response(res);
-      
     } catch (error) {
       alert(res.message);
     }

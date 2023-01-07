@@ -68,6 +68,25 @@ const allList = async(req)=>{
   return record;
 }
 
+
+const getDonationType = async(req)=>{
+  const donationType = await DonationCollection.getDonationType(req);
+  return donationType;
+
+}
+
+const addDonationType = async(req)=>{
+  const donationType = await DonationCollection.addDonationType(req);
+  return donationType;
+
+}
+
+const isChequeDownload = async(req)=>{    //checking the users assigned vouchers
+  const status = await DonationCollection.isChequeDownload(req);
+  return status;
+
+}
+
 module.exports = {
   cashDonation,
   list,
@@ -77,5 +96,8 @@ module.exports = {
   addelecDonation,
   getElecDonation,
   delElecDonation,
-  getElecDonationbyID
+  getElecDonationbyID,
+  getDonationType,
+  addDonationType,
+  isChequeDownload
 };

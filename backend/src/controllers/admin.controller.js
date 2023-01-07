@@ -64,9 +64,27 @@ const delUser = catchAsync(async(req,res)=>{
   })
 })
 
+const addDonationType = catchAsync(async(req,res)=>{
+  const data = await donationService.addDonationType(req)
+  res.status(200).send({
+    status:true,
+    msg:'Donation Type added successfully',
+})
+});
+
+const getDonationType = catchAsync(async(req,res)=>{
+  const data = await donationService.getDonationType(req)
+  res.status(200).send({
+    status:true,
+    data:data
+})
+})
+
 module.exports = {
   adminLogin,
   userRegister,
   allList,
-  delUser
+  delUser,
+  addDonationType,
+  getDonationType
 };

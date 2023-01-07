@@ -27,6 +27,7 @@ const mobileLogin = async (body) => {
     const checkOtpLastSend = await AuthCollaction.checkOtpLastSend(checkUser.id);
     if(!checkOtpLastSend){
       let otp = Math.floor(100000 + Math.random() * 900000); //-----6 digit random number--------
+      // sendSms(otp,body.mobile_no)
       const update_otp = await UserCollection.updateOTP(checkUser.id, otp);
       return update_otp;
     }else{
@@ -39,6 +40,7 @@ const mobileLogin = async (body) => {
       if(checkRemaining > 0){ //----check remaining time-----
         let otp = Math.floor(100000 + Math.random() * 900000); //-----6 digit random number--------
         const update_otp = await UserCollection.updateOTP(checkUser.id, otp);
+        // sendSms(otp,body.mobile_no)
         return update_otp; 
       }else{
         throw new ApiError(httpStatus.NOT_FOUND, `Please wait ${Math.abs(checkRemaining)} seconds.`); 

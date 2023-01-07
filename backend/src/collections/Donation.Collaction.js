@@ -2,6 +2,7 @@ const { sequelize, QueryTypes, query } = require("sequelize");
 const uploadimage = require("../middlewares/imageupload");
 const db = require("../models");
 const electricDonation = require("../models/electricDonation.model");
+const { TBL_VOUCHERS } = require("../models/TableName");
 db.donationModel.hasMany(db.donationItem, {
   foreignKey: "donationId",
   as: "itemDetails",
@@ -28,6 +29,8 @@ const itemList = db.itemList;
 const TblNewDonation = db.newDonationModel;
 const TblelecDonation = db.ElecDonationModel;
 const TblelecDonationItem = db.ElecDonationItem;
+const TblDonationTypes = db.donationTypes
+const TblVouchers = db.Vouchers
 
 class DonationCollaction {
   addNewDonation = async (req) => {
@@ -175,7 +178,6 @@ class DonationCollaction {
         phoneNo,
         address,
         new_member,
-        type,
         donation_date,
         donation_time,
         donation_item,
@@ -324,6 +326,28 @@ class DonationCollaction {
     });
     return list;
   };
+
+  addDonationType = async (req)=>{
+
+    const {type_en,type_hi} = req.body
+
+
+    const data = await TblDonationTypes.create({
+      type_en,
+      type_hi
+    })
+    return data;
+  }
+
+  getDonationType = async ()=>{
+    const data = await TblDonationTypes.findAll()
+    return data
+  }
+
+
+
 }
+
+
 
 module.exports = new DonationCollaction();

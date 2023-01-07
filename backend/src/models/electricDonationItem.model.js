@@ -14,7 +14,7 @@ const sequelize = require('../db/db-connection')
             allowNull:false,
         },
         type: {
-            type: Sequelize.STRING(150),
+            type: Sequelize.TEXT(),
             allowNull:false,
         },
         amount: {

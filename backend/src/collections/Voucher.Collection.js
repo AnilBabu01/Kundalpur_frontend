@@ -56,7 +56,8 @@ class voucherCollection {
             message: "User has been assigned",
           };
         } else {
-          if (voucherNumber[0] < item.from && voucherNumber[0] > item.to) {  //change the status of voucher into 1 if the voucher number is greater than and less than the from and to
+          if (voucherNumber[0] < item.from && voucherNumber[0] > item.to) {  //change the status of voucher into 1 if the voucher number
+                                                                              // is greater than and less than the from and to
             await TblVoucher.update({ status: 1 }, { where: item.id });
           }
           return {
@@ -72,11 +73,6 @@ class voucherCollection {
       }
     });
 
-    return {
-      status: true,
-      message: "User has been assigned",
-      data: AssignedVoucher,
-    };
   };
 }
 

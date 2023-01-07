@@ -62,7 +62,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
       ];
     }
 
-    if (item.length > 0) {
+    if (item.length != 0) {
       itemClick();
       console.log("item from electronic", item);
     }
@@ -206,7 +206,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                       className="inner-input-div1-select "
                       id="type"
                       name="donationtype"
-                      value={donationtype}
+                      // value={donationtype}
                       onChange={(e) => setdonationtype(e.target.value)}
                     >
                       {typesOfDonation.map((mode) => (
@@ -222,7 +222,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                       className="forminput1"
                       placeholder="Amout"
                       name="amount"
-                      value={amount}
+                      // value={amount}
                       onChange={(e) => {
                         setamount(e.target.value);
 
@@ -236,7 +236,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                       className="forminput1"
                       placeholder="remark"
                       name="remark"
-                      value={remark}
+                      // value={remark}
                       onChange={(e) => setremark(e.target.value)}
                     />
                   </td>
@@ -252,7 +252,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                             className="inner-input-div1-select "
                             id="type"
                             name="mode"
-                            value={donationtype}
+                            // value={donationtype}
                             onChange={(e) => setdonationtype(e.target.value)}
                           >
                             {typesOfDonation.map((mode) => (
@@ -269,7 +269,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                             className="forminput1"
                             placeholder="Amout"
                             name="amount"
-                            value={amount}
+                            // value={amount}
                             onChange={(e) => {
                               setamount(e.target.value);
 
@@ -284,7 +284,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                             className="forminput1"
                             placeholder="remark"
                             name="remark"
-                            value={remark}
+                            // value={remark}
                             onChange={(e) => setremark(e.target.value)}
                           />
                         </td>

@@ -546,9 +546,7 @@ function Donation({ setshowreciept }) {
                           console.log(e.target.files[0]);
                         }}
                       />
-                      <p style={{ color: "red", marginTop: "5px" }}>
-                        {formerror.name_of_bank}
-                      </p>
+
                       <div className="inner-input-div">
                         <label style={{ marginTop: "1rem" }}>Bank</label>
                         <input

@@ -32,9 +32,8 @@ const Register = () => {
         Swal.fire("Great!", data.msg, "success");
         navigate("/login");
       } else {
-        Swal.fire("Error!", "", "error");
+        Swal.fire("Error!", "Mobile number or Email already exist", "error");
       }
-      console.log(data);
     }
   };
 

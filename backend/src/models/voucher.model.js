@@ -24,6 +24,11 @@ const vouchers = sequelize.define(tbl.TBL_VOUCHERS,{
     assign:{
         type: Sequelize.STRING(100),
         allowNull:false,
+    },
+    status:{
+        type: Sequelize.INTEGER(10),
+        allowNull:false,
+        defaultValue:0
     }
 })
 

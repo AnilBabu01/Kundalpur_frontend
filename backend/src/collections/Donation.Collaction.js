@@ -2,6 +2,7 @@ const { sequelize, QueryTypes, query } = require("sequelize");
 const uploadimage = require("../middlewares/imageupload");
 const db = require("../models");
 const electricDonation = require("../models/electricDonation.model");
+const { TBL_VOUCHERS } = require("../models/TableName");
 db.donationModel.hasMany(db.donationItem, {
   foreignKey: "donationId",
   as: "itemDetails",
@@ -29,6 +30,7 @@ const TblNewDonation = db.newDonationModel;
 const TblelecDonation = db.ElecDonationModel;
 const TblelecDonationItem = db.ElecDonationItem;
 const TblDonationTypes = db.donationTypes
+const TblVouchers = db.Vouchers
 
 class DonationCollaction {
   addNewDonation = async (req) => {
@@ -176,7 +178,6 @@ class DonationCollaction {
         phoneNo,
         address,
         new_member,
-        type,
         donation_date,
         donation_time,
         donation_item,
@@ -342,6 +343,8 @@ class DonationCollaction {
     const data = await TblDonationTypes.findAll()
     return data
   }
+
+
 
 }
 

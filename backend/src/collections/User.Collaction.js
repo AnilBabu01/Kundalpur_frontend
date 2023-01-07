@@ -165,7 +165,7 @@ class UserCollaction {
     removefile(user.profile_image);
     // ----********--------------------
 
-    const { profile_image } = req.files;
+    const { profile_image } = req?.files;
     const imagePath = uploadimage(profile_image);
 
     user.name = name;

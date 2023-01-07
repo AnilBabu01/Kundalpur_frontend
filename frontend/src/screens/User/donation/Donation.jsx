@@ -8,7 +8,6 @@ import { TypesOfDonation } from "./TypesOfDonation";
 import { backendApiUrl } from "../../../config/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
 import { loadUser } from "../../../Redux/redux/action/AuthAction";
 import axios from "axios";
 import Box from "@mui/material/Box";
@@ -58,7 +57,7 @@ function Donation({ setshowreciept }) {
   const handleClose1 = () => setOpen1(false);
   const auth = useAuth();
   const { user } = useSelector((state) => state.userReducer);
-
+  console.log(user);
   if (donationdata.selected === "yes1" && !user.name) {
     nagivate("/profile");
   }

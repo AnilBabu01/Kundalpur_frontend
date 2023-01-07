@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { serverInstance } from "../../../API/ServerInstance";
+import { backendApiUrl } from "../../../config/config";
 import axios from "axios";
 import {
   AUTH_LOGIN,
@@ -59,7 +60,7 @@ export const updateProfile = (userData) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `http://localhost:4543/api/user/update-profile`,
+      `${backendApiUrl}user/update-profile`,
       userData,
       config
     );
@@ -87,10 +88,12 @@ export const loadUser = () => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
     };
     const { data } = await axios.get(
-      `http://localhost:4543/api/user/profile-list`
+      `${backendApiUrl}user/profile-list`,
+      config
     );
 
     dispatch({

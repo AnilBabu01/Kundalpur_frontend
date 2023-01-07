@@ -5,7 +5,7 @@ import axios from "axios";
 
 import "./ElectronicDonation.css";
 
-const CashDonation = ({ setOpen, setshowalert }) => {
+const CashDonation = ({ setOpen, setshowalert, handleClose }) => {
   const [donationtype, setdonationtype] = useState("");
   const [amount, setamount] = useState("");
   const [remark, setremark] = useState("");
@@ -15,7 +15,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
   const [phoneNo, setphoneNo] = useState("");
   const [noOfRows, setNoOfRows] = useState({ id: 1 });
   const [rowsData, setRowsData] = useState([noOfRows]);
-
+  const [formerror, setFormerror] = useState({});
   const [item, setitem] = useState([]);
   console.log(item, amount);
 
@@ -26,7 +26,6 @@ const CashDonation = ({ setOpen, setshowalert }) => {
     console.log(index);
   };
   const itemClick = () => {
-    // const id = item.length + 1;
     setitem((prev) => [
       ...prev,
       {
@@ -50,7 +49,9 @@ const CashDonation = ({ setOpen, setshowalert }) => {
   const time = `${hour}:${min}`;
   const currentDate = `${year}-${month}-${day}`;
 
-  const addelectronicdonation = async () => {
+  const addelectronicdonation = async (e) => {
+    e.preventDefault();
+    setFormerror(validate(name, amount, phoneNo, donationtype));
     let data;
     if (item.length === 0) {
       data = [
@@ -62,7 +63,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
       ];
     }
 
-    if (item.length != 0) {
+    if (item.length > 0) {
       itemClick();
       console.log("item from electronic", item);
     }
@@ -70,14 +71,8 @@ const CashDonation = ({ setOpen, setshowalert }) => {
     axios.defaults.headers.post[
       "Authorization"
     ] = `Bearer ${sessionStorage.getItem("token")}`;
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const res = await axios.post(
-      `${backendApiUrl}user/add-elecDonation`,
-      {
+    if (name && amount && donationtype && phoneNo) {
+      const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
         name: name,
         phoneNo: phoneNo,
         address: address,
@@ -85,20 +80,39 @@ const CashDonation = ({ setOpen, setshowalert }) => {
         donation_date: currentDate,
         donation_time: time,
         donation_item: data ? data : item,
-      },
-      config
-    );
+      });
 
-    console.log(res.data.status);
+      console.log(res.data.status);
 
-    if (res.data.status === true) {
-      setshowalert(true);
-      setmsg(res.data.msg);
-    } else {
-      Swal.fire("Error!", "Somthing went wrong!!", "error");
+      if (res.data.status === true) {
+        setshowalert(true);
+        handleClose();
+      } else {
+        Swal.fire("Error!", "Somthing went wrong!!", "error");
+      }
     }
   };
+  const validate = (name, amount, phoneNo, donationtype) => {
+    const errors = {};
 
+    if (!name) {
+      errors.name = "Please enter name";
+    }
+
+    // if (!amount) {
+    //   errors.name = "Please enter amount";
+    // }
+
+    // if (!phoneNo) {
+    //   errors.name = "Please enter phone No";
+    // }
+
+    // if (!donationtype) {
+    //   errors.name = "Please enter donation type";
+    // }
+
+    return errors;
+  };
   return (
     <>
       <div className="cash-donation-div">
@@ -118,6 +132,9 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                     name="phoneNo"
                     onChange={(e) => setphoneNo(e.target.value)}
                   />
+                  <p style={{ color: "red", marginTop: "5px" }}>
+                    {formerror.phoneNo}
+                  </p>
                   <label>Donation Date:</label>
                   <input
                     type="text"
@@ -127,7 +144,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                   />
                 </div>
 
-                <div className="inner-input-div2">
+                <div className={"inner-input-div2"}>
                   <label>Name:</label>
                   <input
                     type="text"
@@ -137,6 +154,9 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                     name="name"
                     onChange={(e) => setname(e.target.value)}
                   />
+                  <p style={{ color: "red", marginTop: "5px" }}>
+                    {formerror.name}
+                  </p>
                   <label>Donation Time:</label>
                   <input
                     type="text"

@@ -45,7 +45,7 @@ const Donation = ({ setopendashboard }) => {
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
-  }, [showalert]);
+  }, [showalert, handleClose, open]);
 
   const getall_donation = () => {
     serverInstance("user/add-elecDonation", "get").then((res) => {
@@ -113,6 +113,7 @@ const Donation = ({ setopendashboard }) => {
                 setOpen={setOpen}
                 setshowalert={setshowalert}
                 setmsg={setmsg}
+                handleClose={handleClose}
               />
             </div>
           </Box>

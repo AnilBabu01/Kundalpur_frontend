@@ -72,7 +72,6 @@ function Profile() {
                 <div className="input-group-profile">
                   <label htmlFor="name">Full Name</label>
                   <input
-                    required
                     type="name"
                     id="name"
                     name="name"
@@ -84,7 +83,6 @@ function Profile() {
                 <div className="input-group-profile">
                   <label htmlFor="email">Email</label>
                   <input
-                    required
                     type="email"
                     id="email"
                     name="email"
@@ -96,7 +94,6 @@ function Profile() {
                 <div className="input-group-profile">
                   <label htmlFor="dob">Date of Birth </label>
                   <input
-                    required
                     type="date"
                     id="dob"
                     name="dob"
@@ -111,7 +108,6 @@ function Profile() {
                   <div className="input-group-profile">
                     <label htmlFor="mobile">Mobile Number</label>
                     <input
-                      required
                       type="mobile"
                       id="mobile"
                       name="mobile"
@@ -123,7 +119,6 @@ function Profile() {
                   <div className="input-group-profile">
                     <label htmlFor="password">Create password</label>
                     <input
-                      required
                       type="password"
                       id="password"
                       name="password"
@@ -135,7 +130,6 @@ function Profile() {
                   <div className="input-group-profile">
                     <label htmlFor="anniversary_date">Anniversary date</label>
                     <input
-                      required
                       type="date"
                       id="anniversary_date"
                       name="anniversary_date"
@@ -150,7 +144,6 @@ function Profile() {
             <div className="input-group-profile1">
               <label htmlFor="address">Address</label>
               <input
-                required
                 type="address"
                 id="address"
                 name="address"

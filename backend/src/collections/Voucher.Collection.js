@@ -27,42 +27,50 @@ class voucherCollection {
 
   checkVoucher = async (req) => {
     const userId = req.user.id;
-    console.log(userId)
-    const { voucher } = req.body;
+    console.log(userId);
+    const { voucher } = req.body; // here get The VoucherNumber that needs to be checked
 
-    const currentYear = new Date().getFullYear()
+    const currentYear = new Date().getFullYear();
 
-    let voucherNumber = voucher.match(/(\d+)/)
-    let prefix = voucher.match(/[a-zA-Z]/g).join('' )
-    console.log(prefix)
+    let voucherNumber = voucher.match(/(\d+)/); // extracting NUMBER ONLY 2023002 FROM Elec20230002 (just an example)
+    let prefix = voucher.match(/[a-zA-Z]/g).join(""); // Extracting the prefix  Elec from the Elec20230002
 
     let AssignedVoucher = await TblVoucher.findAll({
+      //geting the assigned voucherrss
       where: {
         assign: userId,
-        status: 0
+        status: 0,
       },
     });
 
-    AssignedVoucher.map((item)=>{
-      if(item.vPrefix == prefix){
-        if((voucherNumber[0] >= currentYear+item.from)   && voucherNumber[0] <= (currentYear+item.to)  ){
+    AssignedVoucher.map(async (item) => {
+      if (item.vPrefix == prefix) {
+        //checking prefix is matched
+        if (
+          voucherNumber[0] >= currentYear + item.from &&
+          voucherNumber[0] <= currentYear + item.to
+        ) {
+          //checking the voucher is greater than the assignedfrom and lessthan the assigned to
           return {
             status: true,
-            message: "User has been assigned"
+            message: "User has been assigned",
           };
-        }else{
+        } else {
+          if (voucherNumber[0] < item.from && voucherNumber[0] > item.to) {  //change the status of voucher into 1 if the voucher number is greater than and less than the from and to
+            await TblVoucher.update({ status: 1 }, { where: item.id });
+          }
           return {
             status: false,
-            message: "User is not allowed to Download"
+            message: "User is not allowed to Download",
           };
         }
-      }else{
+      } else {
         return {
           status: false,
-          message: "Voucher Prefix is not Matching"
+          message: "Voucher Prefix is not Matching",
         };
       }
-    })
+    });
 
     return {
       status: true,

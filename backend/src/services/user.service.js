@@ -3,6 +3,7 @@ const { UserCollection } = require("../collections");
 const AuthCollaction = require("../collections/Auth.Collaction");
 const crypto = require('crypto');
 const ApiError = require("../utils/ApiError");
+const { checkMobile, checkEmail, checkEmployeeMobile, checkEmployeeEmail } = require("../collections/User.Collaction");
 
 
 /**
@@ -185,6 +186,51 @@ const delUser = async (req)=>{
   const users = await UserCollection.delUser(req);
   return users;
 }
+
+
+const editUser = async (req)=>{
+  const users = await UserCollection.editUser(req);
+  return users;
+}
+
+const addEmployees = async (req)=>{
+
+  const mobile = await checkEmployeeMobile(req.body.Mobile)
+  const email = await checkEmployeeEmail(req.body.Email)
+  if(mobile.length > 0){
+    return {
+      status:false,
+      message : "Mobile number already exist."
+    }
+  }
+
+  if(email.length > 0){
+    return {
+      status:false,
+      message : "Email already exist."
+    }
+  }
+
+  const employees = await UserCollection.addEmployees(req);
+
+  return {
+    status : true,
+    message: "User Added Successfully"
+  };
+}
+
+const getEmployees = async (req)=>{
+  const employees = await UserCollection.getEmployees(req);
+  return employees;
+}
+
+const delEmployees = async (req)=>{
+  const employees = await UserCollection.delEmployees(req);
+  return employees;
+}
+
+
+
 module.exports = {
   createuser,
   loginuser,
@@ -198,5 +244,9 @@ module.exports = {
   profileList,
   createAccount,
   getUsers,
-  delUser
+  delUser,
+  editUser,
+  addEmployees,
+  getEmployees,
+  delEmployees
 };

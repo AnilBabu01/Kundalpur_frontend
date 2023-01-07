@@ -46,7 +46,7 @@ const loginWithMobile = catchAsync(async (req, res) => {
 const loginWithEmail = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   let data = await userService.loginuser(email, password);
-  console.log(data)
+  console.log(data);
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
@@ -146,9 +146,9 @@ const createAccount = catchAsync(async (req, res) => {
   const create = await userService.createAccount(req);
   if (create?.status === 0) {
     res.status(401).send({
-      status:create.status,
-      message:create.error
-    })
+      status: create.status,
+      message: create.error,
+    });
   }
 
   res.status(200).send({
@@ -157,19 +157,41 @@ const createAccount = catchAsync(async (req, res) => {
   });
 });
 
-
 const getUsers = catchAsync(async (req, res) => {
   const create = await userService.getUsers(req);
-  console.log(create)
+  console.log(create);
   if (create?.status === 0) {
     res.status(401).send({
-      status:create.status,
-      message:create.error
-    })
+      status: create.status,
+      message: create.error,
+    });
   }
   res.status(200).send({
     status: true,
-    data: create
+    data: create,
+  });
+});
+
+const getEmployees = catchAsync(async (req, res) => {
+  const employees = await userService.getEmployees(req);
+  if (!employees) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Something wrong!");
+  }
+  res.status(200).send({
+    status: true,
+    data: employees,
+  });
+});
+
+
+const delEmployees = catchAsync(async (req, res) => {
+  const employees = await userService.delEmployees(req);
+  if (!employees) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Something wrong!");
+  }
+  res.status(200).send({
+    status: true,
+    message: "User Deleted Successfully",
   });
 });
 
@@ -186,5 +208,7 @@ module.exports = {
   updateProfile,
   profileList,
   createAccount,
-  getUsers
+  getUsers,
+  getEmployees,
+  delEmployees
 };

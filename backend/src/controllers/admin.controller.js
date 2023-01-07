@@ -10,7 +10,7 @@ const adminLogin = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
   const tokens = await generateAuthTokens(data);
-  console.log(data)
+  console.log(data);
   res.send({
     user: {
       id: data.id,
@@ -31,16 +31,16 @@ const userRegister = async (req, res) => {
   // }
   const userdata = await userService.createuser(req.body, req.files);
   console.log(userdata);
-    if (!userdata) {
-      res.status(httpStatus.CONFLICT).send({
-        status: false,
-        msg: "Username already exist.",
-      });
-    }
-    res.status(httpStatus.CREATED).send(userdata);
+  if (!userdata) {
+    res.status(httpStatus.CONFLICT).send({
+      status: false,
+      msg: "Username already exist.",
+    });
+  }
+  res.status(httpStatus.CREATED).send(userdata);
 };
 
-const allList = catchAsync(async(req,res)=>{
+const allList = catchAsync(async (req, res) => {
   // if (req.user.roleDetails.roles.role_name != "Admin") {
   //   res.status(httpStatus.CONFLICT).send({
   //     status: false,
@@ -49,36 +49,59 @@ const allList = catchAsync(async(req,res)=>{
   // }
   const list = await donationService.allList(req);
   res.status(200).send({
-    status:true,
-    msg:'All List',
-    data:list,
-  })
-})
-
-const delUser = catchAsync(async(req,res)=>{
-
-  const list = await userService.delUser(req);
-  res.status(200).send({
-    status:true,
-    msg:'User deleted successfully',
-  })
-})
-
-const addDonationType = catchAsync(async(req,res)=>{
-  const data = await donationService.addDonationType(req)
-  res.status(200).send({
-    status:true,
-    msg:'Donation Type added successfully',
-})
+    status: true,
+    msg: "All List",
+    data: list,
+  });
 });
 
-const getDonationType = catchAsync(async(req,res)=>{
-  const data = await donationService.getDonationType(req)
+const delUser = catchAsync(async (req, res) => {
+  const list = await userService.delUser(req);
   res.status(200).send({
-    status:true,
-    data:data
-})
-})
+    status: true,
+    msg: "User deleted successfully",
+  });
+});
+
+const editUser = catchAsync(async (req, res) => {
+  const data = await userService.editUser(req);
+
+  res.status(200).send({
+    status: true,
+    msg: "User updated successfully",
+  });
+});
+
+const addDonationType = catchAsync(async (req, res) => {
+  const data = await donationService.addDonationType(req);
+
+  res.status(200).send({
+    status: true,
+    msg: "Donation Type added successfully",
+  });
+});
+
+const getDonationType = catchAsync(async (req, res) => {
+  const data = await donationService.getDonationType(req);
+  res.status(200).send({
+    status: true,
+    data: data,
+  });
+});
+
+const addEmployees = catchAsync(async (req, res) => {
+  const data = await userService.addEmployees(req);
+  if(!data){
+   return res.status(httpStatus.UNAUTHORIZED).send({
+      status: false,
+      msg: "Failed to add employees.",
+  })
+}
+  res.status(200).send({
+    status: data.status,
+    message:data.message
+  });
+});
 
 module.exports = {
   adminLogin,
@@ -86,5 +109,7 @@ module.exports = {
   allList,
   delUser,
   addDonationType,
-  getDonationType
+  getDonationType,
+  editUser,
+  addEmployees
 };

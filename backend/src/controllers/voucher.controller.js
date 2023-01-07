@@ -1,5 +1,6 @@
 const httpStatus = require("http-status");
 const { VoucherCollection } = require("../collections");
+const ApiError = require("../utils/ApiError");
 
 const catchAsync = require("../utils/catchAsync");
 
@@ -21,9 +22,8 @@ const checkVoucher = catchAsync(async(req,res)=>{
     const data = await VoucherCollection.checkVoucher(req)
     if (!data) {
         throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong")
-
     }
-    res.send({
+    res.status(200).send({
       status: data.status,
       message : data.message,
     })

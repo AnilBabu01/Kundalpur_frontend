@@ -1,5 +1,5 @@
-const { Op,QueryTypes } = require("sequelize");
-const sequelize = require('../db/db-connection');
+const { Op, QueryTypes } = require("sequelize");
+const sequelize = require("../db/db-connection");
 const db = require("../models");
 const bcrypt = require("bcryptjs");
 const uploadimage = require("../middlewares/imageupload");
@@ -8,6 +8,7 @@ const TblUser = db.userModel;
 const TblOTP = db.otpModel;
 const TblUsersRoles = db.usersRolesModel;
 const TblPasswordReset = db.passwordReset;
+const TblEmployees = db.employees;
 
 class UserCollaction {
   updatePassword = async (body) => {
@@ -41,35 +42,36 @@ class UserCollaction {
     let password = "abcd@1029";
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(password, salt);
-    
+
     const addNew = await TblUser.create({
       username: body.mobile_no,
       mobileNo: body.mobile_no,
       password: hashencrypt,
-  
+      email:''
     })
       .then(async (res) => {
-
-      await TblUsersRoles.create({
+        console.log(res.id)
+        await TblUsersRoles.create({
           user_id: res.id,
           role_id: 2,
-        }).then((resp) => {
-
-          res.dataValues["item_details"] = resp;
-        }).catch((err)=>{
-          console.log("err entered",err)
-          return{
-            msg:err
-          }
         })
+          .then((resp) => {
+            res.dataValues["item_details"] = resp;
+          })
+          .catch((err) => {
+            console.log("err entered", err);
+            return {
+              msg: err,
+            };
+          });
         return res.id;
       })
       .catch((err) => {
         return {
-          msg:err
-        }
+          msg: err,
+        };
       });
-  
+
     return addNew;
   };
 
@@ -165,7 +167,7 @@ class UserCollaction {
     removefile(user.profile_image);
     // ----********--------------------
 
-    const { profile_image } = req.files;
+    const { profile_image } = req?.files;
     const imagePath = uploadimage(profile_image);
 
     user.name = name;
@@ -196,40 +198,69 @@ class UserCollaction {
       ],
     });
     return user;
-  }
+  };
 
-  checkMobile = async (mobile)=>{
-    const query = await sequelize.query(`SELECT * FROM tbl_users WHERE mobileNo = '${mobile}' `,
-    {
-      nest: true,
-      type: QueryTypes.SELECT,
-    }
+  checkMobile = async (mobile) => {
+    const query = await sequelize.query(
+      `SELECT * FROM tbl_users WHERE mobileNo = '${mobile}' `,
+      {
+        nest: true,
+        type: QueryTypes.SELECT,
+      }
     );
-    return query
-  }
-  
-  checkEmail = async (email)=>{
+    return query;
+  };
+
+  checkEmployeeMobile = async (mobile) => {
+    const query = await sequelize.query(
+      `SELECT * FROM tbl_employees WHERE Mobile = '${mobile}' `,
+      {
+        nest: true,
+        type: QueryTypes.SELECT,
+      }
+    );
+    return query;
+  };
+
+  checkEmail = async (email) => {
     console.log(email);
-    const query = await sequelize.query(`SELECT * FROM tbl_users WHERE email = '${email}' `,
-    {
-      nest: true,
-      type: QueryTypes.SELECT,
-    }
+    const query = await sequelize.query(
+      `SELECT * FROM tbl_users WHERE Email = '${email}' `,
+      {
+        nest: true,
+        type: QueryTypes.SELECT,
+      }
     );
-    return query
-  }
-  
-  createAccount = async (req)=>{
-    const {fullname,mobileno,email,password} = req.body;
+    return query;
+  };
+
+  checkEmployeeEmail = async (email) => {
+    console.log(email);
+    const query = await sequelize.query(
+      `SELECT * FROM tbl_employees WHERE email = '${email}' `,
+      {
+        nest: true,
+        type: QueryTypes.SELECT,
+      }
+    );
+    return query;
+  };
+
+  createAccount = async (req) => {
+    const { fullname, mobileno, email, password } = req.body;
 
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(password, salt);
-   
+
     const query = await TblUser.create({
-      username:mobileno,mobileNo:mobileno,name:fullname,email,password: hashencrypt
+      username: mobileno,
+      mobileNo: mobileno,
+      name: fullname,
+      email,
+      password: hashencrypt,
     });
-    
-    if(query){
+
+    if (query) {
       const addRole = await TblUsersRoles.create({
         user_id: query.id,
         role_id: 2,
@@ -237,41 +268,14 @@ class UserCollaction {
       return query;
     }
     return null;
-  }
+  };
 
-
-  getUsers = async (req)=>{
-    const {id} = req.query;
-    let users
-    if (!id ){
-       users = await TblUser.findAll({
-        attributes:[
-          "id",
-          "username",
-          "mobileNo",
-          "email",
-          "verified_by",
-          "veification_status",
-          "name",
-          "dob"
-        ],
-        include:[
-          {
-            model: TblUsersRoles,
-            as: 'roleDetails',
-            where:{
-              role_id: 2
-            }
-          }
-
-        ]
-      })
-    }else{
+  getUsers = async (req) => {
+    const { id } = req.query;
+    let users;
+    if (!id) {
       users = await TblUser.findAll({
-        where:{
-          id:id,
-        },
-        attributes:[
+        attributes: [
           "id",
           "username",
           "mobileNo",
@@ -279,49 +283,188 @@ class UserCollaction {
           "verified_by",
           "veification_status",
           "name",
-          "dob"
+          "dob",
         ],
-        include:[
+        include: [
           {
             model: TblUsersRoles,
-            as: 'roleDetails',
-            where:{
-              role_id: 2
-            }
-          }
-        ]
-      })
-  
+            as: "roleDetails",
+            where: {
+              role_id: 2,
+            },
+          },
+        ],
+      });
+    } else {
+      users = await TblUser.findAll({
+        where: {
+          id: id,
+        },
+        attributes: [
+          "id",
+          "username",
+          "mobileNo",
+          "email",
+          "verified_by",
+          "veification_status",
+          "name",
+          "dob",
+        ],
+        include: [
+          {
+            model: TblUsersRoles,
+            as: "roleDetails",
+            where: {
+              role_id: 2,
+            },
+          },
+        ],
+      });
     }
 
-   
-   return users
-  }
+    return users;
+  };
 
-
-  delUser = async (req)=>{
-    const {id} = req.query;
+  delUser = async (req) => {
+    const { id } = req.query;
     const user = await TblUser.destroy({
-      where:{
-        id:id
+      where: {
+        id: id,
       },
-      include:[
+      include: [
         {
           model: TblUsersRoles,
-          as: 'roleDetails',
-          where:{
-                    role_id: 2
-                  }
-                }
-      ]
-    })
+          as: "roleDetails",
+          where: {
+            role_id: 2,
+          },
+        },
+      ],
+    });
     return user;
-  }
+  };
+
+  editUser = async (req) => {
+    const { id, name, email, mobile } = req.body;
+    console.log(req.body);
+    const user = await TblUser.update(
+      { name: name, email: email, mobileNo: mobile },
+      { where: { id: id } }
+    );
+    console.log(user);
+    return user;
+  };
+
+  addEmployees = async (req) => {
+    const {
+      Username,
+      Mobile,
+      Email,
+      Address,
+      Password,
+      DmaxPTD,
+      MaxPDA,
+      Role,
+      Cashier,
+      Status,
+      cancelCheckout,
+      CreditAA,
+      DebitAA,
+      DDebitAA,
+    } = req.body;
+
+    const salt = bcrypt.genSaltSync(12);
+    const hashencrypt = bcrypt.hashSync(Password, salt);
+    const query = await TblEmployees.create({
+      Username,
+      Mobile,
+      Email,
+      Address,
+      Password: hashencrypt,
+      DmaxPTD,
+      MaxPDA,
+      Role,
+      Cashier,
+      Status,
+      cancelCheckout,
+      CreditAA,
+      DebitAA,
+      DDebitAA,
+    })
+      .then((res) => {
+        return {
+          status: true,
+          data: query,
+        };
+      })
+      .catch((err) => {
+        return {
+          status: false,
+          data: err,
+        };
+      });
+  };
+
+  getEmployees = async (req) => {
+    const { id } = req.query;
+    let data;
+    if (id) {
+      data = await TblEmployees.findAll({
+        where: { id: id },
+        attributes: [
+          "id",
+          "Username",
+          "Mobile",
+          "Email",
+          "Address",
+          "DmaxPTD",
+          "MaxPDA",
+          "Role",
+          "Cashier",
+          "Status",
+          "cancelCheckout",
+          "CreditAA",
+          "DebitAA",
+          "DDebitAA",
+        ],
+      });
+    } else {
+      data = await TblEmployees.findAll({
+        attributes: [
+          "id",
+          "Username",
+          "Mobile",
+          "Email",
+          "Address",
+          "DmaxPTD",
+          "MaxPDA",
+          "Role",
+          "Cashier",
+          "Status",
+          "cancelCheckout",
+          "CreditAA",
+          "DebitAA",
+          "DDebitAA",
+        ],
+      });
+    }
+
+    return data;
+  };
+
+  delEmployees = async (req) => {
+    const id = req.query.id;
+
+    let user = await TblEmployees.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    return user;
+  };
 
   //end of user collection
 }
-
-
-
 
 module.exports = new UserCollaction();

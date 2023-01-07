@@ -12,6 +12,7 @@ module.exports.itemList = require('./item.model');
 module.exports.ElecDonationItem = require('./electricDonationItem.model');
 module.exports.Vouchers = require('./voucher.model')
 module.exports.donationTypes = require('./donationTypes.model')
+module.exports.employees = require('./employees.model')
 
 sequelize.sync().then((result) => {
     console.log('data synced')

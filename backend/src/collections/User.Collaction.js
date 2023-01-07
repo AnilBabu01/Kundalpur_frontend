@@ -47,8 +47,10 @@ class UserCollaction {
       username: body.mobile_no,
       mobileNo: body.mobile_no,
       password: hashencrypt,
+      email:''
     })
       .then(async (res) => {
+        console.log(res.id)
         await TblUsersRoles.create({
           user_id: res.id,
           role_id: 2,

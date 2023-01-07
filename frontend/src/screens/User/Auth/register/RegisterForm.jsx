@@ -11,29 +11,38 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, fullName, password, mobileNumber } = Object.fromEntries(
-      new FormData(e.currentTarget)
-    );
+    try {
+      const { email, fullName, password, mobileNumber } = Object.fromEntries(
+        new FormData(e.currentTarget)
+      );
 
-    if (
-      typeof email === "string" &&
-      typeof password === "string" &&
-      typeof fullName === "string" &&
-      typeof mobileNumber === "string"
-    ) {
-      console.log({ email, fullName, password, mobileNumber });
-      const { data } = await axios.post(`${backendApiUrl}user/create-account`, {
-        fullname: fullName,
-        mobileno: mobileNumber,
-        email: email,
-        password: password,
-      });
-      if (data.status === true) {
-        Swal.fire("Great!", data.msg, "success");
-        navigate("/login");
-      } else {
-        Swal.fire("Error!", "Mobile number or Email already exist", "error");
+      if (
+        typeof email === "string" &&
+        typeof password === "string" &&
+        typeof fullName === "string" &&
+        typeof mobileNumber === "string"
+      ) {
+        console.log({ email, fullName, password, mobileNumber });
+        const { data } = await axios.post(
+          `${backendApiUrl}user/create-account`,
+          {
+            fullname: fullName,
+            mobileno: mobileNumber,
+            email: email,
+            password: password,
+          }
+        );
+        if (data.status === true) {
+          Swal.fire("Great!", data.msg, "success");
+          navigate("/login");
+        } else {
+          Swal.fire("Error!", "Mobile number or Email already exist", "error");
+        }
       }
+    } catch (error) {
+      Swal.fire("Error!", error.response.data.message, "error");
+
+      console.log(error);
     }
   };
 

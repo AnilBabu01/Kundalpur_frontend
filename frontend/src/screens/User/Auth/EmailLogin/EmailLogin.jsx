@@ -24,21 +24,26 @@ const EmailLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(state);
-    const res = await axios.post(`${backendApiUrl}user/login`, {
-      identity: email,
-      password: password,
-    });
+    try {
+      const res = await axios.post(`${backendApiUrl}user/login`, {
+        identity: email,
+        password: password,
+      });
 
-    console.log(res.data.tokens.access.token);
-    if (res.data.status) {
-      navigate("/");
-      Swal.fire("Great!", "You Have Loginn Successfully", "success");
-      console.log("ttttttttttttt", res.data.tokens.access.token);
-      sessionStorage.setItem("token", res.data.tokens.access.token);
-      auth.setUser(res.data.tokens.access.token);
-    } else {
-      Swal.fire("Error!", "", "error");
+      console.log("res", res);
+
+      if (res.data.status) {
+        navigate("/");
+        Swal.fire("Great!", "You Have Loginn Successfully", "success");
+
+        sessionStorage.setItem("token", res.data.tokens.access.token);
+        auth.setUser(res.data.tokens.access.token);
+      } else {
+        Swal.fire("Error!", "", "error");
+      }
+    } catch (error) {
+      Swal.fire("Error!", error.response.data.message, "error");
+      console.log(error.response.data.message);
     }
   };
   return (

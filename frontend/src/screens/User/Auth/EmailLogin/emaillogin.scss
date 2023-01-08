@@ -1,5 +1,13 @@
 @import "../../../../utils//variables";
-
+.admin_radio{
+  display: flex;
+    width: 88%;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+.admin_radio_innear{
+  display: flex;
+}
 .mainlogin-div {
   display: flex;
   justify-content: space-around;

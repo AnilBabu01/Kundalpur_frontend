@@ -2,7 +2,7 @@ import React from "react";
 import images from "../../../../assets/images.png";
 import { useNavigate } from "react-router-dom";
 
-function ChequeSuccessfull({ handleClose }) {
+function ChequeSuccessfull({ handleClose, useindonationhistory }) {
   const navigate = useNavigate();
   return (
     <>
@@ -16,7 +16,10 @@ function ChequeSuccessfull({ handleClose }) {
 
           <button
             onClick={() => {
-              navigate("/");
+              {
+                useindonationhistory ? "" : navigate("/");
+              }
+
               handleClose();
             }}
             className="ok_btn"

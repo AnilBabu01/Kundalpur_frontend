@@ -153,6 +153,20 @@
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+
+.save-btn5 {
+  border: none;
+  background: #e96d00;
+  color: white;
+
+  height: 40px;
+  border-radius: 5px;
+  margin-right: 16px;
+  font-size: 16px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 .calcel-btn {
   border: none;
   background: #e96d00;
@@ -281,6 +295,7 @@
     margin-bottom: 1rem;
     flex-direction: column;
 }
+
 @media screen and (max-width: 780px) {
   .help-div {
     width: 360px;
@@ -288,7 +303,7 @@
   }
 
   .btn-recharge-div button {
-    width: 105px;
+    width: 33%;
     height: 44px;
     border-radius: 5px;
   }
@@ -304,7 +319,7 @@
   }
 
   .btn-recharge-div {
-    width: 334px;
+    width: 100%;
   }
   .input-div {
     width: 338px;
@@ -375,5 +390,43 @@
 .remark-divvv{
   margin-top: -122px!important;
 }
+.save-div-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  margin-top: 136px;
+}
 
+.inner-input-div-input-red input {
+  width: 100%;
+  
+}
+
+.inner-input-div-select-red select {
+  width: 100%;
+  
+}
+.center_mobile_view{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.save-btn5 {
+  margin-top: -176px;
+}
+
+.main-form-div h2 {
+ 
+  text-align: center;
+}
+
+
+.radio_btb{
+  margin-right: 2px;
+    margin-left: 7px;
+}
 }

@@ -38,6 +38,7 @@ const Navbar = () => {
   const logout = () => {
     handleClose();
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userrole");
     setTimeout(() => {
       window.location.reload();
     }, 1000);

@@ -5,7 +5,6 @@ import { serverInstance } from "../../../../API/ServerInstance";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,63 +12,34 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import PrintIcon from "@mui/icons-material/Print";
-import Fade from "@mui/material/Fade";
-import CloseIcon from "@mui/icons-material/Close";
-import CashDonation from "./ElectronicDonation/ElectronicDonation";
-import "./Donation.css";
-const style = {
-  position: "absolute",
-  top: "48%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "90%",
-  bgcolor: "background.paper",
-  p: 2,
-  boxShadow: 24,
-  borderRadius: "5px",
-};
-const Donation = ({ setopendashboard }) => {
+import "./Electornic.css";
+const Electornic = () => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [open, setOpen] = React.useState(false);
-  const [showalert, setshowalert] = useState(false);
-  const [msg, setmsg] = useState("");
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
   const navigation = useNavigate();
 
   useEffect(() => {
-    setopendashboard(true);
     getall_donation();
-  }, [showalert, open]);
+  }, []);
 
   const getall_donation = () => {
-    serverInstance("user/add-elecDonation", "get").then((res) => {
+    serverInstance("admin/donation-list", "get").then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
+      console.log(res);
     });
   };
 
-  const deletedonation = (id) => {
-    serverInstance(`user/add-elecDonation?id=${id}`, "delete").then((res) => {
-      if (res.status === true) {
-        Swal.fire(
-          "Great!",
-          "Eletronic donation delete successfully",
-          "success"
-        );
-        setshowalert(true);
-      } else {
-        Swal("Error", "somthing went  wrong", "error");
-      }
-      console.log(res);
+  const downloadrecept = (row) => {
+    navigation("/reciept", {
+      state: {
+        userdata: row,
+      },
     });
   };
 
@@ -81,49 +51,28 @@ const Donation = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const printreceipt = (row) => {
-    if (row.active === "0") {
-    } else {
-      navigation("/reciept", {
-        state: {
-          userdata: row,
-        },
-      });
-    }
-  };
   return (
     <>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <div>
-              <div className="add-div-close-div1">
-                <h2> Add Electronic Donation</h2>
-                <CloseIcon onClick={() => handleClose()} />
-              </div>
-
-              <CashDonation
-                setOpen={setOpen}
-                setshowalert={setshowalert}
-                setmsg={setmsg}
-                handleClose={handleClose}
-              />
-            </div>
-          </Box>
-        </Fade>
-      </Modal>
       <div className="dashboarddiv">
         <div>
-          <div className="main_center_header">
-            <div className="add-btn-user">
-              <button onClick={() => handleOpen()}>+Add</button>
+          <div className="main_center_header1">
+            <h2 className="Cheque_text">Electornic donation report</h2>
+            <div className="search-header">
+              <div className="search-inner-div-reports">
+                <input type="text" placeholder="Name" />
+                <input type="text" placeholder="Phone No" />
+
+                <button>Search</button>
+                <button>Reset</button>
+              </div>
+              <div>
+                {/* <InsertDriveFileIcon
+                style={{ width: "45px", height: "36px", color: "#e96d00" }}
+              />
+              <PostAddIcon
+                style={{ width: "45px", height: "36px", color: "#e96d00" }}
+              /> */}
+              </div>
             </div>
           </div>
 
@@ -135,12 +84,17 @@ const Donation = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
-                  <TableCell>Receipt No</TableCell>
-                  <TableCell>Phone No</TableCell>
-                  <TableCell>Name</TableCell>
+                  <TableCell>S.No.</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Name </TableCell>
+                  <TableCell>Donation Type</TableCell>
                   <TableCell>Amount</TableCell>
-                  <TableCell>Address</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell>Cheque No.</TableCell>
+                  <TableCell>Date Of submission</TableCell>
+                  <TableCell>Name of Bank</TableCell>
+                  <TableCell>Payment id</TableCell>
+                  <TableCell>certificate</TableCell>
+                  <TableCell>Edit/Delete</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -152,37 +106,45 @@ const Donation = ({ setopendashboard }) => {
                   : isData
                 ).map((row, index) => (
                   <TableRow
-                    key={row.id}
+                    key={index}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.phoneNo}</TableCell>
-                    <TableCell>{row.name}</TableCell>
                     <TableCell>
-                      {row.elecItemDetails.reduce(
-                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                        0
-                      )}
+                      {" "}
+                      {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
                     </TableCell>
-                    <TableCell> {row.address}</TableCell>
-
+                    <TableCell>{row.NAME}</TableCell>
+                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
+                    <TableCell> {row.AMOUNT}</TableCell>
                     <TableCell>
-                      <RemoveRedEyeIcon
-                        onClick={() =>
-                          navigation(`/admin-panel/infoElectronic/${row.id}`)
-                        }
-                      />
+                      {" "}
+                      {row.CHEQUE_NO ? row.CHEQUE_NO : "-"}
+                    </TableCell>
+                    <TableCell>
+                      {" "}
+                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : "-"}
+                    </TableCell>
+                    <TableCell>
+                      {" "}
+                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : "-"}
+                    </TableCell>
 
-                      <DeleteForeverIcon
-                        onClick={() => deletedonation(row.id)}
-                      />
-                      <PrintIcon
-                        onClick={() => {
-                          printreceipt(row);
-                        }}
-                      />
+                    <TableCell> {row.PAYMENT_ID}</TableCell>
+                    <TableCell
+                      onClick={() => {
+                        downloadrecept(row);
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {" "}
+                      downolod
+                    </TableCell>
+                    <TableCell>
+                      <RemoveRedEyeIcon />
+                      <DeleteForeverIcon />
                     </TableCell>
                   </TableRow>
                 ))}
@@ -226,4 +188,4 @@ const Donation = ({ setopendashboard }) => {
   );
 };
 
-export default Donation;
+export default Electornic;

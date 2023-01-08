@@ -82,6 +82,7 @@ function Donation({ setshowreciept }) {
     formData.set("TYPE", donationdata?.donationtype);
     formData.set("REMARK", donationdata?.Remark);
     formData.set("ADDRESS", donationdata?.address);
+    formData.set("CHEQUE_NO", donationdata?.chequeno);
     formData.set("chequeImg", cheqing);
     for (var pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
@@ -246,44 +247,57 @@ function Donation({ setshowreciept }) {
             <h2>Donate</h2>
             <div className="main-input-div">
               <div className="inner-checkbox-div">
-                Donation For :
-                <input
-                  type="radio"
-                  name="selected"
-                  value="yes1"
-                  onChange={onChange}
-                />
-                Self
-                <input
-                  type="radio"
-                  name="selected"
-                  value="yes2"
-                  onChange={onChange}
-                />
-                Someone
-                <p style={{ color: "red" }}>{formerror.selected}</p>
+                <div className="center_mobile_view">
+                  <span>
+                    Donation For :
+                    <input
+                      className="radio_btb"
+                      type="radio"
+                      name="selected"
+                      value="yes1"
+                      onChange={onChange}
+                    />
+                    Self
+                    <input
+                      className="radio_btb"
+                      type="radio"
+                      name="selected"
+                      value="yes2"
+                      onChange={onChange}
+                    />
+                    Someone
+                  </span>
+                  <p style={{ color: "red" }}>{formerror.selected}</p>
+                </div>
               </div>
               <div className="inner-checkbox-div">
-                Donation Mode :
-                <input
-                  type="radio"
-                  value="Onilne"
-                  name="mode"
-                  onChange={(e) => setmode(e.target.value)}
-                />
-                Onilne
-                <input
-                  type="radio"
-                  value="Cheque"
-                  name="mode"
-                  onChange={(e) => setmode(e.target.value)}
-                />
-                Cheque
-                <p style={{ color: "red", marginTop: "5px" }}>
-                  {donationdata.selected &&
-                    !mode &&
-                    "Please select donation mode"}
-                </p>
+                <div className="center_mobile_view">
+                  <span>
+                    Donation Mode :
+                    <input
+                      className="radio_btb"
+                      type="radio"
+                      value="Onilne"
+                      name="mode"
+                      onChange={(e) => setmode(e.target.value)}
+                    />
+                    Onilne
+                    <input
+                      className="radio_btb"
+                      type="radio"
+                      value="Cheque"
+                      name="mode"
+                      onChange={(e) => setmode(e.target.value)}
+                    />
+                    Cheque
+                  </span>
+
+                  <p style={{ color: "red", marginTop: "5px" }}>
+                    {donationdata.selected &&
+                      !mode &&
+                      "Please select donation mode"}
+                  </p>
+                </div>
               </div>
             </div>
             <div className="main-input-div">
@@ -418,7 +432,7 @@ function Donation({ setshowreciept }) {
                       //     ? false
                       //     : true
                       // }
-                      className="save-btn"
+                      className="save-btn5"
                       onClick={handlesubmit}
                     >
                       Process to pay

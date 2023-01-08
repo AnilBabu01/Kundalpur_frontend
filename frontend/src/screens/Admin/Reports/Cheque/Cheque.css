@@ -1,0 +1,20 @@
+.main_center_header1{
+    padding: 1rem;
+}
+.search-inner-div-reports {
+    display: contents;
+}
+
+.search-inner-div-reports input {
+    width: 191px;
+    height: 39px;
+    border: 2px solid #e96d00;
+    border-radius: 5px;
+    font-size: 14px;
+    padding-left: 1rem;
+}
+
+.Cheque_text{
+    color: #e96d00;
+    margin-bottom: 16px;
+}

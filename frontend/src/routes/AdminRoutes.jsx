@@ -10,6 +10,11 @@ import RoleManagement from "../screens/Admin/SystemManagement/RoleManagement/Rol
 import UserManagement from "../screens/Admin/SystemManagement/UserManagement/UserManagement";
 import VoucherManagement from "../screens/Admin/SystemManagement/VoucherManagement/VoucherManagement";
 import InfoElectronic from "../screens/Admin/Donation/Donation/InfoElectronic";
+import Cheque from "../screens/Admin/Reports/Cheque/Cheque";
+import Online from "../screens/Admin/Reports/Online/Online";
+import Electronic from "../screens/Admin/Reports/Electornic/Electornic";
+import Userinfo from "../screens/Admin/masters/Usermaster/Userinfo";
+import Updateuser from "../screens/Admin/masters/Usermaster/Updateuser";
 function AdminRoutes({ setopendashboard }) {
   return (
     <>
@@ -57,6 +62,30 @@ function AdminRoutes({ setopendashboard }) {
         <Route
           path="/admin-panel/infoElectronic/:id"
           element={<InfoElectronic setopendashboard={setopendashboard} />}
+        />
+
+        <Route
+          path="/admin-panel/reports/online"
+          element={<Online setopendashboard={setopendashboard} />}
+        />
+        <Route
+          path="/admin-panel/reports/cheque"
+          element={<Cheque setopendashboard={setopendashboard} />}
+        />
+
+        <Route
+          path="/admin-panel/reports/electronic"
+          element={<Electronic setopendashboard={setopendashboard} />}
+        />
+
+        <Route
+          path="/admin-panel/masters/userinfo"
+          element={<Userinfo setopendashboard={setopendashboard} />}
+        />
+
+        <Route
+          path="/admin-panel/masters/updateuser/:id"
+          element={<Updateuser setopendashboard={setopendashboard} />}
         />
       </Routes>
     </>

@@ -118,14 +118,14 @@ function Profile() {
                     />
                   </div>
                   <div className="input-group-profile">
-                    <label htmlFor="password">Create password</label>
+                    <label htmlFor="address">Address</label>
                     <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      placeholder="enter password"
-                      value={password}
-                      onChange={(e) => setpassword(e.target.value)}
+                      type="address"
+                      id="address"
+                      name="address"
+                      placeholder="enter address"
+                      value={address}
+                      onChange={(e) => setaddress(e.target.value)}
                     />
                   </div>
                   <div className="input-group-profile">
@@ -142,17 +142,7 @@ function Profile() {
                 </div>
               </div>
             </div>
-            <div className="input-group-profile1">
-              <label htmlFor="address">Address</label>
-              <input
-                type="address"
-                id="address"
-                name="address"
-                placeholder="enter address"
-                value={address}
-                onChange={(e) => setaddress(e.target.value)}
-              />
-            </div>
+
             <div className="save-btn-profile-div">
               <button className="save-btn-profile">Save</button>
             </div>

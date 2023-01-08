@@ -137,3 +137,11 @@
     background-color: #e96d00;
     color: white;
   }
+
+  .Profile-main-div-master {
+    background: linear-gradient( 90.42deg, #fdc99c 0.3%, rgba(253, 201, 156, 0) 99.58% );
+   
+    padding: 2rem;
+    padding-left: 20%;
+    padding-right: 20%;
+}

@@ -9,6 +9,7 @@ const Sidebar = ({ setshowsidebar }) => {
   const [showdropdownmenu1, setshowdropdownmenu1] = useState(false);
   const [showdropdownmenu2, setshowdropdownmenu2] = useState(false);
   const [showdropdownmenu3, setshowdropdownmenu3] = useState(false);
+  const [showdropdownmenu4, setshowdropdownmenu4] = useState(false);
   return (
     <>
       <div className="maindiv">
@@ -50,14 +51,37 @@ const Sidebar = ({ setshowsidebar }) => {
                   Electronic Donation
                 </NavLink>
               </li>
+            </div>
+
+            <li className="nav-item">
+              <div
+                className="nav-link"
+                onClick={() => setshowdropdownmenu3(!showdropdownmenu3)}
+              >
+                Masters
+                {showdropdownmenu3 ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </div>
+            </li>
+
+            <div className={showdropdownmenu3 ? "showmenu" : "hidemenu"}>
               <li className="nav-item">
                 <NavLink
                   className={({ isActive }) =>
                     isActive ? "active-nav-link" : "nav-link"
                   }
-                  to="/admin-panel/alldonation"
+                  to="/admin-panel/master"
                 >
-                  Reports
+                  Master
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "active-nav-link" : "nav-link"
+                  }
+                  to="/ALLDonations"
+                >
+                  Others Master
                 </NavLink>
               </li>
             </div>
@@ -115,26 +139,25 @@ const Sidebar = ({ setshowsidebar }) => {
                 <span className="linkspan">Donated users</span>
               </NavLink>
             </li>
-
             <li className="nav-item">
               <div
                 className="nav-link"
-                onClick={() => setshowdropdownmenu3(!showdropdownmenu3)}
+                onClick={() => setshowdropdownmenu4(!showdropdownmenu4)}
               >
-                Masters
-                {showdropdownmenu3 ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                Reports
+                {showdropdownmenu4 ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               </div>
             </li>
 
-            <div className={showdropdownmenu3 ? "showmenu" : "hidemenu"}>
+            <div className={showdropdownmenu4 ? "showmenu" : "hidemenu"}>
               <li className="nav-item">
                 <NavLink
                   className={({ isActive }) =>
                     isActive ? "active-nav-link" : "nav-link"
                   }
-                  to="/admin-panel/master"
+                  to="/admin-panel/reports/electronic"
                 >
-                  Master
+                  Electronic Donation
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -142,12 +165,23 @@ const Sidebar = ({ setshowsidebar }) => {
                   className={({ isActive }) =>
                     isActive ? "active-nav-link" : "nav-link"
                   }
-                  to="/ALLDonations"
+                  to="/admin-panel/reports/cheque"
                 >
-                  Others Master
+                  Cheque Donation
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "active-nav-link" : "nav-link"
+                  }
+                  to="/admin-panel/reports/online"
+                >
+                  Onilne Donation
                 </NavLink>
               </li>
             </div>
+
             <li className="nav-item">
               <NavLink
                 className={({ isActive }) =>

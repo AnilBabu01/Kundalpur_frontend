@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import PostAddIcon from "@mui/icons-material/PostAdd";
-import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import React, { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import Backdrop from "@mui/material/Backdrop";
+import { serverInstance } from "../../../../API/ServerInstance";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-
+import { backendApiUrl } from "../../../../config/config";
+import axios from "axios";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
+import Swal from "sweetalert2";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
@@ -31,9 +31,16 @@ const style = {
 };
 import "./UserMaster.css";
 function UserMaster() {
+  const navigation = useNavigate();
+  const [isData, setisData] = React.useState([]);
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [name, setname] = useState("");
+  const [email, setemail] = useState("");
+  const [phone, setphone] = useState("");
+  const [password, setpassword] = useState("");
+  const [refetch, setrefetch] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -44,6 +51,52 @@ function UserMaster() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(`${backendApiUrl}user/create-account`, {
+        fullname: name,
+        mobileno: phone,
+        email: email,
+        password: password,
+      });
+      if (data.status === true) {
+        Swal.fire("Great!", "User Added Successfully", "success");
+        handleClose();
+      }
+    } catch (error) {
+      Swal.fire("Error!", error.response.data.message, "error");
+      handleClose();
+    }
+  };
+
+  const getall_users = () => {
+    serverInstance("admin/get-users", "get").then((res) => {
+      if (res.status) {
+        setisData(res.data);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+      console.log(res);
+    });
+  };
+
+  useEffect(() => {
+    getall_users();
+  }, [refetch, open]);
+
+  const deleteuser = (id) => {
+    serverInstance(`admin/del-users?id=${id}`, "delete").then((res) => {
+      if (res.status === true) {
+        Swal.fire("Great!", "User delete successfully", "success");
+        setrefetch(refetch);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+      console.log(res);
+    });
   };
   return (
     <>
@@ -57,43 +110,70 @@ function UserMaster() {
         <Fade in={open}>
           <Box sx={style}>
             <div>
-              <div className="add-div-close-div">
-                <h2>Add New User</h2>
-                <CloseIcon onClick={() => handleClose()} />
-              </div>
-              <hr />
-              <div></div>
+              <form onSubmit={handlesubmit}>
+                <div className="add-div-close-div">
+                  <h2>Add New User</h2>
+                  <CloseIcon onClick={() => handleClose()} />
+                </div>
+                <hr />
+                <div></div>
 
-              <div className="main-input-div1">
-                <div className="inner-input-div1">
-                  <label>Phone No</label>
-                  <input text="text" />
+                <div className="main-input-div1">
+                  <div className="inner-input-div1">
+                    <label htmlFor="name">Full name</label>
+                    <input
+                      id="name"
+                      text="text"
+                      name="name"
+                      value={name}
+                      onChange={(e) => setname(e.target.value)}
+                    />
+                  </div>
+                  <div className="inner-input-div1">
+                    <label htmlFor="phone">Mobile Number</label>
+                    <input
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      value={phone}
+                      onChange={(e) => setphone(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <div className="inner-input-div1">
-                  <label>Date Of Birth</label>
-                  <input type="date" />
+                <div className="main-input-div1">
+                  <div className="inner-input-div1">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      text="text"
+                      id="email"
+                      name="email"
+                      value={email}
+                      onChange={(e) => setemail(e.target.value)}
+                    />
+                  </div>
+                  <div className="inner-input-div1">
+                    <label htmlFor="password">Password</label>
+                    <input
+                      text="password"
+                      id="password"
+                      name="password"
+                      value={password}
+                      onChange={(e) => setpassword(e.target.value)}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="main-input-div1">
-                <div className="inner-input-div1">
-                  <label>Password</label>
-                  <input text="text" />
+                <div className="save-div-btn">
+                  <button className="save-btn1">Add User</button>
+                  <button onClick={() => handleClose()} className="calcel-btn">
+                    Cancel
+                  </button>
                 </div>
-                <div className="inner-input-div1">
-                  <label>Address</label>
-                  <input text="text" />
-                </div>
-              </div>
-              <div className="save-div-btn">
-                <button className="save-btn1">Add User</button>
-                <button onClick={() => handleClose()} className="calcel-btn">
-                  Cancel
-                </button>
-              </div>
+              </form>
             </div>
           </Box>
         </Fade>
       </Modal>
+
       <div>
         <div className="search-header">
           <div className="search-inner-div">
@@ -101,14 +181,6 @@ function UserMaster() {
             <input type="text" placeholder="Phone No" />
             <button>Search</button>
             <button>Reset</button>
-          </div>
-          <div>
-            <InsertDriveFileIcon
-              style={{ width: "45px", height: "36px", color: "#e96d00" }}
-            />
-            <PostAddIcon
-              style={{ width: "45px", height: "36px", color: "#e96d00" }}
-            />
           </div>
         </div>
         <hr style={{ color: "#e96d00" }} />
@@ -123,7 +195,7 @@ function UserMaster() {
             <TableHead style={{ background: "#FFEEE0" }}>
               <TableRow>
                 <TableCell>Sn</TableCell>
-                <TableCell>Title</TableCell>
+
                 <TableCell>Name</TableCell>
                 <TableCell>Contact No</TableCell>
                 <TableCell>Email-Id</TableCell>
@@ -131,55 +203,43 @@ function UserMaster() {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell>1</TableCell>
-              <TableCell>Mr</TableCell>
-              <TableCell>Anil Babu</TableCell>
-              <TableCell>7505786956</TableCell>
-              <TableCell>anilb9850@gmail.com</TableCell>
-              <TableCell>
-                <RemoveRedEyeIcon /> <EditIcon /> <DeleteForeverIcon />
-              </TableCell>
-              {/* {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>
-                      {" "}
-                      {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
-                    </TableCell>
-                    <TableCell>{row.NAME}</TableCell>
-                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.CHEQUE_NO ? row.CHEQUE_NO : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : "-"}
-                    </TableCell>
-                    <TableCell> {row.PAYMENT_ID}</TableCell>
-                  
-                  </TableRow>
-                ))} */}
+              {(rowsPerPage > 0
+                ? isData.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : isData
+              ).map((row, index) => (
+                <TableRow
+                  key={index}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                  }}
+                >
+                  <TableCell>{index + 1}</TableCell>
+
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.mobileNo}</TableCell>
+                  <TableCell>{row.email}</TableCell>
+                  <TableCell>
+                    <RemoveRedEyeIcon
+                      onClick={() =>
+                        navigation(`/admin-panel/masters/userinfo`, {
+                          state: {
+                            userdata: row,
+                          },
+                        })
+                      }
+                    />
+                    <EditIcon
+                      onClick={() =>
+                        navigation(`/admin-panel/masters/updateuser/${row.id}`)
+                      }
+                    />
+                    <DeleteForeverIcon onClick={() => deleteuser(row.id)} />
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
             <TableFooter>
               <TableRow>

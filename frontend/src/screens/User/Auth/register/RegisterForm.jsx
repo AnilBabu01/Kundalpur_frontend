@@ -1,5 +1,4 @@
 import { useState } from "react";
-import VerifyMobile from "./VerifyMobile";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/sideimg.jpeg";
 import Swal from "sweetalert2";
@@ -22,7 +21,6 @@ const Register = () => {
         typeof fullName === "string" &&
         typeof mobileNumber === "string"
       ) {
-        console.log({ email, fullName, password, mobileNumber });
         const { data } = await axios.post(
           `${backendApiUrl}user/create-account`,
           {
@@ -41,8 +39,6 @@ const Register = () => {
       }
     } catch (error) {
       Swal.fire("Error!", error.response.data.message, "error");
-
-      console.log(error);
     }
   };
 

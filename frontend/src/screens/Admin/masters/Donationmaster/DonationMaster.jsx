@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import CloseIcon from "@mui/icons-material/Close";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import { serverInstance } from "../../../../API/ServerInstance";
 import Fade from "@mui/material/Fade";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,7 +16,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
-
+import EditIcon from "@mui/icons-material/Edit";
+import { backendApiUrl } from "../../../../config/config";
+import Swal from "sweetalert2";
+import axios from "axios";
 const style = {
   position: "absolute",
   top: "40%",
@@ -31,9 +34,12 @@ const style = {
 import "./DonationMaster.css";
 function DonationMaster() {
   const [open, setOpen] = React.useState(false);
-  const [donationtype, setdonationtype] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [isData, setisData] = React.useState([]);
+  const [refetch, setrefetch] = useState(false);
+  const [donationtype_in_hindi, setdonationtype_in_hindi] = useState("");
+  const [donationtype_in_eng, setdonationtype_in_eng] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const typesOfDonation = ["Please Select donation types", "Online", "Cheque"];
@@ -45,6 +51,54 @@ function DonationMaster() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handlesubmit = async (e) => {
+    try {
+      e.preventDefault();
+      axios.defaults.headers.post[
+        "Authorization"
+      ] = `Bearer ${sessionStorage.getItem("token")}`;
+      const { data } = await axios.post(`${backendApiUrl}admin/donation-type`, {
+        type_en: donationtype_in_eng,
+        type_hi: donationtype_in_hindi,
+      });
+      if (data.status === true) {
+        Swal.fire("Great!", "User Added Successfully", "success");
+        handleClose();
+      }
+    } catch (error) {
+      Swal.fire("Error!", error.response.data.message, "error");
+      handleClose();
+    }
+  };
+
+  const getall_donatiions = () => {
+    serverInstance("admin/donation-type", "get").then((res) => {
+      if (res.status) {
+        setisData(res.data);
+
+        console.log(res.data);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+      console.log("sss", res);
+    });
+  };
+  useEffect(() => {
+    getall_donatiions();
+  }, [refetch]);
+
+  const deletedonation = (id) => {
+    serverInstance(`admin/donation-type"?id=${id}`, "delete").then((res) => {
+      if (res.status === true) {
+        Swal.fire("Great!", "User delete successfully", "success");
+        setrefetch(true);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+      console.log(res);
+    });
   };
   return (
     <>
@@ -58,42 +112,51 @@ function DonationMaster() {
         <Fade in={open}>
           <Box sx={style}>
             <div>
-              <div className="add-div-close-div">
-                <h2>Add New Donation</h2>
-                <CloseIcon onClick={() => handleClose()} />
-              </div>
-              <hr />
-              <div className="main-input-div1">
-                <div className="inner-input-div1">
-                  <label>Enter donation type in hindi </label>
-                  <input type="text" />
-                  <label>Enter donation type in english </label>
-                  <input type="text" />
+              <form onSubmit={handlesubmit}>
+                <div className="add-div-close-div">
+                  <h2>Add New Donation Type</h2>
+                  <CloseIcon onClick={() => handleClose()} />
                 </div>
-              </div>
+                <hr />
+                <div className="main-input-div1">
+                  <div className="inner-input-div1">
+                    <label htmlFor="donationtype_in_hindi">
+                      Enter donation type in hindi 
+                    </label>
+                    <input
+                      type="text"
+                      id="donationtype_in_hindi"
+                      value={donationtype_in_hindi}
+                      name="donationtype_in_hindi"
+                      onChange={(e) => setdonationtype_in_hindi(e.target.value)}
+                    />
+                    <label htmlFor="donationtype_in_eng">
+                      Enter donation type in english 
+                    </label>
+                    <input
+                      type="text"
+                      id="donationtype_in_eng"
+                      value={donationtype_in_eng}
+                      name="donationtype_in_eng"
+                      onChange={(e) => setdonationtype_in_eng(e.target.value)}
+                    />
+                  </div>
+                </div>
 
-              <div className="save-div-btn">
-                <button className="save-btn1">Add </button>
-                <button onClick={() => handleClose()} className="calcel-btn">
-                  Cancel
-                </button>
-              </div>
+                <div className="save-div-btn">
+                  <button className="save-btn1">Add </button>
+                  <button onClick={() => handleClose()} className="calcel-btn">
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
           </Box>
         </Fade>
       </Modal>
       <div>
-        {/* <div className="search-header">
-          <div className="search-inner-div">
-            <input type="text" placeholder="Name" />
-            <input type="text" placeholder="Phone No" />
-            <button>Search</button>
-          </div>
-          <div></div>
-        </div> */}
         <hr style={{ color: "#e96d00" }} />
         <div className="add-btn-user">
-          <button className="report_btn">Generate report</button>
           <button onClick={handleOpen}>+Add</button>
         </div>
         <div className="table-div-maain">
@@ -105,54 +168,34 @@ function DonationMaster() {
               <TableRow>
                 <TableCell>S.No.</TableCell>
 
-                <TableCell> Type Donation </TableCell>
+                <TableCell> Type Donation (hindi)</TableCell>
+                <TableCell> Type Donation (english) </TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell>1</TableCell>
-              <TableCell>online</TableCell>
+              {(rowsPerPage > 0
+                ? isData.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : isData
+              ).map((row, index) => (
+                <TableRow
+                  key={index}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                  }}
+                >
+                  <TableCell>{index + 1}</TableCell>
 
-              {/* {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>
-                      {" "}
-                      {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
-                    </TableCell>
-                    <TableCell>{row.NAME}</TableCell>
-                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.CHEQUE_NO ? row.CHEQUE_NO : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : "-"}
-                    </TableCell>
-                    <TableCell> {row.PAYMENT_ID}</TableCell>
-                  
-                  </TableRow>
-                ))} */}
+                  <TableCell>{row.type_hi}</TableCell>
+                  <TableCell>{row.type_hi}</TableCell>
+                  <TableCell>
+                    <EditIcon /> <DeleteForeverIcon />
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
             <TableFooter>
               <TableRow>

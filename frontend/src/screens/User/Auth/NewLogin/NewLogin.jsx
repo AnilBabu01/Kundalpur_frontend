@@ -55,6 +55,9 @@ const VivekPLogin = () => {
       VerifyOtp({ username: mobileNo, otp: otp }, (res) => {
         console.log(res);
         if (res) {
+          var decoded = jwt_decode(res.tokens.access.token);
+
+          sessionStorage.setItem("userrole", decoded.role);
           sessionStorage.setItem("token", res.tokens.access.token);
           auth.setUser(res.tokens.access.token);
 

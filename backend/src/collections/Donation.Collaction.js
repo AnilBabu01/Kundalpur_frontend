@@ -429,7 +429,7 @@ class DonationCollaction {
     if (status == 1) {
       data = await TblDonation.update(
         {
-          active: 1,
+          active: '1',
         },
         {
           where: {
@@ -440,7 +440,7 @@ class DonationCollaction {
     } else if (status == 0) {
       data = await TblDonation.update(
         {
-          active: 0,
+          active: '0',
         },
         {
           where: {

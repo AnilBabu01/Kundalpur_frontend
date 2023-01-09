@@ -21,9 +21,9 @@ router
 router.route("/verify-opt").post(userController.verifyOTP);
 
 router
-  .route("/forgot-password")
-  .post(
-    validate(userValidation.forgotPass),
+  .route("/user-forgot-password")
+  .post(auth(),
+    validate( userValidation.forgotPass),
     userController.forgotPassword
   );
 

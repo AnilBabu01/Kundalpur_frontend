@@ -94,18 +94,13 @@ const verifyOTP = async (username, otp) => {
 };
 
 
-const forgotPass = async(body)=>{
-  const data = await AuthCollaction.forgotTokenMatch(body);
+const forgotPass = async(req)=>{
+  const data = await AuthCollaction.forgotPass(req);
   if(!data){
-    return null;
+    throw new ApiError(httpStatus.UNAUTHORIZED,"Failed to Forgot Password")
   }
-  let currentDate = Date.now();
-  if(data.resetPasswordExpires < currentDate){
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Token time expire.");
-  }
-  const resetPass = await UserCollection.resetPassword(body,data.user_id);
-  return resetPass;
-
+ 
+  return data
 }
 
 const profileUpdate = async(req)=>{

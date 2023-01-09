@@ -90,7 +90,7 @@ const verifyOTP = catchAsync(async (req, res) => {
 
 
 const forgotPassword = catchAsync(async (req, res) => {
-  const result = await userService.forgotPasswordThird(req.body);
+  const result = await userService.forgotPass(req);
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, "Something went wrong!");
   }

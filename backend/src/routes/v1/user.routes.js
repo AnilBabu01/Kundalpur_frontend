@@ -22,8 +22,9 @@ router.route("/verify-opt").post(userController.verifyOTP);
 
 router
   .route("/user-forgot-password")
-  .post(auth(),
-    validate( userValidation.forgotPass),
+  .post(
+    auth(),
+    validate(userValidation.forgotPass),
     userController.forgotPassword
   );
 
@@ -44,6 +45,9 @@ router
 router
   .route("/add-elecDonation")
   .get(auth(), donationController.getElecDonation);
+  router
+  .route("/add-elecDonation")
+  .put(auth(), donationController.editElecDonation);
 router
   .route("/add-elecDonation")
   .delete(auth(), donationController.deleteElecDonation);

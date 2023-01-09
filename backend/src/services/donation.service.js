@@ -41,6 +41,11 @@ const getElecDonation = async(req)=>{
   return data
 }
 
+const editElecDonation = async(req)=>{
+  const data = await DonationCollection.editElecDonation(req)
+  return data
+}
+
 const getElecDonationbyID = async(req)=>{
   const data = await DonationCollection.getElecDonationbyId(req)
   return data
@@ -119,4 +124,5 @@ module.exports = {
   DelDonationType,
   EditDonationType,
   ChangeChequeStatus,
+  editElecDonation
 };

@@ -2,7 +2,7 @@ const { sequelize, QueryTypes, query } = require("sequelize");
 const uploadimage = require("../middlewares/imageupload");
 const db = require("../models");
 const electricDonation = require("../models/electricDonation.model");
-const { TBL_VOUCHERS } = require("../models/TableName");
+const { TBL_VOUCHERS, TBL_ELEC_DONATION_ITEM } = require("../models/TableName");
 db.donationModel.hasMany(db.donationItem, {
   foreignKey: "donationId",
   as: "itemDetails",
@@ -232,6 +232,61 @@ class DonationCollaction {
         message: err,
       };
     }
+  };
+
+  editElecDonation = async (req) => {
+    const {
+      id,
+      name,
+      phoneNo,
+      address,
+      new_member,
+      donation_date,
+      donation_time,
+      donation_item,
+    } = req.body;
+    const userId = req.user.id;
+
+    const result = await TblelecDonation.update(
+      {
+        name: name,
+        phoneNo: phoneNo,
+        address: address,
+        new_member: new_member,
+        donation_date: donation_date,
+        donation_time: donation_time,
+      },
+      {
+        where: {
+          created_by: userId,
+          id: id,
+        },
+      }
+    ).then(async () => {
+      donation_item.forEach(async(e) => {
+       
+        let items = await TblelecDonationItem.update({
+          type: e.type,
+          amount: e.amount,
+          remark: e.remark,
+        },
+        
+        {
+          where:{
+            donationId: id,
+            id: e.id,
+          }
+        })
+      });
+
+      return {
+        status: 1,
+        message: "Updated Successfully",
+      };
+    });
+ 
+
+    return result;
   };
 
   getElecDonation = async (req) => {

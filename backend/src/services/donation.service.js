@@ -98,6 +98,11 @@ const isChequeDownload = async(req)=>{    //checking the users assigned vouchers
 
 }
 
+const ChangeChequeStatus = async(req)=>{
+  const data = await DonationCollection.ChangeChequeStatus(req);
+  return data;
+}
+
 module.exports = {
   cashDonation,
   list,
@@ -112,5 +117,6 @@ module.exports = {
   addDonationType,
   isChequeDownload,
   DelDonationType,
-  EditDonationType
+  EditDonationType,
+  ChangeChequeStatus,
 };

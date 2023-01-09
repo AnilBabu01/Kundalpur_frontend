@@ -23,7 +23,7 @@ class voucherCollection {
         };
       });
     return voucher;
-  };
+  }
 
   checkVoucher = async (req) => {
     const userId = req.user.id;

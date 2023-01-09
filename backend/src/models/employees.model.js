@@ -71,7 +71,7 @@ const Employees = sequelize.define(tbl.TBL_EMPLOYEES, {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  DDebitAA:{
+  DCreditAA:{
     type: Sequelize.STRING,
     allowNull: false,
   }

@@ -39,7 +39,6 @@ class voucherCollection {
       //geting the assigned voucherrss
       where: {
         assign: userId,
-        status: 0,
       },
     });
 
@@ -56,10 +55,7 @@ class voucherCollection {
             message: "User has been assigned",
           };
         } else {
-          if (voucherNumber[0] < item.from && voucherNumber[0] > item.to) {  //change the status of voucher into 1 if the voucher number
-                                                                              // is greater than and less than the from and to
-            await TblVoucher.update({ status: 1 }, { where: item.id });
-          }
+         
           return {
             status: false,
             message: "User is not allowed to Download",

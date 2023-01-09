@@ -1,5 +1,6 @@
 const httpStatus = require("http-status");
 const { userService, donationService } = require("../services");
+const ApiError = require("../utils/ApiError");
 const catchAsync = require("../utils/catchAsync");
 const { generateAuthTokens } = require("../utils/tokens");
 
@@ -89,6 +90,28 @@ const getDonationType = catchAsync(async (req, res) => {
   });
 });
 
+const DelDonationType = catchAsync(async (req, res) => {
+  const data = await donationService.DelDonationType(req);
+  if(!data){
+    throw new ApiError(httpStatus.NOT_FOUND, "Failed to Delete Donation Type");
+  }
+  res.status(200).send({
+    status: true,
+    message:"Donation Type Deleted Successfully"
+  });
+});
+
+const EditDonationType = catchAsync(async (req, res) => {
+  const data = await donationService.EditDonationType(req);
+  if(!data){
+    throw new ApiError(httpStatus.NOT_FOUND, "Failed to Update Donation Type");
+  }
+  res.status(200).send({
+    status: true,
+    message: "Donation type updated Successfully",
+  });
+});
+
 const addEmployees = catchAsync(async (req, res) => {
   const data = await userService.addEmployees(req);
   if(!data){
@@ -111,5 +134,7 @@ module.exports = {
   addDonationType,
   getDonationType,
   editUser,
-  addEmployees
+  addEmployees,
+  DelDonationType,
+  EditDonationType
 };

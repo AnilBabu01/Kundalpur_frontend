@@ -29,8 +29,8 @@ const itemList = db.itemList;
 const TblNewDonation = db.newDonationModel;
 const TblelecDonation = db.ElecDonationModel;
 const TblelecDonationItem = db.ElecDonationItem;
-const TblDonationTypes = db.donationTypes
-const TblVouchers = db.Vouchers
+const TblDonationTypes = db.donationTypes;
+const TblVouchers = db.Vouchers;
 
 class DonationCollaction {
   addNewDonation = async (req) => {
@@ -48,7 +48,7 @@ class DonationCollaction {
       ADDRESS,
     } = req.body;
 
-    let IMG = ''
+    let IMG = "";
 
     let active = "";
     const count = await TblNewDonation.count();
@@ -327,27 +327,45 @@ class DonationCollaction {
     return list;
   };
 
-  addDonationType = async (req)=>{
-
-    const {type_en,type_hi} = req.body
-
+  addDonationType = async (req) => {
+    const { type_en, type_hi } = req.body;
 
     const data = await TblDonationTypes.create({
       type_en,
-      type_hi
-    })
+      type_hi,
+    });
     return data;
-  }
+  };
 
-  getDonationType = async ()=>{
-    const data = await TblDonationTypes.findAll()
-    return data
-  }
+  getDonationType = async () => {
+    const data = await TblDonationTypes.findAll();
+    return data;
+  };
 
+  delDonationType = async (req) => {
+    let id = req.query.id;
+    const data = await TblDonationTypes.destroy({
+      where: {
+        id: id,
+      },
+    });
+    
+    return data;
+  };
 
+  EditDonationType = async (req) => {
+    let { id, type_en, type_hi } = req.body;
 
+    const data = await TblDonationTypes.update(
+      { type_en: type_en, type_hi: type_hi },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    return data;
+  };
 }
-
-
 
 module.exports = new DonationCollaction();

@@ -196,6 +196,7 @@ class UserCollaction {
   forgotTokenMatch = async (body) => {
     const { identity, token } = body;
     const user = await this.getUserName(identity);
+    
     const data = await TblPasswordReset.findOne({
       where: { user_id: user.id },
     });

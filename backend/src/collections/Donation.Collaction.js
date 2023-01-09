@@ -424,32 +424,40 @@ class DonationCollaction {
 
   ChangeChequeStatus = async (req) => {
     const { status, id } = req.body;
+    console.log(req.body)
     ///status 0 == false ///status 1 === true means active
     let data;
+
     if (status == 1) {
-      data = await TblDonation.update(
+      data = await TblNewDonation.update(
         {
           active: '1',
         },
         {
           where: {
             id: id,
+            MODE_OF_DONATION: "CHEQUE"
           },
         }
-      );
+      ).catch((err)=>{
+        console.log(err)
+      })
     } else if (status == 0) {
-      data = await TblDonation.update(
+      data = await TblNewDonation.update(
         {
           active: '0',
         },
         {
           where: {
             id: id,
+            MODE_OF_DONATION: "CHEQUE"
           },
         }
-      );
+      ).catch((err)=>{
+        console.log(err)
+      })
     }
-
+console.log(data);
     return data;
   };
 }

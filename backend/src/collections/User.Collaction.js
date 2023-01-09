@@ -370,7 +370,7 @@ class UserCollaction {
       cancelCheckout,
       CreditAA,
       DebitAA,
-      DDebitAA,
+      DCreditAA,
     } = req.body;
 
     const salt = bcrypt.genSaltSync(12);
@@ -389,7 +389,7 @@ class UserCollaction {
       cancelCheckout,
       CreditAA,
       DebitAA,
-      DDebitAA,
+      DCreditAA,
     })
       .then((res) => {
         return {
@@ -425,7 +425,7 @@ class UserCollaction {
           "cancelCheckout",
           "CreditAA",
           "DebitAA",
-          "DDebitAA",
+          "DCreditAA",
         ],
       });
     } else {
@@ -444,7 +444,7 @@ class UserCollaction {
           "cancelCheckout",
           "CreditAA",
           "DebitAA",
-          "DDebitAA",
+          "DCreditAA",
         ],
       });
     }

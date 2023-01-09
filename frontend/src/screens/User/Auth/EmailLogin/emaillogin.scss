@@ -161,6 +161,7 @@
     margin-top: 1rem;
     padding-inline: 1.5rem;
     width: 100%;
+    position: relative;
     input {
       border: 0.8px solid $input-placeholder-color;
       padding: 0.5rem 0.9rem;
@@ -234,4 +235,11 @@
   height: 290px;
   margin-bottom: 1rem;
 }
+}
+
+.showpassworddsignup2{
+  position: absolute;
+  top: 37px!important;
+  left: 311px!important;
+  list-style: none;
 }

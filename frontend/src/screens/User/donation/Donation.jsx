@@ -8,7 +8,6 @@ import { backendApiUrl } from "../../../config/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../../../Redux/redux/action/AuthAction";
-
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";

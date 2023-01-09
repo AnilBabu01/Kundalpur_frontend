@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
 import logo from "../../../../assets/sideimg.jpeg";
 import Swal from "sweetalert2";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 import { backendApiUrl } from "../../../../config/config";
 import "./emaillogin.scss";
@@ -18,8 +21,8 @@ const EmailLogin = () => {
   const [unchecked1, setunchecked1] = useState(true);
   const [unchecked2, setunchecked2] = useState(false);
   const [unchecked3, setunchecked3] = useState(false);
-  const [username, setusername] = useState("");
-  const [adminpassword, setadminpassword] = useState("");
+  const [showprocess, setshowprocess] = useState(false);
+  const [showonldpassword, setshowonldpassword] = useState(false);
   const { email, password } = state;
 
   const handleInputChange = (e) => {
@@ -30,11 +33,13 @@ const EmailLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setshowprocess(true);
       const res = await axios.post(`${backendApiUrl}user/login`, {
         identity: email,
         password: password,
       });
       if (res.data.status) {
+        setshowprocess(false);
         Swal.fire("Great!", "You Have Loginn Successfully", "success");
         var decoded = jwt_decode(res.data.tokens.access.token);
         if (decoded.role === 1) {
@@ -52,6 +57,7 @@ const EmailLogin = () => {
       }
     } catch (error) {
       Swal.fire("Error!", error.response.data.message, "error");
+      setshowprocess(false);
     }
   };
   return (
@@ -131,19 +137,32 @@ const EmailLogin = () => {
               <input
                 className="remove_underline"
                 required
-                type="password"
+                type={showonldpassword ? "text" : "password"}
                 id="password"
                 name="password"
                 placeholder="enter password"
                 value={password}
                 onChange={handleInputChange}
               />
+              <li
+                className="showpassworddsignup2"
+                onClick={() => setshowonldpassword(!showonldpassword)}
+              >
+                {showonldpassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </li>
             </div>
             <Link to="/forgot" className="forget-link">
               {"Forgot Password ?"}
             </Link>
             <div className="input-group">
-              <button className="login-btn">Login</button>
+              <button className="login-btn">
+                {" "}
+                {showprocess ? (
+                  <CircularProgress style={{ width: "21px", height: "21px" }} />
+                ) : (
+                  "Login"
+                )}
+              </button>
             </div>
             <span className="newusertag">New to kundalpur</span>
             <Link to="/register" className="creatbtn">
@@ -171,13 +190,19 @@ const EmailLogin = () => {
               <input
                 className="remove_underline"
                 required
-                type="password"
+                type={showonldpassword ? "text" : "password"}
                 id="password"
                 name="password"
                 placeholder="enter password"
                 value={password}
                 onChange={handleInputChange}
               />
+              <li
+                className="showpassworddsignup2"
+                onClick={() => setshowonldpassword(!showonldpassword)}
+              >
+                {showonldpassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </li>
             </div>
             <div className="input-group">
               <button className="login-btn">Login</button>
@@ -205,13 +230,19 @@ const EmailLogin = () => {
               <input
                 className="remove_underline"
                 required
-                type="password"
+                type={showonldpassword ? "text" : "password"}
                 id="password"
                 name="password"
                 placeholder="enter password"
                 value={password}
                 onChange={handleInputChange}
               />
+              <li
+                className="showpassworddsignup2"
+                onClick={() => setshowonldpassword(!showonldpassword)}
+              >
+                {showonldpassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </li>
             </div>
             <div className="input-group">
               <button className="login-btn">Login</button>

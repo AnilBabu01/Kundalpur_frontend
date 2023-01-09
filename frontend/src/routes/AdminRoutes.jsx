@@ -16,7 +16,7 @@ import Electronic from "../screens/Admin/Reports/Electornic/Electornic";
 import Userinfo from "../screens/Admin/masters/Usermaster/Userinfo";
 import Updateuser from "../screens/Admin/masters/Usermaster/Updateuser";
 import Adminprivateroute from "../components/AdminOutlate/Adminprivateroute";
-import ChangeStatus from "../screens/Admin/Reports/Electornic/ChangeStatus";
+import ChangeStatus from "../screens/Admin/Reports/Cheque/ChangeStatus";
 function AdminRoutes({ setopendashboard }) {
   return (
     <>
@@ -151,7 +151,7 @@ function AdminRoutes({ setopendashboard }) {
         />
 
         <Route
-          path="/admin-panel/masters/reports/changeStatus/:id"
+          path="/admin-panel/reports/changeStatus/:id"
           element={
             <Adminprivateroute>
               <ChangeStatus setopendashboard={setopendashboard} />

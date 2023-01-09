@@ -21,15 +21,13 @@ const Cheque = ({ setopendashboard }) => {
 
   const navigation = useNavigate();
 
-  useEffect(() => {
-    getall_donation();
-    setopendashboard(true);
-  }, []);
-
   const getall_donation = () => {
     serverInstance("admin/donation-list", "get").then((res) => {
       if (res.status) {
-        setisData(res.data);
+        let filterData = res.data.filter(
+          (item) => item.MODE_OF_DONATION === "CHEQUE"
+        );
+        setisData(filterData);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
@@ -54,6 +52,10 @@ const Cheque = ({ setopendashboard }) => {
     setPage(0);
   };
 
+  useEffect(() => {
+    getall_donation();
+    setopendashboard(true);
+  }, []);
   return (
     <>
       <div className="dashboarddiv">
@@ -151,7 +153,7 @@ const Cheque = ({ setopendashboard }) => {
                       <EditIcon
                         onClick={() =>
                           navigation(
-                            `/admin-panel/masters/reports/changeStatus/${row.id}`
+                            `/admin-panel/reports/changeStatus/${row.id}`
                           )
                         }
                       />

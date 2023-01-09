@@ -20,11 +20,6 @@ const Electornic = ({ setopendashboard }) => {
 
   const navigation = useNavigate();
 
-  useEffect(() => {
-    getall_donation();
-    setopendashboard(true);
-  }, []);
-
   const getall_donation = () => {
     serverInstance("user/add-elecDonation", "get").then((res) => {
       if (res.status) {
@@ -52,6 +47,11 @@ const Electornic = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  useEffect(() => {
+    getall_donation();
+    setopendashboard(true);
+  }, []);
   return (
     <>
       <div className="dashboarddiv">

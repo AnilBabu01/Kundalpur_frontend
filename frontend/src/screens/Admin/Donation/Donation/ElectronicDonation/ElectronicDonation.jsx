@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { backendApiUrl } from "../../../../../config/config";
 import { serverInstance } from "../../../../../API/ServerInstance";
-import { typesOfDonation } from "./Data";
 import axios from "axios";
-
 import "./ElectronicDonation.css";
 
 const CashDonation = ({ setOpen, setshowalert, handleClose }) => {

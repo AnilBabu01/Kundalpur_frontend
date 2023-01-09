@@ -15,6 +15,7 @@ import TablePagination from "@mui/material/TablePagination";
 import "./Online.css";
 const Online = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
+  const [filterstate, setfilterstate] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -23,7 +24,10 @@ const Online = ({ setopendashboard }) => {
   const getall_donation = () => {
     serverInstance("admin/donation-list", "get").then((res) => {
       if (res.status) {
-        setisData(res.data);
+        let filterData = res.data.filter(
+          (item) => item.MODE_OF_DONATION === "ONLINE"
+        );
+        setisData(filterData);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
@@ -48,12 +52,10 @@ const Online = ({ setopendashboard }) => {
     setPage(0);
   };
 
-  const filterdata = () => {};
-
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
-  }, []);
+  }, [filterstate]);
 
   return (
     <>

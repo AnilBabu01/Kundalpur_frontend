@@ -125,7 +125,7 @@ const getDonationType = catchAsync(async (req, res) => {
 });
 
 const ChangeChequeStatus = catchAsync(async (req,res)=>{
-  const data = await donationService.changeChequeStatus(req);
+  const data = await donationService.ChangeChequeStatus(req);
   if(!data){
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong")
   }

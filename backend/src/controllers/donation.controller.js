@@ -91,6 +91,9 @@ const itemList = catchAsync(async (req, res) => {
 
 const addDonationType = catchAsync(async (req, res) => {
   const data = await donationService.addDonationType(req);
+  if(!data){
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong")
+  }
   res.status(httpStatus.CREATED).send({
     status: true,
     msg: "Success",
@@ -99,11 +102,28 @@ const addDonationType = catchAsync(async (req, res) => {
 
 const getDonationType = catchAsync(async (req, res) => {
   const data = await donationService.getDonationType(req);
+  if(!data){
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong")
+  }
   res.status(httpStatus.CREATED).send({
     status: true,
     data: data
   });
 });
+
+const ChangeChequeStatus = catchAsync(async (req,res)=>{
+  const data = await donationService.changeChequeStatus(req);
+  if(!data){
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong")
+  }
+
+  res.status(200).send({
+    status: true,
+    msg: "cheque Status Updated successfully",
+  });
+
+})
+
 
 module.exports = {
   addCashDonation,
@@ -115,5 +135,6 @@ module.exports = {
   deleteElecDonation,
   getElecDonationbyID,
   addDonationType,
-  getDonationType
+  getDonationType,
+  ChangeChequeStatus
 };

@@ -81,10 +81,26 @@ const addDonationType = async(req)=>{
 
 }
 
+const DelDonationType = async(req)=>{
+  const donationType = await DonationCollection.delDonationType(req);
+  return donationType;
+
+}
+const EditDonationType = async(req)=>{
+  const donationType = await DonationCollection.EditDonationType(req);
+  return donationType;
+
+}
+
 const isChequeDownload = async(req)=>{    //checking the users assigned vouchers
   const status = await DonationCollection.isChequeDownload(req);
   return status;
 
+}
+
+const ChangeChequeStatus = async(req)=>{
+  const data = await DonationCollection.ChangeChequeStatus(req);
+  return data;
 }
 
 module.exports = {
@@ -99,5 +115,8 @@ module.exports = {
   getElecDonationbyID,
   getDonationType,
   addDonationType,
-  isChequeDownload
+  isChequeDownload,
+  DelDonationType,
+  EditDonationType,
+  ChangeChequeStatus,
 };

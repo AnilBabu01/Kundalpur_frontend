@@ -19,20 +19,12 @@ router
   .route("/login-with-mobile")
   .post(validate(userValidation.loginMobile), userController.loginWithMobile);
 router.route("/verify-opt").post(userController.verifyOTP);
+
 router
-  .route("/forgot-password-first")
-  .post(validate(userValidation.forgotPass), userController.forgotPassword);
-router
-  .route("/forgot-password-second")
-  .post(
-    validate(userValidation.forgotPassSecond),
-    userController.forgotPasswordSecond
-  );
-router
-  .route("/forgot-password-third")
-  .post(
-    validate(userValidation.forgotPassThird),
-    userController.forgotPasswordThird
+  .route("/user-forgot-password")
+  .post(auth(),
+    validate( userValidation.forgotPass),
+    userController.forgotPassword
   );
 
 router.route("/create-account").post(userController.createAccount);

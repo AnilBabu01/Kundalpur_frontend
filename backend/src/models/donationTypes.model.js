@@ -15,7 +15,7 @@ const donationTypes = sequelize.define(tbl.TBL_DONATION_TYPES,{
         allowNull: false,
      } ,
      type_hi:{
-        type: Sequelize.STRING(120),
+        type: Sequelize.TEXT,
         allowNull: false,
      }
 

@@ -93,49 +93,14 @@ const verifyOTP = async (username, otp) => {
   return user;
 };
 
-const forgotPass = async (body) => {
-  const user = await AuthCollaction.getUserName(body.identity);
-  if (!user) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect username");
-  }
-  let otp = Math.floor(100000 + Math.random() * 900000); //-----6 digit random number--------
-  let resetPasswordExpires = Date.now() + 3600000; //expires in an hour
-  const updateForgotPassToken = await AuthCollaction.updateForgotPassToken(user.id,otp,resetPasswordExpires);
-  if(body.reset_mode == 'mobile'){
-    //--------send OTP---------
 
-  }else if(body.reset_mode == 'email'){
-    //-----send mail----------
-  }
-  return updateForgotPassToken;
-};
-
-const forgotPassSecond = async(body) => {
-  const data = await AuthCollaction.forgotOTPMatch(body);
+const forgotPass = async(req)=>{
+  const data = await AuthCollaction.forgotPass(req);
   if(!data){
-    return null;
+    throw new ApiError(httpStatus.UNAUTHORIZED,"Failed to Forgot Password")
   }
-  let currentDate = Date.now();
-  if(data.resetPasswordExpires < currentDate){
-    throw new ApiError(httpStatus.UNAUTHORIZED, "OTP time expire.");
-  }
-  let resetPasswordToken = crypto.randomBytes(20).toString('hex');
-  const update = await UserCollection.generateResetToken(resetPasswordToken,data.user_id);
-  return update;
-}
-
-const forgotPasswordThird = async(body)=>{
-  const data = await AuthCollaction.forgotTokenMatch(body);
-  if(!data){
-    return null;
-  }
-  let currentDate = Date.now();
-  if(data.resetPasswordExpires < currentDate){
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Token time expire.");
-  }
-  const resetPass = await UserCollection.resetPassword(body,data.user_id);
-  return resetPass;
-
+ 
+  return data
 }
 
 const profileUpdate = async(req)=>{
@@ -238,8 +203,6 @@ module.exports = {
   loginAdmin,
   forgotPass,
   mobileLogin,
-  forgotPassSecond,
-  forgotPasswordThird,
   profileUpdate,
   profileList,
   createAccount,

@@ -88,28 +88,9 @@ const verifyOTP = catchAsync(async (req, res) => {
   });
 });
 
+
 const forgotPassword = catchAsync(async (req, res) => {
-  const result = await userService.forgotPass(req.body);
-  res.status(200).send({
-    status: true,
-    data: result,
-  });
-});
-
-const forgotPasswordSecond = catchAsync(async (req, res) => {
-  const result = await userService.forgotPassSecond(req.body);
-  if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Otp mismatch.");
-  }
-  res.status(200).send({
-    status: true,
-    msg: "OTP matched.",
-    token: result,
-  });
-});
-
-const forgotPasswordThird = catchAsync(async (req, res) => {
-  const result = await userService.forgotPasswordThird(req.body);
+  const result = await userService.forgotPass(req);
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, "Something went wrong!");
   }
@@ -196,6 +177,8 @@ const delEmployees = catchAsync(async (req, res) => {
 });
 
 
+
+
 module.exports = {
   createUser,
   login,
@@ -203,8 +186,6 @@ module.exports = {
   loginWithEmail,
   verifyOTP,
   forgotPassword,
-  forgotPasswordSecond,
-  forgotPasswordThird,
   updateProfile,
   profileList,
   createAccount,

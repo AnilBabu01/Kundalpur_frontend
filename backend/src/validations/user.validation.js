@@ -32,28 +32,12 @@ const loginEmail = {
   }),
 };
 
+
+
 const forgotPass = {
   body: Joi.object().keys({
-    identity: Joi.string().required(),
-    reset_mode: Joi.string().required(),
-  }),
-};
-
-const forgotPassSecond = {
-  body: Joi.object().keys({
-    identity: Joi.string().required(),
-    reset_mode: Joi.string().required(),
-    otp:Joi.string().required(),
-  })
-}
-
-const forgotPassThird = {
-  body: Joi.object().keys({
-    identity: Joi.string().required(),
-    reset_mode: Joi.string().required(),
-    token:Joi.string().required(),
-    new_password:Joi.string().required().custom(password),
-    confirmPassword:Joi.string().required().custom(password)
+    oldpassword:Joi.string().required().custom(password),
+    newPassword:Joi.string().required().custom(password)
   })
 }
 
@@ -62,7 +46,5 @@ module.exports = {
   register,
   loginMobile,
   loginEmail,
-  forgotPass,
-  forgotPassSecond,
-  forgotPassThird
+  forgotPass
 };

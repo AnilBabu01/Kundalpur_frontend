@@ -28,6 +28,8 @@ db.usersRolesModel.belongsTo(db.userModel, {
 // });
 
 const bcrypt = require("bcryptjs");
+const ApiError = require("../utils/ApiError");
+const httpStatus = require("http-status");
 
 class UserCollaction {
   getUserByEmail = async (email) => {
@@ -193,21 +195,45 @@ class UserCollaction {
     return null;
   };
 
-  forgotTokenMatch = async (body) => {
-    const { identity, token } = body;
-    const user = await this.getUserName(identity);
-    const data = await TblPasswordReset.findOne({
-      where: { user_id: user.id },
+  forgotPass = async (req) => {
+    const id = req.user.id;
+
+    const {oldpassword,newPassword} = req.body;
+    let data;
+    
+    const salt = bcrypt.genSaltSync(12);
+    const hashencrypt = bcrypt.hashSync(newPassword, salt);
+
+    const user = await TblUser.findOne({
+      where: {
+        id: id,
+      },
     });
 
-    if (data.resetPasswordToken == body.token) {
-      return {
-        resetPasswordToken: data.resetPasswordToken,
-        resetPasswordExpires: data.resetPasswordExpires,
-        user_id: user.id,
-      };
+    if (!user){
+      throw new ApiError(httpStatus.UNAUTHORIZED,"Your not Authorized ");
+      
+    }else{
+      let checkpass = await this.isPasswordMatch(oldpassword,user.password)
+      console.log(checkpass)
+     if (checkpass){
+         data = await TblUser.update({
+           password: hashencrypt,
+
+        },
+        {
+          where:{
+            id:user.id
+          }
+        }
+        )
+      }
+    
     }
-    return null;
+
+
+return data
+
   };
 } //end of class
 

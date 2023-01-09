@@ -4,11 +4,11 @@ import badebaba from "../../../assets/badebaba.jpg";
 import { displayRazorpay } from "../../../RazorPay/RazorPay";
 import PaymentSuccessfull from "./PaymentSuccessfull/PaymentSuccessfull";
 import ChequeSuccessfull from "./chequeSuccessfull/ChequeSuccessfull";
-import { TypesOfDonation } from "./TypesOfDonation";
 import { backendApiUrl } from "../../../config/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../../../Redux/redux/action/AuthAction";
+
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -37,7 +37,7 @@ function Donation({ setshowreciept }) {
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [formerror, setFormerror] = useState({});
-  const [fordonatoin, setfordonatoin] = useState("");
+  const [isData, setisData] = React.useState([]);
   const [cheqing, setcheqing] = useState("");
   const [donationdata, setDonationdata] = useState({
     name: "",
@@ -50,7 +50,7 @@ function Donation({ setshowreciept }) {
     amount: "",
     address: "",
   });
-
+  console.log("ssssssfrg", isData);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleOpen1 = () => setOpen1(true);
@@ -189,9 +189,25 @@ function Donation({ setshowreciept }) {
   const gett = () => {
     dispatch(loadUser());
   };
+  const getall_donatiions = () => {
+    try {
+      serverInstance("admin/donation-type", "get").then((res) => {
+        if (res.status) {
+          setisData(res.data);
 
+          console.log(res.data);
+        } else {
+          Swal("Error", "somthing went  wrong", "error");
+        }
+        console.log("sss", res);
+      });
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
+  };
   useEffect(() => {
     gett();
+    getall_donatiions();
     setshowreciept(false);
   }, []);
   return auth.verify ? (
@@ -344,11 +360,12 @@ function Donation({ setshowreciept }) {
                   value={donationdata.donationtype}
                   onChange={onChange}
                 >
-                  {TypesOfDonation.map((mode) => (
-                    <option key={mode} value={mode}>
-                      {mode}
-                    </option>
-                  ))}
+                  {isData &&
+                    isData.map((item) => (
+                      <option key={item.id} value={item.type_hi}>
+                        {item.type_hi}
+                      </option>
+                    ))}
                 </select>
                 <p style={{ color: "red", marginTop: "5px" }}>
                   {formerror.donationtype}

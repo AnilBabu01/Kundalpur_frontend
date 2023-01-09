@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PostAddIcon from "@mui/icons-material/PostAdd";
-import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import CloseIcon from "@mui/icons-material/Close";
-import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { serverInstance } from "../../../../API/ServerInstance";
@@ -11,7 +8,6 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
@@ -42,7 +38,6 @@ function DonationMaster() {
   const [donationtype_in_eng, setdonationtype_in_eng] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const typesOfDonation = ["Please Select donation types", "Online", "Cheque"];
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -74,23 +69,27 @@ function DonationMaster() {
   };
 
   const getall_donatiions = () => {
-    serverInstance("admin/donation-type", "get").then((res) => {
-      if (res.status) {
-        setisData(res.data);
+    try {
+      serverInstance("admin/donation-type", "get").then((res) => {
+        if (res.status) {
+          setisData(res.data);
 
-        console.log(res.data);
-      } else {
-        Swal("Error", "somthing went  wrong", "error");
-      }
-      console.log("sss", res);
-    });
+          console.log(res.data);
+        } else {
+          Swal("Error", "somthing went  wrong", "error");
+        }
+        console.log("sss", res);
+      });
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
   };
   useEffect(() => {
     getall_donatiions();
-  }, [refetch]);
+  }, [refetch, open]);
 
   const deletedonation = (id) => {
-    serverInstance(`admin/donation-type"?id=${id}`, "delete").then((res) => {
+    serverInstance(`admin/donation-type?id=${id}`, "delete").then((res) => {
       if (res.status === true) {
         Swal.fire("Great!", "User delete successfully", "success");
         setrefetch(true);
@@ -190,9 +189,10 @@ function DonationMaster() {
                   <TableCell>{index + 1}</TableCell>
 
                   <TableCell>{row.type_hi}</TableCell>
-                  <TableCell>{row.type_hi}</TableCell>
+                  <TableCell>{row.type_en}</TableCell>
                   <TableCell>
-                    <EditIcon /> <DeleteForeverIcon />
+                    <EditIcon />
+                    <DeleteForeverIcon onClick={() => deletedonation(row.id)} />
                   </TableCell>
                 </TableRow>
               ))}

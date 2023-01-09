@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { backendApiUrl } from "../../../../../config/config";
+import { serverInstance } from "../../../../../API/ServerInstance";
 import { typesOfDonation } from "./Data";
 import axios from "axios";
 
@@ -13,11 +14,12 @@ const CashDonation = ({ setOpen, setshowalert, handleClose }) => {
   const [address, setaddress] = useState("");
   const [new_member, setnew_member] = useState(false);
   const [phoneNo, setphoneNo] = useState("");
+  const [isData, setisData] = React.useState([]);
   const [noOfRows, setNoOfRows] = useState({ id: 1 });
   const [rowsData, setRowsData] = useState([noOfRows]);
   const [formerror, setFormerror] = useState({});
   const [item, setitem] = useState([]);
-  console.log(item, amount);
+  console.log(isData);
 
   const RemoveRow = (index) => {
     const data = rowsData.filter((i) => i.id !== index);
@@ -99,20 +101,28 @@ const CashDonation = ({ setOpen, setshowalert, handleClose }) => {
       errors.name = "Please enter name";
     }
 
-    // if (!amount) {
-    //   errors.name = "Please enter amount";
-    // }
-
-    // if (!phoneNo) {
-    //   errors.name = "Please enter phone No";
-    // }
-
-    // if (!donationtype) {
-    //   errors.name = "Please enter donation type";
-    // }
-
     return errors;
   };
+
+  const getall_donatiions = () => {
+    try {
+      serverInstance("admin/donation-type", "get").then((res) => {
+        if (res.status) {
+          setisData(res.data);
+
+          console.log(res.data);
+        } else {
+          Swal("Error", "somthing went  wrong", "error");
+        }
+        console.log("sss", res);
+      });
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
+  };
+  useEffect(() => {
+    getall_donatiions();
+  }, []);
   return (
     <>
       <div className="cash-donation-div">
@@ -229,11 +239,12 @@ const CashDonation = ({ setOpen, setshowalert, handleClose }) => {
                       // value={donationtype}
                       onChange={(e) => setdonationtype(e.target.value)}
                     >
-                      {typesOfDonation.map((mode) => (
-                        <option key={mode} value={mode}>
-                          {mode}
-                        </option>
-                      ))}
+                      {isData &&
+                        isData.map((item) => (
+                          <option key={item.id} value={item.type_hi}>
+                            {item.type_hi}
+                          </option>
+                        ))}
                     </select>
                   </td>
                   <td>
@@ -275,11 +286,12 @@ const CashDonation = ({ setOpen, setshowalert, handleClose }) => {
                             // value={donationtype}
                             onChange={(e) => setdonationtype(e.target.value)}
                           >
-                            {typesOfDonation.map((mode) => (
-                              <option key={mode} value={mode}>
-                                {mode}
-                              </option>
-                            ))}
+                            {isData &&
+                              isData.map((item) => (
+                                <option key={item.id} value={item.type_hi}>
+                                  {item.type_hi}
+                                </option>
+                              ))}
                           </select>
                         </td>
                         <td>

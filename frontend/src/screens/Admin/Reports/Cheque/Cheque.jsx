@@ -7,13 +7,14 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
+import EditIcon from "@mui/icons-material/Edit";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import "./Cheque.css";
-const Cheque = () => {
+const Cheque = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -22,6 +23,7 @@ const Cheque = () => {
 
   useEffect(() => {
     getall_donation();
+    setopendashboard(true);
   }, []);
 
   const getall_donation = () => {
@@ -51,6 +53,7 @@ const Cheque = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   return (
     <>
       <div className="dashboarddiv">
@@ -95,7 +98,7 @@ const Cheque = () => {
                   <TableCell>Name of Bank</TableCell>
                   <TableCell>Payment id</TableCell>
                   <TableCell>certificate</TableCell>
-                  <TableCell>Edit/Delete</TableCell>
+                  <TableCell>View/Edit/Delete</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -145,6 +148,13 @@ const Cheque = () => {
                     </TableCell>
                     <TableCell>
                       <RemoveRedEyeIcon />
+                      <EditIcon
+                        onClick={() =>
+                          navigation(
+                            `/admin-panel/masters/reports/changeStatus/${row.id}`
+                          )
+                        }
+                      />
                       <DeleteForeverIcon />
                     </TableCell>
                   </TableRow>

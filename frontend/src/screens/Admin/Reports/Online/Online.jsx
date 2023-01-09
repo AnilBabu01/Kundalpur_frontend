@@ -13,16 +13,12 @@ import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import "./Online.css";
-const Online = () => {
+const Online = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const navigation = useNavigate();
-
-  useEffect(() => {
-    getall_donation();
-  }, []);
 
   const getall_donation = () => {
     serverInstance("admin/donation-list", "get").then((res) => {
@@ -51,6 +47,14 @@ const Online = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const filterdata = () => {};
+
+  useEffect(() => {
+    getall_donation();
+    setopendashboard(true);
+  }, []);
+
   return (
     <>
       <div className="dashboarddiv">

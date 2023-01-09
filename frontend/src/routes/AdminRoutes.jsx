@@ -15,77 +15,148 @@ import Online from "../screens/Admin/Reports/Online/Online";
 import Electronic from "../screens/Admin/Reports/Electornic/Electornic";
 import Userinfo from "../screens/Admin/masters/Usermaster/Userinfo";
 import Updateuser from "../screens/Admin/masters/Usermaster/Updateuser";
+import Adminprivateroute from "../components/AdminOutlate/Adminprivateroute";
+import ChangeStatus from "../screens/Admin/Reports/Electornic/ChangeStatus";
 function AdminRoutes({ setopendashboard }) {
   return (
     <>
       <Routes>
         <Route
           path="/admin-panel/dashboard"
-          element={<Dashboard setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <Dashboard setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
         <Route
           path="/admin-panel/master"
-          element={<MasterTap setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <MasterTap setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
         <Route
           path="/admin-panel/donatedusers"
-          element={<DonatedUsers setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <DonatedUsers setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
         <Route
           path="/admin-panel/roombooking"
-          element={<RoomBooking setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <RoomBooking setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
 
         <Route
           path="/admin-panel/alldonation"
-          element={<AllDonationTap setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <AllDonationTap setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
         <Route
           path="/admin-panel/donation"
-          element={<Donation setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <Donation setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
 
         <Route
           path="/admin-panel/rolemanagement"
-          element={<RoleManagement setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <RoleManagement setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
         <Route
           path="/admin-panel/usermanagement"
-          element={<UserManagement setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <UserManagement setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
 
         <Route
           path="/admin-panel/vouchermanagement"
-          element={<VoucherManagement setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <VoucherManagement setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
 
         <Route
           path="/admin-panel/infoElectronic/:id"
-          element={<InfoElectronic setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <InfoElectronic setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
 
         <Route
           path="/admin-panel/reports/online"
-          element={<Online setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <Online setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
         <Route
           path="/admin-panel/reports/cheque"
-          element={<Cheque setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <Cheque setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
 
         <Route
           path="/admin-panel/reports/electronic"
-          element={<Electronic setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <Electronic setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
 
         <Route
           path="/admin-panel/masters/userinfo"
-          element={<Userinfo setopendashboard={setopendashboard} />}
+          element={
+            <Adminprivateroute>
+              <Userinfo setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
 
         <Route
-          path="/admin-panel/masters/updateuser/:id"
-          element={<Updateuser setopendashboard={setopendashboard} />}
+          path="/admin-panel/masters/updateuser"
+          element={
+            <Adminprivateroute>
+              <Updateuser setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/masters/reports/changeStatus/:id"
+          element={
+            <Adminprivateroute>
+              <ChangeStatus setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
         />
       </Routes>
     </>

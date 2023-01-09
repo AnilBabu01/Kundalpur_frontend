@@ -11,15 +11,92 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { secondaryColor } from "../../../utils/colorVariables";
 import Sidebar from "../Sidebar/Sidebar";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/logo.jpg";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import Logout from "@mui/icons-material/Logout";
+
 import "./AdminHeader.css";
 const AdminHeader = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
   const [showsidebar, setshowsidebar] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
+  const logout = () => {
+    handleClose();
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userrole");
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
   return (
     <>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            mt: 1.5,
+            "& .MuiAvatar-root": {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            "&:before": {
+              content: '""',
+              display: "block",
+              position: "absolute",
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem onClick={() => navigate("/changepassword")}>
+          <ListItemIcon>
+            <LockOpenIcon fontSize="small" />
+          </ListItemIcon>
+          Change Password
+        </MenuItem>
+
+        <Divider />
+        <MenuItem onClick={() => logout()}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
       <div className="adminmainheader">
         <div className="adminnavbar">
           <div className="routetilem">
@@ -85,7 +162,11 @@ const AdminHeader = () => {
                 >
                   Pranay
                 </Typography>
-                <IconButton size="small" aria-label="more">
+                <IconButton
+                  size="small"
+                  aria-label="more"
+                  onClick={handleClick}
+                >
                   <ArrowDropDownOutlinedIcon
                     size="large"
                     sx={{ color: secondaryColor }}

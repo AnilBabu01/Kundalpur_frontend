@@ -91,7 +91,7 @@ function UserMaster() {
     serverInstance(`admin/del-users?id=${id}`, "delete").then((res) => {
       if (res.status === true) {
         Swal.fire("Great!", "User delete successfully", "success");
-        setrefetch(refetch);
+        setrefetch(true);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
@@ -233,7 +233,11 @@ function UserMaster() {
                     />
                     <EditIcon
                       onClick={() =>
-                        navigation(`/admin-panel/masters/updateuser/${row.id}`)
+                        navigation(`/admin-panel/masters/updateuser`, {
+                          state: {
+                            userdata: row,
+                          },
+                        })
                       }
                     />
                     <DeleteForeverIcon onClick={() => deleteuser(row.id)} />

@@ -30,38 +30,25 @@ const EmailLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (unchecked3) {
-        const res = await axios.post(`${backendApiUrl}admin/login`, {
-          username: username,
-          password: adminpassword,
-        });
-
-        if (res.data.user) {
+      const res = await axios.post(`${backendApiUrl}user/login`, {
+        identity: email,
+        password: password,
+      });
+      if (res.data.status) {
+        Swal.fire("Great!", "You Have Loginn Successfully", "success");
+        var decoded = jwt_decode(res.data.tokens.access.token);
+        if (decoded.role === 1) {
           navigate("/admin-panel/dashboard");
-          Swal.fire("Great!", "You Have Loginn Successfully", "success");
-          var decoded = jwt_decode(res.data.tokens.access.token);
-
-          sessionStorage.setItem("userrole", decoded.role);
-          sessionStorage.setItem("token", res.data.tokens.access.token);
-          auth.setUser(res.data.tokens.access.token);
         }
-      } else {
-        const res = await axios.post(`${backendApiUrl}user/login`, {
-          identity: email,
-          password: password,
-        });
-
-        console.log("res", res);
-
-        if (res.data.status) {
-          navigate("/");
-          Swal.fire("Great!", "You Have Loginn Successfully", "success");
-          var decoded = jwt_decode(res.data.tokens.access.token);
-
-          sessionStorage.setItem("userrole", decoded.role);
-          sessionStorage.setItem("token", res.data.tokens.access.token);
-          auth.setUser(res.data.tokens.access.token);
+        if (decoded.role === 2) {
+          navigate("/donation");
         }
+        if (decoded.role === 3) {
+          navigate("/admin-panel/dashboard");
+        }
+        sessionStorage.setItem("userrole", decoded.role);
+        sessionStorage.setItem("token", res.data.tokens.access.token);
+        auth.setUser(res.data.tokens.access.token);
       }
     } catch (error) {
       Swal.fire("Error!", error.response.data.message, "error");
@@ -167,16 +154,16 @@ const EmailLogin = () => {
         {unchecked3 && (
           <>
             <div className="input-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <input
                 className="remove_underline"
                 required
-                type="username"
-                id="username"
-                name="username"
-                placeholder="enter Username"
-                value={username}
-                onChange={(e) => setusername(e.target.value)}
+                type="email"
+                id="email"
+                name="email"
+                placeholder="enter email"
+                value={email}
+                onChange={handleInputChange}
               />
             </div>
             <div className="input-group">
@@ -184,12 +171,12 @@ const EmailLogin = () => {
               <input
                 className="remove_underline"
                 required
-                type="adminpassword"
-                id="adminpassword"
-                name="adminpassword"
+                type="password"
+                id="password"
+                name="password"
                 placeholder="enter password"
-                value={adminpassword}
-                onChange={(e) => setadminpassword(e.target.value)}
+                value={password}
+                onChange={handleInputChange}
               />
             </div>
             <div className="input-group">
@@ -201,16 +188,16 @@ const EmailLogin = () => {
         {unchecked2 && (
           <>
             <div className="input-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <input
                 className="remove_underline"
                 required
-                type="username"
-                id="username"
-                name="username"
-                placeholder="enter Username"
-                value={username}
-                onChange={(e) => setusername(e.target.value)}
+                type="email"
+                id="email"
+                name="email"
+                placeholder="enter email"
+                value={email}
+                onChange={handleInputChange}
               />
             </div>
             <div className="input-group">
@@ -218,12 +205,12 @@ const EmailLogin = () => {
               <input
                 className="remove_underline"
                 required
-                type="adminpassword"
-                id="adminpassword"
-                name="adminpassword"
+                type="password"
+                id="password"
+                name="password"
                 placeholder="enter password"
-                value={adminpassword}
-                onChange={(e) => setadminpassword(e.target.value)}
+                value={password}
+                onChange={handleInputChange}
               />
             </div>
             <div className="input-group">

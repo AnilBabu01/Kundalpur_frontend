@@ -141,6 +141,92 @@ class DonationCollaction {
     return result;
   };
 
+  delDonation = async (req) => {
+    let { id, mode } = req.query;
+
+    if (mode == 2) {
+      mode = "CHEQUE";
+    } else {
+      mode = "ONLINE";
+    }
+
+    console.log(mode, id);
+    const result = await TblNewDonation.destroy({
+      where: {
+        id: id,
+        MODE_OF_DONATION: mode,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        return {
+          status: 1,
+          message: "Deleted Successfully",
+        };
+      })
+      .catch((err) => {
+        console.log(err, "err");
+        return {
+          status: 1,
+          message: "Something wrong!",
+        };
+      });
+    return result;
+  };
+
+  editDonation = async (req) => {
+    const {
+      NAME,
+      MODE_OF_DONATION,
+      AMOUNT,
+      CHEQUE_NO,
+      DATE_OF_CHEQUE,
+      NAME_OF_BANK,
+      PAYMENT_ID,
+      DATE_OF_DAAN,
+      TYPE,
+      REMARK,
+      ADDRESS,
+      ID,
+    } = req.body;
+
+    let mode;
+    let IMG = "";
+
+    if (MODE_OF_DONATION == 1) {
+      mode = "ONLINE";
+    } else {
+      const { chequeImg } = req.files;
+
+      IMG = uploadimage(chequeImg);
+      mode = "CHEQUE";
+    }
+
+    let result = await TblNewDonation.update(
+      {
+        NAME: NAME,
+        AMOUNT: AMOUNT,
+        CHEQUE_NO: CHEQUE_NO,
+        DATE_OF_CHEQUE: DATE_OF_CHEQUE,
+        NAME_OF_BANK: NAME_OF_BANK,
+        PAYMENT_ID: PAYMENT_ID,
+        DATE_OF_DAAN: DATE_OF_DAAN,
+        TYPE: TYPE,
+        REMARK: REMARK,
+        ADDRESS: ADDRESS,
+        IMG: IMG,
+      },
+
+      {
+        where: {
+          id: ID,
+          MODE_OF_DONATION: mode,
+        },
+      }
+    );
+    return result;
+  };
+
   delElecDonation = async (req) => {
     let id = req.query.id;
     console.log(id);
@@ -263,20 +349,21 @@ class DonationCollaction {
         },
       }
     ).then(async () => {
-      donation_item.forEach(async(e) => {
-       
-        let items = await TblelecDonationItem.update({
-          type: e.type,
-          amount: e.amount,
-          remark: e.remark,
-        },
-        
-        {
-          where:{
-            donationId: id,
-            id: e.id,
+      donation_item.forEach(async (e) => {
+        let items = await TblelecDonationItem.update(
+          {
+            type: e.type,
+            amount: e.amount,
+            remark: e.remark,
+          },
+
+          {
+            where: {
+              donationId: id,
+              id: e.id,
+            },
           }
-        })
+        );
       });
 
       return {
@@ -284,7 +371,6 @@ class DonationCollaction {
         message: "Updated Successfully",
       };
     });
- 
 
     return result;
   };
@@ -424,40 +510,40 @@ class DonationCollaction {
 
   ChangeChequeStatus = async (req) => {
     const { status, id } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     ///status 0 == false ///status 1 === true means active
     let data;
 
     if (status == 1) {
       data = await TblNewDonation.update(
         {
-          active: '1',
+          active: "1",
         },
         {
           where: {
             id: id,
-            MODE_OF_DONATION: "CHEQUE"
+            MODE_OF_DONATION: "CHEQUE",
           },
         }
-      ).catch((err)=>{
-        console.log(err)
-      })
+      ).catch((err) => {
+        console.log(err);
+      });
     } else if (status == 0) {
       data = await TblNewDonation.update(
         {
-          active: '0',
+          active: "0",
         },
         {
           where: {
             id: id,
-            MODE_OF_DONATION: "CHEQUE"
+            MODE_OF_DONATION: "CHEQUE",
           },
         }
-      ).catch((err)=>{
-        console.log(err)
-      })
+      ).catch((err) => {
+        console.log(err);
+      });
     }
-console.log(data);
+    console.log(data);
     return data;
   };
 }

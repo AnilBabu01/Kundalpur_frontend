@@ -9,6 +9,8 @@ router.route('/cheque-status').post(auth(),donationController.ChangeChequeStatus
 router.route('/login').post(validate(authValidation.adminLogin), adminController.adminLogin);
 router.route('/user-register').post(validate(userValidation.register), adminController.userRegister);
 router.route('/donation-list').get(adminController.allList);
+router.route('/donation-list').delete(donationController.delDonation);
+router.route('/donation-list').put(donationController.editDonation);
 router.route('/donation-list/:id').get(adminController.allList);
 router.route('/get-users').get(auth(),userController.getUsers)
 router.route('/get-users').put(auth(),adminController.editUser)

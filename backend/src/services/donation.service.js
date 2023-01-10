@@ -23,6 +23,18 @@ const addNewDonation = async(req)=>{
   return donation;
 }
 
+const delDonation = async(req)=>{
+  const donation = await DonationCollection.delDonation(req);
+
+  return donation;
+}
+
+const editDonation = async(req)=>{
+  const donation = await DonationCollection.editDonation(req);
+
+  return donation;
+}
+
 const addelecDonation = async(req)=>{
   const lastID = await DonationCollection.getElecLastID();
   const receiptNo = generateElcReceiptNo(lastID);
@@ -124,5 +136,7 @@ module.exports = {
   DelDonationType,
   EditDonationType,
   ChangeChequeStatus,
-  editElecDonation
+  editElecDonation,
+  delDonation,
+  editDonation
 };

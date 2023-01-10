@@ -17,7 +17,7 @@ const addNewDonation = catchAsync(async (req, res) => {
 
 const delDonation = catchAsync(async (req, res) => {
   const data = await donationService.delDonation(req);
-  console.log(data,'elect')
+    console.log(data,"status")
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }

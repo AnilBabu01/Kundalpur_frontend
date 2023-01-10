@@ -155,10 +155,9 @@ class UserCollaction {
   };
 
   updateProfile = async (req) => {
-    const { name, email, password, dob, anniversary_date, address } = req.body;
+    const { name, email, dob, anniversary_date, address } = req.body;
     console.log(req.body);
     const salt = bcrypt.genSaltSync(12);
-    const hashencrypt = bcrypt.hashSync(password, salt);
 
     const userId = req.user.id;
     const user = await TblUser.findByPk(userId);
@@ -172,7 +171,6 @@ class UserCollaction {
 
     user.name = name;
     user.email = email;
-    user.password = hashencrypt;
     user.dob = dob;
     user.anniversary_date = anniversary_date;
     user.address = address;

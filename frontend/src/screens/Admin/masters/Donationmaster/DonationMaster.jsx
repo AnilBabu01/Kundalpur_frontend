@@ -12,6 +12,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
+
+import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { backendApiUrl } from "../../../../config/config";
 import Swal from "sweetalert2";
@@ -29,6 +31,7 @@ const style = {
 };
 import "./DonationMaster.css";
 function DonationMaster() {
+  const naviagte = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -84,21 +87,22 @@ function DonationMaster() {
       Swal.fire("Error!", error, "error");
     }
   };
-  useEffect(() => {
-    getall_donatiions();
-  }, [refetch, open]);
 
   const deletedonation = (id) => {
     serverInstance(`admin/donation-type?id=${id}`, "delete").then((res) => {
       if (res.status === true) {
         Swal.fire("Great!", "User delete successfully", "success");
-        setrefetch(true);
+        setrefetch(!refetch);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
       console.log(res);
     });
   };
+
+  useEffect(() => {
+    getall_donatiions();
+  }, [refetch, open]);
   return (
     <>
       <Modal
@@ -191,7 +195,18 @@ function DonationMaster() {
                   <TableCell>{row.type_hi}</TableCell>
                   <TableCell>{row.type_en}</TableCell>
                   <TableCell>
-                    <EditIcon />
+                    <EditIcon
+                      onClick={() =>
+                        naviagte(
+                          `/admin-panel/masters/updateDonationType/${row.id}`,
+                          {
+                            state: {
+                              data: row,
+                            },
+                          }
+                        )
+                      }
+                    />
                     <DeleteForeverIcon onClick={() => deletedonation(row.id)} />
                   </TableCell>
                 </TableRow>

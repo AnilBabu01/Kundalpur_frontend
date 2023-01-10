@@ -92,14 +92,12 @@ const Reciept = ({ setopendashboard, setshowreciept }) => {
               </div>
               <div className="recipt-info-div">
                 <h2>दान का मदः:</h2>
-                <p>
-                  {isData?.TYPE
-                    ? isData?.TYPE
-                    : isData &&
-                      isData.elecItemDetails.map((item) => {
-                        return `${item.type} , `;
-                      })}{" "}
-                </p>
+                {isData && isData?.TYPE
+                  ? isData?.TYPE
+                  : isData &&
+                    isData.elecItemDetails.map((item) => {
+                      return <p key={item.id}>{item.type}</p>;
+                    })}{" "}
               </div>
               <div className="recipt-info-div">
                 <h2>विवरण :</h2>

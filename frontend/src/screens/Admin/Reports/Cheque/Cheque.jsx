@@ -18,7 +18,7 @@ const Cheque = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  const [refetch, setrefetch] = useState(false);
   const navigation = useNavigate();
 
   const getall_donation = () => {
@@ -52,10 +52,24 @@ const Cheque = ({ setopendashboard }) => {
     setPage(0);
   };
 
+  const deletecheque = (id) => {
+    serverInstance(`admin/donation-list?id=${id}&mode=${2}`, "delete").then(
+      (res) => {
+        if (res.status === true) {
+          Swal.fire("Great!", "Cheque donation delete successfully", "success");
+          setrefetch(!refetch);
+        } else {
+          Swal("Error", "somthing went  wrong", "error");
+        }
+        console.log(res);
+      }
+    );
+  };
+
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
-  }, []);
+  }, [refetch]);
   return (
     <>
       <div className="dashboarddiv">
@@ -149,7 +163,15 @@ const Cheque = ({ setopendashboard }) => {
                       downolod
                     </TableCell>
                     <TableCell>
-                      <RemoveRedEyeIcon />
+                      <RemoveRedEyeIcon
+                        onClick={() =>
+                          navigation(`/admin-panel/reports/chequeinfo`, {
+                            state: {
+                              data: row,
+                            },
+                          })
+                        }
+                      />
                       <EditIcon
                         onClick={() =>
                           navigation(
@@ -157,7 +179,7 @@ const Cheque = ({ setopendashboard }) => {
                           )
                         }
                       />
-                      <DeleteForeverIcon />
+                      <DeleteForeverIcon onClick={() => deletecheque(row.id)} />
                     </TableCell>
                   </TableRow>
                 ))}

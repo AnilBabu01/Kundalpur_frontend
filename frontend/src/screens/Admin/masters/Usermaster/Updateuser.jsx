@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Updateuser() {
+function Updateuser({ setopendashboard }) {
   const location = useLocation();
   const navigation = useNavigate();
   const [isData, setisData] = React.useState(null);
@@ -38,10 +38,16 @@ function Updateuser() {
   };
   useEffect(() => {
     if (location.state) {
+      console.log(location.state);
       setisData(location.state?.userdata);
+      setname(location.state?.userdata.name);
+      setaddress(location.state?.userdata.address);
+      setemail(location.state?.userdata.email);
+      setmobile(location.state?.userdata.mobileNo);
     } else {
       navigation("/admin-panel/master");
     }
+    setopendashboard(true);
   }, []);
 
   console.log(isData?.id);
@@ -87,17 +93,6 @@ function Updateuser() {
                         onChange={(e) => setemail(e.target.value)}
                       />
                     </div>
-                    <div className="input-group-profile">
-                      <label htmlFor="password">Password</label>
-                      <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="enter password"
-                        value={password}
-                        onChange={(e) => setpassword(e.target.value)}
-                      />
-                    </div>
                   </div>
                   <div>
                     <div>
@@ -113,14 +108,14 @@ function Updateuser() {
                         />
                       </div>
                       <div className="input-group-profile">
-                        <label htmlFor="address">Address</label>
+                        <label htmlFor="password">Password</label>
                         <input
-                          type="address"
-                          id="address"
-                          name="address"
-                          placeholder="enter address"
-                          value={address}
-                          onChange={(e) => setaddress(e.target.value)}
+                          type="password"
+                          id="password"
+                          name="password"
+                          placeholder="enter password"
+                          value={password}
+                          onChange={(e) => setpassword(e.target.value)}
                         />
                       </div>
                     </div>

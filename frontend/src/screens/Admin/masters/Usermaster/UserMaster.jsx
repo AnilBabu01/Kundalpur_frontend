@@ -65,6 +65,10 @@ function UserMaster() {
       if (data.status === true) {
         Swal.fire("Great!", "User Added Successfully", "success");
         handleClose();
+        setemail("");
+        setpassword("");
+        setname("");
+        setphone("");
       }
     } catch (error) {
       Swal.fire("Error!", error.response.data.message, "error");
@@ -91,7 +95,7 @@ function UserMaster() {
     serverInstance(`admin/del-users?id=${id}`, "delete").then((res) => {
       if (res.status === true) {
         Swal.fire("Great!", "User delete successfully", "success");
-        setrefetch(true);
+        setrefetch(!refetch);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }

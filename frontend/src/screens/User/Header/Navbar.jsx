@@ -19,21 +19,28 @@ import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import Logout from "@mui/icons-material/Logout";
-
+import { useSelector, useDispatch } from "react-redux";
+import { loadUser } from "../../../Redux/redux/action/AuthAction";
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [isMobile, setisMobile] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const { user } = useSelector((state) => state.userReducer);
+  console.log("anil", user);
   const handleClose = () => {
     setAnchorEl(null);
   };
   const token = sessionStorage.getItem("token");
-  useEffect(() => {}, [isMobile, token]);
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [isMobile, token]);
 
   const logout = () => {
     handleClose();
@@ -176,7 +183,7 @@ const Navbar = () => {
                   }}
                 >
                   <Avatar
-                    alt="Remy Sharp"
+                    alt={user?.name}
                     src="/static/images/avatar/1.jpg"
                     sx={{
                       width: 35,

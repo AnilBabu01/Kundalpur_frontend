@@ -65,7 +65,7 @@ const Donation = ({ setopendashboard }) => {
           "Eletronic donation delete successfully",
           "success"
         );
-        setshowalert(true);
+        setshowalert(!showalert);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
@@ -92,6 +92,11 @@ const Donation = ({ setopendashboard }) => {
       });
     }
   };
+
+  useEffect(() => {
+    setopendashboard(true);
+    getall_donation();
+  }, [showalert, open]);
   return (
     <>
       <Modal

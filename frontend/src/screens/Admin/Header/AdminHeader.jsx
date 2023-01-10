@@ -146,7 +146,7 @@ const AdminHeader = () => {
                 }}
               >
                 <Avatar
-                  alt="Remy Sharp"
+                  alt={user?.name}
                   src="/static/images/avatar/1.jpg"
                   variant="rounded"
                   sx={{

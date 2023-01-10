@@ -83,7 +83,7 @@ const VoucherManagement = ({ setopendashboard }) => {
           <Box sx={style}>
             <div>
               <div className="add-div-close-div1">
-                <h2> Add User</h2>
+                <h2>Generate Voucher</h2>
                 <CloseIcon onClick={() => handleClose()} />
               </div>
 

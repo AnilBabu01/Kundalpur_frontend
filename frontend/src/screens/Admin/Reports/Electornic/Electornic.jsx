@@ -62,6 +62,7 @@ const Electornic = ({ setopendashboard }) => {
       console.log(res);
     });
   };
+
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
@@ -141,7 +142,7 @@ const Electornic = ({ setopendashboard }) => {
                       <EditIcon
                         onClick={() =>
                           navigation(
-                            `/admin-panel/masters/reports/changeStatus/${row.id}`
+                            `/admin-panel/reports/changeStatus/${row.id}`
                           )
                         }
                       />

@@ -30,7 +30,7 @@ const AddVoucherToUser = ({ setOpen }) => {
 
       console.log(res);
       if (res.data.message) {
-        Swal.fire("Great!", res.message, "success");
+        Swal.fire("Great!", "VOUCHER GENERATED SUCCESSFULLY", "success");
         setOpen(false);
       }
       // if (res.data.status === false) {

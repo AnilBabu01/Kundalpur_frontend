@@ -20,6 +20,7 @@ function Profile() {
   const [profile_image, setprofile_image] = useState("");
   const [previewprofile, setpreviewprofile] = useState("");
   const [profileimg, setprofileimg] = useState("");
+
   const { user } = useSelector((state) => state.userReducer);
   console.log("sss", user);
 

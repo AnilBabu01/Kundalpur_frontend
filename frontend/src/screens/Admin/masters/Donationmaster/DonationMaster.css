@@ -17,3 +17,20 @@
     font-size: 18px;
   margin-left: 1rem;
 }
+
+.main_center_header-update-donation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    90.65deg,
+    rgba(250, 116, 1, 0.4) 0.56%,
+    rgba(255, 255, 255, 0.4) 99.48%
+  );
+  padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.main_uodate_div{
+  padding: 1rem;
+}

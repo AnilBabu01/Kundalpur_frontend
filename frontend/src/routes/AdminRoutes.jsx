@@ -17,6 +17,8 @@ import Userinfo from "../screens/Admin/masters/Usermaster/Userinfo";
 import Updateuser from "../screens/Admin/masters/Usermaster/Updateuser";
 import Adminprivateroute from "../components/AdminOutlate/Adminprivateroute";
 import ChangeStatus from "../screens/Admin/Reports/Cheque/ChangeStatus";
+import UpdateDonationType from "../screens/Admin/masters/Donationmaster/UpdateDonationType";
+import Chequeinfo from "../screens/Admin/Reports/Cheque/Chequeinfo";
 function AdminRoutes({ setopendashboard }) {
   return (
     <>
@@ -155,6 +157,22 @@ function AdminRoutes({ setopendashboard }) {
           element={
             <Adminprivateroute>
               <ChangeStatus setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/reports/chequeinfo"
+          element={
+            <Adminprivateroute>
+              <Chequeinfo setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/masters/updateDonationType/:id"
+          element={
+            <Adminprivateroute>
+              <UpdateDonationType setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

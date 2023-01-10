@@ -8,20 +8,39 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
+import ChequeSuccessfull from "../donation/chequeSuccessfull/ChequeSuccessfull";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import moment from "moment";
 import "./DonationHistory.css";
 import { useNavigate } from "react-router-dom";
 import { serverInstance } from "../../../API/ServerInstance";
+const style = {
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  borderRadius: "12px",
+  bgcolor: "background.paper",
 
+  boxShadow: 24,
+  p: 2,
+};
 let status;
 function DonationHistory({ setopendashboard, setshowreciept }) {
-  const [isrow, setisrow] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
   const dispatch = useDispatch();
   const navigation = useNavigate();
+  const [isrow, setisrow] = useState([]);
+  const [page, setPage] = useState(0);
+  const [open1, setOpen1] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [useindonationhistory, setuseindonationhistory] = useState(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
+
   console.log(isrow);
   React.useEffect(() => {
     gettable();
@@ -46,6 +65,8 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
 
   const downloadrecept = (row) => {
     if (row.active === "0") {
+      handleOpen1();
+      setuseindonationhistory(true);
     } else {
       navigation("/reciept", {
         state: {
@@ -66,6 +87,22 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
 
   return (
     <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open1}
+        onClose={handleClose1}
+        closeAfterTransition
+      >
+        <Fade in={open1}>
+          <Box sx={style}>
+            <ChequeSuccessfull
+              handleClose={handleClose1}
+              useindonationhistory={useindonationhistory}
+            />
+          </Box>
+        </Fade>
+      </Modal>
       <div className="DonationHistory-main-div">
         <div>
           <div className="table-div-maain-donation-table-main">

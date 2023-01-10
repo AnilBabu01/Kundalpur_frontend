@@ -4,14 +4,14 @@ import { backendApiUrl } from "../config/config";
 let headers = {
   "Content-Type": "multipart/form-data",
 };
-var token = "";
+// var token = "";
 
-const gettoken = () => {
-  if (sessionStorage.getItem("token")) {
-    token = sessionStorage.getItem("token");
-  }
-  return;
-};
+// const gettoken = () => {
+//   if (sessionStorage.getItem("token")) {
+//     token = sessionStorage.getItem("token");
+//   }
+//   return;
+// };
 gettoken();
 const axiosInstance = axios.create({
   baseURL: backendApiUrl,
@@ -20,9 +20,8 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    config.headers.Authorization = `Bearer ${sessionStorage.getItem("token")}`;
+
     return config;
   },
   (error) => {

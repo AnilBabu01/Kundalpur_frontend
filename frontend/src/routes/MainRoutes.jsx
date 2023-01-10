@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "../screens/User/Home/Home";
-
 import EmailLogin from "../screens/User/Auth/EmailLogin/EmailLogin";
 import NewLogin from "../screens/User/Auth/NewLogin/NewLogin";
 import Forgot from "../screens/User/Auth/Forgot/Forgot";
@@ -39,7 +38,7 @@ function MainRoutes({ setopendashboard, setshowreciept }) {
           element={
             // route is protected
             <PrivateRoutes>
-              <Donation />
+              <Donation setshowreciept={setshowreciept} />
             </PrivateRoutes>
           }
         />

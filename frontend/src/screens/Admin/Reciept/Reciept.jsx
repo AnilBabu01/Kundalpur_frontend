@@ -62,7 +62,7 @@ const Reciept = ({ setopendashboard, setshowreciept }) => {
               <p className="shree-second-text">
                 श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि{" "}
               </p>
-              <p className="shree-third-text"> (HTË, HITH UK. 17-)</p>
+              <p className="shree-third-text"> सार्व, न्यास क्रं. 17 - ह</p>
               <p className="shree-four-text">
                 ग्राम- कुण्डलपुर, तह-पटेरा, जिला दमोह (म.प्र.) 470772
               </p>
@@ -83,24 +83,47 @@ const Reciept = ({ setopendashboard, setshowreciept }) => {
               </div>
               <div className="recipt-info-div">
                 <h2>दान दातार श्री :</h2>
-                <p>श्री {isData?.NAME}</p>
+                <p>श्री {isData?.NAME ? isData?.NAME : isData?.name}</p>
                 {/* <p>श्री दिगम्बर जैन सर्वोदय तीर्थक्षेत्र अमरकंटक</p> */}
               </div>
               <div className="recipt-info-div">
                 <h2>स्थान :</h2>
-                <p>{isData?.ADDRESS}</p>
+                <p>{isData?.ADDRESS ? isData?.ADDRESS : isData?.address}</p>
               </div>
               <div className="recipt-info-div">
                 <h2>दान का मदः:</h2>
-                <p>{isData?.TYPE} </p>
+                <p>
+                  {isData?.TYPE
+                    ? isData?.TYPE
+                    : isData &&
+                      isData.elecItemDetails.map((item) => {
+                        return `${item.type} , `;
+                      })}{" "}
+                </p>
               </div>
               <div className="recipt-info-div">
                 <h2>विवरण :</h2>
-                <p>{isData?.REMARK}</p>
+                <p>
+                  {isData?.REMARK
+                    ? isData?.REMARK
+                    : isData &&
+                      isData.elecItemDetails.map((item) => {
+                        return `${item.remark} , `;
+                      })}
+                </p>
               </div>
               <div className="recipt-info-div">
                 <h2>राशि अंको में :</h2>
-                <p>₹{" " + isData?.AMOUNT}</p>
+                <p>
+                  ₹
+                  {isData?.AMOUNT
+                    ? isData?.AMOUNT
+                    : isData &&
+                      isData.elecItemDetails.reduce(
+                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
+                        0
+                      )}
+                </p>
               </div>
             </div>
           </div>

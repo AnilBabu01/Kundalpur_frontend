@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { serverInstance } from "../../../../API/ServerInstance";
 import "./Donation.css";
 function InfoElectronic({ setopendashboard }) {

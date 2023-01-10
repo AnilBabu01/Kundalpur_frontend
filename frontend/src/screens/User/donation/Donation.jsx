@@ -4,10 +4,10 @@ import badebaba from "../../../assets/badebaba.jpg";
 import { displayRazorpay } from "../../../RazorPay/RazorPay";
 import PaymentSuccessfull from "./PaymentSuccessfull/PaymentSuccessfull";
 import ChequeSuccessfull from "./chequeSuccessfull/ChequeSuccessfull";
-import { TypesOfDonation } from "./TypesOfDonation";
 import { backendApiUrl } from "../../../config/config";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { loadUser } from "../../../Redux/redux/action/AuthAction";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -28,14 +28,15 @@ const style = {
   boxShadow: 24,
   p: 2,
 };
-function Donation() {
+function Donation({ setshowreciept }) {
+  const dispatch = useDispatch();
   const nagivate = useNavigate();
   const [mode, setmode] = useState("");
   const [amount, setamount] = useState("");
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [formerror, setFormerror] = useState({});
-  const [fordonatoin, setfordonatoin] = useState("");
+  const [isData, setisData] = React.useState([]);
   const [cheqing, setcheqing] = useState("");
   const [donationdata, setDonationdata] = useState({
     name: "",
@@ -48,14 +49,14 @@ function Donation() {
     amount: "",
     address: "",
   });
-
+  console.log("ssssssfrg", isData);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
   const auth = useAuth();
   const { user } = useSelector((state) => state.userReducer);
-
+  console.log(user);
   if (donationdata.selected === "yes1" && !user.name) {
     nagivate("/profile");
   }
@@ -80,6 +81,7 @@ function Donation() {
     formData.set("TYPE", donationdata?.donationtype);
     formData.set("REMARK", donationdata?.Remark);
     formData.set("ADDRESS", donationdata?.address);
+    formData.set("CHEQUE_NO", donationdata?.chequeno);
     formData.set("chequeImg", cheqing);
     for (var pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
@@ -89,14 +91,13 @@ function Donation() {
       nagivate("/login");
       return false;
     }
-    if (mode === "Onilne") {
+    if (mode === "Onilne" && amount) {
       displayRazorpay(
         {
           ammount: amount,
           userid: 1,
         },
         (data) => {
-          formData.set("PAYMENT_ID", data.razorpay_order_id);
           serverInstance("user/add-donation", "POST", {
             NAME:
               donationdata.selected === "yes1" && user.name
@@ -123,7 +124,14 @@ function Donation() {
       );
     }
 
-    if (mode === "Cheque") {
+    if (
+      mode === "Cheque" &&
+      donationdata.chequeno &&
+      cheqing &&
+      amount &&
+      donationdata.date_of_sub &&
+      donationdata.name_of_bank
+    ) {
       axios.defaults.headers.post[
         "Authorization"
       ] = `Bearer ${sessionStorage.getItem("token")}`;
@@ -147,10 +155,12 @@ function Donation() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.name && !user.name) {
+    if (!values.name) {
       errors.name = "Please enter name";
     }
-
+    if (donationdata.selected === "yes1" && !user.name) {
+      errors.namesecond = "Please enter name";
+    }
     if (!amount) {
       errors.amount = "Please enter amount";
     }
@@ -175,7 +185,30 @@ function Donation() {
 
     return errors;
   };
+  const gett = () => {
+    dispatch(loadUser());
+  };
+  const getall_donatiions = () => {
+    try {
+      serverInstance("admin/donation-type", "get").then((res) => {
+        if (res.status) {
+          setisData(res.data);
 
+          console.log(res.data);
+        } else {
+          Swal("Error", "somthing went  wrong", "error");
+        }
+        console.log("sss", res);
+      });
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
+  };
+  useEffect(() => {
+    gett();
+    getall_donatiions();
+    setshowreciept(false);
+  }, []);
   return auth.verify ? (
     <>
       <Modal
@@ -189,7 +222,11 @@ function Donation() {
           <Box sx={style}>
             <PaymentSuccessfull
               handleClose={handleClose}
-              name={donationdata.name}
+              name={
+                donationdata.selected === "yes1" && user.name
+                  ? user.name
+                  : donationdata.name
+              }
               amount={amount}
               address={donationdata.address}
               mat={donationdata.donationtype}
@@ -225,50 +262,65 @@ function Donation() {
             <h2>Donate</h2>
             <div className="main-input-div">
               <div className="inner-checkbox-div">
-                Donation For :
-                <input
-                  type="radio"
-                  name="selected"
-                  value="yes1"
-                  onChange={onChange}
-                />
-                Self
-                <input
-                  type="radio"
-                  name="selected"
-                  value="yes2"
-                  onChange={onChange}
-                />
-                Someone
-                <p style={{ color: "red", marginTop: "5px" }}>
-                  {formerror.selected}
-                </p>
+                <div className="center_mobile_view">
+                  <span>
+                    Donation For :
+                    <input
+                      className="radio_btb"
+                      type="radio"
+                      name="selected"
+                      value="yes1"
+                      onChange={onChange}
+                    />
+                    Self
+                    <input
+                      className="radio_btb"
+                      type="radio"
+                      name="selected"
+                      value="yes2"
+                      onChange={onChange}
+                    />
+                    Someone
+                  </span>
+                  <p style={{ color: "red" }}>{formerror.selected}</p>
+                </div>
               </div>
-              <div
-                style={{ marginRight: "4.3rem" }}
-                className="inner-checkbox-div"
-              >
-                Mode :
-                <input
-                  type="radio"
-                  value="Onilne"
-                  name="mode"
-                  onChange={(e) => setmode(e.target.value)}
-                />
-                Onilne
-                <input
-                  type="radio"
-                  value="Cheque"
-                  name="mode"
-                  onChange={(e) => setmode(e.target.value)}
-                />
-                Cheque
+              <div className="inner-checkbox-div">
+                <div className="center_mobile_view">
+                  <span>
+                    Donation Mode :
+                    <input
+                      className="radio_btb"
+                      type="radio"
+                      value="Onilne"
+                      name="mode"
+                      onChange={(e) => setmode(e.target.value)}
+                    />
+                    Onilne
+                    <input
+                      className="radio_btb"
+                      type="radio"
+                      value="Cheque"
+                      name="mode"
+                      onChange={(e) => setmode(e.target.value)}
+                    />
+                    Cheque
+                  </span>
+
+                  <p style={{ color: "red", marginTop: "5px" }}>
+                    {donationdata.selected &&
+                      !mode &&
+                      "Please select donation mode"}
+                  </p>
+                </div>
               </div>
             </div>
             <div className="main-input-div">
               <div
                 className={
-                  formerror.name
+                  donationdata.selected === "yes1" && user.name
+                    ? "inner-input-div"
+                    : formerror.name
                     ? "inner-input-div-input-red"
                     : "inner-input-div"
                 }
@@ -285,9 +337,13 @@ function Donation() {
                   }
                   onChange={onChange}
                 />
-                <p style={{ color: "red", marginTop: "5px" }}>
-                  {formerror.name}
-                </p>
+                {donationdata.selected === "yes1" && user.name ? (
+                  ""
+                ) : (
+                  <p style={{ color: "red", marginTop: "5px" }}>
+                    {formerror.name}
+                  </p>
+                )}
               </div>
               <div
                 className={
@@ -303,11 +359,12 @@ function Donation() {
                   value={donationdata.donationtype}
                   onChange={onChange}
                 >
-                  {TypesOfDonation.map((mode) => (
-                    <option key={mode} value={mode}>
-                      {mode}
-                    </option>
-                  ))}
+                  {isData &&
+                    isData.map((item) => (
+                      <option key={item.id} value={item.type_hi}>
+                        {item.type_hi}
+                      </option>
+                    ))}
                 </select>
                 <p style={{ color: "red", marginTop: "5px" }}>
                   {formerror.donationtype}
@@ -383,15 +440,15 @@ function Donation() {
 
                   <div className="save-div-btn">
                     <button
-                      disabled={
-                        donationdata.donationtype &&
-                        donationdata.selected &&
-                        donationdata.address &&
-                        donationdata.Remark
-                          ? false
-                          : true
-                      }
-                      className="save-btn"
+                      // disabled={
+                      //   donationdata.donationtype &&
+                      //   donationdata.selected &&
+                      //   donationdata.address &&
+                      //   donationdata.Remark
+                      //     ? false
+                      //     : true
+                      // }
+                      className="save-btn5"
                       onClick={handlesubmit}
                     >
                       Process to pay
@@ -500,7 +557,13 @@ function Donation() {
                         />
                       </div>
                     </div>
-                    <div className="inner-input-div">
+                    <div
+                      className={
+                        formerror.name_of_bank
+                          ? "inner-input-div-input-red"
+                          : "inner-input-div"
+                      }
+                    >
                       <label>Upload Chueqe</label>
                       <input
                         type="file"
@@ -512,9 +575,7 @@ function Donation() {
                           console.log(e.target.files[0]);
                         }}
                       />
-                      <p style={{ color: "red", marginTop: "5px" }}>
-                        {formerror.name_of_bank}
-                      </p>
+
                       <div className="inner-input-div">
                         <label style={{ marginTop: "1rem" }}>Bank</label>
                         <input
@@ -524,6 +585,9 @@ function Donation() {
                           value={donationdata.name_of_bank}
                           onChange={onChange}
                         />
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formerror.name_of_bank}
+                        </p>
                       </div>
                       <div className="inner-input-div">
                         <label style={{ marginTop: "1rem" }}>Address</label>
@@ -546,18 +610,18 @@ function Donation() {
                     <button
                       onClick={handlesubmit}
                       className="save-btn"
-                      disabled={
-                        donationdata.donationtype &&
-                        donationdata.selected &&
-                        donationdata.address &&
-                        donationdata.Remark &&
-                        donationdata.date_of_sub &&
-                        donationdata.chequeno &&
-                        donationdata.name_of_bank &&
-                        cheqing
-                          ? false
-                          : true
-                      }
+                      // disabled={
+                      //   donationdata.donationtype &&
+                      //   donationdata.selected &&
+                      //   donationdata.address &&
+                      //   donationdata.Remark &&
+                      //   donationdata.date_of_sub &&
+                      //   donationdata.chequeno &&
+                      //   donationdata.name_of_bank &&
+                      //   cheqing
+                      //     ? false
+                      //     : true
+                      // }
                     >
                       Submit
                     </button>

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { backendApiUrl } from "../../../../../config/config";
-import { typesOfDonation } from "./Data";
+import { serverInstance } from "../../../../../API/ServerInstance";
 import axios from "axios";
-
 import "./ElectronicDonation.css";
 
-const CashDonation = ({ setOpen, setshowalert }) => {
+const CashDonation = ({ setOpen, setshowalert, handleClose }) => {
   const [donationtype, setdonationtype] = useState("");
   const [amount, setamount] = useState("");
   const [remark, setremark] = useState("");
@@ -13,11 +12,12 @@ const CashDonation = ({ setOpen, setshowalert }) => {
   const [address, setaddress] = useState("");
   const [new_member, setnew_member] = useState(false);
   const [phoneNo, setphoneNo] = useState("");
+  const [isData, setisData] = React.useState([]);
   const [noOfRows, setNoOfRows] = useState({ id: 1 });
   const [rowsData, setRowsData] = useState([noOfRows]);
-
+  const [formerror, setFormerror] = useState({});
   const [item, setitem] = useState([]);
-  console.log(item, amount);
+  console.log(isData);
 
   const RemoveRow = (index) => {
     const data = rowsData.filter((i) => i.id !== index);
@@ -26,7 +26,6 @@ const CashDonation = ({ setOpen, setshowalert }) => {
     console.log(index);
   };
   const itemClick = () => {
-    // const id = item.length + 1;
     setitem((prev) => [
       ...prev,
       {
@@ -50,7 +49,9 @@ const CashDonation = ({ setOpen, setshowalert }) => {
   const time = `${hour}:${min}`;
   const currentDate = `${year}-${month}-${day}`;
 
-  const addelectronicdonation = async () => {
+  const addelectronicdonation = async (e) => {
+    e.preventDefault();
+    setFormerror(validate(name, amount, phoneNo, donationtype));
     let data;
     if (item.length === 0) {
       data = [
@@ -70,27 +71,56 @@ const CashDonation = ({ setOpen, setshowalert }) => {
     axios.defaults.headers.post[
       "Authorization"
     ] = `Bearer ${sessionStorage.getItem("token")}`;
+    if (name && amount && donationtype && phoneNo) {
+      const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
+        name: name,
+        phoneNo: phoneNo,
+        address: address,
+        new_member: new_member,
+        donation_date: currentDate,
+        donation_time: time,
+        donation_item: data ? data : item,
+      });
 
-    const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
-      name: name,
-      phoneNo: phoneNo,
-      address: address,
-      new_member: new_member,
-      donation_date: currentDate,
-      donation_time: time,
-      donation_item: data ? data : item,
-    });
+      console.log(res.data.status);
 
-    console.log(res.data.status);
-
-    if (res.data.status === true) {
-      setshowalert(true);
-      setmsg(res.data.msg);
-    } else {
-      Swal.fire("Error!", "Somthing went wrong!!", "error");
+      if (res.data.status === true) {
+        setshowalert(true);
+        handleClose();
+      } else {
+        Swal.fire("Error!", "Somthing went wrong!!", "error");
+      }
     }
   };
+  const validate = (name, amount, phoneNo, donationtype) => {
+    const errors = {};
 
+    if (!name) {
+      errors.name = "Please enter name";
+    }
+
+    return errors;
+  };
+
+  const getall_donatiions = () => {
+    try {
+      serverInstance("admin/donation-type", "get").then((res) => {
+        if (res.status) {
+          setisData(res.data);
+
+          console.log(res.data);
+        } else {
+          Swal("Error", "somthing went  wrong", "error");
+        }
+        console.log("sss", res);
+      });
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
+  };
+  useEffect(() => {
+    getall_donatiions();
+  }, []);
   return (
     <>
       <div className="cash-donation-div">
@@ -110,6 +140,9 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                     name="phoneNo"
                     onChange={(e) => setphoneNo(e.target.value)}
                   />
+                  <p style={{ color: "red", marginTop: "5px" }}>
+                    {formerror.phoneNo}
+                  </p>
                   <label>Donation Date:</label>
                   <input
                     type="text"
@@ -119,7 +152,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                   />
                 </div>
 
-                <div className="inner-input-div2">
+                <div className={"inner-input-div2"}>
                   <label>Name:</label>
                   <input
                     type="text"
@@ -129,6 +162,9 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                     name="name"
                     onChange={(e) => setname(e.target.value)}
                   />
+                  <p style={{ color: "red", marginTop: "5px" }}>
+                    {formerror.name}
+                  </p>
                   <label>Donation Time:</label>
                   <input
                     type="text"
@@ -198,14 +234,15 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                       className="inner-input-div1-select "
                       id="type"
                       name="donationtype"
-                      value={donationtype}
+                      // value={donationtype}
                       onChange={(e) => setdonationtype(e.target.value)}
                     >
-                      {typesOfDonation.map((mode) => (
-                        <option key={mode} value={mode}>
-                          {mode}
-                        </option>
-                      ))}
+                      {isData &&
+                        isData.map((item) => (
+                          <option key={item.id} value={item.type_hi}>
+                            {item.type_hi}
+                          </option>
+                        ))}
                     </select>
                   </td>
                   <td>
@@ -214,7 +251,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                       className="forminput1"
                       placeholder="Amout"
                       name="amount"
-                      value={amount}
+                      // value={amount}
                       onChange={(e) => {
                         setamount(e.target.value);
 
@@ -228,7 +265,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                       className="forminput1"
                       placeholder="remark"
                       name="remark"
-                      value={remark}
+                      // value={remark}
                       onChange={(e) => setremark(e.target.value)}
                     />
                   </td>
@@ -244,14 +281,15 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                             className="inner-input-div1-select "
                             id="type"
                             name="mode"
-                            value={donationtype}
+                            // value={donationtype}
                             onChange={(e) => setdonationtype(e.target.value)}
                           >
-                            {typesOfDonation.map((mode) => (
-                              <option key={mode} value={mode}>
-                                {mode}
-                              </option>
-                            ))}
+                            {isData &&
+                              isData.map((item) => (
+                                <option key={item.id} value={item.type_hi}>
+                                  {item.type_hi}
+                                </option>
+                              ))}
                           </select>
                         </td>
                         <td>
@@ -261,7 +299,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                             className="forminput1"
                             placeholder="Amout"
                             name="amount"
-                            value={amount}
+                            // value={amount}
                             onChange={(e) => {
                               setamount(e.target.value);
 
@@ -276,7 +314,7 @@ const CashDonation = ({ setOpen, setshowalert }) => {
                             className="forminput1"
                             placeholder="remark"
                             name="remark"
-                            value={remark}
+                            // value={remark}
                             onChange={(e) => setremark(e.target.value)}
                           />
                         </td>

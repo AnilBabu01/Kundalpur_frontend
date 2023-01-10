@@ -38,10 +38,13 @@ const Navbar = () => {
   const logout = () => {
     handleClose();
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userrole");
     setTimeout(() => {
       window.location.reload();
     }, 1000);
   };
+
+  let userrole = sessionStorage.getItem("userrole");
   return (
     <>
       <Menu
@@ -101,13 +104,17 @@ const Navbar = () => {
           </ListItemIcon>
           Room Booking History
         </MenuItem>
+        {userrole === 1 && (
+          <>
+            <MenuItem onClick={() => navigate("/admin-panel/dashboard")}>
+              <ListItemIcon>
+                <DashboardIcon fontSize="small" />
+              </ListItemIcon>
+              Dashboard
+            </MenuItem>
+          </>
+        )}
 
-        <MenuItem onClick={() => navigate("/admin-panel/dashboard")}>
-          <ListItemIcon>
-            <DashboardIcon fontSize="small" />
-          </ListItemIcon>
-          Dashboard
-        </MenuItem>
         <Divider />
         <MenuItem onClick={() => logout()}>
           <ListItemIcon>

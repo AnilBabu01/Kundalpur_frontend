@@ -377,16 +377,35 @@ class DonationCollaction {
 
   getElecDonation = async (req) => {
     const userId = req.user.id;
-    let data = await TblelecDonation.findAll({
-      where: { created_by: userId },
-      include: [
-        {
-          model: TblelecDonationItem,
-          as: "elecItemDetails",
+    const { phone, name } = req.query;
+
+    if (phone && name) {
+      let data = await TblelecDonation.findAll({
+        where: {
+          created_by: userId,
+          phone: phone,
+          name: name,
         },
-      ],
-    });
-    return data;
+        include: [
+          {
+            model: TblelecDonationItem,
+            as: "elecItemDetails",
+          },
+        ],
+      });
+      return data;
+    } else {
+      let data = await TblelecDonation.findAll({
+        where: { created_by: userId },
+        include: [
+          {
+            model: TblelecDonationItem,
+            as: "elecItemDetails",
+          },
+        ],
+      });
+      return data;
+    }
   };
 
   getElecDonationbyId = async (req) => {

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import profileimgs from "../../../assets/profileimg.jpg";
 import { updateProfile } from "../../../Redux/redux/action/AuthAction";
-
+import { backendUrl, backendApiUrl } from "../../../config/config";
 import Swal from "sweetalert2";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { loadUser } from "../../../Redux/redux/action/AuthAction";
+import axios from "axios";
 import "./Profile.css";
 const formData = new FormData();
 function Profile() {
@@ -18,25 +19,58 @@ function Profile() {
   const [address, setaddress] = useState("");
   const [profile_image, setprofile_image] = useState("");
   const [previewprofile, setpreviewprofile] = useState("");
+  const [profileimg, setprofileimg] = useState("");
+  const { user } = useSelector((state) => state.userReducer);
+  console.log("sss", user);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const submitHandler = async (e) => {
+    try {
+      e.preventDefault();
 
-    formData.set("name", name);
-    formData.set("mobile", mobile);
-    formData.set("email", email);
-    formData.set("password", password);
-    formData.set("dob", dob);
-    formData.set("anniversary_date", anniversary_date);
-    formData.set("address", address);
-    formData.set("profile_image", profile_image);
+      formData.set("name", name);
+      formData.set("mobile", mobile);
+      formData.set("email", email);
+      formData.set("password", password);
+      formData.set("dob", dob);
+      formData.set("anniversary_date", anniversary_date);
+      formData.set("address", address);
+      formData.set("profile_image", profile_image);
+      axios.defaults.headers.post[
+        "Authorization"
+      ] = `Bearer ${sessionStorage.getItem("token")}`;
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const res = await axios.post(
+        `${backendApiUrl}user/update-profile`,
 
-    dispatch(updateProfile(formData));
+        formData,
+        config
+      );
+
+      if (res.data.status) {
+        Swal.fire("Great!", res.data.msg, "success");
+        dispatch(loadUser());
+      }
+    } catch (error) {
+      Swal.fire("Error!", error.response.data.message, "error");
+    }
   };
-  const { isUpdated } = useSelector((state) => state.userReducer);
-  if (isUpdated) {
-    Swal.fire("Profile Updated!", "success");
-  }
+
+  useEffect(() => {
+    if (user) {
+      setname(user?.name);
+      setaddress(user?.address);
+      setemail(user?.email);
+      setmobile(user?.mobileNo);
+      setanniversary_date(user?.anniversary_date);
+      setdob(user?.dob);
+      setprofileimg(user?.profile_image);
+    }
+  }, []);
+
   return (
     <>
       <div className="Profile-main-div">

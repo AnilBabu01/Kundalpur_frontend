@@ -34,26 +34,46 @@ const EmailLogin = () => {
     e.preventDefault();
     try {
       setshowprocess(true);
-      const res = await axios.post(`${backendApiUrl}user/login`, {
-        identity: email,
-        password: password,
-      });
-      if (res.data.status) {
-        setshowprocess(false);
-        Swal.fire("Great!", "You Have Loginn Successfully", "success");
-        var decoded = jwt_decode(res.data.tokens.access.token);
-        if (decoded.role === 1) {
-          navigate("/admin-panel/dashboard");
+      if (unchecked1) {
+        const res = await axios.post(`${backendApiUrl}user/login`, {
+          identity: email,
+          password: password,
+        });
+        if (res.data.status) {
+          setshowprocess(false);
+          Swal.fire("Great!", "You Have Login Successfully", "success");
+          var decoded = jwt_decode(res.data.tokens.access.token);
+
+          if (decoded.role === 2) {
+            navigate("/donation");
+          }
+
+          sessionStorage.setItem("userrole", decoded.role);
+          sessionStorage.setItem("token", res.data.tokens.access.token);
+          auth.setUser(res.data.tokens.access.token);
         }
-        if (decoded.role === 2) {
-          navigate("/donation");
+      }
+      if (unchecked3 || unchecked2) {
+        const res = await axios.post(`${backendApiUrl}admin/login`, {
+          username: email,
+          password: password,
+        });
+        console.log(res.data);
+        if (res.data.user) {
+          setshowprocess(false);
+          Swal.fire("Great!", "You Have Login Successfully", "success");
+          var decoded = jwt_decode(res.data.tokens.access.token);
+          if (decoded.role === 1) {
+            navigate("/admin-panel/dashboard");
+          }
+
+          if (decoded.role === 3) {
+            navigate("/admin-panel/dashboard");
+          }
+          sessionStorage.setItem("userrole", decoded.role);
+          sessionStorage.setItem("token", res.data.tokens.access.token);
+          auth.setUser(res.data.tokens.access.token);
         }
-        if (decoded.role === 3) {
-          navigate("/admin-panel/dashboard");
-        }
-        sessionStorage.setItem("userrole", decoded.role);
-        sessionStorage.setItem("token", res.data.tokens.access.token);
-        auth.setUser(res.data.tokens.access.token);
       }
     } catch (error) {
       Swal.fire("Error!", error.response.data.message, "error");
@@ -156,7 +176,6 @@ const EmailLogin = () => {
             </Link>
             <div className="input-group">
               <button className="login-btn">
-                {" "}
                 {showprocess ? (
                   <CircularProgress style={{ width: "21px", height: "21px" }} />
                 ) : (
@@ -205,7 +224,14 @@ const EmailLogin = () => {
               </li>
             </div>
             <div className="input-group">
-              <button className="login-btn">Login</button>
+              <button className="login-btn">
+                {" "}
+                {showprocess ? (
+                  <CircularProgress style={{ width: "21px", height: "21px" }} />
+                ) : (
+                  "Login"
+                )}
+              </button>
             </div>
           </>
         )}
@@ -245,7 +271,14 @@ const EmailLogin = () => {
               </li>
             </div>
             <div className="input-group">
-              <button className="login-btn">Login</button>
+              <button className="login-btn">
+                {" "}
+                {showprocess ? (
+                  <CircularProgress style={{ width: "21px", height: "21px" }} />
+                ) : (
+                  "Login"
+                )}
+              </button>
             </div>
           </>
         )}

@@ -17,7 +17,7 @@ const Electornic = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  const [showalert, setshowalert] = useState(false);
   const navigation = useNavigate();
 
   const getall_donation = () => {
@@ -47,11 +47,25 @@ const Electornic = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  const deletedonation = (id) => {
+    serverInstance(`user/add-elecDonation?id=${id}`, "delete").then((res) => {
+      if (res.status === true) {
+        Swal.fire(
+          "Great!",
+          "Eletronic donation delete successfully",
+          "success"
+        );
+        setshowalert(true);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+      console.log(res);
+    });
+  };
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
-  }, []);
+  }, [showalert]);
   return (
     <>
       <div className="dashboarddiv">

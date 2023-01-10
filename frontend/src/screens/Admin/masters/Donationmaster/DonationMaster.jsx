@@ -73,8 +73,8 @@ function DonationMaster() {
       serverInstance("admin/donation-type", "get").then((res) => {
         if (res.status) {
           setisData(res.data);
-
-          console.log(res.data);
+          setdonationtype_in_eng("");
+          setdonationtype_in_hindi("");
         } else {
           Swal("Error", "somthing went  wrong", "error");
         }

@@ -49,7 +49,7 @@ function Donation({ setshowreciept }) {
     amount: "",
     address: "",
   });
-  console.log("ssssssfrg", isData);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleOpen1 = () => setOpen1(true);

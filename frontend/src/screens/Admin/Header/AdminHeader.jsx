@@ -16,6 +16,7 @@ import logo from "../../../assets/logo.jpg";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { useSelector } from "react-redux";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
@@ -29,6 +30,8 @@ const AdminHeader = () => {
   const [showsidebar, setshowsidebar] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
   const open = Boolean(anchorEl);
+  const { user } = useSelector((state) => state.userReducer);
+  console.log("sss", user);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -128,11 +131,11 @@ const AdminHeader = () => {
                 <img src={search} alt="search" />
               </button>
             </div>
-            <div className="notificationdiv">
+            {/* <div className="notificationdiv">
               <Badge badgeContent={4} color="primary" style={{ zIndex: 0 }}>
                 <NotificationsIcon color="action" />
               </Badge>
-            </div>
+            </div> */}
 
             <div className="profilemaindiv">
               <Box
@@ -160,7 +163,7 @@ const AdminHeader = () => {
                     lineHeight: "17px",
                   }}
                 >
-                  Pranay
+                  {user?.name}
                 </Typography>
                 <IconButton
                   size="small"

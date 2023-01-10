@@ -128,7 +128,8 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                 </TableHead>
                 <TableBody>
                   {(rowsPerPage > 0
-                    ? isrow.slice(
+                    ? isrow &&
+                      isrow.slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
                       )

@@ -1,20 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/sideimg.jpeg";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { backendApiUrl } from "../../../../config/config";
 import "./registerform.scss";
 const Register = () => {
   const navigate = useNavigate();
-
+  const [showonldpassword, setshowonldpassword] = useState(false);
+  const [showprocess, setshowprocess] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { email, fullName, password, mobileNumber } = Object.fromEntries(
         new FormData(e.currentTarget)
       );
-
+      setshowprocess(true);
       if (
         typeof email === "string" &&
         typeof password === "string" &&
@@ -33,12 +37,14 @@ const Register = () => {
         if (data.status === true) {
           Swal.fire("Great!", data.msg, "success");
           navigate("/login");
+          setshowprocess(false);
         } else {
           Swal.fire("Error!", "Mobile number or Email already exist", "error");
         }
       }
     } catch (error) {
       Swal.fire("Error!", error.response.data.message, "error");
+      setshowprocess(false);
     }
   };
 
@@ -85,15 +91,25 @@ const Register = () => {
               required
               title="*At least six characters"
               pattern=".{6,}"
-              type="password"
+              type={showonldpassword ? "text" : "password"}
               id="password"
               placeholder="enter password"
             />
+            <li
+              className="showpassworddsignup8"
+              onClick={() => setshowonldpassword(!showonldpassword)}
+            >
+              {showonldpassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+            </li>
             <div>*At least six characters</div>
           </div>
           <div className="input-group">
             <button type="submit" className="register-btn">
-              Register
+              {showprocess ? (
+                <CircularProgress style={{ width: "21px", height: "21px" }} />
+              ) : (
+                "Login"
+              )}
             </button>
           </div>
         </form>

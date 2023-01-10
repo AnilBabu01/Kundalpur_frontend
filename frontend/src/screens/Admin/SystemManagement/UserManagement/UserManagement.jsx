@@ -34,31 +34,18 @@ const UserManagement = ({ setopendashboard }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = React.useState(false);
+  const [refetch, setrefetch] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const navigation = useNavigate();
-
-  useEffect(() => {
-    setopendashboard(true);
-    getall_donation();
-  }, []);
 
   const getall_donation = () => {
-    serverInstance("admin/donation-list", "get").then((res) => {
+    serverInstance("admin/add-employee", "get").then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
       console.log(res);
-    });
-  };
-
-  const downloadrecept = (row) => {
-    navigation("/reciept", {
-      state: {
-        userdata: row,
-      },
     });
   };
 
@@ -70,6 +57,22 @@ const UserManagement = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const deletedonation = (id) => {
+    serverInstance(`admin/add-employee?id=${id}`, "delete").then((res) => {
+      if (res.status === true) {
+        Swal.fire("Great!", "User delete successfully", "success");
+        setrefetch(true);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+      console.log(res);
+    });
+  };
+
+  useEffect(() => {
+    setopendashboard(true);
+    getall_donation();
+  }, [refetch, open]);
   return (
     <>
       <Modal
@@ -108,8 +111,8 @@ const UserManagement = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
+                  <TableCell>Sr No.</TableCell>
                   <TableCell>Username</TableCell>
-                  <TableCell>Company name</TableCell>
                   <TableCell>Email</TableCell>
                   <TableCell>Mobile</TableCell>
                   <TableCell>Address</TableCell>
@@ -132,21 +135,19 @@ const UserManagement = ({ setopendashboard }) => {
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>
-                      {" "}
-                      {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
-                    </TableCell>
-                    <TableCell>{row.NAME}</TableCell>
-                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
 
-                    <TableCell>
-                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : "-"}
-                    </TableCell>
+                    <TableCell>{row.Username}</TableCell>
+                    <TableCell>{row.Email}</TableCell>
+                    <TableCell> {row.Mobile}</TableCell>
+                    <TableCell> {row.Address}</TableCell>
+
+                    <TableCell>{row.Status ? "Active" : "De-Active"}</TableCell>
 
                     <TableCell>
                       <RemoveRedEyeIcon />
-                      <DeleteForeverIcon />
+                      <DeleteForeverIcon
+                        onClick={() => deletedonation(row.id)}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

@@ -118,7 +118,7 @@ function ChangePassword() {
                     {formerror.confirm}
                   </p>
                   <li
-                    className="showpassworddsignup2"
+                    className="showpassworddsignup20"
                     onClick={() => setshownewpassword(!shownewpassword)}
                   >
                     {shownewpassword ? (

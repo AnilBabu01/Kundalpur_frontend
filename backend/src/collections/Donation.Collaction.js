@@ -383,7 +383,7 @@ class DonationCollaction {
       let data = await TblelecDonation.findAll({
         where: {
           created_by: userId,
-          phone: phone,
+          phoneNo: phone,
           name: name,
         },
         include: [

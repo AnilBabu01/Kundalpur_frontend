@@ -47,10 +47,10 @@ class UserCollaction {
       username: body.mobile_no,
       mobileNo: body.mobile_no,
       password: hashencrypt,
-      email:''
+      email: "",
     })
       .then(async (res) => {
-        console.log(res.id)
+        console.log(res.id);
         await TblUsersRoles.create({
           user_id: res.id,
           role_id: 2,
@@ -271,9 +271,38 @@ class UserCollaction {
   };
 
   getUsers = async (req) => {
-    const { id } = req.query;
+    let { id, phone, name } = req?.query;
+
     let users;
-    if (!id) {
+    console.log(phone);
+    if (phone && name) {
+      console.log("enm");
+      users = await TblUser.findAll({
+        where: {
+          mobileNo: phone,
+          name: name,
+        },
+        attributes: [
+          "id",
+          "username",
+          "mobileNo",
+          "email",
+          "verified_by",
+          "veification_status",
+          "name",
+          "dob",
+        ],
+        include: [
+          {
+            model: TblUsersRoles,
+            as: "roleDetails",
+            where: {
+              role_id: 2,
+            },
+          },
+        ],
+      });
+    } else if (!id && !phone && !email) {
       users = await TblUser.findAll({
         attributes: [
           "id",

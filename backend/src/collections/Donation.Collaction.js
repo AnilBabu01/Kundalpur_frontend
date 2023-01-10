@@ -159,10 +159,7 @@ class DonationCollaction {
     })
       .then((res) => {
         console.log(res);
-        return {
-          status: 1,
-          message: "Deleted Successfully",
-        };
+     
       })
       .catch((err) => {
         console.log(err, "err");

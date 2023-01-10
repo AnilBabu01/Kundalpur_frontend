@@ -274,7 +274,6 @@ class UserCollaction {
     let { id, phone, name } = req?.query;
 
     let users;
-    console.log(phone);
     if (phone && name) {
       console.log("enm");
       users = await TblUser.findAll({
@@ -302,7 +301,7 @@ class UserCollaction {
           },
         ],
       });
-    } else if (!id && !phone && !email) {
+    } else if (!id && !phone && !name) {
       users = await TblUser.findAll({
         attributes: [
           "id",

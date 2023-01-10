@@ -371,10 +371,12 @@ class UserCollaction {
   };
 
   editUser = async (req) => {
-    const { id, name, email, mobile } = req.body;
+    const { id, name, email, mobile,password } = req.body;
+    const salt = bcrypt.genSaltSync(12);
+    const hashencrypt = bcrypt.hashSync(password, salt);
     console.log(req.body);
     const user = await TblUser.update(
-      { name: name, email: email, mobileNo: mobile },
+      { name: name, email: email, mobileNo: mobile ,password:hashencrypt},
       { where: { id: id } }
     );
     console.log(user);

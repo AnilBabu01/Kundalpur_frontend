@@ -4,6 +4,8 @@ const catchAsync = require("../utils/catchAsync");
 const { generateAuthTokens } = require("../utils/tokens");
 const { isEmailValid } = require("../utils/checkEmail");
 const ApiError = require("../utils/ApiError");
+const crypto = require('crypto');
+const UserCollaction = require("../collections/User.Collaction");
 
 const createUser = catchAsync(async (req, res) => {
   const userdata = await userService.createuser(req.body);
@@ -88,6 +90,27 @@ const verifyOTP = catchAsync(async (req, res) => {
   });
 });
 
+const verifyForgotOtp = catchAsync(async(req,res)=>{
+  const { username, otp } = req.body;
+
+  const data = await userService.verifyOTP(username, otp);
+  console.log(data.id)
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+
+  let resetPasswordToken = crypto.randomBytes(20).toString('hex');
+  const update = await UserCollaction.generateResetTokenNew(resetPasswordToken,data.id);
+
+
+  res.status(200).send({
+    status:true,
+    message : "Successfully Verified Otp",
+    token:update
+  })
+
+
+})
 
 const forgotPassword = catchAsync(async (req, res) => {
   const result = await userService.forgotPass(req);
@@ -176,6 +199,18 @@ const delEmployees = catchAsync(async (req, res) => {
   });
 });
 
+const forgotPasswordReqOtp = catchAsync(async(req,res)=>{
+  const data = await userService.forgotPasswordReqOtp(req)
+  console.log(data)
+  if (!data) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong")
+}
+res.status(200).send({
+  status: data.status,
+  message : data.message,
+})
+})
+
 
 
 
@@ -191,5 +226,7 @@ module.exports = {
   createAccount,
   getUsers,
   getEmployees,
-  delEmployees
+  delEmployees,
+  forgotPasswordReqOtp,
+  verifyForgotOtp
 };

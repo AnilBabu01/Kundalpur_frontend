@@ -30,7 +30,10 @@ const checkVoucher = catchAsync(async(req,res)=>{
 })
 
 
+
+
 module.exports = {
     GenerateVoucher,
-    checkVoucher
+    checkVoucher,
+
 }

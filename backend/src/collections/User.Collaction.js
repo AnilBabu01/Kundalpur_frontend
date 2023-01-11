@@ -131,14 +131,33 @@ class UserCollaction {
 
   generateResetToken = async (token, id) => {
     let resetPasswordExpires = Date.now() + 3600000; //expires in an hour
-    await TblPasswordReset.update(
+    let data = await TblPasswordReset.update(
       {
         resetPasswordOtp: null,
         resetPasswordToken: token,
         resetPasswordExpires: resetPasswordExpires,
       },
       { where: { user_id: id } }
-    );
+    ).catch((Err) => {
+      console.log(Err);
+    });
+
+    console.log(data);
+    return token;
+  };
+
+  generateResetTokenNew = async (token, id) => {
+    let resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+    let data = await TblPasswordReset.create({
+      user_id: id,
+      resetPasswordOtp: null,
+      resetPasswordToken: token,
+      resetPasswordExpires: resetPasswordExpires,
+    }).catch((Err) => {
+      console.log(Err);
+    });
+
+    console.log(data);
     return token;
   };
 
@@ -371,12 +390,12 @@ class UserCollaction {
   };
 
   editUser = async (req) => {
-    const { id, name, email, mobile,password } = req.body;
+    const { id, name, email, mobile, password } = req.body;
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(password, salt);
     console.log(req.body);
     const user = await TblUser.update(
-      { name: name, email: email, mobileNo: mobile ,password:hashencrypt},
+      { name: name, email: email, mobileNo: mobile, password: hashencrypt },
       { where: { id: id } }
     );
     console.log(user);

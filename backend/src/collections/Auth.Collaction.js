@@ -30,6 +30,7 @@ db.usersRolesModel.belongsTo(db.userModel, {
 const bcrypt = require("bcryptjs");
 const ApiError = require("../utils/ApiError");
 const httpStatus = require("http-status");
+const { UserCollection } = require(".");
 
 class UserCollaction {
   getUserByEmail = async (email) => {
@@ -198,9 +199,9 @@ class UserCollaction {
   forgotPass = async (req) => {
     const id = req.user.id;
 
-    const {oldpassword,newPassword} = req.body;
+    const { oldpassword, newPassword } = req.body;
     let data;
-    
+
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(newPassword, salt);
 
@@ -210,30 +211,78 @@ class UserCollaction {
       },
     });
 
-    if (!user){
-      throw new ApiError(httpStatus.UNAUTHORIZED,"Your not Authorized ");
-      
-    }else{
-      let checkpass = await this.isPasswordMatch(oldpassword,user.password)
-      console.log(checkpass)
-     if (checkpass){
-         data = await TblUser.update({
-           password: hashencrypt,
-
-        },
-        {
-          where:{
-            id:user.id
+    if (!user) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, "Your not Authorized ");
+    } else {
+      let checkpass = await this.isPasswordMatch(oldpassword, user.password);
+      console.log(checkpass);
+      if (checkpass) {
+        data = await TblUser.update(
+          {
+            password: hashencrypt,
+          },
+          {
+            where: {
+              id: user.id,
+            },
           }
-        }
-        )
+        );
       }
-    
     }
 
+    return data;
+  };
 
-return data
+  forgotPasswordReqOtp = async (req) => {
+    const email = req.body.email;
 
+    let user = await TblUser.findOne({
+      where: {
+        email: email,
+      },
+      include: [
+        {
+          model: TblUsersRoles,
+          as: "roleDetails",
+          where: { role_id: 2 },
+        },
+      ],
+    });
+
+    if (user) {
+      // ---------check OTP TIME--------
+      const checkOtpLastSend = await this.checkOtpLastSend(user.id);
+      if (!checkOtpLastSend) {
+        let otp = Math.floor(100000 + Math.random() * 900000); //-----6 digit random number--------
+        // sendSms(otp,body.mobile_no)
+        const update_otp = await UserCollection.updateOTP(user.id, otp);
+        return update_otp;
+      } else {
+        let date_ob = new Date();
+        var seconds = 60;
+        var parsedDate = new Date(Date.parse(checkOtpLastSend.updatedAt));
+        var newDate = new Date(parsedDate.getTime() + 1000 * seconds);
+        const remaining = date_ob - newDate;
+        const checkRemaining = Math.floor((remaining / 1000) % 60);
+        if (checkRemaining > 0) {
+          //----check remaining time-----
+          let otp = Math.floor(100000 + Math.random() * 900000); //-----6 digit random number--------
+          const update_otp = await UserCollection.updateOTP(user.id, otp);
+          // sendSms(otp,body.mobile_no)
+          return update_otp;
+        } else {
+          throw new ApiError(
+            httpStatus.NOT_FOUND,
+            `Please wait ${Math.abs(checkRemaining)} seconds.`
+          );
+        }
+      }
+      
+    }
+    return {
+      status:true,
+      message:"Otp Will send to Your Registered Mail"
+    }
   };
 } //end of class
 

@@ -194,6 +194,12 @@ const delEmployees = async (req)=>{
   return employees;
 }
 
+const forgotPasswordReqOtp = async (req)=>{
+  const data = await AuthCollaction.forgotPasswordReqOtp(req)
+  return data 
+
+}
+
 
 
 module.exports = {
@@ -211,5 +217,6 @@ module.exports = {
   editUser,
   addEmployees,
   getEmployees,
-  delEmployees
+  delEmployees,
+  forgotPasswordReqOtp
 };

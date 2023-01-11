@@ -41,10 +41,17 @@ const forgotPass = {
   })
 }
 
+const ReqforgotPass = {
+  body: Joi.object().keys({
+    email: Joi.string().required()
+  })
+}
+
 module.exports = {
   login,
   register,
   loginMobile,
   loginEmail,
-  forgotPass
+  forgotPass,
+  ReqforgotPass
 };

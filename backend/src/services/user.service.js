@@ -23,6 +23,7 @@ const createuser = async (userBody, file) => {
 
 const mobileLogin = async (body) => {
   const checkUser = await AuthCollaction.getUserName(body.mobile_no);
+
   if(checkUser){
     // ---------check OTP TIME--------
     const checkOtpLastSend = await AuthCollaction.checkOtpLastSend(checkUser.id);
@@ -48,7 +49,9 @@ const mobileLogin = async (body) => {
       }
     }
   }else{
+
     const result = await UserCollection.selfRegister(body);
+    
     if(!result){
       throw new ApiError(httpStatus.NOT_FOUND, "Something went wrong. Please try again."); 
     }
@@ -177,12 +180,14 @@ const addEmployees = async (req)=>{
   }
 
   const employees = await UserCollection.addEmployees(req);
-
+if(employees){
   return {
     status : true,
     message: "User Added Successfully"
   };
 }
+}
+
 
 const getEmployees = async (req)=>{
   const employees = await UserCollection.getEmployees(req);
@@ -192,6 +197,22 @@ const getEmployees = async (req)=>{
 const delEmployees = async (req)=>{
   const employees = await UserCollection.delEmployees(req);
   return employees;
+}
+
+const forgotPasswordReqOtp = async (req)=>{
+  const data = await AuthCollaction.forgotPasswordReqOtp(req)
+  return data 
+
+}
+
+const loginEmployee = async (email, password)=>{
+  const user = await AuthCollaction.getEmployee(email);
+  console.log(user)
+  if (!user || !(await AuthCollaction.isPasswordMatch(password, user.Password))) {
+    throw new ApiError(httpStatus.UNAUTHORIZED,"Incorrect username or password");
+  }
+  return user;
+
 }
 
 
@@ -211,5 +232,7 @@ module.exports = {
   editUser,
   addEmployees,
   getEmployees,
-  delEmployees
+  delEmployees,
+  forgotPasswordReqOtp,
+  loginEmployee
 };

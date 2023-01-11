@@ -13,4 +13,5 @@ module.exports = Object.freeze({
     TBL_VOUCHERS:'tbl_vouchers',
     TBL_DONATION_TYPES:'tbl_donation_types',
     TBL_EMPLOYEES:'tbl_employees',
+    TBL_ADMIN : 'tbl_admin',
 }); 

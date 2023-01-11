@@ -22,6 +22,7 @@ const PasswordResets = sequelize.define(tbl.TBL_PASSWORD_RESET, {
   },
   resetPasswordExpires:{
     type: Sequelize.DATE,
+    
   }
 
 });

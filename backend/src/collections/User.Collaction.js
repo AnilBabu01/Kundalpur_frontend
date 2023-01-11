@@ -9,6 +9,7 @@ const TblOTP = db.otpModel;
 const TblUsersRoles = db.usersRolesModel;
 const TblPasswordReset = db.passwordReset;
 const TblEmployees = db.employees;
+const TblAdmin = db.admin;
 
 class UserCollaction {
   updatePassword = async (body) => {
@@ -60,16 +61,12 @@ class UserCollaction {
           })
           .catch((err) => {
             console.log("err entered", err);
-            return {
-              msg: err,
-            };
+     
           });
         return res.id;
       })
       .catch((err) => {
-        return {
-          msg: err,
-        };
+      
       });
 
     return addNew;
@@ -83,7 +80,6 @@ class UserCollaction {
       email,
       address,
       gender,
-      roles,
       password,
     } = body;
     const { profile_image } = file;
@@ -92,17 +88,19 @@ class UserCollaction {
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(password, salt);
 
-    const query = await TblUser.create({
+    const query = await TblAdmin.create({
       username,
       mobileNo,
       name,
       email,
       address,
       gender,
-      roles,
       profile_image: imagePath,
       password: hashencrypt,
-    });
+    }).catch((err)=>{
+      console.log(err);
+    })
+    
     if (query) {
       const addRole = await TblUsersRoles.create({
         user_id: query.id,
@@ -131,14 +129,33 @@ class UserCollaction {
 
   generateResetToken = async (token, id) => {
     let resetPasswordExpires = Date.now() + 3600000; //expires in an hour
-    await TblPasswordReset.update(
+    let data = await TblPasswordReset.update(
       {
         resetPasswordOtp: null,
         resetPasswordToken: token,
         resetPasswordExpires: resetPasswordExpires,
       },
       { where: { user_id: id } }
-    );
+    ).catch((Err) => {
+      console.log(Err);
+    });
+
+    console.log(data);
+    return token;
+  };
+
+  generateResetTokenNew = async (token, id) => {
+    let resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+    let data = await TblPasswordReset.create({
+      user_id: id,
+      resetPasswordOtp: null,
+      resetPasswordToken: token,
+      resetPasswordExpires: resetPasswordExpires,
+    }).catch((Err) => {
+      console.log(Err);
+    });
+
+    console.log(data);
     return token;
   };
 
@@ -371,12 +388,12 @@ class UserCollaction {
   };
 
   editUser = async (req) => {
-    const { id, name, email, mobile,password } = req.body;
+    const { id, name, email, mobile, password } = req.body;
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(password, salt);
     console.log(req.body);
     const user = await TblUser.update(
-      { name: name, email: email, mobileNo: mobile ,password:hashencrypt},
+      { name: name, email: email, mobileNo: mobile, password: hashencrypt },
       { where: { id: id } }
     );
     console.log(user);
@@ -384,6 +401,7 @@ class UserCollaction {
   };
 
   addEmployees = async (req) => {
+
     const {
       Username,
       Mobile,
@@ -401,6 +419,9 @@ class UserCollaction {
       DCreditAA,
     } = req.body;
 
+
+    
+
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(Password, salt);
     const query = await TblEmployees.create({
@@ -412,6 +433,7 @@ class UserCollaction {
       DmaxPTD,
       MaxPDA,
       Role,
+      role_id:3,
       Cashier,
       Status,
       cancelCheckout,
@@ -420,6 +442,7 @@ class UserCollaction {
       DCreditAA,
     })
       .then((res) => {
+        console.log(query)
         return {
           status: true,
           data: query,
@@ -431,6 +454,8 @@ class UserCollaction {
           data: err,
         };
       });
+
+return query
   };
 
   getEmployees = async (req) => {

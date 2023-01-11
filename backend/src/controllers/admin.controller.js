@@ -6,6 +6,7 @@ const { generateAuthTokens } = require("../utils/tokens");
 
 const adminLogin = catchAsync(async (req, res) => {
   const { username, password } = req.body;
+  
   const data = await userService.loginAdmin(username, password);
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
@@ -126,6 +127,26 @@ const addEmployees = catchAsync(async (req, res) => {
   });
 });
 
+const EmployeeLogin = catchAsync(async (req, res) => {
+  const { email, password } = req.body;
+  
+  const data = await userService.loginEmployee(email, password);
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+  const tokens = await generateAuthTokens(data);
+  console.log(data);
+  res.send({
+    user: {
+      id: data.id,
+      username: data.username,
+      name: data.name,
+      profile_image: data.profile_image,
+    },
+    tokens,
+  });
+});
+
 module.exports = {
   adminLogin,
   userRegister,
@@ -136,5 +157,6 @@ module.exports = {
   editUser,
   addEmployees,
   DelDonationType,
-  EditDonationType
+  EditDonationType,
+  EmployeeLogin
 };

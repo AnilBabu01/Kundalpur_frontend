@@ -7,6 +7,7 @@ const auth = require('../../middlewares/auth');
 
 router.route('/cheque-status').post(auth(),donationController.ChangeChequeStatus)
 router.route('/login').post(validate(authValidation.adminLogin), adminController.adminLogin);
+router.route('/login-employee').post(validate(authValidation.employeeLogin), adminController.EmployeeLogin);
 router.route('/user-register').post(validate(userValidation.register), adminController.userRegister);
 router.route('/donation-list').get(adminController.allList);
 router.route('/donation-list').delete(donationController.delDonation);

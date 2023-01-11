@@ -26,7 +26,15 @@ router
     auth(),
     validate(userValidation.forgotPass),
     userController.forgotPassword
-  );
+  );  /// RESET PASSWORD FOR LOGINNED USERS
+
+  router.route('/forgot-password').post( validate(userValidation.ReqforgotPass),
+  userController.forgotPasswordReqOtp) ///req otp
+
+  router.route('/verify-otp-forgot').post( 
+  userController.verifyForgotOtp) ///req otp
+
+
 
 router.route("/create-account").post(userController.createAccount);
 

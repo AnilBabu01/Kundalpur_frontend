@@ -24,9 +24,17 @@ const adminLogin = {
     password: Joi.string().required(),
   }),
 };
+const employeeLogin = {
+  body: Joi.object().keys({
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+  }),
+}
 
 module.exports = {
   register,
   login,
-  adminLogin
+  adminLogin,
+  employeeLogin
+
 };

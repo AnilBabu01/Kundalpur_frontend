@@ -180,12 +180,14 @@ const addEmployees = async (req)=>{
   }
 
   const employees = await UserCollection.addEmployees(req);
-
+if(employees){
   return {
     status : true,
     message: "User Added Successfully"
   };
 }
+}
+
 
 const getEmployees = async (req)=>{
   const employees = await UserCollection.getEmployees(req);
@@ -200,6 +202,16 @@ const delEmployees = async (req)=>{
 const forgotPasswordReqOtp = async (req)=>{
   const data = await AuthCollaction.forgotPasswordReqOtp(req)
   return data 
+
+}
+
+const loginEmployee = async (email, password)=>{
+  const user = await AuthCollaction.getEmployee(email);
+  console.log(user)
+  if (!user || !(await AuthCollaction.isPasswordMatch(password, user.Password))) {
+    throw new ApiError(httpStatus.UNAUTHORIZED,"Incorrect username or password");
+  }
+  return user;
 
 }
 
@@ -221,5 +233,6 @@ module.exports = {
   addEmployees,
   getEmployees,
   delEmployees,
-  forgotPasswordReqOtp
+  forgotPasswordReqOtp,
+  loginEmployee
 };

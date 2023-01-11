@@ -5,6 +5,7 @@ const TblUser = db.userModel;
 const TblUsersRoles = db.usersRolesModel;
 const TblOTP = db.otpModel;
 const TblPasswordReset = db.passwordReset;
+const TblEmployees = db.employees;
 
 db.userModel.hasOne(db.otpModel, { foreignKey: "user_id", as: "otpDetails" });
 db.otpModel.belongsTo(db.userModel, { foreignKey: "user_id", as: "userOTP" });
@@ -71,7 +72,7 @@ class UserCollaction {
             as: "roleDetails",
             where: {
               user_id: userId.id,
-              role_id: 2
+              role_id: 2,
             },
           },
         ],
@@ -90,15 +91,14 @@ class UserCollaction {
           { email: username },
           { mobileNo: username },
         ],
-       
       },
-      include:[
+      include: [
         {
           model: TblUsersRoles,
           as: "roleDetails",
           where: { role_id: 2 },
         },
-      ]
+      ],
     });
     return query;
   };
@@ -118,6 +118,20 @@ class UserCollaction {
       ],
     }).then((res) => {
       result = res;
+    });
+
+    return result;
+  };
+
+  getEmployee = async (email) => {
+    let result = "";
+    const query = await TblEmployees.findOne({
+      where: {
+        email: email,
+      },
+    }).then((res) => {
+      result = res;
+      result.roleDetails = { role_id: res.role_id };
     });
 
     return result;
@@ -286,12 +300,11 @@ class UserCollaction {
           );
         }
       }
-      
     }
     return {
-      status:true,
-      message:"Otp Will send to Your Registered Mail"
-    }
+      status: true,
+      message: "Otp Will send to Your Registered Mail",
+    };
   };
 } //end of class
 

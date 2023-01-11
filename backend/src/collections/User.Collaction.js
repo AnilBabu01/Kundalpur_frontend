@@ -399,6 +399,7 @@ class UserCollaction {
   };
 
   addEmployees = async (req) => {
+
     const {
       Username,
       Mobile,
@@ -416,6 +417,8 @@ class UserCollaction {
       DCreditAA,
     } = req.body;
 
+
+    
 
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(Password, salt);
@@ -437,6 +440,7 @@ class UserCollaction {
       DCreditAA,
     })
       .then((res) => {
+        console.log(query)
         return {
           status: true,
           data: query,
@@ -448,6 +452,8 @@ class UserCollaction {
           data: err,
         };
       });
+
+return query
   };
 
   getEmployees = async (req) => {

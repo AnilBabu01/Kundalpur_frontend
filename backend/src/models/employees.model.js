@@ -48,6 +48,10 @@ const Employees = sequelize.define(tbl.TBL_EMPLOYEES, {
     type: Sequelize.STRING(20),
     allowNull: false,
   },
+  role_id:{
+    type: Sequelize.INTEGER(50),   
+    allowNull:false,
+  },
   Cashier: {
     type: Sequelize.BOOLEAN,
     allowNull: false,

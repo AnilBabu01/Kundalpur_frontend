@@ -23,6 +23,7 @@ const createuser = async (userBody, file) => {
 
 const mobileLogin = async (body) => {
   const checkUser = await AuthCollaction.getUserName(body.mobile_no);
+
   if(checkUser){
     // ---------check OTP TIME--------
     const checkOtpLastSend = await AuthCollaction.checkOtpLastSend(checkUser.id);
@@ -48,7 +49,9 @@ const mobileLogin = async (body) => {
       }
     }
   }else{
+
     const result = await UserCollection.selfRegister(body);
+    
     if(!result){
       throw new ApiError(httpStatus.NOT_FOUND, "Something went wrong. Please try again."); 
     }

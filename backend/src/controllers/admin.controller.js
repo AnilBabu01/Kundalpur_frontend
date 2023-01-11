@@ -6,6 +6,7 @@ const { generateAuthTokens } = require("../utils/tokens");
 
 const adminLogin = catchAsync(async (req, res) => {
   const { username, password } = req.body;
+  
   const data = await userService.loginAdmin(username, password);
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");

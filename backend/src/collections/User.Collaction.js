@@ -60,16 +60,12 @@ class UserCollaction {
           })
           .catch((err) => {
             console.log("err entered", err);
-            return {
-              msg: err,
-            };
+     
           });
         return res.id;
       })
       .catch((err) => {
-        return {
-          msg: err,
-        };
+      
       });
 
     return addNew;
@@ -420,6 +416,7 @@ class UserCollaction {
       DCreditAA,
     } = req.body;
 
+
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(Password, salt);
     const query = await TblEmployees.create({
@@ -431,6 +428,7 @@ class UserCollaction {
       DmaxPTD,
       MaxPDA,
       Role,
+      role_id:3,
       Cashier,
       Status,
       cancelCheckout,

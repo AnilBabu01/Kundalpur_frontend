@@ -71,6 +71,7 @@ class UserCollaction {
             as: "roleDetails",
             where: {
               user_id: userId.id,
+              role_id: 2
             },
           },
         ],
@@ -89,7 +90,15 @@ class UserCollaction {
           { email: username },
           { mobileNo: username },
         ],
+       
       },
+      include:[
+        {
+          model: TblUsersRoles,
+          as: "roleDetails",
+          where: { role_id: 2 },
+        },
+      ]
     });
     return query;
   };

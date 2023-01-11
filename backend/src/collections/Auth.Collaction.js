@@ -1,23 +1,35 @@
 const db = require("../models");
 const { Op, QueryTypes } = require("sequelize");
 const sequelize = require("../db/db-connection");
+
 const TblUser = db.userModel;
 const TblUsersRoles = db.usersRolesModel;
 const TblOTP = db.otpModel;
 const TblPasswordReset = db.passwordReset;
 const TblEmployees = db.employees;
+const TblAdmin = db.admin
+
 
 db.userModel.hasOne(db.otpModel, { foreignKey: "user_id", as: "otpDetails" });
 db.otpModel.belongsTo(db.userModel, { foreignKey: "user_id", as: "userOTP" });
+
 
 db.userModel.hasOne(db.usersRolesModel, {
   foreignKey: "user_id",
   as: "roleDetails",
 });
-db.usersRolesModel.belongsTo(db.userModel, {
+
+db.usersRolesModel.belongsTo(db.admin, {
   foreignKey: "user_id",
   as: "userRole",
 });
+
+
+db.admin.hasOne(db.usersRolesModel, {
+  foreignKey: "user_id",
+  as: "roleDetails",
+});
+
 
 // db.roleModel.hasMany(db.usersRolesModel, {
 //   foreignKey: "role_id",
@@ -105,7 +117,7 @@ class UserCollaction {
 
   getAdminName = async (username) => {
     let result = "";
-    const query = await TblUser.findOne({
+    const query = await TblAdmin.findOne({
       where: {
         username: username,
       },

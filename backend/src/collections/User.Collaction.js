@@ -9,6 +9,7 @@ const TblOTP = db.otpModel;
 const TblUsersRoles = db.usersRolesModel;
 const TblPasswordReset = db.passwordReset;
 const TblEmployees = db.employees;
+const TblAdmin = db.admin;
 
 class UserCollaction {
   updatePassword = async (body) => {
@@ -79,7 +80,6 @@ class UserCollaction {
       email,
       address,
       gender,
-      roles,
       password,
     } = body;
     const { profile_image } = file;
@@ -88,17 +88,19 @@ class UserCollaction {
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(password, salt);
 
-    const query = await TblUser.create({
+    const query = await TblAdmin.create({
       username,
       mobileNo,
       name,
       email,
       address,
       gender,
-      roles,
       profile_image: imagePath,
       password: hashencrypt,
-    });
+    }).catch((err)=>{
+      console.log(err);
+    })
+    
     if (query) {
       const addRole = await TblUsersRoles.create({
         user_id: query.id,

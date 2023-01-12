@@ -95,16 +95,14 @@ try{
     gender,
     profile_image: imagePath,
     password: hashencrypt,
-  })
-  
-  if (query) {
+  }).then(async(res)=>{
     const addRole = await TblUsersRoles.create({
-      user_id: query.id,
+      user_id: res.id,
       role_id: 1,
     })
+  })
+  
 
-  }
-  console.log(query,"err")
   return query;
 }catch(err){
   console.log(err)
@@ -292,12 +290,14 @@ try{
     let { id, phone, name } = req?.query;
 
     let users;
-    if (phone && name) {
+    if (phone ||  name) {
       console.log("enm");
       users = await TblUser.findAll({
         where: {
-          mobileNo: phone,
-          name: name,
+          [Op.or]:{
+            mobileNo:{[Op.like]: '%' + phone + '%'},
+            name:{[Op.like]: '%' + name + '%'}
+          }
         },
         attributes: [
           "id",

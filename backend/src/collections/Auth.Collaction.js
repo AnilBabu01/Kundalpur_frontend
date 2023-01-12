@@ -26,7 +26,7 @@ db.usersRolesModel.belongsTo(db.userModel, {
 
 db.admin.hasOne(db.usersRolesModel, {
   foreignKey: "user_id",
-  as: "roleDetails",
+  as: "adminDetails",
 });
 
 
@@ -132,7 +132,7 @@ class UserCollaction {
       include: [
         {
           model: TblUsersRoles,
-          as: "roleDetails",
+          as: "adminDetails",
           where: { role_id: 1 },
         },
       ],

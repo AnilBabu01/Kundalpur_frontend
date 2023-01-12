@@ -13,13 +13,71 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import PrintIcon from "@mui/icons-material/Print";
+import Fade from "@mui/material/Fade";
+import CloseIcon from "@mui/icons-material/Close";
+import ChangeStatus from "./ChangeStatus";
 import "./Cheque.css";
+const style = {
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "30%",
+  bgcolor: "background.paper",
+  p: 2,
+  boxShadow: 24,
+  borderRadius: "5px",
+};
 const Cheque = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [refetch, setrefetch] = useState(false);
   const navigation = useNavigate();
+  const [open1, setOpen1] = React.useState(false);
+  const [deleteId, setdeleteId] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen1 = (id) => {
+    setOpen1(true);
+    setdeleteId(id);
+  };
+
+  const handleClose1 = () => {
+    setOpen1(false);
+  };
+
+  const handleClose2 = () => {
+    setOpen1(false);
+    serverInstance(
+      `admin/donation-list?id=${deleteId}&mode=${2}`,
+      "delete"
+    ).then((res) => {
+      if (res.status === true) {
+        Swal.fire("Great!", "Cheque donation delete successfully", "success");
+        setrefetch(!refetch);
+        console.log(res);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+      console.log(res);
+    });
+  };
+
+  const handleOpen = (id) => {
+    setOpen(true);
+    setdeleteId(id);
+  };
+
+  const handleClose = () => setOpen(false);
 
   const getall_donation = () => {
     serverInstance("admin/donation-list", "get").then((res) => {
@@ -52,26 +110,52 @@ const Cheque = ({ setopendashboard }) => {
     setPage(0);
   };
 
-  const deletecheque = (id) => {
-    serverInstance(`admin/donation-list?id=${id}&mode=${2}`, "delete").then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire("Great!", "Cheque donation delete successfully", "success");
-          setrefetch(!refetch);
-        } else {
-          Swal("Error", "somthing went  wrong", "error");
-        }
-        console.log(res);
-      }
-    );
-  };
-
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
   }, [refetch]);
   return (
     <>
+      <Dialog
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Do you want to delete"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            After delete you cannot get again
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose1}>Disagree</Button>
+          <Button onClick={handleClose2} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+      >
+        <Fade in={open}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div1">
+                <h2>Update cheque status</h2>
+                <CloseIcon onClick={() => handleClose()} />
+              </div>
+              <ChangeStatus id={deleteId} handleClose={handleClose} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
       <div className="dashboarddiv">
         <div>
           <div className="main_center_header1">
@@ -172,14 +256,10 @@ const Cheque = ({ setopendashboard }) => {
                           })
                         }
                       />
-                      <EditIcon
-                        onClick={() =>
-                          navigation(
-                            `/admin-panel/reports/changeStatus/${row.id}`
-                          )
-                        }
+                      <EditIcon onClick={() => handleOpen(row.id)} />
+                      <DeleteForeverIcon
+                        onClick={() => handleClickOpen1(row.id)}
                       />
-                      <DeleteForeverIcon onClick={() => deletecheque(row.id)} />
                     </TableCell>
                   </TableRow>
                 ))}

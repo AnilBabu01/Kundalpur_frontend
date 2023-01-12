@@ -22,6 +22,7 @@ import Divider from "@mui/material/Divider";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import { backendUrl } from "../../../config/config";
 import Logout from "@mui/icons-material/Logout";
 
 import "./AdminHeader.css";
@@ -103,11 +104,6 @@ const AdminHeader = () => {
       <div className="adminmainheader">
         <div className="adminnavbar">
           <div className="routetilem">
-            {/* <p>
-              {location.pathname.slice(1).charAt(0).toUpperCase() +
-                location.pathname.slice(2)}
-            </p> */}
-
             <img
               src={logo}
               alt="logo"
@@ -131,11 +127,11 @@ const AdminHeader = () => {
                 <img src={search} alt="search" />
               </button>
             </div>
-            {/* <div className="notificationdiv">
+            <div className="notificationdiv">
               <Badge badgeContent={4} color="primary" style={{ zIndex: 0 }}>
                 <NotificationsIcon color="action" />
               </Badge>
-            </div> */}
+            </div>
 
             <div className="profilemaindiv">
               <Box
@@ -147,7 +143,7 @@ const AdminHeader = () => {
               >
                 <Avatar
                   alt={user?.name}
-                  src="/static/images/avatar/1.jpg"
+                  src={`${backendUrl}uploads/images/${user?.profile_image}`}
                   variant="rounded"
                   sx={{
                     width: 35,

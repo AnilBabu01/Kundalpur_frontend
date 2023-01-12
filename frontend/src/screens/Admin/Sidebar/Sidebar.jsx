@@ -128,6 +128,17 @@ const Sidebar = ({ setshowsidebar }) => {
                   Generate Voucher
                 </NavLink>
               </li>
+
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "active-nav-link" : "nav-link"
+                  }
+                  to="/admin-panel/vouchermanagement"
+                >
+                  Assign Voucher
+                </NavLink>
+              </li>
             </div>
             <li className="nav-item">
               <NavLink

@@ -72,7 +72,7 @@ const Electornic = ({ setopendashboard }) => {
       <div className="dashboarddiv">
         <div>
           <div className="main_center_header1">
-            <h2 className="Cheque_text">Electornic donation report</h2>
+            <h2 className="Cheque_text">Electronic donation report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
                 <input type="text" placeholder="Name" />

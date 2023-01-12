@@ -3,13 +3,11 @@ import { backendApiUrl } from "../../../../config/config";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
-function ChangeStatus({ setopendashboard }) {
+function ChangeStatus({ id, handleClose }) {
   const navigate = useNavigate();
 
-  const { id } = useParams();
-
   const [approvevalue, setapprovevalue] = useState("");
-  console.log(typeof id, typeof Number(approvevalue));
+  console.log(id);
 
   const handlesubmit = async () => {
     try {
@@ -24,19 +22,18 @@ function ChangeStatus({ setopendashboard }) {
       if (res.data.status) {
         Swal.fire("Great!", res.data.msg, "success");
         navigate("/admin-panel/reports/cheque");
+        handleClose(false);
       }
       console.log(res);
     } catch (error) {}
   };
 
-  useEffect(() => {
-    setopendashboard(true);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
-      <div className="dashboarddiv">
-        <div className="main_center_header1">
+      <div>
+        <div>
           <div className="Status_main_div">
             <label>Status</label>
             <select

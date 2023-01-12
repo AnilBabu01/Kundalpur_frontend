@@ -35,33 +35,25 @@ function Userinfo() {
       <div className="dashboarddiv">
         <div className="main-user-info">
           <div className="Profile-main-div-master">
-            <div>
-              <form>
-                <div className="form-main-div-profile">
-                  <div>
-                    <div className="input-group-profile">
-                      <p htmlFor="name">Full Name</p>
-                      <p>{isData?.name}</p>
-                    </div>
-                    <div className="input-group-profile">
-                      <p>Email</p>
-                      <p>{isData?.email}</p>
-                    </div>
-                  </div>
-                  <div>
-                    <div>
-                      <div className="input-group-profile">
-                        <p>Mobile Number</p>
-                        <p> {isData?.mobileNo}</p>
-                      </div>
-                      <div className="input-group-profile">
-                        <p>Address</p>
-                        <p> {isData?.mobileNo}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
+            <h2
+              className="info_head_color"
+              style={{ textAlign: "center", marginBottom: "1rem" }}
+            >
+              User Details
+            </h2>
+            <div className="main_emep_info_innear_content">
+              <div>
+                <p className="info_head_color">Full Name</p>
+                <p>{isData?.name}</p>
+                <p className="info_head_color">Email</p>
+                <p>{isData?.email}</p>
+              </div>
+              <div>
+                <p className="info_head_color">Mobile Number</p>
+                <p> {isData?.mobileNo}</p>
+                <p className="info_head_color">Address</p>
+                <p> {isData?.mobileNo}</p>
+              </div>
             </div>
           </div>
         </div>

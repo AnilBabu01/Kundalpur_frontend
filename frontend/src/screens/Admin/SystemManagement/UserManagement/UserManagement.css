@@ -1,0 +1,44 @@
+.main_emep_info_innear_content{
+    display: flex;
+    justify-content: space-around;
+}
+
+.info_head_color{
+    color: #fd7906;
+}
+
+.search-header-employee {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 97%;
+   
+}
+.search-header-employee input{
+    width: 287px;
+    height: 39px;
+    border: 2px solid #e96d00;
+    border-radius: 5px;
+    font-size: 14px;
+    padding-left: 1rem;
+}
+
+.search-header-employee input:focus{
+    outline: none;
+}
+
+.search-header-employee button{
+    background-color: #e96d00;
+    border: none;
+    height: 39px;
+    border-radius: 5px;
+    width: 127px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.uemploye_main{
+    padding-left: 1rem;
+}

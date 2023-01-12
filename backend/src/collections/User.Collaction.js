@@ -462,9 +462,36 @@ return query
   };
 
   getEmployees = async (req) => {
-    const { id } = req.query;
+    const { id ,name,phone } = req.query;
     let data;
-    if (id) {
+
+    if ( name || phone){
+      data = await TblEmployees.findAll({
+        where: { 
+          [Op.or]:{
+            Mobile:{[Op.like]: '%' + phone + '%'},
+            Username:{[Op.like]: '%' + name + '%'}
+          }
+         },
+        attributes: [
+          "id",
+          "Username",
+          "Mobile",
+          "Email",
+          "Address",
+          "DmaxPTD",
+          "MaxPDA",
+          "Role",
+          "Cashier",
+          "Status",
+          "cancelCheckout",
+          "CreditAA",
+          "DebitAA",
+          "DCreditAA",
+        ],
+      });
+    }
+   else if (id) {
       data = await TblEmployees.findAll({
         where: { id: id },
         attributes: [

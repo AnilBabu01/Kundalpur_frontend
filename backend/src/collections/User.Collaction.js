@@ -401,6 +401,7 @@ class UserCollaction {
       DmaxPTD,
       MaxPDA,
       Role,
+      Rid,
       Cashier,
       Status,
       cancelCheckout,
@@ -420,6 +421,7 @@ class UserCollaction {
       DmaxPTD,
       MaxPDA,
       Role,
+      Rid,
       role_id: 3,
       Cashier,
       Status,
@@ -455,6 +457,7 @@ class UserCollaction {
       DmaxPTD,
       MaxPDA,
       Role,
+      Rid,
       Cashier,
       Status,
       cancelCheckout,
@@ -463,26 +466,32 @@ class UserCollaction {
       DCreditAA,
     } = req.body;
 
-    const employees = await TblEmployees.update({
-      Username: Username,
-      Mobile: Mobile,
-      Email: Email,
-      Address: Address,
-      DmaxPTD: DmaxPTD,
-      MaxPDA: MaxPDA,
-      Role: Role,
-      Cashier: Cashier,
-      Status: Status,
-      cancelCheckout: cancelCheckout,
-      CreditAA: CreditAA,
-      DebitAA: DebitAA,
-      DCreditAA: DCreditAA,
-    },{where:{
-        id:id
-    }}).catch((Err)=>{
-      console.log(Err)
-    })
-    console.log(employees)
+    const employees = await TblEmployees.update(
+      {
+        Username: Username,
+        Mobile: Mobile,
+        Email: Email,
+        Address: Address,
+        DmaxPTD: DmaxPTD,
+        MaxPDA: MaxPDA,
+        Role: Role,
+        Cashier: Cashier,
+        Status: Status,
+        cancelCheckout: cancelCheckout,
+        CreditAA: CreditAA,
+        DebitAA: DebitAA,
+        Rid:Rid,
+        DCreditAA: DCreditAA,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    ).catch((Err) => {
+      console.log(Err);
+    });
+    console.log(employees);
     return employees;
   };
 
@@ -507,6 +516,7 @@ class UserCollaction {
           "DmaxPTD",
           "MaxPDA",
           "Role",
+          "Rid",
           "Cashier",
           "Status",
           "cancelCheckout",
@@ -527,6 +537,7 @@ class UserCollaction {
           "DmaxPTD",
           "MaxPDA",
           "Role",
+          "Rid",
           "Cashier",
           "Status",
           "cancelCheckout",
@@ -546,6 +557,7 @@ class UserCollaction {
           "DmaxPTD",
           "MaxPDA",
           "Role",
+          "Rid",
           "Cashier",
           "Status",
           "cancelCheckout",

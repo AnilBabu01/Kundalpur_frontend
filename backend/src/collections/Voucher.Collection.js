@@ -2,7 +2,9 @@ const { request } = require("express");
 const sequelize = require("../db/db-connection");
 const db = require("../models");
 const TblVoucher = db.Vouchers;
-const TblEmployee = db.employees
+const TblEmployee = db.employees;
+const TblEmpRoles = db.empRoles;
+
 class voucherCollection {
   generateVoucher = async (req) => {
     const { vPrefix, from, to, user } = req.body;
@@ -97,7 +99,7 @@ class voucherCollection {
   };
 
   requestVoucher = async (req) => {
-    const id = req.user.id
+    const id = req.user.id;
 
     const Voucher = await TblEmployee.update(
       {
@@ -109,20 +111,50 @@ class voucherCollection {
         },
       }
     );
-    return Voucher
+    return Voucher;
   };
 
-  getrequestVoucher = async (req)=>{
+  getrequestVoucher = async (req) => {
     const request = await TblEmployee.findAll({
-      where:{
+      where: {
         isRequest: true,
       },
-      attributes:["id","Username","Role"]
+      attributes: ["id", "Username", "Role"],
+    });
+    return request;
+  };
+
+  EmployeeRole = async (req) => {
+    const {
+      roleName,
+      roleDesc,
+      DAdd,
+      DDel,
+      Dedt,
+      Denq,
+      RAdd,
+      RDel,
+      Redt,
+      Renq,
+    } = req.body;
+
+    const roles = await TblEmpRoles.create({
+      roleName,
+      roleDesc,
+      DAdd,
+      DDel,
+      Dedt,
+      Denq,
+      RAdd,
+      RDel,
+      Redt,
+      Renq,
+    }).catch((err)=>{
+      console.error(err);
     })
-    return request
-  }
 
-
+    return roles
+  };
 }
 
 module.exports = new voucherCollection();

@@ -74,6 +74,21 @@ res.status(200).send({
 })
 
 
+const EmployeeRole = catchAsync(async(req,res)=>{
+
+  const data = await VoucherCollection.EmployeeRole(req)
+
+  if (!data) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong")
+}
+
+res.status(200).send({
+  status: true,
+  data : "Successfully created a new role"
+})
+})
+
+
 
 
 
@@ -82,6 +97,7 @@ module.exports = {
     checkVoucher,
     getVoucher,
     requestVoucher,
-    getrequestVoucher
+    getrequestVoucher,
+    EmployeeRole
 
 }

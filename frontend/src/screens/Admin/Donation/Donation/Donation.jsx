@@ -19,6 +19,12 @@ import PrintIcon from "@mui/icons-material/Print";
 import Fade from "@mui/material/Fade";
 import CloseIcon from "@mui/icons-material/Close";
 import CashDonation from "./ElectronicDonation/ElectronicDonation";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import "./Donation.css";
 const style = {
   position: "absolute",
@@ -35,11 +41,47 @@ const Donation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
   const [showalert, setshowalert] = useState(false);
+  const [deleteId, setdeleteId] = useState("");
   const [msg, setmsg] = useState("");
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen1 = (id) => {
+    setOpen1(true);
+    setdeleteId(id);
+    console.log(id);
+  };
+
+  const handleClose1 = () => {
+    setOpen1(false);
+  };
+
+  const handleClose2 = () => {
+    setOpen1(false);
+    serverInstance(`user/add-elecDonation?id=${deleteId}`, "delete").then(
+      (res) => {
+        if (res.status === true) {
+          Swal.fire(
+            "Great!",
+            "Eletronic donation delete successfully",
+            "success"
+          );
+          setshowalert(!showalert);
+
+          setOpen1(false);
+        } else {
+          Swal("Error", "somthing went  wrong", "error");
+        }
+        console.log(res);
+      }
+    );
+  };
+
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
   const navigation = useNavigate();
 
   useEffect(() => {
@@ -54,22 +96,6 @@ const Donation = ({ setopendashboard }) => {
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
-    });
-  };
-
-  const deletedonation = (id) => {
-    serverInstance(`user/add-elecDonation?id=${id}`, "delete").then((res) => {
-      if (res.status === true) {
-        Swal.fire(
-          "Great!",
-          "Eletronic donation delete successfully",
-          "success"
-        );
-        setshowalert(!showalert);
-      } else {
-        Swal("Error", "somthing went  wrong", "error");
-      }
-      console.log(res);
     });
   };
 
@@ -99,6 +125,27 @@ const Donation = ({ setopendashboard }) => {
   }, [showalert, open]);
   return (
     <>
+      <Dialog
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Do you want to delete"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            After delete you cannot get again
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose1}>Disagree</Button>
+          <Button onClick={handleClose2} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -181,7 +228,7 @@ const Donation = ({ setopendashboard }) => {
                       />
 
                       <DeleteForeverIcon
-                        onClick={() => deletedonation(row.id)}
+                        onClick={() => handleClickOpen1(row.id)}
                       />
                       <PrintIcon
                         onClick={() => {

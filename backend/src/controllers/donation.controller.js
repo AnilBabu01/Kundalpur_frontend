@@ -5,7 +5,7 @@ const ApiError = require("../utils/ApiError");
 
 const addNewDonation = catchAsync(async (req, res) => {
   const data = await donationService.addNewDonation(req);
-  console.log(data,'elect')
+  console.log(data, "elect");
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
@@ -17,17 +17,17 @@ const addNewDonation = catchAsync(async (req, res) => {
 
 const delDonation = catchAsync(async (req, res) => {
   const data = await donationService.delDonation(req);
-    console.log(data,"status")
-  if (!data) {
-    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
-  }
+
+  // if (!data) {
+  //   throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  // }
   res.status(httpStatus.CREATED).send({
     status: true,
     msg: "Donation Deleted successfully.",
   });
 });
 
-const editDonation = catchAsync(async (req,res)=>{
+const editDonation = catchAsync(async (req, res) => {
   const data = await donationService.editDonation(req);
 
   if (!data) {
@@ -37,12 +37,11 @@ const editDonation = catchAsync(async (req,res)=>{
     status: true,
     msg: "Donation updated successfully.",
   });
-
-})
+});
 
 const addelecDonation = catchAsync(async (req, res) => {
   const data = await donationService.addelecDonation(req);
-  console.log(data,'elect')
+  console.log(data, "elect");
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
@@ -52,9 +51,8 @@ const addelecDonation = catchAsync(async (req, res) => {
   });
 });
 
-
-const getElecDonation = catchAsync(async(req,res)=>{
-  const data = await donationService.getElecDonation(req)
+const getElecDonation = catchAsync(async (req, res) => {
+  const data = await donationService.getElecDonation(req);
 
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
@@ -62,25 +60,23 @@ const getElecDonation = catchAsync(async(req,res)=>{
   res.status(httpStatus.CREATED).send({
     status: true,
     msg: "Succes",
-    data:data
+    data: data,
   });
-})
+});
 
-const editElecDonation = catchAsync(async(req,res)=>{
-  const data = await donationService.editElecDonation(req)
+const editElecDonation = catchAsync(async (req, res) => {
+  const data = await donationService.editElecDonation(req);
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
   res.status(200).send({
     status: data.status,
     msg: data.message,
-
   });
-})
+});
 
-
-const getElecDonationbyID = catchAsync(async(req,res)=>{
-  const data = await donationService.getElecDonationbyID(req)
+const getElecDonationbyID = catchAsync(async (req, res) => {
+  const data = await donationService.getElecDonationbyID(req);
 
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
@@ -88,12 +84,12 @@ const getElecDonationbyID = catchAsync(async(req,res)=>{
   res.status(httpStatus.CREATED).send({
     status: true,
     msg: "Success",
-    data:data
+    data: data,
   });
-})
+});
 
-const deleteElecDonation = catchAsync(async(req,res)=>{
-  const data = await donationService.delElecDonation(req)
+const deleteElecDonation = catchAsync(async (req, res) => {
+  const data = await donationService.delElecDonation(req);
 
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
@@ -102,8 +98,7 @@ const deleteElecDonation = catchAsync(async(req,res)=>{
     status: true,
     msg: "Success",
   });
-})
-
+});
 
 const addCashDonation = catchAsync(async (req, res) => {
   const data = await donationService.cashDonation(req);
@@ -129,8 +124,8 @@ const itemList = catchAsync(async (req, res) => {
 
 const addDonationType = catchAsync(async (req, res) => {
   const data = await donationService.addDonationType(req);
-  if(!data){
-    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong")
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
   res.status(httpStatus.CREATED).send({
     status: true,
@@ -140,28 +135,26 @@ const addDonationType = catchAsync(async (req, res) => {
 
 const getDonationType = catchAsync(async (req, res) => {
   const data = await donationService.getDonationType(req);
-  if(!data){
-    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong")
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
   res.status(httpStatus.CREATED).send({
     status: true,
-    data: data
+    data: data,
   });
 });
 
-const ChangeChequeStatus = catchAsync(async (req,res)=>{
+const ChangeChequeStatus = catchAsync(async (req, res) => {
   const data = await donationService.ChangeChequeStatus(req);
-  if(!data){
-    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong")
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
 
   res.status(200).send({
     status: true,
     msg: "cheque Status Updated successfully",
   });
-
-})
-
+});
 
 module.exports = {
   addCashDonation,
@@ -177,5 +170,5 @@ module.exports = {
   ChangeChequeStatus,
   editElecDonation,
   delDonation,
-  editDonation
+  editDonation,
 };

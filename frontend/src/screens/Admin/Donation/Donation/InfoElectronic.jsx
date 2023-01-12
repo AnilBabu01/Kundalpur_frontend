@@ -57,7 +57,7 @@ function InfoElectronic({ setopendashboard }) {
                         Type of donation
                       </th>
                       <th style={{ textAlign: "center", width: "27rem" }}>
-                        Amout
+                        Amount
                       </th>
                       <th style={{ textAlign: "center" }}>Remark</th>
                     </tr>

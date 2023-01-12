@@ -18,6 +18,12 @@ import Swal from "sweetalert2";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 const style = {
   position: "absolute",
   top: "40%",
@@ -41,6 +47,30 @@ function UserMaster() {
   const [phone, setphone] = useState("");
   const [password, setpassword] = useState("");
   const [refetch, setrefetch] = useState(false);
+  const [open1, setOpen1] = React.useState(false);
+  const [deleteId, setdeleteId] = useState("");
+
+  const handleClickOpen1 = (id) => {
+    setOpen1(true);
+    setdeleteId(id);
+  };
+
+  const handleClose1 = () => {
+    setOpen1(false);
+  };
+
+  const handleClose2 = () => {
+    setOpen1(false);
+    serverInstance(`admin/del-users?id=${deleteId}`, "delete").then((res) => {
+      if (res.status === true) {
+        Swal.fire("Great!", "User delete successfully", "success");
+        setrefetch(!refetch);
+      } else {
+        Swal("Error", "somthing went  wrong", "error");
+      }
+      console.log(res);
+    });
+  };
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -104,6 +134,27 @@ function UserMaster() {
   };
   return (
     <>
+      <Dialog
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Do you want to delete"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            After delete you cannot get again
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose1}>Disagree</Button>
+          <Button onClick={handleClose2} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -244,7 +295,9 @@ function UserMaster() {
                         })
                       }
                     />
-                    <DeleteForeverIcon onClick={() => deleteuser(row.id)} />
+                    <DeleteForeverIcon
+                      onClick={() => handleClickOpen1(row.id)}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

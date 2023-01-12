@@ -53,7 +53,29 @@ const EmailLogin = () => {
           auth.setUser(res.data.tokens.access.token);
         }
       }
-      if (unchecked3 || unchecked2) {
+      if (unchecked2) {
+        const res = await axios.post(`${backendApiUrl}admin/login-employee`, {
+          email: email,
+          password: password,
+        });
+        console.log(res.data);
+        if (res.data.user) {
+          setshowprocess(false);
+          Swal.fire("Great!", "You Have Login Successfully", "success");
+          var decoded = jwt_decode(res.data.tokens.access.token);
+          if (decoded.role === 1) {
+            navigate("/admin-panel/dashboard");
+          }
+
+          if (decoded.role === 3) {
+            navigate("/admin-panel/dashboard");
+          }
+          sessionStorage.setItem("userrole", decoded.role);
+          sessionStorage.setItem("token", res.data.tokens.access.token);
+          auth.setUser(res.data.tokens.access.token);
+        }
+      }
+      if (unchecked3) {
         const res = await axios.post(`${backendApiUrl}admin/login`, {
           username: email,
           password: password,
@@ -92,6 +114,7 @@ const EmailLogin = () => {
               id="adiovalue1"
               type="radio"
               name="radAnswer"
+              checked={unchecked1}
               onClick={() => {
                 setunchecked1(!unchecked1);
                 setunchecked2(false);
@@ -105,6 +128,7 @@ const EmailLogin = () => {
               id="adiovalue2"
               type="radio"
               name="radAnswer"
+              checked={unchecked2}
               onClick={() => {
                 setunchecked2(!unchecked2);
                 setunchecked1(false);
@@ -118,6 +142,7 @@ const EmailLogin = () => {
               id="adiovalue3"
               type="radio"
               name="radAnswer"
+              checked={unchecked3}
               onClick={() => {
                 setunchecked3(!unchecked3);
                 setunchecked1(false);

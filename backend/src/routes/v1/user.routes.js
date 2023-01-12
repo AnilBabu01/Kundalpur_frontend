@@ -71,5 +71,7 @@ router
   .get(auth(), voucherController.getVoucher);
 
 router.route("/check-voucher").post(auth(), voucherController.checkVoucher);
+router.route('/req-voucher').get(auth(),voucherController.requestVoucher)
+router.route('/get-req-voucher').get(auth(),voucherController.getrequestVoucher)
 
 module.exports = router;

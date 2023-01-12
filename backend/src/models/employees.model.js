@@ -69,15 +69,19 @@ const Employees = sequelize.define(tbl.TBL_EMPLOYEES, {
   },
   CreditAA: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull:true
   },
   DebitAA: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull:true
   },
   DCreditAA:{
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull:true
+  },
+  isRequest:{
+    type: Sequelize.BOOLEAN,
+    defaultValue:false
   }
 });
 

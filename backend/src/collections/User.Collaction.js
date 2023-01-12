@@ -61,53 +61,41 @@ class UserCollaction {
           })
           .catch((err) => {
             console.log("err entered", err);
-     
           });
         return res.id;
       })
-      .catch((err) => {
-      
-      });
+      .catch((err) => {});
 
     return addNew;
   };
 
   createuser = async (body, file) => {
-    const {
-      username,
-      mobileNo,
-      name,
-      email,
-      gender,
-      password,
-    } = body;
+    const { username, mobileNo, name, email, gender, password } = body;
     const { profile_image } = file;
     const imagePath = uploadimage(profile_image);
 
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(password, salt);
-try{
-  const query = await TblAdmin.create({
-    username,
-    mobileNo,
-    name,
-    email,
-    gender,
-    profile_image: imagePath,
-    password: hashencrypt,
-  }).then(async(res)=>{
-    const addRole = await TblUsersRoles.create({
-      user_id: res.id,
-      role_id: 1,
-    })
-  })
-  
+    try {
+      const query = await TblAdmin.create({
+        username,
+        mobileNo,
+        name,
+        email,
+        gender,
+        profile_image: imagePath,
+        password: hashencrypt,
+      }).then(async (res) => {
+        const addRole = await TblUsersRoles.create({
+          user_id: res.id,
+          role_id: 1,
+        });
+      });
 
-  return query;
-}catch(err){
-  console.log(err)
-}
-   
+      return query;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   updateOTP = async (id, otp) => {
@@ -183,9 +171,9 @@ try{
     // ----********--------------------
 
     const { profile_image } = req?.files;
-    
+
     const imagePath = uploadimage(profile_image);
-    console.log(imagePath.replace('/uploads'))
+    console.log(imagePath.replace("/uploads"));
 
     user.name = name;
     user.email = email;
@@ -290,14 +278,14 @@ try{
     let { id, phone, name } = req?.query;
 
     let users;
-    if (phone ||  name) {
+    if (phone || name) {
       console.log("enm");
       users = await TblUser.findAll({
         where: {
-          [Op.or]:{
-            mobileNo:{[Op.like]: '%' + phone + '%'},
-            name:{[Op.like]: '%' + name + '%'}
-          }
+          [Op.or]: {
+            mobileNo: { [Op.like]: "%" + phone + "%" },
+            name: { [Op.like]: "%" + name + "%" },
+          },
         },
         attributes: [
           "id",
@@ -404,7 +392,6 @@ try{
   };
 
   addEmployees = async (req) => {
-
     const {
       Username,
       Mobile,
@@ -422,9 +409,6 @@ try{
       DCreditAA,
     } = req.body;
 
-
-    
-
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(Password, salt);
     const query = await TblEmployees.create({
@@ -436,7 +420,7 @@ try{
       DmaxPTD,
       MaxPDA,
       Role,
-      role_id:3,
+      role_id: 3,
       Cashier,
       Status,
       cancelCheckout,
@@ -445,7 +429,7 @@ try{
       DCreditAA,
     })
       .then((res) => {
-        console.log(query)
+        console.log(query);
         return {
           status: true,
           data: query,
@@ -458,21 +442,62 @@ try{
         };
       });
 
-return query
+    return query;
+  };
+
+  editEmployee = async (req, res) => {
+    const {
+      Username,
+      id,
+      Mobile,
+      Email,
+      Address,
+      DmaxPTD,
+      MaxPDA,
+      Role,
+      Cashier,
+      Status,
+      cancelCheckout,
+      CreditAA,
+      DebitAA,
+      DCreditAA,
+    } = req.body;
+
+    const employees = await TblEmployees.update({
+      Username: Username,
+      Mobile: Mobile,
+      Email: Email,
+      Address: Address,
+      DmaxPTD: DmaxPTD,
+      MaxPDA: MaxPDA,
+      Role: Role,
+      Cashier: Cashier,
+      Status: Status,
+      cancelCheckout: cancelCheckout,
+      CreditAA: CreditAA,
+      DebitAA: DebitAA,
+      DCreditAA: DCreditAA,
+    },{where:{
+        id:id
+    }}).catch((Err)=>{
+      console.log(Err)
+    })
+    console.log(employees)
+    return employees;
   };
 
   getEmployees = async (req) => {
-    const { id ,name,phone } = req.query;
+    const { id, name, phone } = req.query;
     let data;
 
-    if ( name || phone){
+    if (name || phone) {
       data = await TblEmployees.findAll({
-        where: { 
-          [Op.or]:{
-            Mobile:{[Op.like]: '%' + phone + '%'},
-            Username:{[Op.like]: '%' + name + '%'}
-          }
-         },
+        where: {
+          [Op.or]: {
+            Mobile: { [Op.like]: "%" + phone + "%" },
+            Username: { [Op.like]: "%" + name + "%" },
+          },
+        },
         attributes: [
           "id",
           "Username",
@@ -490,8 +515,7 @@ return query
           "DCreditAA",
         ],
       });
-    }
-   else if (id) {
+    } else if (id) {
       data = await TblEmployees.findAll({
         where: { id: id },
         attributes: [

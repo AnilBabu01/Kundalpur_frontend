@@ -1,7 +1,8 @@
+const { request } = require("express");
 const sequelize = require("../db/db-connection");
 const db = require("../models");
 const TblVoucher = db.Vouchers;
-
+const TblEmployee = db.employees
 class voucherCollection {
   generateVoucher = async (req) => {
     const { vPrefix, from, to, user } = req.body;
@@ -23,7 +24,7 @@ class voucherCollection {
         };
       });
     return voucher;
-  }
+  };
 
   checkVoucher = async (req) => {
     const userId = req.user.id;
@@ -43,8 +44,32 @@ class voucherCollection {
     });
 
     AssignedVoucher.map(async (item) => {
-      if (item.vPrefix == prefix) {
-        //checking prefix is matched
+      if (prefix) {
+        if (item.vPrefix == prefix) {
+          //checking prefix is matched
+          if (
+            voucherNumber[0] >= currentYear + item.from &&
+            voucherNumber[0] <= currentYear + item.to
+          ) {
+            //checking the voucher is greater than the assignedfrom and lessthan the assigned to
+            return {
+              status: true,
+              message: "User has been assigned",
+            };
+          } else {
+            return {
+              status: false,
+              message:
+                "User is not allowed to Download please Request to Allot more Vouchers",
+            };
+          }
+        } else {
+          return {
+            status: false,
+            message: "Voucher Prefix is not Matching",
+          };
+        }
+      } else {
         if (
           voucherNumber[0] >= currentYear + item.from &&
           voucherNumber[0] <= currentYear + item.to
@@ -55,27 +80,47 @@ class voucherCollection {
             message: "User has been assigned",
           };
         } else {
-         
           return {
             status: false,
-            message: "User is not allowed to Download",
+            message:
+              "User is not allowed to Download please Request to Allot more Vouchers",
           };
         }
-      } else {
-        return {
-          status: false,
-          message: "Voucher Prefix is not Matching",
-        };
       }
     });
-
   };
 
- getVoucher = async ()=>{
-    const voucher = await TblVoucher.findAll()
-  
-    return voucher
- }
+  getVoucher = async () => {
+    const voucher = await TblVoucher.findAll();
+
+    return voucher;
+  };
+
+  requestVoucher = async (req) => {
+    const id = req.user.id
+
+    const Voucher = await TblEmployee.update(
+      {
+        isRequest: true,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    return Voucher
+  };
+
+  getrequestVoucher = async (req)=>{
+    const request = await TblEmployee.findAll({
+      where:{
+        isRequest: true,
+      },
+      attributes:["id","Username","Role"]
+    })
+    return request
+  }
 
 
 }

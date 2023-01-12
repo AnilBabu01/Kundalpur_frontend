@@ -43,12 +43,45 @@ res.status(200).send({
 })
 })
 
+const requestVoucher = catchAsync(async(req,res)=>{
+
+  const data = await VoucherCollection.requestVoucher(req)
+
+  if (!data) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong")
+}
+
+res.status(200).send({
+  status: true,
+  data : "Successfully requested Wait for the Admin Approval !"
+})
+})
+
+
+
+const getrequestVoucher = catchAsync(async(req,res)=>{
+
+  const data = await VoucherCollection.getrequestVoucher(req)
+
+  if (!data) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong")
+}
+
+res.status(200).send({
+  status: true,
+  data : data
+})
+})
+
+
 
 
 
 module.exports = {
     GenerateVoucher,
     checkVoucher,
-    getVoucher
+    getVoucher,
+    requestVoucher,
+    getrequestVoucher
 
 }

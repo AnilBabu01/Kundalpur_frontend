@@ -12,7 +12,7 @@ const uploadimage = (file) => {
     
     const ext = file.name.split(".")[1]
     const filename = Date.now() + uuidv4() + '.' + ext;
-    const filepath =    'uploads/' + newdate + '/' + filename;
+    const filepath =     newdate + '/' + filename;
     const newpath = path.join(process.cwd(), dir, filename);
 
   

@@ -184,7 +184,9 @@ class UserCollaction {
     // ----********--------------------
 
     const { profile_image } = req?.files;
+    
     const imagePath = uploadimage(profile_image);
+    console.log(imagePath.replace('/uploads'))
 
     user.name = name;
     user.email = email;

@@ -1,4 +1,4 @@
-const { sequelize, QueryTypes, query } = require("sequelize");
+const { sequelize, QueryTypes, query, Op } = require("sequelize");
 const uploadimage = require("../middlewares/imageupload");
 const db = require("../models");
 const electricDonation = require("../models/electricDonation.model");
@@ -380,12 +380,15 @@ class DonationCollaction {
     const userId = req.user.id;
     const { phone, name } = req.query;
 
-    if (phone && name) {
+    if (phone || name) {
+      console.log("enter")
       let data = await TblelecDonation.findAll({
         where: {
           created_by: userId,
-          phoneNo: phone,
-          name: name,
+          [Op.or]:{
+          phoneNo: {[Op.like]: '%' + phone + '%'},
+          name: {[Op.like]: '%' + name + '%'},
+          }
         },
         include: [
           {
@@ -396,6 +399,7 @@ class DonationCollaction {
       });
       return data;
     } else {
+     
       let data = await TblelecDonation.findAll({
         where: { created_by: userId },
         include: [

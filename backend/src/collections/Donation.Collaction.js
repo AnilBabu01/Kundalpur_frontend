@@ -253,11 +253,12 @@ class DonationCollaction {
     console.log(deleteReq);
   };
 
-  addElecDonation = async (req, voucherNo) => {
+  addElecDonation = async (req, voucherNo,receipt) => {
     try {
       const {
         name,
         phoneNo,
+        prefix,
         address,
         new_member,
         donation_date,
@@ -267,11 +268,14 @@ class DonationCollaction {
       console.log(req.body);
       const userId = req.user.id;
 
+      const ReceiptNo = `${prefix}${receipt}`
+      console.log(ReceiptNo);
       const result = await TblelecDonation.create({
         name,
         phoneNo,
         address,
         voucherNo,
+        ReceiptNo,
         new_member,
         donation_date,
         donation_time,

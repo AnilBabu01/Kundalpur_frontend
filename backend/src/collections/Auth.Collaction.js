@@ -19,16 +19,24 @@ db.userModel.hasOne(db.usersRolesModel, {
   as: "roleDetails",
 });
 
-db.usersRolesModel.belongsTo(db.admin, {
+db.usersRolesModel.belongsTo(db.userModel, {
   foreignKey: "user_id",
   as: "userRole",
 });
-
 
 db.admin.hasOne(db.usersRolesModel, {
   foreignKey: "user_id",
   as: "roleDetails",
 });
+
+
+db.usersRolesModel.belongsTo(db.admin, {
+  foreignKey: "user_id",
+  as: "userRoles",
+});
+
+
+
 
 
 // db.roleModel.hasMany(db.usersRolesModel, {

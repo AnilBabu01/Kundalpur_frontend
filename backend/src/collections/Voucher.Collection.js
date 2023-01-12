@@ -70,6 +70,14 @@ class voucherCollection {
     });
 
   };
+
+ getVoucher = async ()=>{
+    const voucher = await TblVoucher.findAll()
+  
+    return voucher
+ }
+
+
 }
 
 module.exports = new voucherCollection();

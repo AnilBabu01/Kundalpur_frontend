@@ -61,27 +61,16 @@ class UserCollaction {
           })
           .catch((err) => {
             console.log("err entered", err);
-     
           });
         return res.id;
       })
-      .catch((err) => {
-      
-      });
+      .catch((err) => {});
 
     return addNew;
   };
 
   createuser = async (body, file) => {
-    const {
-      username,
-      mobileNo,
-      name,
-      email,
-      address,
-      gender,
-      password,
-    } = body;
+    const { username, mobileNo, name, email, address, gender, password } = body;
     const { profile_image } = file;
     const imagePath = uploadimage(profile_image);
 
@@ -97,10 +86,10 @@ class UserCollaction {
       gender,
       profile_image: imagePath,
       password: hashencrypt,
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err);
-    })
-    
+    });
+
     if (query) {
       const addRole = await TblUsersRoles.create({
         user_id: query.id,
@@ -184,14 +173,28 @@ class UserCollaction {
     // ----********--------------------
 
     const { profile_image } = req?.files;
-    const imagePath = uploadimage(profile_image);
 
-    user.name = name;
-    user.email = email;
-    user.dob = dob;
-    user.anniversary_date = anniversary_date;
-    user.address = address;
-    user.profile_image = imagePath;
+    const imagePath = uploadimage(profile_image);
+    console.log(imagePath.replace("/uploads"));
+    if (name) {
+      user.name = name;
+    }
+    if (email) {
+      user.email = email;
+    }
+    if (dob) {
+      user.dob = dob;
+    }
+    if (anniversary_date) {
+      user.anniversary_date = anniversary_date;
+    }
+    if (address) {
+      user.address = address;
+    }
+    if (imagePath) {
+      user.profile_image = imagePath;
+    }
+
     return user.save();
   };
 
@@ -401,7 +404,6 @@ class UserCollaction {
   };
 
   addEmployees = async (req) => {
-
     const {
       Username,
       Mobile,
@@ -419,9 +421,6 @@ class UserCollaction {
       DCreditAA,
     } = req.body;
 
-
-    
-
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(Password, salt);
     const query = await TblEmployees.create({
@@ -433,7 +432,7 @@ class UserCollaction {
       DmaxPTD,
       MaxPDA,
       Role,
-      role_id:3,
+      role_id: 3,
       Cashier,
       Status,
       cancelCheckout,
@@ -442,7 +441,7 @@ class UserCollaction {
       DCreditAA,
     })
       .then((res) => {
-        console.log(query)
+        console.log(query);
         return {
           status: true,
           data: query,
@@ -455,7 +454,7 @@ class UserCollaction {
         };
       });
 
-return query
+    return query;
   };
 
   getEmployees = async (req) => {

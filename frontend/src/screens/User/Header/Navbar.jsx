@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import { secondaryColor } from "../../../utils/colorVariables";
 import { NavLink, useNavigate } from "react-router-dom";
+import { backendUrl, backendApiUrl } from "../../../config/config";
 import { useLocation } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -27,20 +28,21 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const [isMobile, setisMobile] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
+  const [profileimg, setprofileimg] = useState("");
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const { user } = useSelector((state) => state.userReducer);
-  console.log("anil", user);
+
   const handleClose = () => {
     setAnchorEl(null);
   };
   const token = sessionStorage.getItem("token");
   useEffect(() => {
     dispatch(loadUser());
-  }, [isMobile, token]);
+  }, [isMobile, token, profileimg]);
 
   const logout = () => {
     handleClose();
@@ -184,7 +186,7 @@ const Navbar = () => {
                 >
                   <Avatar
                     alt={user?.name}
-                    src="/static/images/avatar/1.jpg"
+                    src={`${backendUrl}uploads/images/${user?.profile_image}`}
                     sx={{
                       width: 35,
                       height: 35,

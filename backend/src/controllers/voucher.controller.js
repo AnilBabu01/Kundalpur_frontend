@@ -29,11 +29,26 @@ const checkVoucher = catchAsync(async(req,res)=>{
     })
 })
 
+const getVoucher = catchAsync(async(req,res)=>{
+
+  const data = await VoucherCollection.getVoucher(req)
+
+  if (!data) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong")
+}
+
+res.status(200).send({
+  status: true,
+  data : data
+})
+})
+
 
 
 
 module.exports = {
     GenerateVoucher,
     checkVoucher,
+    getVoucher
 
 }

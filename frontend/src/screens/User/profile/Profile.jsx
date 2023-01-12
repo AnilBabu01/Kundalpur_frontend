@@ -22,8 +22,7 @@ function Profile() {
   const [profileimg, setprofileimg] = useState("");
 
   const { user } = useSelector((state) => state.userReducer);
-  console.log("sss", user);
-
+  console.log(user);
   const submitHandler = async (e) => {
     try {
       e.preventDefault();
@@ -59,7 +58,7 @@ function Profile() {
       Swal.fire("Error!", error.response.data.message, "error");
     }
   };
-
+  console.log("url", profileimg);
   useEffect(() => {
     if (user) {
       setname(user?.name);
@@ -68,7 +67,7 @@ function Profile() {
       setmobile(user?.mobileNo);
       setanniversary_date(user?.anniversary_date);
       setdob(user?.dob);
-      setprofileimg(user?.profile_image);
+      setprofileimg(`${backendUrl}uploads/images/${user?.profile_image}`);
     }
   }, []);
 
@@ -95,7 +94,13 @@ function Profile() {
                   />
                   <div className="profile-img-div">
                     <img
-                      src={previewprofile ? previewprofile : profileimgs}
+                      src={
+                        previewprofile
+                          ? previewprofile
+                          : profileimg
+                          ? profileimg
+                          : profileimgs
+                      }
                       alt="profileimg"
                     />
                   </div>

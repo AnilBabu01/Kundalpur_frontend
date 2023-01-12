@@ -32,11 +32,11 @@ const userRegister = async (req, res) => {
   //   });
   // }
   const userdata = await userService.createuser(req.body, req.files);
-  console.log(userdata);
+  
   if (!userdata) {
-    res.status(httpStatus.CONFLICT).send({
+    res.status(httpStatus.UNAUTHORIZED).send({
       status: false,
-      msg: "Username already exist.",
+      msg: "Something went wrong",
     });
   }
   res.status(httpStatus.CREATED).send(userdata);

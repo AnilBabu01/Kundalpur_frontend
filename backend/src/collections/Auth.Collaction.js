@@ -129,6 +129,7 @@ class UserCollaction {
         },
       ],
     }).then((res) => {
+      console.log(res);
       result = res;
     });
 

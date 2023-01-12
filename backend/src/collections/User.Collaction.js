@@ -82,7 +82,6 @@ class UserCollaction {
       mobileNo,
       name,
       email,
-      address,
       gender,
       profile_image: imagePath,
       password: hashencrypt,

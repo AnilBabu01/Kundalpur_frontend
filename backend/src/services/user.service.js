@@ -12,7 +12,7 @@ const { checkMobile, checkEmail, checkEmployeeMobile, checkEmployeeEmail } = req
  * @returns {Promise<User>}
  */
 const createuser = async (userBody, file) => {
-  const user = await AuthCollaction.getUserName(userBody.username);
+  const user = await AuthCollaction.getAdminName(userBody.username);
   if (user) {
     return null;
   }

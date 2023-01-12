@@ -86,27 +86,30 @@ class UserCollaction {
 
     const salt = bcrypt.genSaltSync(12);
     const hashencrypt = bcrypt.hashSync(password, salt);
-
-    const query = await TblAdmin.create({
-      username,
-      mobileNo,
-      name,
-      email,
-      gender,
-      profile_image: imagePath,
-      password: hashencrypt,
-    }).catch((err)=>{
-      console.log(err);
+try{
+  const query = await TblAdmin.create({
+    username,
+    mobileNo,
+    name,
+    email,
+    gender,
+    profile_image: imagePath,
+    password: hashencrypt,
+  })
+  
+  if (query) {
+    const addRole = await TblUsersRoles.create({
+      user_id: query.id,
+      role_id: 1,
     })
-    
-    if (query) {
-      const addRole = await TblUsersRoles.create({
-        user_id: query.id,
-        role_id: 1,
-      });
-      return query;
-    }
-    return null;
+
+  }
+  console.log(query,"err")
+  return query;
+}catch(err){
+  console.log(err)
+}
+   
   };
 
   updateOTP = async (id, otp) => {

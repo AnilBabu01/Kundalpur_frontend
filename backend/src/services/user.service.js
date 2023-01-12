@@ -14,10 +14,13 @@ const { checkMobile, checkEmail, checkEmployeeMobile, checkEmployeeEmail } = req
 const createuser = async (userBody, file) => {
   const user = await AuthCollaction.getAdminName(userBody.username);
   if (user) {
-    return null;
+    return {
+      status:false,
+      message:"User already exists"
+    }
   }
   console.log(user)
-  const result = await UserCollection.createuser(userBody, file,);
+  const result = await UserCollection.createuser(userBody, file);
   return result;
 };
 

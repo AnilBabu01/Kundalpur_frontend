@@ -62,9 +62,14 @@ router
 router
   .route("/get-elecDonation")
   .get(auth(), donationController.getElecDonationbyID);
+
 router
   .route("/add-voucher-user")
   .post(auth(), voucherController.GenerateVoucher);
+  router
+  .route("/add-voucher-user")
+  .get(auth(), voucherController.getVoucher);
+
 router.route("/check-voucher").post(auth(), voucherController.checkVoucher);
 
 module.exports = router;

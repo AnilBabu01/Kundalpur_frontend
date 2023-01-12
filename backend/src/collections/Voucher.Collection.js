@@ -149,11 +149,54 @@ class voucherCollection {
       RDel,
       Redt,
       Renq,
-    }).catch((err)=>{
+    }).catch((err) => {
       console.error(err);
-    })
+    });
 
-    return roles
+    return roles;
+  };
+
+  getEmployeeRole = async () => {
+    let roles = await TblEmpRoles.findAll();
+
+    return roles;
+  };
+
+  EditEmployeeRole = async (req) => {
+    const {
+      id,
+      roleName,
+      roleDesc,
+      DAdd,
+      DDel,
+      Dedt,
+      Denq,
+      RAdd,
+      RDel,
+      Redt,
+      Renq,
+    } = req.body;
+
+    const updatedRoles = await TblEmpRoles.update(
+      {
+        roleName: roleName,
+        roleDesc: roleDesc,
+        DAdd: DAdd,
+        DDel: DDel,
+        Dedt: Dedt,
+        Denq: Denq,
+        RAdd: RAdd,
+        RDel: RDel,
+        Redt: Redt,
+        Renq: Renq,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    return updatedRoles;
   };
 }
 

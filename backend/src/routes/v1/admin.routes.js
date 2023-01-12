@@ -25,4 +25,7 @@ router.route('/add-employee').get(auth(),userController.getEmployees)
 router.route('/add-employee').delete(auth(),userController.delEmployees)
 router.route('/add-employee').put(auth(),userController.editEmployee)
 router.route('/create-role').post(auth(),voucherController.EmployeeRole)
+router.route('/create-role').get(auth(),voucherController.getEmployeeRole)
+router.route('/create-role').put(auth(),voucherController.EditEmployeeRole)
+
 module.exports = router;

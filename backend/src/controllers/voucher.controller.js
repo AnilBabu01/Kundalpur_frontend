@@ -84,10 +84,39 @@ const EmployeeRole = catchAsync(async(req,res)=>{
 
 res.status(200).send({
   status: true,
-  data : "Successfully created a new role"
+  message : "Successfully created a new role"
 })
 })
 
+
+const getEmployeeRole = catchAsync(async(req,res)=>{
+
+  const data = await VoucherCollection.getEmployeeRole(req)
+
+  if (!data) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong")
+}
+
+res.status(200).send({
+  status: true,
+  data : data
+})
+})
+
+
+const EditEmployeeRole = catchAsync(async(req,res)=>{
+
+  const data = await VoucherCollection.EditEmployeeRole(req)
+
+  if (!data) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong")
+}
+
+res.status(200).send({
+  status: true,
+  message : "Successfully updated Role"
+})
+})
 
 
 
@@ -98,6 +127,8 @@ module.exports = {
     getVoucher,
     requestVoucher,
     getrequestVoucher,
-    EmployeeRole
+    EmployeeRole,
+    getEmployeeRole,
+    EditEmployeeRole
 
 }

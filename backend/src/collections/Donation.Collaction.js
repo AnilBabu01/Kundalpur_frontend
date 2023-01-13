@@ -570,6 +570,45 @@ class DonationCollaction {
     console.log(data);
     return data;
   };
+
+  ChangeElecStatus = async (req) => {
+    const { status, id } = req.body;
+    console.log(req.body);
+    ///status 0 == false ///status 1 === true means active
+    let data;
+
+    if (status == 1) {
+      data = await TblelecDonation.update(
+        {
+          isActive: true,
+        },
+        {
+          where: {
+            id: id,
+          },
+        }
+      ).catch((err) => {
+        console.log(err);
+      });
+    } else if (status == 0) {
+      data = await TblelecDonation.update(
+        {
+          isActive: false,
+        },
+        {
+          where: {
+            id: id,
+          },
+        }
+      ).catch((err) => {
+        console.log(err);
+      });
+    }
+    console.log(data);
+    return data;
+  };
+
+
 }
 
 module.exports = new DonationCollaction();

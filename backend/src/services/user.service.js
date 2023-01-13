@@ -81,6 +81,7 @@ const loginuser = async (identity, password) => {
 
 const loginAdmin = async (username, password) => {
   const user = await AuthCollaction.getAdminName(username);
+  console.log(user)
   if (!user || !(await AuthCollaction.isPasswordMatch(password, user.password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED,"Incorrect username or password");
   }

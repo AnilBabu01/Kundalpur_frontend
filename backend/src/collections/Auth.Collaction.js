@@ -24,16 +24,7 @@ db.usersRolesModel.belongsTo(db.userModel, {
   as: "userRole",
 });
 
-db.admin.hasOne(db.usersRolesModel, {
-  foreignKey: "user_id",
-  as: "adminDetails",
-});
 
-
-db.usersRolesModel.belongsTo(db.admin, {
-  foreignKey: "user_id",
-  as: "userRoles",
-});
 
 
 

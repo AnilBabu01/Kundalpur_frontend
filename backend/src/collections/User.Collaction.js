@@ -11,6 +11,16 @@ const TblPasswordReset = db.passwordReset;
 const TblEmployees = db.employees;
 const TblAdmin = db.admin;
 
+db.admin.hasOne(db.usersRolesModel, {
+  foreignKey: "user_id",
+  as: "adminDetails",
+});
+
+db.usersRolesModel.belongsTo(db.admin, {
+  foreignKey: "user_id",
+  as: "userRoles",
+});
+
 class UserCollaction {
   updatePassword = async (body) => {
     const { identity, new_password } = body;
@@ -89,10 +99,17 @@ class UserCollaction {
         const addRole = await TblUsersRoles.create({
           user_id: res.id,
           role_id: 1,
-        });
+        }).then((res)=>{
+          return{
+            status:true,
+            message:"Admin Registered Successfully"
+          }
+        })
       });
-
-      return query;
+      return{
+        status:true,
+        message:"Admin Registered Successfully"
+      }
     } catch (err) {
       console.log(err);
     }
@@ -431,14 +448,12 @@ class UserCollaction {
       DCreditAA,
     })
       .then((res) => {
-
         return {
           status: true,
-
         };
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         return {
           status: false,
           data: err,
@@ -481,7 +496,7 @@ class UserCollaction {
         cancelCheckout: cancelCheckout,
         CreditAA: CreditAA,
         DebitAA: DebitAA,
-        Rid:Rid,
+        Rid: Rid,
         DCreditAA: DCreditAA,
       },
       {

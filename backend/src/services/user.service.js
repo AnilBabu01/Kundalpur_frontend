@@ -21,6 +21,7 @@ const createuser = async (userBody, file) => {
   }
   console.log(user)
   const result = await UserCollection.createuser(userBody, file);
+  
   return result;
 };
 

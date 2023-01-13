@@ -32,7 +32,7 @@ const userRegister = async (req, res) => {
   //   });
   // }
   const userdata = await userService.createuser(req.body, req.files);
-  
+    console.log(userdata)
   if (!userdata) {
     res.status(httpStatus.UNAUTHORIZED).send({
       status: false,

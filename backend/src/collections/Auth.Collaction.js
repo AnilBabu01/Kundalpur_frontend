@@ -24,16 +24,7 @@ db.usersRolesModel.belongsTo(db.userModel, {
   as: "userRole",
 });
 
-db.admin.hasOne(db.usersRolesModel, {
-  foreignKey: "user_id",
-  as: "adminDetails",
-});
 
-
-db.usersRolesModel.belongsTo(db.admin, {
-  foreignKey: "user_id",
-  as: "userRoles",
-});
 
 
 
@@ -327,6 +318,37 @@ class UserCollaction {
       message: "Otp Will send to Your Registered Mail",
     };
   };
+
+  changePassForgot =async (req)=>{
+
+    const {token,password} = req.body;
+let data;
+    const salt = bcrypt.genSaltSync(12);
+    const hashencrypt = bcrypt.hashSync(password, salt);
+    let verify = await TblPasswordReset.findOne({
+      where:{resetPasswordToken:token}
+    })
+
+    if(verify){
+     data = await TblUser.update({
+        password:hashencrypt
+      },
+      {
+        where:{
+          id:verify.user_id
+        }
+      }
+      ).catch((err)=>{
+        console.log(err)
+      }
+
+      )
+    }
+
+    return data
+
+  }
+
 } //end of class
 
 function sendToElasticAndLogToConsole(sql, queryObject) {

@@ -21,6 +21,7 @@ const createuser = async (userBody, file) => {
   }
   console.log(user)
   const result = await UserCollection.createuser(userBody, file);
+  
   return result;
 };
 
@@ -114,6 +115,10 @@ const profileUpdate = async(req)=>{
   return update;
 }
 
+const changePassForgot = async (req)=>{
+  const update = await AuthCollaction.changePassForgot(req);
+  return update;
+}
 const profileList = async(req)=>{
   const list = await UserCollection.profileList(req);
   if(!list){
@@ -234,6 +239,7 @@ module.exports = {
   mobileLogin,
   profileUpdate,
   profileList,
+  changePassForgot,
   createAccount,
   getUsers,
   delUser,

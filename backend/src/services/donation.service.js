@@ -129,6 +129,11 @@ const ChangeChequeStatus = async(req)=>{
   return data;
 }
 
+const ChangeElecStatus = async(req)=>{
+  const data = await DonationCollection.ChangeElecStatus(req);
+  return data;
+}
+
 
 module.exports = {
   cashDonation,
@@ -148,5 +153,6 @@ module.exports = {
   ChangeChequeStatus,
   editElecDonation,
   delDonation,
-  editDonation
+  editDonation,
+  ChangeElecStatus
 };

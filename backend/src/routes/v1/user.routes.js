@@ -33,6 +33,10 @@ router
 
   router.route('/verify-otp-forgot').post( 
   userController.verifyForgotOtp) ///req otp
+  
+  router.route('/changepass-forgot').post( 
+    userController.changePassForgot) ///changePassword
+
 
 
 

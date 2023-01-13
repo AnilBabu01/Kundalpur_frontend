@@ -4,7 +4,7 @@ const catchAsync = require("../utils/catchAsync");
 const { generateAuthTokens } = require("../utils/tokens");
 const { isEmailValid } = require("../utils/checkEmail");
 const ApiError = require("../utils/ApiError");
-const crypto = require('crypto');
+const crypto = require("crypto");
 const UserCollaction = require("../collections/User.Collaction");
 
 const createUser = catchAsync(async (req, res) => {
@@ -90,27 +90,39 @@ const verifyOTP = catchAsync(async (req, res) => {
   });
 });
 
-const verifyForgotOtp = catchAsync(async(req,res)=>{
+const verifyForgotOtp = catchAsync(async (req, res) => {
   const { username, otp } = req.body;
 
   const data = await userService.verifyOTP(username, otp);
-  console.log(data.id)
+  console.log(data.id);
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
 
-  let resetPasswordToken = crypto.randomBytes(20).toString('hex');
-  const update = await UserCollaction.generateResetTokenNew(resetPasswordToken,data.id);
-
+  let resetPasswordToken = crypto.randomBytes(20).toString("hex");
+  const update = await UserCollaction.generateResetTokenNew(
+    resetPasswordToken,
+    data.id
+  );
 
   res.status(200).send({
-    status:true,
-    message : "Successfully Verified Otp",
-    token:update
-  })
+    status: true,
+    message: "Successfully Verified Otp",
+    token: update,
+  });
+});
 
+const changePassForgot = catchAsync(async (req, res) => {
+  const data = await userService.changePassForgot(req);
 
-})
+  if (!data) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong");
+  }
+  res.status(200).send({
+    status: true,
+    message: "Successfully Updated password",
+  });
+});
 
 const forgotPassword = catchAsync(async (req, res) => {
   const result = await userService.forgotPass(req);
@@ -187,7 +199,6 @@ const getEmployees = catchAsync(async (req, res) => {
   });
 });
 
-
 const delEmployees = catchAsync(async (req, res) => {
   const employees = await userService.delEmployees(req);
   if (!employees) {
@@ -198,8 +209,6 @@ const delEmployees = catchAsync(async (req, res) => {
     message: "User Deleted Successfully",
   });
 });
-
-
 
 const editEmployee = catchAsync(async (req, res) => {
   const employees = await userService.editEmployee(req);
@@ -212,20 +221,17 @@ const editEmployee = catchAsync(async (req, res) => {
   });
 });
 
-const forgotPasswordReqOtp = catchAsync(async(req,res)=>{
-  const data = await userService.forgotPasswordReqOtp(req)
-  console.log(data)
+const forgotPasswordReqOtp = catchAsync(async (req, res) => {
+  const data = await userService.forgotPasswordReqOtp(req);
+  console.log(data);
   if (!data) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong")
-}
-res.status(200).send({
-  status: data.status,
-  message : data.message,
-})
-})
-
-
-
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong");
+  }
+  res.status(200).send({
+    status: data.status,
+    message: data.message,
+  });
+});
 
 module.exports = {
   createUser,
@@ -242,5 +248,6 @@ module.exports = {
   delEmployees,
   forgotPasswordReqOtp,
   verifyForgotOtp,
-  editEmployee
+  editEmployee,
+  changePassForgot,
 };

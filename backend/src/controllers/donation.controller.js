@@ -156,6 +156,18 @@ const ChangeChequeStatus = catchAsync(async (req, res) => {
   });
 });
 
+const ChangeElecStatus = catchAsync(async (req, res) => {
+  const data = await donationService.ChangeElecStatus(req);
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+
+  res.status(200).send({
+    status: true,
+    msg: "cheque Status Updated successfully",
+  });
+});
+
 module.exports = {
   addCashDonation,
   donationList,
@@ -171,4 +183,5 @@ module.exports = {
   editElecDonation,
   delDonation,
   editDonation,
+  ChangeElecStatus,
 };

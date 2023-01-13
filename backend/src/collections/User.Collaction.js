@@ -11,6 +11,16 @@ const TblPasswordReset = db.passwordReset;
 const TblEmployees = db.employees;
 const TblAdmin = db.admin;
 
+db.admin.hasOne(db.usersRolesModel, {
+  foreignKey: "user_id",
+  as: "adminDetails",
+});
+
+db.usersRolesModel.belongsTo(db.admin, {
+  foreignKey: "user_id",
+  as: "userRoles",
+});
+
 class UserCollaction {
   updatePassword = async (body) => {
     const { identity, new_password } = body;
@@ -85,16 +95,21 @@ class UserCollaction {
         gender,
         profile_image: imagePath,
         password: hashencrypt,
-      });
-
-      if (query) {
+      }).then(async (res) => {
         const addRole = await TblUsersRoles.create({
-          user_id: query.id,
+          user_id: res.id,
           role_id: 1,
+        }).then((res) => {
+          return {
+            status: true,
+            message: "Admin Registered Successfully",
+          };
         });
-      }
-      console.log(query, "err");
-      return query;
+      });
+      return {
+        status: true,
+        message: "Admin Registered Successfully",
+      };
     } catch (err) {
       console.log(err);
     }
@@ -432,14 +447,12 @@ class UserCollaction {
       DCreditAA,
     })
       .then((res) => {
-
         return {
           status: true,
-
         };
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         return {
           status: false,
           data: err,
@@ -447,6 +460,54 @@ class UserCollaction {
       });
 
     return query;
+  };
+
+  editEmployee = async (req, res) => {
+    const {
+      Username,
+      id,
+      Mobile,
+      Email,
+      Address,
+      DmaxPTD,
+      MaxPDA,
+      Role,
+      Rid,
+      Cashier,
+      Status,
+      cancelCheckout,
+      CreditAA,
+      DebitAA,
+      DCreditAA,
+    } = req.body;
+
+    const employees = await TblEmployees.update(
+      {
+        Username: Username,
+        Mobile: Mobile,
+        Email: Email,
+        Address: Address,
+        DmaxPTD: DmaxPTD,
+        MaxPDA: MaxPDA,
+        Role: Role,
+        Cashier: Cashier,
+        Status: Status,
+        cancelCheckout: cancelCheckout,
+        CreditAA: CreditAA,
+        DebitAA: DebitAA,
+        Rid: Rid,
+        DCreditAA: DCreditAA,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    ).catch((Err) => {
+      console.log(Err);
+    });
+    console.log(employees);
+    return employees;
   };
 
   getEmployees = async (req) => {

@@ -27,5 +27,6 @@ router.route('/add-employee').put(auth(),userController.editEmployee)
 router.route('/create-role').post(auth(),voucherController.EmployeeRole)
 router.route('/create-role').get(auth(),voucherController.getEmployeeRole)
 router.route('/create-role').put(auth(),voucherController.EditEmployeeRole)
+router.route('/change-elec').post(auth(),donationController.ChangeElecStatus)
 
 module.exports = router;

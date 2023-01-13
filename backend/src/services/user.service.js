@@ -114,6 +114,10 @@ const profileUpdate = async(req)=>{
   return update;
 }
 
+const changePassForgot = async (req)=>{
+  const update = await AuthCollaction.changePassForgot(req);
+  return update;
+}
 const profileList = async(req)=>{
   const list = await UserCollection.profileList(req);
   if(!list){
@@ -234,6 +238,7 @@ module.exports = {
   mobileLogin,
   profileUpdate,
   profileList,
+  changePassForgot,
   createAccount,
   getUsers,
   delUser,

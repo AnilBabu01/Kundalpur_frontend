@@ -327,6 +327,37 @@ class UserCollaction {
       message: "Otp Will send to Your Registered Mail",
     };
   };
+
+  changePassForgot =async (req)=>{
+
+    const {token,password} = req.body;
+let data;
+    const salt = bcrypt.genSaltSync(12);
+    const hashencrypt = bcrypt.hashSync(password, salt);
+    let verify = await TblPasswordReset.findOne({
+      where:{resetPasswordToken:token}
+    })
+
+    if(verify){
+     data = await TblUser.update({
+        password:hashencrypt
+      },
+      {
+        where:{
+          id:verify.user_id
+        }
+      }
+      ).catch((err)=>{
+        console.log(err)
+      }
+
+      )
+    }
+
+    return data
+
+  }
+
 } //end of class
 
 function sendToElasticAndLogToConsole(sql, queryObject) {

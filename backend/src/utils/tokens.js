@@ -25,8 +25,10 @@ const generateToken = (userId,role ,expires,secret = config.jwt.secret) => {
  * @returns {Promise<Object>}
  */
 const generateAuthTokens = async (user) => {
+
+  let role = user?.adminDetails?.role_id || user?.roleDetails?.role_id 
   const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
-  const accessToken = generateToken(user.id,user.roleDetails.role_id, accessTokenExpires);
+  const accessToken = generateToken(user.id,role, accessTokenExpires);
   return {
     access: {
       token: accessToken,

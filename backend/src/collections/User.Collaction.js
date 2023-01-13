@@ -431,13 +431,14 @@ class UserCollaction {
       DCreditAA,
     })
       .then((res) => {
-        console.log(query);
+
         return {
           status: true,
-          data: query,
+
         };
       })
       .catch((err) => {
+        console.log(err)
         return {
           status: false,
           data: err,

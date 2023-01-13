@@ -107,12 +107,10 @@ const Assign = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
-                  <TableCell>Userid</TableCell>
-                  <TableCell>Compnay Name</TableCell>
-                  <TableCell>Voucher</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Time</TableCell>
                   <TableCell>Status</TableCell>
-                  <TableCell>Remark</TableCell>
-
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -130,14 +128,10 @@ const Assign = ({ setopendashboard }) => {
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell>{index + 1}</TableCell>
-
                     <TableCell>{row.NAME}</TableCell>
                     <TableCell> {row.MODE_OF_DONATION}</TableCell>
                     <TableCell> {row.AMOUNT}</TableCell>
-
-                    <TableCell> {row.PAYMENT_ID}</TableCell>
-
+                    <TableCell> {row.AMOUNT}</TableCell>
                     <TableCell>
                       <button className="Accepted_btn">Accepted</button>
                     </TableCell>

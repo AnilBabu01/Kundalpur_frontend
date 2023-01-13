@@ -24,22 +24,28 @@ import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { backendUrl } from "../../../config/config";
 import Logout from "@mui/icons-material/Logout";
-
+import Notification from "./Notification/Notification";
 import "./AdminHeader.css";
 const AdminHeader = () => {
   const navigate = useNavigate();
   const [showsidebar, setshowsidebar] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
-
+  const [anchorEl1, setAnchorEl1] = useState(false);
   const open = Boolean(anchorEl);
-  const { user } = useSelector((state) => state.userReducer);
-  console.log("sss", user);
+  const open1 = Boolean(anchorEl1);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleClick1 = (event) => {
+    setAnchorEl1(event.currentTarget);
+  };
+  const handleClose1 = () => {
+    setAnchorEl1(null);
+  };
+  const { user } = useSelector((state) => state.userReducer);
 
   const logout = () => {
     handleClose();
@@ -53,6 +59,42 @@ const AdminHeader = () => {
 
   return (
     <>
+      <Menu
+        anchorEl={anchorEl1}
+        id="account-menu"
+        open={open1}
+        // onClose={handleClose1}
+        // onClick={handleClose1}
+
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            mt: 1.5,
+            "& .MuiAvatar-root": {
+              width: 22,
+              height: 32,
+            },
+            "&:before": {
+              content: '""',
+              display: "block",
+              position: "absolute",
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <Notification handleClose1={handleClose1} />
+      </Menu>
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -129,7 +171,7 @@ const AdminHeader = () => {
                 <img src={search} alt="search" />
               </button>
             </div>
-            <div className="notificationdiv">
+            <div onClick={handleClick1} className="notificationdiv">
               <Badge badgeContent={4} color="primary" style={{ zIndex: 0 }}>
                 <NotificationsIcon color="action" />
               </Badge>

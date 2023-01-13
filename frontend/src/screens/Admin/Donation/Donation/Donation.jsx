@@ -25,6 +25,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Request from "./Request";
+import { backendApiUrl } from "../../../../config/config";
+import axios from "axios";
+
 import "./Donation.css";
 const style = {
   position: "absolute",
@@ -32,6 +36,17 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "90%",
+  bgcolor: "background.paper",
+  p: 2,
+  boxShadow: 24,
+  borderRadius: "5px",
+};
+const style2 = {
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "30%",
   bgcolor: "background.paper",
   p: 2,
   boxShadow: 24,
@@ -45,8 +60,12 @@ const Donation = ({ setopendashboard }) => {
   const [open1, setOpen1] = React.useState(false);
   const [showalert, setshowalert] = useState(false);
   const [deleteId, setdeleteId] = useState("");
+  const [checkVoucher, setcheckVoucher] = useState(false);
   const [msg, setmsg] = useState("");
   const [open, setOpen] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
+  const handleOpen3 = () => setOpen3(true);
+  const handleClose3 = () => setOpen3(false);
 
   const handleClickOpen1 = (id) => {
     setOpen1(true);
@@ -80,9 +99,8 @@ const Donation = ({ setopendashboard }) => {
   };
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = () => setOpen(false);
+
   const navigation = useNavigate();
 
   useEffect(() => {
@@ -120,6 +138,33 @@ const Donation = ({ setopendashboard }) => {
     }
   };
 
+  const voucherexhauted = async (row) => {
+    try {
+      axios.defaults.headers.post[
+        "Authorization"
+      ] = `Bearer ${sessionStorage.getItem("token")}`;
+
+      const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
+        voucher: row?.voucherNo,
+      });
+
+      console.log(res);
+
+      if (res.data.status === true) {
+        // if (checkVoucher) {
+        //   printreceipt(row);
+        // }
+        // if (!checkVoucher) {
+        //   handleOpen3();
+        // }
+        Swal.fire("Great!", res.data.data, "success");
+      } else {
+        Swal.fire("Error!", "Somthing went wrong!!", "error");
+      }
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
+  };
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
@@ -168,6 +213,28 @@ const Donation = ({ setopendashboard }) => {
                 setmsg={setmsg}
                 handleClose={handleClose}
               />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open3}
+        onClose={handleClose3}
+        closeAfterTransition
+      >
+        <Fade in={open3}>
+          <Box sx={style2}>
+            <div>
+              <div className="add-div-close-div1">
+                <h2 style={{ textAlign: "center" }}>
+                  Vouchers exhausted, Please request to new Vouchers
+                </h2>
+                <CloseIcon onClick={() => handleClose3()} />
+              </div>
+              <Request handleClose={handleClose3} />
             </div>
           </Box>
         </Fade>
@@ -228,12 +295,10 @@ const Donation = ({ setopendashboard }) => {
                         }
                       />
 
-                      <DeleteForeverIcon
-                        onClick={() => handleClickOpen1(row.id)}
-                      />
+                      <DeleteForeverIcon onClick={() => ClickOpen(row.id)} />
                       <PrintIcon
                         onClick={() => {
-                          printreceipt(row);
+                          voucherexhauted(row);
                         }}
                       />
                     </TableCell>

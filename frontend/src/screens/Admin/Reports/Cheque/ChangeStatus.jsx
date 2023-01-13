@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 function ChangeStatus({ id, handleClose }) {
   const navigate = useNavigate();
-
+  const [paymentId, setpaymentId] = useState("");
   const [approvevalue, setapprovevalue] = useState("");
   console.log(id);
 
@@ -35,7 +35,16 @@ function ChangeStatus({ id, handleClose }) {
       <div>
         <div>
           <div className="Status_main_div">
-            <label>Status</label>
+            <label htmlFor="Payment id">Payment id</label>
+            <input
+              type="text"
+              name="paymentId"
+              id="paymentId"
+              value={paymentId}
+              placeholder="Payment id"
+              onChange={(e) => setpaymentId(e.target.value)}
+            />
+            <label htmlFor="type">Status</label>
             <select
               className="inner-input-div1-select-cheque"
               id="type"
@@ -46,7 +55,7 @@ function ChangeStatus({ id, handleClose }) {
               <option value={0}> Not approved</option>
               <option value={1}>Approved</option>
             </select>
-            <button onClick={() => handlesubmit()}>Change</button>
+            <button onClick={() => handlesubmit()}>Save</button>
           </div>
         </div>
       </div>

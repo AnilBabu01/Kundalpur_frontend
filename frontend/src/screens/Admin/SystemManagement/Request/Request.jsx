@@ -3,88 +3,61 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { serverInstance } from "../../../../API/ServerInstance";
 import Swal from "sweetalert2";
+import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import EditIcon from "@mui/icons-material/Edit";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
-import CancelIcon from "@mui/icons-material/Cancel";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import PrintIcon from "@mui/icons-material/Print";
 import Fade from "@mui/material/Fade";
 import CloseIcon from "@mui/icons-material/Close";
-import Cancel from "./Cancel";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import "./Electornic.css";
+import AddVoucherToUser from "../VoucherManagement/AddVoucherToUser/AddVoucherToUser";
 const style = {
   position: "absolute",
-  top: "40%",
+  top: "27%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "30%",
+
   bgcolor: "background.paper",
   p: 2,
   boxShadow: 24,
   borderRadius: "5px",
 };
-const Electornic = ({ setopendashboard }) => {
+const Request = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [showalert, setshowalert] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigation = useNavigate();
-  const [open1, setOpen1] = React.useState(false);
-  const [deleteId, setdeleteId] = useState("");
 
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-  };
-
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
-
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, "delete").then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire(
-            "Great!",
-            "Eletronic donation delete successfully",
-            "success"
-          );
-          setshowalert(true);
-        } else {
-          Swal("Error", "somthing went  wrong", "error");
-        }
-        console.log(res);
-      }
-    );
-  };
+  useEffect(() => {
+    setopendashboard(true);
+    getall_donation();
+  }, []);
 
   const getall_donation = () => {
-    serverInstance("user/add-elecDonation", "get").then((res) => {
+    serverInstance("admin/donation-list", "get").then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
       console.log(res);
+    });
+  };
+
+  const downloadrecept = (row) => {
+    navigation("/reciept", {
+      state: {
+        userdata: row,
+      },
     });
   };
 
@@ -96,35 +69,8 @@ const Electornic = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  useEffect(() => {
-    getall_donation();
-    setopendashboard(true);
-  }, [showalert]);
-
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Do you want to delete"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -136,34 +82,20 @@ const Electornic = ({ setopendashboard }) => {
           <Box sx={style}>
             <div>
               <div className="add-div-close-div1">
-                <h2>Cancel electronic donation </h2>
+                <h2>Generate Voucher</h2>
                 <CloseIcon onClick={() => handleClose()} />
               </div>
-              <Cancel handleClose={handleClose} />
+
+              <AddVoucherToUser setOpen={setOpen} />
             </div>
           </Box>
         </Fade>
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div className="main_center_header1">
-            <h2 className="Cheque_text">Electronic donation report</h2>
-            <div className="search-header">
-              <div className="search-inner-div-reports">
-                <input type="text" placeholder="Name" />
-                <input type="text" placeholder="Phone No" />
-
-                <button>Search</button>
-                <button>Reset</button>
-              </div>
-              <div>
-                {/* <InsertDriveFileIcon
-                style={{ width: "45px", height: "36px", color: "#e96d00" }}
-              />
-              <PostAddIcon
-                style={{ width: "45px", height: "36px", color: "#e96d00" }}
-              /> */}
-              </div>
+          <div className="main_center_header">
+            <div className="add-btn-user">
+              <button onClick={() => handleOpen()}>+Add</button>
             </div>
           </div>
 
@@ -175,13 +107,12 @@ const Electornic = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
-                  <TableCell>Receipt No</TableCell>
+                  <TableCell>Userid</TableCell>
+                  <TableCell>Compnay Name</TableCell>
+                  <TableCell>Voucher</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Remark</TableCell>
 
-                  <TableCell>Phone No</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Amount</TableCell>
-
-                  <TableCell>Address</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -194,34 +125,21 @@ const Electornic = ({ setopendashboard }) => {
                   : isData
                 ).map((row, index) => (
                   <TableRow
-                    key={row.id}
+                    key={index}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.phoneNo}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.reduce(
-                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                        0
-                      )}
-                    </TableCell>
-                    <TableCell> {row.address}</TableCell>
+
+                    <TableCell>{row.NAME}</TableCell>
+                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
+                    <TableCell> {row.AMOUNT}</TableCell>
+
+                    <TableCell> {row.PAYMENT_ID}</TableCell>
 
                     <TableCell>
-                      <RemoveRedEyeIcon
-                        onClick={() =>
-                          navigation(`/admin-panel/infoElectronic/${row.id}`)
-                        }
-                      />
-
-                      <DeleteForeverIcon
-                        onClick={() => handleClickOpen1(row.id)}
-                      />
-
-                      <CancelIcon onClick={() => handleOpen()} />
+                      <button className="Accepted_btn">Accepted</button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -265,4 +183,4 @@ const Electornic = ({ setopendashboard }) => {
   );
 };
 
-export default Electornic;
+export default Request;

@@ -63,9 +63,6 @@ const EmailLogin = () => {
           setshowprocess(false);
           Swal.fire("Great!", "You Have Login Successfully", "success");
           var decoded = jwt_decode(res.data.tokens.access.token);
-          if (decoded.role === 1) {
-            navigate("/admin-panel/dashboard");
-          }
 
           if (decoded.role === 3) {
             navigate("/admin-panel/dashboard");
@@ -89,9 +86,6 @@ const EmailLogin = () => {
             navigate("/admin-panel/dashboard");
           }
 
-          if (decoded.role === 3) {
-            navigate("/admin-panel/dashboard");
-          }
           sessionStorage.setItem("userrole", decoded.role);
           sessionStorage.setItem("token", res.data.tokens.access.token);
           auth.setUser(res.data.tokens.access.token);

@@ -14,6 +14,7 @@ module.exports.Vouchers = require('./voucher.model')
 module.exports.donationTypes = require('./donationTypes.model')
 module.exports.employees = require('./employees.model')
 module.exports.admin = require('./admin.model')
+module.exports.empRoles = require('./employeeRoles.model')
 
 sequelize.sync().then((result) => {
     console.log('data synced')

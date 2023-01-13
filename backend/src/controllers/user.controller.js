@@ -199,6 +199,19 @@ const delEmployees = catchAsync(async (req, res) => {
   });
 });
 
+
+
+const editEmployee = catchAsync(async (req, res) => {
+  const employees = await userService.editEmployee(req);
+  if (!employees) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Something wrong!");
+  }
+  res.status(200).send({
+    status: true,
+    message: "User updated Successfully",
+  });
+});
+
 const forgotPasswordReqOtp = catchAsync(async(req,res)=>{
   const data = await userService.forgotPasswordReqOtp(req)
   console.log(data)
@@ -228,5 +241,6 @@ module.exports = {
   getEmployees,
   delEmployees,
   forgotPasswordReqOtp,
-  verifyForgotOtp
+  verifyForgotOtp,
+  editEmployee
 };

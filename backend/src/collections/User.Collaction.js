@@ -70,7 +70,7 @@ class UserCollaction {
   };
 
   createuser = async (body, file) => {
-    const { username, mobileNo, name, email, address, gender, password } = body;
+    const { username, mobileNo, name, email, gender, password } = body;
     const { profile_image } = file;
     const imagePath = uploadimage(profile_image);
 
@@ -176,25 +176,13 @@ class UserCollaction {
 
     const imagePath = uploadimage(profile_image);
     console.log(imagePath.replace("/uploads"));
-    if (name) {
-      user.name = name;
-    }
-    if (email) {
-      user.email = email;
-    }
-    if (dob) {
-      user.dob = dob;
-    }
-    if (anniversary_date) {
-      user.anniversary_date = anniversary_date;
-    }
-    if (address) {
-      user.address = address;
-    }
-    if (imagePath) {
-      user.profile_image = imagePath;
-    }
 
+    user.name = name;
+    user.email = email;
+    user.dob = dob;
+    user.anniversary_date = anniversary_date;
+    user.address = address;
+    user.profile_image = imagePath;
     return user.save();
   };
 
@@ -292,12 +280,14 @@ class UserCollaction {
     let { id, phone, name } = req?.query;
 
     let users;
-    if (phone && name) {
+    if (phone || name) {
       console.log("enm");
       users = await TblUser.findAll({
         where: {
-          mobileNo: phone,
-          name: name,
+          [Op.or]: {
+            mobileNo: { [Op.like]: "%" + phone + "%" },
+            name: { [Op.like]: "%" + name + "%" },
+          },
         },
         attributes: [
           "id",
@@ -413,6 +403,7 @@ class UserCollaction {
       DmaxPTD,
       MaxPDA,
       Role,
+      Rid,
       Cashier,
       Status,
       cancelCheckout,
@@ -458,9 +449,36 @@ class UserCollaction {
   };
 
   getEmployees = async (req) => {
-    const { id } = req.query;
+    const { id, name, phone } = req.query;
     let data;
-    if (id) {
+
+    if (name || phone) {
+      data = await TblEmployees.findAll({
+        where: {
+          [Op.or]: {
+            Mobile: { [Op.like]: "%" + phone + "%" },
+            Username: { [Op.like]: "%" + name + "%" },
+          },
+        },
+        attributes: [
+          "id",
+          "Username",
+          "Mobile",
+          "Email",
+          "Address",
+          "DmaxPTD",
+          "MaxPDA",
+          "Role",
+          "Rid",
+          "Cashier",
+          "Status",
+          "cancelCheckout",
+          "CreditAA",
+          "DebitAA",
+          "DCreditAA",
+        ],
+      });
+    } else if (id) {
       data = await TblEmployees.findAll({
         where: { id: id },
         attributes: [
@@ -472,6 +490,7 @@ class UserCollaction {
           "DmaxPTD",
           "MaxPDA",
           "Role",
+          "Rid",
           "Cashier",
           "Status",
           "cancelCheckout",
@@ -491,6 +510,7 @@ class UserCollaction {
           "DmaxPTD",
           "MaxPDA",
           "Role",
+          "Rid",
           "Cashier",
           "Status",
           "cancelCheckout",

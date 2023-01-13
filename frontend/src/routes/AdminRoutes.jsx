@@ -19,7 +19,9 @@ import Adminprivateroute from "../components/AdminOutlate/Adminprivateroute";
 import ChangeStatus from "../screens/Admin/Reports/Cheque/ChangeStatus";
 import UpdateDonationType from "../screens/Admin/masters/Donationmaster/UpdateDonationType";
 import EmployeeUserInfo from "../screens/Admin/SystemManagement/UserManagement/EmployeeUserInfo";
+import Assign from "../screens/Admin/SystemManagement/Assign/Assign";
 import Chequeinfo from "../screens/Admin/Reports/Cheque/Chequeinfo";
+import Request from "../screens/Admin/SystemManagement/Request/Request";
 function AdminRoutes({ setopendashboard }) {
   return (
     <>
@@ -100,6 +102,22 @@ function AdminRoutes({ setopendashboard }) {
           }
         />
 
+        <Route
+          path="/admin-panel/assign"
+          element={
+            <Adminprivateroute>
+              <Assign setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/request"
+          element={
+            <Adminprivateroute>
+              <Request setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
         <Route
           path="/admin-panel/infoElectronic/:id"
           element={

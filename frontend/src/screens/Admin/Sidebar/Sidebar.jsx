@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { NavLink, Link } from "react-router-dom";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -10,6 +10,13 @@ const Sidebar = ({ setshowsidebar }) => {
   const [showdropdownmenu2, setshowdropdownmenu2] = useState(false);
   const [showdropdownmenu3, setshowdropdownmenu3] = useState(false);
   const [showdropdownmenu4, setshowdropdownmenu4] = useState(false);
+  const [userrole, setuserrole] = useState("");
+  console.log(userrole);
+
+  useEffect(() => {
+    setuserrole(Number(sessionStorage.getItem("userrole")));
+  }, []);
+
   return (
     <>
       <div className="maindiv">
@@ -134,9 +141,20 @@ const Sidebar = ({ setshowsidebar }) => {
                   className={({ isActive }) =>
                     isActive ? "active-nav-link" : "nav-link"
                   }
-                  to="/admin-panel/vouchermanagement"
+                  to="/admin-panel/assign"
                 >
                   Assign Voucher
+                </NavLink>
+              </li>
+
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "active-nav-link" : "nav-link"
+                  }
+                  to="/admin-panel/request"
+                >
+                  Request
                 </NavLink>
               </li>
             </div>

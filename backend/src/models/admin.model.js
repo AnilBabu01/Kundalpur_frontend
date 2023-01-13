@@ -12,6 +12,8 @@ const Admin = sequelize.define(tbl.TBL_ADMIN, {
   username: {
     type: Sequelize.STRING(100),
     trim: true,
+    unique: true,
+    
   },
   mobileNo: {
     type: Sequelize.STRING(15),
@@ -41,7 +43,8 @@ const Admin = sequelize.define(tbl.TBL_ADMIN, {
   },
   profile_image: {
     type: Sequelize.STRING(150),
-  },
+  }
+  
 });
 
 module.exports = Admin;

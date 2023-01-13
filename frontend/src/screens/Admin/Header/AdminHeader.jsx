@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import search from "../../../assets/search.svg";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
@@ -30,6 +30,7 @@ const AdminHeader = () => {
   const navigate = useNavigate();
   const [showsidebar, setshowsidebar] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
+
   const open = Boolean(anchorEl);
   const { user } = useSelector((state) => state.userReducer);
   console.log("sss", user);
@@ -49,6 +50,7 @@ const AdminHeader = () => {
       window.location.reload();
     }, 1000);
   };
+
   return (
     <>
       <Menu

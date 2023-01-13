@@ -202,6 +202,11 @@ const delEmployees = async (req)=>{
   return employees;
 }
 
+const editEmployee = async (req)=>{
+  const employees = await UserCollection.editEmployee(req);
+  return employees;
+}
+
 const forgotPasswordReqOtp = async (req)=>{
   const data = await AuthCollaction.forgotPasswordReqOtp(req)
   return data 
@@ -237,5 +242,6 @@ module.exports = {
   getEmployees,
   delEmployees,
   forgotPasswordReqOtp,
-  loginEmployee
+  loginEmployee,
+  editEmployee
 };

@@ -28,12 +28,13 @@
 
       height: 200px;
       display: flex;
-    justify-content: center;
+      justify-content: space-around;
     align-items: center;
+    flex-direction: column;
 }
 
 .Status_main_div label{
-    font-size: 26px;
+    font-size: 20px;
 }
 
 
@@ -56,7 +57,18 @@
     width: 22%;
     font-size: 18px;
 }
-
+.Status_main_div input:focus{
+    outline: none;
+}
+.Status_main_div input{
+    height: 37px;
+    width: 195px;
+    padding-left: 6px;
+    border-radius: 5px;
+    border: 1px solid #e96d00;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
 .cheque_main_info_div{
     background: linear-gradient(
     90.65deg,

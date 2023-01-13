@@ -52,6 +52,7 @@ const Adduser = ({ setOpen }) => {
           DmaxPTD: Dmax,
           MaxPDA: max,
           Role: role,
+          Rid: 2,
           Cashier: Cashier === "true" ? true : false,
           Status: status === "true" ? true : false,
           cancelCheckout: cancelCheckout === "true" ? true : false,

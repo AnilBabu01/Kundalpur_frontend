@@ -51,7 +51,6 @@ const Employees = sequelize.define(tbl.TBL_EMPLOYEES, {
   Rid:{
     type: Sequelize.INTEGER(50),
     allowNull: false,
-    defaultValue:''
   }
   ,
   role_id:{

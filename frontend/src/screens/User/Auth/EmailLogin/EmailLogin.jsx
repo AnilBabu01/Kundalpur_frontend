@@ -45,7 +45,7 @@ const EmailLogin = () => {
           var decoded = jwt_decode(res.data.tokens.access.token);
 
           if (decoded.role === 2) {
-            navigate("/admin-panel/dashboard");
+            navigate("/donation");
           }
 
           sessionStorage.setItem("userrole", decoded.role);

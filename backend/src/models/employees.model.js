@@ -48,14 +48,13 @@ const Employees = sequelize.define(tbl.TBL_EMPLOYEES, {
     type: Sequelize.STRING(20),
     allowNull: false,
   },
-  Rid:{
+  Rid: {
+    type: Sequelize.INTEGER(50),
+    allowNull: true,
+  },
+  role_id: {
     type: Sequelize.INTEGER(50),
     allowNull: false,
-  }
-  ,
-  role_id:{
-    type: Sequelize.INTEGER(50),   
-    allowNull:false,
   },
   Cashier: {
     type: Sequelize.BOOLEAN,
@@ -74,20 +73,20 @@ const Employees = sequelize.define(tbl.TBL_EMPLOYEES, {
   },
   CreditAA: {
     type: Sequelize.STRING,
-    allowNull:true
+    allowNull: true,
   },
   DebitAA: {
     type: Sequelize.STRING,
-    allowNull:true
+    allowNull: true,
   },
-  DCreditAA:{
+  DCreditAA: {
     type: Sequelize.STRING,
-    allowNull:true
+    allowNull: true,
   },
-  isRequest:{
+  isRequest: {
     type: Sequelize.BOOLEAN,
-    defaultValue:false
-  }
+    defaultValue: false,
+  },
 });
 
 module.exports = Employees;

@@ -1,6 +1,11 @@
 import React from "react";
 import "./AboutUs.css";
 import badebaba from "../../../assets/badebaba.jpg";
+import img3 from "../../../assets/img3.jpeg";
+import img1 from "../../../assets/img2.jpeg";
+import img4 from "../../../assets/img4.jpeg";
+import img2 from "../../../assets/img2.jpeg";
+import img5 from "../../../assets/img5.jpeg";
 function AboutUs() {
   return (
     <>
@@ -37,7 +42,7 @@ function AboutUs() {
             </p>
           </div>
           <div className="donation-top-img1">
-            <img src={badebaba} alt="badebaba" />
+            <img src={img1} alt="badebaba" />
           </div>
           <div>
             <p className="para">
@@ -52,7 +57,7 @@ function AboutUs() {
             </p>
           </div>
           <div className="donation-top-img1">
-            <img src={badebaba} alt="badebaba" />
+            <img src={img2} alt="badebaba" />
           </div>
           <div>
             <p className="para">
@@ -75,7 +80,7 @@ function AboutUs() {
             </p>
           </div>
           <div className="donation-top-img1">
-            <img src={badebaba} alt="badebaba" />
+            <img src={img4} alt="badebaba" />
           </div>
           <div>
             <p className="para">
@@ -88,7 +93,7 @@ function AboutUs() {
             </p>
           </div>
           <div className="donation-top-img1">
-            <img src={badebaba} alt="badebaba" />
+            <img src={img3} alt="badebaba" />
           </div>
         </div>
       </div>

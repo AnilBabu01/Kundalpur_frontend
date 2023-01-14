@@ -20,6 +20,7 @@ console.log(data)
 
 const checkVoucher = catchAsync(async(req,res)=>{
     const data = await VoucherCollection.checkVoucher(req)
+    console.log(data)
     if (!data) {
         throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong")
     }

@@ -31,6 +31,7 @@ class voucherCollection {
   checkVoucher = async (req) => {
     const userId = req.user.id;
     console.log(userId);
+    let data;
     const { voucher } = req.body; // here get The VoucherNumber that needs to be checked
 
     const currentYear = new Date().getFullYear();
@@ -45,51 +46,61 @@ class voucherCollection {
       },
     });
 
+    console.log(AssignedVoucher)
+
     AssignedVoucher.map(async (item) => {
       if (prefix) {
+
         if (item.vPrefix == prefix) {
+          console.log(voucherNumber[0])
           //checking prefix is matched
           if (
             voucherNumber[0] >= currentYear + item.from &&
             voucherNumber[0] <= currentYear + item.to
           ) {
+            console.log("enter")
             //checking the voucher is greater than the assignedfrom and lessthan the assigned to
-            return {
+            data=  {
               status: true,
               message: "User has been assigned",
             };
           } else {
-            return {
+            data = {
               status: false,
               message:
                 "User is not allowed to Download please Request to Allot more Vouchers",
             };
           }
         } else {
-          return {
+       
+          data = {
             status: false,
             message: "Voucher Prefix is not Matching",
           };
         }
       } else {
+    
         if (
           voucherNumber[0] >= currentYear + item.from &&
           voucherNumber[0] <= currentYear + item.to
         ) {
+          
           //checking the voucher is greater than the assignedfrom and lessthan the assigned to
-          return {
+          data = {
             status: true,
             message: "User has been assigned",
           };
         } else {
-          return {
+          data = {
             status: false,
             message:
               "User is not allowed to Download please Request to Allot more Vouchers",
           };
         }
       }
+
     });
+   return data
   };
 
   getVoucher = async () => {

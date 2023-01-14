@@ -33,11 +33,12 @@ class voucherCollection {
     console.log(userId);
     let data;
     const { voucher } = req.body; // here get The VoucherNumber that needs to be checked
+    let VoucherF = voucher.replaceAll("-","")
 
     const currentYear = new Date().getFullYear();
 
-    let voucherNumber = voucher.match(/(\d+)/); // extracting NUMBER ONLY 2023002 FROM Elec20230002 (just an example)
-    let prefix = voucher.match(/[a-zA-Z]/g).join(""); // Extracting the prefix  Elec from the Elec20230002
+    let voucherNumber = VoucherF.match(/(\d+)/); // extracting NUMBER ONLY 2023002 FROM Elec20230002 (just an example)
+    let prefix = VoucherF.match(/[a-zA-Z]/g).join(""); // Extracting the prefix  Elec from the Elec20230002
 
     let AssignedVoucher = await TblVoucher.findAll({
       //geting the assigned voucherrss

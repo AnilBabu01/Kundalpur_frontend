@@ -3,8 +3,6 @@ import lefttop from "../../../assets/lefttop.jpeg";
 import innear from "../../../assets/innear.jpeg";
 import rightbottom from "../../../assets/rightbottom.jpeg";
 import check from "../../../assets/check.jpeg";
-import om from "../../../assets/om.jpeg";
-import bg from "../../../assets/bg.svg";
 import img3 from "../../../assets/img3.jpeg";
 import img1 from "../../../assets/img2.jpeg";
 import img4 from "../../../assets/img4.jpeg";

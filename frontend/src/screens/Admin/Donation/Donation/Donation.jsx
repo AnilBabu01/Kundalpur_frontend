@@ -295,7 +295,9 @@ const Donation = ({ setopendashboard }) => {
                         }
                       />
 
-                      <DeleteForeverIcon onClick={() => ClickOpen(row.id)} />
+                      <DeleteForeverIcon
+                        onClick={() => handleClickOpen1(row.id)}
+                      />
                       <PrintIcon
                         onClick={() => {
                           voucherexhauted(row);

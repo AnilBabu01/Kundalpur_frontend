@@ -21,6 +21,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import UpdateDonationType from "./UpdateDonationType";
 import Swal from "sweetalert2";
 import axios from "axios";
 const style = {
@@ -28,9 +29,9 @@ const style = {
   top: "40%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "70%",
+  width: "30%",
   bgcolor: "background.paper",
-
+  borderRadius: 3,
   boxShadow: 24,
   p: 4,
 };
@@ -46,6 +47,13 @@ function DonationMaster() {
   const [donationtype_in_eng, setdonationtype_in_eng] = useState("");
   const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState("");
+  const [open3, setOpen3] = React.useState(false);
+  const [data, setdata] = useState("");
+  const handleOpen3 = (data) => {
+    setOpen3(true);
+    setdata(data);
+  };
+  const handleClose3 = () => setOpen3(false);
 
   const handleClickOpen1 = (id) => {
     setOpen1(true);
@@ -95,6 +103,8 @@ function DonationMaster() {
       if (data.status === true) {
         Swal.fire("Great!", "User Added Successfully", "success");
         handleClose();
+        setdonationtype_in_eng("");
+        setdonationtype_in_hindi("");
       }
     } catch (error) {
       Swal.fire("Error!", error.response.data.message, "error");
@@ -119,7 +129,7 @@ function DonationMaster() {
 
   useEffect(() => {
     getall_donatiions();
-  }, [refetch, open]);
+  }, [refetch, open, open3]);
   return (
     <>
       <Dialog
@@ -195,6 +205,26 @@ function DonationMaster() {
           </Box>
         </Fade>
       </Modal>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open3}
+        onClose={handleClose3}
+        closeAfterTransition
+      >
+        <Fade in={open3}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div">
+                <h2>Update Donation Type</h2>
+                <CloseIcon onClick={() => handleClose3()} />
+              </div>
+              <hr />
+              <UpdateDonationType data={data} handleClose3={handleClose3} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
       <div>
         <hr style={{ color: "#e96d00" }} />
         <div className="add-btn-user">
@@ -233,18 +263,7 @@ function DonationMaster() {
                   <TableCell>{row.type_hi}</TableCell>
                   <TableCell>{row.type_en}</TableCell>
                   <TableCell>
-                    <EditIcon
-                      onClick={() =>
-                        naviagte(
-                          `/admin-panel/masters/updateDonationType/${row.id}`,
-                          {
-                            state: {
-                              data: row,
-                            },
-                          }
-                        )
-                      }
-                    />
+                    <EditIcon onClick={() => handleOpen3(row)} />
                     <DeleteForeverIcon
                       onClick={() => handleClickOpen1(row.id)}
                     />

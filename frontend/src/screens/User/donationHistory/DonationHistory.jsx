@@ -123,6 +123,7 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                     <TableCell align="left">Date Of submission</TableCell>
                     <TableCell align="left">Name of Bank</TableCell>
                     <TableCell align="left">Payment id</TableCell>
+                    <TableCell align="left">Status</TableCell>
                     <TableCell align="left">certificate</TableCell>
                   </TableRow>
                 </TableHead>
@@ -161,6 +162,13 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                       </TableCell>
                       <TableCell align="left">
                         {row.PAYMENT_ID ? row.PAYMENT_ID : "-"}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.PAYMENT_ID
+                          ? "-"
+                          : row.active === "0"
+                          ? "Not Approved"
+                          : "Approved"}
                       </TableCell>
                       <TableCell
                         onClick={() => {

@@ -37,14 +37,14 @@ const VoucherManagement = ({ setopendashboard }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigation = useNavigate();
-
+  console.log("asss", isData);
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
   }, []);
 
   const getall_donation = () => {
-    serverInstance("admin/donation-list", "get").then((res) => {
+    serverInstance("user/add-voucher-user", "get").then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
@@ -112,7 +112,6 @@ const VoucherManagement = ({ setopendashboard }) => {
                   <TableCell>Compnay Name</TableCell>
                   <TableCell>Voucher</TableCell>
                   <TableCell>Status</TableCell>
-                  <TableCell>Remark</TableCell>
 
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -133,11 +132,9 @@ const VoucherManagement = ({ setopendashboard }) => {
                   >
                     <TableCell>{index + 1}</TableCell>
 
-                    <TableCell>{row.NAME}</TableCell>
-                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
-
-                    <TableCell> {row.PAYMENT_ID}</TableCell>
+                    <TableCell>Kundarpur</TableCell>
+                    <TableCell> {`${row.from} to ${row.to}`}</TableCell>
+                    <TableCell> {row.status ? "Active" : "pasive"}</TableCell>
 
                     <TableCell>
                       <button className="Accepted_btn">Accepted</button>

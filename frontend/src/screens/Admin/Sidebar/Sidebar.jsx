@@ -159,17 +159,6 @@ const Sidebar = ({ setshowsidebar }) => {
                       Assign Voucher
                     </NavLink>
                   </li>
-
-                  <li className="nav-item">
-                    <NavLink
-                      className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
-                      }
-                      to="/admin-panel/request"
-                    >
-                      Request
-                    </NavLink>
-                  </li>
                 </div>
                 <li className="nav-item">
                   <NavLink
@@ -269,7 +258,16 @@ const Sidebar = ({ setshowsidebar }) => {
                     </NavLink>
                   </li>
                 </div>
-
+                <li className="nav-item">
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? "active-nav-link" : "nav-link"
+                    }
+                    to="/admin-panel/request"
+                  >
+                    Request
+                  </NavLink>
+                </li>
                 <li className="nav-item">
                   <div
                     className="nav-link"

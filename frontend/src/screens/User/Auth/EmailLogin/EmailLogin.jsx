@@ -77,7 +77,7 @@ const EmailLogin = () => {
           username: email,
           password: password,
         });
-        console.log(res.data);
+
         if (res.data.user) {
           setshowprocess(false);
           Swal.fire("Great!", "You Have Login Successfully", "success");
@@ -85,7 +85,9 @@ const EmailLogin = () => {
           if (decoded.role === 1) {
             navigate("/admin-panel/dashboard");
           }
+          console.log(res.data);
 
+          sessionStorage.setItem("adminuser", res.data.user.name);
           sessionStorage.setItem("userrole", decoded.role);
           sessionStorage.setItem("token", res.data.tokens.access.token);
           auth.setUser(res.data.tokens.access.token);

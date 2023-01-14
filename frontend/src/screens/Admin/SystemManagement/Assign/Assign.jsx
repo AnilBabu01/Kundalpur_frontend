@@ -36,14 +36,14 @@ const Assign = ({ setopendashboard }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigation = useNavigate();
-
+  console.log("ass", isData);
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
   }, []);
 
   const getall_donation = () => {
-    serverInstance("admin/donation-list", "get").then((res) => {
+    serverInstance("user/get-req-voucher", "get").then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
@@ -107,10 +107,10 @@ const Assign = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
+                  <TableCell>UserId</TableCell>
                   <TableCell>Name</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Time</TableCell>
-                  <TableCell>Status</TableCell>
+                  <TableCell>Role</TableCell>
+
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -128,10 +128,10 @@ const Assign = ({ setopendashboard }) => {
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell>{row.NAME}</TableCell>
-                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
+                    <TableCell> {row.id}</TableCell>
+                    <TableCell>{row.Username}</TableCell>
+                    <TableCell> {row.Role}</TableCell>
+
                     <TableCell>
                       <button className="Accepted_btn">Accepted</button>
                     </TableCell>

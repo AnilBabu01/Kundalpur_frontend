@@ -95,7 +95,7 @@ const UserManagement = ({ setopendashboard }) => {
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
-  }, [refetch, open]);
+  }, [refetch, open, open1]);
   return (
     <>
       <Dialog

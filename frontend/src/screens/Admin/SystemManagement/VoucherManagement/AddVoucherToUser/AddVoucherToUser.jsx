@@ -11,11 +11,11 @@ const AddVoucherToUser = ({ setOpen }) => {
   const [Voucherprefix, setVoucherprefix] = useState("");
   const [fromNo, setfromNo] = useState("");
   const [toNo, settoNo] = useState("");
-  const [assingTo, setassingTo] = useState("");
-
+  const [assingTo, setassingTo] = useState();
+  console.log(isData);
   const handlesubmit = async () => {
     try {
-      console.log(assingTo, Voucherprefix, toNo, fromNo);
+      console.log("ss", assingTo, Voucherprefix, toNo, fromNo);
 
       axios.defaults.headers.post[
         "Authorization"
@@ -25,7 +25,7 @@ const AddVoucherToUser = ({ setOpen }) => {
         vPrefix: Voucherprefix,
         from: fromNo,
         to: toNo,
-        user: assingTo,
+        user: Number(assingTo),
       });
 
       console.log(res);
@@ -108,8 +108,8 @@ const AddVoucherToUser = ({ setOpen }) => {
                   onChange={(e) => setassingTo(e.target.value)}
                 >
                   {isData &&
-                    isData.map((item) => (
-                      <option key={item.id} value={item.id}>
+                    isData.map((item, index) => (
+                      <option key={index} value={item.id}>
                         {item.Username}
                       </option>
                     ))}

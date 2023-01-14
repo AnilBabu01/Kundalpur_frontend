@@ -11,7 +11,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { secondaryColor } from "../../../utils/colorVariables";
 import Sidebar from "../Sidebar/Sidebar";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import logo from "../../../assets/logo.jpg";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import Menu from "@mui/material/Menu";
@@ -46,7 +46,9 @@ const AdminHeader = () => {
     setAnchorEl1(null);
   };
   const { user } = useSelector((state) => state.userReducer);
+  const adminuser = sessionStorage.getItem("adminuser");
 
+  console.log("admin", adminuser);
   const logout = () => {
     handleClose();
     sessionStorage.removeItem("token");
@@ -186,7 +188,7 @@ const AdminHeader = () => {
                 }}
               >
                 <Avatar
-                  alt={user?.name}
+                  alt={adminuser?.adminuser}
                   src={`${backendUrl}uploads/images/${user?.profile_image}`}
                   variant="rounded"
                   sx={{

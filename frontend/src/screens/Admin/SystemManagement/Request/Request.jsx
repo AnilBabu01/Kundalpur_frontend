@@ -43,7 +43,7 @@ const Request = ({ setopendashboard }) => {
   }, []);
 
   const getall_donation = () => {
-    serverInstance("admin/donation-list", "get").then((res) => {
+    serverInstance("user/get-req-voucher", "get").then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
@@ -107,11 +107,9 @@ const Request = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
-                  <TableCell>Userid</TableCell>
-                  <TableCell>Compnay Name</TableCell>
-                  <TableCell>Voucher</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Remark</TableCell>
+                  <TableCell>UserId</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Role</TableCell>
 
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -130,13 +128,9 @@ const Request = ({ setopendashboard }) => {
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell>{index + 1}</TableCell>
-
-                    <TableCell>{row.NAME}</TableCell>
-                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
-
-                    <TableCell> {row.PAYMENT_ID}</TableCell>
+                    <TableCell> {row.id}</TableCell>
+                    <TableCell>{row.Username}</TableCell>
+                    <TableCell> {row.Role}</TableCell>
 
                     <TableCell>
                       <button className="Accepted_btn">Accepted</button>

@@ -66,7 +66,7 @@ const Donation = ({ setopendashboard }) => {
   const [open3, setOpen3] = React.useState(false);
   const handleOpen3 = () => setOpen3(true);
   const handleClose3 = () => setOpen3(false);
-
+  console.log("check data ", isData);
   const handleClickOpen1 = (id) => {
     setOpen1(true);
     setdeleteId(id);
@@ -151,15 +151,11 @@ const Donation = ({ setopendashboard }) => {
       console.log(res);
 
       if (res.data.status === true) {
-        // if (checkVoucher) {
-        //   printreceipt(row);
-        // }
-        // if (!checkVoucher) {
-        //   handleOpen3();
-        // }
-        Swal.fire("Great!", res.data.data, "success");
+        printreceipt(row);
+
+        Swal.fire("Great!", res.data.message, "success");
       } else {
-        Swal.fire("Error!", "Somthing went wrong!!", "error");
+        Swal.fire("Great!", res.data.message, "success");
       }
     } catch (error) {
       Swal.fire("Error!", error, "error");

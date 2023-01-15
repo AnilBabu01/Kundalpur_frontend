@@ -148,3 +148,34 @@
     width: 76.1%;
   }
 }
+
+
+.main_notifiaction_div_card{
+  background: linear-gradient(
+    90.65deg,
+    rgba(250, 116, 1, 0.4) 0.56%,
+    rgba(255, 255, 255, 0.4) 99.48%
+  );
+  margin-bottom: 1rem;
+}
+
+.main_notification_main{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-right: 2rem;
+}
+
+.noti_text_p h2{
+    margin-left: 20px;
+    margin-bottom: 7px;
+}
+
+.close_note_div{
+     display: flex;
+     justify-content: space-between;
+    padding-left: 21px;
+    padding-right: 19px;
+    margin-bottom: 12px;
+}

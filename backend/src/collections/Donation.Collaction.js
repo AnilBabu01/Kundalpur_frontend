@@ -1,5 +1,8 @@
-const { sequelize, QueryTypes, query } = require("sequelize");
+const { sequelize, QueryTypes, query, Op } = require("sequelize");
+const uploadimage = require("../middlewares/imageupload");
 const db = require("../models");
+const electricDonation = require("../models/electricDonation.model");
+const { TBL_VOUCHERS, TBL_ELEC_DONATION_ITEM } = require("../models/TableName");
 db.donationModel.hasMany(db.donationItem, {
   foreignKey: "donationId",
   as: "itemDetails",
@@ -26,6 +29,8 @@ const itemList = db.itemList;
 const TblNewDonation = db.newDonationModel;
 const TblelecDonation = db.ElecDonationModel;
 const TblelecDonationItem = db.ElecDonationItem;
+const TblDonationTypes = db.donationTypes;
+const TblVouchers = db.Vouchers;
 
 class DonationCollaction {
   addNewDonation = async (req) => {
@@ -39,15 +44,24 @@ class DonationCollaction {
       PAYMENT_ID,
       DATE_OF_DAAN,
       TYPE,
-      REMARK
+      REMARK,
+      ADDRESS,
     } = req.body;
 
+    let IMG = "";
+
+    let active = "";
     const count = await TblNewDonation.count();
     const currentYear = new Date().getFullYear();
     let donationType = "ONLINE";
+
     if (MODE_OF_DONATION == 2) {
+      const { chequeImg } = req.files;
       donationType = "CHEQUE";
+      active = "0";
+      IMG = uploadimage(chequeImg);
     }
+
     const receiptId = count + 1;
     let RECEIPT_NO = `${donationType}-${currentYear}-000${receiptId}`;
     const userId = req.user.id;
@@ -61,13 +75,16 @@ class DonationCollaction {
       NAME_OF_BANK,
       PAYMENT_ID,
       TYPE,
+      ADDRESS,
       REMARK,
+      IMG,
+      active,
       DATE_OF_DAAN,
       ADDED_BY: userId,
-    }).catch((err)=>{
-      console.log(err)
-    })
-    console.log(result)
+    }).catch((err) => {
+      console.log(err);
+    });
+    console.log(result);
     if (!result) {
       return null;
     }
@@ -124,29 +141,141 @@ class DonationCollaction {
     return result;
   };
 
+  delDonation = async (req) => {
+    let { id, mode } = req.query;
 
+    if (mode == 2) {
+      mode = "CHEQUE";
+    } else {
+      mode = "ONLINE";
+    }
 
-  addElecDonation = async (req,voucherNo) => {
- 
+    console.log(mode, id);
+    const result = await TblNewDonation.destroy({
+      where: {
+        id: id,
+        MODE_OF_DONATION: mode,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err, "err");
+        return {
+          status: 1,
+          message: "Something wrong!",
+        };
+      });
+    return result;
+  };
+
+  editDonation = async (req) => {
+    const {
+      NAME,
+      MODE_OF_DONATION,
+      AMOUNT,
+      CHEQUE_NO,
+      DATE_OF_CHEQUE,
+      NAME_OF_BANK,
+      PAYMENT_ID,
+      DATE_OF_DAAN,
+      TYPE,
+      REMARK,
+      ADDRESS,
+      ID,
+    } = req.body;
+
+    let mode;
+    let IMG = "";
+
+    if (MODE_OF_DONATION == 1) {
+      mode = "ONLINE";
+    } else {
+      const { chequeImg } = req.files;
+
+      IMG = uploadimage(chequeImg);
+      mode = "CHEQUE";
+    }
+
+    let result = await TblNewDonation.update(
+      {
+        NAME: NAME,
+        AMOUNT: AMOUNT,
+        CHEQUE_NO: CHEQUE_NO,
+        DATE_OF_CHEQUE: DATE_OF_CHEQUE,
+        NAME_OF_BANK: NAME_OF_BANK,
+        PAYMENT_ID: PAYMENT_ID,
+        DATE_OF_DAAN: DATE_OF_DAAN,
+        TYPE: TYPE,
+        REMARK: REMARK,
+        ADDRESS: ADDRESS,
+        IMG: IMG,
+      },
+
+      {
+        where: {
+          id: ID,
+          MODE_OF_DONATION: mode,
+        },
+      }
+    );
+    return result;
+  };
+
+  delElecDonation = async (req) => {
+    let id = req.query.id;
+    console.log(id);
+
+    let deleteReq = await TblelecDonation.destroy({
+      where: {
+        id: id,
+      },
+    })
+      .then(async (res) => {
+        await TblelecDonationItem.destroy({
+          where: {
+            donationId: id,
+          },
+        });
+        return {
+          status: 1,
+          message: "deleted successfully",
+        };
+      })
+      .catch((err) => {
+        return {
+          status: 1,
+          message: "Something went wrong",
+        };
+      });
+    return deleteReq;
+    console.log(deleteReq);
+  };
+
+  addElecDonation = async (req, voucherNo,receipt) => {
     try {
       const {
         name,
         phoneNo,
+        prefix,
         address,
         new_member,
-        type,
         donation_date,
         donation_time,
         donation_item,
       } = req.body;
-      console.log(req.body)
+      console.log(req.body);
       const userId = req.user.id;
 
+      const ReceiptNo = `${prefix}${receipt}`
+      console.log(ReceiptNo);
       const result = await TblelecDonation.create({
         name,
         phoneNo,
         address,
         voucherNo,
+        ReceiptNo,
         new_member,
         donation_date,
         donation_time,
@@ -191,19 +320,113 @@ class DonationCollaction {
     }
   };
 
-  getElecDonation = async (req) =>{
+  editElecDonation = async (req) => {
+    const {
+      id,
+      name,
+      phoneNo,
+      address,
+      new_member,
+      donation_date,
+      donation_time,
+      donation_item,
+    } = req.body;
     const userId = req.user.id;
-    let data = await TblelecDonation.findAll({
-      where: { created_by: userId },
-include:[
-  {
-    model:TblelecDonationItem,
-    as:'elecItemDetails'
-  }
-]
-    })
-    return data
-  }
+
+    const result = await TblelecDonation.update(
+      {
+        name: name,
+        phoneNo: phoneNo,
+        address: address,
+        new_member: new_member,
+        donation_date: donation_date,
+        donation_time: donation_time,
+      },
+      {
+        where: {
+          created_by: userId,
+          id: id,
+        },
+      }
+    ).then(async () => {
+      donation_item.forEach(async (e) => {
+        let items = await TblelecDonationItem.update(
+          {
+            type: e.type,
+            amount: e.amount,
+            remark: e.remark,
+          },
+
+          {
+            where: {
+              donationId: id,
+              id: e.id,
+            },
+          }
+        );
+      });
+
+      return {
+        status: 1,
+        message: "Updated Successfully",
+      };
+    });
+
+    return result;
+  };
+
+  getElecDonation = async (req) => {
+    const userId = req.user.id;
+    const { phone, name } = req.query;
+
+    if (phone || name) {
+      console.log("enter")
+      let data = await TblelecDonation.findAll({
+        where: {
+          created_by: userId,
+          [Op.or]:{
+          phoneNo: {[Op.like]: '%' + phone + '%'},
+          name: {[Op.like]: '%' + name + '%'},
+          }
+        },
+        include: [
+          {
+            model: TblelecDonationItem,
+            as: "elecItemDetails",
+          },
+        ],
+      });
+      return data;
+    } else {
+     
+      let data = await TblelecDonation.findAll({
+        where: { created_by: userId },
+        include: [
+          {
+            model: TblelecDonationItem,
+            as: "elecItemDetails",
+          },
+        ],
+      });
+      return data;
+    }
+  };
+
+  getElecDonationbyId = async (req) => {
+    let id = req.query.id;
+    const userID = req.user.id;
+    let data = await TblelecDonation.findOne({
+      where: { created_by: userID, id: id },
+      include: [
+        {
+          model: TblelecDonationItem,
+          as: "elecItemDetails",
+        },
+      ],
+    });
+    console.log(data);
+    return data;
+  };
 
   getLastID = async () => {
     const lastID = await TblDonation.findOne({
@@ -246,8 +469,6 @@ include:[
     return record;
   };
 
-  
-
   newDonationRecord = async (req) => {
     const userId = req.user.id;
     const record = await TblNewDonation.findAll({
@@ -269,6 +490,124 @@ include:[
     });
     return list;
   };
+
+  addDonationType = async (req) => {
+    const { type_en, type_hi } = req.body;
+
+    const data = await TblDonationTypes.create({
+      type_en,
+      type_hi,
+    });
+    return data;
+  };
+
+  getDonationType = async () => {
+    const data = await TblDonationTypes.findAll();
+    return data;
+  };
+
+  delDonationType = async (req) => {
+    let id = req.query.id;
+    const data = await TblDonationTypes.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    return data;
+  };
+
+  EditDonationType = async (req) => {
+    let { id, type_en, type_hi } = req.body;
+
+    const data = await TblDonationTypes.update(
+      { type_en: type_en, type_hi: type_hi },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    return data;
+  };
+
+  ChangeChequeStatus = async (req) => {
+    const { status, id } = req.body;
+    console.log(req.body);
+    ///status 0 == false ///status 1 === true means active
+    let data;
+
+    if (status == 1) {
+      data = await TblNewDonation.update(
+        {
+          active: "1",
+        },
+        {
+          where: {
+            id: id,
+            MODE_OF_DONATION: "CHEQUE",
+          },
+        }
+      ).catch((err) => {
+        console.log(err);
+      });
+    } else if (status == 0) {
+      data = await TblNewDonation.update(
+        {
+          active: "0",
+        },
+        {
+          where: {
+            id: id,
+            MODE_OF_DONATION: "CHEQUE",
+          },
+        }
+      ).catch((err) => {
+        console.log(err);
+      });
+    }
+    console.log(data);
+    return data;
+  };
+
+  ChangeElecStatus = async (req) => {
+    const { status, id } = req.body;
+    console.log(req.body);
+    ///status 0 == false ///status 1 === true means active
+    let data;
+
+    if (status == 1) {
+      data = await TblelecDonation.update(
+        {
+          isActive: true,
+        },
+        {
+          where: {
+            id: id,
+          },
+        }
+      ).catch((err) => {
+        console.log(err);
+      });
+    } else if (status == 0) {
+      data = await TblelecDonation.update(
+        {
+          isActive: false,
+        },
+        {
+          where: {
+            id: id,
+          },
+        }
+      ).catch((err) => {
+        console.log(err);
+      });
+    }
+    console.log(data);
+    return data;
+  };
+
+
 }
 
 module.exports = new DonationCollaction();

@@ -7,7 +7,12 @@ module.exports = Object.freeze({
     TBL_USERS_ROLES:'tbl_users_roles',
     TBL_PASSWORD_RESET:'tbl_password_resets',
     TBL_ITEM:'tbl_items',
-    TBL_NEW_DONATION:'tbl_donation',
+    TBL_NEW_DONATION:'tbl_donations',
     TBL_ELEC_DONATION:'tbl_elec_donation',
     TBL_ELEC_DONATION_ITEM:'tbl_elec_donation_item',
+    TBL_VOUCHERS:'tbl_vouchers',
+    TBL_DONATION_TYPES:'tbl_donation_types',
+    TBL_EMPLOYEES:'tbl_employees',
+    TBL_ADMIN : 'tbl_admin',
+    TBL_EMP_ROLES: 'tbl_emp_roles',
 }); 

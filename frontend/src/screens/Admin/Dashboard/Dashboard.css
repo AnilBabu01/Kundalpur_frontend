@@ -61,7 +61,26 @@
   box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
+.cooming_div{
+    border: 1px solid #fd7906;
+    width: 388px;
+    height: 116px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: ju;
+    justify-content: center;
+    align-items: center;
+    color: #fd7906;
+    margin-bottom: 2rem;
+}
 
+.main_coomig_div{
+  display: flex;
+    padding-left: 1rem;
+    justify-content: space-between;
+    padding-right: 1rem;
+    flex-wrap: wrap;
+}
 @media screen and (max-width: 780px) {
   .dashboarddiv {
     margin-left: 0px;

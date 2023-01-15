@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainAdmin from "../src/screens/Admin/MainAdmin/MainAdmin";
 import Navbar from "./screens/User/Header/Navbar";
@@ -19,6 +19,11 @@ function App() {
   const gett = () => {
     dispatch(loadUser());
   };
+
+  useEffect(() => {
+    gett();
+  }, []);
+
   return (
     <>
       <Router>
@@ -31,8 +36,6 @@ function App() {
         <AdminRoutes setopendashboard={setopendashboard} />
         {!opendashboard && !showreciept ? <Footer /> : ""}
       </Router>
-
-      <button onClick={gett()}>get info</button>
     </>
   );
 }

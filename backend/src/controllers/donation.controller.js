@@ -5,7 +5,7 @@ const ApiError = require("../utils/ApiError");
 
 const addNewDonation = catchAsync(async (req, res) => {
   const data = await donationService.addNewDonation(req);
-  console.log(data,'elect')
+  console.log(data, "elect");
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
@@ -15,9 +15,33 @@ const addNewDonation = catchAsync(async (req, res) => {
   });
 });
 
+const delDonation = catchAsync(async (req, res) => {
+  const data = await donationService.delDonation(req);
+
+  // if (!data) {
+  //   throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  // }
+  res.status(httpStatus.CREATED).send({
+    status: true,
+    msg: "Donation Deleted successfully.",
+  });
+});
+
+const editDonation = catchAsync(async (req, res) => {
+  const data = await donationService.editDonation(req);
+
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong ");
+  }
+  res.status(httpStatus.CREATED).send({
+    status: true,
+    msg: "Donation updated successfully.",
+  });
+});
+
 const addelecDonation = catchAsync(async (req, res) => {
   const data = await donationService.addelecDonation(req);
-  console.log(data,'elect')
+  console.log(data, "elect");
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
@@ -27,9 +51,8 @@ const addelecDonation = catchAsync(async (req, res) => {
   });
 });
 
-
-const getElecDonation = catchAsync(async(req,res)=>{
-  const data = await donationService.getElecDonation(req)
+const getElecDonation = catchAsync(async (req, res) => {
+  const data = await donationService.getElecDonation(req);
 
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
@@ -37,9 +60,45 @@ const getElecDonation = catchAsync(async(req,res)=>{
   res.status(httpStatus.CREATED).send({
     status: true,
     msg: "Succes",
-    data:data
+    data: data,
   });
-})
+});
+
+const editElecDonation = catchAsync(async (req, res) => {
+  const data = await donationService.editElecDonation(req);
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+  res.status(200).send({
+    status: data.status,
+    msg: data.message,
+  });
+});
+
+const getElecDonationbyID = catchAsync(async (req, res) => {
+  const data = await donationService.getElecDonationbyID(req);
+
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+  res.status(httpStatus.CREATED).send({
+    status: true,
+    msg: "Success",
+    data: data,
+  });
+});
+
+const deleteElecDonation = catchAsync(async (req, res) => {
+  const data = await donationService.delElecDonation(req);
+
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+  res.status(httpStatus.CREATED).send({
+    status: true,
+    msg: "Success",
+  });
+});
 
 const addCashDonation = catchAsync(async (req, res) => {
   const data = await donationService.cashDonation(req);
@@ -63,11 +122,66 @@ const itemList = catchAsync(async (req, res) => {
   res.status(200).send(data);
 });
 
+const addDonationType = catchAsync(async (req, res) => {
+  const data = await donationService.addDonationType(req);
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+  res.status(httpStatus.CREATED).send({
+    status: true,
+    msg: "Success",
+  });
+});
+
+const getDonationType = catchAsync(async (req, res) => {
+  const data = await donationService.getDonationType(req);
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+  res.status(httpStatus.CREATED).send({
+    status: true,
+    data: data,
+  });
+});
+
+const ChangeChequeStatus = catchAsync(async (req, res) => {
+  const data = await donationService.ChangeChequeStatus(req);
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+
+  res.status(200).send({
+    status: true,
+    msg: "cheque Status Updated successfully",
+  });
+});
+
+const ChangeElecStatus = catchAsync(async (req, res) => {
+  const data = await donationService.ChangeElecStatus(req);
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+
+  res.status(200).send({
+    status: true,
+    msg: "cheque Status Updated successfully",
+  });
+});
+
 module.exports = {
   addCashDonation,
   donationList,
   itemList,
   addNewDonation,
   addelecDonation,
-  getElecDonation
+  getElecDonation,
+  deleteElecDonation,
+  getElecDonationbyID,
+  addDonationType,
+  getDonationType,
+  ChangeChequeStatus,
+  editElecDonation,
+  delDonation,
+  editDonation,
+  ChangeElecStatus,
 };

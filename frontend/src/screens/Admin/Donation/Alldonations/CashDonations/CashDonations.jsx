@@ -55,22 +55,21 @@ const CashDonations = () => {
     <>
       <div>
         <div className="main_center_header1">
-          <div className="generate_report">
-            <div className="chck_div">
-              <input type="checkbox" />
-              Monthly
+          <div className="search-header">
+            <div className="search-inner-div">
+              <input type="text" placeholder="Name" />
+              <input type="text" placeholder="Phone No" />
+              <button>Search</button>
+              <button>Reset</button>
             </div>
-            <div className="chck_div">
-              <input type="checkbox" />3 Months
+            <div>
+              {/* <InsertDriveFileIcon
+                style={{ width: "45px", height: "36px", color: "#e96d00" }}
+              />
+              <PostAddIcon
+                style={{ width: "45px", height: "36px", color: "#e96d00" }}
+              /> */}
             </div>
-            <div className="chck_div">
-              <input type="checkbox" />6 Months
-            </div>
-            <div className="chck_div">
-              <input type="checkbox" />
-              Yearly
-            </div>
-            <button>Genatare Report</button>
           </div>
         </div>
 

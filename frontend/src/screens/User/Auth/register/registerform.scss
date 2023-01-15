@@ -44,6 +44,7 @@
     margin-top: 1rem;
     padding-inline: 1.5rem;
     width: 100%;
+    position: relative;
     input {
       border: 0.8px solid $input-placeholder-color;
       padding: 0.5rem 0.9rem;
@@ -133,7 +134,14 @@
     border-radius: 0.5rem;
   }
 }
+.showpassworddsignup8 {
 
+  position: absolute;
+    top: 36px;
+    left: 292px;
+    list-style: none;
+    right: -3px;
+}
 @media screen and (max-width: 780px) {
   
 .register-form-main-center{

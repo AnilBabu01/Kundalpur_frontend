@@ -3,8 +3,6 @@ import lefttop from "../../../assets/lefttop.jpeg";
 import innear from "../../../assets/innear.jpeg";
 import rightbottom from "../../../assets/rightbottom.jpeg";
 import check from "../../../assets/check.jpeg";
-import om from "../../../assets/om.jpeg";
-import bg from "../../../assets/bg.svg";
 import img3 from "../../../assets/img3.jpeg";
 import img1 from "../../../assets/img2.jpeg";
 import img4 from "../../../assets/img4.jpeg";
@@ -23,33 +21,32 @@ function Aboutus() {
             <img className="img-3" src={lefttop} alt="ss" />
           </div>
           <div className="tex-right-main-div">
-            <div className="education-text">
-              <img src={om} alt="om" />
-              <p>EDUCATION FOR ALL RURAL CHILDREN</p>
-            </div>
             <h2>
-              We are a Hindu that believe <br />
-              in Ram
+              जैन धर्म के सिद्धांत <br />
             </h2>
             <div className="supper-check-main-div">
               <div className="check-main-div">
                 <div className="check-inear-div">
                   <img src={check} alt="check" />
-                  <p>Peace of Mind</p>
+                  <p>~अहिंसा</p>
                 </div>
                 <div className="check-inear-div">
                   <img src={check} alt="check" />
-                  <p>100% Satisfaction</p>
+                  <p>~सत्य</p>
                 </div>
               </div>
               <div className="check-main-div">
                 <div className="check-inear-div">
                   <img src={check} alt="check" style={{ marginLeft: "10px" }} />
-                  <p>Set For Pastor</p>
+                  <p>~अपरिग्रह</p>
                 </div>
                 <div className="check-inear-div">
                   <img src={check} alt="check" style={{ marginLeft: "10px" }} />
-                  <p>Trusted Company</p>
+                  <p>~अचौर्य (अस्तेय) </p>
+                </div>
+                <div className="check-inear-div">
+                  <img src={check} alt="check" style={{ marginLeft: "10px" }} />
+                  <p>~ ब्रह्मचर्य </p>
                 </div>
               </div>
             </div>
@@ -61,16 +58,28 @@ function Aboutus() {
               </div>
 
               <p>
-                We are a Hindu that belives in Lord Rama and Vishnu
-                <br /> Deva the followers and We are a Hindu that belives in
-                <br /> Lord Rama and Vishnu Deva. This is where you should
-                <br /> start
+                कुण्डलपुर जी सिद्ध क्षेत्र , बड़े बाबा का अतिशय क्षेत्र प्राचीन
+                <br /> मंदिरों का गढ़ है. जहाँ लगभग २४०० वर्ष पुराने श्रीधर केवली
+                के चरण
+                <br /> विराजमान हैं. पहाड़ एवं तलहटी में लगभग ५०० वर्ष पूर्व के
+                ६१ और जिन
+                <br /> मंदिर हैं, जिनमे पार्श्वनाथ भगवान और चंद्रप्रभु भगवान के
+                दर्शन
+                <br />
+                बहुतायत में मिलते हैं. यहाँ आस पास के क्षेत्र में गुप्तकाल की
+                <br />
+                प्रतिमाओं का भी उल्लेख है. इन सबसे ऊपर विराजमान हैं कुंडलपुर के
+                <br />
+                बड़े बाबा श्री १००८ आदिनाथ भगवान लगभग १५०० वर्ष पुराने मंदिर जी
+                एवं
+                <br />
+                सिंहपीठ आसन पर विराजमान हैं.
               </p>
             </div>
           </div>
         </div>
         <div className="about-bttom-div">
-          <h2>Trusted by successful nonprofits around the india</h2>
+          <h2>सम्यकदर्शन-ज्ञान-चारित्र का दान अनमोल दान है</h2>
         </div>
         <div className="bottom-img-div">
           <img src={img3} alt="img" />

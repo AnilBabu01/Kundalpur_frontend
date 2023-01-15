@@ -81,7 +81,14 @@
   height: 61px;
 }
 
-
+.linnes-outer-div-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  margin-top: 10px;
+  width: 95%;
+}
 @media screen and (max-width: 780px) {
   .mainbghomediv {
     display: flex;

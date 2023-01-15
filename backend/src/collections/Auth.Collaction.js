@@ -1,33 +1,48 @@
 const db = require("../models");
-const { Op,QueryTypes } = require("sequelize");
-const sequelize = require('../db/db-connection');
+const { Op, QueryTypes } = require("sequelize");
+const sequelize = require("../db/db-connection");
+
 const TblUser = db.userModel;
 const TblUsersRoles = db.usersRolesModel;
 const TblOTP = db.otpModel;
 const TblPasswordReset = db.passwordReset;
+const TblEmployees = db.employees;
+const TblAdmin = db.admin
+
 
 db.userModel.hasOne(db.otpModel, { foreignKey: "user_id", as: "otpDetails" });
 db.otpModel.belongsTo(db.userModel, { foreignKey: "user_id", as: "userOTP" });
+
 
 db.userModel.hasOne(db.usersRolesModel, {
   foreignKey: "user_id",
   as: "roleDetails",
 });
+
 db.usersRolesModel.belongsTo(db.userModel, {
   foreignKey: "user_id",
   as: "userRole",
 });
 
-db.roleModel.hasMany(db.usersRolesModel, {
-  foreignKey: "role_id",
-  as: "usersRoles",
-});
-db.usersRolesModel.belongsTo(db.roleModel, {
-  foreignKey: "role_id",
-  as: "roles",
-});
+
+
+
+
+
+
+// db.roleModel.hasMany(db.usersRolesModel, {
+//   foreignKey: "role_id",
+//   as: "usersRoles",
+// });
+// db.usersRolesModel.belongsTo(db.roleModel, {
+//   foreignKey: "role_id",
+//   as: "roles",
+// });
 
 const bcrypt = require("bcryptjs");
+const ApiError = require("../utils/ApiError");
+const httpStatus = require("http-status");
+const { UserCollection } = require(".");
 
 class UserCollaction {
   getUserByEmail = async (email) => {
@@ -42,33 +57,43 @@ class UserCollaction {
     return result;
   };
 
-  getUserDetails = async(identity) => {
-    // console.log(identity,"identity");
-    // const query = await sequelize.query(`SELECT u.id,u.username,u.name,u.email,u.password,u.gender,r.role_name,r.id role_id FROM tbl_users
-    // where (u.username = '${identity}' OR mobileNo = '${identity}' OR email = '${identity}') `,
-    // {
-    //   nest: true,
-    //   type: QueryTypes.SELECT,
-    // }
-    // ).catch((err)=>{
-    //   console.log(err)
-    // })
-    // console.log(query,"query");
-    // return query
-
-    let data = await TblUser.findOne({
-      where:{
+  getUserDetails = async (identity) => {
+    const userId = await TblUser.findOne({
+      where: {
         [Op.or]: [
           { username: identity },
           { email: identity },
           { mobileNo: identity },
-        ]
-      }
-    })
+        ],
+      },
+    });
 
-  return data
-  }
-   
+    if (userId) {
+      let data = await TblUser.findOne({
+        where: {
+          [Op.or]: [
+            { username: identity },
+            { email: identity },
+            { mobileNo: identity },
+          ],
+        },
+        include: [
+          {
+            model: TblUsersRoles,
+            as: "roleDetails",
+            where: {
+              user_id: userId.id,
+              role_id: 2,
+            },
+          },
+        ],
+      });
+      return data;
+    }
+
+    return null;
+  };
+
   getUserName = async (username) => {
     const query = await TblUser.findOne({
       where: {
@@ -78,25 +103,47 @@ class UserCollaction {
           { mobileNo: username },
         ],
       },
+      include: [
+        {
+          model: TblUsersRoles,
+          as: "roleDetails",
+          where: { role_id: 2 },
+        },
+      ],
     });
     return query;
   };
 
   getAdminName = async (username) => {
     let result = "";
-    const query = await TblUser.findOne({
+    const query = await TblAdmin.findOne({
       where: {
         username: username,
       },
       include: [
         {
           model: TblUsersRoles,
-          as: "roleDetails",
+          as: "adminDetails",
           where: { role_id: 1 },
         },
       ],
     }).then((res) => {
+      console.log(res);
       result = res;
+    });
+
+    return result;
+  };
+
+  getEmployee = async (email) => {
+    let result = "";
+    const query = await TblEmployees.findOne({
+      where: {
+        email: email,
+      },
+    }).then((res) => {
+      result = res;
+      result.roleDetails = { role_id: res.role_id };
     });
 
     return result;
@@ -184,22 +231,124 @@ class UserCollaction {
     return null;
   };
 
-  forgotTokenMatch = async (body) => {
-    const { identity, token } = body;
-    const user = await this.getUserName(identity);
-    const data = await TblPasswordReset.findOne({
-      where: { user_id: user.id },
+  forgotPass = async (req) => {
+    const id = req.user.id;
+
+    const { oldpassword, newPassword } = req.body;
+    let data;
+
+    const salt = bcrypt.genSaltSync(12);
+    const hashencrypt = bcrypt.hashSync(newPassword, salt);
+
+    const user = await TblUser.findOne({
+      where: {
+        id: id,
+      },
     });
 
-    if (data.resetPasswordToken == body.token) {
-      return {
-        resetPasswordToken: data.resetPasswordToken,
-        resetPasswordExpires: data.resetPasswordExpires,
-        user_id: user.id,
-      };
+    if (!user) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, "Your not Authorized ");
+    } else {
+      let checkpass = await this.isPasswordMatch(oldpassword, user.password);
+      console.log(checkpass);
+      if (checkpass) {
+        data = await TblUser.update(
+          {
+            password: hashencrypt,
+          },
+          {
+            where: {
+              id: user.id,
+            },
+          }
+        );
+      }
     }
-    return null;
+
+    return data;
   };
+
+  forgotPasswordReqOtp = async (req) => {
+    const email = req.body.email;
+
+    let user = await TblUser.findOne({
+      where: {
+        email: email,
+      },
+      include: [
+        {
+          model: TblUsersRoles,
+          as: "roleDetails",
+          where: { role_id: 2 },
+        },
+      ],
+    });
+
+    if (user) {
+      // ---------check OTP TIME--------
+      const checkOtpLastSend = await this.checkOtpLastSend(user.id);
+      if (!checkOtpLastSend) {
+        let otp = Math.floor(100000 + Math.random() * 900000); //-----6 digit random number--------
+        // sendSms(otp,body.mobile_no)
+        const update_otp = await UserCollection.updateOTP(user.id, otp);
+        return update_otp;
+      } else {
+        let date_ob = new Date();
+        var seconds = 60;
+        var parsedDate = new Date(Date.parse(checkOtpLastSend.updatedAt));
+        var newDate = new Date(parsedDate.getTime() + 1000 * seconds);
+        const remaining = date_ob - newDate;
+        const checkRemaining = Math.floor((remaining / 1000) % 60);
+        if (checkRemaining > 0) {
+          //----check remaining time-----
+          let otp = Math.floor(100000 + Math.random() * 900000); //-----6 digit random number--------
+          const update_otp = await UserCollection.updateOTP(user.id, otp);
+          // sendSms(otp,body.mobile_no)
+          return update_otp;
+        } else {
+          throw new ApiError(
+            httpStatus.NOT_FOUND,
+            `Please wait ${Math.abs(checkRemaining)} seconds.`
+          );
+        }
+      }
+    }
+    return {
+      status: true,
+      message: "Otp Will send to Your Registered Mail",
+    };
+  };
+
+  changePassForgot =async (req)=>{
+
+    const {token,password} = req.body;
+let data;
+    const salt = bcrypt.genSaltSync(12);
+    const hashencrypt = bcrypt.hashSync(password, salt);
+    let verify = await TblPasswordReset.findOne({
+      where:{resetPasswordToken:token}
+    })
+
+    if(verify){
+     data = await TblUser.update({
+        password:hashencrypt
+      },
+      {
+        where:{
+          id:verify.user_id
+        }
+      }
+      ).catch((err)=>{
+        console.log(err)
+      }
+
+      )
+    }
+
+    return data
+
+  }
+
 } //end of class
 
 function sendToElasticAndLogToConsole(sql, queryObject) {

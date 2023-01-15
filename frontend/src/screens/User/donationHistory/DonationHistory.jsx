@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,23 +8,45 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
+import ChequeSuccessfull from "../donation/chequeSuccessfull/ChequeSuccessfull";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import moment from "moment";
-
 import "./DonationHistory.css";
 import { useNavigate } from "react-router-dom";
-import { User_AllDonation } from "../../../Redux/redux/action/AuthAction";
 import { serverInstance } from "../../../API/ServerInstance";
-function DonationHistory() {
-  const [isrow, setisrow] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+const style = {
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  borderRadius: "12px",
+  bgcolor: "background.paper",
+
+  boxShadow: 24,
+  p: 2,
+};
+let status;
+function DonationHistory({ setopendashboard, setshowreciept }) {
   const dispatch = useDispatch();
   const navigation = useNavigate();
+  const [isrow, setisrow] = useState([]);
+  const [page, setPage] = useState(0);
+  const [open1, setOpen1] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [useindonationhistory, setuseindonationhistory] = useState(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
 
+  console.log(isrow);
   React.useEffect(() => {
     gettable();
+  }, []);
+  useEffect(() => {
+    setshowreciept(false);
   }, []);
 
   const gettable = () => {
@@ -42,11 +64,16 @@ function DonationHistory() {
   };
 
   const downloadrecept = (row) => {
-    navigation("/reciept", {
-      state: {
-        userdata: row,
-      },
-    });
+    if (row.active === "0") {
+      handleOpen1();
+      setuseindonationhistory(true);
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -60,6 +87,22 @@ function DonationHistory() {
 
   return (
     <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open1}
+        onClose={handleClose1}
+        closeAfterTransition
+      >
+        <Fade in={open1}>
+          <Box sx={style}>
+            <ChequeSuccessfull
+              handleClose={handleClose1}
+              useindonationhistory={useindonationhistory}
+            />
+          </Box>
+        </Fade>
+      </Modal>
       <div className="DonationHistory-main-div">
         <div>
           <div className="table-div-maain-donation-table-main">
@@ -80,12 +123,14 @@ function DonationHistory() {
                     <TableCell align="left">Date Of submission</TableCell>
                     <TableCell align="left">Name of Bank</TableCell>
                     <TableCell align="left">Payment id</TableCell>
+                    <TableCell align="left">Status</TableCell>
                     <TableCell align="left">certificate</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {(rowsPerPage > 0
-                    ? isrow.slice(
+                    ? isrow &&
+                      isrow.slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
                       )
@@ -97,6 +142,9 @@ function DonationHistory() {
                         "&:last-child td, &:last-child th": { border: 0 },
                       }}
                     >
+                      <div style={{ display: "none" }}>
+                        {(status = row.active)}
+                      </div>
                       <TableCell align="left">
                         {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
                       </TableCell>
@@ -115,11 +163,21 @@ function DonationHistory() {
                       <TableCell align="left">
                         {row.PAYMENT_ID ? row.PAYMENT_ID : "-"}
                       </TableCell>
+                      <TableCell align="left">
+                        {row.PAYMENT_ID
+                          ? "-"
+                          : row.active === "0"
+                          ? "Not Approved"
+                          : "Approved"}
+                      </TableCell>
                       <TableCell
-                        align="left"
-                        style={{ cursor: "pointer" }}
                         onClick={() => {
                           downloadrecept(row);
+                        }}
+                        align="left"
+                        style={{
+                          cursor: "pointer",
+                          color: status === "0" ? "red" : "",
                         }}
                       >
                         downolod

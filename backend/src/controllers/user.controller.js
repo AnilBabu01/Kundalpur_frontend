@@ -4,6 +4,8 @@ const catchAsync = require("../utils/catchAsync");
 const { generateAuthTokens } = require("../utils/tokens");
 const { isEmailValid } = require("../utils/checkEmail");
 const ApiError = require("../utils/ApiError");
+const crypto = require("crypto");
+const UserCollaction = require("../collections/User.Collaction");
 
 const createUser = catchAsync(async (req, res) => {
   const userdata = await userService.createuser(req.body);
@@ -20,6 +22,7 @@ const login = catchAsync(async (req, res) => {
   }
   const tokens = await generateAuthTokens(data);
   res.send({
+    status: true,
     user: {
       id: data.id,
       username: data.username,
@@ -45,6 +48,7 @@ const loginWithMobile = catchAsync(async (req, res) => {
 const loginWithEmail = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   let data = await userService.loginuser(email, password);
+  console.log(data);
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
@@ -56,8 +60,8 @@ const loginWithEmail = catchAsync(async (req, res) => {
       name: data.name,
       email: data.email,
       gender: data.gender,
-      role:data.role_name,
-      role_id:data.role_id
+      role: data.role_name,
+      role_id: data.role_id,
     },
     tokens,
   });
@@ -65,12 +69,12 @@ const loginWithEmail = catchAsync(async (req, res) => {
 
 const verifyOTP = catchAsync(async (req, res) => {
   const { username, otp } = req.body;
+
   const data = await userService.verifyOTP(username, otp);
-  console.log(data,"data");
+
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
   }
-  console.log(data);
   const tokens = await generateAuthTokens(data);
   res.status(200).send({
     user: {
@@ -79,35 +83,49 @@ const verifyOTP = catchAsync(async (req, res) => {
       name: data.name,
       email: data.email,
       gender: data.gender,
-      role:data.role_name,
-      role_id:data.role_id
+      role: data.role_name,
+      role_id: data.role_id,
     },
     tokens,
   });
 });
 
-const forgotPassword = catchAsync(async (req, res) => {
-  const result = await userService.forgotPass(req.body);
+const verifyForgotOtp = catchAsync(async (req, res) => {
+  const { username, otp } = req.body;
+
+  const data = await userService.verifyOTP(username, otp);
+  console.log(data.id);
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "!somthing Went Wrong");
+  }
+
+  let resetPasswordToken = crypto.randomBytes(20).toString("hex");
+  const update = await UserCollaction.generateResetTokenNew(
+    resetPasswordToken,
+    data.id
+  );
+
   res.status(200).send({
     status: true,
-    data: result,
+    message: "Successfully Verified Otp",
+    token: update,
   });
 });
 
-const forgotPasswordSecond = catchAsync(async (req, res) => {
-  const result = await userService.forgotPassSecond(req.body);
-  if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Otp mismatch.");
+const changePassForgot = catchAsync(async (req, res) => {
+  const data = await userService.changePassForgot(req);
+
+  if (!data) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong");
   }
   res.status(200).send({
     status: true,
-    msg: "OTP matched.",
-    token: result,
+    message: "Successfully Updated password",
   });
 });
 
-const forgotPasswordThird = catchAsync(async (req, res) => {
-  const result = await userService.forgotPasswordThird(req.body);
+const forgotPassword = catchAsync(async (req, res) => {
+  const result = await userService.forgotPass(req);
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, "Something went wrong!");
   }
@@ -140,16 +158,80 @@ const profileList = catchAsync(async (req, res) => {
   });
 });
 
-const createAccount = catchAsync(async(req,res)=>{
+const createAccount = catchAsync(async (req, res) => {
   const create = await userService.createAccount(req);
-  if(!create){
+  if (create?.status === 0) {
+    res.status(401).send({
+      status: create.status,
+      message: create.error,
+    });
+  }
+
+  res.status(200).send({
+    status: true,
+    msg: "Account created successfully.",
+  });
+});
+
+const getUsers = catchAsync(async (req, res) => {
+  const create = await userService.getUsers(req);
+  console.log(create);
+  if (create?.status === 0) {
+    res.status(401).send({
+      status: create.status,
+      message: create.error,
+    });
+  }
+  res.status(200).send({
+    status: true,
+    data: create,
+  });
+});
+
+const getEmployees = catchAsync(async (req, res) => {
+  const employees = await userService.getEmployees(req);
+  if (!employees) {
     throw new ApiError(httpStatus.NOT_FOUND, "Something wrong!");
   }
   res.status(200).send({
-    status:true,
-    msg:'Account created successfully.' 
-  })
-})
+    status: true,
+    data: employees,
+  });
+});
+
+const delEmployees = catchAsync(async (req, res) => {
+  const employees = await userService.delEmployees(req);
+  if (!employees) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Something wrong!");
+  }
+  res.status(200).send({
+    status: true,
+    message: "User Deleted Successfully",
+  });
+});
+
+const editEmployee = catchAsync(async (req, res) => {
+  const employees = await userService.editEmployee(req);
+  if (!employees) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Something wrong!");
+  }
+  res.status(200).send({
+    status: true,
+    message: "User updated Successfully",
+  });
+});
+
+const forgotPasswordReqOtp = catchAsync(async (req, res) => {
+  const data = await userService.forgotPasswordReqOtp(req);
+  console.log(data);
+  if (!data) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "!somthing Went Wrong");
+  }
+  res.status(200).send({
+    status: data.status,
+    message: data.message,
+  });
+});
 
 module.exports = {
   createUser,
@@ -158,9 +240,14 @@ module.exports = {
   loginWithEmail,
   verifyOTP,
   forgotPassword,
-  forgotPasswordSecond,
-  forgotPasswordThird,
   updateProfile,
   profileList,
-  createAccount
+  createAccount,
+  getUsers,
+  getEmployees,
+  delEmployees,
+  forgotPasswordReqOtp,
+  verifyForgotOtp,
+  editEmployee,
+  changePassForgot,
 };

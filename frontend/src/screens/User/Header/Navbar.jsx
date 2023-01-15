@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import { secondaryColor } from "../../../utils/colorVariables";
 import { NavLink, useNavigate } from "react-router-dom";
+import { backendUrl, backendApiUrl } from "../../../config/config";
 import { useLocation } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -17,30 +18,42 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import Logout from "@mui/icons-material/Logout";
-
+import { useSelector, useDispatch } from "react-redux";
+import { loadUser } from "../../../Redux/redux/action/AuthAction";
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [isMobile, setisMobile] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
+  const [profileimg, setprofileimg] = useState("");
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const { user } = useSelector((state) => state.userReducer);
+
   const handleClose = () => {
     setAnchorEl(null);
   };
   const token = sessionStorage.getItem("token");
-  useEffect(() => {}, [isMobile, token]);
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [isMobile, token, profileimg]);
 
   const logout = () => {
     handleClose();
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userrole");
     setTimeout(() => {
       window.location.reload();
     }, 1000);
   };
+
+  let userrole = sessionStorage.getItem("userrole");
   return (
     <>
       <Menu
@@ -100,6 +113,17 @@ const Navbar = () => {
           </ListItemIcon>
           Room Booking History
         </MenuItem>
+        {userrole === 1 && (
+          <>
+            <MenuItem onClick={() => navigate("/admin-panel/dashboard")}>
+              <ListItemIcon>
+                <DashboardIcon fontSize="small" />
+              </ListItemIcon>
+              Dashboard
+            </MenuItem>
+          </>
+        )}
+
         <Divider />
         <MenuItem onClick={() => logout()}>
           <ListItemIcon>
@@ -141,7 +165,7 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to="/paymenthistory"
+              to="/about"
               className={({ isActive }) =>
                 isActive ? style.active : style.about
               }
@@ -161,8 +185,8 @@ const Navbar = () => {
                   }}
                 >
                   <Avatar
-                    alt="Remy Sharp"
-                    src="/static/images/avatar/1.jpg"
+                    alt={user?.name}
+                    src={`${backendUrl}uploads/images/${user?.profile_image}`}
                     sx={{
                       width: 35,
                       height: 35,

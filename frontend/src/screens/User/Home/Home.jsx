@@ -11,9 +11,11 @@ const Home = () => {
           <div className="home-right-text">
             <div>
               <h2>
-                Some Important Life <br /> Lessons From Gita
+                श्री दिगम्बर जैन सिद्धक्षेत्र
+                <br />
+                (कुण्डलपुर) कुण्डलगिरि
               </h2>
-              <div className="linnes-outer-div">
+              <div className="linnes-outer-div-main">
                 <div className="line-main-div">
                   <div className="line-1" />
                   <div className="line-2" />
@@ -21,10 +23,12 @@ const Home = () => {
                 </div>
 
                 <p>
-                  We are a Hindu that belives in Lord Rama and Vishnu
-                  <br /> Deva the followers and We are a Hindu that belives in
-                  <br /> Lord Rama and Vishnu Deva. This is where you should
-                  <br /> start
+                  भारतवर्ष का ह्रदय स्थल मध्य प्रदेश का एक जिला है “दमोह”
+                  <br />
+                  I दमोह (जिला मुख्यालय) से लगभग ३५ किलोमीटर दूर पटेरा तहसील में
+                  <br />
+                  बुन्देखण्ड का शिरर्मोर्य तीर्थ है I “कुंडलपुर” जो की
+                  <br /> “कुण्डलगिरी” नामक अर्द्धचन्द्राकार पहाड़ियों पर स्थित है
                 </p>
               </div>
               <div className="main-start-btn-div">

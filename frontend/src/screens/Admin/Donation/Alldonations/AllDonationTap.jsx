@@ -67,7 +67,7 @@ export default function AllDonationTap({ setopendashboard }) {
               aria-label="full width tabs example"
               style={{ background: "#e96d00" }}
             >
-              <Tab label="Cash Donation" {...a11yProps(0)} />
+              <Tab label="Electronic Donation" {...a11yProps(0)} />
               <Tab label="Cheque Donation" {...a11yProps(1)} />
               <Tab label="Online Donation" {...a11yProps(2)} />
             </Tabs>

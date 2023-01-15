@@ -1,5 +1,5 @@
 export const typesOfDonation = [
-  "Please Select ",
+  "Please Select",
   "बड़े बाबा मंदिर निर्माण दान (विशेष दान)",
   "कुण्डलपुर क्षेत्र विकास हेतु दान ",
   "गोलक दान जमा",

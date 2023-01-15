@@ -3,6 +3,8 @@ const { UserCollection } = require("../collections");
 const AuthCollaction = require("../collections/Auth.Collaction");
 const crypto = require('crypto');
 const ApiError = require("../utils/ApiError");
+const { checkMobile, checkEmail, checkEmployeeMobile, checkEmployeeEmail } = require("../collections/User.Collaction");
+
 
 /**
  * Create a user
@@ -10,21 +12,28 @@ const ApiError = require("../utils/ApiError");
  * @returns {Promise<User>}
  */
 const createuser = async (userBody, file) => {
-  const user = await AuthCollaction.getUserName(userBody.username);
+  const user = await AuthCollaction.getAdminName(userBody.username);
   if (user) {
-    return null;
+    return {
+      status:false,
+      message:"User already exists"
+    }
   }
+  console.log(user)
   const result = await UserCollection.createuser(userBody, file);
+  
   return result;
 };
 
 const mobileLogin = async (body) => {
   const checkUser = await AuthCollaction.getUserName(body.mobile_no);
+
   if(checkUser){
     // ---------check OTP TIME--------
     const checkOtpLastSend = await AuthCollaction.checkOtpLastSend(checkUser.id);
     if(!checkOtpLastSend){
       let otp = Math.floor(100000 + Math.random() * 900000); //-----6 digit random number--------
+      // sendSms(otp,body.mobile_no)
       const update_otp = await UserCollection.updateOTP(checkUser.id, otp);
       return update_otp;
     }else{
@@ -37,13 +46,16 @@ const mobileLogin = async (body) => {
       if(checkRemaining > 0){ //----check remaining time-----
         let otp = Math.floor(100000 + Math.random() * 900000); //-----6 digit random number--------
         const update_otp = await UserCollection.updateOTP(checkUser.id, otp);
+        // sendSms(otp,body.mobile_no)
         return update_otp; 
       }else{
         throw new ApiError(httpStatus.NOT_FOUND, `Please wait ${Math.abs(checkRemaining)} seconds.`); 
       }
     }
   }else{
+
     const result = await UserCollection.selfRegister(body);
+    
     if(!result){
       throw new ApiError(httpStatus.NOT_FOUND, "Something went wrong. Please try again."); 
     }
@@ -69,6 +81,7 @@ const loginuser = async (identity, password) => {
 
 const loginAdmin = async (username, password) => {
   const user = await AuthCollaction.getAdminName(username);
+  console.log(user)
   if (!user || !(await AuthCollaction.isPasswordMatch(password, user.password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED,"Incorrect username or password");
   }
@@ -88,49 +101,14 @@ const verifyOTP = async (username, otp) => {
   return user;
 };
 
-const forgotPass = async (body) => {
-  const user = await AuthCollaction.getUserName(body.identity);
-  if (!user) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect username");
-  }
-  let otp = Math.floor(100000 + Math.random() * 900000); //-----6 digit random number--------
-  let resetPasswordExpires = Date.now() + 3600000; //expires in an hour
-  const updateForgotPassToken = await AuthCollaction.updateForgotPassToken(user.id,otp,resetPasswordExpires);
-  if(body.reset_mode == 'mobile'){
-    //--------send OTP---------
 
-  }else if(body.reset_mode == 'email'){
-    //-----send mail----------
-  }
-  return updateForgotPassToken;
-};
-
-const forgotPassSecond = async(body) => {
-  const data = await AuthCollaction.forgotOTPMatch(body);
+const forgotPass = async(req)=>{
+  const data = await AuthCollaction.forgotPass(req);
   if(!data){
-    return null;
+    throw new ApiError(httpStatus.UNAUTHORIZED,"Failed to Forgot Password")
   }
-  let currentDate = Date.now();
-  if(data.resetPasswordExpires < currentDate){
-    throw new ApiError(httpStatus.UNAUTHORIZED, "OTP time expire.");
-  }
-  let resetPasswordToken = crypto.randomBytes(20).toString('hex');
-  const update = await UserCollection.generateResetToken(resetPasswordToken,data.user_id);
-  return update;
-}
-
-const forgotPasswordThird = async(body)=>{
-  const data = await AuthCollaction.forgotTokenMatch(body);
-  if(!data){
-    return null;
-  }
-  let currentDate = Date.now();
-  if(data.resetPasswordExpires < currentDate){
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Token time expire.");
-  }
-  const resetPass = await UserCollection.resetPassword(body,data.user_id);
-  return resetPass;
-
+ 
+  return data
 }
 
 const profileUpdate = async(req)=>{
@@ -138,6 +116,10 @@ const profileUpdate = async(req)=>{
   return update;
 }
 
+const changePassForgot = async (req)=>{
+  const update = await AuthCollaction.changePassForgot(req);
+  return update;
+}
 const profileList = async(req)=>{
   const list = await UserCollection.profileList(req);
   if(!list){
@@ -149,18 +131,105 @@ const profileList = async(req)=>{
 const createAccount = async(req)=>{
   //-----check mobile exist or not ------
   const mobile = await UserCollection.checkMobile(req.body.mobileno);
-  console.log(mobile);
+
   if(mobile.length > 0){
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Mobile number already exist.");
+  
+    return{
+      status:0,
+      error : "Mobile number already exist."
+    }
+
   }
   const email = await UserCollection.checkEmail(req.body.email);
   if(email.length > 0){
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Email already exist.");
+    return{
+      status:0,
+      error : "Email already exist"
+    }
   }
   //-----check email exist or not ------
   const create = await  UserCollection.createAccount(req);
+  console.log(create)
   return create;
 }
+
+const getUsers = async (req)=>{
+  
+  const users = await UserCollection.getUsers(req);
+  return users;
+}
+
+const delUser = async (req)=>{
+  const users = await UserCollection.delUser(req);
+  return users;
+}
+
+
+const editUser = async (req)=>{
+  const users = await UserCollection.editUser(req);
+  return users;
+}
+
+const addEmployees = async (req)=>{
+
+  const mobile = await checkEmployeeMobile(req.body.Mobile)
+  const email = await checkEmployeeEmail(req.body.Email)
+  if(mobile.length > 0){
+    return {
+      status:false,
+      message : "Mobile number already exist."
+    }
+  }
+
+  if(email.length > 0){
+    return {
+      status:false,
+      message : "Email already exist."
+    }
+  }
+
+  const employees = await UserCollection.addEmployees(req);
+if(employees){
+  return {
+    status : true,
+    message: "User Added Successfully"
+  };
+}
+}
+
+
+const getEmployees = async (req)=>{
+  const employees = await UserCollection.getEmployees(req);
+  return employees;
+}
+
+const delEmployees = async (req)=>{
+  const employees = await UserCollection.delEmployees(req);
+  return employees;
+}
+
+const editEmployee = async (req)=>{
+  const employees = await UserCollection.editEmployee(req);
+  return employees;
+}
+
+const forgotPasswordReqOtp = async (req)=>{
+  const data = await AuthCollaction.forgotPasswordReqOtp(req)
+  return data 
+
+}
+
+const loginEmployee = async (email, password)=>{
+  const user = await AuthCollaction.getEmployee(email);
+  console.log(user)
+  if (!user || !(await AuthCollaction.isPasswordMatch(password, user.Password))) {
+    throw new ApiError(httpStatus.UNAUTHORIZED,"Incorrect username or password");
+  }
+  return user;
+
+}
+
+
 
 module.exports = {
   createuser,
@@ -169,9 +238,17 @@ module.exports = {
   loginAdmin,
   forgotPass,
   mobileLogin,
-  forgotPassSecond,
-  forgotPasswordThird,
   profileUpdate,
   profileList,
-  createAccount
+  changePassForgot,
+  createAccount,
+  getUsers,
+  delUser,
+  editUser,
+  addEmployees,
+  getEmployees,
+  delEmployees,
+  forgotPasswordReqOtp,
+  loginEmployee,
+  editEmployee
 };

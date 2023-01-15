@@ -5,6 +5,7 @@ import { serverInstance } from "../../../../API/ServerInstance";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -14,9 +15,20 @@ import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import PrintIcon from "@mui/icons-material/Print";
 import Fade from "@mui/material/Fade";
 import CloseIcon from "@mui/icons-material/Close";
 import CashDonation from "./ElectronicDonation/ElectronicDonation";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Request from "./Request";
+import { backendApiUrl } from "../../../../config/config";
+import axios from "axios";
+
 import "./Donation.css";
 const style = {
   position: "absolute",
@@ -29,38 +41,80 @@ const style = {
   boxShadow: 24,
   borderRadius: "5px",
 };
+const style2 = {
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "30%",
+  bgcolor: "background.paper",
+  p: 2,
+  boxShadow: 24,
+  borderRadius: "5px",
+};
+
 const Donation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
   const [showalert, setshowalert] = useState(false);
+  const [deleteId, setdeleteId] = useState("");
+  const [checkVoucher, setcheckVoucher] = useState(false);
   const [msg, setmsg] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
+  const handleOpen3 = () => setOpen3(true);
+  const handleClose3 = () => setOpen3(false);
+  console.log("check data ", isData);
+  const handleClickOpen1 = (id) => {
+    setOpen1(true);
+    setdeleteId(id);
+    console.log(id);
+  };
+
+  const handleClose1 = () => {
+    setOpen1(false);
+  };
+
+  const handleClose2 = () => {
+    setOpen1(false);
+    serverInstance(`user/add-elecDonation?id=${deleteId}`, "delete").then(
+      (res) => {
+        if (res.status === true) {
+          Swal.fire(
+            "Great!",
+            "Eletronic donation delete successfully",
+            "success"
+          );
+          setshowalert(!showalert);
+
+          setOpen1(false);
+        } else {
+          Swal("Error", "somthing went  wrong", "error");
+        }
+        console.log(res);
+      }
+    );
+  };
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const navigation = useNavigate();
 
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
-  }, []);
+  }, [showalert, open]);
 
   const getall_donation = () => {
-    serverInstance("admin/donation-list", "get").then((res) => {
+    serverInstance("user/add-elecDonation", "get").then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
-      console.log(res);
-    });
-  };
-
-  const downloadrecept = (row) => {
-    navigation("/reciept", {
-      state: {
-        userdata: row,
-      },
     });
   };
 
@@ -73,11 +127,67 @@ const Donation = ({ setopendashboard }) => {
     setPage(0);
   };
 
-  if (showalert) {
-    Swal.fire("Great!", msg, "success");
-  }
+  const printreceipt = (row) => {
+    if (row.active === "0") {
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
+  };
+
+  const voucherexhauted = async (row) => {
+    try {
+      axios.defaults.headers.post[
+        "Authorization"
+      ] = `Bearer ${sessionStorage.getItem("token")}`;
+
+      const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
+        voucher: row?.voucherNo,
+      });
+
+      console.log(res);
+
+      if (res.data.status === true) {
+        printreceipt(row);
+
+        Swal.fire("Great!", res.data.message, "success");
+      } else {
+        Swal.fire("Great!", res.data.message, "success");
+      }
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
+  };
+  useEffect(() => {
+    setopendashboard(true);
+    getall_donation();
+  }, [showalert, open]);
   return (
     <>
+      <Dialog
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Do you want to delete"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            After delete you cannot get again
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose1}>Disagree</Button>
+          <Button onClick={handleClose2} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -97,7 +207,30 @@ const Donation = ({ setopendashboard }) => {
                 setOpen={setOpen}
                 setshowalert={setshowalert}
                 setmsg={setmsg}
+                handleClose={handleClose}
               />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open3}
+        onClose={handleClose3}
+        closeAfterTransition
+      >
+        <Fade in={open3}>
+          <Box sx={style2}>
+            <div>
+              <div className="add-div-close-div1">
+                <h2 style={{ textAlign: "center" }}>
+                  Vouchers exhausted, Please request to new Vouchers
+                </h2>
+                <CloseIcon onClick={() => handleClose3()} />
+              </div>
+              <Request handleClose={handleClose3} />
             </div>
           </Box>
         </Fade>
@@ -118,17 +251,12 @@ const Donation = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
-                  <TableCell>S.No.</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Name </TableCell>
-                  <TableCell>Donation Type</TableCell>
+                  <TableCell>Receipt No</TableCell>
+                  <TableCell>Phone No</TableCell>
+                  <TableCell>Name</TableCell>
                   <TableCell>Amount</TableCell>
-                  <TableCell>Cheque No.</TableCell>
-                  <TableCell>Date Of submission</TableCell>
-                  <TableCell>Name of Bank</TableCell>
-                  <TableCell>Payment id</TableCell>
-                  <TableCell>certificate</TableCell>
-                  <TableCell>Edit/Delete</TableCell>
+                  <TableCell>Address</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -140,45 +268,37 @@ const Donation = ({ setopendashboard }) => {
                   : isData
                 ).map((row, index) => (
                   <TableRow
-                    key={index}
+                    key={row.id}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>{row.phoneNo}</TableCell>
+                    <TableCell>{row.name}</TableCell>
                     <TableCell>
-                      {" "}
-                      {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
+                      {row.elecItemDetails.reduce(
+                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
+                        0
+                      )}
                     </TableCell>
-                    <TableCell>{row.NAME}</TableCell>
-                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.CHEQUE_NO ? row.CHEQUE_NO : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : "-"}
-                    </TableCell>
+                    <TableCell> {row.address}</TableCell>
 
-                    <TableCell> {row.PAYMENT_ID}</TableCell>
-                    <TableCell
-                      onClick={() => {
-                        downloadrecept(row);
-                      }}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {" "}
-                      downolod
-                    </TableCell>
                     <TableCell>
-                      <RemoveRedEyeIcon />
-                      <DeleteForeverIcon />
+                      <RemoveRedEyeIcon
+                        onClick={() =>
+                          navigation(`/admin-panel/infoElectronic/${row.id}`)
+                        }
+                      />
+
+                      <DeleteForeverIcon
+                        onClick={() => handleClickOpen1(row.id)}
+                      />
+                      <PrintIcon
+                        onClick={() => {
+                          voucherexhauted(row);
+                        }}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

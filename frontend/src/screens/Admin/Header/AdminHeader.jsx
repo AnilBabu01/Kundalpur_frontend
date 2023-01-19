@@ -205,7 +205,7 @@ const AdminHeader = () => {
                     lineHeight: "17px",
                   }}
                 >
-                  {user?.name}
+                  {user?.name.slice(0, 1)}
                 </Typography>
                 <IconButton
                   size="small"

@@ -180,15 +180,14 @@ const Donation = ({ setopendashboard }) => {
         "Authorization"
       ] = `Bearer ${sessionStorage.getItem("token")}`;
 
-      // const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
-      //   voucher: row?.voucherNo,
-      // });
+      const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
+        voucher: row?.voucherNo,
+      });
 
-      // console.log(res);
-
-      // if (res.data.status === true) {
-
-      Swal.fire("Great!", res.data.message, "success");
+      console.log(res.data);
+      if (res.data.status === false) {
+        handleOpen3();
+      }
     } catch (error) {
       Swal.fire("Error!", error, "error");
     }

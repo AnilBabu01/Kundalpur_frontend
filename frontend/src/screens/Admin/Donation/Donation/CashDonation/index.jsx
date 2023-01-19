@@ -121,6 +121,7 @@ const CashDonation = ({ setshowalert, handleClose }) => {
       donationItems[0].type &&
       mobileNo
     ) {
+      
       const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
         name: fullName,
         phoneNo: mobileNo,

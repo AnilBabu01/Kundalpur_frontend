@@ -22,6 +22,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import UpdateDonationType from "./UpdateDonationType";
+import CheckIcon from "@mui/icons-material/Check";
 import Swal from "sweetalert2";
 import axios from "axios";
 const style = {
@@ -49,6 +50,8 @@ function IntemMaster() {
   const [deleteId, setdeleteId] = useState("");
   const [open3, setOpen3] = React.useState(false);
   const [data, setdata] = useState("");
+  const [manageActivation, setmanageActivation] = useState(false);
+  let status;
   const handleOpen3 = (data) => {
     setOpen3(true);
     setdata(data);
@@ -131,6 +134,45 @@ function IntemMaster() {
   useEffect(() => {
     getall_donatiions();
   }, [refetch, open, open3]);
+
+  const deacivateAndactivateuser = async (id) => {
+    try {
+      if (!manageActivation) {
+        status = 0;
+      } else {
+        status = 1;
+      }
+
+      setmanageActivation(!manageActivation);
+      axios.defaults.headers.post[
+        "Authorization"
+      ] = `Bearer ${sessionStorage.getItem("token")}`;
+      const { data } = await axios.post(
+        `${backendApiUrl}admin/change-donation-type`,
+        {
+          id: id,
+          status: status,
+          type: 2,
+        }
+      );
+
+      console.log(data.data);
+
+      if (data.data.status === true) {
+        Swal.fire(
+          "Great!",
+          !manageActivation
+            ? "Donation Item Deactivate"
+            : "Donation Item Activate",
+          "success"
+        );
+        setrefetch(!refetch);
+      }
+      console.log("ss", res);
+    } catch (error) {
+      Swal("Error", error, "error");
+    }
+  };
   return (
     <>
       <Dialog
@@ -269,9 +311,15 @@ function IntemMaster() {
                     </TableCell>
                     <TableCell>
                       <EditIcon onClick={() => handleOpen3(row)} />
-                      <DeleteForeverIcon
-                        onClick={() => handleClickOpen1(row.id)}
-                      />
+                      {row.status === 1 ? (
+                        <CloseIcon
+                          onClick={() => deacivateAndactivateuser(row.id)}
+                        />
+                      ) : (
+                        <CheckIcon
+                          onClick={() => deacivateAndactivateuser(row.id)}
+                        />
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { backendApiUrl } from "../../../../config/config";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
-
 import Swal from "sweetalert2";
 import axios from "axios";
 function UpdateDonationType({ data, handleClose3 }) {

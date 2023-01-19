@@ -15,6 +15,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import Swal from "sweetalert2";
+
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
@@ -24,6 +25,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import activate from "../../../../assets/activate.png";
+import deacivate from "../../../../assets/deacivate.png";
 const style = {
   position: "absolute",
   top: "40%",
@@ -49,7 +52,8 @@ function UserMaster() {
   const [refetch, setrefetch] = useState(false);
   const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState("");
-
+  const [manageActivation, setmanageActivation] = useState(false);
+  let status;
   const handleClickOpen1 = (id) => {
     setOpen1(true);
     setdeleteId(id);
@@ -113,7 +117,6 @@ function UserMaster() {
       } else {
         Swal("Error", "somthing went  wrong", "error");
       }
-      console.log(res);
     });
   };
 
@@ -121,16 +124,32 @@ function UserMaster() {
     getall_users();
   }, [refetch, open]);
 
-  const deleteuser = (id) => {
-    serverInstance(`admin/del-users?id=${id}`, "delete").then((res) => {
-      if (res.status === true) {
-        Swal.fire("Great!", "User delete successfully", "success");
-        setrefetch(!refetch);
-      } else {
-        Swal("Error", "somthing went  wrong", "error");
-      }
-      console.log(res);
-    });
+  const deacivateAndactivateuser = (id) => {
+    if (!manageActivation) {
+      status = 0;
+    } else {
+      status = 1;
+    }
+
+    setmanageActivation(!manageActivation);
+    try {
+      serverInstance(
+        `admin/change-status-users?id=${id}&status=${status}`,
+        "get"
+      ).then((res) => {
+        console.log("res", res);
+        if (res.status) {
+          Swal.fire(
+            "Great!",
+            !manageActivation ? "User Deactivate" : "User Activate",
+            "User Activate"
+          );
+          setrefetch(!refetch);
+        }
+      });
+    } catch (error) {
+      Swal("Error", error, "error");
+    }
   };
   return (
     <>
@@ -295,9 +314,22 @@ function UserMaster() {
                         })
                       }
                     />
-                    <DeleteForeverIcon
-                      onClick={() => handleClickOpen1(row.id)}
-                    />
+
+                    {!manageActivation ? (
+                      <img
+                        src={activate}
+                        alt="deacivate"
+                        className="activate-icon"
+                        onClick={() => deacivateAndactivateuser(row.id)}
+                      />
+                    ) : (
+                      <img
+                        src={deacivate}
+                        alt="deacivate"
+                        className="activate-icon"
+                        onClick={() => deacivateAndactivateuser(row.id)}
+                      />
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

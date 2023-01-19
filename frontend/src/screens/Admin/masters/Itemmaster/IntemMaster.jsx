@@ -35,8 +35,8 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-import "./DonationMaster.css";
-function DonationMaster() {
+
+function IntemMaster() {
   const naviagte = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = useState(0);
@@ -97,9 +97,9 @@ function DonationMaster() {
         "Authorization"
       ] = `Bearer ${sessionStorage.getItem("token")}`;
       const { data } = await axios.post(`${backendApiUrl}admin/donation-type`, {
-        modeOfType: 1,
-        type_en: donationtype_in_eng,
-        type_hi: donationtype_in_hindi,
+        modeOfType: 2,
+        itemType_en: donationtype_in_eng,
+        itemType_hi: donationtype_in_hindi,
       });
       if (data.status === true) {
         Swal.fire("Great!", "User Added Successfully", "success");
@@ -115,7 +115,7 @@ function DonationMaster() {
 
   const getall_donatiions = () => {
     try {
-      serverInstance(`admin/donation-type?type=1`, "get").then((res) => {
+      serverInstance(`admin/donation-type?type=2`, "get").then((res) => {
         if (res.status === true) {
           setisData(res.data);
         } else {
@@ -171,12 +171,11 @@ function DonationMaster() {
                 </div>
                 <hr />
                 <div className="main-input-div1">
-                  <div className="inner-input-div-donations">
+                  <div className="inner-input-div1">
                     <label htmlFor="donationtype_in_hindi">
-                      Enter donation type in hindi 
+                      Enter donation item in hindi 
                     </label>
                     <input
-                      className="input_add_donation_type"
                       type="text"
                       id="donationtype_in_hindi"
                       value={donationtype_in_hindi}
@@ -184,10 +183,9 @@ function DonationMaster() {
                       onChange={(e) => setdonationtype_in_hindi(e.target.value)}
                     />
                     <label htmlFor="donationtype_in_eng">
-                      Enter donation type in english 
+                      Enter donation item in english 
                     </label>
                     <input
-                      className="input_add_donation_type"
                       type="text"
                       id="donationtype_in_eng"
                       value={donationtype_in_eng}
@@ -242,8 +240,8 @@ function DonationMaster() {
               <TableRow>
                 <TableCell>S.No.</TableCell>
 
-                <TableCell> Type Donation (hindi)</TableCell>
-                <TableCell> Type Donation (english) </TableCell>
+                <TableCell>Donation Item (hindi)</TableCell>
+                <TableCell>Donation Item (english) </TableCell>
                 <TableCell>Status</TableCell>
                 <TableCell>Action</TableCell>
               </TableRow>
@@ -264,9 +262,8 @@ function DonationMaster() {
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
-
-                    <TableCell>{row.type_hi}</TableCell>
-                    <TableCell>{row.type_en}</TableCell>
+                    <TableCell>{row.itemType_hi}</TableCell>
+                    <TableCell>{row.itemType_en}</TableCell>
                     <TableCell>
                       {row.status === 1 ? "Active" : "Deactive"}
                     </TableCell>
@@ -316,4 +313,4 @@ function DonationMaster() {
   );
 }
 
-export default DonationMaster;
+export default IntemMaster;

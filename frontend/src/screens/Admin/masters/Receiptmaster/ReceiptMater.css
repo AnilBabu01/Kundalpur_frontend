@@ -1,0 +1,40 @@
+.main_reciept_master{
+    display: flex;
+    justify-content: space-between;
+   
+}
+.right_input_label{
+    display: flex;
+    flex-direction: column;
+}
+.right_input_label input{
+    height: 33px;
+    border-radius: 5px;
+    margin-bottom: 3px;
+    margin-top: 4px;
+    border: 1px solid #fd7906;
+}
+
+.ineear_dave_receipt_no:focus{
+    outline: none;
+}
+.ineear_dave_receipt_no label{
+
+}
+.ineear_dave_receipt_no button{
+    height: 33px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #fd7906;
+    margin-bottom: 16px;
+    margin-top: 3px;
+}
+.ineear_dave_receipt_no{
+    display: flex;
+    flex-direction: column;
+}
+
+.table_div_recipt{
+    width: 75%;
+}

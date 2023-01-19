@@ -9,6 +9,8 @@ import Box from "@mui/material/Box";
 import UserMaster from "./Usermaster/UserMaster";
 import DonationMaster from "./Donationmaster/DonationMaster";
 import RoomMaster from "./RoomMaster/RoomMaster";
+import IntemMaster from "./Itemmaster/IntemMaster";
+import ReceiptMater from "./Receiptmaster/ReceiptMater";
 import "./MasterTap.css";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -69,8 +71,10 @@ export default function MasterTap({ setopendashboard }) {
               style={{ background: "#e96d00" }}
             >
               <Tab label="User Master" {...a11yProps(0)} />
-              <Tab label="Donation Master" {...a11yProps(1)} />
-              <Tab label="Room Master" {...a11yProps(2)} />
+              <Tab label="Donation Type Master" {...a11yProps(1)} />
+              <Tab label="Donation Item Master" {...a11yProps(2)} />
+              <Tab label="Receipt Master" {...a11yProps(3)} />
+              {/* <Tab label="Room Master" {...a11yProps(2)} /> */}
             </Tabs>
           </AppBar>
           <SwipeableViews
@@ -85,8 +89,14 @@ export default function MasterTap({ setopendashboard }) {
               <DonationMaster />
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
-              <RoomMaster />
+              <IntemMaster />
             </TabPanel>
+            <TabPanel value={value} index={3} dir={theme.direction}>
+              <ReceiptMater />
+            </TabPanel>
+            {/* <TabPanel value={value} index={2} dir={theme.direction}>
+              <RoomMaster />
+            </TabPanel> */}
           </SwipeableViews>
         </Box>
       </div>

@@ -34,32 +34,3 @@
 .main_uodate_div{
   padding: 1rem;
 }
-.inner-input-div-donation {
-  display: flex;
-  flex-direction: column;
-}
-
-.inner-input-div-donations input:focus{
-  outline: none;
-}
-
-.inner-input-div-donations input{
-  width: 363px;
-    height: 55px;
-    border: 1px solid #e96d00;
-    border-radius: 5px;
-    font-size: 20px;
-    padding-left: 1rem;
-    margin-top: 4px;
-  }
-
-
-.inner-input-div-donations  label{
-    font-family: "Imprima";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 25px;
-    line-height: 29px;
-    color: #827b7b;
-    margin-bottom: 1rem;
-                  }

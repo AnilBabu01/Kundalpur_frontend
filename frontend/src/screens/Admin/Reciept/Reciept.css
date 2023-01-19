@@ -1,3 +1,6 @@
+
+/* Certificate */
+
 .receipt-main-div {
   width: 100%;
   height: 100%;
@@ -7,7 +10,7 @@
   align-items: center;
   padding-right: 17rem;
   padding-left: 18rem;
-  margin-top: 2rem;
+  padding-top: 6rem;
 }
 
 .mainbghomediv-receipt {
@@ -16,7 +19,6 @@
 
   background-position: center;
   background-size: cover;
-
   width: 100%;
 }
 .overlay-div-receipt {
@@ -24,6 +26,52 @@
   opacity: 0.8;
   width: 100%;
   padding: 1rem;
+  display: flex;
+}
+.overlay-div-receipt h2 {
+  font-size: 19px;
+}
+.overlay-div-receipt p {
+  font-size: 16px;
+}
+.overlay-div-receipt .leftdata{
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.overlay-div-receipt .leftdata .dataitems{
+  display: flex;
+  gap: 8px;
+}
+
+.overlay-div-receipt .rightdata{
+  width: 38%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+.overlay-div-receipt .rightdata .dataitems{
+  display: flex;
+  gap: 8px;
+}
+
+
+.overlay-div-receipt .reciptflex{
+  display: flex;
+  align-items: center;
+  gap: 200px;
+}
+.overlay-div-receipt .reciptflex2{
+  display: flex;
+  align-items: center;
+  gap: 248px;
+}
+.overlay-div-receipt .reciptflex3{
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 .ttable-receipt-donation {
   width: 100%;
@@ -67,6 +115,9 @@
   padding-top: 7px;
   padding-bottom: 7px;
 }
+button{
+  cursor: pointer;
+}
 .down-btn {
   border: none;
   background: #3737d6;
@@ -87,7 +138,11 @@
   align-items: center;
 }
 .recipt-info-div h2 {
+  font-size: 20px;
   margin-right: 1rem;
+}
+.recipt-info-div p {
+  font-size: 17px;
 }
 
 .receipt-header-div {
@@ -121,8 +176,6 @@
   outline: 1px solis white;
   outline: 2px solid white;
 }
-.email-header-div {
-}
 .emil-font-size {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -135,13 +188,15 @@
   margin-bottom: 0px;
   font-weight: 600;
   font-size: 20px;
+  text-align: left;
 }
 .serial-div {
   background: white;
   width: 98%;
+  padding-left: 10px;
   height: 55px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-radius: 8px;
 }

@@ -13,33 +13,43 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
+
 import Box from "@mui/material/Box";
+
+import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import PrintIcon from "@mui/icons-material/Print";
 import Fade from "@mui/material/Fade";
 import CloseIcon from "@mui/icons-material/Close";
-import CashDonation from "./ElectronicDonation/ElectronicDonation";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Typography from "@mui/material/Typography";
 import Request from "./Request";
 import { backendApiUrl } from "../../../../config/config";
 import axios from "axios";
 
 import "./Donation.css";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import ElectronicDonation from "./ElectronicDonation/ElectronicDonation";
+import CashDonation from "./CashDonation";
+import AllDonationTap from "../Alldonations/AllDonationTap";
+import ItemDonation from "./ItemDonation";
+import ChequeDonation from "./ChequeDonation";
 const style = {
   position: "absolute",
-  top: "48%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "90%",
   bgcolor: "background.paper",
   p: 2,
   boxShadow: 24,
-  borderRadius: "5px",
+  borderRadius: "15px",
+  minHeight: 500,
 };
 const style2 = {
   position: "absolute",
@@ -52,6 +62,27 @@ const style2 = {
   boxShadow: 24,
   borderRadius: "5px",
 };
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const Donation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
@@ -64,6 +95,11 @@ const Donation = ({ setopendashboard }) => {
   const [msg, setmsg] = useState("");
   const [open, setOpen] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
+  const [tabValue, setTabValue] = React.useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
   const handleOpen3 = () => setOpen3(true);
   const handleClose3 = () => setOpen3(false);
   console.log("check data ", isData);
@@ -144,19 +180,15 @@ const Donation = ({ setopendashboard }) => {
         "Authorization"
       ] = `Bearer ${sessionStorage.getItem("token")}`;
 
-      const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
-        voucher: row?.voucherNo,
-      });
+      // const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
+      //   voucher: row?.voucherNo,
+      // });
 
-      console.log(res);
+      // console.log(res);
 
-      if (res.data.status === true) {
-        printreceipt(row);
+      // if (res.data.status === true) {
 
-        Swal.fire("Great!", res.data.message, "success");
-      } else {
-        Swal.fire("Great!", res.data.message, "success");
-      }
+      Swal.fire("Great!", res.data.message, "success");
     } catch (error) {
       Swal.fire("Error!", error, "error");
     }
@@ -196,19 +228,102 @@ const Donation = ({ setopendashboard }) => {
         closeAfterTransition
       >
         <Fade in={open}>
-          <Box sx={style}>
-            <div>
-              <div className="add-div-close-div1">
-                <h2> Add Electronic Donation</h2>
-                <CloseIcon onClick={() => handleClose()} />
+          <Box
+            sx={{
+              ...style,
+              width: {
+                xs: "90%",
+                sm: "70%",
+                md: "60%",
+              },
+            }}
+          >
+            <div className="close-btn-container">
+              <div className="modal-close-btn">
+                <IconButton
+                  onClick={() => {
+                    console.log("clicked");
+                    handleClose();
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
               </div>
 
-              <CashDonation
-                setOpen={setOpen}
-                setshowalert={setshowalert}
-                setmsg={setmsg}
-                handleClose={handleClose}
-              />
+              <Box sx={{ width: "100%" }}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                  <Tabs
+                    value={tabValue}
+                    onChange={handleTabChange}
+                    aria-label="donation tabs"
+                  >
+                    <Tab
+                      sx={{
+                        textTransform: "none",
+                        paddingY: 0,
+                      }}
+                      label="Electronic Donation"
+                      {...a11yProps(0)}
+                    />
+                    <Tab
+                      sx={{
+                        textTransform: "none",
+                        paddingY: 0,
+                      }}
+                      label="Cash Donation"
+                      {...a11yProps(1)}
+                    />
+                    <Tab
+                      sx={{
+                        textTransform: "none",
+                        paddingY: 0,
+                      }}
+                      label="Item Donation"
+                      {...a11yProps(1)}
+                    />
+                    <Tab
+                      sx={{
+                        textTransform: "none",
+                        paddingY: 0,
+                      }}
+                      label="Cheque Donation"
+                      {...a11yProps(1)}
+                    />
+                  </Tabs>
+                </Box>
+                <TabPanel value={tabValue} index={0}>
+                  <ElectronicDonation
+                    setOpen={setOpen}
+                    setshowalert={setshowalert}
+                    setmsg={setmsg}
+                    handleClose={handleClose}
+                  />
+                </TabPanel>
+                <TabPanel value={tabValue} index={1}>
+                  <CashDonation
+                    setOpen={setOpen}
+                    setshowalert={setshowalert}
+                    setmsg={setmsg}
+                    handleClose={handleClose}
+                  />
+                </TabPanel>
+                <TabPanel value={tabValue} index={2}>
+                  <ItemDonation
+                    setOpen={setOpen}
+                    setshowalert={setshowalert}
+                    setmsg={setmsg}
+                    handleClose={handleClose}
+                  />
+                </TabPanel>
+                <TabPanel value={tabValue} index={3}>
+                  <ChequeDonation
+                    setOpen={setOpen}
+                    setshowalert={setshowalert}
+                    setmsg={setmsg}
+                    handleClose={handleClose}
+                  />
+                </TabPanel>
+              </Box>
             </div>
           </Box>
         </Fade>

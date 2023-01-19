@@ -50,13 +50,14 @@ function Donation({ setshowreciept }) {
     address: "",
   });
 
+  console.log(isData);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
   const auth = useAuth();
   const { user } = useSelector((state) => state.userReducer);
-  console.log(user);
+
   if (donationdata.selected === "yes1" && !user.name) {
     nagivate("/profile");
   }
@@ -190,15 +191,13 @@ function Donation({ setshowreciept }) {
   };
   const getall_donatiions = () => {
     try {
-      serverInstance("admin/donation-type", "get").then((res) => {
-        if (res.status) {
+      serverInstance(`admin/donation-type?type=1`, "get").then((res) => {
+        if (res.status === true) {
           setisData(res.data);
-
-          console.log(res.data);
         } else {
           Swal("Error", "somthing went  wrong", "error");
         }
-        console.log("sss", res);
+        console.log("ss", res);
       });
     } catch (error) {
       Swal.fire("Error!", error, "error");

@@ -26,3 +26,14 @@
 
   padding: 2rem;
 }
+
+.close-btn-container {
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}

@@ -188,8 +188,8 @@ const AdminHeader = () => {
                 }}
               >
                 <Avatar
-                  alt={adminuser && adminuser?.adminuser}
-                  src={`${backendUrl}uploads/images/${user?.profile_image}`}
+                  // alt={adminuser && adminuser?.adminuser}
+                  // src={`${backendUrl}uploads/images/${user?.profile_image}`}
                   variant="rounded"
                   sx={{
                     width: 35,

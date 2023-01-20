@@ -112,6 +112,7 @@ function UserMaster() {
 
   const getall_users = () => {
     serverInstance("admin/get-users", "get").then((res) => {
+      console.log(res);
       if (res.status) {
         setisData(res.data);
       } else {
@@ -139,6 +140,7 @@ function UserMaster() {
       ).then((res) => {
         console.log("res", res);
         if (res.status) {
+          setrefetch(!refetch);
           Swal.fire(
             "Great!",
             !manageActivation ? "User Deactivate" : "User Activate",
@@ -273,6 +275,7 @@ function UserMaster() {
                 <TableCell>Name</TableCell>
                 <TableCell>Contact No</TableCell>
                 <TableCell>Email-Id</TableCell>
+                <TableCell>Status</TableCell>
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -296,6 +299,9 @@ function UserMaster() {
                   <TableCell>{row.mobileNo}</TableCell>
                   <TableCell>{row.email}</TableCell>
                   <TableCell>
+                    {row.status === true ? "Avtive" : "Deactivate"}
+                  </TableCell>
+                  <TableCell>
                     <RemoveRedEyeIcon
                       onClick={() =>
                         navigation(`/admin-panel/masters/userinfo`, {
@@ -315,7 +321,7 @@ function UserMaster() {
                       }
                     />
 
-                    {!manageActivation ? (
+                    {row.status === true ? (
                       <img
                         src={activate}
                         alt="deacivate"

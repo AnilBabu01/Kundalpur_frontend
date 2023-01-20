@@ -188,7 +188,7 @@ const AdminHeader = () => {
                 }}
               >
                 <Avatar
-                  alt={adminuser?.adminuser}
+                  alt={adminuser && adminuser?.adminuser}
                   src={`${backendUrl}uploads/images/${user?.profile_image}`}
                   variant="rounded"
                   sx={{

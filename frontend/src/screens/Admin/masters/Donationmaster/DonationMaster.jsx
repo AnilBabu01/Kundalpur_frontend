@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import { serverInstance } from "../../../../API/ServerInstance";
 import Fade from "@mui/material/Fade";

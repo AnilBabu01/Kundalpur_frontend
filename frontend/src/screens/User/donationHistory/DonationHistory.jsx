@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import ChequeSuccessfull from "../donation/chequeSuccessfull/ChequeSuccessfull";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import { useDispatch } from "react-redux";

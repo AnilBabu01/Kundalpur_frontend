@@ -5,7 +5,7 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import UserMaster from "./Usermaster/UserMaster";
 import DonationMaster from "./Donationmaster/DonationMaster";
 import RoomMaster from "./RoomMaster/RoomMaster";

@@ -1,88 +1,71 @@
-import React, { useEffect, useState } from "react";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { serverInstance } from "../../../../API/ServerInstance";
-import Swal from "sweetalert2";
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
+import React, { useEffect, useState } from 'react';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { serverInstance } from '../../../../API/ServerInstance';
+import Swal from 'sweetalert2';
+import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
 
-import Box from "@mui/material/Box";
+import Box from '@mui/material/Box';
 
-import IconButton from "@mui/material/IconButton";
-import Modal from "@mui/material/Modal";
-import PrintIcon from "@mui/icons-material/Print";
-import Fade from "@mui/material/Fade";
-import CloseIcon from "@mui/icons-material/Close";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Typography from "@mui/material/Typography";
-import Request from "./Request";
-import { backendApiUrl } from "../../../../config/config";
-import axios from "axios";
-
-import "./Donation.css";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
-import ElectronicDonation from "./ElectronicDonation/ElectronicDonation";
-import CashDonation from "./CashDonation";
-import AllDonationTap from "../Alldonations/AllDonationTap";
-import ItemDonation from "./ItemDonation";
-import ChequeDonation from "./ChequeDonation";
+import IconButton from '@mui/material/IconButton';
+import Modal from '@mui/material/Modal';
+import PrintIcon from '@mui/icons-material/Print';
+import Fade from '@mui/material/Fade';
+import CloseIcon from '@mui/icons-material/Close';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Request from './Request';
+import { backendApiUrl } from '../../../../config/config';
+import axios from 'axios';
+import './Donation.css';
+import ElectronicDonation from './ElectronicDonation/ElectronicDonation';
+import CashDonation from './CashDonation';
+import AllDonationTap from '../Alldonations/AllDonationTap';
+import ItemDonation from './ItemDonation';
+import ChequeDonation from './ChequeDonation';
+import UnderlinedTab from './common/UnderlinedTab';
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bgcolor: "background.paper",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
-  borderRadius: "15px",
+  borderRadius: '15px',
   minHeight: 500,
 };
 const style2 = {
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "30%",
-  bgcolor: "background.paper",
+  position: 'absolute',
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '30%',
+  bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
-  borderRadius: "5px",
+  borderRadius: '5px',
 };
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+const donationColorTheme = {
+  cash: '#48a828',
+  electronic: '#e96d00',
+  cheque: '#1C82AD',
+  item: '#d6cb00',
+};
 
 const Donation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
@@ -90,9 +73,9 @@ const Donation = ({ setopendashboard }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open1, setOpen1] = React.useState(false);
   const [showalert, setshowalert] = useState(false);
-  const [deleteId, setdeleteId] = useState("");
+  const [deleteId, setdeleteId] = useState('');
   const [checkVoucher, setcheckVoucher] = useState(false);
-  const [msg, setmsg] = useState("");
+  const [msg, setmsg] = useState('');
   const [open, setOpen] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
   const [tabValue, setTabValue] = React.useState(0);
@@ -102,7 +85,7 @@ const Donation = ({ setopendashboard }) => {
   };
   const handleOpen3 = () => setOpen3(true);
   const handleClose3 = () => setOpen3(false);
-  console.log("check data ", isData);
+  console.log('check data ', isData);
   const handleClickOpen1 = (id) => {
     setOpen1(true);
     setdeleteId(id);
@@ -115,27 +98,27 @@ const Donation = ({ setopendashboard }) => {
 
   const handleClose2 = () => {
     setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, "delete").then(
+    serverInstance(`user/add-elecDonation?id=${deleteId}`, 'delete').then(
       (res) => {
         if (res.status === true) {
           Swal.fire(
-            "Great!",
-            "Eletronic donation delete successfully",
-            "success"
+            'Great!',
+            'Eletronic donation delete successfully',
+            'success',
           );
           setshowalert(!showalert);
 
           setOpen1(false);
         } else {
-          Swal("Error", "somthing went  wrong", "error");
+          Swal('Error', 'somthing went  wrong', 'error');
         }
         console.log(res);
-      }
+      },
     );
   };
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = React.useCallback(() => setOpen(false), []);
 
   const navigation = useNavigate();
 
@@ -145,11 +128,11 @@ const Donation = ({ setopendashboard }) => {
   }, [showalert, open]);
 
   const getall_donation = () => {
-    serverInstance("user/add-elecDonation", "get").then((res) => {
+    serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
-        Swal("Error", "somthing went  wrong", "error");
+        Swal('Error', 'somthing went  wrong', 'error');
       }
     });
   };
@@ -164,9 +147,9 @@ const Donation = ({ setopendashboard }) => {
   };
 
   const printreceipt = (row) => {
-    if (row.active === "0") {
+    if (row.active === '0') {
     } else {
-      navigation("/reciept", {
+      navigation('/reciept', {
         state: {
           userdata: row,
         },
@@ -177,25 +160,78 @@ const Donation = ({ setopendashboard }) => {
   const voucherexhauted = async (row) => {
     try {
       axios.defaults.headers.post[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("token")}`;
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
         voucher: row?.voucherNo,
       });
 
-      console.log(res.data);
-      if (res.data.status === false) {
-        handleOpen3();
+      console.log(res);
+
+      if (res.data.status === true) {
+        printreceipt(row);
+
+        Swal.fire('Great!', res.data.message, 'success');
+      } else {
+        Swal.fire('Great!', res.data.message, 'success');
       }
     } catch (error) {
-      Swal.fire("Error!", error, "error");
+      Swal.fire('Error!', error, 'error');
     }
   };
+
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
   }, [showalert, open]);
+
+  const tabs = React.useMemo(
+    () => [
+      {
+        label: 'Cash Donation',
+        component: (
+          <CashDonation
+            setshowalert={setshowalert}
+            handleClose={handleClose}
+            themeColor={donationColorTheme.cash}
+          />
+        ),
+      },
+      {
+        label: 'Electronic Donation',
+        component: (
+          <ElectronicDonation
+            setshowalert={setshowalert}
+            handleClose={handleClose}
+            themeColor={donationColorTheme.electronic}
+          />
+        ),
+      },
+      {
+        label: 'Cheque Donation',
+        component: (
+          <ChequeDonation
+            setshowalert={setshowalert}
+            handleClose={handleClose}
+            themeColor={donationColorTheme.cheque}
+          />
+        ),
+      },
+      {
+        label: 'Item Donation',
+        component: (
+          <ItemDonation
+            setshowalert={setshowalert}
+            handleClose={handleClose}
+            themeColor={donationColorTheme.item}
+          />
+        ),
+      },
+    ],
+    [],
+  );
+
   return (
     <>
       <Dialog
@@ -205,7 +241,7 @@ const Donation = ({ setopendashboard }) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Do you want to delete"}
+          {'Do you want to delete'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -231,99 +267,17 @@ const Donation = ({ setopendashboard }) => {
             sx={{
               ...style,
               width: {
-                xs: "90%",
-                sm: "70%",
-                md: "60%",
+                xs: '90%',
+                sm: '70%',
+                md: '60%',
               },
             }}
           >
-            <div className="close-btn-container">
-              <div className="modal-close-btn">
-                <IconButton
-                  onClick={() => {
-                    console.log("clicked");
-                    handleClose();
-                  }}
-                >
-                  <CloseIcon />
-                </IconButton>
-              </div>
-
-              <Box sx={{ width: "100%" }}>
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                  <Tabs
-                    value={tabValue}
-                    onChange={handleTabChange}
-                    aria-label="donation tabs"
-                  >
-                    <Tab
-                      sx={{
-                        textTransform: "none",
-                        paddingY: 0,
-                      }}
-                      label="Electronic Donation"
-                      {...a11yProps(0)}
-                    />
-                    <Tab
-                      sx={{
-                        textTransform: "none",
-                        paddingY: 0,
-                      }}
-                      label="Cash Donation"
-                      {...a11yProps(1)}
-                    />
-                    <Tab
-                      sx={{
-                        textTransform: "none",
-                        paddingY: 0,
-                      }}
-                      label="Item Donation"
-                      {...a11yProps(1)}
-                    />
-                    <Tab
-                      sx={{
-                        textTransform: "none",
-                        paddingY: 0,
-                      }}
-                      label="Cheque Donation"
-                      {...a11yProps(1)}
-                    />
-                  </Tabs>
-                </Box>
-                <TabPanel value={tabValue} index={0}>
-                  <ElectronicDonation
-                    setOpen={setOpen}
-                    setshowalert={setshowalert}
-                    setmsg={setmsg}
-                    handleClose={handleClose}
-                  />
-                </TabPanel>
-                <TabPanel value={tabValue} index={1}>
-                  <CashDonation
-                    setOpen={setOpen}
-                    setshowalert={setshowalert}
-                    setmsg={setmsg}
-                    handleClose={handleClose}
-                  />
-                </TabPanel>
-                <TabPanel value={tabValue} index={2}>
-                  <ItemDonation
-                    setOpen={setOpen}
-                    setshowalert={setshowalert}
-                    setmsg={setmsg}
-                    handleClose={handleClose}
-                  />
-                </TabPanel>
-                <TabPanel value={tabValue} index={3}>
-                  <ChequeDonation
-                    setOpen={setOpen}
-                    setshowalert={setshowalert}
-                    setmsg={setmsg}
-                    handleClose={handleClose}
-                  />
-                </TabPanel>
-              </Box>
-            </div>
+            <UnderlinedTab
+              tabs={tabs}
+              handleClose={handleClose}
+              themeColor={donationColorTheme}
+            />
           </Box>
         </Fade>
       </Modal>
@@ -339,7 +293,7 @@ const Donation = ({ setopendashboard }) => {
           <Box sx={style2}>
             <div>
               <div className="add-div-close-div1">
-                <h2 style={{ textAlign: "center" }}>
+                <h2 style={{ textAlign: 'center' }}>
                   Vouchers exhausted, Please request to new Vouchers
                 </h2>
                 <CloseIcon onClick={() => handleClose3()} />
@@ -360,10 +314,10 @@ const Donation = ({ setopendashboard }) => {
           <div className="table-div-maain">
             {/* <TableContainer component={Paper}> */}
             <Table
-              sx={{ minWidth: 650, width: "97%" }}
+              sx={{ minWidth: 650, width: '97%' }}
               aria-label="simple table"
             >
-              <TableHead style={{ background: "#FFEEE0" }}>
+              <TableHead style={{ background: '#FFEEE0' }}>
                 <TableRow>
                   <TableCell>Receipt No</TableCell>
                   <TableCell>Phone No</TableCell>
@@ -377,14 +331,14 @@ const Donation = ({ setopendashboard }) => {
                 {(rowsPerPage > 0
                   ? isData.slice(
                       page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
+                      page * rowsPerPage + rowsPerPage,
                     )
                   : isData
                 ).map((row, index) => (
                   <TableRow
                     key={row.id}
                     sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
+                      '&:last-child td, &:last-child th': { border: 0 },
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
@@ -393,7 +347,7 @@ const Donation = ({ setopendashboard }) => {
                     <TableCell>
                       {row.elecItemDetails.reduce(
                         (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                        0
+                        0,
                       )}
                     </TableCell>
                     <TableCell> {row.address}</TableCell>
@@ -431,12 +385,12 @@ const Donation = ({ setopendashboard }) => {
                       return `Page: ${page}`;
                     }}
                     backIconButtonProps={{
-                      color: "secondary",
+                      color: 'secondary',
                     }}
-                    nextIconButtonProps={{ color: "secondary" }}
+                    nextIconButtonProps={{ color: 'secondary' }}
                     SelectProps={{
                       inputProps: {
-                        "aria-label": "page number",
+                        'aria-label': 'page number',
                       },
                     }}
                     // showFirstButton={true}

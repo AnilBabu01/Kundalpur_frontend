@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import style from "./Navbar.module.css";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";

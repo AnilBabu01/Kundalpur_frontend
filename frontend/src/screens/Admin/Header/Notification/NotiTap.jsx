@@ -5,7 +5,7 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import AssignVoucher from "./AssignVoucher";
 import RequestVoucher from "./RequestVoucher";
 function TabPanel(props) {

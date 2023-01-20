@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import search from "../../../assets/search.svg";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";

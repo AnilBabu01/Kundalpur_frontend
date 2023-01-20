@@ -19,7 +19,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import PrintIcon from "@mui/icons-material/Print";
 import Fade from "@mui/material/Fade";

@@ -35,13 +35,13 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
 
 export const CustomTableInput = styled(InputBase)(({ theme }) => ({
   width: '100%',
+  border: '1px solid #C8C6D3',
   '& .MuiInputBase-input': {
-    width: '100%',
+    padding: "8px 4px",
+    // width: '100%',
     position: 'relative',
     backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
-    border: '1px solid #C8C6D3',
     fontSize: 14,
-    padding: 8,
     transition: theme.transitions.create([
       'border-color',
       'background-color',

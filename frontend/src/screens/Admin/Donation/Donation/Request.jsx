@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { backendApiUrl } from "../../../../config/config";
+import "./Request.css";
 function Request({ handleClose }) {
   const handlesubmit = async () => {
     axios.defaults.headers.post[
@@ -23,7 +24,8 @@ function Request({ handleClose }) {
     <>
       <div>
         <div>
-          <div className="Status_main_div">
+          <div className="Status_main_div_request">
+            <p>Request for new Vouchers</p>
             <button onClick={() => handlesubmit()}>Request</button>
           </div>
         </div>

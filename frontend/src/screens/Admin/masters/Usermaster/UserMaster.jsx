@@ -323,14 +323,14 @@ function UserMaster() {
 
                     {row.status === true ? (
                       <img
-                        src={activate}
+                        src={deacivate}
                         alt="deacivate"
                         className="activate-icon"
                         onClick={() => deacivateAndactivateuser(row.id)}
                       />
                     ) : (
                       <img
-                        src={deacivate}
+                        src={activate}
                         alt="deacivate"
                         className="activate-icon"
                         onClick={() => deacivateAndactivateuser(row.id)}

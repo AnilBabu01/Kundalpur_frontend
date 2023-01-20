@@ -36,5 +36,11 @@
 }
 
 .table_div_recipt{
-    width: 75%;
+    width: 64%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.table_div_recipt ul{
+    list-style: none;
 }

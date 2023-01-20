@@ -1,113 +1,162 @@
-import React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
+import React, { useState, useEffect } from "react";
+import { backendApiUrl } from "../../../../config/config";
+import { serverInstance } from "../../../../API/ServerInstance";
+import Swal from "sweetalert2";
+import axios from "axios";
 import "./ReceiptMater.css";
 function ReceiptMater() {
+  const [eleReceiptNo, seteleReceiptNo] = useState("");
+  const [cacgReceiptNo, setcacgReceiptNo] = useState("");
+  const [itemReceiptNo, setitemReceiptNo] = useState("");
+  const [chequeReceiptNo, setchequeReceiptNo] = useState("");
+  const [eleReceipts, seteleReceipts] = useState("");
+  const [cachReceipts, setcachReceipts] = useState("");
+  const [itemReceipts, setitemReceipts] = useState("");
+  const [chequeReceipts, setchequeReceipts] = useState("");
+
+  console.log(eleReceipts);
+  const handleSubmit = async () => {
+    try {
+      axios.defaults.headers.post[
+        "Authorization"
+      ] = `Bearer ${sessionStorage.getItem("token")}`;
+      if (eleReceiptNo) {
+        const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
+          receipt: eleReceiptNo,
+          type: 1,
+        });
+        if (res.data.status === true) {
+          Swal.fire(
+            "Great!",
+            "Electronic receiptNo. Added Successfully",
+            "success"
+          );
+        }
+      }
+      if (cacgReceiptNo) {
+        console.log(cacgReceiptNo);
+        const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
+          receipt: eleReceiptNo,
+          type: 2,
+        });
+        if (res.data.status === true) {
+          Swal.fire("Great!", "Cach receiptNo. Added Successfully", "success");
+        }
+      }
+      if (itemReceiptNo) {
+        const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
+          receipt: eleReceiptNo,
+          type: 3,
+        });
+        if (res.data.status === true) {
+          Swal.fire("Great!", "Item receiptNo. Added Successfully", "success");
+        }
+      }
+      if (chequeReceiptNo) {
+        const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
+          receipt: eleReceiptNo,
+          type: 4,
+        });
+        if (res.data.status === true) {
+          Swal.fire(
+            "Great!",
+            "Cheque receiptNo. Added Successfully",
+            "success"
+          );
+        }
+      }
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
+  };
+
+  const getReceiptNo = () => {
+    try {
+      serverInstance("admin/get-receipt", "get").then((res) => {
+        if (res.status) {
+          console.log("ress", res.data);
+          seteleReceipts(res.data);
+        }
+      });
+    } catch (error) {
+      Swal.fire("Error", error, "error");
+    }
+  };
+  useEffect(() => {
+    getReceiptNo();
+  }, []);
+
   return (
     <div>
       <div className="main_reciept_master">
         <div className="right_input_label">
           <div className="ineear_dave_receipt_no">
-            <label>Enter reciept no for electronic donation</label>
-            <input type="text" />
-            <button>Save</button>
+            <label htmlFor="eleReceiptNo">
+              Enter reciept no for electronic donation
+            </label>
+            <input
+              type="text"
+              id="eleReceiptNo"
+              value={eleReceiptNo}
+              name="eleReceiptNo"
+              onChange={(e) => seteleReceiptNo(e.target.value)}
+            />
+            <button onClick={() => handleSubmit()}>Save</button>
           </div>
           <div className="ineear_dave_receipt_no">
-            <label>Enter reciept no for cach donation</label>
-            <input type="text" />
-            <button>Save</button>
+            <label htmlFor="cacgReceiptNo">
+              Enter reciept no for cach donation
+            </label>
+            <input
+              type="text"
+              id="cacgReceiptNo"
+              value={cacgReceiptNo}
+              name="cacgReceiptNo"
+              onChange={(e) => setcacgReceiptNo(e.target.value)}
+            />
+            <button onClick={() => handleSubmit()}>Save</button>
           </div>
           <div className="ineear_dave_receipt_no">
-            <label>Enter reciept no for Item donation</label>
-            <input type="text" />
-            <button>Save</button>
+            <label htmlFor="itemReceiptNo">
+              Enter reciept no for Item donation
+            </label>
+            <input
+              type="text"
+              id="itemReceiptNo"
+              value={itemReceiptNo}
+              name="itemReceiptNo"
+              onChange={(e) => setitemReceiptNo(e.target.value)}
+            />
+            <button onClick={() => handleSubmit()}>Save</button>
           </div>
           <div className="ineear_dave_receipt_no">
-            <label>Enter reciept no for cheque donation</label>
-            <input type="text" />
-            <button>Save</button>
+            <label htmlFor="chequeReceiptNo">
+              Enter reciept no for cheque donation
+            </label>
+            <input
+              type="text"
+              id="chequeReceiptNo"
+              value={chequeReceiptNo}
+              name="chequeReceiptNo"
+              onChange={(e) => setchequeReceiptNo(e.target.value)}
+            />
+            <button onClick={() => handleSubmit()}>Save</button>
           </div>
         </div>
+
         <div className="table_div_recipt">
-          <Table
-            sx={{ minWidth: 650, width: "100%" }}
-            aria-label="simple table"
-          >
-            <TableHead style={{ background: "#FFEEE0" }}>
-              <TableRow>
-                <TableCell>Electronic </TableCell>
-                <TableCell>Cach</TableCell>
-                <TableCell>Item</TableCell>
-                <TableCell>Cheque</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableCell>hhh</TableCell>
-              {/* {isData &&
-                (rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.itemType_hi}</TableCell>
-                    <TableCell>{row.itemType_en}</TableCell>
-                    <TableCell>
-                      {row.status === 1 ? "Active" : "Deactive"}
-                    </TableCell>
-                    <TableCell>
-                      <EditIcon onClick={() => handleOpen3(row)} />
-                      <DeleteForeverIcon
-                        onClick={() => handleClickOpen1(row.id)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))} */}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  // count={isData.length}
-                  // rowsPerPage={rowsPerPage}
-                  // page={page}
-                  // onPageChange={handleChangePage}
-                  // onRowsPerPageChange={handleChangeRowsPerPage}
-                  rowsPerPageOptions={[5, 10, 25]}
-                  labelRowsPerPage={<span>Rows:</span>}
-                  labelDisplayedRows={({ page }) => {
-                    return `Page: ${page}`;
-                  }}
-                  backIconButtonProps={{
-                    color: "secondary",
-                  }}
-                  nextIconButtonProps={{ color: "secondary" }}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "page number",
-                    },
-                  }}
-                  // showFirstButton={true}
-                  // showLastButton={true}
-                  //ActionsComponent={TablePaginationActions}
-                  //component={Box}
-                  //sx and classes prop discussed in styling section
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
+          <ul>
+            <li>Electronic</li>
+          </ul>
+          <ul>
+            <li>Cach</li>
+          </ul>
+          <ul>
+            <li>Item</li>
+          </ul>
+          <ul>
+            <li>cheque</li>
+          </ul>
         </div>
       </div>
     </div>

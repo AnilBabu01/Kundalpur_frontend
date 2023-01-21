@@ -25,6 +25,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Moment from "moment-js";
 import "./ManualCash.css";
 const style = {
   position: "absolute",
@@ -48,7 +49,7 @@ const ManualCash = ({ setopendashboard }) => {
   const navigation = useNavigate();
   const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState("");
-
+  console.log(isData);
   const handleClickOpen1 = (id) => {
     setOpen1(true);
     setdeleteId(id);
@@ -104,6 +105,10 @@ const ManualCash = ({ setopendashboard }) => {
     setopendashboard(true);
   }, [showalert]);
 
+  const convertDate = (date) => {
+    var nowDate = new Date(parseInt(date.substr(6)));
+    return nowDate;
+  };
   return (
     <>
       <Dialog
@@ -178,12 +183,15 @@ const ManualCash = ({ setopendashboard }) => {
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
                   <TableCell>Receipt No</TableCell>
-
-                  <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
+                  <TableCell>Phone No</TableCell>
+
                   <TableCell>Amount</TableCell>
 
                   <TableCell>Address</TableCell>
+                  <TableCell>Donation Date</TableCell>
+                  <TableCell>Donation Types</TableCell>
+                  <TableCell>Remark</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -201,9 +209,10 @@ const ManualCash = ({ setopendashboard }) => {
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.phoneNo}</TableCell>
+                    <TableCell>{row.ReceiptNo}</TableCell>
                     <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.phoneNo}</TableCell>
+
                     <TableCell>
                       {row.elecItemDetails.reduce(
                         (n, { amount }) => parseFloat(n) + parseFloat(amount),
@@ -211,7 +220,19 @@ const ManualCash = ({ setopendashboard }) => {
                       )}
                     </TableCell>
                     <TableCell> {row.address}</TableCell>
-
+                    <TableCell>
+                      {Moment(row.donation_date).format("DD/MM/YYYY")}
+                    </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return <li>{row.type} </li>;
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return <li>{row.remark} </li>;
+                      })}
+                    </TableCell>
                     <TableCell>
                       <RemoveRedEyeIcon
                         onClick={() =>

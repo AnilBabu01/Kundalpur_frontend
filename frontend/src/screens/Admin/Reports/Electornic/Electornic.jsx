@@ -26,6 +26,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./Electornic.css";
+import Moment from "moment-js";
 const style = {
   position: "absolute",
   top: "40%",
@@ -179,11 +180,14 @@ const Electornic = ({ setopendashboard }) => {
                 <TableRow>
                   <TableCell>Receipt No</TableCell>
 
-                  <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
+                  <TableCell>Phone No</TableCell>
                   <TableCell>Amount</TableCell>
 
                   <TableCell>Address</TableCell>
+                  <TableCell>Donation Date</TableCell>
+                  <TableCell>Donation Types</TableCell>
+                  <TableCell>Remark</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -201,9 +205,10 @@ const Electornic = ({ setopendashboard }) => {
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.phoneNo}</TableCell>
+                    <TableCell>{row.ReceiptNo}</TableCell>
+
                     <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.phoneNo}</TableCell>
                     <TableCell>
                       {row.elecItemDetails.reduce(
                         (n, { amount }) => parseFloat(n) + parseFloat(amount),
@@ -211,7 +216,19 @@ const Electornic = ({ setopendashboard }) => {
                       )}
                     </TableCell>
                     <TableCell> {row.address}</TableCell>
-
+                    <TableCell>
+                      {Moment(row.donation_date).format("DD/MM/YYYY")}
+                    </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return <li>{row.type} </li>;
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return <li>{row.remark} </li>;
+                      })}
+                    </TableCell>
                     <TableCell>
                       <RemoveRedEyeIcon
                         onClick={() =>

@@ -151,7 +151,6 @@ const EmailLogin = () => {
         {unchecked1 && (
           <>
             <div className="button-container">
-              <button className="pl-button pl-button--active">Email</button>
               <Link
                 to="/phonelogin"
                 className="navi-button"
@@ -159,6 +158,7 @@ const EmailLogin = () => {
               >
                 Phone Number
               </Link>
+              <button className="pl-button pl-button--active">Email</button>
             </div>
             <div className="input-group">
               <label htmlFor="email">Email</label>

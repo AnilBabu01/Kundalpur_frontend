@@ -13,6 +13,7 @@
     margin-bottom: 3px;
     margin-top: 4px;
     border: 1px solid #fd7906;
+    padding-left: 6px;
 }
 
 .ineear_dave_receipt_no:focus{
@@ -36,11 +37,19 @@
 }
 
 .table_div_recipt{
-    width: 64%;
+    width: 75%;
     display: flex;
     justify-content: space-between;
 }
 
 .table_div_recipt ul{
     list-style: none;
+}
+
+.ScrollStyle
+{
+    max-height: 583px;
+    overflow-x: scroll;
+    width: 103%;
+    display: flex;
 }

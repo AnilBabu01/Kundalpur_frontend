@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+
+import { useReactToPrint } from "react-to-print";
 import "./cashrecipt.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Reciept.css";
@@ -8,6 +10,8 @@ import jsPDF from "jspdf";
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
+  const componentRef = useRef();
+
   const [isData, setisData] = React.useState(null);
   const navigation = useNavigate();
 
@@ -21,7 +25,9 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
       navigation("/");
     }
   }, []);
-
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   // const down = () => {
   //   const re = document.getElementById("receipt");
   //   var opt = {
@@ -52,10 +58,11 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
       pdf.save("download.pdf");
     });
   }
+
   return (
     <>
       <div>
-        <div className="main-certificate" id="receipt">
+        <div className="main-certificate" id="receipt" ref={componentRef}>
           <div className="topinfo-flex">
             <p>E-mail:badebaba.kundalpur@gmail.com</p>
             <p>॥ श्री बड़े बाबा नम:॥</p>
@@ -202,7 +209,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
       </div>
       <div className="button_div_print_download">
         <button onClick={() => down()}>Download</button>
-        <button onClick={() => printDiv()}>Print</button>
+        <button onClick={handlePrint}>Print</button>
       </div>
     </>
   );

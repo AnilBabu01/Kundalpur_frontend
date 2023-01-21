@@ -60,7 +60,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/donation"
                     >
-                      Electronic Donation
+                      Manual Donation
                     </NavLink>
                   </li>
                 </div>
@@ -254,7 +254,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/donation"
                     >
-                      Electronic Donation
+                      Manual Donation
                     </NavLink>
                   </li>
                 </div>
@@ -290,7 +290,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/reports/electronic"
                     >
-                      Electronic Donation
+                      Manual Donation
                     </NavLink>
                   </li>
                 </div>

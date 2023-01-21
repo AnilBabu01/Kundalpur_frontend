@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import "./cashrecipt.css";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import "./Reciept.css";
 import { Converter, hiIN } from "any-number-to-words";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
@@ -20,17 +22,17 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
     }
   }, []);
 
-  const down = () => {
-    const re = document.getElementById("receipt");
-    var opt = {
-      margin: 1,
-      filename: "myfile.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "A4", orientation: "landscape" },
-    };
-    html2pdf().from(re).set(opt).save();
-  };
+  // const down = () => {
+  //   const re = document.getElementById("receipt");
+  //   var opt = {
+  //     margin: 1,
+  //     filename: "myfile.pdf",
+  //     image: { type: "jpeg", quality: 0.98 },
+  //     html2canvas: { scale: 2 },
+  //     jsPDF: { unit: "in", format: "A4", orientation: "landscape" },
+  //   };
+  //   html2pdf().from(re).set(opt).save();
+  // };
 
   function printDiv() {
     var divContents = document.getElementById("receipt").innerHTML;
@@ -39,10 +41,21 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
 
     a.print();
   }
+
+  function down() {
+    console.log("cliii");
+    const input = document.getElementById("receipt");
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "pt", "a4", false);
+      pdf.addImage(imgData, "PNG", 0, 0, 600, 0, undefined, false);
+      pdf.save("download.pdf");
+    });
+  }
   return (
     <>
-      <div id="receipt">
-        <div className="main-certificate">
+      <div>
+        <div className="main-certificate" id="receipt">
           <div className="topinfo-flex">
             <p>E-mail:badebaba.kundalpur@gmail.com</p>
             <p>॥ श्री बड़े बाबा नम:॥</p>
@@ -75,7 +88,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                 </span>
                 <span className="leftitems">
                   <h2>दान दातार श्री :</h2>
-                  <p>श्री {isData?.NAME ? isData?.NAME : isData?.name}</p>
+                  <p>{isData?.NAME ? isData?.NAME : isData?.name}</p>
                 </span>
                 <span className="leftitems">
                   <h2>स्थान :</h2>
@@ -187,8 +200,10 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
           </div>
         </div>
       </div>
-
-      <button onClick={() => down()}>Download</button>
+      <div className="button_div_print_download">
+        <button onClick={() => down()}>Download</button>
+        <button onClick={() => printDiv()}>Print</button>
+      </div>
     </>
   );
 };

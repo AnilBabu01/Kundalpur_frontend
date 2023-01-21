@@ -150,11 +150,11 @@ const ItemDonation = ({ setshowalert, handleClose, themeColor }) => {
         donation_item: modifiedDonationItems,
       });
 
-      let totalamount = donationItems?.amount
-        ? donationItems?.amount
+      let totalamount = donationItems?.type
+        ? donationItems?.type
         : donationItems &&
           donationItems.reduce(
-            (n, { amount }) => parseFloat(n) + parseFloat(amount),
+            (n, { type }) => parseFloat(n) + parseFloat(type),
             0
           );
 
@@ -358,7 +358,7 @@ const ItemDonation = ({ setshowalert, handleClose, themeColor }) => {
                           whiteSpace: "nowrap",
                         }}
                       >
-                        Type of donation*
+                        Donation item*
                       </p>
                       <IconButton aria-label="add" size="small">
                         <AddBoxIcon color="primary" onClick={addDonationItem} />

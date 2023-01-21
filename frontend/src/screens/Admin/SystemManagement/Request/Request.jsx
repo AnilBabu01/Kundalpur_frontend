@@ -105,7 +105,7 @@ const Request = ({ setopendashboard }) => {
               sx={{ minWidth: 650, width: "97%" }}
               aria-label="simple table"
             >
-              <TableHead style={{ background: "#FFEEE0" }}>
+              <TableHead style={{ background: "#F1F0F0" }}>
                 <TableRow>
                   <TableCell>EmpId</TableCell>
                   <TableCell>Name</TableCell>

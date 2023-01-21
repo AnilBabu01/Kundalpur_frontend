@@ -7,16 +7,23 @@
 
 .search-inner-div-reports input {
     width: 191px;
-    height: 39px;
+    /* height: 39px; */
     border: 2px solid #e96d00;
+    border: 1px solid #05313C;
+    padding-left: 1rem;
+    height: auto;
+    padding: 0.4rem ;
+    padding-left: 0.8rem;
+    
     border-radius: 5px;
     font-size: 14px;
-    padding-left: 1rem;
 }
 
 .Cheque_text{
-    color: #e96d00;
+    /* color: #e96d00; */
     margin-bottom: 16px;
+    font-weight: 500;
+    color: #05313C;
 }
 
 .Status_main_div{
@@ -51,7 +58,6 @@
     border: none;
     background-color: #e96d00;
     color: white;
-    color: white;
     height: 42px;
     border-radius: 5px;
     width: 22%;
@@ -66,6 +72,7 @@
     padding-left: 6px;
     border-radius: 5px;
     border: 1px solid #e96d00;
+    /* border: 1px solid #05313C; */
     margin-left: 1rem;
     margin-right: 1rem;
 }

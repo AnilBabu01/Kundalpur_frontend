@@ -83,11 +83,14 @@
   display: flex;
   align-items: center;
 }
+/* css-changes */
 .routetilem  p{
   margin-top: 0px;
   margin-bottom:0px;
   font-size: 16px;
-  color: #e96d00;
+  /* color: #e96d00; */
+  color: #05313B;
+
 }
 
 .routetilem img{

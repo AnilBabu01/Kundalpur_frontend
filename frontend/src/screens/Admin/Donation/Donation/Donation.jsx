@@ -76,7 +76,7 @@ const Donation = ({ setopendashboard }) => {
   const [deleteId, setdeleteId] = useState("");
   const [checkVoucher, setcheckVoucher] = useState(false);
   const [msg, setmsg] = useState("");
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [open3, setOpen3] = React.useState(false);
   const [tabValue, setTabValue] = React.useState(0);
 

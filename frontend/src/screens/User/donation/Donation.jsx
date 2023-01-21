@@ -9,14 +9,108 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../../../Redux/redux/action/AuthAction";
 import axios from "axios";
-import { Box } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonBase,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  InputAdornment,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  Typography,
+} from "@mui/material";
+import MuiTextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Swal from "sweetalert2";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 const formData = new FormData();
 import "./Donation.css";
 import { useJwt } from "react-jwt";
 import { useAuth } from "../../../Context/AuthContext";
+import { alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import InputLabel from "@mui/material/InputLabel";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+
+export const CustomInputLabel = styled(InputLabel)(() => ({
+  fontSize: 14,
+  lineHeight: "24px",
+  color: "#000",
+  fontFamily: "Poppins",
+  marginBlock: "0.1rem",
+}));
+const primaryColor = "#FA7401";
+
+const CustomButton = styled(ButtonBase)(({ theme }) => ({
+  padding: "0.2rem",
+  // borderRadius: '3em',
+  borderRadius: "0.2em",
+  fontFamily: "Poppins",
+  width: "5rem",
+  fontSize: 14,
+  lineHeight: "24px",
+  display: "flex",
+  boxShadow: "none",
+  border: "1px solid #B8B8B8",
+}));
+
+export const CustomInput = styled(InputBase)(({ theme }) => ({
+  width: "100%",
+  fontFamily: "Poppins",
+  backgroundColor: "#fff",
+  borderRadius: 6,
+  "& .MuiInputBase-input": {
+    border: "1px solid #B8B8B8",
+    borderRadius: 6,
+    width: "100%",
+    fontSize: 15,
+    padding: 8,
+    paddingLeft: 12,
+    transition: theme.transitions.create([
+      "border-color",
+      "background-color",
+      "box-shadow",
+    ]),
+    "&:focus": {
+      // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}));
+
+const donationAmounts = [
+  {
+    label: "1,111",
+    value: "1111",
+  },
+  {
+    label: "2,121",
+    value: "2121",
+  },
+  {
+    label: "5,151",
+    value: "5151",
+  },
+  {
+    label: "11,111",
+    value: "11111",
+  },
+  {
+    label: "21,211",
+    value: "21211",
+  },
+  {
+    label: "51,511",
+    value: "51511",
+  },
+];
+
 const style = {
   position: "absolute",
   top: "40%",
@@ -31,6 +125,16 @@ const style = {
 function Donation({ setshowreciept }) {
   const dispatch = useDispatch();
   const nagivate = useNavigate();
+  const theme = createTheme({
+    typography: {
+      fontFamily: "Poppins",
+    },
+    palette: {
+      primary: {
+        main: primaryColor,
+      },
+    },
+  });
   const [mode, setmode] = useState("");
   const [amount, setamount] = useState("");
   const [open, setOpen] = useState(false);
@@ -57,7 +161,7 @@ function Donation({ setshowreciept }) {
   const handleClose1 = () => setOpen1(false);
   const auth = useAuth();
   const { user } = useSelector((state) => state.userReducer);
-  console.log(user);
+
   if (donationdata.selected === "yes1" && !user.name) {
     nagivate("/profile");
   }
@@ -185,6 +289,9 @@ function Donation({ setshowreciept }) {
     if (!values.name_of_bank) {
       errors.name_of_bank = "Please enter name of bank";
     }
+    if (mode === "Cheque" && !cheqing) {
+      errors.chequeImg = "Upload cheque image";
+    }
 
     return errors;
   };
@@ -205,11 +312,6 @@ function Donation({ setshowreciept }) {
       Swal.fire("Error!", error, "error");
     }
   };
-  useEffect(() => {
-    gett();
-    getall_donatiions();
-    setshowreciept(false);
-  }, []);
 
   const sendsms = async (totalamount) => {
     try {
@@ -222,12 +324,15 @@ function Donation({ setshowreciept }) {
         url: "",
       });
       console.log("sent sms ", res);
-      if (res.data.status === true) {
-      }
     } catch (error) {
       Swal.fire("Error!", error, "error");
     }
   };
+  useEffect(() => {
+    gett();
+    getall_donatiions();
+    setshowreciept(false);
+  }, []);
   return auth.verify ? (
     <>
       <Modal
@@ -271,385 +376,344 @@ function Donation({ setshowreciept }) {
       </Modal>
 
       <div className="supper-main-div">
-        <div className="donation-top-img">
-          <img src={badebaba} alt="badebaba" />
-          <div className="donation-top-img-overlay">Donation</div>
-        </div>
+        <ThemeProvider theme={theme}>
+          <div className="donation-top-img">
+            <img src={badebaba} alt="badebaba" />
+            <div className="donation-top-img-overlay">Donation</div>
+          </div>
 
-        <div className="supper-inear-main-div">
-          <div className="main-form-div">
-            <h2>Donate</h2>
-            <div className="main-input-div">
-              <div className="inner-checkbox-div">
-                <div className="center_mobile_view">
-                  <span>
-                    Donation For :
-                    <input
-                      className="radio_btb"
-                      type="radio"
+          <div className="supper-inear-main-div">
+            <Box maxWidth={"sm"} width={"100%"} marginX={"auto"}>
+              <Typography variant="h5" fontWeight={500} align="center" mt={2}>
+                Online Donation
+              </Typography>
+              <Grid
+                container
+                rowSpacing={2}
+                columnSpacing={2}
+                mt={1}
+                sx={{
+                  paddingX: {
+                    xs: 3,
+                    md: 0,
+                  },
+                }}
+              >
+                <Grid item md={6}>
+                  <Typography component="legend">Donation For</Typography>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    onChange={onChange}
+                  >
+                    <FormControlLabel
                       name="selected"
                       value="yes1"
-                      onChange={onChange}
+                      control={<Radio />}
+                      label="Self"
                     />
-                    Self
-                    <input
-                      className="radio_btb"
-                      type="radio"
+                    <FormControlLabel
                       name="selected"
                       value="yes2"
-                      onChange={onChange}
+                      control={<Radio />}
+                      label="Someone"
                     />
-                    Someone
-                  </span>
-                  <p style={{ color: "red" }}>{formerror.selected}</p>
-                </div>
-              </div>
-              <div className="inner-checkbox-div">
-                <div className="center_mobile_view">
-                  <span>
-                    Donation Mode :
-                    <input
-                      className="radio_btb"
-                      type="radio"
+                  </RadioGroup>
+                </Grid>
+                <Grid item md={6}>
+                  <Typography component="legend">Donation Mode</Typography>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    onChange={(e) => setmode(e.target.value)}
+                  >
+                    <FormControlLabel
+                      name="selected"
                       value="Onilne"
-                      name="mode"
-                      onChange={(e) => setmode(e.target.value)}
+                      control={<Radio />}
+                      label="Online"
                     />
-                    Onilne
-                    <input
-                      className="radio_btb"
-                      type="radio"
+                    <FormControlLabel
+                      name="selected"
                       value="Cheque"
-                      name="mode"
-                      onChange={(e) => setmode(e.target.value)}
+                      control={<Radio />}
+                      label="Cheque"
                     />
-                    Cheque
-                  </span>
+                    <p style={{ color: "red", marginTop: "5px" }}>
+                      {donationdata.selected &&
+                        !mode &&
+                        "Please select donation mode"}
+                    </p>
+                  </RadioGroup>
+                </Grid>
 
-                  <p style={{ color: "red", marginTop: "5px" }}>
-                    {donationdata.selected &&
-                      !mode &&
-                      "Please select donation mode"}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="main-input-div">
-              <div
-                className={
-                  donationdata.selected === "yes1" && user.name
-                    ? "inner-input-div"
-                    : formerror.name
-                    ? "inner-input-div-input-red"
-                    : "inner-input-div"
-                }
-              >
-                <label>Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full name"
-                  value={
-                    donationdata.selected === "yes1" && user.name
-                      ? user.name
-                      : donationdata.name
-                  }
-                  onChange={onChange}
-                />
-                {donationdata.selected === "yes1" && user.name ? (
-                  ""
-                ) : (
-                  <p style={{ color: "red", marginTop: "5px" }}>
-                    {formerror.name}
-                  </p>
-                )}
-              </div>
-              <div
-                className={
-                  formerror.donationtype
-                    ? "inner-input-div-select-red"
-                    : "inner-input-div"
-                }
-              >
-                <label>Type of donation </label>
-                <select
-                  id="type"
-                  name="donationtype"
-                  value={donationdata.donationtype}
-                  onChange={onChange}
-                >
-                  {isData &&
-                    isData.map((item) => (
-                      <option key={item.id} value={item.type_hi}>
-                        {item.type_hi}
-                      </option>
-                    ))}
-                </select>
-                <p style={{ color: "red", marginTop: "5px" }}>
-                  {formerror.donationtype}
-                </p>
-              </div>
-            </div>
-            {mode === "Onilne" && (
-              <>
-                <div>
-                  <div className="main-input-div">
-                    <div className="inner-input-div">
-                      <label>Amount</label>
-                      <input
-                        type="text"
-                        value={amount}
-                        placeholder="Amount"
-                        onChange={(e) => setamount(e.target.value)}
-                      />
-
-                      <p style={{ color: "red", marginTop: "5px" }}>
-                        {formerror.amount}
-                      </p>
-
-                      <div
-                        className="donation-money-div-main"
-                        style={{ marginTop: "10px" }}
-                      >
-                        <div className="btn-recharge-div">
-                          <button onClick={() => setamount("1111")}>
-                            ₹1111
-                          </button>
-                          <button onClick={() => setamount("2121")}>
-                            ₹2121
-                          </button>
-                          <button onClick={() => setamount("5151")}>
-                            ₹5151
-                          </button>
-                        </div>
-                        <div className="btn-recharge-div">
-                          <button onClick={() => setamount("11111")}>
-                            ₹11,111
-                          </button>
-                          <button onClick={() => setamount("21211")}>
-                            ₹21,211
-                          </button>
-                          <button onClick={() => setamount("51511")}>
-                            ₹51,511
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="inner-input-div">
-                        <label>Address</label>
-                        <input
-                          type="text"
-                          name="address"
-                          placeholder="Address"
-                          value={donationdata.address}
-                          onChange={onChange}
-                        />
-                        <label style={{ marginTop: "1rem" }}>Remark</label>
-                        <input
-                          type="text"
-                          name="Remark"
-                          placeholder="Remark"
-                          value={donationdata.Remark}
-                          onChange={onChange}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="save-div-btn">
-                    <button
-                      // disabled={
-                      //   donationdata.donationtype &&
-                      //   donationdata.selected &&
-                      //   donationdata.address &&
-                      //   donationdata.Remark
-                      //     ? false
-                      //     : true
-                      // }
-                      className="save-btn5"
-                      onClick={handlesubmit}
-                    >
-                      Process to pay
-                    </button>
-                  </div>
-                </div>
-              </>
-            )}
-            {mode === "Cheque" && (
-              <>
-                <div>
-                  <div className="main-input-div">
-                    <div
-                      className={
-                        formerror.chequeno
-                          ? "inner-input-div-input-red"
-                          : "inner-input-div"
-                      }
-                    >
-                      <label>Cheque No</label>
-                      <input
-                        type="text"
-                        name="chequeno"
-                        placeholder="Cheque No "
-                        value={donationdata.chequeno}
+                {mode && (
+                  <>
+                    <Grid item xs={12} md={6}>
+                      <CustomInputLabel htmlFor="name">Name</CustomInputLabel>
+                      <CustomInput
+                        id="name"
+                        name="name"
+                        placeholder="Full name"
                         onChange={onChange}
+                        value={
+                          donationdata.selected === "yes1" && user.name
+                            ? user.name
+                            : donationdata.name
+                        }
                       />
-                      <p style={{ color: "red", marginTop: "5px" }}>
-                        {formerror.chequeno}
-                      </p>
-                    </div>
-                    <div
-                      className={
-                        formerror.date_of_sub
-                          ? "inner-input-div-input-red"
-                          : "inner-input-div"
-                      }
-                    >
-                      <label>Date</label>
-                      <input
-                        type="date"
-                        name="date_of_sub"
-                        placeholder="DOB"
-                        value={donationdata.date_of_sub}
-                        onChange={onChange}
-                      />
-                      <p style={{ color: "red", marginTop: "5px" }}>
-                        {formerror.date_of_sub}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="main-input-div">
-                    <div
-                      className={
-                        formerror.amount
-                          ? "inner-input-div-input-red"
-                          : "inner-input-div"
-                      }
-                    >
-                      <label>Amout</label>
-                      <input
-                        type="text"
-                        value={amount}
-                        placeholder="Amount"
-                        onChange={(e) => setamount(e.target.value)}
-                      />
-                      <p style={{ color: "red", marginTop: "5px" }}>
-                        {formerror.amount}
-                      </p>
-                      <div
-                        className="donation-money-div-main"
-                        style={{ marginTop: "3px" }}
-                      >
-                        <div
-                          className="btn-recharge-div"
-                          style={{ arginBottom: "-8px" }}
-                        >
-                          <button onClick={() => setamount("1111")}>
-                            ₹1111
-                          </button>
-                          <button onClick={() => setamount("2121")}>
-                            ₹2121
-                          </button>
-                          <button onClick={() => setamount("5151")}>
-                            ₹5151
-                          </button>
-                        </div>
-                        <div className="btn-recharge-div">
-                          <button onClick={() => setamount("11111")}>
-                            ₹11,111
-                          </button>
-                          <button onClick={() => setamount("21211")}>
-                            ₹21,211
-                          </button>
-                          <button onClick={() => setamount("51511")}>
-                            ₹51,511
-                          </button>
-                        </div>
-                        <label>Remark</label>
-                        <input
-                          type="text"
-                          name="Remark"
-                          placeholder="Remark"
-                          value={donationdata.Remark}
-                          onChange={onChange}
-                        />
-                      </div>
-                    </div>
-                    <div
-                      className={
-                        formerror.name_of_bank
-                          ? "inner-input-div-input-red"
-                          : "inner-input-div"
-                      }
-                    >
-                      <label>Upload Chueqe</label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        name="chqque_img"
-                        placeholder="Bank Name"
-                        onChange={(e) => {
-                          setcheqing(e.target.files[0]);
-                          console.log(e.target.files[0]);
-                        }}
-                      />
-
-                      <div className="inner-input-div">
-                        <label style={{ marginTop: "1rem" }}>Bank</label>
-                        <input
-                          type="text"
-                          name="name_of_bank"
-                          placeholder="name_of_bank"
-                          value={donationdata.name_of_bank}
-                          onChange={onChange}
-                        />
+                      {donationdata.selected === "yes1" && user.name ? (
+                        ""
+                      ) : (
                         <p style={{ color: "red", marginTop: "5px" }}>
-                          {formerror.name_of_bank}
+                          {formerror.name}
                         </p>
-                      </div>
-                      <div className="inner-input-div">
-                        <label style={{ marginTop: "1rem" }}>Address</label>
-                        <input
-                          type="text"
-                          name="address"
-                          placeholder="Address"
-                          value={donationdata.address}
-                          onChange={onChange}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="main-input-div remark-divvv"
-                    style={{ marginTop: "-25px" }}
-                  ></div>
+                      )}
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                      <CustomInputLabel htmlFor="donation-type">
+                        Donation Type
+                      </CustomInputLabel>
 
-                  <div className="save-div-btn">
-                    <button
-                      onClick={handlesubmit}
-                      className="save-btn"
-                      // disabled={
-                      //   donationdata.donationtype &&
-                      //   donationdata.selected &&
-                      //   donationdata.address &&
-                      //   donationdata.Remark &&
-                      //   donationdata.date_of_sub &&
-                      //   donationdata.chequeno &&
-                      //   donationdata.name_of_bank &&
-                      //   cheqing
-                      //     ? false
-                      //     : true
-                      // }
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </div>
-              </>
-            )}
+                      <Select
+                        id="donation-type"
+                        required
+                        sx={{
+                          width: "100%",
+                          fontSize: 14,
+                          "& .MuiSelect-select": {
+                            borderColor: !!formerror.donationtype ? "red" : "",
+                            padding: "10px 0px 10px 10px",
+                            background: "#fff",
+                          },
+                        }}
+                        value={donationdata.donationtype}
+                        name="donationtype"
+                        onChange={onChange}
+                        displayEmpty
+                      >
+                        {isData &&
+                          isData.map((item) => {
+                            return (
+                              <MenuItem
+                                sx={{
+                                  fontSize: 14,
+                                }}
+                                key={item.id}
+                                value={item.type_hi}
+                              >
+                                {item.type_hi}
+                              </MenuItem>
+                            );
+                          })}
+                      </Select>
+                      <p style={{ color: "red", marginTop: "5px" }}>
+                        {formerror.donationtype}
+                      </p>
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                      <CustomInputLabel htmlFor="address">
+                        Address
+                      </CustomInputLabel>
+                      <CustomInput
+                        id="address"
+                        name="address"
+                        placeholder="Address"
+                        value={donationdata.address}
+                        onChange={onChange}
+                      />
+                    </Grid>
+
+                    <Grid item md={6} xs={12}>
+                      <CustomInputLabel htmlFor="remark">
+                        Remark
+                      </CustomInputLabel>
+                      <CustomInput
+                        id="remark"
+                        name="Remark"
+                        placeholder="Remark"
+                        value={donationdata.Remark}
+                        onChange={onChange}
+                      />
+                    </Grid>
+                    <Grid item xs={12} container>
+                      <Grid item xs={12}>
+                        <CustomInputLabel htmlFor="donation-amount">
+                          Donation Amount
+                        </CustomInputLabel>
+                        <CustomInput
+                          id="donation-amount"
+                          name="donation-amount"
+                          placeholder="Amount"
+                          value={amount}
+                          onChange={(e) => setamount(e.target.value)}
+                          // startAdornment={
+                          //   <InputAdornment position="start" sx={{
+                          //     color: '#000',
+                          //     padding: ' 14px',
+                          //     backgroundColor: primaryColor
+                          //   }}>
+                          //     <CurrencyRupeeIcon fontSize='small' sx={{
+                          //       color:'#fff'
+                          //     }} />
+                          //   </InputAdornment>
+                          // }
+                        />
+
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formerror.amount}
+                        </p>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            gap: 2,
+                            mt: 1,
+                          }}
+                        >
+                          {donationAmounts.slice(0, 3).map((item) => (
+                            <CustomButton
+                              sx={{
+                                border: "none",
+                                background:
+                                  amount === item.value ? primaryColor : "#fff",
+                                color: amount === item.value ? "#fff" : "#000",
+                              }}
+                              onClick={() => setamount(item.value)}
+                            >
+                              <CurrencyRupeeIcon
+                                sx={{
+                                  fontSize: "0.9rem",
+                                }}
+                              />
+
+                              {item.label}
+                            </CustomButton>
+                          ))}
+                        </Box>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            gap: 2,
+                            mt: 1,
+                          }}
+                        >
+                          {donationAmounts.slice(-3).map((item) => (
+                            <CustomButton
+                              sx={{
+                                border: "none",
+                                background:
+                                  amount === item.value ? primaryColor : "#fff",
+                                color: amount === item.value ? "#fff" : "#000",
+                              }}
+                              onClick={() => setamount(item.value)}
+                            >
+                              <CurrencyRupeeIcon
+                                sx={{
+                                  fontSize: "0.9rem",
+                                }}
+                              />
+                              {item.label}
+                            </CustomButton>
+                          ))}
+                        </Box>
+                      </Grid>
+                    </Grid>
+                    {mode === "Cheque" && (
+                      <>
+                        <Grid item xs={12}>
+                          <CustomInputLabel htmlFor="cheque-no">
+                            Cheque No
+                          </CustomInputLabel>
+                          <CustomInput
+                            id="cheque-no"
+                            name="chequeno"
+                            placeholder="Cheque No"
+                            value={donationdata.chequeno}
+                            onChange={onChange}
+                          />
+                          <p style={{ color: "red", marginTop: "5px" }}>
+                            {formerror.chequeno}
+                          </p>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <CustomInputLabel htmlFor="bank-name">
+                            Bank Name
+                          </CustomInputLabel>
+                          <CustomInput
+                            id="bank-name"
+                            type="text"
+                            name="name_of_bank"
+                            placeholder="Enter Bank Name"
+                            value={donationdata.name_of_bank}
+                            onChange={onChange}
+                          />
+                          <p style={{ color: "red", marginTop: "5px" }}>
+                            {formerror.name_of_bank}
+                          </p>
+                        </Grid>
+                        <Grid item md={6} xs={12}>
+                          <CustomInputLabel htmlFor="cheque-date">
+                            Date
+                          </CustomInputLabel>
+                          <CustomInput
+                            id="cheque-date"
+                            type="date"
+                            name="date_of_sub"
+                            placeholder="DOB"
+                            value={donationdata.date_of_sub}
+                            onChange={onChange}
+                          />
+                          <p style={{ color: "red", marginTop: "5px" }}>
+                            {formerror.date_of_sub}
+                          </p>
+                        </Grid>
+                        <Grid item md={6} xs={12}>
+                          <CustomInputLabel htmlFor="cheque-upload">
+                            Upload Cheque{" "}
+                          </CustomInputLabel>
+                          <CustomInput
+                            id="cheque-upload"
+                            type="file"
+                            accept="image/*"
+                            name="chqque_img"
+                            placeholder="Bank Name"
+                            onChange={(e) => {
+                              setcheqing(e.target.files[0]);
+                              console.log(e.target.files[0]);
+                            }}
+                          />
+                          <p style={{ color: "red", marginTop: "5px" }}>
+                            {formerror.chequeImg}
+                          </p>
+                        </Grid>
+                      </>
+                    )}
+                    <Grid item xs={12} textAlign="center">
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        sx={{
+                          color: "#fff",
+                          textTransform: "capitalize",
+                          mt: mode === "Cheque" ? 1 : 2,
+                        }}
+                        onClick={handlesubmit}
+                      >
+                        {mode === "Cheque" ? "Submit" : "Donate now"}
+                      </Button>
+                    </Grid>
+                  </>
+                )}
+              </Grid>
+            </Box>
           </div>
-        </div>
+        </ThemeProvider>
       </div>
     </>
   ) : (

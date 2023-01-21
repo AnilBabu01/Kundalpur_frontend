@@ -1,7 +1,7 @@
 .main_reciept_master{
     display: flex;
     justify-content: space-between;
-   
+    gap:2rem;
 }
 .right_input_label{
     display: flex;
@@ -13,12 +13,14 @@
     margin-bottom: 3px;
     margin-top: 4px;
     border: 1px solid #fd7906;
+    border: 1px solid #05313c;
     padding-left: 6px;
 }
 
 .ineear_dave_receipt_no:focus{
     outline: none;
 }
+
 .ineear_dave_receipt_no label{
 
 }
@@ -26,8 +28,11 @@
     height: 33px;
     border: none;
     border-radius: 5px;
-    color: white;
+    font-weight: 600;
+    color: #05313c;
+    border:1px solid #05313c;
     background-color: #fd7906;
+    background-color: #fdc99c;
     margin-bottom: 16px;
     margin-top: 3px;
 }
@@ -48,8 +53,8 @@
 
 .ScrollStyle
 {
-    max-height: 583px;
+    /* max-height: 583px; */
     overflow-x: scroll;
     width: 103%;
-    display: flex;
+    /* display: flex; */
 }

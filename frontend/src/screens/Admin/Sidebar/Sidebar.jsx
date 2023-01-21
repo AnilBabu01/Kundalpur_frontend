@@ -190,9 +190,39 @@ const Sidebar = ({ setshowsidebar }) => {
                       className={({ isActive }) =>
                         isActive ? "active-nav-link" : "nav-link"
                       }
+                      to="/admin-panel/reports/manualcash"
+                    >
+                      Manual Cash
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? "active-nav-link" : "nav-link"
+                      }
                       to="/admin-panel/reports/electronic"
                     >
-                      Electronic Donation
+                      Manual Electronic
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? "active-nav-link" : "nav-link"
+                      }
+                      to="/admin-panel/reports/manualcheque"
+                    >
+                      Manual Cheque
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? "active-nav-link" : "nav-link"
+                      }
+                      to="/admin-panel/reports/manualitem"
+                    >
+                      Manual Item
                     </NavLink>
                   </li>
                   <li className="nav-item">

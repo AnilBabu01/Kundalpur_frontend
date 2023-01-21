@@ -25,7 +25,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import "./Electornic.css";
+import "./Itemdonation.css";
 const style = {
   position: "absolute",
   top: "40%",
@@ -37,7 +37,7 @@ const style = {
   boxShadow: 24,
   borderRadius: "5px",
 };
-const Electornic = ({ setopendashboard }) => {
+const Itemdonation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -80,7 +80,7 @@ const Electornic = ({ setopendashboard }) => {
   const getall_donation = () => {
     serverInstance("user/add-elecDonation", "get").then((res) => {
       if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === "1");
+        let filterData = res.data.filter((item) => item.modeOfDonation === "3");
 
         setisData(filterData);
       } else {
@@ -175,7 +175,7 @@ const Electornic = ({ setopendashboard }) => {
               sx={{ minWidth: 650, width: "97%" }}
               aria-label="simple table"
             >
-              <TableHead style={{ background: "#F1F0F0" }}>
+              <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
                   <TableCell>Receipt No</TableCell>
 
@@ -267,4 +267,4 @@ const Electornic = ({ setopendashboard }) => {
   );
 };
 
-export default Electornic;
+export default Itemdonation;

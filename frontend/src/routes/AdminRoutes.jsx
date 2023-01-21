@@ -12,7 +12,6 @@ import VoucherManagement from "../screens/Admin/SystemManagement/VoucherManageme
 import InfoElectronic from "../screens/Admin/Donation/Donation/InfoElectronic";
 import Cheque from "../screens/Admin/Reports/Cheque/Cheque";
 import Online from "../screens/Admin/Reports/Online/Online";
-import Electronic from "../screens/Admin/Reports/Electornic/Electornic";
 import Userinfo from "../screens/Admin/masters/Usermaster/Userinfo";
 import Updateuser from "../screens/Admin/masters/Usermaster/Updateuser";
 import Adminprivateroute from "../components/AdminOutlate/Adminprivateroute";
@@ -22,6 +21,10 @@ import EmployeeUserInfo from "../screens/Admin/SystemManagement/UserManagement/E
 import Assign from "../screens/Admin/SystemManagement/Assign/Assign";
 import Chequeinfo from "../screens/Admin/Reports/Cheque/Chequeinfo";
 import Request from "../screens/Admin/SystemManagement/Request/Request";
+import Electronic from "../screens/Admin/Reports/Electornic/Electornic";
+import Itemdonation from "../screens/Admin/Reports/Itemdonation/Itemdonation";
+import ManualCash from "../screens/Admin/Reports/manualCash/ManualCash";
+import ManualCheque from "../screens/Admin/Reports/ManualCheque/ManualCheque";
 function AdminRoutes({ setopendashboard }) {
   return (
     <>
@@ -149,6 +152,33 @@ function AdminRoutes({ setopendashboard }) {
           element={
             <Adminprivateroute>
               <Electronic setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/reports/manualcash"
+          element={
+            <Adminprivateroute>
+              <ManualCash setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/reports/manualcheque"
+          element={
+            <Adminprivateroute>
+              <ManualCheque setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/reports/manualitem"
+          element={
+            <Adminprivateroute>
+              <Itemdonation setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

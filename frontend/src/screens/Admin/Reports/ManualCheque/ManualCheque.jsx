@@ -25,7 +25,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import "./Electornic.css";
+import "./ManualCheque.css";
 const style = {
   position: "absolute",
   top: "40%",
@@ -37,7 +37,7 @@ const style = {
   boxShadow: 24,
   borderRadius: "5px",
 };
-const Electornic = ({ setopendashboard }) => {
+const ManualCheque = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -80,7 +80,7 @@ const Electornic = ({ setopendashboard }) => {
   const getall_donation = () => {
     serverInstance("user/add-elecDonation", "get").then((res) => {
       if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === "1");
+        let filterData = res.data.filter((item) => item.modeOfDonation === "4");
 
         setisData(filterData);
       } else {
@@ -267,4 +267,4 @@ const Electornic = ({ setopendashboard }) => {
   );
 };
 
-export default Electornic;
+export default ManualCheque;

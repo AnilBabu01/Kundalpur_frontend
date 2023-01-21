@@ -202,10 +202,6 @@ const ItemDonation = ({ setshowalert, handleClose, themeColor }) => {
         amount: totalamount,
         url: "",
       });
-      console.log("sent sms ", res);
-      if (res.data.status === true) {
-        Swal.fire("Great!", res.data.message, "success");
-      }
     } catch (error) {
       Swal.fire("Error!", error, "error");
     }

@@ -145,18 +145,14 @@ function ReceiptMater() {
         </div>
 
         <div className="table_div_recipt">
-          <ul>
-            <li>Electronic</li>
-          </ul>
-          <ul>
-            <li>Cach</li>
-          </ul>
-          <ul>
-            <li>Item</li>
-          </ul>
-          <ul>
-            <li>cheque</li>
-          </ul>
+          <div>
+            <div>1</div>
+            <div>2</div>
+          </div>
+          <div>
+            <div>1</div>
+            <div>2</div>
+          </div>
         </div>
       </div>
     </div>

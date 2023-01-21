@@ -70,7 +70,7 @@ const TotalAmountRow = ({ donationItems }) => {
         <TableCell colSpan={5} style={tableTotalCellStyles}>
           <Typography variant="body1" fontSize={14}>
           {(totalAmount && totalAmount > 0) ?
-          converter.toWords(totalAmount) +  " रुपए" : ''}
+          converter.toWords(totalAmount) +  " रुपए मात्र" : ''}
           </Typography>
         </TableCell>
       </TableRow>

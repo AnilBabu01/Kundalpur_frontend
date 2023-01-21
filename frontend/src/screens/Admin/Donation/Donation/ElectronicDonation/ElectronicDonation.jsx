@@ -41,6 +41,7 @@ const ElectronicDonation = ({ setshowalert, handleClose, themeColor }) => {
     },
   });
   const [donationTypes, setDonationTypes] = useState([]);
+  const [receiptNo, setReceiptNo] = useState("");
 
   const [fullName, setFullName] = useState("");
   const [address, setAddress] = useState("");
@@ -165,15 +166,22 @@ const ElectronicDonation = ({ setshowalert, handleClose, themeColor }) => {
 
   const getall_donatiions = () => {
     try {
-      serverInstance("admin/donation-type?type=1", "get").then((res) => {
+      Promise.all([
+      serverInstance("admin/donation-type?type=1", "get"),
+      serverInstance("admin/get-receipt?type=1", "get"),
+    
+    ]).then(([res, item]) => {
         if (res.status) {
           setDonationTypes(res.data);
-
           console.log(res.data);
         } else {
           Swal.fire("Error", "somthing went  wrong", "error");
         }
-        console.log("sss", res);
+        if(item.status){
+          setReceiptNo(item.data);
+        }
+
+        console.log("sss", res, item);
       });
     } catch (error) {
       Swal.fire("Error!", error, "error");
@@ -212,6 +220,9 @@ const ElectronicDonation = ({ setshowalert, handleClose, themeColor }) => {
             }}
           >
             {currDate} / {currTime}
+          </Typography>
+          <Typography variant="body2" my={1}>
+            Receipt No: {receiptNo}
           </Typography>
           <Box
             sx={{
@@ -348,14 +359,8 @@ const ElectronicDonation = ({ setshowalert, handleClose, themeColor }) => {
                         justifyContent: "space-between",
                         alignItems: "center",
                       }}
-                    >
-                      <p
-                        style={{
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                    >            
                         Type of donation*
-                      </p>
                       <IconButton aria-label="add" size="small">
                         <AddBoxIcon color="primary" onClick={addDonationItem} />
                       </IconButton>
@@ -444,6 +449,7 @@ const ElectronicDonation = ({ setshowalert, handleClose, themeColor }) => {
                     <TableCell align="center">
                       <CustomTableInput
                         required
+                        type="number"
                         value={item.amount}
                         onChange={(e) =>
                           handleDonationItemUpdate(

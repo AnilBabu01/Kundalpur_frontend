@@ -35,6 +35,7 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.4.5",
     "react-swipeable-views": "^0.14.0",
+    "react-to-print": "^2.14.11",
     "react-toastify": "^9.1.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",

@@ -40,7 +40,7 @@ const VivekPLogin = () => {
       LoginwithOtp({ mobile_no: mobileNo }, (res) => {
         console.log(res);
         if (res.status === 1) {
-          Swal.fire("Great!", res.msg, "success");
+          Swal.fire("Great!", "OTP Sent Successfully", "success");
           setVerify(true);
           setMobileNo(mobileNo);
         } else {

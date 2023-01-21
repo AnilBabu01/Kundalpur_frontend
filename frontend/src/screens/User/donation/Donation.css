@@ -8,6 +8,17 @@
   );
   padding-bottom: 11.5rem;
 }
+.supper-main-div::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('/src/assets/receipt.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.6;
+}
 .donation-top-img {
   position: relative;
 }

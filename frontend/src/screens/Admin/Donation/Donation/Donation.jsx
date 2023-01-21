@@ -313,7 +313,7 @@ const Donation = ({ setopendashboard }) => {
               sx={{ minWidth: 650, width: "97%" }}
               aria-label="simple table"
             >
-              <TableHead style={{ background: "#FFEEE0" }}>
+              <TableHead style={{ background: "#f1f0f0" }}>
                 <TableRow>
                   <TableCell>Receipt No</TableCell>
                   <TableCell>Phone No</TableCell>

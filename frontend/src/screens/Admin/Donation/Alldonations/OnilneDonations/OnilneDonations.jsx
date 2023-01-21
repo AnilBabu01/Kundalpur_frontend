@@ -76,7 +76,7 @@ const OnilneDonations = () => {
         <div className="table-div-maain">
           {/* <TableContainer component={Paper}> */}
           <Table sx={{ minWidth: 650, width: "97%" }} aria-label="simple table">
-            <TableHead style={{ background: "#FFEEE0" }}>
+            <TableHead style={{ background: "#F1F0F0" }}>
               <TableRow>
                 <TableCell>S.No.</TableCell>
                 <TableCell>Date</TableCell>

@@ -73,6 +73,22 @@ function InfoElectronic({ setopendashboard }) {
                           </tr>
                         );
                       })}
+
+                    <tr>
+                      <td>Total</td>
+                      <td>
+                        {" "}
+                        {isData?.AMOUNT
+                          ? isData?.AMOUNT
+                          : isData &&
+                            isData.elecItemDetails.reduce(
+                              (n, { amount }) =>
+                                parseFloat(n) + parseFloat(amount),
+                              0
+                            )}
+                      </td>
+                      <td>-</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

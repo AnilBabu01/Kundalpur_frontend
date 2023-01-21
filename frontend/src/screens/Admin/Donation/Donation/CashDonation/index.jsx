@@ -134,28 +134,43 @@ const CashDonation = ({ setshowalert, handleClose, themeColor }) => {
         donation_item: donationItems,
       });
 
-      console.log(res.data.status);
+      let totalamount = donationItems?.amount
+        ? donationItems?.amount
+        : donationItems &&
+          donationItems.reduce(
+            (n, { amount }) => parseFloat(n) + parseFloat(amount),
+            0
+          );
 
       if (res.data.status === true) {
         setshowalert(true);
         handleClose();
 
-        const ress = await axios.post(`${backendApiUrl}api/user/sms`, {
-          mobile: mobileNo,
-          amount: 500,
-          url: "",
-        });
-
-        console, log(ress);
-        if (ress.data.status === true) {
-          Swal.fire("Error!", "Somthing went wrong!!", "error");
-        }
+        sendsms(totalamount);
       } else {
         Swal.fire("Error!", "Somthing went wrong!!", "error");
       }
     }
   };
 
+  const sendsms = async (totalamount) => {
+    try {
+      axios.defaults.headers.post[
+        "Authorization"
+      ] = `Bearer ${sessionStorage.getItem("token")}`;
+      const res = await axios.post(`${backendApiUrl}user/sms`, {
+        mobile: mobileNo,
+        amount: totalamount,
+        url: "",
+      });
+      console.log("sent sms ", res);
+      if (res.data.status === true) {
+        Swal.fire("Great!", res.data.message, "success");
+      }
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
+  };
   const getall_donatiions = () => {
     try {
       serverInstance("admin/donation-type?type=1", "get").then((res) => {

@@ -93,12 +93,6 @@ const Assign = ({ setopendashboard }) => {
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div className="main_center_header">
-            <div className="add-btn-user">
-              <button onClick={() => handleOpen()}>+Add</button>
-            </div>
-          </div>
-
           <div className="table-div-maain">
             {/* <TableContainer component={Paper}> */}
             <Table
@@ -133,7 +127,12 @@ const Assign = ({ setopendashboard }) => {
                     <TableCell> {row.Role}</TableCell>
 
                     <TableCell>
-                      <button className="Accepted_btn">Accepted</button>
+                      <button
+                        onClick={() => handleOpen()}
+                        className="Accepted_btn"
+                      >
+                        Accepted
+                      </button>
                     </TableCell>
                   </TableRow>
                 ))}

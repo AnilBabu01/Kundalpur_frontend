@@ -150,11 +150,18 @@ const ItemDonation = ({ setshowalert, handleClose, themeColor }) => {
         donation_item: modifiedDonationItems,
       });
 
-      console.log(res.data.status);
+      let totalamount = donationItems?.amount
+        ? donationItems?.amount
+        : donationItems &&
+          donationItems.reduce(
+            (n, { amount }) => parseFloat(n) + parseFloat(amount),
+            0
+          );
 
       if (res.data.status === true) {
         setshowalert(true);
         handleClose();
+        sendsms(totalamount);
       } else {
         Swal.fire("Error!", "Somthing went wrong!!", "error");
       }
@@ -185,6 +192,24 @@ const ItemDonation = ({ setshowalert, handleClose, themeColor }) => {
     }
   };
 
+  const sendsms = async (totalamount) => {
+    try {
+      axios.defaults.headers.post[
+        "Authorization"
+      ] = `Bearer ${sessionStorage.getItem("token")}`;
+      const res = await axios.post(`${backendApiUrl}user/sms`, {
+        mobile: mobileNo,
+        amount: totalamount,
+        url: "",
+      });
+      console.log("sent sms ", res);
+      if (res.data.status === true) {
+        Swal.fire("Great!", res.data.message, "success");
+      }
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
+  };
   useEffect(() => {
     getall_donatiions();
   }, []);

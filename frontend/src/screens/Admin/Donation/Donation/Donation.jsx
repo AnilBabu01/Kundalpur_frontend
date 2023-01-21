@@ -291,7 +291,9 @@ const Donation = ({ setopendashboard }) => {
           <Box sx={style2}>
             <div>
               <div className="add-div-close-div1">
-                <h2 style={{ textAlign: "center" }}>Request Vouchers</h2>
+                <h2 style={{ textAlign: "center", marginLeft: "24%" }}>
+                  Request Vouchers
+                </h2>
                 <CloseIcon onClick={() => handleClose3()} />
               </div>
               <Request handleClose={handleClose3} />

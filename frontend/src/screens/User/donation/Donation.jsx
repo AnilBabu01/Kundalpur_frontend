@@ -57,7 +57,7 @@ function Donation({ setshowreciept }) {
   const handleClose1 = () => setOpen1(false);
   const auth = useAuth();
   const { user } = useSelector((state) => state.userReducer);
-
+  console.log(user);
   if (donationdata.selected === "yes1" && !user.name) {
     nagivate("/profile");
   }
@@ -117,6 +117,7 @@ function Donation({ setshowreciept }) {
           }).then((res) => {
             if (res.status === true) {
               handleOpen();
+              sendsms();
             } else {
               Swal.fire("Error!", "Somthing went wrong!!", "error");
             }
@@ -146,6 +147,7 @@ function Donation({ setshowreciept }) {
 
       if (res.data.status === true) {
         handleOpen1();
+        sendsms();
       } else {
         Swal.fire("Error!", "Mobile number already exist!!", "error");
       }
@@ -208,6 +210,24 @@ function Donation({ setshowreciept }) {
     getall_donatiions();
     setshowreciept(false);
   }, []);
+
+  const sendsms = async (totalamount) => {
+    try {
+      axios.defaults.headers.post[
+        "Authorization"
+      ] = `Bearer ${sessionStorage.getItem("token")}`;
+      const res = await axios.post(`${backendApiUrl}user/sms`, {
+        mobile: user?.mobileNo,
+        amount: amount,
+        url: "",
+      });
+      console.log("sent sms ", res);
+      if (res.data.status === true) {
+      }
+    } catch (error) {
+      Swal.fire("Error!", error, "error");
+    }
+  };
   return auth.verify ? (
     <>
       <Modal

@@ -68,7 +68,18 @@ export default function MasterTap({ setopendashboard }) {
               textColor="inherit"
               variant="fullWidth"
               aria-label="full width tabs example"
-              style={{ background: "#e96d00" }}
+              sx={{ 
+                background: "#F1F0F0",
+              "& .MuiButtonBase-root":{
+                color: "#05313C",
+                opacity: 1,
+                textTransform: "capitalize",
+                fontSize: "16px",
+              },
+              "& .MuiTabs-indicator":{
+                background: "#05313C",
+              },
+            }}
             >
               <Tab label="User Master" {...a11yProps(0)} />
               <Tab label="Donation Type Master" {...a11yProps(1)} />

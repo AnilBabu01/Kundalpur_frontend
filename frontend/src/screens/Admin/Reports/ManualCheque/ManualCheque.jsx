@@ -26,6 +26,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./ManualCheque.css";
+import Moment from "moment-js";
 const style = {
   position: "absolute",
   top: "40%",
@@ -80,8 +81,8 @@ const ManualCheque = ({ setopendashboard }) => {
   const getall_donation = () => {
     serverInstance("user/add-elecDonation", "get").then((res) => {
       if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === "4");
-
+        let filterData = res.data.filter((item) => item.modeOfDonation === "3");
+        console.log(filterData);
         setisData(filterData);
       } else {
         Swal("Error", "somthing went  wrong", "error");
@@ -178,11 +179,13 @@ const ManualCheque = ({ setopendashboard }) => {
               <TableHead style={{ background: "#FFEEE0" }}>
                 <TableRow>
                   <TableCell>Receipt No</TableCell>
-
                   <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Amount</TableCell>
-
+                  <TableCell>Bank</TableCell>
+                  <TableCell>Cheque No</TableCell>
+                  <TableCell>Donation Type</TableCell>
+                  <TableCell>Date</TableCell>
                   <TableCell>Address</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -201,7 +204,7 @@ const ManualCheque = ({ setopendashboard }) => {
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{row.ReceiptNo}</TableCell>
                     <TableCell>{row.phoneNo}</TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>
@@ -210,8 +213,26 @@ const ManualCheque = ({ setopendashboard }) => {
                         0
                       )}
                     </TableCell>
-                    <TableCell> {row.address}</TableCell>
 
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return row.BankName;
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return row.ChequeNo;
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return row.type;
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {Moment(row.donation_date).format("DD/MM/YYYY")}
+                    </TableCell>
+                    <TableCell> {row.address}</TableCell>
                     <TableCell>
                       <RemoveRedEyeIcon
                         onClick={() =>

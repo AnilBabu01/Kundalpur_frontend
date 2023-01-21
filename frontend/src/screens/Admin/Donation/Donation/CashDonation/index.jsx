@@ -116,6 +116,7 @@ const CashDonation = ({ setshowalert, handleClose, themeColor }) => {
     axios.defaults.headers.post[
       "Authorization"
     ] = `Bearer ${sessionStorage.getItem("token")}`;
+
     if (
       fullName &&
       donationItems[0].amount &&

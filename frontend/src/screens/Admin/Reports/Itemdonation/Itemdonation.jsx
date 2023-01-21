@@ -26,6 +26,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./Itemdonation.css";
+import Moment from "moment-js";
 const style = {
   position: "absolute",
   top: "40%",
@@ -80,7 +81,7 @@ const Itemdonation = ({ setopendashboard }) => {
   const getall_donation = () => {
     serverInstance("user/add-elecDonation", "get").then((res) => {
       if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === "3");
+        let filterData = res.data.filter((item) => item.modeOfDonation === "4");
 
         setisData(filterData);
       } else {
@@ -179,11 +180,16 @@ const Itemdonation = ({ setopendashboard }) => {
                 <TableRow>
                   <TableCell>Receipt No</TableCell>
 
-                  <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
+                  <TableCell>Phone No</TableCell>
                   <TableCell>Amount</TableCell>
-
+                  <TableCell>Donation Item</TableCell>
+                  <TableCell>itemType</TableCell>
+                  <TableCell>quantity</TableCell>
+                  <TableCell>size</TableCell>
+                  <TableCell>remark</TableCell>
                   <TableCell>Address</TableCell>
+                  <TableCell>Date</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -201,17 +207,45 @@ const Itemdonation = ({ setopendashboard }) => {
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.phoneNo}</TableCell>
+                    <TableCell>{row.ReceiptNo}</TableCell>
+
                     <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.phoneNo}</TableCell>
                     <TableCell>
                       {row.elecItemDetails.reduce(
                         (n, { amount }) => parseFloat(n) + parseFloat(amount),
                         0
                       )}
                     </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return row.itemType;
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return row.itemType;
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return row.quantity;
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return row.size;
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return row.remark;
+                      })}
+                    </TableCell>
                     <TableCell> {row.address}</TableCell>
-
+                    <TableCell>
+                      {Moment(row.donation_date).format("DD/MM/YYYY")}
+                    </TableCell>
                     <TableCell>
                       <RemoveRedEyeIcon
                         onClick={() =>

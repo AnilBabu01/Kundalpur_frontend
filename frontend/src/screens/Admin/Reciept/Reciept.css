@@ -1,4 +1,7 @@
-
+#receipt{
+  width: 940px;
+  height: 655px;
+}
 
 .button_div_print_download{
   display: flex;

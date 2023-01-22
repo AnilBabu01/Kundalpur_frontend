@@ -149,14 +149,14 @@ const ItemDonation = ({ setshowalert, handleClose, themeColor }) => {
         donation_time: donationTime,
         donation_item: modifiedDonationItems,
       });
-
-      let totalamount = donationItems?.type
-        ? donationItems?.type
-        : donationItems &&
-          donationItems.reduce(
-            (n, { type }) => parseFloat(n) + parseFloat(type),
+      let totalamount = modifiedDonationItems?.amount
+        ? modifiedDonationItems?.amount
+        : modifiedDonationItems &&
+          modifiedDonationItems.reduce(
+            (n, { amount }) => parseFloat(n) + parseFloat(amount),
             0
           );
+
 
       if (res.data.status === true) {
         setshowalert(true);

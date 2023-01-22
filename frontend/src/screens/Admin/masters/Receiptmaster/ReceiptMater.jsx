@@ -70,7 +70,7 @@ function ReceiptMater() {
       if (type ==="itemReceiptNo") {
         const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
           receipt: itemReceiptNo,
-          type: 3,
+          type: 4,
         });
         if (res.data.status === true) {
           Swal.fire("Great!", "Item receiptNo. Added Successfully", "success");
@@ -79,7 +79,7 @@ function ReceiptMater() {
       if (type ==="chequeReceiptNo") {
         const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
           receipt: chequeReceiptNo,
-          type: 4,
+          type: 3,
         });
         if (res.data.status === true) {
           Swal.fire(

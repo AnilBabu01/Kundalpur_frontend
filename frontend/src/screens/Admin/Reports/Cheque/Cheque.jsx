@@ -109,7 +109,16 @@ const Cheque = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  const printreceipt = (row) => {
+    if (row.active === "0") {
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
+  };
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
@@ -164,10 +173,11 @@ const Cheque = ({ setopendashboard }) => {
               <div className="search-inner-div-reports">
                 <input type="text" placeholder="Name" />
                 <input type="text" placeholder="Phone No" />
-                <input type="text" placeholder="Cheque No" />
-
+                <input type="text" placeholder="Date" />
+                <input type="text" placeholder="Donation Type" />
                 <button>Search</button>
                 <button>Reset</button>
+                <button>Export Report</button>
               </div>
               <div>
                 {/* <InsertDriveFileIcon
@@ -255,6 +265,11 @@ const Cheque = ({ setopendashboard }) => {
                             },
                           })
                         }
+                      />
+                      <PrintIcon
+                        onClick={() => {
+                          printreceipt(row);
+                        }}
                       />
                       <EditIcon onClick={() => handleOpen(row.id)} />
                       <DeleteForeverIcon

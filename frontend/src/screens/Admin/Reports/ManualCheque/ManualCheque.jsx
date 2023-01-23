@@ -99,7 +99,16 @@ const ManualCheque = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  const printreceipt = (row) => {
+    if (row.active === "0") {
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
+  };
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
@@ -149,23 +158,17 @@ const ManualCheque = ({ setopendashboard }) => {
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div className="main_center_header1">
-            <h2 className="Cheque_text">Electronic donation report</h2>
+          <div className="main_center_header10">
+            <h2 className="Cheque_text">Cheque donation report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
                 <input type="text" placeholder="Name" />
                 <input type="text" placeholder="Phone No" />
-
+                <input type="text" placeholder="Date" />
+                <input type="text" placeholder="Donation Type" />
                 <button>Search</button>
                 <button>Reset</button>
-              </div>
-              <div>
-                {/* <InsertDriveFileIcon
-                style={{ width: "45px", height: "36px", color: "#e96d00" }}
-              />
-              <PostAddIcon
-                style={{ width: "45px", height: "36px", color: "#e96d00" }}
-              /> */}
+                <button>Export Excel Report</button>
               </div>
             </div>
           </div>
@@ -243,7 +246,11 @@ const ManualCheque = ({ setopendashboard }) => {
                       <DeleteForeverIcon
                         onClick={() => handleClickOpen1(row.id)}
                       />
-
+                      <PrintIcon
+                        onClick={() => {
+                          printreceipt(row);
+                        }}
+                      />
                       <CancelIcon onClick={() => handleOpen()} />
                     </TableCell>
                   </TableRow>

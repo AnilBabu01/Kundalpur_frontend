@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from "react";
-
 import { useReactToPrint } from "react-to-print";
 import "./cashrecipt.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import "./Reciept.css";
 import { Converter, hiIN } from "any-number-to-words";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import Moment from "moment-js";
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
@@ -14,8 +15,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
 
   const [isData, setisData] = React.useState(null);
   const navigation = useNavigate();
-
-  console.log("data form", isData);
+  const { user } = useSelector((state) => state.userReducer);
+  console.log("data form", isData, user);
   useEffect(() => {
     setshowreciept(true);
     setopendashboard(false);
@@ -91,7 +92,11 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
               <div className="leftdata">
                 <span className="leftitems">
                   <h2>दान रसीद नं :</h2>
-                  <p>{isData?.RECEIPT_NO}</p>
+                  <p>
+                    {isData?.RECEIPT_NO
+                      ? isData?.RECEIPT_NO
+                      : isData?.ReceiptNo}
+                  </p>
                 </span>
                 <span className="leftitems">
                   <h2>दान दातार श्री :</h2>
@@ -120,7 +125,11 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
               <div className="rightdata">
                 <span className="rightitems">
                   <h2>दिनांक :</h2>
-                  <p>{isData?.DATE_OF_CHEQUE}</p>
+                  <p>
+                    {isData?.DATE_OF_CHEQUE
+                      ? isData?.DATE_OF_CHEQUE
+                      : Moment(isData?.donation_date).format("DD/MM/YYYY")}
+                  </p>
                 </span>
                 <span className="rightitems">
                   <h2>&nbsp;</h2>
@@ -128,7 +137,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                 </span>
                 <span className="rightitems">
                   <h2>मोबाइल नं :</h2>
-                  <p>123456789</p>
+                  <p>{isData?.phoneNo ? isData?.phoneNo : user?.mobileNo}</p>
                 </span>
                 <span className="rightitems">
                   <h2>दान का मद :</h2>
@@ -155,7 +164,11 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
             </span>
             <span className="rightitems3">
               <h2>बोली राशि :</h2>
-              <p> 01-01-2023</p>
+              <p>
+                {isData?.DATE_OF_CHEQUE
+                  ? isData?.DATE_OF_CHEQUE
+                  : Moment(isData?.donation_date).format("DD/MM/YYYY")}
+              </p>
             </span>
             <div className="bankjankari">
               <h3>बैंक द्वारा राशि भेजने संबंधी जानकारी</h3>

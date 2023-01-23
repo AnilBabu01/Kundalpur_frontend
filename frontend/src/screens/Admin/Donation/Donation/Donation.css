@@ -273,7 +273,7 @@ td {
 .styled-table tfoot tr {
   background-color: #f3f3f3;
 }
-.add_itrm_btn {
+.add_ittnrm_b {
   background-color: #5cb85c;
   border: navajowhite;
   color: white;
@@ -300,4 +300,12 @@ td {
   overflow-x: hidden;
   margin: 0 auto;
   white-space: nowrap;
+}
+
+.add-btn-user-donation {
+    margin-top: 1rem;
+    width: 97%;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
 }

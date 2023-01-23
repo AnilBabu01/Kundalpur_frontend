@@ -99,7 +99,16 @@ const Electornic = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  const printreceipt = (row) => {
+    if (row.active === "0") {
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
+  };
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
@@ -149,15 +158,24 @@ const Electornic = ({ setopendashboard }) => {
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div className="main_center_header1">
+          <div className="main_center_header10">
             <h2 className="Cheque_text">Electronic donation report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
                 <input type="text" placeholder="Name" />
                 <input type="text" placeholder="Phone No" />
+                <input type="date" placeholder="Date" />
+                <select name="cars" id="cars">
+                  <option value="volvo">Select option</option>
+                  <option value="saab">Cash donation</option>
+                  <option value="mercedes">cheque donation</option>
+                  <option value="audi">Electronic donation</option>
+                  <option value="audi">Item donation</option>
+                </select>
 
                 <button>Search</button>
                 <button>Reset</button>
+                <button>Export Report</button>
               </div>
               <div>
                 {/* <InsertDriveFileIcon
@@ -239,7 +257,11 @@ const Electornic = ({ setopendashboard }) => {
                       <DeleteForeverIcon
                         onClick={() => handleClickOpen1(row.id)}
                       />
-
+                      <PrintIcon
+                        onClick={() => {
+                          printreceipt(row);
+                        }}
+                      />
                       <CancelIcon onClick={() => handleOpen()} />
                     </TableCell>
                   </TableRow>

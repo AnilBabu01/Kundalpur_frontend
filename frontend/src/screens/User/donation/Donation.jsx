@@ -175,7 +175,7 @@ function Donation({ setshowreciept }) {
     date_of_sub: '',
     name_of_bank: '',
     Remark: '',
-    donationtype: 'Please Select',
+    donationtype: '',
     selected: '',
     amount: '',
     address: '',
@@ -600,6 +600,14 @@ function Donation({ setshowreciept }) {
                         onChange={onChange}
                         displayEmpty
                       >
+                         <MenuItem
+                          sx={{
+                            fontSize: 14,
+                          }}
+                          value={""}
+                        >
+                          Please select
+                        </MenuItem>
                         {isData &&
                           isData.map((item) => {
                             return (
@@ -650,7 +658,7 @@ function Donation({ setshowreciept }) {
                           Donation Amount
                         </CustomInputLabel>
                       </Grid>
-                      <Grid container item xs={12} spacing={{ sx: 0, md: 2 }}>
+                      <Grid container item xs={12} columnSpacing={2}>
                         <Grid item xs={12} md={6}>
                           <CustomInput
                             id="donation-amount"

@@ -25,6 +25,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import Moment from "moment-js";
 import "./ManualCash.css";
 const style = {
@@ -100,6 +101,16 @@ const ManualCash = ({ setopendashboard }) => {
     setPage(0);
   };
 
+  const printreceipt = (row) => {
+    if (row.active === "0") {
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
+  };
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
@@ -153,15 +164,17 @@ const ManualCash = ({ setopendashboard }) => {
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div className="main_center_header1">
-            <h2 className="Cheque_text">Electronic donation report</h2>
+          <div className="main_center_header10">
+            <h2 className="Cheque_text">Cash donation report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
                 <input type="text" placeholder="Name" />
                 <input type="text" placeholder="Phone No" />
-
+                <input type="text" placeholder="Date" />
+                <input type="text" placeholder="Donation Type" />
                 <button>Search</button>
                 <button>Reset</button>
+                <button>Export Report</button>
               </div>
               <div>
                 {/* <InsertDriveFileIcon
@@ -225,12 +238,16 @@ const ManualCash = ({ setopendashboard }) => {
                     </TableCell>
                     <TableCell>
                       {row.elecItemDetails.map((row) => {
-                        return <li>{row.type} </li>;
+                        return (
+                          <li style={{ listStyle: "none" }}>{row.type} </li>
+                        );
                       })}
                     </TableCell>
                     <TableCell>
                       {row.elecItemDetails.map((row) => {
-                        return <li>{row.remark} </li>;
+                        return (
+                          <li style={{ listStyle: "none" }}>{row.remark} </li>
+                        );
                       })}
                     </TableCell>
                     <TableCell>
@@ -243,7 +260,11 @@ const ManualCash = ({ setopendashboard }) => {
                       <DeleteForeverIcon
                         onClick={() => handleClickOpen1(row.id)}
                       />
-
+                      <PrintIcon
+                        onClick={() => {
+                          printreceipt(row);
+                        }}
+                      />
                       <CancelIcon onClick={() => handleOpen()} />
                     </TableCell>
                   </TableRow>

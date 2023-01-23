@@ -99,7 +99,16 @@ const Itemdonation = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  const printreceipt = (row) => {
+    if (row.active === "0") {
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
+  };
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
@@ -149,15 +158,17 @@ const Itemdonation = ({ setopendashboard }) => {
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div className="main_center_header1">
-            <h2 className="Cheque_text">Electronic donation report</h2>
+          <div className="main_center_header10">
+            <h2 className="Cheque_text">Item donation report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
                 <input type="text" placeholder="Name" />
                 <input type="text" placeholder="Phone No" />
-
+                <input type="text" placeholder="Date" />
+                <input type="text" placeholder="Donation Type" />
                 <button>Search</button>
                 <button>Reset</button>
+                <button>Export Report</button>
               </div>
               <div>
                 {/* <InsertDriveFileIcon
@@ -184,9 +195,7 @@ const Itemdonation = ({ setopendashboard }) => {
                   <TableCell>Phone No</TableCell>
                   <TableCell>Amount</TableCell>
                   <TableCell>Donation Item</TableCell>
-                  <TableCell>itemType</TableCell>
-                  <TableCell>quantity</TableCell>
-                  <TableCell>size</TableCell>
+
                   <TableCell>remark</TableCell>
                   <TableCell>Address</TableCell>
                   <TableCell>Date</TableCell>
@@ -222,21 +231,7 @@ const Itemdonation = ({ setopendashboard }) => {
                         return row.itemType;
                       })}
                     </TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return row.itemType;
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return row.quantity;
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return row.size;
-                      })}
-                    </TableCell>
+
                     <TableCell>
                       {row.elecItemDetails.map((row) => {
                         return row.remark;
@@ -252,7 +247,11 @@ const Itemdonation = ({ setopendashboard }) => {
                           navigation(`/admin-panel/infoElectronic/${row.id}`)
                         }
                       />
-
+                      <PrintIcon
+                        onClick={() => {
+                          printreceipt(row);
+                        }}
+                      />
                       <DeleteForeverIcon
                         onClick={() => handleClickOpen1(row.id)}
                       />

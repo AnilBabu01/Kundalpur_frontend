@@ -18,6 +18,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import PrintIcon from "@mui/icons-material/Print";
 import "./Online.css";
 const Online = ({ setopendashboard }) => {
   const navigation = useNavigate();
@@ -85,7 +86,16 @@ const Online = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  const printreceipt = (row) => {
+    if (row.active === "0") {
+    } else {
+      navigation("/reciept", {
+        state: {
+          userdata: row,
+        },
+      });
+    }
+  };
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
@@ -122,9 +132,11 @@ const Online = ({ setopendashboard }) => {
               <div className="search-inner-div-reports">
                 <input type="text" placeholder="Name" />
                 <input type="text" placeholder="Phone No" />
-
+                <input type="text" placeholder="Date" />
+                <input type="text" placeholder="Donation Type" />
                 <button>Search</button>
                 <button>Reset</button>
+                <button>Export Report</button>
               </div>
               <div>
                 {/* <InsertDriveFileIcon
@@ -154,8 +166,7 @@ const Online = ({ setopendashboard }) => {
                   <TableCell>Date Of submission</TableCell>
                   <TableCell>Name of Bank</TableCell>
                   <TableCell>Payment id</TableCell>
-                  <TableCell>certificate</TableCell>
-                  <TableCell>Edit/Delete</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -194,17 +205,14 @@ const Online = ({ setopendashboard }) => {
                     </TableCell>
 
                     <TableCell> {row.PAYMENT_ID}</TableCell>
-                    <TableCell
-                      onClick={() => {
-                        downloadrecept(row);
-                      }}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {" "}
-                      downolod
-                    </TableCell>
+
                     <TableCell>
                       <RemoveRedEyeIcon />
+                      <PrintIcon
+                        onClick={() => {
+                          printreceipt(row);
+                        }}
+                      />
                       <DeleteForeverIcon
                         onClick={() => handleClickOpen1(row.id)}
                       />

@@ -302,7 +302,13 @@ const Donation = ({ setopendashboard }) => {
       <div className="dashboarddiv">
         <div>
           <div className="main_center_header">
-            <div className="add-btn-user">
+            <div className="add-btn-user10">
+              <input type="text" placeholder="Name" />
+              <input type="text" placeholder="Phone No" />
+              <input type="text" placeholder="Date" />
+              <input type="text" placeholder="Donation Type" />
+              <button>Search</button>
+              <button>Reset</button>
               <button onClick={() => handleOpen()}>+Add</button>
             </div>
           </div>
@@ -316,9 +322,11 @@ const Donation = ({ setopendashboard }) => {
               <TableHead style={{ background: "#f1f0f0" }}>
                 <TableRow>
                   <TableCell>Receipt No</TableCell>
-                  <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
+                  <TableCell>Phone No</TableCell>
                   <TableCell>Amount</TableCell>
+                  <TableCell>Type of donation</TableCell>
+                  <TableCell>Mode of donation</TableCell>
                   <TableCell>Address</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -338,14 +346,28 @@ const Donation = ({ setopendashboard }) => {
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.phoneNo}</TableCell>
                     <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.phoneNo}</TableCell>
                     <TableCell>
                       {row.elecItemDetails.reduce(
                         (n, { amount }) => parseFloat(n) + parseFloat(amount),
                         0
                       )}
                     </TableCell>
+                    <TableCell>
+                      {row.elecItemDetails.map((row) => {
+                        return (
+                          <li style={{ listStyle: "none" }}>{row.type} </li>
+                        );
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {(row.modeOfDonation === "2" && "Cash") ||
+                        (row.modeOfDonation === "3" && "Cheque") ||
+                        (row.modeOfDonation === "1" && "Electronic") ||
+                        (row.modeOfDonation === "4" && "Item")}
+                    </TableCell>
+
                     <TableCell> {row.address}</TableCell>
 
                     <TableCell>

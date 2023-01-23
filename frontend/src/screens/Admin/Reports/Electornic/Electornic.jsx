@@ -25,6 +25,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import SimCardAlertIcon from "@mui/icons-material/SimCardAlert";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import DownloadIcon from "@mui/icons-material/Download";
 import "./Electornic.css";
 import Moment from "moment-js";
 const style = {
@@ -172,24 +175,16 @@ const Electornic = ({ setopendashboard }) => {
                   <option value="audi">Electronic donation</option>
                   <option value="audi">Item donation</option>
                 </select>
-
                 <button>Search</button>
                 <button>Reset</button>
-                <button>Export Report</button>
+                <SimCardAlertIcon />
+                <PictureAsPdfIcon />
               </div>
-              <div>
-                {/* <InsertDriveFileIcon
-                style={{ width: "45px", height: "36px", color: "#e96d00" }}
-              />
-              <PostAddIcon
-                style={{ width: "45px", height: "36px", color: "#e96d00" }}
-              /> */}
-              </div>
+              <div></div>
             </div>
           </div>
 
           <div className="table-div-maain">
-            {/* <TableContainer component={Paper}> */}
             <Table
               sx={{ minWidth: 650, width: "97%" }}
               aria-label="simple table"
@@ -239,12 +234,16 @@ const Electornic = ({ setopendashboard }) => {
                     </TableCell>
                     <TableCell>
                       {row.elecItemDetails.map((row) => {
-                        return <li>{row.type} </li>;
+                        return (
+                          <li style={{ listStyle: "none" }}>{row.type} </li>
+                        );
                       })}
                     </TableCell>
                     <TableCell>
                       {row.elecItemDetails.map((row) => {
-                        return <li>{row.remark} </li>;
+                        return (
+                          <li style={{ listStyle: "none" }}>{row.remark} </li>
+                        );
                       })}
                     </TableCell>
                     <TableCell>
@@ -253,11 +252,9 @@ const Electornic = ({ setopendashboard }) => {
                           navigation(`/admin-panel/infoElectronic/${row.id}`)
                         }
                       />
-
-                      <DeleteForeverIcon
-                        onClick={() => handleClickOpen1(row.id)}
-                      />
-                      <PrintIcon
+                      <EditIcon />
+                      <PrintIcon />
+                      <DownloadIcon
                         onClick={() => {
                           printreceipt(row);
                         }}
@@ -289,16 +286,10 @@ const Electornic = ({ setopendashboard }) => {
                         "aria-label": "page number",
                       },
                     }}
-                    // showFirstButton={true}
-                    // showLastButton={true}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
-                    //sx and classes prop discussed in styling section
                   />
                 </TableRow>
               </TableFooter>
             </Table>
-            {/* </TableContainer> */}
           </div>
         </div>
       </div>

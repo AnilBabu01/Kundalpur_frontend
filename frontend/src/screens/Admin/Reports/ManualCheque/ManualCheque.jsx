@@ -25,6 +25,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import SimCardAlertIcon from "@mui/icons-material/SimCardAlert";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import DownloadIcon from "@mui/icons-material/Download";
 import "./ManualCheque.css";
 import Moment from "moment-js";
 const style = {
@@ -164,11 +167,18 @@ const ManualCheque = ({ setopendashboard }) => {
               <div className="search-inner-div-reports">
                 <input type="text" placeholder="Name" />
                 <input type="text" placeholder="Phone No" />
-                <input type="text" placeholder="Date" />
-                <input type="text" placeholder="Donation Type" />
+                <input type="date" placeholder="Date" />
+                <select name="cars" id="cars">
+                  <option value="volvo">Select option</option>
+                  <option value="saab">Cash donation</option>
+                  <option value="mercedes">cheque donation</option>
+                  <option value="audi">Electronic donation</option>
+                  <option value="audi">Item donation</option>
+                </select>
                 <button>Search</button>
                 <button>Reset</button>
-                <button>Export Excel Report</button>
+                <SimCardAlertIcon />
+                <PictureAsPdfIcon />
               </div>
             </div>
           </div>
@@ -186,7 +196,7 @@ const ManualCheque = ({ setopendashboard }) => {
                   <TableCell>Name</TableCell>
                   <TableCell>Amount</TableCell>
                   <TableCell>Bank</TableCell>
-                  <TableCell>Cheque No</TableCell>
+
                   <TableCell>Donation Type</TableCell>
                   <TableCell>Date</TableCell>
                   <TableCell>Address</TableCell>
@@ -222,11 +232,7 @@ const ManualCheque = ({ setopendashboard }) => {
                         return row.BankName;
                       })}
                     </TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return row.ChequeNo;
-                      })}
-                    </TableCell>
+
                     <TableCell>
                       {row.elecItemDetails.map((row) => {
                         return row.type;
@@ -243,10 +249,9 @@ const ManualCheque = ({ setopendashboard }) => {
                         }
                       />
 
-                      <DeleteForeverIcon
-                        onClick={() => handleClickOpen1(row.id)}
-                      />
-                      <PrintIcon
+                      <EditIcon />
+                      <PrintIcon />
+                      <DownloadIcon
                         onClick={() => {
                           printreceipt(row);
                         }}

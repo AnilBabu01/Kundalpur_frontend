@@ -3,7 +3,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { serverInstance } from "../../../../API/ServerInstance";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import EditIcon from "@mui/icons-material/Edit";
@@ -26,6 +26,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
+import SimCardAlertIcon from "@mui/icons-material/SimCardAlert";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import DownloadIcon from "@mui/icons-material/Download";
 import Moment from "moment-js";
 import "./ManualCash.css";
 const style = {
@@ -40,6 +43,7 @@ const style = {
   borderRadius: "5px",
 };
 const ManualCash = ({ setopendashboard }) => {
+  const navigation = useNavigate();
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -47,7 +51,6 @@ const ManualCash = ({ setopendashboard }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const navigation = useNavigate();
   const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState("");
   console.log(isData);
@@ -170,11 +173,18 @@ const ManualCash = ({ setopendashboard }) => {
               <div className="search-inner-div-reports">
                 <input type="text" placeholder="Name" />
                 <input type="text" placeholder="Phone No" />
-                <input type="text" placeholder="Date" />
-                <input type="text" placeholder="Donation Type" />
+                <input type="date" placeholder="Date" />
+                <select name="cars" id="cars">
+                  <option value="volvo">Select option</option>
+                  <option value="saab">Cash donation</option>
+                  <option value="mercedes">cheque donation</option>
+                  <option value="audi">Electronic donation</option>
+                  <option value="audi">Item donation</option>
+                </select>
                 <button>Search</button>
                 <button>Reset</button>
-                <button>Export Report</button>
+                <SimCardAlertIcon />
+                <PictureAsPdfIcon />
               </div>
               <div>
                 {/* <InsertDriveFileIcon
@@ -256,11 +266,18 @@ const ManualCash = ({ setopendashboard }) => {
                           navigation(`/admin-panel/infoElectronic/${row.id}`)
                         }
                       />
-
-                      <DeleteForeverIcon
-                        onClick={() => handleClickOpen1(row.id)}
-                      />
+                      <EditIcon />
                       <PrintIcon
+                        onClick={() =>
+                          navigation("/admin-panel/reports/printcontent", {
+                            state: {
+                              data: row,
+                            },
+                          })
+                        }
+                      />
+
+                      <DownloadIcon
                         onClick={() => {
                           printreceipt(row);
                         }}

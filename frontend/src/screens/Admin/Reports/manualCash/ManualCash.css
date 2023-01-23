@@ -1,0 +1,29 @@
+.main_print_div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.super_main_divsss{
+    padding: 5rem;
+}
+
+.gray_color_div_print_content p{
+    color: gray;
+    font-weight: 300;
+}
+
+.gray-text{
+    color: gray;
+    font-weight: 300; 
+}
+.gray-text-div {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 2rem;
+    margin-bottom: 7rem;
+   
+}
+.gray-text-div  p{
+    color: gray;
+    font-weight: 300; 
+}

@@ -25,7 +25,8 @@ import Electronic from "../screens/Admin/Reports/Electornic/Electornic";
 import Itemdonation from "../screens/Admin/Reports/Itemdonation/Itemdonation";
 import ManualCash from "../screens/Admin/Reports/manualCash/ManualCash";
 import ManualCheque from "../screens/Admin/Reports/ManualCheque/ManualCheque";
-function AdminRoutes({ setopendashboard }) {
+import PrintContent from "../screens/Admin/Reports/manualCash/PrintContent";
+function AdminRoutes({ setopendashboard, setshowreciept }) {
   return (
     <>
       <Routes>
@@ -179,6 +180,17 @@ function AdminRoutes({ setopendashboard }) {
           element={
             <Adminprivateroute>
               <Itemdonation setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/reports/printcontent"
+          element={
+            <Adminprivateroute>
+              <PrintContent
+                setopendashboard={setopendashboard}
+                setshowreciept={setshowreciept}
+              />
             </Adminprivateroute>
           }
         />

@@ -12,7 +12,6 @@ const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
   const componentRef = useRef();
-
   const [isData, setisData] = React.useState(null);
   const navigation = useNavigate();
   const { user } = useSelector((state) => state.userReducer);
@@ -29,17 +28,6 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-  // const down = () => {
-  //   const re = document.getElementById("receipt");
-  //   var opt = {
-  //     margin: 1,
-  //     filename: "myfile.pdf",
-  //     image: { type: "jpeg", quality: 0.98 },
-  //     html2canvas: { scale: 2 },
-  //     jsPDF: { unit: "in", format: "A4", orientation: "landscape" },
-  //   };
-  //   html2pdf().from(re).set(opt).save();
-  // };
 
   function printDiv() {
     var divContents = document.getElementById("receipt").innerHTML;
@@ -127,8 +115,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                   <h2>दिनांक :</h2>
                   <p>
                     {isData?.DATE_OF_CHEQUE
-                      ? isData?.DATE_OF_CHEQUE
-                      : Moment(isData?.donation_date).format("DD/MM/YYYY")}
+                      ? Moment(isData?.DATE_OF_CHEQUE).format("DD-MM-YYYY")
+                      : Moment(isData?.donation_date).format("DD-MM-YYYY")}
                   </p>
                 </span>
                 <span className="rightitems">
@@ -166,8 +154,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
               <h2>बोली राशि :</h2>
               <p>
                 {isData?.DATE_OF_CHEQUE
-                  ? isData?.DATE_OF_CHEQUE
-                  : Moment(isData?.donation_date).format("DD/MM/YYYY")}
+                  ? Moment(isData?.DATE_OF_CHEQUE).format("DD-MM-YYYY")
+                  : Moment(isData?.donation_date).format("DD-MM-YYYY")}
               </p>
             </span>
             <div className="bankjankari">

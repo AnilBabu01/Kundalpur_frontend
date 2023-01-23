@@ -33,7 +33,10 @@ function App() {
           setopendashboard={setopendashboard}
           setshowreciept={setshowreciept}
         />
-        <AdminRoutes setopendashboard={setopendashboard} />
+        <AdminRoutes
+          setopendashboard={setopendashboard}
+          setshowreciept={setshowreciept}
+        />
         {!opendashboard && !showreciept ? <Footer /> : ""}
       </Router>
     </>

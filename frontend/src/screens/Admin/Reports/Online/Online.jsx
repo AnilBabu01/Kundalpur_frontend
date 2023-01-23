@@ -19,6 +19,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import PrintIcon from "@mui/icons-material/Print";
+import SimCardAlertIcon from "@mui/icons-material/SimCardAlert";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import DownloadIcon from "@mui/icons-material/Download";
+import CancelIcon from "@mui/icons-material/Cancel";
+import EditIcon from "@mui/icons-material/Edit";
 import "./Online.css";
 const Online = ({ setopendashboard }) => {
   const navigation = useNavigate();
@@ -132,11 +137,18 @@ const Online = ({ setopendashboard }) => {
               <div className="search-inner-div-reports">
                 <input type="text" placeholder="Name" />
                 <input type="text" placeholder="Phone No" />
-                <input type="text" placeholder="Date" />
-                <input type="text" placeholder="Donation Type" />
+                <input type="date" placeholder="Date" />
+                <select name="cars" id="cars">
+                  <option value="volvo">Select option</option>
+                  <option value="saab">Cash donation</option>
+                  <option value="mercedes">cheque donation</option>
+                  <option value="audi">Electronic donation</option>
+                  <option value="audi">Item donation</option>
+                </select>
                 <button>Search</button>
                 <button>Reset</button>
-                <button>Export Report</button>
+                <SimCardAlertIcon />
+                <PictureAsPdfIcon />
               </div>
               <div>
                 {/* <InsertDriveFileIcon
@@ -208,14 +220,14 @@ const Online = ({ setopendashboard }) => {
 
                     <TableCell>
                       <RemoveRedEyeIcon />
+                      <EditIcon />
                       <PrintIcon
                         onClick={() => {
                           printreceipt(row);
                         }}
                       />
-                      <DeleteForeverIcon
-                        onClick={() => handleClickOpen1(row.id)}
-                      />
+                      <DownloadIcon />
+                      <CancelIcon />
                     </TableCell>
                   </TableRow>
                 ))}

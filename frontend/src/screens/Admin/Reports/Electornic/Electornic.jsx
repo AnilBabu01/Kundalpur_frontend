@@ -1,45 +1,68 @@
-import React, { useEffect, useState } from "react";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { serverInstance } from "../../../../API/ServerInstance";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import EditIcon from "@mui/icons-material/Edit";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { Box } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import PrintIcon from "@mui/icons-material/Print";
-import Fade from "@mui/material/Fade";
-import CloseIcon from "@mui/icons-material/Close";
-import Cancel from "./Cancel";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import SimCardAlertIcon from "@mui/icons-material/SimCardAlert";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import DownloadIcon from "@mui/icons-material/Download";
-import "./Electornic.css";
-import Moment from "moment-js";
+import React, { useEffect, useState } from 'react';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { serverInstance } from '../../../../API/ServerInstance';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import EditIcon from '@mui/icons-material/Edit';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Box } from '@mui/material';
+import Modal from '@mui/material/Modal';
+import PrintIcon from '@mui/icons-material/Print';
+import Fade from '@mui/material/Fade';
+import CloseIcon from '@mui/icons-material/Close';
+import Cancel from './Cancel';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import DownloadIcon from '@mui/icons-material/Download';
+import exportFromJSON from 'export-from-json';
+import ElectronicDonation from '../../Donation/Donation/ElectronicDonation/ElectronicDonation';
+import { backendApiUrl } from '../../../../config/config';
+import axios from 'axios';
+import './Electornic.css';
+import Moment from 'moment-js';
 const style = {
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "30%",
-  bgcolor: "background.paper",
+  position: 'absolute',
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '30%',
+  bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
-  borderRadius: "5px",
+  borderRadius: '5px',
+};
+
+const openupadtestyle = {
+  position: 'absolute',
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '30%',
+  bgcolor: 'background.paper',
+  p: 2,
+  boxShadow: 24,
+  borderRadius: '5px',
+};
+
+const donationColorTheme = {
+  cash: '#48a828',
+  electronic: '#e96d00',
+  cheque: '#1C82AD',
+  item: '#d6cb00',
 };
 const Electornic = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
@@ -51,7 +74,22 @@ const Electornic = ({ setopendashboard }) => {
   const handleClose = () => setOpen(false);
   const navigation = useNavigate();
   const [open1, setOpen1] = React.useState(false);
-  const [deleteId, setdeleteId] = useState("");
+  const [deleteId, setdeleteId] = useState('');
+  const [updateData, setupdateData] = useState('');
+  const [openupdate, setopenupdate] = useState(false);
+  const [showUpdateBtn, setshowUpdateBtn] = useState(true);
+  const [phone, setphone] = useState('');
+  const [date, setdate] = useState('');
+  const [typedonation, settypedonation] = useState('');
+  const [name, setname] = useState('');
+  const [donationTypes, setDonationTypes] = useState([]);
+  const upadteClose = () => {
+    setopenupdate(false);
+  };
+  const upadteOpen = (row) => {
+    setupdateData(row);
+    setopenupdate(true);
+  };
 
   const handleClickOpen1 = (id) => {
     setOpen1(true);
@@ -64,31 +102,31 @@ const Electornic = ({ setopendashboard }) => {
 
   const handleClose2 = () => {
     setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, "delete").then(
+    serverInstance(`user/add-elecDonation?id=${deleteId}`, 'delete').then(
       (res) => {
         if (res.status === true) {
           Swal.fire(
-            "Great!",
-            "Eletronic donation delete successfully",
-            "success"
+            'Great!',
+            'Eletronic donation delete successfully',
+            'success',
           );
           setshowalert(true);
         } else {
-          Swal("Error", "somthing went  wrong", "error");
+          Swal('Error', 'somthing went  wrong', 'error');
         }
         console.log(res);
-      }
+      },
     );
   };
 
   const getall_donation = () => {
-    serverInstance("user/add-elecDonation", "get").then((res) => {
+    serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === "1");
+        let filterData = res.data.filter((item) => item.modeOfDonation === '1');
 
         setisData(filterData);
       } else {
-        Swal("Error", "somthing went  wrong", "error");
+        Swal('Error', 'somthing went  wrong', 'error');
       }
       console.log(res);
     });
@@ -103,14 +141,41 @@ const Electornic = ({ setopendashboard }) => {
     setPage(0);
   };
   const printreceipt = (row) => {
-    if (row.active === "0") {
+    if (row.active === '0') {
     } else {
-      navigation("/reciept", {
+      navigation('/reciept', {
         state: {
           userdata: row,
         },
       });
     }
+  };
+
+  const ExportToExcel = () => {
+    const fileName = 'ManualElectronicReport';
+    const exportType = 'xls';
+    var data = [];
+    isData.map((item, index) => {
+      data.push({
+        'Receipt No': item?.ReceiptNo,
+        Name: item?.name,
+        'Phone No': item?.phoneNo,
+        Amount: item?.elecItemDetails.reduce(
+          (n, { amount }) => parseFloat(n) + parseFloat(amount),
+          0,
+        ),
+        Address: item?.address,
+        'Donation Date': Moment(item.donation_date).format('DD/MM/YYYY'),
+        Remark: item?.elecItemDetails.map((row) => {
+          return row.type;
+        }),
+
+        donation_time: item?.donation_time,
+        voucherNo: item?.voucherNo,
+        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY hh:mm a'),
+      });
+    });
+    exportFromJSON({ data, fileName, exportType });
   };
   useEffect(() => {
     getall_donation();
@@ -126,7 +191,7 @@ const Electornic = ({ setopendashboard }) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Do you want to delete"}
+          {'Do you want to delete'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -159,6 +224,33 @@ const Electornic = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={openupdate}
+        onClose={upadteClose}
+        closeAfterTransition
+      >
+        <Fade in={openupdate}>
+          <Box
+            sx={{
+              ...openupadtestyle,
+              width: {
+                xs: '90%',
+                sm: '70%',
+                md: '60%',
+              },
+            }}
+          >
+            <ElectronicDonation
+              handleClose={upadteClose}
+              themeColor={donationColorTheme.cash}
+              updateData={updateData}
+              showUpdateBtn={showUpdateBtn}
+            />
+          </Box>
+        </Fade>
+      </Modal>
       <div className="dashboarddiv">
         <div>
           <div className="main_center_header10">
@@ -177,7 +269,7 @@ const Electornic = ({ setopendashboard }) => {
                 </select>
                 <button>Search</button>
                 <button>Reset</button>
-                <SimCardAlertIcon />
+                <SimCardAlertIcon onClick={() => ExportToExcel()} />
                 <PictureAsPdfIcon />
               </div>
               <div></div>
@@ -186,10 +278,10 @@ const Electornic = ({ setopendashboard }) => {
 
           <div className="table-div-maain">
             <Table
-              sx={{ minWidth: 650, width: "97%" }}
+              sx={{ minWidth: 650, width: '97%' }}
               aria-label="simple table"
             >
-              <TableHead style={{ background: "#F1F0F0" }}>
+              <TableHead style={{ background: '#F1F0F0' }}>
                 <TableRow>
                   <TableCell>Receipt No</TableCell>
 
@@ -208,14 +300,14 @@ const Electornic = ({ setopendashboard }) => {
                 {(rowsPerPage > 0
                   ? isData.slice(
                       page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
+                      page * rowsPerPage + rowsPerPage,
                     )
                   : isData
                 ).map((row, index) => (
                   <TableRow
                     key={row.id}
                     sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
+                      '&:last-child td, &:last-child th': { border: 0 },
                     }}
                   >
                     <TableCell>{row.ReceiptNo}</TableCell>
@@ -225,24 +317,24 @@ const Electornic = ({ setopendashboard }) => {
                     <TableCell>
                       {row.elecItemDetails.reduce(
                         (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                        0
+                        0,
                       )}
                     </TableCell>
                     <TableCell> {row.address}</TableCell>
                     <TableCell>
-                      {Moment(row.donation_date).format("DD/MM/YYYY")}
+                      {Moment(row.donation_date).format('DD/MM/YYYY')}
                     </TableCell>
                     <TableCell>
                       {row.elecItemDetails.map((row) => {
                         return (
-                          <li style={{ listStyle: "none" }}>{row.type} </li>
+                          <li style={{ listStyle: 'none' }}>{row.type} </li>
                         );
                       })}
                     </TableCell>
                     <TableCell>
                       {row.elecItemDetails.map((row) => {
                         return (
-                          <li style={{ listStyle: "none" }}>{row.remark} </li>
+                          <li style={{ listStyle: 'none' }}>{row.remark} </li>
                         );
                       })}
                     </TableCell>
@@ -252,8 +344,16 @@ const Electornic = ({ setopendashboard }) => {
                           navigation(`/admin-panel/infoElectronic/${row.id}`)
                         }
                       />
-                      <EditIcon />
-                      <PrintIcon />
+                      <EditIcon onClick={() => upadteOpen(row)} />
+                      <PrintIcon
+                        onClick={() =>
+                          navigation('/admin-panel/reports/printcontent', {
+                            state: {
+                              data: row,
+                            },
+                          })
+                        }
+                      />
                       <DownloadIcon
                         onClick={() => {
                           printreceipt(row);
@@ -278,12 +378,12 @@ const Electornic = ({ setopendashboard }) => {
                       return `Page: ${page}`;
                     }}
                     backIconButtonProps={{
-                      color: "secondary",
+                      color: 'secondary',
                     }}
-                    nextIconButtonProps={{ color: "secondary" }}
+                    nextIconButtonProps={{ color: 'secondary' }}
                     SelectProps={{
                       inputProps: {
-                        "aria-label": "page number",
+                        'aria-label': 'page number',
                       },
                     }}
                   />

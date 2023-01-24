@@ -1,13 +1,13 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import EmailIcon from "@mui/icons-material/Email";
-import CallIcon from "@mui/icons-material/Call";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { Link } from "react-router-dom";
-import Logo from "../../../assets/logo1.jpeg";
-import "./Footer.css";
+import React from 'react';
+import Typography from '@mui/material/Typography';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import EmailIcon from '@mui/icons-material/Email';
+import CallIcon from '@mui/icons-material/Call';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Link } from 'react-router-dom';
+import Logo from '../../../assets/logo1.jpeg';
+import './Footer.css';
 const Footer = () => {
   return (
     <>
@@ -29,7 +29,7 @@ const Footer = () => {
                 <br />
               </p>
               <p>
-                <LocationOnIcon /> श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि{" "}
+                <LocationOnIcon /> श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि{' '}
                 <br />
                 (सार्व, न्यास क्रं. 17 - ह) <br /> ग्राम- कुण्डलपुर, तह-पटेरा,
                 जिला दमोह 470772 (म.प्र.)
@@ -40,7 +40,7 @@ const Footer = () => {
           <div className="phonecon">
             <Typography
               variant="h6"
-              style={{ fontWeight: "400", marginBottom: "20px" }}
+              style={{ fontWeight: '400', marginBottom: '20px' }}
             >
               हमसे जुड़ें
             </Typography>
@@ -48,13 +48,17 @@ const Footer = () => {
               <Link to="/rental">facebook</Link>
               <Link to="/rental"> twitter </Link>
               <Link to="/rental"> google</Link>
+              <Link
+                to="https://instagram.com/shreebadebaba?igshid=OGQ2MjdiOTE="
+                target="_blank"
+              ></Link>
               <Link to="/https://www.youtube.com/c/ShreeBadeBaba">Youtube</Link>
             </div>
           </div>
           <div className="phonecon">
             <Typography
               variant="h6"
-              style={{ fontWeight: "400", marginBottom: "20px" }}
+              style={{ fontWeight: '400', marginBottom: '20px' }}
             >
               पृष्ठ
             </Typography>
@@ -69,18 +73,18 @@ const Footer = () => {
           <div className="phonecon">
             <Typography
               variant="h6"
-              style={{ fontWeight: "400", marginBottom: "20px" }}
+              style={{ fontWeight: '400', marginBottom: '20px' }}
             >
               हमसे संपर्क करें​
             </Typography>
             <div className="mardivcontentlink">
               <p>
-                {" "}
+                {' '}
                 <CallIcon />
                 +91-7771834880 (आवास एवं कार्यालय)
               </p>
               <p>
-                {" "}
+                {' '}
                 <CallIcon />
                 +91-7771835891 (दान एवं कबूलियत)
               </p>

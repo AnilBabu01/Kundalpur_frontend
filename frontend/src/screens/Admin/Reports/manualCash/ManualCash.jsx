@@ -61,9 +61,6 @@ const openupadtestyle = {
 
 const donationColorTheme = {
   cash: '#48a828',
-  electronic: '#e96d00',
-  cheque: '#1C82AD',
-  item: '#d6cb00',
 };
 
 const ManualCash = ({ setopendashboard }) => {
@@ -196,21 +193,16 @@ const ManualCash = ({ setopendashboard }) => {
 
   const get_donation_tyeps = () => {
     try {
-      Promise.all([
-        serverInstance('admin/donation-type?type=1', 'get'),
-        serverInstance('admin/get-receipt?type=2', 'get'),
-      ]).then(([res, item]) => {
-        if (res.status) {
-          setDonationTypes(res.data);
-          console.log(res.data);
-        } else {
-          Swal.fire('Error', 'somthing went  wrong', 'error');
-        }
-        if (item.status) {
-          setReceiptNo(item.data);
-        }
-        console.log('sss', res, item);
-      });
+      Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
+        ([res, item]) => {
+          if (res.status) {
+            setDonationTypes(res.data);
+            console.log(res.data);
+          } else {
+            Swal.fire('Error', 'somthing went  wrong', 'error');
+          }
+        },
+      );
     } catch (error) {
       Swal.fire('Error!', error, 'error');
     }

@@ -235,7 +235,7 @@ const Cheque = ({ setopendashboard }) => {
                   <TableCell>Cheque No.</TableCell>
                   <TableCell>Date Of submission</TableCell>
                   <TableCell>Name of Bank</TableCell>
-                  <TableCell>Payment id</TableCell>
+
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -273,8 +273,6 @@ const Cheque = ({ setopendashboard }) => {
                       {' '}
                       {row.NAME_OF_BANK ? row.NAME_OF_BANK : '-'}
                     </TableCell>
-
-                    <TableCell> {row.PAYMENT_ID}</TableCell>
 
                     <TableCell>
                       <RemoveRedEyeIcon

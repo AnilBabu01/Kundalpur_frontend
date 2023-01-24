@@ -59,10 +59,7 @@ const openupadtestyle = {
 };
 
 const donationColorTheme = {
-  cash: '#48a828',
-  electronic: '#e96d00',
   cheque: '#1C82AD',
-  item: '#d6cb00',
 };
 const ManualCheque = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
@@ -176,9 +173,37 @@ const ManualCheque = ({ setopendashboard }) => {
     });
     exportFromJSON({ data, fileName, exportType });
   };
+  const filterdata = async () => {
+    console.log('filter');
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+    const res = await axios.get(
+      `${backendApiUrl}user/add-elecDonation?phone=${phone}&name=${name}&type=${typedonation}&date=${typedonation}`,
+    );
+    console.log('filter data is', res);
+  };
+  const get_donation_tyeps = () => {
+    try {
+      Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
+        ([res, item]) => {
+          if (res.status) {
+            setDonationTypes(res.data);
+            console.log(res.data);
+          } else {
+            Swal.fire('Error', 'somthing went  wrong', 'error');
+          }
+        },
+      );
+    } catch (error) {
+      Swal.fire('Error!', error, 'error');
+    }
+  };
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
+    get_donation_tyeps();
   }, [showalert]);
 
   return (
@@ -243,7 +268,7 @@ const ManualCheque = ({ setopendashboard }) => {
           >
             <ChequeDonation
               handleClose={upadteClose}
-              themeColor={donationColorTheme.cash}
+              themeColor={donationColorTheme.cheque}
               updateData={updateData}
               showUpdateBtn={showUpdateBtn}
             />
@@ -256,18 +281,29 @@ const ManualCheque = ({ setopendashboard }) => {
             <h2 className="Cheque_text">Cheque donation report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
-                <input type="text" placeholder="Name" />
-                <input type="text" placeholder="Phone No" />
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={name}
+                  name="name"
+                  onChange={(e) => setname(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Phone No"
+                  value={phone}
+                  name="phone"
+                  onChange={(e) => setphone(e.target.value)}
+                />
                 <input type="date" placeholder="Date" />
                 <select name="cars" id="cars">
-                  <option value="volvo">Select option</option>
-                  <option value="saab">Cash donation</option>
-                  <option value="mercedes">cheque donation</option>
-                  <option value="audi">Electronic donation</option>
-                  <option value="audi">Item donation</option>
+                  <option>Select option</option>
+                  {donationTypes.map((item, idx) => {
+                    return <option value={item.id}>{item.type_hi}</option>;
+                  })}
                 </select>
-                <button>Search</button>
-                <button>Reset</button>
+                <button onClick={() => filterdata()}>Search</button>
+                <button onClick={() => getall_donation()}>Reset</button>
                 <SimCardAlertIcon onClick={() => ExportToExcel()} />
                 <PictureAsPdfIcon />
               </div>

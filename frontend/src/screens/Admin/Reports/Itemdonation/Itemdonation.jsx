@@ -29,6 +29,9 @@ import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DownloadIcon from '@mui/icons-material/Download';
 import exportFromJSON from 'export-from-json';
+import ItemDonation from '../../Donation/Donation/ItemDonation/index';
+import { backendApiUrl } from '../../../../config/config';
+import axios from 'axios';
 import './Itemdonation.css';
 import Moment from 'moment-js';
 const style = {
@@ -42,6 +45,22 @@ const style = {
   boxShadow: 24,
   borderRadius: '5px',
 };
+
+const openupadtestyle = {
+  position: 'absolute',
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '30%',
+  bgcolor: 'background.paper',
+  p: 2,
+  boxShadow: 24,
+  borderRadius: '5px',
+};
+
+const donationColorTheme = {
+  item: '#d6cb00',
+};
 const Itemdonation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
@@ -53,6 +72,21 @@ const Itemdonation = ({ setopendashboard }) => {
   const navigation = useNavigate();
   const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState('');
+  const [updateData, setupdateData] = useState('');
+  const [openupdate, setopenupdate] = useState(false);
+  const [showUpdateBtn, setshowUpdateBtn] = useState(true);
+  const [phone, setphone] = useState('');
+  const [date, setdate] = useState('');
+  const [typedonation, settypedonation] = useState('');
+  const [name, setname] = useState('');
+  const [donationTypes, setDonationTypes] = useState([]);
+  const upadteClose = () => {
+    setopenupdate(false);
+  };
+  const upadteOpen = (row) => {
+    setupdateData(row);
+    setopenupdate(true);
+  };
 
   const handleClickOpen1 = (id) => {
     setOpen1(true);
@@ -141,9 +175,37 @@ const Itemdonation = ({ setopendashboard }) => {
     });
     exportFromJSON({ data, fileName, exportType });
   };
+  const filterdata = async () => {
+    console.log('filter');
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+    const res = await axios.get(
+      `${backendApiUrl}user/add-elecDonation?phone=${phone}&name=${name}&type=${typedonation}&date=${typedonation}`,
+    );
+    console.log('filter data is', res);
+  };
+  const get_donation_tyeps = () => {
+    try {
+      Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
+        ([res, item]) => {
+          if (res.status) {
+            setDonationTypes(res.data);
+            console.log(res.data);
+          } else {
+            Swal.fire('Error', 'somthing went  wrong', 'error');
+          }
+        },
+      );
+    } catch (error) {
+      Swal.fire('Error!', error, 'error');
+    }
+  };
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
+    get_donation_tyeps();
   }, [showalert]);
 
   return (
@@ -188,24 +250,62 @@ const Itemdonation = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={openupdate}
+        onClose={upadteClose}
+        closeAfterTransition
+      >
+        <Fade in={openupdate}>
+          <Box
+            sx={{
+              ...openupadtestyle,
+              width: {
+                xs: '90%',
+                sm: '70%',
+                md: '60%',
+              },
+            }}
+          >
+            <ItemDonation
+              handleClose={upadteClose}
+              themeColor={donationColorTheme.item}
+              updateData={updateData}
+              showUpdateBtn={showUpdateBtn}
+            />
+          </Box>
+        </Fade>
+      </Modal>
       <div className="dashboarddiv">
         <div>
           <div className="main_center_header10">
             <h2 className="Cheque_text">Item donation report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
-                <input type="text" placeholder="Name" />
-                <input type="text" placeholder="Phone No" />
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={name}
+                  name="name"
+                  onChange={(e) => setname(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Phone No"
+                  value={phone}
+                  name="phone"
+                  onChange={(e) => setphone(e.target.value)}
+                />
                 <input type="date" placeholder="Date" />
                 <select name="cars" id="cars">
-                  <option value="volvo">Select option</option>
-                  <option value="saab">Cash donation</option>
-                  <option value="mercedes">cheque donation</option>
-                  <option value="audi">Electronic donation</option>
-                  <option value="audi">Item donation</option>
+                  <option>Select option</option>
+                  {donationTypes.map((item, idx) => {
+                    return <option value={item.id}>{item.type_hi}</option>;
+                  })}
                 </select>
-                <button>Search</button>
-                <button>Reset</button>
+                <button onClick={() => filterdata()}>Search</button>
+                <button onClick={() => getall_donation()}>Reset</button>
                 <SimCardAlertIcon onClick={() => ExportToExcel()} />
                 <PictureAsPdfIcon />
               </div>
@@ -279,6 +379,8 @@ const Itemdonation = ({ setopendashboard }) => {
                           navigation(`/admin-panel/infoElectronic/${row.id}`)
                         }
                       />
+
+                      <EditIcon onClick={() => upadteOpen(row)} />
                       <PrintIcon
                         onClick={() =>
                           navigation('/admin-panel/reports/printcontent', {
@@ -292,9 +394,6 @@ const Itemdonation = ({ setopendashboard }) => {
                         onClick={() => {
                           printreceipt(row);
                         }}
-                      />
-                      <DeleteForeverIcon
-                        onClick={() => handleClickOpen1(row.id)}
                       />
 
                       <CancelIcon onClick={() => handleOpen()} />

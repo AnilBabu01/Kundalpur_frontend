@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from "react";
-import { useReactToPrint } from "react-to-print";
-import "./cashrecipt.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import "./Reciept.css";
-import { Converter, hiIN } from "any-number-to-words";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import Moment from "moment-js";
+import React, { useEffect, useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
+import './cashrecipt.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import './Reciept.css';
+import { Converter, hiIN } from 'any-number-to-words';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import Moment from 'moment-js';
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
@@ -15,14 +15,14 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const [isData, setisData] = React.useState(null);
   const navigation = useNavigate();
   const { user } = useSelector((state) => state.userReducer);
-  console.log("data form", isData, user);
+  console.log('data form', isData, user);
   useEffect(() => {
     setshowreciept(true);
     setopendashboard(false);
     if (location.state) {
       setisData(location.state?.userdata);
     } else {
-      navigation("/");
+      navigation('/');
     }
   }, []);
   const handlePrint = useReactToPrint({
@@ -30,7 +30,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   });
 
   function printDiv() {
-    var divContents = document.getElementById("receipt").innerHTML;
+    var divContents = document.getElementById('receipt').innerHTML;
 
     a.document.write(divContents);
 
@@ -38,13 +38,13 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   }
 
   function down() {
-    console.log("cliii");
-    const input = document.getElementById("receipt");
+    console.log('cliii');
+    const input = document.getElementById('receipt');
     html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "pt", "a4", false);
-      pdf.addImage(imgData, "PNG", 0, 0, 600, 0, undefined, false);
-      pdf.save("download.pdf");
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'pt', 'a4', false);
+      pdf.addImage(imgData, 'PNG', 0, 0, 600, 0, undefined, false);
+      pdf.save('download.pdf');
     });
   }
 
@@ -97,14 +97,14 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                 <span className="leftitems">
                   <h2>दान राशि :</h2>
                   <p>
-                    {" "}
+                    {' '}
                     ₹
                     {isData && isData?.AMOUNT
                       ? isData?.AMOUNT
                       : isData &&
                         isData.elecItemDetails.reduce(
                           (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                          0
+                          0,
                         )}
                     .00/-
                   </p>
@@ -115,8 +115,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                   <h2>दिनांक :</h2>
                   <p>
                     {isData?.DATE_OF_CHEQUE
-                      ? Moment(isData?.DATE_OF_CHEQUE).format("DD-MM-YYYY")
-                      : Moment(isData?.donation_date).format("DD-MM-YYYY")}
+                      ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                      : Moment(isData?.donation_date).format('DD-MM-YYYY')}
                   </p>
                 </span>
                 <span className="rightitems">
@@ -142,11 +142,11 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
               <h2>दान राशि शब्दों में:</h2>
               <p>
                 <b>
-                  {" "}
+                  {' '}
                   {converter.toWords(isData?.AMOUNT ? isData?.AMOUNT : 0, {
                     comma: true,
                   })}
-                </b>{" "}
+                </b>{' '}
                 रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।
               </p>
             </span>
@@ -154,8 +154,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
               <h2>बोली राशि :</h2>
               <p>
                 {isData?.DATE_OF_CHEQUE
-                  ? Moment(isData?.DATE_OF_CHEQUE).format("DD-MM-YYYY")
-                  : Moment(isData?.donation_date).format("DD-MM-YYYY")}
+                  ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                  : Moment(isData?.donation_date).format('DD-MM-YYYY')}
               </p>
             </span>
             <div className="bankjankari">

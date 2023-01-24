@@ -53,6 +53,11 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                 : isData && isData.elecItemDetails[0].type}
             </p>
             <p>
+              {isData && isData?.REMARK
+                ? isData?.REMARK
+                : isData && isData.elecItemDetails[0].remark}
+            </p>
+            <p>
               {isData && isData?.AMOUNT
                 ? isData?.AMOUNT
                 : isData &&
@@ -62,6 +67,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   )}
               .00/-
             </p>
+
             <p>
               {isData && isData?.AMOUNT
                 ? converter.toWords(isData?.AMOUNT ? isData?.AMOUNT : 0, {
@@ -98,7 +104,6 @@ function PrintContent({ setopendashboard, setshowreciept }) {
         <div className="gray-text-div">
           <p>(SHASHANK ASATI)</p>
         </div>
-
         <div className="main_print_div">
           <div>
             <p>दान रसीद नं :</p>
@@ -119,6 +124,11 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                 : isData && isData.elecItemDetails[0].type}
             </p>
             <p>
+              {isData && isData?.REMARK
+                ? isData?.REMARK
+                : isData && isData.elecItemDetails[0].remark}
+            </p>
+            <p>
               {isData && isData?.AMOUNT
                 ? isData?.AMOUNT
                 : isData &&
@@ -128,6 +138,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   )}
               .00/-
             </p>
+
             <p>
               {isData && isData?.AMOUNT
                 ? converter.toWords(isData?.AMOUNT ? isData?.AMOUNT : 0, {

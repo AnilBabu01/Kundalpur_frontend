@@ -1,45 +1,47 @@
-import React, { useEffect, useState } from "react";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { serverInstance } from "../../../../API/ServerInstance";
-import Swal from "sweetalert2";
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import EditIcon from "@mui/icons-material/Edit";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Box } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import PrintIcon from "@mui/icons-material/Print";
-import Fade from "@mui/material/Fade";
-import CloseIcon from "@mui/icons-material/Close";
-import ChangeStatus from "./ChangeStatus";
-import SimCardAlertIcon from "@mui/icons-material/SimCardAlert";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import DownloadIcon from "@mui/icons-material/Download";
-import CancelIcon from "@mui/icons-material/Cancel";
-import "./Cheque.css";
+import React, { useEffect, useState } from 'react';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { serverInstance } from '../../../../API/ServerInstance';
+import Swal from 'sweetalert2';
+import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import EditIcon from '@mui/icons-material/Edit';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Box } from '@mui/material';
+import Modal from '@mui/material/Modal';
+import PrintIcon from '@mui/icons-material/Print';
+import Fade from '@mui/material/Fade';
+import CloseIcon from '@mui/icons-material/Close';
+import ChangeStatus from './ChangeStatus';
+import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import DownloadIcon from '@mui/icons-material/Download';
+import CancelIcon from '@mui/icons-material/Cancel';
+import exportFromJSON from 'export-from-json';
+import Moment from 'moment-js';
+import './Cheque.css';
 const style = {
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "30%",
-  bgcolor: "background.paper",
+  position: 'absolute',
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '30%',
+  bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
-  borderRadius: "5px",
+  borderRadius: '5px',
 };
 const Cheque = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
@@ -48,7 +50,7 @@ const Cheque = ({ setopendashboard }) => {
   const [refetch, setrefetch] = useState(false);
   const navigation = useNavigate();
   const [open1, setOpen1] = React.useState(false);
-  const [deleteId, setdeleteId] = useState("");
+  const [deleteId, setdeleteId] = useState('');
   const [open, setOpen] = React.useState(false);
   const handleClickOpen1 = (id) => {
     setOpen1(true);
@@ -63,14 +65,14 @@ const Cheque = ({ setopendashboard }) => {
     setOpen1(false);
     serverInstance(
       `admin/donation-list?id=${deleteId}&mode=${2}`,
-      "delete"
+      'delete',
     ).then((res) => {
       if (res.status === true) {
-        Swal.fire("Great!", "Cheque donation delete successfully", "success");
+        Swal.fire('Great!', 'Cheque donation delete successfully', 'success');
         setrefetch(!refetch);
         console.log(res);
       } else {
-        Swal("Error", "somthing went  wrong", "error");
+        Swal('Error', 'somthing went  wrong', 'error');
       }
       console.log(res);
     });
@@ -84,21 +86,21 @@ const Cheque = ({ setopendashboard }) => {
   const handleClose = () => setOpen(false);
 
   const getall_donation = () => {
-    serverInstance("admin/donation-list", "get").then((res) => {
+    serverInstance('admin/donation-list', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter(
-          (item) => item.MODE_OF_DONATION === "CHEQUE"
+          (item) => item.MODE_OF_DONATION === 'CHEQUE',
         );
         setisData(filterData);
       } else {
-        Swal("Error", "somthing went  wrong", "error");
+        Swal('Error', 'somthing went  wrong', 'error');
       }
       console.log(res);
     });
   };
 
   const downloadrecept = (row) => {
-    navigation("/reciept", {
+    navigation('/reciept', {
       state: {
         userdata: row,
       },
@@ -114,14 +116,37 @@ const Cheque = ({ setopendashboard }) => {
     setPage(0);
   };
   const printreceipt = (row) => {
-    if (row.active === "0") {
+    if (row.active === '0') {
     } else {
-      navigation("/reciept", {
+      navigation('/reciept', {
         state: {
           userdata: row,
         },
       });
     }
+  };
+
+  const ExportToExcel = () => {
+    const fileName = 'OnlineChequeReport';
+    const exportType = 'xls';
+    var data = [];
+    isData.map((item, index) => {
+      data.push({
+        'Receipt No': item?.RECEIPT_NO,
+        Name: item?.NAME,
+        'Phone No': item?.mobileNo,
+        Amount: item?.AMOUNT,
+        MODE_OF_DONATION: item?.MODE_OF_DONATION,
+        Address: item?.ADDRESS,
+        CHEQUE_NO: item?.CHEQUE_NO,
+        DATE_OF_CHEQUE: item?.DATE_OF_CHEQUE,
+        'Donation Date': Moment(item?.DATE_OF_DAAN).format('DD/MM/YYYY'),
+        Remark: item?.REMARK,
+        'Donation Type': item?.TYPE,
+        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY hh:mm a'),
+      });
+    });
+    exportFromJSON({ data, fileName, exportType });
   };
   useEffect(() => {
     getall_donation();
@@ -136,7 +161,7 @@ const Cheque = ({ setopendashboard }) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Do you want to delete"}
+          {'Do you want to delete'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -187,27 +212,20 @@ const Cheque = ({ setopendashboard }) => {
                 </select>
                 <button>Search</button>
                 <button>Reset</button>
-                <SimCardAlertIcon />
+                <SimCardAlertIcon onClick={() => ExportToExcel()} />
                 <PictureAsPdfIcon />
               </div>
-              <div>
-                {/* <InsertDriveFileIcon
-                style={{ width: "45px", height: "36px", color: "#e96d00" }}
-              />
-              <PostAddIcon
-                style={{ width: "45px", height: "36px", color: "#e96d00" }}
-              /> */}
-              </div>
+              <div></div>
             </div>
           </div>
 
           <div className="table-div-maain">
             {/* <TableContainer component={Paper}> */}
             <Table
-              sx={{ minWidth: 650, width: "97%" }}
+              sx={{ minWidth: 650, width: '97%' }}
               aria-label="simple table"
             >
-              <TableHead style={{ background: "#F1F0F0" }}>
+              <TableHead style={{ background: '#F1F0F0' }}>
                 <TableRow>
                   <TableCell>S.No.</TableCell>
                   <TableCell>Date</TableCell>
@@ -217,56 +235,45 @@ const Cheque = ({ setopendashboard }) => {
                   <TableCell>Cheque No.</TableCell>
                   <TableCell>Date Of submission</TableCell>
                   <TableCell>Name of Bank</TableCell>
-                  <TableCell>Payment id</TableCell>
-                  <TableCell>certificate</TableCell>
-                  <TableCell>View/Edit/Delete</TableCell>
+
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {(rowsPerPage > 0
                   ? isData.slice(
                       page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
+                      page * rowsPerPage + rowsPerPage,
                     )
                   : isData
                 ).map((row, index) => (
                   <TableRow
                     key={index}
                     sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
+                      '&:last-child td, &:last-child th': { border: 0 },
                     }}
                   >
-                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{row?.RECEIPT_NO}</TableCell>
                     <TableCell>
-                      {" "}
-                      {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
+                      {' '}
+                      {moment(row?.DATE_OF_DAAN).format('DD/MM/YYYY')}
                     </TableCell>
                     <TableCell>{row.NAME}</TableCell>
                     <TableCell> {row.MODE_OF_DONATION}</TableCell>
                     <TableCell> {row.AMOUNT}</TableCell>
                     <TableCell>
-                      {" "}
-                      {row.CHEQUE_NO ? row.CHEQUE_NO : "-"}
+                      {' '}
+                      {row.CHEQUE_NO ? row.CHEQUE_NO : '-'}
                     </TableCell>
                     <TableCell>
-                      {" "}
-                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : "-"}
+                      {' '}
+                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : '-'}
                     </TableCell>
                     <TableCell>
-                      {" "}
-                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : "-"}
+                      {' '}
+                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : '-'}
                     </TableCell>
 
-                    <TableCell> {row.PAYMENT_ID}</TableCell>
-                    <TableCell
-                      onClick={() => {
-                        downloadrecept(row);
-                      }}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {" "}
-                      downolod
-                    </TableCell>
                     <TableCell>
                       <RemoveRedEyeIcon
                         onClick={() =>
@@ -279,7 +286,15 @@ const Cheque = ({ setopendashboard }) => {
                       />
 
                       <EditIcon onClick={() => handleOpen(row.id)} />
-                      <PrintIcon />
+                      <PrintIcon
+                        onClick={() =>
+                          navigation('/admin-panel/reports/printcontent', {
+                            state: {
+                              data: row,
+                            },
+                          })
+                        }
+                      />
                       <DownloadIcon
                         onClick={() => {
                           printreceipt(row);
@@ -304,12 +319,12 @@ const Cheque = ({ setopendashboard }) => {
                       return `Page: ${page}`;
                     }}
                     backIconButtonProps={{
-                      color: "secondary",
+                      color: 'secondary',
                     }}
-                    nextIconButtonProps={{ color: "secondary" }}
+                    nextIconButtonProps={{ color: 'secondary' }}
                     SelectProps={{
                       inputProps: {
-                        "aria-label": "page number",
+                        'aria-label': 'page number',
                       },
                     }}
                     // showFirstButton={true}

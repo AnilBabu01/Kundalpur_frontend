@@ -68,7 +68,7 @@
     font-weight: 600;
   }
   .main-certificate .reciptimg{
-    height: 349px;
+
     width: 100%;
     background-image: url(/src/assets/receipt.jpg);
     background-repeat: no-repeat;
@@ -77,13 +77,14 @@
   .main-certificate .reciptimg .reciptbody{
     display: flex;
     width: 100%;
-    height: 44%;
+ 
     /*height: 156px */
     /* border-bottom: 0.1px solid; */
     /* border-top: 0.1px solid; */
     padding: 1rem 1rem 0rem 1rem;
     background: rgba(255, 255, 255, 0.582);
       opacity: 1;
+      justify-content: space-between;
   }
   .main-certificate .reciptimg .reciptbody2{
     border: 0.2px solid red;
@@ -139,7 +140,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
-    width: 65%;
+ 
   }
   .main-certificate .reciptimg .reciptbody .leftdata .leftitems{
     display: flex;
@@ -149,7 +150,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
-    width: 34%;
+
   }
   .main-certificate .reciptimg .reciptbody .rightdata .rightitems{
     display: flex;
@@ -236,7 +237,7 @@
     text-align: center;
   }
   .main-certificate .note p{
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 690;
   }
   
@@ -280,4 +281,8 @@
       padding-left: 18rem;
       padding-top: 6rem;
       
+    }
+
+    .margin_bittton{
+      margin-bottom: 1rem;
     }

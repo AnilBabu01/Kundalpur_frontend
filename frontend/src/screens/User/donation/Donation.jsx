@@ -215,6 +215,7 @@ function Donation({ setshowreciept }) {
     formData.set('ADDRESS', donationdata?.address);
     formData.set('CHEQUE_NO', donationdata?.chequeno);
     formData.set('chequeImg', cheqing);
+    formData.set('MobileNo', user?.mobileNo);
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
     }
@@ -245,6 +246,7 @@ function Donation({ setshowreciept }) {
             TYPE: donationdata?.donationtype,
             REMARK: donationdata?.Remark,
             ADDRESS: donationdata?.address,
+            MobileNo: user?.mobileNo,
           }).then((res) => {
             if (res.status === true) {
               handleOpen();
@@ -431,9 +433,9 @@ function Donation({ setshowreciept }) {
                 background: 'rgba(255, 255, 255, 0.7)',
                 backdropFilter: 'blur(2px)',
                 borderRadius: '5px',
-                '& p':{
-                  fontSize:'0.9rem'
-                }
+                '& p': {
+                  fontSize: '0.9rem',
+                },
               }}
             >
               <Box
@@ -600,11 +602,11 @@ function Donation({ setshowreciept }) {
                         onChange={onChange}
                         displayEmpty
                       >
-                         <MenuItem
+                        <MenuItem
                           sx={{
                             fontSize: 14,
                           }}
-                          value={""}
+                          value={''}
                         >
                           Please select
                         </MenuItem>
@@ -807,7 +809,7 @@ function Donation({ setshowreciept }) {
                           padding: '0.2rem 3rem',
                           borderRadius: '2rem',
                           fontSize: '1rem',
-                          fontFamily:'Inter'
+                          fontFamily: 'Inter',
                         }}
                         onClick={handlesubmit}
                       >

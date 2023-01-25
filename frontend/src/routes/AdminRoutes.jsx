@@ -25,7 +25,7 @@ import Electronic from '../screens/Admin/Reports/Electornic/Electornic';
 import Itemdonation from '../screens/Admin/Reports/Itemdonation/Itemdonation';
 import ManualCash from '../screens/Admin/Reports/manualCash/ManualCash';
 import ManualCheque from '../screens/Admin/Reports/ManualCheque/ManualCheque';
-import PrintContent from '../screens/Admin/Reports/manualCash/PrintContent';
+import PrintContent from '../screens/Admin/compoments/PrintContent';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   return (
     <>

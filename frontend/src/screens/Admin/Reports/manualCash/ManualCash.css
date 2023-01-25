@@ -6,6 +6,7 @@
 .super_main_divsss{
     padding: 5rem;
     padding-top: 9rem;
+    position: relative;
 }
 
 .gray_color_div_print_content p{

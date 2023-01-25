@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { serverInstance } from '../../../API/ServerInstance';
+import {
+  serverInstance,
+  PaymentserverInstance,
+} from '../../../API/ServerInstance';
 import badebaba from '../../../assets/badebaba.jpg';
 import { displayRazorpay } from '../../../RazorPay/RazorPay';
 import PaymentSuccessfull from './PaymentSuccessfull/PaymentSuccessfull';
@@ -225,38 +228,40 @@ function Donation({ setshowreciept }) {
       return false;
     }
     if (mode === 'Online' && amount) {
-      displayRazorpay(
-        {
-          ammount: amount,
-          userid: 1,
-        },
-        (data) => {
-          serverInstance('user/add-donation', 'POST', {
-            NAME:
-              donationdata.selected === 'yes1' && user.name
-                ? user.name
-                : donationdata.name,
-            MODE_OF_DONATION: 1,
-            AMOUNT: amount,
-            CHEQUE_NO: donationdata?.chequeno,
-            DATE_OF_CHEQUE: donationdata?.date_of_sub,
-            NAME_OF_BANK: donationdata?.name_of_bank,
-            DATE_OF_DAAN: new Date(),
-            PAYMENT_ID: data.razorpay_order_id,
-            TYPE: donationdata?.donationtype,
-            REMARK: donationdata?.Remark,
-            ADDRESS: donationdata?.address,
-            MobileNo: user?.mobileNo,
-          }).then((res) => {
-            if (res.status === true) {
-              handleOpen();
-              sendsms();
-            } else {
-              Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-            }
-          });
-        },
-      );
+      PaymentserverInstance('/ccavRequestHandler', 'POST', {
+        merchant_id: '1927947',
+        order_id: '11111',
+        currency: 'INR',
+        redirect_url: 'http://127.0.0.1:3001/ccavResponseHandler',
+        cancel_url: 'http://127.0.0.1:3001/ccavResponseHandler',
+        language: 'EN',
+        amount: '1.00',
+      }).then((res) => {
+        serverInstance('user/add-donation', 'POST', {
+          NAME:
+            donationdata.selected === 'yes1' && user.name
+              ? user.name
+              : donationdata.name,
+          MODE_OF_DONATION: 1,
+          AMOUNT: amount,
+          CHEQUE_NO: donationdata?.chequeno,
+          DATE_OF_CHEQUE: donationdata?.date_of_sub,
+          NAME_OF_BANK: donationdata?.name_of_bank,
+          DATE_OF_DAAN: new Date(),
+          PAYMENT_ID: data.razorpay_order_id,
+          TYPE: donationdata?.donationtype,
+          REMARK: donationdata?.Remark,
+          ADDRESS: donationdata?.address,
+          MobileNo: user?.mobileNo,
+        }).then((res) => {
+          if (res.status === true) {
+            handleOpen();
+            sendsms();
+          } else {
+            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+          }
+        });
+      });
     }
 
     if (

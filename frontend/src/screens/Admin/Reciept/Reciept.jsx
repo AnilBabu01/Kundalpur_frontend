@@ -96,15 +96,15 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                   <p>{isData?.ADDRESS ? isData?.ADDRESS : isData?.address}</p>
                 </span>
                 <span className="leftitems">
-                  <h2>विवरण :</h2>
+                  <h2>दान राशि शब्दों में:</h2>
                   <p>
-                    {/* {isData && isData?.REMARK
-                      ? isData?.REMARK
-                      : isData && isData.elecItemDetails[0].remark} */}
-                    बोली राशि
-                    {isData?.DATE_OF_CHEQUE
-                      ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
-                      : Moment(isData?.donation_date).format('DD-MM-YYYY')}
+                    <b>
+                      {' '}
+                      {converter.toWords(isData?.AMOUNT ? isData?.AMOUNT : 0, {
+                        comma: true,
+                      })}
+                    </b>{' '}
+                    रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।
                   </p>
                 </span>
 
@@ -148,9 +148,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                         {isData && isData?.TYPE
                           ? isData?.TYPE
                           : isData &&
-                            isData.elecItemDetails.map((item) => {
-                              return <p key={item.id}>{item.ChequeNo}</p>;
-                            })}
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails[0].ChequeNo}
                       </span>
                     </>
                   )}
@@ -163,9 +162,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                         {isData && isData?.TYPE
                           ? isData?.TYPE
                           : isData &&
-                            isData.elecItemDetails.map((item) => {
-                              return <p key={item.id}>{item.BankName}</p>;
-                            })}
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails[0].BankName}
                       </span>
                     </>
                   )}
@@ -179,23 +177,23 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                   {isData && isData?.TYPE
                     ? isData?.TYPE
                     : isData &&
-                      isData.elecItemDetails.map((item) => {
-                        return <p key={item.id}>{item.type}</p>;
-                      })}
+                      isData.elecItemDetails && (
+                        <p>{isData.elecItemDetails[0].type}</p>
+                      )}
                 </span>
               </div>
             </div>
 
             <span className="rightitems2 ">
-              <h2>दान राशि शब्दों में:</h2>
+              <h2>विवरण :</h2>
               <p>
-                <b>
-                  {' '}
-                  {converter.toWords(isData?.AMOUNT ? isData?.AMOUNT : 0, {
-                    comma: true,
-                  })}
-                </b>{' '}
-                रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।
+                {/* {isData && isData?.REMARK
+                      ? isData?.REMARK
+                      : isData && isData.elecItemDetails[0].remark} */}
+                बोली राशि
+                {isData?.DATE_OF_CHEQUE
+                  ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                  : Moment(isData?.donation_date).format('DD-MM-YYYY')}
               </p>
             </span>
 

@@ -5,7 +5,6 @@ import { Converter, hiIN } from 'any-number-to-words';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Moment from 'moment-js';
-import moment from 'moment';
 const converter = new Converter(hiIN);
 function PrintContent({ setopendashboard, setshowreciept }) {
   const location = useLocation();
@@ -39,12 +38,26 @@ function PrintContent({ setopendashboard, setshowreciept }) {
             <p className="common_margin_p">दान रसीद नं :</p>
             <p className="common_margin_p">दान दातार श्री :</p>
             <p className="common_margin_p">स्थान :</p>
-            <p className="common_margin_p">दिनांक:</p>
-            <p className="common_margin_p">विवरण :</p>
             <p className="common_margin_p">दान का मद</p>
+
             <p className="common_margin_p">मोबाइल नं:</p>
+
             <p className="common_margin_p">दान राशि अंको में:</p>
             <p className="common_margin_p">दान राशि शब्दों में:</p>
+
+            <p className="common_margin_p">
+              {isData &&
+                isData.elecItemDetails &&
+                isData.elecItemDetails[0].BankName && <>माध्यम :</>}
+            </p>
+           <p className="common_margin_p">
+
+           {isData &&
+                isData.elecItemDetails &&
+                isData.elecItemDetails[0].BankName && <> सामग्री का नाम :</>}
+      
+           </p>
+            <p className="common_margin_p">विवरण :</p>
           </div>
           <div>
             <p className="common_margin_p">
@@ -57,28 +70,11 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               {isData?.ADDRESS ? isData?.ADDRESS : isData?.address}
             </p>
             <p className="common_margin_p">
-              {isData?.DATE_OF_CHEQUE
-                ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
-                : Moment(isData?.donation_date).format('DD-MM-YYYY')}
-              ,
-              {isData &&
-                isData?.donation_time &&
-                moment(isData?.donation_time, 'HH:mm:ss').format('hh:mm A')}
-            </p>
-
-            <p className="common_margin_p">
-              {isData && isData?.REMARK
-                ? isData?.REMARK
-                : isData && isData.elecItemDetails[0].remark}
-              {isData?.DATE_OF_CHEQUE
-                ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
-                : Moment(isData?.donation_date).format('DD-MM-YYYY')}
-            </p>
-            <p className="common_margin_p">
               {isData && isData?.TYPE
                 ? isData?.TYPE
                 : isData && isData.elecItemDetails[0].type}
             </p>
+
             <p className="common_margin_p">
               {isData && isData?.MobileNo
                 ? isData?.MobileNo
@@ -115,6 +111,58 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       comma: true,
                     },
                   )}
+            </p>
+            <p className="common_margin_p">
+              {isData &&
+                isData.modeOfDonation === '1' &&
+                isData.elecItemDetails &&
+                isData.elecItemDetails[0].BankName && (
+                  <>
+                    {isData && isData?.TYPE
+                      ? isData?.TYPE
+                      : isData &&
+                        isData.elecItemDetails &&
+                        isData.elecItemDetails[0].BankName}
+                  </>
+                )}
+            </p>
+
+            <p className="common_margin_p">
+              {isData &&
+                isData.elecItemDetails &&
+                isData.elecItemDetails[0].ChequeNo && (
+                  <>
+                    {isData && isData?.TYPE
+                      ? isData?.TYPE
+                      : isData &&
+                        isData.elecItemDetails &&
+                        isData.elecItemDetails[0].BankName}
+                    {isData && isData?.TYPE
+                      ? isData?.TYPE
+                      : isData &&
+                        isData.elecItemDetails &&
+                        isData.elecItemDetails[0].ChequeNo}{' '}
+                  </>
+                )}
+            </p>
+
+            <p className="common_margin_p">
+              {isData && isData?.REMARK
+                ? isData?.REMARK
+                : isData && isData.elecItemDetails[0].remark}
+              बोली राशि
+              {isData?.DATE_OF_CHEQUE
+                ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                : Moment(isData?.donation_date).format('DD-MM-YYYY')}
+            </p>
+          </div>
+          <div>
+            <p className="common_margin_p">
+              <span className="gray-text">दिनांक:</span>
+
+              {isData?.DATE_OF_CHEQUE
+                ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                : Moment(isData?.donation_date).format('DD-MM-YYYY')}
             </p>
           </div>
         </div>
@@ -122,20 +170,17 @@ function PrintContent({ setopendashboard, setshowreciept }) {
         <div className="gray-text-div">
           <p>(SHASHANK ASATI)</p>
         </div>
-
         <div className="main_print_div">
           <div className="gray_color_div_print_content">
             <p className="common_margin_p">दान रसीद नं :</p>
             <p className="common_margin_p">दान दातार श्री :</p>
             <p className="common_margin_p">स्थान :</p>
-            <p className="common_margin_p">दिनांक:</p>
-
-            <p className="common_margin_p">विवरण :</p>
             <p className="common_margin_p">दान का मद</p>
-            <p className="common_margin_p">मोबाइल नं:</p>
 
+            <p className="common_margin_p">मोबाइल नं:</p>
             <p className="common_margin_p">दान राशि अंको में:</p>
             <p className="common_margin_p">दान राशि शब्दों में:</p>
+            <p className="common_margin_p">विवरण :</p>
           </div>
           <div>
             <p className="common_margin_p">
@@ -148,28 +193,11 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               {isData?.ADDRESS ? isData?.ADDRESS : isData?.address}
             </p>
             <p className="common_margin_p">
-              {isData?.DATE_OF_CHEQUE
-                ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
-                : Moment(isData?.donation_date).format('DD-MM-YYYY')}
-              ,
-              {isData &&
-                isData?.donation_time &&
-                moment(isData?.donation_time, 'HH:mm:ss').format('hh:mm A')}
-            </p>
-
-            <p className="common_margin_p">
-              {isData && isData?.REMARK
-                ? isData?.REMARK
-                : isData && isData.elecItemDetails[0].remark}
-              {isData?.DATE_OF_CHEQUE
-                ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
-                : Moment(isData?.donation_date).format('DD-MM-YYYY')}
-            </p>
-            <p className="common_margin_p">
               {isData && isData?.TYPE
                 ? isData?.TYPE
                 : isData && isData.elecItemDetails[0].type}
             </p>
+
             <p className="common_margin_p">
               {isData && isData?.MobileNo
                 ? isData?.MobileNo
@@ -207,9 +235,26 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     },
                   )}
             </p>
+            <p className="common_margin_p">
+              {isData && isData?.REMARK
+                ? isData?.REMARK
+                : isData && isData.elecItemDetails[0].remark}
+              बोली राशि
+              {isData?.DATE_OF_CHEQUE
+                ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                : Moment(isData?.donation_date).format('DD-MM-YYYY')}
+            </p>
+          </div>
+          <div>
+            <p className="common_margin_p">
+              <span className="gray-text">दिनांक:</span>
+
+              {isData?.DATE_OF_CHEQUE
+                ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                : Moment(isData?.donation_date).format('DD-MM-YYYY')}
+            </p>
           </div>
         </div>
-
         <div className="gray-text-div">
           <p>(SHASHANK ASATI)</p>
         </div>

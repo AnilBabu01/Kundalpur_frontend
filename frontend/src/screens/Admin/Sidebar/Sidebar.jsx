@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import { NavLink, Link } from "react-router-dom";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import React, { useState, useEffect } from 'react';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import { NavLink, Link } from 'react-router-dom';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import "./Sidebar.css";
+import './Sidebar.css';
 const Sidebar = ({ setshowsidebar }) => {
   const [showdropdownmenu1, setshowdropdownmenu1] = useState(false);
   const [showdropdownmenu2, setshowdropdownmenu2] = useState(false);
   const [showdropdownmenu3, setshowdropdownmenu3] = useState(false);
   const [showdropdownmenu4, setshowdropdownmenu4] = useState(false);
-  const [userrole, setuserrole] = useState("");
+  const [userrole, setuserrole] = useState('');
   console.log(userrole);
 
   useEffect(() => {
-    setuserrole(Number(sessionStorage.getItem("userrole")));
+    setuserrole(Number(sessionStorage.getItem('userrole')));
+    setshowdropdownmenu4(localStorage.getItem('showdropdownmenu4'));
   }, []);
 
   return (
@@ -28,11 +29,11 @@ const Sidebar = ({ setshowsidebar }) => {
             <li className="nav-item" onClick={() => setshowsidebar(!true)}>
               <NavLink
                 className={({ isActive }) =>
-                  isActive ? "active-nav-link" : "nav-link-no-dropdown"
+                  isActive ? 'active-nav-link' : 'nav-link-no-dropdown'
                 }
                 to="/admin-panel/dashboard"
               >
-                <DashboardIcon style={{ marginRight: "1rem" }} />
+                <DashboardIcon style={{ marginRight: '1rem' }} />
                 <span className="linkspan"> Dashboard</span>
               </NavLink>
             </li>
@@ -41,7 +42,13 @@ const Sidebar = ({ setshowsidebar }) => {
                 <li className="nav-item">
                   <div
                     className="nav-link"
-                    onClick={() => setshowdropdownmenu2(!showdropdownmenu2)}
+                    onClick={() => {
+                      setshowdropdownmenu2(!showdropdownmenu2);
+                      localStorage.setItem(
+                        'showdropdownmenu1',
+                        showdropdownmenu1,
+                      );
+                    }}
                   >
                     Donation
                     {showdropdownmenu2 ? (
@@ -52,11 +59,11 @@ const Sidebar = ({ setshowsidebar }) => {
                   </div>
                 </li>
 
-                <div className={showdropdownmenu2 ? "showmenu" : "hidemenu"}>
+                <div className={showdropdownmenu2 ? 'showmenu' : 'hidemenu'}>
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/donation"
                     >
@@ -68,7 +75,13 @@ const Sidebar = ({ setshowsidebar }) => {
                 <li className="nav-item">
                   <div
                     className="nav-link"
-                    onClick={() => setshowdropdownmenu3(!showdropdownmenu3)}
+                    onClick={() => {
+                      setshowdropdownmenu3(!showdropdownmenu3);
+                      localStorage.setItem(
+                        'showdropdownmenu3',
+                        showdropdownmenu3,
+                      );
+                    }}
                   >
                     Masters
                     {showdropdownmenu3 ? (
@@ -79,11 +92,11 @@ const Sidebar = ({ setshowsidebar }) => {
                   </div>
                 </li>
 
-                <div className={showdropdownmenu3 ? "showmenu" : "hidemenu"}>
+                <div className={showdropdownmenu3 ? 'showmenu' : 'hidemenu'}>
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/master"
                     >
@@ -93,7 +106,7 @@ const Sidebar = ({ setshowsidebar }) => {
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/ALLDonations"
                     >
@@ -105,7 +118,13 @@ const Sidebar = ({ setshowsidebar }) => {
                 <li className="nav-item">
                   <div
                     className="nav-link"
-                    onClick={() => setshowdropdownmenu1(!showdropdownmenu1)}
+                    onClick={() => {
+                      setshowdropdownmenu1(!showdropdownmenu1);
+                      localStorage.setItem(
+                        'showdropdownmenu1',
+                        showdropdownmenu1,
+                      );
+                    }}
                   >
                     System Management
                     {showdropdownmenu1 ? (
@@ -116,11 +135,11 @@ const Sidebar = ({ setshowsidebar }) => {
                   </div>
                 </li>
 
-                <div className={showdropdownmenu1 ? "showmenu" : "hidemenu"}>
+                <div className={showdropdownmenu1 ? 'showmenu' : 'hidemenu'}>
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/usermanagement"
                     >
@@ -130,7 +149,7 @@ const Sidebar = ({ setshowsidebar }) => {
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/rolemanagement"
                     >
@@ -141,7 +160,7 @@ const Sidebar = ({ setshowsidebar }) => {
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/vouchermanagement"
                     >
@@ -152,7 +171,7 @@ const Sidebar = ({ setshowsidebar }) => {
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/assign"
                     >
@@ -163,7 +182,7 @@ const Sidebar = ({ setshowsidebar }) => {
                 <li className="nav-item">
                   <NavLink
                     className={({ isActive }) =>
-                      isActive ? "active-nav-link" : "nav-link-no-dropdown"
+                      isActive ? 'active-nav-link' : 'nav-link-no-dropdown'
                     }
                     to="/admin-panel/donatedusers"
                   >
@@ -173,7 +192,13 @@ const Sidebar = ({ setshowsidebar }) => {
                 <li className="nav-item">
                   <div
                     className="nav-link"
-                    onClick={() => setshowdropdownmenu4(!showdropdownmenu4)}
+                    onClick={() => {
+                      setshowdropdownmenu4(!showdropdownmenu4);
+                      localStorage.setItem(
+                        'showdropdownmenu4',
+                        showdropdownmenu4,
+                      );
+                    }}
                   >
                     Reports
                     {showdropdownmenu4 ? (
@@ -184,11 +209,11 @@ const Sidebar = ({ setshowsidebar }) => {
                   </div>
                 </li>
 
-                <div className={showdropdownmenu4 ? "showmenu" : "hidemenu"}>
+                <div className={showdropdownmenu4 ? 'showmenu' : 'hidemenu'}>
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/reports/manualcash"
                     >
@@ -198,7 +223,7 @@ const Sidebar = ({ setshowsidebar }) => {
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/reports/electronic"
                     >
@@ -208,7 +233,7 @@ const Sidebar = ({ setshowsidebar }) => {
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/reports/manualcheque"
                     >
@@ -218,7 +243,7 @@ const Sidebar = ({ setshowsidebar }) => {
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/reports/manualitem"
                     >
@@ -228,7 +253,7 @@ const Sidebar = ({ setshowsidebar }) => {
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/reports/cheque"
                     >
@@ -238,7 +263,7 @@ const Sidebar = ({ setshowsidebar }) => {
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/reports/online"
                     >
@@ -250,7 +275,7 @@ const Sidebar = ({ setshowsidebar }) => {
                 <li className="nav-item">
                   <NavLink
                     className={({ isActive }) =>
-                      isActive ? "active-nav-link" : "nav-link-no-dropdown"
+                      isActive ? 'active-nav-link' : 'nav-link-no-dropdown'
                     }
                     to="/admin-panel/roombooking"
                   >
@@ -276,11 +301,11 @@ const Sidebar = ({ setshowsidebar }) => {
                   </div>
                 </li>
 
-                <div className={showdropdownmenu2 ? "showmenu" : "hidemenu"}>
+                <div className={showdropdownmenu2 ? 'showmenu' : 'hidemenu'}>
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/donation"
                     >
@@ -291,7 +316,7 @@ const Sidebar = ({ setshowsidebar }) => {
                 <li className="nav-item">
                   <NavLink
                     className={({ isActive }) =>
-                      isActive ? "active-nav-link" : "nav-link"
+                      isActive ? 'active-nav-link' : 'nav-link'
                     }
                     to="/admin-panel/request"
                   >
@@ -312,11 +337,11 @@ const Sidebar = ({ setshowsidebar }) => {
                   </div>
                 </li>
 
-                <div className={showdropdownmenu4 ? "showmenu" : "hidemenu"}>
+                <div className={showdropdownmenu4 ? 'showmenu' : 'hidemenu'}>
                   <li className="nav-item">
                     <NavLink
                       className={({ isActive }) =>
-                        isActive ? "active-nav-link" : "nav-link"
+                        isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/reports/electronic"
                     >

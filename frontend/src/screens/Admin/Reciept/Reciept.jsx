@@ -8,6 +8,7 @@ import { Converter, hiIN } from 'any-number-to-words';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Moment from 'moment-js';
+import moment from 'moment';
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
@@ -95,9 +96,21 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                   <p>{isData?.ADDRESS ? isData?.ADDRESS : isData?.address}</p>
                 </span>
                 <span className="leftitems">
+                  <h2>दान राशि शब्दों में:</h2>
+                  <p>
+                    <b>
+                      {' '}
+                      {converter.toWords(isData?.AMOUNT ? isData?.AMOUNT : 0, {
+                        comma: true,
+                      })}
+                    </b>{' '}
+                    रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।
+                  </p>
+                </span>
+
+                <span className="leftitems margin_bittton">
                   <h2>दान राशि :</h2>
                   <p>
-                    {' '}
                     ₹
                     {isData && isData?.AMOUNT
                       ? isData?.AMOUNT
@@ -117,12 +130,44 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                     {isData?.DATE_OF_CHEQUE
                       ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
                       : Moment(isData?.donation_date).format('DD-MM-YYYY')}
+                    ,
+                    {isData?.DATE_OF_CHEQUE
+                      ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                      : moment(isData?.donation_time, 'HH:mm:ss').format(
+                          'hh:mm A',
+                        )}
                   </p>
                 </span>
-                <span className="rightitems">
-                  <h2>&nbsp;</h2>
-                  <p>&nbsp;</p>
-                </span>
+
+                {isData &&
+                  isData.elecItemDetails &&
+                  isData.elecItemDetails[0].ChequeNo && (
+                    <>
+                      <span className="rightitems">
+                        <h2>माध्यम :</h2>
+                        {isData && isData?.TYPE
+                          ? isData?.TYPE
+                          : isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails[0].ChequeNo}
+                      </span>
+                    </>
+                  )}
+                {isData &&
+                  isData.elecItemDetails &&
+                  isData.elecItemDetails[0].BankName && (
+                    <>
+                      <span className="rightitems">
+                        <h2>बैंक का नाम:</h2>
+                        {isData && isData?.TYPE
+                          ? isData?.TYPE
+                          : isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails[0].BankName}
+                      </span>
+                    </>
+                  )}
+
                 <span className="rightitems">
                   <h2>मोबाइल नं :</h2>
                   <p>{isData?.phoneNo ? isData?.phoneNo : user?.mobileNo}</p>
@@ -132,32 +177,26 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                   {isData && isData?.TYPE
                     ? isData?.TYPE
                     : isData &&
-                      isData.elecItemDetails.map((item) => {
-                        return <p key={item.id}>{item.type}</p>;
-                      })}
+                      isData.elecItemDetails && (
+                        <p>{isData.elecItemDetails[0].type}</p>
+                      )}
                 </span>
               </div>
             </div>
-            <span className="rightitems2">
-              <h2>दान राशि शब्दों में:</h2>
+
+            <span className="rightitems2 ">
+              <h2>विवरण :</h2>
               <p>
-                <b>
-                  {' '}
-                  {converter.toWords(isData?.AMOUNT ? isData?.AMOUNT : 0, {
-                    comma: true,
-                  })}
-                </b>{' '}
-                रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।
-              </p>
-            </span>
-            <span className="rightitems3">
-              <h2>बोली राशि :</h2>
-              <p>
+                {/* {isData && isData?.REMARK
+                      ? isData?.REMARK
+                      : isData && isData.elecItemDetails[0].remark} */}
+                बोली राशि
                 {isData?.DATE_OF_CHEQUE
                   ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
                   : Moment(isData?.donation_date).format('DD-MM-YYYY')}
               </p>
             </span>
+
             <div className="bankjankari">
               <h3>बैंक द्वारा राशि भेजने संबंधी जानकारी</h3>
             </div>
@@ -181,6 +220,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
               </div>
             </div>
           </div>
+
           <div className="note">
             <p>
               नोट: 1 यहां अतिशयकारी" बड़े बाबा" की 1500 वर्ष प्राचीन प्रतिमा है

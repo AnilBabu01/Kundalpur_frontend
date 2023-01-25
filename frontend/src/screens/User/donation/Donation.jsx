@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { serverInstance } from '../../../API/ServerInstance';
+import {
+  serverInstance,
+  PaymentserverInstance,
+} from '../../../API/ServerInstance';
 import badebaba from '../../../assets/badebaba.jpg';
 import { displayRazorpay } from '../../../RazorPay/RazorPay';
 import PaymentSuccessfull from './PaymentSuccessfull/PaymentSuccessfull';
@@ -215,6 +218,7 @@ function Donation({ setshowreciept }) {
     formData.set('ADDRESS', donationdata?.address);
     formData.set('CHEQUE_NO', donationdata?.chequeno);
     formData.set('chequeImg', cheqing);
+    formData.set('MobileNo', user?.mobileNo);
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
     }
@@ -224,37 +228,40 @@ function Donation({ setshowreciept }) {
       return false;
     }
     if (mode === 'Online' && amount) {
-      displayRazorpay(
-        {
-          ammount: amount,
-          userid: 1,
-        },
-        (data) => {
-          serverInstance('user/add-donation', 'POST', {
-            NAME:
-              donationdata.selected === 'yes1' && user.name
-                ? user.name
-                : donationdata.name,
-            MODE_OF_DONATION: 1,
-            AMOUNT: amount,
-            CHEQUE_NO: donationdata?.chequeno,
-            DATE_OF_CHEQUE: donationdata?.date_of_sub,
-            NAME_OF_BANK: donationdata?.name_of_bank,
-            DATE_OF_DAAN: new Date(),
-            PAYMENT_ID: data.razorpay_order_id,
-            TYPE: donationdata?.donationtype,
-            REMARK: donationdata?.Remark,
-            ADDRESS: donationdata?.address,
-          }).then((res) => {
-            if (res.status === true) {
-              handleOpen();
-              sendsms();
-            } else {
-              Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-            }
-          });
-        },
-      );
+      PaymentserverInstance('/ccavRequestHandler', 'POST', {
+        merchant_id: '1927947',
+        order_id: '11111',
+        currency: 'INR',
+        redirect_url: 'http://127.0.0.1:3001/ccavResponseHandler',
+        cancel_url: 'http://127.0.0.1:3001/ccavResponseHandler',
+        language: 'EN',
+        amount: '1.00',
+      }).then((res) => {
+        serverInstance('user/add-donation', 'POST', {
+          NAME:
+            donationdata.selected === 'yes1' && user.name
+              ? user.name
+              : donationdata.name,
+          MODE_OF_DONATION: 1,
+          AMOUNT: amount,
+          CHEQUE_NO: donationdata?.chequeno,
+          DATE_OF_CHEQUE: donationdata?.date_of_sub,
+          NAME_OF_BANK: donationdata?.name_of_bank,
+          DATE_OF_DAAN: new Date(),
+          PAYMENT_ID: data.razorpay_order_id,
+          TYPE: donationdata?.donationtype,
+          REMARK: donationdata?.Remark,
+          ADDRESS: donationdata?.address,
+          MobileNo: user?.mobileNo,
+        }).then((res) => {
+          if (res.status === true) {
+            handleOpen();
+            sendsms();
+          } else {
+            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+          }
+        });
+      });
     }
 
     if (
@@ -431,9 +438,9 @@ function Donation({ setshowreciept }) {
                 background: 'rgba(255, 255, 255, 0.7)',
                 backdropFilter: 'blur(2px)',
                 borderRadius: '5px',
-                '& p':{
-                  fontSize:'0.9rem'
-                }
+                '& p': {
+                  fontSize: '0.9rem',
+                },
               }}
             >
               <Box
@@ -600,11 +607,11 @@ function Donation({ setshowreciept }) {
                         onChange={onChange}
                         displayEmpty
                       >
-                         <MenuItem
+                        <MenuItem
                           sx={{
                             fontSize: 14,
                           }}
-                          value={""}
+                          value={''}
                         >
                           Please select
                         </MenuItem>
@@ -807,7 +814,7 @@ function Donation({ setshowreciept }) {
                           padding: '0.2rem 3rem',
                           borderRadius: '2rem',
                           fontSize: '1rem',
-                          fontFamily:'Inter'
+                          fontFamily: 'Inter',
                         }}
                         onClick={handlesubmit}
                       >

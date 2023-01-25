@@ -18,7 +18,7 @@ import Modal from '@mui/material/Modal';
 import PrintIcon from '@mui/icons-material/Print';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
-import Cancel from './Cancel';
+import Cancel from '../../compoments/Cancel';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -29,6 +29,7 @@ import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DownloadIcon from '@mui/icons-material/Download';
+import ClearIcon from '@mui/icons-material/Clear';
 import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
 import CashDonation from '../../Donation/Donation/CashDonation';
@@ -70,8 +71,6 @@ const ManualCash = ({ setopendashboard }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [showalert, setshowalert] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState('');
   const [updateData, setupdateData] = useState('');
@@ -79,9 +78,15 @@ const ManualCash = ({ setopendashboard }) => {
   const [showUpdateBtn, setshowUpdateBtn] = useState(true);
   const [phone, setphone] = useState('');
   const [date, setdate] = useState('');
-  const [typedonation, settypedonation] = useState('');
+  const [typedonation, settypedonation] = useState(2);
   const [name, setname] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
+  const [updateId, setupdateId] = useState('');
+  const handleOpen = (id) => {
+    setupdateId(id);
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
   const upadteClose = () => {
     setopenupdate(false);
   };
@@ -186,9 +191,10 @@ const ManualCash = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/add-elecDonation?phone=${phone}&name=${name}&type=${typedonation}&date=${typedonation}`,
+      `${backendApiUrl}user/add-elecDonation?phone=${phone}&name=${name}&type=${typedonation}&date=${date}`,
     );
     console.log('filter data is', res);
+    setisData([]);
   };
 
   const get_donation_tyeps = () => {
@@ -211,7 +217,7 @@ const ManualCash = ({ setopendashboard }) => {
     getall_donation();
     setopendashboard(true);
     get_donation_tyeps();
-  }, [showalert, openupdate]);
+  }, [showalert, openupdate, open]);
 
   return (
     <>
@@ -250,7 +256,7 @@ const ManualCash = ({ setopendashboard }) => {
                 <h2>Cancel electronic donation </h2>
                 <CloseIcon onClick={() => handleClose()} />
               </div>
-              <Cancel handleClose={handleClose} />
+              <Cancel handleClose={handleClose} updateId={updateId} type={2} />
             </div>
           </Box>
         </Fade>
@@ -397,13 +403,17 @@ const ManualCash = ({ setopendashboard }) => {
                           })
                         }
                       />
+                      {row.isActive ? (
+                        <DownloadIcon
+                          onClick={() => {
+                            printreceipt(row);
+                          }}
+                        />
+                      ) : (
+                        <ClearIcon />
+                      )}
 
-                      <DownloadIcon
-                        onClick={() => {
-                          printreceipt(row);
-                        }}
-                      />
-                      <CancelIcon onClick={() => handleOpen()} />
+                      <CancelIcon onClick={() => handleOpen(row.id)} />
                     </TableCell>
                   </TableRow>
                 ))}

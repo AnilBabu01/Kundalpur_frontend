@@ -134,7 +134,7 @@ const Cheque = ({ setopendashboard }) => {
       data.push({
         'Receipt No': item?.RECEIPT_NO,
         Name: item?.NAME,
-        'Phone No': item?.mobileNo,
+        'Phone No': item?.MobileNo,
         Amount: item?.AMOUNT,
         MODE_OF_DONATION: item?.MODE_OF_DONATION,
         Address: item?.ADDRESS,
@@ -297,10 +297,9 @@ const Cheque = ({ setopendashboard }) => {
                       />
                       <DownloadIcon
                         onClick={() => {
-                          printreceipt(row);
+                          downloadrecept(row);
                         }}
                       />
-                      <CancelIcon />
                     </TableCell>
                   </TableRow>
                 ))}

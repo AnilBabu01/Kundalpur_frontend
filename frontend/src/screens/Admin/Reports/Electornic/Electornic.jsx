@@ -18,7 +18,7 @@ import Modal from '@mui/material/Modal';
 import PrintIcon from '@mui/icons-material/Print';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
-import Cancel from './Cancel';
+import Cancel from '../../compoments/Cancel';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -28,6 +28,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DownloadIcon from '@mui/icons-material/Download';
+import ClearIcon from '@mui/icons-material/Clear';
 import exportFromJSON from 'export-from-json';
 import ElectronicDonation from '../../Donation/Donation/ElectronicDonation/ElectronicDonation';
 import { backendApiUrl } from '../../../../config/config';
@@ -67,8 +68,6 @@ const Electornic = ({ setopendashboard }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [showalert, setshowalert] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const navigation = useNavigate();
   const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState('');
@@ -80,6 +79,12 @@ const Electornic = ({ setopendashboard }) => {
   const [typedonation, settypedonation] = useState('');
   const [name, setname] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
+  const [updateId, setupdateId] = useState('');
+  const handleOpen = (id) => {
+    setOpen(true);
+    setupdateId(id);
+  };
+  const handleClose = () => setOpen(false);
   const upadteClose = () => {
     setopenupdate(false);
   };
@@ -205,7 +210,7 @@ const Electornic = ({ setopendashboard }) => {
     getall_donation();
     setopendashboard(true);
     get_donation_tyeps();
-  }, [showalert]);
+  }, [showalert, open]);
 
   return (
     <>
@@ -244,7 +249,7 @@ const Electornic = ({ setopendashboard }) => {
                 <h2>Cancel electronic donation </h2>
                 <CloseIcon onClick={() => handleClose()} />
               </div>
-              <Cancel handleClose={handleClose} />
+              <Cancel handleClose={handleClose} updateId={updateId} type={1} />
             </div>
           </Box>
         </Fade>
@@ -390,12 +395,16 @@ const Electornic = ({ setopendashboard }) => {
                           })
                         }
                       />
-                      <DownloadIcon
-                        onClick={() => {
-                          printreceipt(row);
-                        }}
-                      />
-                      <CancelIcon onClick={() => handleOpen()} />
+                      {row.isActive ? (
+                        <DownloadIcon
+                          onClick={() => {
+                            printreceipt(row);
+                          }}
+                        />
+                      ) : (
+                        <ClearIcon />
+                      )}
+                      <CancelIcon onClick={() => handleOpen(row.id)} />
                     </TableCell>
                   </TableRow>
                 ))}

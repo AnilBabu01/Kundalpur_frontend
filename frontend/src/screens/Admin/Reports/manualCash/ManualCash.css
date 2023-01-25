@@ -5,6 +5,8 @@
 
 .super_main_divsss{
     padding: 5rem;
+    padding-top: 9rem;
+    position: relative;
 }
 
 .gray_color_div_print_content p{
@@ -19,11 +21,14 @@
 .gray-text-div {
     display: flex;
     flex-direction: row-reverse;
-    margin-top: 2rem;
-    margin-bottom: 7rem;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
    
 }
 .gray-text-div  p{
     color: gray;
     font-weight: 300; 
+}
+.common_margin_p{
+    margin-bottom: 1rem;
 }

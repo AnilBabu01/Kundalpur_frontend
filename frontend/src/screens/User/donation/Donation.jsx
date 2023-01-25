@@ -192,6 +192,7 @@ function Donation({ setshowreciept }) {
   const auth = useAuth();
   const { user } = useSelector((state) => state.userReducer);
   console.log(user);
+
   if (donationdata.selected === 'yes1' && !user.name) {
     nagivate('/profile');
   }
@@ -227,6 +228,7 @@ function Donation({ setshowreciept }) {
       nagivate('/login');
       return false;
     }
+
     if (mode === 'Online' && amount) {
       PaymentserverInstance('/ccavRequestHandler', 'POST', {
         merchant_id: '1927947',
@@ -237,6 +239,7 @@ function Donation({ setshowreciept }) {
         language: 'EN',
         amount: '1.00',
       }).then((res) => {
+        console.log(JSON.parse(res));
         serverInstance('user/add-donation', 'POST', {
           NAME:
             donationdata.selected === 'yes1' && user.name

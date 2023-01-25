@@ -41,22 +41,40 @@ function PrintContent({ setopendashboard, setshowreciept }) {
             <p className="common_margin_p">दान का मद</p>
 
             <p className="common_margin_p">मोबाइल नं:</p>
+            {isData &&
+            isData.elecItemDetails &&
+            isData.elecItemDetails[0].itemType ? (
+              <>
+                <p className="common_margin_p">
+                  {isData &&
+                    isData.elecItemDetails &&
+                    isData.elecItemDetails[0].quantity && <>संख्या : :</>}
+                </p>
+                <p className="common_margin_p">
+                  {isData &&
+                    isData.elecItemDetails &&
+                    isData.elecItemDetails[0].itemType && (
+                      <> सामग्री का नाम :</>
+                    )}
+                </p>
+                <p className="common_margin_p">
+                  {isData &&
+                    isData.elecItemDetails &&
+                    isData.elecItemDetails[0].itemType && <>अंदाजन कीमत ::</>}
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="common_margin_p">
+                  {isData &&
+                    isData.elecItemDetails &&
+                    isData.elecItemDetails[0].BankName && <>माध्यम :</>}
+                </p>
+                <p className="common_margin_p">दान राशि अंको में:</p>
+                <p className="common_margin_p">दान राशि शब्दों में:</p>
+              </>
+            )}
 
-            <p className="common_margin_p">दान राशि अंको में:</p>
-            <p className="common_margin_p">दान राशि शब्दों में:</p>
-
-            <p className="common_margin_p">
-              {isData &&
-                isData.elecItemDetails &&
-                isData.elecItemDetails[0].BankName && <>माध्यम :</>}
-            </p>
-           <p className="common_margin_p">
-
-           {isData &&
-                isData.elecItemDetails &&
-                isData.elecItemDetails[0].BankName && <> सामग्री का नाम :</>}
-      
-           </p>
             <p className="common_margin_p">विवरण :</p>
           </div>
           <div>
@@ -80,38 +98,73 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                 ? isData?.MobileNo
                 : isData && isData.phoneNo}
             </p>
-            <p className="common_margin_p">
-              {isData && isData?.AMOUNT
-                ? isData?.AMOUNT
-                : isData &&
-                  isData.elecItemDetails.reduce(
-                    (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                    0,
-                  )}
-              .00/-
-            </p>
 
-            <p className="common_margin_p">
-              {isData && isData?.AMOUNT
-                ? converter.toWords(isData?.AMOUNT ? isData?.AMOUNT : 0, {
-                    comma: true,
-                  })
-                : isData &&
-                  converter.toWords(
-                    isData.elecItemDetails.reduce(
-                      (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                      0,
-                    )
-                      ? isData.elecItemDetails.reduce(
+            {isData &&
+            isData.elecItemDetails &&
+            isData.elecItemDetails[0].itemType ? (
+              <>
+                <p className="common_margin_p">
+                  {isData &&
+                    isData.elecItemDetails &&
+                    isData.elecItemDetails[0].BankName && <>माध्यम :</>}
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="common_margin_p">
+                  {isData &&
+                    isData.elecItemDetails &&
+                    isData.elecItemDetails[0].ChequeNo && (
+                      <>
+                        {isData && isData?.TYPE
+                          ? isData?.TYPE
+                          : isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails[0].BankName}
+                        {isData && isData?.TYPE
+                          ? isData?.TYPE
+                          : isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails[0].ChequeNo}{' '}
+                      </>
+                    )}
+                </p>
+                <p className="common_margin_p">
+                  {isData && isData?.AMOUNT
+                    ? isData?.AMOUNT
+                    : isData &&
+                      isData.elecItemDetails.reduce(
+                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
+                        0,
+                      )}
+                  .00/-
+                </p>
+
+                <p className="common_margin_p">
+                  {isData && isData?.AMOUNT
+                    ? converter.toWords(isData?.AMOUNT ? isData?.AMOUNT : 0, {
+                        comma: true,
+                      })
+                    : isData &&
+                      converter.toWords(
+                        isData.elecItemDetails.reduce(
                           (n, { amount }) => parseFloat(n) + parseFloat(amount),
                           0,
                         )
-                      : 0,
-                    {
-                      comma: true,
-                    },
-                  )}
-            </p>
+                          ? isData.elecItemDetails.reduce(
+                              (n, { amount }) =>
+                                parseFloat(n) + parseFloat(amount),
+                              0,
+                            )
+                          : 0,
+                        {
+                          comma: true,
+                        },
+                      )}
+                </p>
+              </>
+            )}
+
             <p className="common_margin_p">
               {isData &&
                 isData.modeOfDonation === '1' &&
@@ -126,26 +179,25 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   </>
                 )}
             </p>
+            {isData &&
+              isData.elecItemDetails &&
+              isData.elecItemDetails[0].itemType && (
+                <p className="common_margin_p">
+                  {isData &&
+                    isData.elecItemDetails &&
+                    isData.elecItemDetails[0].quantity}
+                </p>
+              )}
 
-            <p className="common_margin_p">
-              {isData &&
-                isData.elecItemDetails &&
-                isData.elecItemDetails[0].ChequeNo && (
-                  <>
-                    {isData && isData?.TYPE
-                      ? isData?.TYPE
-                      : isData &&
-                        isData.elecItemDetails &&
-                        isData.elecItemDetails[0].BankName}
-                    {isData && isData?.TYPE
-                      ? isData?.TYPE
-                      : isData &&
-                        isData.elecItemDetails &&
-                        isData.elecItemDetails[0].ChequeNo}{' '}
-                  </>
-                )}
-            </p>
-
+            {isData &&
+              isData.elecItemDetails &&
+              isData.elecItemDetails[0].itemType && (
+                <p className="common_margin_p">
+                  {isData &&
+                    isData.elecItemDetails &&
+                    isData.elecItemDetails[0].itemType}
+                </p>
+              )}
             <p className="common_margin_p">
               {isData && isData?.REMARK
                 ? isData?.REMARK

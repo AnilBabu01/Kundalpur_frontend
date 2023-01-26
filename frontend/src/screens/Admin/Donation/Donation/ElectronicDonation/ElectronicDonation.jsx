@@ -56,7 +56,7 @@ const ElectronicDonation = ({
   const [newMember, setNewMember] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
-
+  const [genderp, setgenderp] = useState('श्री');
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -79,6 +79,20 @@ const ElectronicDonation = ({
       },
     ]);
   }
+  const genderoptiins = [
+    {
+      id: 2,
+      gender: 'श्रीमति',
+    },
+    {
+      id: 3,
+      gender: 'मे.',
+    },
+    {
+      id: 4,
+      gender: 'कु.',
+    },
+  ];
   function removeDonationItem(item) {
     setDonationItems(
       donationItems.filter((donationItem) => donationItem !== item),
@@ -357,6 +371,40 @@ const ElectronicDonation = ({
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="full-name">
+                <Select
+                  required
+                  sx={{
+                    width: '20%',
+                    fontSize: 14,
+                    '& .MuiSelect-select': {
+                      padding: '1px',
+                    },
+                  }}
+                  value={genderp}
+                  onChange={(e) => setgenderp(e.target.value)}
+                >
+                  <MenuItem
+                    sx={{
+                      fontSize: 14,
+                    }}
+                    value={'श्री'}
+                  >
+                    श्री
+                  </MenuItem>
+                  {genderoptiins.map((item, idx) => {
+                    return (
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        key={item.id}
+                        value={item.gender}
+                      >
+                        {item.gender}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
                 Full Name
               </CustomInputLabel>
               <CustomInput

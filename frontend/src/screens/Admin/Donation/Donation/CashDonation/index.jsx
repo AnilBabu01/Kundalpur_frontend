@@ -181,6 +181,7 @@ const CashDonation = ({
       ) {
         const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
           name: fullName,
+          gender: genderp,
           phoneNo: mobileNo,
           address: address,
           prefix: 'CASH',

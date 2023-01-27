@@ -60,14 +60,23 @@ function PrintContent({ setopendashboard, setshowreciept }) {
           <div>
             <div>
               <p className="common_margin_p">
-                <span className="gray-text">श्री -</span>
+                <span className="gray-text">दान दातार -</span>
+                {isData?.gender}
                 {isData?.NAME ? isData?.NAME : isData?.name}
               </p>
             </div>
           </div>
         </div>
+
         <div>
-          {!isData?.isActive && (
+          {isData?.active === '0' && (
+            <>
+              <div className="cancel_text1">
+                <p>Cancelled </p>
+              </div>
+            </>
+          )}
+          {isData?.isActive === false && (
             <>
               <div className="cancel_text1">
                 <p>Cancelled </p>
@@ -126,7 +135,15 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   ? isData?.MobileNo
                   : isData && isData.phoneNo}
               </p>
-
+              {isData && isData.CHEQUE_NO && (
+                <>
+                  <p className="common_margin_p">
+                    <span className="gray-text">माध्यम -</span>
+                    {isData?.CHEQUE_NO}
+                    {isData?.NAME_OF_BANK}
+                  </p>
+                </>
+              )}
               {isData &&
                 isData.elecItemDetails &&
                 isData.elecItemDetails[0].ChequeNo && (
@@ -220,7 +237,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               ,रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।
             </p>
           </div>
-          <div className="gray-text-div">
+          <div className="gray-text-div extra_bottom_margin">
             <p>(SHASHANK ASATI)</p>
           </div>
           <div className="top_name_date">
@@ -247,14 +264,22 @@ function PrintContent({ setopendashboard, setshowreciept }) {
           <div>
             <div>
               <p className="common_margin_p">
-                <span className="gray-text">श्री -</span>
+                <span className="gray-text">दान दातार -</span>
+                {isData?.gender}
                 {isData?.NAME ? isData?.NAME : isData?.name}
               </p>
             </div>
           </div>
         </div>
         <div>
-          {!isData?.isActive && (
+          {isData?.active === '0' && (
+            <>
+              <div className="cancel_text1">
+                <p>Cancelled </p>
+              </div>
+            </>
+          )}
+          {isData?.isActive === false && (
             <>
               <div className="cancel_text1">
                 <p>Cancelled </p>
@@ -313,7 +338,15 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   ? isData?.MobileNo
                   : isData && isData.phoneNo}
               </p>
-
+              {isData && isData.CHEQUE_NO && (
+                <>
+                  <p className="common_margin_p">
+                    <span className="gray-text">माध्यम -</span>
+                    {isData?.CHEQUE_NO}
+                    {isData?.NAME_OF_BANK}
+                  </p>
+                </>
+              )}
               {isData &&
                 isData.elecItemDetails &&
                 isData.elecItemDetails[0].ChequeNo && (

@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import ChequeSuccessfull from "../donation/chequeSuccessfull/ChequeSuccessfull";
-import { Box } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import { useDispatch } from "react-redux";
-import Swal from "sweetalert2";
-import moment from "moment";
-import "./DonationHistory.css";
-import { useNavigate } from "react-router-dom";
-import { serverInstance } from "../../../API/ServerInstance";
+import React, { useState, useEffect } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
+import ChequeSuccessfull from '../donation/chequeSuccessfull/ChequeSuccessfull';
+import { Box } from '@mui/material';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
+import moment from 'moment';
+import './DonationHistory.css';
+import { useNavigate } from 'react-router-dom';
+import { serverInstance } from '../../../API/ServerInstance';
 const style = {
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  borderRadius: "12px",
-  bgcolor: "background.paper",
+  position: 'absolute',
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  borderRadius: '12px',
+  bgcolor: 'background.paper',
 
   boxShadow: 24,
   p: 2,
@@ -50,25 +50,25 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
   }, []);
 
   const gettable = () => {
-    serverInstance("user/donation-list", "get").then((res) => {
+    serverInstance('user/donation-list', 'get').then((res) => {
       if (res.status === 404) {
-        Swal.fire("Error!", "please authenticate", "error");
+        Swal.fire('Error!', 'please authenticate', 'error');
         return false;
       }
       try {
         setisrow(res.donation);
       } catch (error) {
-        Swal.fire("Error!", "please authenticate", "error");
+        Swal.fire('Error!', 'please authenticate', 'error');
       }
     });
   };
 
   const downloadrecept = (row) => {
-    if (row.active === "0") {
+    if (row.active === '0') {
       handleOpen1();
       setuseindonationhistory(true);
     } else {
-      navigation("/reciept", {
+      navigation('/reciept', {
         state: {
           userdata: row,
         },
@@ -113,7 +113,7 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
 
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead style={{ background: "#F1F0F0" }}>
+                <TableHead style={{ background: '#F1F0F0' }}>
                   <TableRow>
                     <TableCell align="left">DATE</TableCell>
                     <TableCell align="left">NAME</TableCell>
@@ -132,43 +132,43 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                     ? isrow &&
                       isrow.slice(
                         page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
+                        page * rowsPerPage + rowsPerPage,
                       )
-                    : isrow
+                    : isrow && isrow
                   ).map((row, index) => (
                     <TableRow
                       key={index}
                       sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
+                        '&:last-child td, &:last-child th': { border: 0 },
                       }}
                     >
-                      <div style={{ display: "none" }}>
+                      <div style={{ display: 'none' }}>
                         {(status = row.active)}
                       </div>
                       <TableCell align="left">
-                        {moment(row?.DATE_OF_DAAN).format("DD/MM/YYYY")}
+                        {moment(row?.DATE_OF_DAAN).format('DD/MM/YYYY')}
                       </TableCell>
                       <TableCell align="left">{row.NAME}</TableCell>
                       <TableCell align="left">{row.MODE_OF_DONATION}</TableCell>
                       <TableCell align="left">{row.AMOUNT}</TableCell>
                       <TableCell align="left">
-                        {row.CHEQUE_NO ? row.CHEQUE_NO : "-"}
+                        {row.CHEQUE_NO ? row.CHEQUE_NO : '-'}
                       </TableCell>
                       <TableCell align="left">
-                        {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : "-"}
+                        {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : '-'}
                       </TableCell>
                       <TableCell align="left">
-                        {row.NAME_OF_BANK ? row.NAME_OF_BANK : "-"}
+                        {row.NAME_OF_BANK ? row.NAME_OF_BANK : '-'}
                       </TableCell>
                       <TableCell align="left">
-                        {row.PAYMENT_ID ? row.PAYMENT_ID : "-"}
+                        {row.PAYMENT_ID ? row.PAYMENT_ID : '-'}
                       </TableCell>
                       <TableCell align="left">
                         {row.PAYMENT_ID
-                          ? "-"
-                          : row.active === "0"
-                          ? "Not Approved"
-                          : "Approved"}
+                          ? '-'
+                          : row.active === '0'
+                          ? 'Not Approved'
+                          : 'Approved'}
                       </TableCell>
                       <TableCell
                         onClick={() => {
@@ -176,8 +176,8 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                         }}
                         align="left"
                         style={{
-                          cursor: "pointer",
-                          color: status === "0" ? "red" : "",
+                          cursor: 'pointer',
+                          color: status === '0' ? 'red' : '',
                         }}
                       >
                         downolod
@@ -199,12 +199,12 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                         return `Page: ${page}`;
                       }}
                       backIconButtonProps={{
-                        color: "secondary",
+                        color: 'secondary',
                       }}
-                      nextIconButtonProps={{ color: "secondary" }}
+                      nextIconButtonProps={{ color: 'secondary' }}
                       SelectProps={{
                         inputProps: {
-                          "aria-label": "page number",
+                          'aria-label': 'page number',
                         },
                       }}
                       // showFirstButton={true}

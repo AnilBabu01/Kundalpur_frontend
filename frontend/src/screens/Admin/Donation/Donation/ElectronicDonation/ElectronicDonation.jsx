@@ -187,6 +187,7 @@ const ElectronicDonation = ({
             `${backendApiUrl}user/add-elecDonation`,
             {
               name: fullName,
+              gender: genderp,
               phoneNo: mobileNo,
               prefix: 'ELEC',
               address: address,

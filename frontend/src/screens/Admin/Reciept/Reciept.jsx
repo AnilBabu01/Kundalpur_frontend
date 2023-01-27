@@ -88,8 +88,11 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                   </p>
                 </span>
                 <span className="leftitems">
-                  <h2>दान दातार श्री :</h2>
-                  <p>{isData?.NAME ? isData?.NAME : isData?.name}</p>
+                  <h2>दान दातार :</h2>
+                  <p>
+                    {isData && isData?.gender}{' '}
+                    {isData?.NAME ? isData?.NAME : isData?.name}
+                  </p>
                 </span>
                 <span className="leftitems">
                   <h2>स्थान :</h2>
@@ -105,7 +108,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                       )}
                 </span>
 
-                {isData.modeOfDonation === '4' ? (
+                {isData && isData.modeOfDonation === '4' ? (
                   <>
                     {isData &&
                       isData.elecItemDetails &&
@@ -147,15 +150,15 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                 <span className="rightitems">
                   <h2>दिनांक :</h2>
                   <p>
-                    {isData?.DATE_OF_CHEQUE
-                      ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
-                      : Moment(isData?.donation_date).format('DD-MM-YYYY')}
-                    ,
-                    {isData?.DATE_OF_CHEQUE
-                      ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
-                      : moment(isData?.donation_time, 'HH:mm:ss').format(
-                          'hh:mm A',
-                        )}
+                    {isData && isData?.elecItemDetails ? (
+                      Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                    ) : (
+                      <>
+                        {isData?.DATE_OF_CHEQUE
+                          ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                          : Moment(isData?.donation_date).format('DD-MM-YYYY')}
+                      </>
+                    )}
                   </p>
                 </span>
                 <span className="rightitems">
@@ -252,9 +255,21 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
               <p>
                 <b>
                   {' '}
-                  {converter.toWords(isData?.AMOUNT ? isData?.AMOUNT : 0, {
-                    comma: true,
-                  })}
+                  {converter.toWords(
+                    isData?.AMOUNT
+                      ? isData?.AMOUNT
+                      : Number(
+                          isData &&
+                            isData.elecItemDetails.reduce(
+                              (n, { amount }) =>
+                                parseFloat(n) + parseFloat(amount),
+                              0,
+                            ),
+                        ),
+                    {
+                      comma: true,
+                    },
+                  )}
                 </b>{' '}
                 रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।
               </p>

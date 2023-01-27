@@ -28,10 +28,14 @@
     justify-content: space-between;
 }
 .size_equal2{
-  width: 44.5%;
+  width: 40.1%;
 
 }
 .size_equal1{
     width: 50%;
 
+}
+
+.extra_bottom_margin{
+    margin-bottom: 14rem;
 }

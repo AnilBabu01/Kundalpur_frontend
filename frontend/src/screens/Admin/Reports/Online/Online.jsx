@@ -187,14 +187,12 @@ const Online = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: '#F1F0F0' }}>
                 <TableRow>
-                  <TableCell>S.No.</TableCell>
+                  <TableCell>Receipt No</TableCell>
                   <TableCell>Date</TableCell>
                   <TableCell>Name </TableCell>
                   <TableCell>Donation Type</TableCell>
                   <TableCell>Amount</TableCell>
-                  <TableCell>Cheque No.</TableCell>
-                  <TableCell>Date Of submission</TableCell>
-                  <TableCell>Name of Bank</TableCell>
+
                   <TableCell>Payment id</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -220,13 +218,6 @@ const Online = ({ setopendashboard }) => {
                     <TableCell>{row.NAME}</TableCell>
                     <TableCell> {row.MODE_OF_DONATION}</TableCell>
                     <TableCell> {row.AMOUNT}</TableCell>
-                    <TableCell>{row.CHEQUE_NO ? row.CHEQUE_NO : '-'}</TableCell>
-                    <TableCell>
-                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : '-'}
-                    </TableCell>
-                    <TableCell>
-                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : '-'}
-                    </TableCell>
 
                     <TableCell> {row.PAYMENT_ID}</TableCell>
 

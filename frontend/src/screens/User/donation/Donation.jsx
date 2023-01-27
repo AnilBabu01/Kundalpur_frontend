@@ -172,6 +172,8 @@ function Donation({ setshowreciept }) {
   const [formerror, setFormerror] = useState({});
   const [isData, setisData] = React.useState([]);
   const [cheqing, setcheqing] = useState('');
+  const [genderp, setgenderp] = useState('श्री');
+
   const [donationdata, setDonationdata] = useState({
     name: '',
     chequeno: '',
@@ -183,7 +185,20 @@ function Donation({ setshowreciept }) {
     amount: '',
     address: '',
   });
-
+  const genderoptiins = [
+    {
+      id: 2,
+      gender: 'श्रीमति',
+    },
+    {
+      id: 3,
+      gender: 'मे.',
+    },
+    {
+      id: 4,
+      gender: 'कु.',
+    },
+  ];
   console.log(isData);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -220,6 +235,8 @@ function Donation({ setshowreciept }) {
     formData.set('CHEQUE_NO', donationdata?.chequeno);
     formData.set('chequeImg', cheqing);
     formData.set('MobileNo', user?.mobileNo);
+    formData.set('GENDER', genderp);
+    formData.set('PAYMENT_ID', 'ddd');
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
     }
@@ -230,40 +247,30 @@ function Donation({ setshowreciept }) {
     }
 
     if (mode === 'Online' && amount) {
-      PaymentserverInstance('/ccavRequestHandler', 'POST', {
-        merchant_id: '1927947',
-        order_id: '11111',
-        currency: 'INR',
-        redirect_url: 'http://127.0.0.1:3001/ccavResponseHandler',
-        cancel_url: 'http://127.0.0.1:3001/ccavResponseHandler',
-        language: 'EN',
-        amount: '1.00',
+      serverInstance('user/add-donation', 'POST', {
+        NAME:
+          donationdata.selected === 'yes1' && user.name
+            ? user.name
+            : donationdata.name,
+        MODE_OF_DONATION: 1,
+        AMOUNT: amount,
+        GENDER: genderp,
+        CHEQUE_NO: donationdata?.chequeno,
+        DATE_OF_CHEQUE: donationdata?.date_of_sub,
+        NAME_OF_BANK: donationdata?.name_of_bank,
+        DATE_OF_DAAN: new Date(),
+        PAYMENT_ID: 'new_id_pay_12',
+        TYPE: donationdata?.donationtype,
+        REMARK: donationdata?.Remark,
+        ADDRESS: donationdata?.address,
+        MobileNo: user?.mobileNo,
       }).then((res) => {
-        console.log(JSON.parse(res));
-        serverInstance('user/add-donation', 'POST', {
-          NAME:
-            donationdata.selected === 'yes1' && user.name
-              ? user.name
-              : donationdata.name,
-          MODE_OF_DONATION: 1,
-          AMOUNT: amount,
-          CHEQUE_NO: donationdata?.chequeno,
-          DATE_OF_CHEQUE: donationdata?.date_of_sub,
-          NAME_OF_BANK: donationdata?.name_of_bank,
-          DATE_OF_DAAN: new Date(),
-          PAYMENT_ID: data.razorpay_order_id,
-          TYPE: donationdata?.donationtype,
-          REMARK: donationdata?.Remark,
-          ADDRESS: donationdata?.address,
-          MobileNo: user?.mobileNo,
-        }).then((res) => {
-          if (res.status === true) {
-            handleOpen();
-            sendsms();
-          } else {
-            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-          }
-        });
+        if (res.status === true) {
+          handleOpen();
+          sendsms();
+        } else {
+          Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+        }
       });
     }
 
@@ -568,7 +575,43 @@ function Donation({ setshowreciept }) {
                 {mode && (
                   <>
                     <Grid item xs={12} md={6}>
-                      <CustomInputLabel htmlFor="name">Name</CustomInputLabel>
+                      <CustomInputLabel htmlFor="name">
+                        <Select
+                          required
+                          sx={{
+                            width: '20%',
+                            fontSize: 14,
+                            '& .MuiSelect-select': {
+                              padding: '1px',
+                            },
+                          }}
+                          value={genderp}
+                          onChange={(e) => setgenderp(e.target.value)}
+                        >
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            value={'श्री'}
+                          >
+                            श्री
+                          </MenuItem>
+                          {genderoptiins.map((item, idx) => {
+                            return (
+                              <MenuItem
+                                sx={{
+                                  fontSize: 14,
+                                }}
+                                key={item.id}
+                                value={item.gender}
+                              >
+                                {item.gender}
+                              </MenuItem>
+                            );
+                          })}
+                        </Select>
+                        Name
+                      </CustomInputLabel>
                       <CustomInput
                         id="name"
                         name="name"

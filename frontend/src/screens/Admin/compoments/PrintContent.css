@@ -1,0 +1,41 @@
+.cancel_text{
+    margin-left: 22%;
+    position: absolute;
+    margin-top: 35%;
+}
+
+.cancel_text1{
+    margin-left: 22%;
+    position: absolute;
+    margin-top: 4%;
+}
+
+.cancel_text1 p{
+    font-size: 50px;
+    color: red;
+    opacity: 0.5;
+    transform: rotate(50deg);
+}
+.cancel_text p{
+   font-size: 50px;
+   color: red;
+   opacity: 0.5;
+   transform: rotate(50deg);
+}
+
+.top_name_date{
+    display: flex;
+    justify-content: space-between;
+}
+.size_equal2{
+  width: 40.1%;
+
+}
+.size_equal1{
+    width: 50%;
+
+}
+
+.extra_bottom_margin{
+    margin-bottom: 14rem;
+}

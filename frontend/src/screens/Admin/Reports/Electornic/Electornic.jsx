@@ -324,7 +324,7 @@ const Electornic = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: '#F1F0F0' }}>
                 <TableRow>
-                  <TableCell>Receipt No</TableCell>
+                  <TableCell align="left">Receipt No</TableCell>
 
                   <TableCell>Name</TableCell>
                   <TableCell>Phone No</TableCell>

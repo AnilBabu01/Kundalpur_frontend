@@ -27,6 +27,7 @@
     "material-table": "^1.69.3",
     "moment": "^2.29.4",
     "moment-js": "^1.1.15",
+    "npm-hindi-converter": "^0.1.2",
     "razorpay": "^2.8.4",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.1.0",
@@ -46,7 +47,8 @@
     "redux-saga": "^1.2.2",
     "redux-thunk": "^2.4.2",
     "sass": "^1.56.2",
-    "sweetalert2": "^11.6.16"
+    "sweetalert2": "^11.6.16",
+    "translate-google": "^1.5.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",

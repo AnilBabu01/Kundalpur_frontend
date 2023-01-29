@@ -171,7 +171,7 @@
     width: 100%;
     background: rgba(255, 255, 255, 0.582);
     opacity: 1;
-    padding-top: 16px;
+    padding-top: 45px;
     font-size: 15px;
     font-weight: 600;
     
@@ -279,6 +279,7 @@
     justify-content: space-between;
     height: 65px;
     padding: 0.1px 74px;
+    padding-bottom: 14px;
   }
   
   .receipt-main-div {

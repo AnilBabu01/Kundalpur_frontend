@@ -5,6 +5,9 @@
     height: 655px;
     margin: 0.2px auto;
     border: 0.0001px solid gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
   
   
@@ -101,6 +104,7 @@
   .main-certificate .reciptimg .reciptbody h2{
     font-size: 20px;
     font-weight: 400;
+    margin-bottom: 4px;
   }
   .main-certificate .reciptimg .reciptbody p{
     font-size: 16px;
@@ -112,7 +116,30 @@
     display: flex;
     padding: 0rem 1rem 0rem 1rem;
     gap: 8px;
+    padding-bottom: 16px;
+    width: 100%;
   }
+
+  .main-certificate .reciptimg .rightitems4 {
+    background: rgba(255, 255, 255, 0.582);
+    opacity: 1;
+    display: flex;
+    padding: 0rem 1rem 0rem 1rem;
+    gap: 8px;
+    padding-bottom: 16px;
+    width: 100%;
+    padding-left: 82px;
+    padding-left: 11.5%;
+}
+
+.electronic_center_div{
+  display: flex;
+}
+
+.main-certificate .reciptimg .rightitems4 h2 {
+  font-size: 20px;
+    font-weight: 400;
+}
   .main-certificate .reciptimg .rightitems2 h2{
     font-size: 20px;
     font-weight: 400;
@@ -160,7 +187,7 @@
     width: 100%;
     background: rgba(255, 255, 255, 0.582);
     opacity: 1;
-    padding-top: 16px;
+    padding-top: 8px;
     font-size: 15px;
     font-weight: 600;
     
@@ -268,6 +295,8 @@
     justify-content: space-between;
     height: 65px;
     padding: 0.1px 74px;
+
+    align-items: center;
   }
   
   .receipt-main-div {
@@ -284,5 +313,5 @@
     }
 
     .margin_bittton{
-      margin-bottom: 1rem;
+      margin-bottom: 8px;
     }

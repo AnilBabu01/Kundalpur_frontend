@@ -28,7 +28,7 @@
     justify-content: space-between;
 }
 .size_equal2{
-  width: 40.1%;
+    width: 50.1%;
 
 }
 .size_equal1{
@@ -36,6 +36,21 @@
 
 }
 
+.size_equal3{
+    width: 50%;
+
+}
+.size_equal4{
+    width: 47.4%;
+
+}
+
 .extra_bottom_margin{
     margin-bottom: 14rem;
+}
+
+.center_justify_m{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

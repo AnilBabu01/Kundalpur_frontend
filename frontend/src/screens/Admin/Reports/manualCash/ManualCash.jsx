@@ -35,6 +35,7 @@ import Moment from 'moment-js';
 import CashDonation from '../../Donation/Donation/CashDonation';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 import './ManualCash.css';
 const style = {
   position: 'absolute',
@@ -323,134 +324,133 @@ const ManualCash = ({ setopendashboard }) => {
               <div></div>
             </div>
           </div>
+          {isData ? (
+            <>
+              <div className="table-div-maain">
+                <Table
+                  sx={{ minWidth: 650, width: '97%' }}
+                  aria-label="simple table"
+                >
+                  <TableHead style={{ background: '#FFEEE0' }}>
+                    <TableRow>
+                      <TableCell>Receipt No</TableCell>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Phone No</TableCell>
 
-          <div className="table-div-maain">
-            {/* <TableContainer component={Paper}> */}
-            <Table
-              sx={{ minWidth: 650, width: '97%' }}
-              aria-label="simple table"
-            >
-              <TableHead style={{ background: '#FFEEE0' }}>
-                <TableRow>
-                  <TableCell>Receipt No</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Phone No</TableCell>
+                      <TableCell>Amount</TableCell>
 
-                  <TableCell>Amount</TableCell>
+                      <TableCell>Address</TableCell>
+                      <TableCell>Donation Date</TableCell>
 
-                  <TableCell>Address</TableCell>
-                  <TableCell>Donation Date</TableCell>
-                  <TableCell>Donation Types</TableCell>
-                  <TableCell>Remark</TableCell>
-                  <TableCell>Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
-                    }}
-                  >
-                    <TableCell>{row.ReceiptNo}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.phoneNo}</TableCell>
+                      <TableCell>Remark</TableCell>
+                      <TableCell>Action</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {(rowsPerPage > 0
+                      ? isData.slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
+                      : isData
+                    ).map((row, index) => (
+                      <TableRow
+                        key={row.id}
+                        sx={{
+                          '&:last-child td, &:last-child th': { border: 0 },
+                        }}
+                      >
+                        <TableCell>{row.ReceiptNo}</TableCell>
+                        <TableCell>{row.name}</TableCell>
+                        <TableCell>{row.phoneNo}</TableCell>
 
-                    <TableCell>
-                      {row.elecItemDetails.reduce(
-                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                        0,
-                      )}
-                    </TableCell>
-                    <TableCell> {row.address}</TableCell>
-                    <TableCell>
-                      {Moment(row.donation_date).format('DD/MM/YYYY')}
-                    </TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return (
-                          <li style={{ listStyle: 'none' }}>{row.type} </li>
-                        );
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return (
-                          <li style={{ listStyle: 'none' }}>{row.remark} </li>
-                        );
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      <RemoveRedEyeIcon
-                        onClick={() =>
-                          navigation(`/admin-panel/infoElectronic/${row.id}`)
-                        }
+                        <TableCell>
+                          {row.elecItemDetails.reduce(
+                            (n, { amount }) =>
+                              parseFloat(n) + parseFloat(amount),
+                            0,
+                          )}
+                        </TableCell>
+                        <TableCell> {row.address}</TableCell>
+                        <TableCell>
+                          {Moment(row.donation_date).format('DD/MM/YYYY')}
+                        </TableCell>
+
+                        <TableCell>
+                          {row.elecItemDetails.map((row) => {
+                            return (
+                              <li style={{ listStyle: 'none' }}>
+                                {row.remark}{' '}
+                              </li>
+                            );
+                          })}
+                        </TableCell>
+                        <TableCell>
+                          <RemoveRedEyeIcon
+                            onClick={() =>
+                              navigation(
+                                `/admin-panel/infoElectronic/${row.id}`,
+                              )
+                            }
+                          />
+                          <EditIcon onClick={() => upadteOpen(row)} />
+                          <PrintIcon
+                            onClick={() =>
+                              navigation('/admin-panel/reports/printcontent', {
+                                state: {
+                                  data: row,
+                                },
+                              })
+                            }
+                          />
+                          {row.isActive ? (
+                            <DownloadIcon
+                              onClick={() => {
+                                printreceipt(row);
+                              }}
+                            />
+                          ) : (
+                            <ClearIcon />
+                          )}
+
+                          <CancelIcon onClick={() => handleOpen(row.id)} />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                  <TableFooter>
+                    <TableRow>
+                      <TablePagination
+                        count={isData.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        rowsPerPageOptions={[5, 10, 25]}
+                        labelRowsPerPage={<span>Rows:</span>}
+                        labelDisplayedRows={({ page }) => {
+                          return `Page: ${page}`;
+                        }}
+                        backIconButtonProps={{
+                          color: 'secondary',
+                        }}
+                        nextIconButtonProps={{ color: 'secondary' }}
+                        SelectProps={{
+                          inputProps: {
+                            'aria-label': 'page number',
+                          },
+                        }}
                       />
-                      <EditIcon onClick={() => upadteOpen(row)} />
-                      <PrintIcon
-                        onClick={() =>
-                          navigation('/admin-panel/reports/printcontent', {
-                            state: {
-                              data: row,
-                            },
-                          })
-                        }
-                      />
-                      {row.isActive ? (
-                        <DownloadIcon
-                          onClick={() => {
-                            printreceipt(row);
-                          }}
-                        />
-                      ) : (
-                        <ClearIcon />
-                      )}
-
-                      <CancelIcon onClick={() => handleOpen(row.id)} />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    count={isData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowsPerPageOptions={[5, 10, 25]}
-                    labelRowsPerPage={<span>Rows:</span>}
-                    labelDisplayedRows={({ page }) => {
-                      return `Page: ${page}`;
-                    }}
-                    backIconButtonProps={{
-                      color: 'secondary',
-                    }}
-                    nextIconButtonProps={{ color: 'secondary' }}
-                    SelectProps={{
-                      inputProps: {
-                        'aria-label': 'page number',
-                      },
-                    }}
-                    // showFirstButton={true}
-                    // showLastButton={true}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
-                    //sx and classes prop discussed in styling section
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-            {/* </TableContainer> */}
-          </div>
+                    </TableRow>
+                  </TableFooter>
+                </Table>
+              </div>
+            </>
+          ) : (
+            <>
+              <CircularProgress />
+            </>
+          )}
         </div>
       </div>
     </>

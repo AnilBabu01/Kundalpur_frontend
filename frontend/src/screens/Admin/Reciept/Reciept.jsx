@@ -3,7 +3,6 @@ import { useReactToPrint } from 'react-to-print';
 import './cashrecipt.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import './Reciept.css';
 import { Converter, hiIN } from 'any-number-to-words';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';

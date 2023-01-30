@@ -319,5 +319,27 @@
     .font_bold_in_donation{
       font-weight: 600!important;
     }
-
+    #receipt{
+      width: 940px;
+      height: 655px;
+    }
+    
+    .button_div_print_download{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    
+    .button_div_print_download button{
+      height: 31px;
+      background: blue;
+      border: navajowhite;
+      color: white;
+      width: 7%;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+    
     

@@ -287,6 +287,7 @@ const ElectronicDonation = ({
             sx={{
               color: themeColor,
             }}
+            align="right"
           >
             {currDate} / {currTime}
           </Typography>
@@ -302,7 +303,7 @@ const ElectronicDonation = ({
               my: 2,
             }}
           >
-            <Typography variant="body1">Are you new member:</Typography>
+            <Typography variant="body1">Change language:</Typography>
             <Button
               variant={newMember ? 'outlined' : 'contained'}
               sx={{
@@ -315,7 +316,7 @@ const ElectronicDonation = ({
               onClick={() => setNewMember(false)}
             >
               {' '}
-              No
+              Hindi
             </Button>
             <Button
               onClick={() => setNewMember(true)}
@@ -329,7 +330,7 @@ const ElectronicDonation = ({
               }}
             >
               {' '}
-              Yes
+              English
             </Button>
           </Box>
 

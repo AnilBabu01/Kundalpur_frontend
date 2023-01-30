@@ -313,7 +313,7 @@ const ItemDonation = ({
           <Typography variant="h6" color={themeColor} align="center">
             {showUpdateBtn ? 'Upadte Cheque Donation' : 'Add Item Donation'}
           </Typography>
-          <Typography variant="body2" color="primary">
+          <Typography variant="body2" color="primary" align="right">
             {currDate} / {currTime}
           </Typography>
           <Typography variant="body2" my={1}>
@@ -328,7 +328,7 @@ const ItemDonation = ({
               my: 2,
             }}
           >
-            <Typography variant="body1">Are you new member:</Typography>
+            <Typography variant="body1">Change language:</Typography>
             <Button
               variant={newMember ? 'outlined' : 'contained'}
               sx={{
@@ -341,7 +341,7 @@ const ItemDonation = ({
               onClick={() => setNewMember(false)}
             >
               {' '}
-              No
+              Hindi
             </Button>
             <Button
               onClick={() => setNewMember(true)}
@@ -355,7 +355,7 @@ const ItemDonation = ({
               }}
             >
               {' '}
-              Yes
+              English
             </Button>
           </Box>
           <Grid container rowSpacing={2} columnSpacing={5}>

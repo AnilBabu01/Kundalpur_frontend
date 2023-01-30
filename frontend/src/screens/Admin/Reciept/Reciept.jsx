@@ -137,7 +137,10 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                           </span>
                           <span className="leftitems ">
                             <h2>वजन:</h2>
-                            <h2 className="font_bold_in_donation">
+                            <h2
+                              className="font_bold_in_donation"
+                              style={{ marginBottom: '1rem' }}
+                            >
                               {isData &&
                                 isData.elecItemDetails &&
                                 isData.elecItemDetails[0].size}
@@ -362,10 +365,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
             {isData && isData?.modeOfDonation === '4' ? (
               <>
                 <span className="rightitems2 " style={{ width: '100%' }}>
-                  <h2
-                    style={{ textAlign: 'center' }}
-                    className="font_bold_in_donation"
-                  >
+                  <h2 style={{ textAlign: 'center' }}>
                     आपके द्वारा प्रदत्त उपहार दान स्वरूप सधन्यवाद प्राप्त हुआ।
                   </h2>
                 </span>
@@ -376,46 +376,51 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                   <h2>दान राशि शब्दों में :</h2>
                   {isData && isData?.MODE_OF_DONATION === 'ONLINE' && (
                     <>
-                      <h2 className="font_bold_in_donation">
-                        {isData && converter.toWords(isData?.AMOUNT)}, रूपये
-                        ऑनलाइन द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
+                      <h2>
+                        <span className="font_bold_in_donation">
+                          {' '}
+                          {isData && converter.toWords(isData?.AMOUNT)}{' '}
+                        </span>
+                        , रूपये ऑनलाइन द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
                       </h2>
                     </>
                   )}
 
                   {isData && isData?.MODE_OF_DONATION === 'CHEQUE' && (
                     <>
-                      <h2 className="font_bold_in_donation">
-                        {isData && converter.toWords(isData?.AMOUNT)}, रूपये
-                        ऑनलाइन चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
+                      <h2>
+                        <span className="font_bold_in_donation">
+                          {isData && converter.toWords(isData?.AMOUNT)}
+                        </span>
+                        , रूपये ऑनलाइन चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त
+                        हुये।
                       </h2>
                     </>
                   )}
 
                   {isData && isData.elecItemDetails && (
                     <>
-                      <h2 className="font_bold_in_donation">
-                        {converter.toWords(
-                          isData?.AMOUNT
-                            ? isData?.AMOUNT
-                            : Number(
-                                isData &&
-                                  isData.elecItemDetails.reduce(
-                                    (n, { amount }) =>
-                                      parseFloat(n) + parseFloat(amount),
-                                    0,
-                                  ),
-                              ),
-                          {
-                            comma: true,
-                          },
-                        )}
+                      <h2>
+                        <span className="font_bold_in_donation">
+                          {converter.toWords(
+                            isData?.AMOUNT
+                              ? isData?.AMOUNT
+                              : Number(
+                                  isData &&
+                                    isData.elecItemDetails.reduce(
+                                      (n, { amount }) =>
+                                        parseFloat(n) + parseFloat(amount),
+                                      0,
+                                    ),
+                                ),
+                            {
+                              comma: true,
+                            },
+                          )}
+                        </span>
                         ,{' '}
                         {isData && isData?.modeOfDonation === '2' && (
-                          <span className="font_bold_in_donation">
-                            {' '}
-                            रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
-                          </span>
+                          <> रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये। </>
                         )}
                         {isData && isData?.modeOfDonation === '1' && (
                           <>

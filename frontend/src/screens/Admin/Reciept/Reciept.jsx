@@ -154,34 +154,42 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                     {isData && isData?.modeOfDonation === '1' && (
                       <span className="leftitems ">
                         <h2>दान का मद :</h2>
-                        <h2 className="font_bold_in_donation">
-                          {isData && isData?.TYPE
-                            ? isData?.TYPE
-                            : isData &&
-                              isData.elecItemDetails && (
-                                <h2>{isData.elecItemDetails[0].type}</h2>
-                              )}
-                        </h2>
+                        <b>
+                          <h2 className="font_bold_in_donation">
+                            {isData && isData?.TYPE
+                              ? isData?.TYPE
+                              : isData &&
+                                isData.elecItemDetails && (
+                                  <>{isData.elecItemDetails[0].type}</>
+                                )}
+                          </h2>
+                        </b>
                       </span>
                     )}
+
                     {isData && isData?.modeOfDonation === '2' && (
                       <span className="leftitems ">
                         <h2>दान का मद :</h2>
-                        <h3 className="font_bold_in_donation">
-                          {isData && isData.elecItemDetails && (
-                            <h2>{isData.elecItemDetails[0].type}</h2>
-                          )}
-                        </h3>
+                        <b>
+                          <h2 className="font_bold_in_donation">
+                            {isData && isData.elecItemDetails && (
+                              <>{isData.elecItemDetails[0].type}</>
+                            )}
+                          </h2>
+                        </b>
                       </span>
                     )}
+
                     {isData && isData?.modeOfDonation === '3' && (
                       <span className="leftitems ">
                         <h2>दान का मद :</h2>
-                        <span style={{ fontWeight: 600 }}>
-                          {isData && isData.elecItemDetails && (
-                            <h2>{isData.elecItemDetails[0].type}</h2>
-                          )}
-                        </span>
+                        <b>
+                          <h2 style={{ fontWeight: 600 }}>
+                            {isData && isData.elecItemDetails && (
+                              <>{isData.elecItemDetails[0].type}</>
+                            )}
+                          </h2>
+                        </b>
                       </span>
                     )}
 

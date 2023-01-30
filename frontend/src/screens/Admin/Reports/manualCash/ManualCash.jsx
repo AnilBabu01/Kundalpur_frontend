@@ -67,7 +67,7 @@ const donationColorTheme = {
 
 const ManualCash = ({ setopendashboard }) => {
   const navigation = useNavigate();
-  const [isData, setisData] = React.useState([]);
+  const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [showalert, setshowalert] = useState(false);
@@ -83,6 +83,10 @@ const ManualCash = ({ setopendashboard }) => {
   const [name, setname] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [updateId, setupdateId] = useState('');
+  const [showsearchData, setshowsearchData] = useState(false);
+
+  const [userrole, setuserrole] = useState('');
+  console.log(userrole);
   const handleOpen = (id) => {
     setupdateId(id);
     setOpen(true);
@@ -96,7 +100,6 @@ const ManualCash = ({ setopendashboard }) => {
     setopenupdate(true);
   };
 
-  console.log(isData);
   const handleClickOpen1 = (id) => {
     setOpen1(true);
     setdeleteId(id);
@@ -186,7 +189,6 @@ const ManualCash = ({ setopendashboard }) => {
   };
 
   const filterdata = async () => {
-    console.log('filter');
     axios.defaults.headers.get[
       'Authorization'
     ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -194,8 +196,11 @@ const ManualCash = ({ setopendashboard }) => {
     const res = await axios.get(
       `${backendApiUrl}user/add-elecDonation?phone=${phone}&name=${name}&type=${typedonation}&date=${date}`,
     );
-    console.log('filter data is', res);
-    setisData([]);
+    console.log('dilter data is', res);
+    if (res.data.status) {
+      setshowsearchData(!showsearchData);
+      setisData(res.data.data);
+    }
   };
 
   const get_donation_tyeps = () => {
@@ -218,6 +223,7 @@ const ManualCash = ({ setopendashboard }) => {
     getall_donation();
     setopendashboard(true);
     get_donation_tyeps();
+    setuserrole(Number(sessionStorage.getItem('userrole')));
   }, [showalert, openupdate, open]);
 
   return (
@@ -324,29 +330,30 @@ const ManualCash = ({ setopendashboard }) => {
               <div></div>
             </div>
           </div>
-          {isData ? (
-            <>
-              <div className="table-div-maain">
-                <Table
-                  sx={{ minWidth: 650, width: '97%' }}
-                  aria-label="simple table"
-                >
-                  <TableHead style={{ background: '#FFEEE0' }}>
-                    <TableRow>
-                      <TableCell>Receipt No</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Phone No</TableCell>
 
-                      <TableCell>Amount</TableCell>
+          <div className="table-div-maain">
+            <Table
+              sx={{ minWidth: 650, width: '97%' }}
+              aria-label="simple table"
+            >
+              <TableHead style={{ background: '#FFEEE0' }}>
+                <TableRow>
+                  <TableCell>Receipt No</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Phone No</TableCell>
 
-                      <TableCell>Address</TableCell>
-                      <TableCell>Donation Date</TableCell>
+                  <TableCell>Amount</TableCell>
 
-                      <TableCell>Remark</TableCell>
-                      <TableCell>Action</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
+                  <TableCell>Address</TableCell>
+                  <TableCell>Donation Date</TableCell>
+
+                  <TableCell>Remark</TableCell>
+                  <TableCell>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {isData ? (
+                  <>
                     {(rowsPerPage > 0
                       ? isData.slice(
                           page * rowsPerPage,
@@ -393,7 +400,10 @@ const ManualCash = ({ setopendashboard }) => {
                               )
                             }
                           />
-                          <EditIcon onClick={() => upadteOpen(row)} />
+                          {userrole === 1 && (
+                            <EditIcon onClick={() => upadteOpen(row)} />
+                          )}
+
                           <PrintIcon
                             onClick={() =>
                               navigation('/admin-panel/reports/printcontent', {
@@ -412,45 +422,48 @@ const ManualCash = ({ setopendashboard }) => {
                           ) : (
                             <ClearIcon />
                           )}
-
-                          <CancelIcon onClick={() => handleOpen(row.id)} />
+                          {userrole === 1 && (
+                            <CancelIcon onClick={() => handleOpen(row.id)} />
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
-                  </TableBody>
-                  <TableFooter>
-                    <TableRow>
-                      <TablePagination
-                        count={isData.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                        rowsPerPageOptions={[5, 10, 25]}
-                        labelRowsPerPage={<span>Rows:</span>}
-                        labelDisplayedRows={({ page }) => {
-                          return `Page: ${page}`;
-                        }}
-                        backIconButtonProps={{
-                          color: 'secondary',
-                        }}
-                        nextIconButtonProps={{ color: 'secondary' }}
-                        SelectProps={{
-                          inputProps: {
-                            'aria-label': 'page number',
-                          },
-                        }}
-                      />
-                    </TableRow>
-                  </TableFooter>
-                </Table>
-              </div>
-            </>
-          ) : (
-            <>
-              <CircularProgress />
-            </>
-          )}
+                  </>
+                ) : (
+                  <>
+                    <TableCell colSpan={8} align="center">
+                      <CircularProgress />
+                    </TableCell>
+                  </>
+                )}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    count={isData.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    rowsPerPageOptions={[5, 10, 25]}
+                    labelRowsPerPage={<span>Rows:</span>}
+                    labelDisplayedRows={({ page }) => {
+                      return `Page: ${page}`;
+                    }}
+                    backIconButtonProps={{
+                      color: 'secondary',
+                    }}
+                    nextIconButtonProps={{ color: 'secondary' }}
+                    SelectProps={{
+                      inputProps: {
+                        'aria-label': 'page number',
+                      },
+                    }}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </div>
         </div>
       </div>
     </>

@@ -57,6 +57,7 @@ const ItemDonation = ({
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
+
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -66,6 +67,7 @@ const ItemDonation = ({
       size: '',
       quantity: '',
       approxValue: '',
+      unit: '',
     },
   ]);
 
@@ -79,6 +81,7 @@ const ItemDonation = ({
         size: '',
         quantity: '',
         approxValue: '',
+        unit: '',
       },
     ]);
   }
@@ -99,6 +102,25 @@ const ItemDonation = ({
     {
       id: 4,
       gender: 'कु.',
+    },
+  ];
+
+  const unitss = [
+    {
+      id: 2,
+      unit: 'g',
+    },
+    {
+      id: 3,
+      unit: 'kg',
+    },
+    {
+      id: 4,
+      unit: 'mg',
+    },
+    {
+      id: 5,
+      unit: 'µg',
     },
   ];
   console.log('donationItems', donationItems);
@@ -490,6 +512,14 @@ const ItemDonation = ({
                   <TableCell
                     align="center"
                     sx={{
+                      minWidth: 80,
+                    }}
+                  >
+                    Units
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{
                       minWidth: 100,
                     }}
                   >
@@ -578,6 +608,45 @@ const ItemDonation = ({
                           handleDonationItemUpdate(item, 'size', e.target.value)
                         }
                       />
+                    </TableCell>
+                    <TableCell align="center">
+                      <Select
+                        required
+                        sx={{
+                          width: '90%',
+                          fontSize: 14,
+                          '& .MuiSelect-select': {
+                            padding: '1px',
+                          },
+                        }}
+                        value={item.unit}
+                        onChange={(e) =>
+                          handleDonationItemUpdate(item, 'unit', e.target.value)
+                        }
+                        displayEmpty
+                      >
+                        <MenuItem
+                          sx={{
+                            fontSize: 14,
+                          }}
+                          value={''}
+                        >
+                          Please select
+                        </MenuItem>
+                        {unitss.map((item, idx) => {
+                          return (
+                            <MenuItem
+                              sx={{
+                                fontSize: 14,
+                              }}
+                              key={item.id}
+                              value={item.unit}
+                            >
+                              {item.unit}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
                     </TableCell>
                     <TableCell align="center">
                       <CustomTableInput

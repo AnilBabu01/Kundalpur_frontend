@@ -108,7 +108,7 @@
   }
   .main-certificate .reciptimg .reciptbody p{
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 600!important;
   }
   .main-certificate .reciptimg .rightitems2{
     background: rgba(255, 255, 255, 0.582);
@@ -315,3 +315,9 @@
     .margin_bittton{
       margin-bottom: 8px;
     }
+
+    .font_bold_in_donation{
+      font-weight: 600!important;
+    }
+
+    

@@ -322,12 +322,14 @@
     #receipt{
       width: 940px;
       height: 655px;
+      margin-top: 4rem;
     }
     
     .button_div_print_download{
       display: flex;
       justify-content: space-around;
       align-items: center;
+      margin-bottom: 1rem;
     }
     
     .button_div_print_download button{

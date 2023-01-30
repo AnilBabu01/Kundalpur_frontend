@@ -30,7 +30,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
     }
     setTimeout(() => {
       handlePrint();
-    }, 500);
+    }, 100);
   }, []);
 
   return (
@@ -202,7 +202,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </span>
                       {isData &&
                         isData.elecItemDetails &&
-                        isData.elecItemDetails[0].quantity}
+                        isData.elecItemDetails[0].type}
                     </p>
 
                     <p className="common_margin_p">
@@ -216,11 +216,11 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     </p>
                     <p className="common_margin_p">
                       <span className="gray-text">
-                        अंदाजन कीमत- &nbsp; &nbsp; &nbsp;
+                        वजन -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp;&nbsp; &nbsp;
                       </span>
-                      {isData &&
-                        isData.elecItemDetails &&
-                        isData.elecItemDetails[0].quantity}
+                      {isData && isData.elecItemDetails[0].size} &nbsp;
+                      {isData && isData.elecItemDetails[0].unit}
                     </p>
                   </>
                 )}
@@ -368,21 +368,11 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                 <>
                   <p className="common_margin_p">
                     <span className="gray-text">
-                      वजन - &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-                      &nbsp;&nbsp;
-                    </span>
-                    {isData && isData?.TYPE
-                      ? isData?.TYPE
-                      : isData && isData.elecItemDetails[0].type}
-                  </p>
-
-                  <p className="common_margin_p">
-                    <span className="gray-text">
                       विवरण - &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
                     </span>
                     {isData && isData?.TYPE
                       ? isData?.TYPE
-                      : isData && isData.elecItemDetails[0].type}
+                      : isData && isData.elecItemDetails[0].remark}
                   </p>
                 </>
               ) : (
@@ -633,7 +623,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </span>
                       {isData &&
                         isData.elecItemDetails &&
-                        isData.elecItemDetails[0].quantity}
+                        isData.elecItemDetails[0].type}
                     </p>
 
                     <p className="common_margin_p">
@@ -647,11 +637,11 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     </p>
                     <p className="common_margin_p">
                       <span className="gray-text">
-                        अंदाजन कीमत- &nbsp; &nbsp; &nbsp;
+                        वजन -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp;&nbsp; &nbsp;
                       </span>
-                      {isData &&
-                        isData.elecItemDetails &&
-                        isData.elecItemDetails[0].quantity}
+                      {isData && isData.elecItemDetails[0].size} &nbsp;
+                      {isData && isData.elecItemDetails[0].unit}
                     </p>
                   </>
                 )}
@@ -799,21 +789,11 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                 <>
                   <p className="common_margin_p">
                     <span className="gray-text">
-                      वजन - &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-                      &nbsp;&nbsp;
-                    </span>
-                    {isData && isData?.TYPE
-                      ? isData?.TYPE
-                      : isData && isData.elecItemDetails[0].type}
-                  </p>
-
-                  <p className="common_margin_p">
-                    <span className="gray-text">
                       विवरण - &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
                     </span>
                     {isData && isData?.TYPE
                       ? isData?.TYPE
-                      : isData && isData.elecItemDetails[0].type}
+                      : isData && isData.elecItemDetails[0].remark}
                   </p>
                 </>
               ) : (
@@ -839,7 +819,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     <>
                       {isData && isData?.AMOUNT
                         ? converter.toWords(
-                            isData && isData?.AMOUNT ? isData?.AMOUNT : 0,
+                            isData?.AMOUNT ? isData?.AMOUNT : 0,
                             {
                               comma: true,
                             },

@@ -31,6 +31,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import CancelIcon from '@mui/icons-material/Cancel';
 import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
+import CircularProgress from '@mui/material/CircularProgress';
 import './Cheque.css';
 const style = {
   position: 'absolute',
@@ -44,7 +45,7 @@ const style = {
   borderRadius: '5px',
 };
 const Cheque = ({ setopendashboard }) => {
-  const [isData, setisData] = React.useState([]);
+  const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [refetch, setrefetch] = useState(false);
@@ -240,69 +241,79 @@ const Cheque = ({ setopendashboard }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
-                    }}
-                  >
-                    <TableCell>{row?.RECEIPT_NO}</TableCell>
-                    <TableCell>
-                      {' '}
-                      {moment(row?.DATE_OF_DAAN).format('DD/MM/YYYY')}
-                    </TableCell>
-                    <TableCell>{row.NAME}</TableCell>
-                    <TableCell> {row.MODE_OF_DONATION}</TableCell>
-                    <TableCell> {row.AMOUNT}</TableCell>
-                    <TableCell>
-                      {' '}
-                      {row.CHEQUE_NO ? row.CHEQUE_NO : '-'}
-                    </TableCell>
-                    <TableCell>
-                      {' '}
-                      {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : '-'}
-                    </TableCell>
-                    <TableCell>
-                      {' '}
-                      {row.NAME_OF_BANK ? row.NAME_OF_BANK : '-'}
-                    </TableCell>
-
-                    <TableCell>
-                      <RemoveRedEyeIcon
-                        onClick={() =>
-                          navigation(`/admin-panel/reports/chequeinfo`, {
-                            state: {
-                              data: row,
-                            },
-                          })
-                        }
-                      />
-
-                      <EditIcon onClick={() => handleOpen(row.id)} />
-                      <PrintIcon
-                        onClick={() =>
-                          navigation('/admin-panel/reports/printcontent', {
-                            state: {
-                              data: row,
-                            },
-                          })
-                        }
-                      />
-                      <DownloadIcon
-                        onClick={() => {
-                          downloadrecept(row);
+                {isData ? (
+                  <>
+                    {(rowsPerPage > 0
+                      ? isData.slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
+                      : isData
+                    ).map((row, index) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          '&:last-child td, &:last-child th': { border: 0 },
                         }}
-                      />
+                      >
+                        <TableCell>{row?.RECEIPT_NO}</TableCell>
+                        <TableCell>
+                          {' '}
+                          {moment(row?.DATE_OF_DAAN).format('DD/MM/YYYY')}
+                        </TableCell>
+                        <TableCell>{row.NAME}</TableCell>
+                        <TableCell> {row.MODE_OF_DONATION}</TableCell>
+                        <TableCell> {row.AMOUNT}</TableCell>
+                        <TableCell>
+                          {' '}
+                          {row.CHEQUE_NO ? row.CHEQUE_NO : '-'}
+                        </TableCell>
+                        <TableCell>
+                          {' '}
+                          {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : '-'}
+                        </TableCell>
+                        <TableCell>
+                          {' '}
+                          {row.NAME_OF_BANK ? row.NAME_OF_BANK : '-'}
+                        </TableCell>
+
+                        <TableCell>
+                          <RemoveRedEyeIcon
+                            onClick={() =>
+                              navigation(`/admin-panel/reports/chequeinfo`, {
+                                state: {
+                                  data: row,
+                                },
+                              })
+                            }
+                          />
+
+                          <EditIcon onClick={() => handleOpen(row.id)} />
+                          <PrintIcon
+                            onClick={() =>
+                              navigation('/admin-panel/reports/printcontent', {
+                                state: {
+                                  data: row,
+                                },
+                              })
+                            }
+                          />
+                          <DownloadIcon
+                            onClick={() => {
+                              downloadrecept(row);
+                            }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <TableCell colSpan={9} align="center">
+                      <CircularProgress />
                     </TableCell>
-                  </TableRow>
-                ))}
+                  </>
+                )}
               </TableBody>
               <TableFooter>
                 <TableRow>

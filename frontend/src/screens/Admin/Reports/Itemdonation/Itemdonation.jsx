@@ -32,6 +32,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import exportFromJSON from 'export-from-json';
 import ItemDonation from '../../Donation/Donation/ItemDonation/index';
 import { backendApiUrl } from '../../../../config/config';
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import './Itemdonation.css';
 import Moment from 'moment-js';
@@ -63,7 +64,7 @@ const donationColorTheme = {
   item: '#d6cb00',
 };
 const Itemdonation = ({ setopendashboard }) => {
-  const [isData, setisData] = React.useState([]);
+  const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [showalert, setshowalert] = useState(false);
@@ -80,6 +81,7 @@ const Itemdonation = ({ setopendashboard }) => {
   const [name, setname] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [updateId, setupdateId] = useState('');
+  const [userrole, setuserrole] = useState('');
   const handleOpen = (id) => {
     setOpen(true);
     setupdateId(id);
@@ -181,15 +183,18 @@ const Itemdonation = ({ setopendashboard }) => {
     exportFromJSON({ data, fileName, exportType });
   };
   const filterdata = async () => {
-    console.log('filter');
     axios.defaults.headers.get[
       'Authorization'
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/add-elecDonation?phone=${phone}&name=${name}&type=${typedonation}&date=${typedonation}`,
+      `${backendApiUrl}user/add-elecDonation?phone=${phone}&name=${name}&type=${typedonation}&date=${date}`,
     );
-    console.log('filter data is', res);
+    console.log('dilter data is', res);
+    if (res.data.status) {
+      setshowsearchData(!showsearchData);
+      setisData(res.data.data);
+    }
   };
   const get_donation_tyeps = () => {
     try {
@@ -211,6 +216,7 @@ const Itemdonation = ({ setopendashboard }) => {
     getall_donation();
     setopendashboard(true);
     get_donation_tyeps();
+    setuserrole(Number(sessionStorage.getItem('userrole')));
   }, [showalert, open]);
 
   return (
@@ -340,75 +346,91 @@ const Itemdonation = ({ setopendashboard }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
-                    }}
-                  >
-                    <TableCell>{row.ReceiptNo}</TableCell>
+                {isData ? (
+                  <>
+                    {(rowsPerPage > 0
+                      ? isData.slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
+                      : isData
+                    ).map((row, index) => (
+                      <TableRow
+                        key={row.id}
+                        sx={{
+                          '&:last-child td, &:last-child th': { border: 0 },
+                        }}
+                      >
+                        <TableCell>{row.ReceiptNo}</TableCell>
 
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.phoneNo}</TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.reduce(
-                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                        0,
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return row.itemType;
-                      })}
-                    </TableCell>
+                        <TableCell>{row.name}</TableCell>
+                        <TableCell>{row.phoneNo}</TableCell>
+                        <TableCell>
+                          {row.elecItemDetails.reduce(
+                            (n, { amount }) =>
+                              parseFloat(n) + parseFloat(amount),
+                            0,
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {row.elecItemDetails.map((row) => {
+                            return row.itemType;
+                          })}
+                        </TableCell>
 
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return row.remark;
-                      })}
-                    </TableCell>
-                    <TableCell> {row.address}</TableCell>
-                    <TableCell>
-                      {Moment(row.donation_date).format('DD/MM/YYYY')}
-                    </TableCell>
-                    <TableCell>
-                      <RemoveRedEyeIcon
-                        onClick={() =>
-                          navigation(`/admin-panel/infoElectronic/${row.id}`)
-                        }
-                      />
+                        <TableCell>
+                          {row.elecItemDetails.map((row) => {
+                            return row.remark;
+                          })}
+                        </TableCell>
+                        <TableCell> {row.address}</TableCell>
+                        <TableCell>
+                          {Moment(row.donation_date).format('DD/MM/YYYY')}
+                        </TableCell>
+                        <TableCell>
+                          <RemoveRedEyeIcon
+                            onClick={() =>
+                              navigation(
+                                `/admin-panel/infoElectronic/${row.id}`,
+                              )
+                            }
+                          />
 
-                      <EditIcon onClick={() => upadteOpen(row)} />
-                      <PrintIcon
-                        onClick={() =>
-                          navigation('/admin-panel/reports/printcontent', {
-                            state: {
-                              data: row,
-                            },
-                          })
-                        }
-                      />
-                      {row.isActive ? (
-                        <DownloadIcon
-                          onClick={() => {
-                            printreceipt(row);
-                          }}
-                        />
-                      ) : (
-                        <ClearIcon />
-                      )}
-
-                      <CancelIcon onClick={() => handleOpen(row.id)} />
+                          {userrole === 1 && (
+                            <EditIcon onClick={() => upadteOpen(row)} />
+                          )}
+                          <PrintIcon
+                            onClick={() =>
+                              navigation('/admin-panel/reports/printcontent', {
+                                state: {
+                                  data: row,
+                                },
+                              })
+                            }
+                          />
+                          {row.isActive ? (
+                            <DownloadIcon
+                              onClick={() => {
+                                printreceipt(row);
+                              }}
+                            />
+                          ) : (
+                            <ClearIcon />
+                          )}
+                          {userrole === 1 && (
+                            <CancelIcon onClick={() => handleOpen(row.id)} />
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <TableCell colSpan={9} align="center">
+                      <CircularProgress />
                     </TableCell>
-                  </TableRow>
-                ))}
+                  </>
+                )}
               </TableBody>
               <TableFooter>
                 <TableRow>

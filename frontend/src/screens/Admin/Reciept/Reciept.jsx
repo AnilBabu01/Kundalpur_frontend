@@ -156,12 +156,9 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                         <h2>दान का मद :</h2>
                         <b>
                           <h2 className="font_bold_in_donation">
-                            {isData && isData?.TYPE
-                              ? isData?.TYPE
-                              : isData &&
-                                isData.elecItemDetails && (
-                                  <>{isData.elecItemDetails[0].type}</>
-                                )}
+                            {isData && isData.elecItemDetails && (
+                              <>{isData.elecItemDetails[0].type}</>
+                            )}
                           </h2>
                         </b>
                       </span>

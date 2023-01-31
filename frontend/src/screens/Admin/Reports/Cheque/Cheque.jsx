@@ -32,6 +32,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
 import CircularProgress from '@mui/material/CircularProgress';
+import { ExportPdfUserCheque } from '../../compoments/ExportPdf';
 import './Cheque.css';
 const style = {
   position: 'absolute',
@@ -214,7 +215,11 @@ const Cheque = ({ setopendashboard }) => {
                 <button>Search</button>
                 <button>Reset</button>
                 <SimCardAlertIcon onClick={() => ExportToExcel()} />
-                <PictureAsPdfIcon />
+                <PictureAsPdfIcon
+                  onClick={() =>
+                    ExportPdfUserCheque(isData, 'OnlineChequeReport')
+                  }
+                />
               </div>
               <div></div>
             </div>

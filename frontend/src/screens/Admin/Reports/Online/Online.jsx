@@ -27,6 +27,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
 import CircularProgress from '@mui/material/CircularProgress';
+import { ExportPdfUser } from '../../compoments/ExportPdf';
 import './Online.css';
 const Online = ({ setopendashboard }) => {
   const navigation = useNavigate();
@@ -174,7 +175,9 @@ const Online = ({ setopendashboard }) => {
                 <button>Search</button>
                 <button>Reset</button>
                 <SimCardAlertIcon onClick={() => ExportToExcel()} />
-                <PictureAsPdfIcon />
+                <PictureAsPdfIcon
+                  onClick={() => ExportPdfUser(isData, 'OnlineReport')}
+                />
               </div>
               <div></div>
             </div>

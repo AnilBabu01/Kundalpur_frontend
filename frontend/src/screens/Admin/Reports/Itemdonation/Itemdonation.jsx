@@ -36,6 +36,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import './Itemdonation.css';
 import Moment from 'moment-js';
+import { ExportPdfmanul } from '../../compoments/ExportPdf';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -188,7 +189,7 @@ const Itemdonation = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/add-elecDonation?phone=${phone}&name=${name}&type=${typedonation}&date=${date}`,
+      `${backendApiUrl}user/search-donation?name=${name}&type=${typedonation}&date=${date}&phone=${phone}`,
     );
     console.log('dilter data is', res);
     if (res.data.status) {
@@ -318,7 +319,9 @@ const Itemdonation = ({ setopendashboard }) => {
                 <button onClick={() => filterdata()}>Search</button>
                 <button onClick={() => getall_donation()}>Reset</button>
                 <SimCardAlertIcon onClick={() => ExportToExcel()} />
-                <PictureAsPdfIcon />
+                <PictureAsPdfIcon
+                  onClick={() => ExportPdfmanul(isData, 'ManualItemReport')}
+                />
               </div>
               <div></div>
             </div>

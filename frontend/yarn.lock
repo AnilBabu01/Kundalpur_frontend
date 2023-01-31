@@ -1626,12 +1626,30 @@ json5@^2.2.1:
   resolved "https://registry.npmjs.org/json5/-/json5-2.2.1.tgz"
   integrity sha512-1hqLFMSrGHRHxav9q9gNjJ5EXznIxGVO09xQRrwplcS8qs28pZ8s8hupZAmqDwZUmVZ2Qb2jnyPOWcDH8m8dlA==
 
+jspdf-autotable@^3.5.28:
+  version "3.5.28"
+  resolved "https://registry.npmjs.org/jspdf-autotable/-/jspdf-autotable-3.5.28.tgz"
+  integrity sha512-eNYt5mUxCGa1Y0bmOhGXU+Va/P2jNkgOgUPGIpZp2rbZUauU34s0q3S59Jps5zi2u90nQy7DmD/D+sdesJLIEA==
+
 jspdf-autotable@3.5.9:
   version "3.5.9"
   resolved "https://registry.npmjs.org/jspdf-autotable/-/jspdf-autotable-3.5.9.tgz"
   integrity sha512-ZRfiI5P7leJuWmvC0jGVXu227m68C2Jfz1dkDckshmDYDeVFCGxwIBYdCUXJ8Eb2CyFQC2ok82fEWO+xRDovDQ==
 
-jspdf@^2.0.0, jspdf@^2.5.1:
+jspdf@^2.0.0, jspdf@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/jspdf/-/jspdf-2.1.0.tgz"
+  integrity sha512-NQygqZEKhSw+nExySJxB72Ge/027YEyIM450Vh/hgay/H9cgZNnkXXOQPRspe9EuCW4sq92zg8hpAXyyBdnaIQ==
+  dependencies:
+    atob "^2.1.2"
+    btoa "^1.2.1"
+  optionalDependencies:
+    canvg "^3.0.6"
+    core-js "^3.6.0"
+    dompurify "^2.0.12"
+    html2canvas "^1.0.0-rc.5"
+
+jspdf@^2.5.1:
   version "2.5.1"
   resolved "https://registry.npmjs.org/jspdf/-/jspdf-2.5.1.tgz"
   integrity sha512-hXObxz7ZqoyhxET78+XR34Xu2qFGrJJ2I2bE5w4SM8eFaFEkW2xcGRVUss360fYelwRSid/jT078kbNvmoW0QA==
@@ -1644,19 +1662,6 @@ jspdf@^2.0.0, jspdf@^2.5.1:
     canvg "^3.0.6"
     core-js "^3.6.0"
     dompurify "^2.2.0"
-    html2canvas "^1.0.0-rc.5"
-
-jspdf@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/jspdf/-/jspdf-2.1.0.tgz"
-  integrity sha512-NQygqZEKhSw+nExySJxB72Ge/027YEyIM450Vh/hgay/H9cgZNnkXXOQPRspe9EuCW4sq92zg8hpAXyyBdnaIQ==
-  dependencies:
-    atob "^2.1.2"
-    btoa "^1.2.1"
-  optionalDependencies:
-    canvg "^3.0.6"
-    core-js "^3.6.0"
-    dompurify "^2.0.12"
     html2canvas "^1.0.0-rc.5"
 
 jsprim@^1.2.2:

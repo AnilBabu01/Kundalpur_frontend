@@ -280,18 +280,20 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                     <>
                       <span className="rightitems">
                         <h2>माध्यम :</h2>
+
                         <h2 className="font_bold_in_donation">
-                          {isData && isData?.TYPE
-                            ? isData?.TYPE
-                            : isData &&
-                              isData.elecItemDetails &&
-                              isData.elecItemDetails[0].BankName}
-                          {isData && isData?.TYPE
-                            ? isData?.TYPE
-                            : isData &&
-                              isData.elecItemDetails &&
-                              isData.elecItemDetails[0].ChequeNo}
+                          {isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails.map((item) => {
+                              return item.BankName;
+                            })}
+                          {isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails.map((item) => {
+                              return item.ChequeNo;
+                            })}
                         </h2>
+                        <br />
                       </span>
                     </>
                   )}
@@ -299,9 +301,14 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                   <span className="rightitems">
                     <h2>विवरण :</h2>
                     <h2 className="font_bold_in_donation">
-                      {isData && isData?.REMARK
-                        ? isData?.REMARK
-                        : isData && isData.elecItemDetails[0].remark}
+                      {isData &&
+                        isData.elecItemDetails.map((item) => {
+                          return (
+                            <>
+                              {item.remark} <br />
+                            </>
+                          );
+                        })}
                     </h2>
                   </span>
                 )}
@@ -313,10 +320,15 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                     <>
                       <span className="rightitems">
                         <h2>माध्यम:</h2>
+
                         <h2 className="font_bold_in_donation">
                           {isData &&
                             isData.elecItemDetails.map((item) => {
-                              return item.remark;
+                              return (
+                                <>
+                                  {item.BankName} <br />
+                                </>
+                              );
                             })}
                         </h2>
                       </span>

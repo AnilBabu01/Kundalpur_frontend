@@ -196,7 +196,7 @@ const ManualCash = ({ setopendashboard }) => {
     const res = await axios.get(
       `${backendApiUrl}user/add-elecDonation?phone=${phone}&name=${name}&type=${typedonation}&date=${date}`,
     );
-    console.log('dilter data is', res);
+    console.log('filter data is', res);
     if (res.data.status) {
       setshowsearchData(!showsearchData);
       setisData(res.data.data);

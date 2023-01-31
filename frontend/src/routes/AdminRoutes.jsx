@@ -5,7 +5,6 @@ import MasterTap from '../screens/Admin/masters/MasterTap';
 import DonatedUsers from '../screens/Admin/Donatedusers/DonatedUsers';
 import RoomBooking from '../screens/Admin/RoomBooking/RoomBooking';
 import Donation from '../screens/Admin/Donation/Donation/Donation';
-import AllDonationTap from '../screens/Admin/Donation/Alldonations/AllDonationTap';
 import RoleManagement from '../screens/Admin/SystemManagement/RoleManagement/RoleManagement';
 import UserManagement from '../screens/Admin/SystemManagement/UserManagement/UserManagement';
 import VoucherManagement from '../screens/Admin/SystemManagement/VoucherManagement/VoucherManagement';
@@ -63,14 +62,6 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           }
         />
 
-        <Route
-          path="/admin-panel/alldonation"
-          element={
-            <Adminprivateroute>
-              <AllDonationTap setopendashboard={setopendashboard} />
-            </Adminprivateroute>
-          }
-        />
         <Route
           path="/admin-panel/donation"
           element={

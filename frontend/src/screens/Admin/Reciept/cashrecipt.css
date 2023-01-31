@@ -167,7 +167,8 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
- 
+    width: 70%;
+  
   }
   .main-certificate .reciptimg .reciptbody .leftdata .leftitems{
     display: flex;
@@ -177,6 +178,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+    width: 30%;
 
   }
   .main-certificate .reciptimg .reciptbody .rightdata .rightitems{
@@ -320,8 +322,7 @@
       font-weight: 600!important;
     }
     #receipt{
-      width: 940px;
-      height: 655px;
+    height: 100%;
       margin-top: 4rem;
     }
     
@@ -343,5 +344,9 @@
       font-weight: 600;
       margin-top: 1rem;
     }
-    
+    .warp_text{
+      display: flex;
+    flex-wrap: wrap;
+    width:70%;
+    }
     

@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { backendApiUrl } from "../../../../../config/config";
-import { serverInstance } from "../../../../../API/ServerInstance";
-import Swal from "sweetalert2";
-import axios from "axios";
-import "./Adduser.css";
+import React, { useEffect, useState } from 'react';
+import { backendApiUrl } from '../../../../../config/config';
+import { serverInstance } from '../../../../../API/ServerInstance';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import './Adduser.css';
 
 const Adduser = ({ setOpen }) => {
-  const [username, setusername] = useState("");
-  const [mobile, setmobile] = useState("");
-  const [password, setpassword] = useState("");
-  const [email, setemail] = useState("");
-  const [address, setaddress] = useState("");
-  const [role, setrole] = useState("");
-  const [Dmax, setDmax] = useState("");
-  const [max, setmax] = useState("");
+  const [username, setusername] = useState('');
+  const [mobile, setmobile] = useState('');
+  const [password, setpassword] = useState('');
+  const [email, setemail] = useState('');
+  const [address, setaddress] = useState('');
+  const [role, setrole] = useState('');
+  const [Dmax, setDmax] = useState('');
+  const [max, setmax] = useState('');
   const [Cashier, setCashier] = useState(false);
   const [status, setstatus] = useState(false);
   const [cancelCheckout, setcancelCheckout] = useState(false);
-  const [CreditAA, setCreditAA] = useState("");
-  const [DebitAA, setDebitAA] = useState("");
-  const [DCreditAA, setDCreditAA] = useState("");
+  const [CreditAA, setCreditAA] = useState('');
+  const [DebitAA, setDebitAA] = useState('');
+  const [DCreditAA, setDCreditAA] = useState('');
 
   const handlesubmit = async (e) => {
     try {
       e.preventDefault();
       axios.defaults.headers.post[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("token")}`;
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
       if (
         username
         // password &&
@@ -53,25 +53,25 @@ const Adduser = ({ setOpen }) => {
           MaxPDA: max,
           Role: role,
           Rid: 2,
-          Cashier: Cashier === "true" ? true : false,
-          Status: status === "true" ? true : false,
-          cancelCheckout: cancelCheckout === "true" ? true : false,
+          Cashier: Cashier === 'true' ? true : false,
+          Status: status === 'true' ? true : false,
+          cancelCheckout: cancelCheckout === 'true' ? true : false,
           CreditAA: CreditAA,
           DebitAA: DebitAA,
           DCreditAA: DCreditAA,
         });
         console.log(res.data);
         if (res.data.status === true) {
-          Swal.fire("Great!", res.data.message, "success");
+          Swal.fire('Great!', res.data.message, 'success');
           setOpen(false);
         }
         if (res.data.status === false) {
-          Swal.fire("Error!", res.data.message, "error");
+          Swal.fire('Error!', res.data.message, 'error');
           setOpen(false);
         }
       }
     } catch (error) {
-      Swal.fire("Error!", error.response.data.message, "error");
+      Swal.fire('Error!', error.response.data.message, 'error');
       setOpen(false);
     }
   };
@@ -82,7 +82,7 @@ const Adduser = ({ setOpen }) => {
         <form onSubmit={handlesubmit}>
           <div
             className="cash-donation-container-innser"
-            style={{ paddingLeft: "2rem" }}
+            style={{ paddingLeft: '2rem' }}
           >
             <div className="form-div">
               <div className="form-input-div_add_user">

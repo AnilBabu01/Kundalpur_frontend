@@ -36,6 +36,7 @@ import CashDonation from '../../Donation/Donation/CashDonation';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
+import { ExportPdfmanul } from '../../compoments/ExportPdf';
 import './ManualCash.css';
 const style = {
   position: 'absolute',
@@ -194,9 +195,9 @@ const ManualCash = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/add-elecDonation?phone=${phone}&name=${name}&type=${typedonation}&date=${date}`,
+      `${backendApiUrl}user/search-donation?name=${name}&type=${typedonation}&date=${date}&phone=${phone}`,
     );
-    console.log('dilter data is', res);
+    console.log('filter data is', res);
     if (res.data.status) {
       setshowsearchData(!showsearchData);
       setisData(res.data.data);
@@ -325,7 +326,9 @@ const ManualCash = ({ setopendashboard }) => {
                 <button onClick={() => filterdata()}>Search</button>
                 <button onClick={() => getall_donation()}>Reset</button>
                 <SimCardAlertIcon onClick={() => ExportToExcel()} />
-                <PictureAsPdfIcon />
+                <PictureAsPdfIcon
+                  onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+                />
               </div>
               <div></div>
             </div>

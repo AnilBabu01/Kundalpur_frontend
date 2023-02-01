@@ -29,6 +29,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Request from './Request';
+import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import './Donation.css';
 import ElectronicDonation from './ElectronicDonation/ElectronicDonation';
 import CashDonation from './CashDonation';
@@ -79,6 +81,7 @@ const Donation = ({ setopendashboard }) => {
   const [open3, setOpen3] = React.useState(false);
   const [tabValue, setTabValue] = React.useState(0);
   const [userrole, setuserrole] = useState('');
+  const [donationTypes, setDonationTypes] = useState([]);
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -155,7 +158,22 @@ const Donation = ({ setopendashboard }) => {
       });
     }
   };
-
+  const get_donation_tyeps = () => {
+    try {
+      Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
+        ([res, item]) => {
+          if (res.status) {
+            setDonationTypes(res.data);
+            console.log(res.data);
+          } else {
+            Swal.fire('Error', 'somthing went  wrong', 'error');
+          }
+        },
+      );
+    } catch (error) {
+      Swal.fire('Error!', error, 'error');
+    }
+  };
   const voucherexhauted = async (row) => {
     printreceipt(row);
     if (res.data.status === true) {
@@ -179,6 +197,7 @@ const Donation = ({ setopendashboard }) => {
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
+    get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
   }, [showalert, open]);
 
@@ -301,16 +320,79 @@ const Donation = ({ setopendashboard }) => {
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div className="main_center_header">
-            <div className="add-btn-user10">
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="Phone No" />
-              <input type="text" placeholder="Date" />
-              <input type="text" placeholder="Donation Type" />
-              <button>Search</button>
-              <button>Reset</button>
-              <button onClick={() => handleOpen()}>+Add</button>
+          <div
+            className="search-header-div-center"
+            style={{ paddingLeft: '1rem' }}
+          >
+            <div className="search-inner-div-reports">
+              <div className="Center_main_dic_filetr">
+                <label>Employee</label>
+                <select name="cars" id="cars">
+                  <option>Select user</option>
+                  {/* {donationTypes.map((item, idx) => {
+                    return <option value={item.id}>{item.type_hi}</option>;
+                  })} */}
+                </select>
+              </div>
+              <div className="Center_main_dic_filetr">
+                <label>From Date</label>
+                <input type="date" placeholder="From" />
+              </div>
+              <div className="Center_main_dic_filetr">
+                <label>To Date</label>
+                <input type="date" placeholder="From" />
+              </div>
+              <div className="Center_main_dic_filetr">
+                <label>From Voucher</label>
+                <input type="text" placeholder="From" />
+              </div>
+              <div className="Center_main_dic_filetr">
+                <label>To Voucher</label>
+                <input type="text" placeholder="From" />
+              </div>
+
+              <div className="Center_main_dic_filetr">
+                <label>Head/Item</label>
+                <select name="cars" id="cars">
+                  <option>Select option</option>
+                  {/* {donationTypes.map((item, idx) => {
+                    return <option value={item.id}>{item.type_hi}</option>;
+                  })} */}
+                </select>
+              </div>
+
+              <div className="Center_main_dic_filetr">
+                <label>&nbsp;</label>
+                <button onClick={() => filterdata()}>Search</button>
+              </div>
+              <div className="Center_main_dic_filetr">
+                <label>&nbsp;</label>
+                <button onClick={() => getall_donation()}>Reset</button>
+              </div>
+              <div className="Center_main_dic_filetr">
+                <label>&nbsp;</label>
+                <button onClick={() => handleOpen()}>+Add</button>
+              </div>
             </div>
+            {/* <div></div> */}
+          </div>
+          <div className="search-header-print">
+            <SimCardAlertIcon onClick={() => ExportToExcel()} />
+            &nbsp;&nbsp;
+            <PictureAsPdfIcon
+              onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+            />
+            <button
+              className="search-header-div-center-button"
+              onClick={() => filterdata()}
+            >
+              Search
+            </button>
+            <input
+              className="search-header-div-center-input"
+              type="text"
+              placeholder="Search"
+            />
           </div>
 
           <div className="table-div-maain">

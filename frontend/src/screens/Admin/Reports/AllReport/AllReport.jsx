@@ -312,10 +312,22 @@ const AllReport = ({ setopendashboard }) => {
             <div className="search-header-div-center">
               <div className="search-inner-div-reports">
                 <div className="Center_main_dic_filetr">
+                  <label>Employee</label>
+                  <select name="cars" id="cars">
+                    <option>Select user</option>
+                    {donationTypes.map((item, idx) => {
+                      return <option value={item.id}>{item.type_hi}</option>;
+                    })}
+                  </select>
+                </div>
+                <div className="Center_main_dic_filetr">
                   <label>From Date</label>
                   <input type="date" placeholder="From" />
                 </div>
-
+                <div className="Center_main_dic_filetr">
+                  <label>To Date</label>
+                  <input type="date" placeholder="From" />
+                </div>
                 <div className="Center_main_dic_filetr">
                   <label>From Voucher</label>
                   <input type="text" placeholder="From" />
@@ -323,10 +335,6 @@ const AllReport = ({ setopendashboard }) => {
                 <div className="Center_main_dic_filetr">
                   <label>To Voucher</label>
                   <input type="text" placeholder="From" />
-                </div>
-                <div className="Center_main_dic_filetr">
-                  <label>To Date</label>
-                  <input type="date" placeholder="From" />
                 </div>
 
                 <div className="Center_main_dic_filetr">
@@ -356,6 +364,17 @@ const AllReport = ({ setopendashboard }) => {
             &nbsp;&nbsp;
             <PictureAsPdfIcon
               onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+            />
+            <button
+              className="search-header-div-center-button"
+              onClick={() => filterdata()}
+            >
+              Search
+            </button>
+            <input
+              className="search-header-div-center-input"
+              type="text"
+              placeholder="Search"
             />
           </div>
           <div className="table-div-maain">

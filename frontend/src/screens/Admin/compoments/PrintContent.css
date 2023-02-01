@@ -7,7 +7,7 @@
 .cancel_text1{
     margin-left: 22%;
     position: absolute;
-    margin-top: 4%;
+    margin-top: 20%;
 }
 
 .cancel_text1 p{
@@ -53,4 +53,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.div_center_text_is{
+    display: flex;
+   
+}
+
+.wrap_div_child{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.gray-text_div{
+    width: 21%;
+}
+
+.gray-text_div p{
+    color: gray;
+    font-weight: 300;
 }

@@ -118,6 +118,7 @@
     gap: 8px;
     padding-bottom: 16px;
     width: 100%;
+    align-items: baseline;
   }
 
   .main-certificate .reciptimg .rightitems4 {
@@ -349,4 +350,16 @@
     flex-wrap: wrap;
     width:70%;
     }
+    .dan_ka_mad{
+      width: 16%;
+    }
+
+    .center_receipt_format{
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+  }
+  .center_receipt_format h2{
+    padding: 1rem;
+  }
     

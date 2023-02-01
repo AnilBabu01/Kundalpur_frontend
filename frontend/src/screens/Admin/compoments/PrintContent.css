@@ -7,7 +7,7 @@
 .cancel_text1{
     margin-left: 22%;
     position: absolute;
-    margin-top: 4%;
+    margin-top: 15%;
 }
 
 .cancel_text1 p{
@@ -46,11 +46,43 @@
 }
 
 .extra_bottom_margin{
-    margin-bottom: 14rem;
+    margin-bottom: 10rem;
 }
 
 .center_justify_m{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.div_center_text_is{
+    display: flex;
+   
+}
+
+.wrap_div_child{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.gray-text_div{
+    width: 21%;
+}
+
+.gray-text_div p{
+    color: gray;
+    font-weight: 300;
+}
+
+
+.super_main_divsss{
+    padding: 2rem;
+    padding-top: 5rem;
+    position: relative;
+}
+
+.super_main_divss {
+    padding: 2rem;
+    padding-top: 7rem;
+    position: relative;
 }

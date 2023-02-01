@@ -158,78 +158,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                       )}
                   </>
                 ) : (
-                  <>
-                    {isData && isData?.modeOfDonation === '1' && (
-                      <span className="leftitems ">
-                        <h2>दान का मद :</h2>
-                        <b>
-                          <h2 className="font_bold_in_donation">
-                            {isData && isData.elecItemDetails && (
-                              <>
-                                {isData.elecItemDetails.map((item) => {
-                                  return item.type;
-                                })}
-                              </>
-                            )}
-                          </h2>
-                        </b>
-                      </span>
-                    )}
-
-                    {isData && isData?.modeOfDonation === '2' && (
-                      <span className="leftitems ">
-                        <h2>दान का मद :</h2>
-                        <b>
-                          <h2 className="font_bold_in_donation">
-                            {isData && isData.elecItemDetails && (
-                              <div>
-                                {isData.elecItemDetails.map((item) => {
-                                  return (
-                                    <>
-                                      {item.type}
-                                      <br />{' '}
-                                    </>
-                                  );
-                                })}
-                              </div>
-                            )}
-                          </h2>
-                        </b>
-                      </span>
-                    )}
-
-                    {isData && isData?.modeOfDonation === '3' && (
-                      <span className="leftitems ">
-                        <h2>दान का मद :</h2>
-                        <b>
-                          <h2 style={{ fontWeight: 600 }}>
-                            {isData && isData.elecItemDetails && (
-                              <>
-                                {isData.elecItemDetails.map((item) => {
-                                  return item.type;
-                                })}
-                              </>
-                            )}
-                          </h2>
-                        </b>
-                      </span>
-                    )}
-
-                    <span
-                      className="leftitems "
-                      style={{ marginBottom: '14px' }}
-                    >
-                      <h2>दान राशि अंको में :</h2>
-                      {isData &&
-                        isData.elecItemDetails.map((item) => {
-                          return (
-                            <h2 className="font_bold_in_donation">
-                              ₹ {item.amount} /-
-                            </h2>
-                          );
-                        })}
-                    </span>
-                  </>
+                  <></>
                 )}
               </div>
               <div className="rightdata">
@@ -284,16 +213,11 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                         <h2 className="font_bold_in_donation">
                           {isData &&
                             isData.elecItemDetails &&
-                            isData.elecItemDetails.map((item) => {
-                              return item.BankName;
-                            })}
+                            isData.elecItemDetails[0].BankName}
                           {isData &&
                             isData.elecItemDetails &&
-                            isData.elecItemDetails.map((item) => {
-                              return item.ChequeNo;
-                            })}
+                            isData.elecItemDetails[0].ChequeNo}
                         </h2>
-                        <br />
                       </span>
                     </>
                   )}
@@ -302,13 +226,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                     <h2>विवरण :</h2>
                     <h2 className="font_bold_in_donation">
                       {isData &&
-                        isData.elecItemDetails.map((item) => {
-                          return (
-                            <>
-                              {item.remark} <br />
-                            </>
-                          );
-                        })}
+                        isData.elecItemDetails &&
+                        isData.elecItemDetails[0].remark}
                     </h2>
                   </span>
                 )}
@@ -322,14 +241,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                         <h2>माध्यम:</h2>
 
                         <h2 className="font_bold_in_donation">
-                          {isData &&
-                            isData.elecItemDetails.map((item) => {
-                              return (
-                                <>
-                                  {item.BankName} <br />
-                                </>
-                              );
-                            })}
+                          {isData && isData.elecItemDetails[0].BankName}
                         </h2>
                       </span>
                     </>
@@ -339,13 +251,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                     <h2>विवरण :</h2>
                     <h2 className="font_bold_in_donation">
                       {isData &&
-                        isData.elecItemDetails.map((item) => {
-                          return (
-                            <>
-                              {item.remark} <br />
-                            </>
-                          );
-                        })}
+                        isData.elecItemDetails &&
+                        isData.elecItemDetails[0].remark}
                     </h2>
                   </span>
                 )}
@@ -355,13 +262,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                     <h2>विवरण :</h2>
                     <h2 className="font_bold_in_donation">
                       {isData &&
-                        isData.elecItemDetails.map((item) => {
-                          return (
-                            <>
-                              {item.remark} <br />
-                            </>
-                          );
-                        })}
+                        isData.elecItemDetails &&
+                        isData.elecItemDetails[0].remark}
                     </h2>
                   </span>
                 )}
@@ -410,6 +312,90 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
               </>
             ) : (
               <>
+                {isData && isData?.modeOfDonation === '1' && (
+                  <span className="rightitems2 ">
+                    <div className="dan_ka_mad">
+                      <h2>दान का मद :</h2>
+                    </div>
+                    <span className="center_receipt_format">
+                      {isData && isData.elecItemDetails && (
+                        <>
+                          {isData.elecItemDetails.map((item) => {
+                            return (
+                              <h2>
+                                <b>{item.type}</b> -₹{item.amount} /-
+                              </h2>
+                            );
+                          })}
+                        </>
+                      )}
+                    </span>
+                  </span>
+                )}
+
+                {isData && isData?.modeOfDonation === '3' && (
+                  <span className="rightitems2 ">
+                    <div className="dan_ka_mad">
+                      <h2>दान का मद :</h2>
+                    </div>
+                    <span className="center_receipt_format">
+                      {isData && isData.elecItemDetails && (
+                        <>
+                          {isData.elecItemDetails.map((item) => {
+                            return (
+                              <h2>
+                                <b>{item.type}</b> -₹{item.amount} /-
+                              </h2>
+                            );
+                          })}
+                        </>
+                      )}
+                    </span>
+                  </span>
+                )}
+
+                {isData && isData?.modeOfDonation === '2' && (
+                  <span className="rightitems2 ">
+                    <div className="dan_ka_mad">
+                      <h2>दान का मद :</h2>
+                    </div>
+                    <span className="center_receipt_format">
+                      {isData && isData.elecItemDetails && (
+                        <>
+                          {isData.elecItemDetails.map((item) => {
+                            return (
+                              <h2>
+                                <b>{item.type}</b> -₹{item.amount} /-
+                              </h2>
+                            );
+                          })}
+                        </>
+                      )}
+                    </span>
+                  </span>
+                )}
+
+                <span className="rightitems2 ">
+                  <h2>दान राशि अंको में :</h2>
+                  <h2 className="font_bold_in_donation">
+                    ₹
+                    {isData && isData.AMOUNT ? (
+                      isData.AMOUNT
+                    ) : (
+                      <>
+                        {isData &&
+                          isData.elecItemDetails &&
+                          isData.elecItemDetails.reduce(
+                            (n, { amount }) =>
+                              parseFloat(n) + parseFloat(amount),
+                            0,
+                          )}
+                      </>
+                    )}
+                    /-
+                  </h2>
+                </span>
+
                 <span className="rightitems2 ">
                   <h2>दान राशि शब्दों में :</h2>
                   {isData && isData?.MODE_OF_DONATION === 'ONLINE' && (
@@ -438,78 +424,34 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
 
                   {isData && isData.elecItemDetails && (
                     <>
-                      {/* <span className="font_bold_in_donation">
-                          {converter.toWords(
-                            isData?.AMOUNT
-                              ? isData?.AMOUNT
-                              : Number(
-                                  isData &&
-                                    isData.elecItemDetails.reduce(
-                                      (n, { amount }) =>
-                                        parseFloat(n) + parseFloat(amount),
-                                      0,
-                                    ),
-                                ),
-                            {
-                              comma: true,
-                            },
-                          )}
-                        </span> */}{' '}
+                      <h2 className="font_bold_in_donation">
+                        {converter.toWords(
+                          isData?.AMOUNT
+                            ? isData?.AMOUNT
+                            : Number(
+                                isData &&
+                                  isData.elecItemDetails &&
+                                  isData.elecItemDetails.reduce(
+                                    (n, { amount }) =>
+                                      parseFloat(n) + parseFloat(amount),
+                                    0,
+                                  ),
+                              ),
+                          {
+                            comma: true,
+                          },
+                        )}
+                      </h2>
                       {isData && isData?.modeOfDonation === '2' && (
-                        <>
-                          {isData &&
-                            isData.elecItemDetails.map((item) => {
-                              return (
-                                <>
-                                  <h2>
-                                    <span className="font_bold_in_donation">
-                                      {converter.toWords(Number(item.amount), {
-                                        comma: true,
-                                      })}
-                                    </span>
-                                    , रूपये नगद दान स्वरूप सधन्यवाद प्राप्त
-                                    हुये।
-                                  </h2>
-                                  <br />
-                                </>
-                              );
-                            })}
-                        </>
+                        <h2>, रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।</h2>
                       )}
                       {isData && isData?.modeOfDonation === '1' && (
-                        <>
-                          {isData &&
-                            isData.elecItemDetails.map((item) => {
-                              return (
-                                <>
-                                  <span className="font_bold_in_donation">
-                                    {converter.toWords(Number(item.amount), {
-                                      comma: true,
-                                    })}
-                                  </span>
-                                  , रूपये बैंक द्वारा दान स्वरूप सधन्यवाद
-                                  प्राप्त हुये। <br />
-                                </>
-                              );
-                            })}
-                        </>
+                        <h2>
+                          , रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
+                        </h2>
                       )}
                       {isData && isData?.modeOfDonation === '3' && (
-                        <>
-                          {isData &&
-                            isData.elecItemDetails.map((item) => {
-                              return (
-                                <>
-                                  <span className="font_bold_in_donation">
-                                    {converter.toWords(Number(item.amount), {
-                                      comma: true,
-                                    })}
-                                  </span>
-                                  , चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
-                                </>
-                              );
-                            })}
-                        </>
+                        <h2>, चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।</h2>
                       )}
                     </>
                   )}

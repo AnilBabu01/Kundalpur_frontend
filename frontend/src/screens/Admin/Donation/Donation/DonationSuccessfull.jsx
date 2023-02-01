@@ -11,7 +11,7 @@ function DonationSuccessfull({ handleClose, isData }) {
       <div className="PaymentSuccessfull-main-div">
         <div className="PaymentSuccessfull-main-div-innear">
           <img src={images} alt=" images " />
-          <p>Payment successful</p>
+          <p>Donation Added Successfully</p>
           <button
             onClick={() => {
               navigate('/reciept', {

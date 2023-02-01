@@ -43,12 +43,12 @@ const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
+
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
   borderRadius: '15px',
-  minHeight: 500,
 };
 const style2 = {
   position: 'absolute',

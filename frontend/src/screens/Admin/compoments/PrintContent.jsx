@@ -290,6 +290,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           <p>दान का मद -</p>
                         </div>
                         <div className="wrap_div_child_div">
+
                           {isData &&
                             isData.elecItemDetails &&
                             isData.elecItemDetails.map((item) => {
@@ -673,7 +674,10 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         <div className="gray-text_div">
                           <p>दान का मद -</p>
                         </div>
+
                         <div className="wrap_div_child_div">
+
+            
                           {isData &&
                             isData.elecItemDetails &&
                             isData.elecItemDetails.map((item) => {

@@ -215,7 +215,6 @@ function Donation({ setshowreciept }) {
   const onChange = (e) => {
     setDonationdata({ ...donationdata, [e.target.name]: e.target.value });
   };
-
   const handlesubmit = async (e) => {
     setFormerror(validate(donationdata));
     formData.set(
@@ -236,8 +235,6 @@ function Donation({ setshowreciept }) {
     formData.set('CHEQUE_NO', donationdata?.chequeno);
     formData.set('chequeImg', cheqing);
     formData.set('MobileNo', user?.mobileNo);
-    formData.set('GENDER', genderp);
-    formData.set('PAYMENT_ID', 'ddd');
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
     }
@@ -255,26 +252,26 @@ function Donation({ setshowreciept }) {
             : donationdata.name,
         MODE_OF_DONATION: 1,
         AMOUNT: amount,
-        GENDER: genderp,
         CHEQUE_NO: donationdata?.chequeno,
         DATE_OF_CHEQUE: donationdata?.date_of_sub,
         NAME_OF_BANK: donationdata?.name_of_bank,
         DATE_OF_DAAN: new Date(),
-        PAYMENT_ID: 'new_id_pay_12',
+        PAYMENT_ID: 0,
         TYPE: donationdata?.donationtype,
         REMARK: donationdata?.Remark,
         ADDRESS: donationdata?.address,
         MobileNo: user?.mobileNo,
       }).then((res) => {
         if (res.status === true) {
-          handleOpen();
-          sendsms();
+          window.location.href =
+            'http://localhost:3003/about?order_id=' + res.data.id;
+          // handleOpen();
+          // sendsms();
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
         }
       });
     }
-
     if (
       mode === 'Cheque' &&
       donationdata.chequeno &&

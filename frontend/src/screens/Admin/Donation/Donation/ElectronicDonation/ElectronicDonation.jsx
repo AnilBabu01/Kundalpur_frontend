@@ -35,6 +35,7 @@ const ElectronicDonation = ({
   themeColor,
   updateData,
   showUpdateBtn,
+  handleOpen4,
 }) => {
   const theme = createTheme({
     typography: {
@@ -211,6 +212,7 @@ const ElectronicDonation = ({
             setshowalert(true);
             handleClose();
             sendsms(totalamount);
+            handleOpen4();
           }
         }
       }

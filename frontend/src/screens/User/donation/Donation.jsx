@@ -185,6 +185,7 @@ function Donation({ setshowreciept }) {
     amount: '',
     address: '',
   });
+
   const genderoptiins = [
     {
       id: 2,

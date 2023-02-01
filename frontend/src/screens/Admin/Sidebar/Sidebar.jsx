@@ -67,7 +67,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/donation"
                     >
-                      Manual Donation
+                      Donation
                     </NavLink>
                   </li>
                 </div>

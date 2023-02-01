@@ -36,6 +36,7 @@ const ItemDonation = ({
   themeColor,
   updateData,
   showUpdateBtn,
+  handleOpen4,
 }) => {
   const theme = createTheme({
     typography: {
@@ -194,6 +195,7 @@ const ItemDonation = ({
           if (res.data.status === true) {
             setshowalert(true);
             handleClose();
+            handleOpen4();
           } else {
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');
           }
@@ -243,6 +245,7 @@ const ItemDonation = ({
             setshowalert(true);
             handleClose();
             sendsms(totalamount);
+            handleOpen4();
           } else {
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');
           }

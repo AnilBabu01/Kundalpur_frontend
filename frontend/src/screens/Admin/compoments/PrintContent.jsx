@@ -35,7 +35,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
   return (
     <>
-      <div className="super_main_divss" ref={componentRef}>
+      <div className="super_main_divsss" ref={componentRef}>
         <div>
           <div>
             {isData?.active === '0' && (
@@ -225,58 +225,27 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         </>
                       )}
                   </div>
-
-                  <div>
-                    {isData && isData.modeOfDonation === '3' && (
-                      <>
-                        <p className="common_margin_p">
-                          <span className="gray-text">
-                            विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          </span>
-                          {isData && isData?.REMARK
-                            ? isData?.REMARK
-                            : isData && isData.elecItemDetails[0].remark}
-                        </p>
-                      </>
-                    )}
-                  </div>
                 </div>
 
                 <div>
-                  <div className="size_equal1">
-                    {isData &&
-                      isData.modeOfDonation === '1' &&
-                      isData.elecItemDetails &&
-                      isData.elecItemDetails[0].BankName && (
-                        <>
-                          <p className="common_margin_p">
-                            <span className="gray-text">
-                              माध्यम - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                              &nbsp; &nbsp; &nbsp;
-                            </span>
-                            {isData && isData?.TYPE
-                              ? isData?.TYPE
-                              : isData &&
-                                isData.elecItemDetails &&
-                                isData.elecItemDetails[0].BankName}
-                          </p>
-                        </>
-                      )}
-                  </div>
-
-                  <div className="size_equal2">
-                    {isData && isData.modeOfDonation === '1' && (
+                  {isData &&
+                    isData.modeOfDonation === '1' &&
+                    isData.elecItemDetails &&
+                    isData.elecItemDetails[0].BankName && (
                       <>
                         <p className="common_margin_p">
-                          <span className="gray-text">विवरण - &nbsp;</span>
-                          {isData && isData?.REMARK
-                            ? isData?.REMARK
-                            : isData && isData.elecItemDetails[0].remark}
+                          <span className="gray-text">
+                            माध्यम - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp;
+                          </span>
+                          {isData && isData?.TYPE
+                            ? isData?.TYPE
+                            : isData &&
+                              isData.elecItemDetails &&
+                              isData.elecItemDetails[0].BankName}
                         </p>
                       </>
                     )}
-                  </div>
                 </div>
                 {isData &&
                   isData.elecItemDetails &&
@@ -315,34 +284,68 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               ) : (
                 <>
                   <div className="div_center_text_is">
-                    <div className="gray-text_div">
-                      <p>दान का मद -</p>
-                    </div>
-                    <div className="wrap_div_child">
-                      {isData &&
-                        isData.elecItemDetails.map((item) => {
-                          return (
-                            <p className="common_margin_p">
-                              {' '}
-                              {item.type}-₹ {item.amount} /-
-                            </p>
-                          );
-                        })}
-                    </div>
+                    {isData && isData.elecItemDetails && (
+                      <>
+                        <div className="gray-text_div">
+                          <p>दान का मद -</p>
+                        </div>
+                        <div className="wrap_div_child">
+                          {isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails.map((item) => {
+                              return (
+                                <p className="common_margin_p">
+                                  {' '}
+                                  {item.type}-₹ {item.amount} /-
+                                </p>
+                              );
+                            })}
+                        </div>
+                      </>
+                    )}
                   </div>
-                  <p className="common_margin_p">
-                    <span className="gray-text">
-                      दान राशि अंको में - &nbsp;
-                    </span>
-                    {isData && isData?.AMOUNT
-                      ? isData?.AMOUNT
-                      : isData &&
-                        isData.elecItemDetails.reduce(
-                          (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                          0,
-                        )}
-                    /-
-                  </p>
+
+                  <div className="handle_display_div">
+                    <p className="common_margin_p">
+                      <span className="gray-text">
+                        दान राशि अंको में - &nbsp;
+                      </span>
+                      {isData && isData?.AMOUNT
+                        ? isData?.AMOUNT
+                        : isData &&
+                          isData.elecItemDetails.reduce(
+                            (n, { amount }) =>
+                              parseFloat(n) + parseFloat(amount),
+                            0,
+                          )}
+                      /-
+                    </p>
+
+                    {isData && isData.modeOfDonation === '3' && (
+                      <>
+                        <p className="common_margin_p margin_left_is">
+                          <span className="gray-text">
+                            विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </span>
+                          {isData && isData?.REMARK
+                            ? isData?.REMARK
+                            : isData && isData.elecItemDetails[0].remark}
+                        </p>
+                      </>
+                    )}
+
+                    {isData && isData.modeOfDonation === '1' && (
+                      <>
+                        <p className="common_margin_p margin_left_is">
+                          <span className="gray-text">विवरण - &nbsp;</span>
+                          {isData && isData?.REMARK
+                            ? isData?.REMARK
+                            : isData && isData.elecItemDetails[0].remark}
+                        </p>
+                      </>
+                    )}
+                  </div>
                   <p className="common_margin_p">
                     <span className="gray-text">
                       दान राशि शब्दों में - &nbsp;
@@ -410,11 +413,9 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               )}
             </div>
           </div>
-
           <div className="gray-text-div extra_bottom_margin">
             <p>(SHASHANK ASATI)</p>
           </div>
-
           <div>
             {isData?.active === '0' && (
               <>
@@ -458,7 +459,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   <>
                     <p className="common_margin_p">
                       <span className="gray-text">
-                        दान का मद- &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        दान का मद - &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </span>
                       {isData && isData?.TYPE}
                     </p>
@@ -480,7 +481,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                 isData.elecItemDetails[0].itemType ? (
                   <></>
                 ) : (
-                  <></>
+                  <>{isData && isData.modeOfDonation && <></>}</>
                 )}
 
                 {isData &&
@@ -603,58 +604,27 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         </>
                       )}
                   </div>
-
-                  <div>
-                    {isData && isData.modeOfDonation === '3' && (
-                      <>
-                        <p className="common_margin_p">
-                          <span className="gray-text">
-                            विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          </span>
-                          {isData && isData?.REMARK
-                            ? isData?.REMARK
-                            : isData && isData.elecItemDetails[0].remark}
-                        </p>
-                      </>
-                    )}
-                  </div>
                 </div>
 
                 <div>
-                  <div className="size_equal1">
-                    {isData &&
-                      isData.modeOfDonation === '1' &&
-                      isData.elecItemDetails &&
-                      isData.elecItemDetails[0].BankName && (
-                        <>
-                          <p className="common_margin_p">
-                            <span className="gray-text">
-                              माध्यम - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                              &nbsp; &nbsp; &nbsp;
-                            </span>
-                            {isData && isData?.TYPE
-                              ? isData?.TYPE
-                              : isData &&
-                                isData.elecItemDetails &&
-                                isData.elecItemDetails[0].BankName}
-                          </p>
-                        </>
-                      )}
-                  </div>
-
-                  <div className="size_equal2">
-                    {isData && isData.modeOfDonation === '1' && (
+                  {isData &&
+                    isData.modeOfDonation === '1' &&
+                    isData.elecItemDetails &&
+                    isData.elecItemDetails[0].BankName && (
                       <>
                         <p className="common_margin_p">
-                          <span className="gray-text">विवरण - &nbsp;</span>
-                          {isData && isData?.REMARK
-                            ? isData?.REMARK
-                            : isData && isData.elecItemDetails[0].remark}
+                          <span className="gray-text">
+                            माध्यम - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp;
+                          </span>
+                          {isData && isData?.TYPE
+                            ? isData?.TYPE
+                            : isData &&
+                              isData.elecItemDetails &&
+                              isData.elecItemDetails[0].BankName}
                         </p>
                       </>
                     )}
-                  </div>
                 </div>
                 {isData &&
                   isData.elecItemDetails &&
@@ -693,35 +663,68 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               ) : (
                 <>
                   <div className="div_center_text_is">
-                    <div className="gray-text_div">
-                      <p>दान का मद -</p>
-                    </div>
-                    <div className="wrap_div_child">
-                      {isData &&
-                        isData.elecItemDetails.map((item) => {
-                          return (
-                            <p className="common_margin_p">
-                              {' '}
-                              {item.type}-₹ {item.amount} /-
-                            </p>
-                          );
-                        })}
-                    </div>
+                    {isData && isData.elecItemDetails && (
+                      <>
+                        <div className="gray-text_div">
+                          <p>दान का मद -</p>
+                        </div>
+                        <div className="wrap_div_child">
+                          {isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails.map((item) => {
+                              return (
+                                <p className="common_margin_p">
+                                  {' '}
+                                  {item.type}-₹ {item.amount} /-
+                                </p>
+                              );
+                            })}
+                        </div>
+                      </>
+                    )}
                   </div>
-                  {isData && isData.modeOfDonation && <></>}
-                  <p className="common_margin_p">
-                    <span className="gray-text">
-                      दान राशि अंको में - &nbsp;
-                    </span>
-                    {isData && isData?.AMOUNT
-                      ? isData?.AMOUNT
-                      : isData &&
-                        isData.elecItemDetails.reduce(
-                          (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                          0,
-                        )}
-                    /-
-                  </p>
+
+                  <div className="handle_display_div">
+                    <p className="common_margin_p">
+                      <span className="gray-text">
+                        दान राशि अंको में - &nbsp;
+                      </span>
+                      {isData && isData?.AMOUNT
+                        ? isData?.AMOUNT
+                        : isData &&
+                          isData.elecItemDetails.reduce(
+                            (n, { amount }) =>
+                              parseFloat(n) + parseFloat(amount),
+                            0,
+                          )}
+                      /-
+                    </p>
+
+                    {isData && isData.modeOfDonation === '3' && (
+                      <>
+                        <p className="common_margin_p margin_left_is">
+                          <span className="gray-text">
+                            विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </span>
+                          {isData && isData?.REMARK
+                            ? isData?.REMARK
+                            : isData && isData.elecItemDetails[0].remark}
+                        </p>
+                      </>
+                    )}
+
+                    {isData && isData.modeOfDonation === '1' && (
+                      <>
+                        <p className="common_margin_p margin_left_is">
+                          <span className="gray-text">विवरण - &nbsp;</span>
+                          {isData && isData?.REMARK
+                            ? isData?.REMARK
+                            : isData && isData.elecItemDetails[0].remark}
+                        </p>
+                      </>
+                    )}
+                  </div>
                   <p className="common_margin_p">
                     <span className="gray-text">
                       दान राशि शब्दों में - &nbsp;

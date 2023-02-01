@@ -15,7 +15,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const [isData, setisData] = React.useState(null);
   const navigation = useNavigate();
   const { user } = useSelector((state) => state.userReducer);
-  console.log('data form', isData, user);
+  console.log('data form', isData);
   useEffect(() => {
     setshowreciept(true);
     setopendashboard(false);
@@ -221,16 +221,6 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                       </span>
                     </>
                   )}
-                {isData && isData?.modeOfDonation === '3' && (
-                  <span className="rightitems">
-                    <h2>विवरण :</h2>
-                    <h2 className="font_bold_in_donation">
-                      {isData &&
-                        isData.elecItemDetails &&
-                        isData.elecItemDetails[0].remark}
-                    </h2>
-                  </span>
-                )}
 
                 {isData &&
                   isData.elecItemDetails &&
@@ -246,16 +236,6 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                       </span>
                     </>
                   )}
-                {isData && isData?.modeOfDonation === '1' && (
-                  <span className="rightitems">
-                    <h2>विवरण :</h2>
-                    <h2 className="font_bold_in_donation">
-                      {isData &&
-                        isData.elecItemDetails &&
-                        isData.elecItemDetails[0].remark}
-                    </h2>
-                  </span>
-                )}
 
                 {isData && isData?.modeOfDonation === '2' && (
                   <span className="rightitems">
@@ -374,27 +354,49 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                     </span>
                   </span>
                 )}
-
-                <span className="rightitems2 ">
-                  <h2>दान राशि अंको में :</h2>
-                  <h2 className="font_bold_in_donation">
-                    ₹
-                    {isData && isData.AMOUNT ? (
-                      isData.AMOUNT
-                    ) : (
-                      <>
+                <div className="main_div_center">
+                  <span className="rightitems2 ">
+                    <h2>दान राशि अंको में :</h2>
+                    <h2 className="font_bold_in_donation">
+                      ₹
+                      {isData && isData.AMOUNT ? (
+                        isData.AMOUNT
+                      ) : (
+                        <>
+                          {isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails.reduce(
+                              (n, { amount }) =>
+                                parseFloat(n) + parseFloat(amount),
+                              0,
+                            )}
+                        </>
+                      )}
+                      /-
+                    </h2>
+                  </span>
+                  {isData && isData?.modeOfDonation === '1' && (
+                    <div className="rightitems2  margin_left_div">
+                      <h2 style={{ marginLeft: '38%' }}>विवरण :</h2>
+                      <h2 className="font_bold_in_donation">
                         {isData &&
                           isData.elecItemDetails &&
-                          isData.elecItemDetails.reduce(
-                            (n, { amount }) =>
-                              parseFloat(n) + parseFloat(amount),
-                            0,
-                          )}
-                      </>
-                    )}
-                    /-
-                  </h2>
-                </span>
+                          isData.elecItemDetails[0].remark}
+                      </h2>
+                    </div>
+                  )}
+
+                  {isData && isData?.modeOfDonation === '3' && (
+                    <span className="rightitems2  margin_left_div">
+                      <h2 style={{ marginLeft: '38%' }}>विवरण :</h2>
+                      <h2 className="font_bold_in_donation">
+                        {isData &&
+                          isData.elecItemDetails &&
+                          isData.elecItemDetails[0].remark}
+                      </h2>
+                    </span>
+                  )}
+                </div>
 
                 <span className="rightitems2 ">
                   <h2>दान राशि शब्दों में :</h2>

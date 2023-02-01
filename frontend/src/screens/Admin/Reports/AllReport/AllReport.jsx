@@ -309,6 +309,7 @@ const AllReport = ({ setopendashboard }) => {
         <div>
           <div className="main_center_header10">
             <h2 className="Cheque_text"> Donations Report</h2>
+
             <div className="search-header-div-center">
               <div className="search-inner-div-reports">
                 <div className="Center_main_dic_filetr">
@@ -377,6 +378,7 @@ const AllReport = ({ setopendashboard }) => {
               placeholder="Search"
             />
           </div>
+
           <div className="table-div-maain">
             <Table
               sx={{ minWidth: 650, width: '97%' }}
@@ -397,6 +399,70 @@ const AllReport = ({ setopendashboard }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Date"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Receipt"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Voucher"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Phone"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    className="cuolms_search"
+                    placeholder="Name"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Address"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    className="cuolms_search"
+                    placeholder="Search Head"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Amount"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Remark"
+                  />
+                </TableCell>
+                <TableCell>&nbsp;</TableCell>
                 {isData ? (
                   <>
                     {(rowsPerPage > 0

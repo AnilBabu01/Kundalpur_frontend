@@ -308,4 +308,16 @@ td {
     padding-bottom: 1rem;
     display: flex;
     justify-content: space-between;
+
+}
+.cuolms_search{
+  width: 115%;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid #05313C;
+  text-align: center;
+}
+
+.cuolms_search:focus{
+  outline: none;
 }

@@ -78,7 +78,7 @@
 
 .super_main_divsss{
     padding: 2rem;
-    padding-top: 10rem;
+    padding-top: 8rem;
     position: relative;
 }
 
@@ -94,3 +94,10 @@
 .margin_left_is{
     margin-left:30%;
 }
+
+.wrap_div_child_div{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-left: 24px;
+} 

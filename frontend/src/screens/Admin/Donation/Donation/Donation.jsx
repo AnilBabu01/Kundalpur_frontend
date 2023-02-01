@@ -125,7 +125,29 @@ const Donation = ({ setopendashboard }) => {
     );
   };
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    const role = Number(sessionStorage.getItem('userrole'));
+    if (role === 3) {
+      setLoading(true);
+      serverInstance('admin/voucher-get', 'get').then((res) => {
+        if (res.status) {
+          console.log('voucher data', res);
+          voucherexhauted(res.data);
+        } else {
+          Swal('Error', 'somthing went  wrong', 'error');
+        }
+      });
+    } else {
+      setOpen(true);
+      serverInstance('admin/voucher-get', 'get').then((res) => {
+        if (res.status) {
+          console.log('voucher data', res);
+        } else {
+          Swal('Error', 'somthing went  wrong', 'error');
+        }
+      });
+    }
+  };
   const handleClose = React.useCallback(() => setOpen(false), []);
 
   const navigation = useNavigate();

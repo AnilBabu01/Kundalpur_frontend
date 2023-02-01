@@ -50,7 +50,7 @@ const CashDonation = ({
   });
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
-
+  const [voucher, setvoucher] = useState('');
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
   const [transactionNo, setTransactionNo] = useState('');
@@ -249,6 +249,14 @@ const CashDonation = ({
     } catch (error) {
       Swal.fire('Error!', error, 'error');
     }
+
+    serverInstance('admin/voucher-get', 'get').then((res) => {
+      if (res.status) {
+        console.log('voucher data', res);
+      } else {
+        Swal('Error', 'somthing went  wrong', 'error');
+      }
+    });
   };
 
   useEffect(() => {

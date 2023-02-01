@@ -313,15 +313,6 @@ const AllReport = ({ setopendashboard }) => {
             <div className="search-header-div-center">
               <div className="search-inner-div-reports">
                 <div className="Center_main_dic_filetr">
-                  <label>Employee</label>
-                  <select name="cars" id="cars">
-                    <option>Select user</option>
-                    {donationTypes.map((item, idx) => {
-                      return <option value={item.id}>{item.type_hi}</option>;
-                    })}
-                  </select>
-                </div>
-                <div className="Center_main_dic_filetr">
                   <label>From Date</label>
                   <input type="date" placeholder="From" />
                 </div>
@@ -388,12 +379,14 @@ const AllReport = ({ setopendashboard }) => {
                 <TableRow>
                   <TableCell>Date</TableCell>
                   <TableCell>ReceiptNo</TableCell>
+
                   <TableCell>VoucherNo</TableCell>
                   <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Address</TableCell>
                   <TableCell>Head/Item</TableCell>
                   <TableCell>Amount</TableCell>
+                  <TableCell>User</TableCell>
                   <TableCell>Remark</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -413,6 +406,7 @@ const AllReport = ({ setopendashboard }) => {
                     placeholder="Search Receipt"
                   />
                 </TableCell>
+
                 <TableCell>
                   <input
                     className="cuolms_search"
@@ -456,6 +450,14 @@ const AllReport = ({ setopendashboard }) => {
                   />
                 </TableCell>
                 <TableCell>
+                  <select name="cars" id="cars" className="cuolms_search">
+                    <option>Select user</option>
+                    {donationTypes.map((item, idx) => {
+                      return <option value={item.id}>{item.type_hi}</option>;
+                    })}
+                  </select>
+                </TableCell>
+                <TableCell>
                   <input
                     className="cuolms_search"
                     type="text"
@@ -466,10 +468,12 @@ const AllReport = ({ setopendashboard }) => {
                 {isData ? (
                   <>
                     {(rowsPerPage > 0
-                      ? isData.slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage,
-                        )
+                      ? isData
+                          .reverse()
+                          .slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage,
+                          )
                       : isData
                     ).map((row, index) => (
                       <TableRow
@@ -482,6 +486,7 @@ const AllReport = ({ setopendashboard }) => {
                           {Moment(row.donation_date).format('DD/MM/YYYY')}
                         </TableCell>
                         <TableCell>{row.ReceiptNo}</TableCell>
+
                         <TableCell>{row.voucherNo}</TableCell>
                         <TableCell>{row.phoneNo}</TableCell>
                         <TableCell>{row.name}</TableCell>
@@ -500,7 +505,7 @@ const AllReport = ({ setopendashboard }) => {
                             0,
                           )}
                         </TableCell>
-
+                        <TableCell>&nbsp;</TableCell>
                         <TableCell>
                           {row.elecItemDetails.map((row) => {
                             return (

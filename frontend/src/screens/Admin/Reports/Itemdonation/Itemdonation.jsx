@@ -343,6 +343,7 @@ const Itemdonation = ({ setopendashboard }) => {
                   <TableCell>Address</TableCell>
                   <TableCell>Head/Item</TableCell>
                   <TableCell>Amount</TableCell>
+                  <TableCell>User</TableCell>
                   <TableCell>Remark</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -405,6 +406,14 @@ const Itemdonation = ({ setopendashboard }) => {
                   />
                 </TableCell>
                 <TableCell>
+                  <select name="cars" id="cars" className="cuolms_search">
+                    <option>Select user</option>
+                    {donationTypes.map((item, idx) => {
+                      return <option value={item.id}>{item.type_hi}</option>;
+                    })}
+                  </select>
+                </TableCell>
+                <TableCell>
                   <input
                     className="cuolms_search"
                     type="text"
@@ -415,10 +424,12 @@ const Itemdonation = ({ setopendashboard }) => {
                 {isData ? (
                   <>
                     {(rowsPerPage > 0
-                      ? isData.slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage,
-                        )
+                      ? isData
+                          .reverse()
+                          .slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage,
+                          )
                       : isData
                     ).map((row, index) => (
                       <TableRow
@@ -449,7 +460,7 @@ const Itemdonation = ({ setopendashboard }) => {
                             0,
                           )}
                         </TableCell>
-
+                        <TableCell>&nbsp;</TableCell>
                         <TableCell>
                           {row.elecItemDetails.map((row) => {
                             return (

@@ -326,15 +326,6 @@ const Donation = ({ setopendashboard }) => {
           >
             <div className="search-inner-div-reports">
               <div className="Center_main_dic_filetr">
-                <label>Employee</label>
-                <select name="cars" id="cars">
-                  <option>Select user</option>
-                  {/* {donationTypes.map((item, idx) => {
-                    return <option value={item.id}>{item.type_hi}</option>;
-                  })} */}
-                </select>
-              </div>
-              <div className="Center_main_dic_filetr">
                 <label>From Date</label>
                 <input type="date" placeholder="From" />
               </div>
@@ -404,12 +395,14 @@ const Donation = ({ setopendashboard }) => {
                 <TableRow>
                   <TableCell>Date</TableCell>
                   <TableCell>ReceiptNo</TableCell>
+
                   <TableCell>VoucherNo</TableCell>
                   <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Address</TableCell>
                   <TableCell>Head/Item</TableCell>
                   <TableCell>Amount</TableCell>
+                  <TableCell>User</TableCell>
                   <TableCell>Remark</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -429,6 +422,7 @@ const Donation = ({ setopendashboard }) => {
                     placeholder="Search Receipt"
                   />
                 </TableCell>
+
                 <TableCell>
                   <input
                     className="cuolms_search"
@@ -472,6 +466,15 @@ const Donation = ({ setopendashboard }) => {
                   />
                 </TableCell>
                 <TableCell>
+                  <select name="cars" id="cars" className="cuolms_search">
+                    <option>Select user</option>
+                    {donationTypes.map((item, idx) => {
+                      return <option value={item.id}>{item.type_hi}</option>;
+                    })}
+                  </select>
+                </TableCell>
+
+                <TableCell>
                   <input
                     className="cuolms_search"
                     type="text"
@@ -500,6 +503,7 @@ const Donation = ({ setopendashboard }) => {
                           {Moment(row.donation_date).format('DD/MM/YYYY')}
                         </TableCell>
                         <TableCell>{row.ReceiptNo}</TableCell>
+
                         <TableCell>{row.voucherNo}</TableCell>
                         <TableCell>{row.phoneNo}</TableCell>
                         <TableCell>{row.name}</TableCell>
@@ -518,7 +522,7 @@ const Donation = ({ setopendashboard }) => {
                             0,
                           )}
                         </TableCell>
-
+                        <TableCell>&nbsp;</TableCell>
                         <TableCell>
                           {row.elecItemDetails.map((row) => {
                             return (

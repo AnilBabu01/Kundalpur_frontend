@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import MainAdmin from "../src/screens/Admin/MainAdmin/MainAdmin";
 import Navbar from "./screens/User/Header/Navbar";
 import Footer from "./screens/User/Footer/Footer";
@@ -13,6 +13,9 @@ function App() {
   const dispatch = useDispatch();
   const [opendashboard, setopendashboard] = useState(false);
   const [showreciept, setshowreciept] = useState(false);
+  const [noHeaderFooter,setHeaderFooter] = useState(false)
+
+
   if (!sessionStorage.getItem("token")) {
   }
 
@@ -22,22 +25,24 @@ function App() {
 
   useEffect(() => {
     gett();
+    setHeaderFooter(false)
   }, []);
 
   return (
     <>
       <Router>
-        {!opendashboard && !showreciept ? <Navbar /> : ""}
+        {!opendashboard && !showreciept && !noHeaderFooter ? <Navbar /> : ""}
         {opendashboard && <MainAdmin />}
         <MainRoutes
           setopendashboard={setopendashboard}
           setshowreciept={setshowreciept}
+          setHeaderFooter={setHeaderFooter}
         />
         <AdminRoutes
           setopendashboard={setopendashboard}
           setshowreciept={setshowreciept}
         />
-        {!opendashboard && !showreciept ? <Footer /> : ""}
+        {!opendashboard && !showreciept && !noHeaderFooter ? <Footer /> : ""}
       </Router>
     </>
   );

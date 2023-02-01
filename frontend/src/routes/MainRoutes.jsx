@@ -13,7 +13,8 @@ import DonationHistory from "../screens/User/donationHistory/DonationHistory";
 import ChangePassword from "../screens/User/ChangePassword/ChangePassword";
 import PrivateRoutes from "../components/PrivateRoutes/PrivateRoutes";
 import AboutUs from "../screens/User/Aboutus/AboutUs";
-function MainRoutes({ setopendashboard, setshowreciept }) {
+import PaymentStatusPage from "../screens/User/PaymentStatusPage/PaymentStatusPage";
+function MainRoutes({ setopendashboard, setshowreciept, setHeaderFooter }) {
   return (
     <>
       <Routes>
@@ -24,6 +25,7 @@ function MainRoutes({ setopendashboard, setshowreciept }) {
         <Route path="/create" element={<CreatePassword />} />
         <Route path="/register" element={<Auth />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/payment-status" element={<PaymentStatusPage setHeaderFooter={setHeaderFooter}  />} />
 
         <Route
           path="/profile"

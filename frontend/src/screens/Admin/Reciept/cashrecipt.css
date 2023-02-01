@@ -362,4 +362,9 @@
   .center_receipt_format h2{
     padding: 1rem;
   }
+  .main_div_center{
+    display: flex;
+  }  
+  .margin_left_div{
     
+  }

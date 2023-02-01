@@ -38,6 +38,7 @@ import ItemDonation from './ItemDonation';
 import ChequeDonation from './ChequeDonation';
 import UnderlinedTab from './common/UnderlinedTab';
 import DownloadIcon from '@mui/icons-material/Download';
+import DonationSuccessfull from './DonationSuccessfull';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -82,6 +83,11 @@ const Donation = ({ setopendashboard }) => {
   const [tabValue, setTabValue] = React.useState(0);
   const [userrole, setuserrole] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
+
+  const [rowData, setrowData] = useState('');
+  const [open4, setOpen4] = useState(false);
+  const handleOpen4 = () => setOpen4(true);
+  const handleClose4 = () => setOpen4(false);
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -133,6 +139,8 @@ const Donation = ({ setopendashboard }) => {
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
+        setrowData(res.data.pop());
+        console.log('this', typeof rowData);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
@@ -210,6 +218,7 @@ const Donation = ({ setopendashboard }) => {
             setshowalert={setshowalert}
             handleClose={handleClose}
             themeColor={donationColorTheme.cash}
+            handleOpen4={handleOpen4}
           />
         ),
       },
@@ -220,6 +229,7 @@ const Donation = ({ setopendashboard }) => {
             setshowalert={setshowalert}
             handleClose={handleClose}
             themeColor={donationColorTheme.electronic}
+            handleOpen4={handleOpen4}
           />
         ),
       },
@@ -230,6 +240,7 @@ const Donation = ({ setopendashboard }) => {
             setshowalert={setshowalert}
             handleClose={handleClose}
             themeColor={donationColorTheme.cheque}
+            handleOpen4={handleOpen4}
           />
         ),
       },
@@ -240,6 +251,7 @@ const Donation = ({ setopendashboard }) => {
             setshowalert={setshowalert}
             handleClose={handleClose}
             themeColor={donationColorTheme.item}
+            handleOpen4={handleOpen4}
           />
         ),
       },
@@ -249,6 +261,20 @@ const Donation = ({ setopendashboard }) => {
 
   return (
     <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open4}
+        onClose={handleClose4}
+        closeAfterTransition
+      >
+        <Fade in={open4}>
+          <Box sx={style}>
+            <DonationSuccessfull handleClose={handleClose4} isData={rowData} />
+          </Box>
+        </Fade>
+      </Modal>
+
       <Dialog
         open={open1}
         onClose={handleClose1}

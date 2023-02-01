@@ -72,12 +72,13 @@
 .gray-text_div p{
     color: gray;
     font-weight: 300;
+    font-size: 15px;
 }
 
 
 .super_main_divsss{
     padding: 2rem;
-    padding-top: 5rem;
+    padding-top: 10rem;
     position: relative;
 }
 
@@ -85,4 +86,11 @@
     padding: 2rem;
     padding-top: 7rem;
     position: relative;
+}
+
+.handle_display_div{
+    display: flex;
+}
+.margin_left_is{
+    margin-left:30%;
 }

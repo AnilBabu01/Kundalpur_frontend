@@ -34,6 +34,7 @@ const ChequeDonation = ({
   themeColor,
   updateData,
   showUpdateBtn,
+  handleOpen4,
 }) => {
   const theme = createTheme({
     typography: {
@@ -211,6 +212,7 @@ const ChequeDonation = ({
             setshowalert(true);
             handleClose();
             sendsms(totalamount);
+            handleOpen4();
             console.log('donationItems', donationItems);
           } else {
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');

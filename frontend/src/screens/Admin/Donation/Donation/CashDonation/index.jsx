@@ -35,6 +35,7 @@ const CashDonation = ({
   themeColor,
   updateData,
   showUpdateBtn,
+  handleOpen4,
 }) => {
   console.log('upadte data is', updateData);
   const theme = createTheme({
@@ -166,6 +167,7 @@ const CashDonation = ({
         if (res.data.status === true) {
           setshowalert(true);
           handleClose();
+          setshowDownButton(true);
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
         }
@@ -201,7 +203,7 @@ const CashDonation = ({
             );
 
         if (res.data.status === true) {
-          setshowalert(true);
+          handleOpen4();
           handleClose();
 
           sendsms(totalamount);

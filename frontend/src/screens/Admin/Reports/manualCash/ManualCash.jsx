@@ -162,28 +162,39 @@ const ManualCash = ({ setopendashboard }) => {
     }
   };
 
+  // date,
+  //   recipt,
+  //   voucher,
+  //   phone,
+  //   name,
+  //   address,
+  //   item / type,
+  //   amout,
+  //   remark,
+  //   action;
   const ExportToExcel = () => {
     const fileName = 'ManualCashReport';
     const exportType = 'xls';
     var data = [];
     isData.map((item, index) => {
       data.push({
+        Date: Moment(item.donation_date).format('DD-MM-YYYY'),
         'Receipt No': item?.ReceiptNo,
-        Name: item?.name,
+        'Voucher No': item?.voucherNo,
         'Phone No': item?.phoneNo,
+        name: item?.name,
+        Address: item?.address,
+        'Head/Item': item?.elecItemDetails.map((row) => {
+          return row.type;
+        }),
         Amount: item?.elecItemDetails.reduce(
           (n, { amount }) => parseFloat(n) + parseFloat(amount),
           0,
         ),
-        Address: item?.address,
-        'Donation Date': Moment(item.donation_date).format('DD/MM/YYYY'),
-        Remark: item?.elecItemDetails.map((row) => {
-          return row.type;
+        remark: item?.elecItemDetails.map((row) => {
+          return row.remark;
         }),
-
-        donation_time: item?.donation_time,
-        voucherNo: item?.voucherNo,
-        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY hh:mm a'),
+        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
       });
     });
     exportFromJSON({ data, fileName, exportType });
@@ -341,20 +352,83 @@ const ManualCash = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: '#FFEEE0' }}>
                 <TableRow>
-                  <TableCell>Receipt No</TableCell>
-                  <TableCell>Name</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>ReceiptNo</TableCell>
+                  <TableCell>VoucherNo</TableCell>
                   <TableCell>Phone No</TableCell>
-
-                  <TableCell>Amount</TableCell>
-
+                  <TableCell>Name</TableCell>
                   <TableCell>Address</TableCell>
-                  <TableCell>Donation Date</TableCell>
-
+                  <TableCell>Head/Item</TableCell>
+                  <TableCell>Amount</TableCell>
                   <TableCell>Remark</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Date"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Receipt"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Voucher"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Phone"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    className="cuolms_search"
+                    placeholder="Name"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Address"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    className="cuolms_search"
+                    placeholder="Search Head"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Amount"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Remark"
+                  />
+                </TableCell>
+                <TableCell>&nbsp;</TableCell>
                 {isData ? (
                   <>
                     {(rowsPerPage > 0
@@ -370,20 +444,27 @@ const ManualCash = ({ setopendashboard }) => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
+                        <TableCell>
+                          {Moment(row.donation_date).format('DD/MM/YYYY')}
+                        </TableCell>
                         <TableCell>{row.ReceiptNo}</TableCell>
-                        <TableCell>{row.name}</TableCell>
+                        <TableCell>{row.voucherNo}</TableCell>
                         <TableCell>{row.phoneNo}</TableCell>
-
+                        <TableCell>{row.name}</TableCell>
+                        <TableCell> {row.address}</TableCell>
+                        <TableCell>
+                          {row.elecItemDetails.map((row) => {
+                            return (
+                              <li style={{ listStyle: 'none' }}>{row.type}</li>
+                            );
+                          })}
+                        </TableCell>
                         <TableCell>
                           {row.elecItemDetails.reduce(
                             (n, { amount }) =>
                               parseFloat(n) + parseFloat(amount),
                             0,
                           )}
-                        </TableCell>
-                        <TableCell> {row.address}</TableCell>
-                        <TableCell>
-                          {Moment(row.donation_date).format('DD/MM/YYYY')}
                         </TableCell>
 
                         <TableCell>

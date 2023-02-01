@@ -105,6 +105,7 @@ const Online = ({ setopendashboard }) => {
       });
     }
   };
+
   const ExportToExcel = () => {
     const fileName = 'OnlineDonationReport';
     const exportType = 'xls';
@@ -112,17 +113,20 @@ const Online = ({ setopendashboard }) => {
     var data = [];
     isData.map((item, index) => {
       data.push({
+        Date: Moment(item?.DATE_OF_DAAN).format('DD/MM/YYYY'),
         'Receipt No': item?.RECEIPT_NO,
         Name: item?.NAME,
         'Phone No': item?.MobileNo,
+        Name: item.NAME,
+        Address: item?.ADDRESS,
+        'Head/Item': item?.TYPE,
         Amount: item?.AMOUNT,
+        Remark: item?.REMARK,
         MODE_OF_DONATION: item?.MODE_OF_DONATION,
         Address: item?.ADDRESS,
         CHEQUE_NO: item?.CHEQUE_NO,
         DATE_OF_CHEQUE: item?.DATE_OF_CHEQUE,
-        'Donation Date': Moment(item?.DATE_OF_DAAN).format('DD/MM/YYYY'),
-        Remark: item?.REMARK,
-        'Donation Type': item?.TYPE,
+
         'Created Date': Moment(item?.created_at).format('DD-MM-YYYY hh:mm a'),
       });
     });

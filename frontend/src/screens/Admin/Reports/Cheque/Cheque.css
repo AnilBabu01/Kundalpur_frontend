@@ -3,6 +3,7 @@
 }
 .search-inner-div-reports {
     display: contents;
+    padding-right: 1rem;
 }
 
 .search-inner-div-reports input {

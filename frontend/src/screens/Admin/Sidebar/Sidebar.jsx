@@ -215,6 +215,16 @@ const Sidebar = ({ setshowsidebar }) => {
                       className={({ isActive }) =>
                         isActive ? 'active-nav-link' : 'nav-link'
                       }
+                      to="/admin-panel/reports/allreport"
+                    >
+                      Donations Report
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? 'active-nav-link' : 'nav-link'
+                      }
                       to="/admin-panel/reports/manualcash"
                     >
                       Manual Cash

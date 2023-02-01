@@ -43,12 +43,12 @@ const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
+
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
   borderRadius: '15px',
-  minHeight: 500,
 };
 const style2 = {
   position: 'absolute',
@@ -125,7 +125,29 @@ const Donation = ({ setopendashboard }) => {
     );
   };
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    const role = Number(sessionStorage.getItem('userrole'));
+    if (role === 3) {
+      setLoading(true);
+      serverInstance('admin/voucher-get', 'get').then((res) => {
+        if (res.status) {
+          console.log('voucher data', res);
+          voucherexhauted(res.data);
+        } else {
+          Swal('Error', 'somthing went  wrong', 'error');
+        }
+      });
+    } else {
+      setOpen(true);
+      serverInstance('admin/voucher-get', 'get').then((res) => {
+        if (res.status) {
+          console.log('voucher data', res);
+        } else {
+          Swal('Error', 'somthing went  wrong', 'error');
+        }
+      });
+    }
+  };
   const handleClose = React.useCallback(() => setOpen(false), []);
 
   const navigation = useNavigate();

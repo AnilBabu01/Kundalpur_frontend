@@ -277,7 +277,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
             <div>
               {isData && isData?.modeOfDonation === '4' ? (
                 <>
-                  <p style={{ textAlign: 'center' }}>
+                  <p style={{ textAlign: 'center' }} className="gray-text">
                     आपके द्वारा प्रदत्त उपहार दान स्वरूप सधन्यवाद प्राप्त हुआ।
                   </p>
                 </>
@@ -289,7 +289,8 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         <div className="gray-text_div">
                           <p>दान का मद -</p>
                         </div>
-                        <div className="wrap_div_child">
+                        <div className="wrap_div_child_div">
+
                           {isData &&
                             isData.elecItemDetails &&
                             isData.elecItemDetails.map((item) => {
@@ -381,30 +382,35 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                             )}
                         ,
                         {isData && isData?.modeOfDonation === '2' && (
-                          <> रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये। </>
+                          <span className="gray-text">
+                            {' '}
+                            रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                          </span>
                         )}
                         {isData && isData?.modeOfDonation === '1' && (
-                          <>
+                          <span className="gray-text">
                             रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
-                          </>
+                          </span>
                         )}
                         {isData && isData?.modeOfDonation === '3' && (
-                          <>चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये। </>
+                          <span className="gray-text">
+                            चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                          </span>
                         )}
                       </>
                     ) : (
                       <>
                         {isData && isData?.MODE_OF_DONATION === 'ONLINE' && (
-                          <>
+                          <span className="gray-text">
                             {isData && converter.toWords(isData?.AMOUNT)}, रूपये
                             ऑनलाइन द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
-                          </>
+                          </span>
                         )}
                         {isData && isData?.MODE_OF_DONATION === 'CHEQUE' && (
-                          <>
+                          <span span className="gray-text">
                             {isData && converter.toWords(isData?.AMOUNT)}, रूपये
                             ऑनलाइन चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
-                          </>
+                          </span>
                         )}
                       </>
                     )}
@@ -668,7 +674,10 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         <div className="gray-text_div">
                           <p>दान का मद -</p>
                         </div>
-                        <div className="wrap_div_child">
+
+                        <div className="wrap_div_child_div">
+
+            
                           {isData &&
                             isData.elecItemDetails &&
                             isData.elecItemDetails.map((item) => {
@@ -760,15 +769,20 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                             )}
                         ,
                         {isData && isData?.modeOfDonation === '2' && (
-                          <> रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये। </>
+                          <span className="gray-text">
+                            {' '}
+                            रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                          </span>
                         )}
                         {isData && isData?.modeOfDonation === '1' && (
-                          <>
+                          <span className="gray-text">
                             रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
-                          </>
+                          </span>
                         )}
                         {isData && isData?.modeOfDonation === '3' && (
-                          <>चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये। </>
+                          <span className="gray-text">
+                            चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                          </span>
                         )}
                       </>
                     ) : (

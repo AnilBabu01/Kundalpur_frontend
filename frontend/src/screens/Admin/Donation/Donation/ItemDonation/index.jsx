@@ -267,7 +267,7 @@ const ItemDonation = ({
     try {
       Promise.all([
         serverInstance('admin/donation-type?type=2', 'get'),
-        serverInstance('admin/get-receipt?type=4', 'get'),
+        serverInstance('admin/voucher-get', 'get'),
       ]).then(([res, item]) => {
         if (res.status) {
           setDonationTypes(res.data);
@@ -295,9 +295,7 @@ const ItemDonation = ({
         amount: totalamount,
         url: '',
       });
-    } catch (error) {
-      Swal.fire('Error!', error, 'error');
-    }
+    } catch (error) {}
   };
   useEffect(() => {
     getall_donatiions();
@@ -320,7 +318,7 @@ const ItemDonation = ({
             {currDate} / {currTime}
           </Typography>
           <Typography variant="body2" my={1}>
-            Receipt No:{' '}
+            {updateData?.ReceiptNo ? 'Receipt No :' : ' Voucher No :'}
             {updateData?.ReceiptNo ? updateData?.ReceiptNo : receiptNo}
           </Typography>
           <Box

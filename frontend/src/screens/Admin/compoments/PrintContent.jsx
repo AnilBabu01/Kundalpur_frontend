@@ -35,7 +35,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
   return (
     <>
-      <div className="super_main_divsss" ref={componentRef}>
+      <div className="super_main_divss" ref={componentRef}>
         <div>
           <div>
             {isData?.active === '0' && (

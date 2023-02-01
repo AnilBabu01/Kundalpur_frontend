@@ -365,6 +365,70 @@ const ManualCash = ({ setopendashboard }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Date"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Receipt"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Voucher"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Phone"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    className="cuolms_search"
+                    placeholder="Name"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Address"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    className="cuolms_search"
+                    placeholder="Search Head"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Search Amount"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    className="cuolms_search"
+                    type="text"
+                    placeholder="Remark"
+                  />
+                </TableCell>
+                <TableCell>&nbsp;</TableCell>
                 {isData ? (
                   <>
                     {(rowsPerPage > 0

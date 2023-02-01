@@ -235,8 +235,8 @@ const Cheque = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: '#F1F0F0' }}>
                 <TableRow>
-                  <TableCell>S.No.</TableCell>
                   <TableCell>Date</TableCell>
+                  <TableCell>Receipt No</TableCell>
                   <TableCell>Name </TableCell>
                   <TableCell>Donation Type</TableCell>
                   <TableCell>Amount</TableCell>
@@ -263,11 +263,12 @@ const Cheque = ({ setopendashboard }) => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
-                        <TableCell>{row?.RECEIPT_NO}</TableCell>
                         <TableCell>
                           {' '}
                           {moment(row?.DATE_OF_DAAN).format('DD/MM/YYYY')}
                         </TableCell>
+                        <TableCell>{row?.RECEIPT_NO}</TableCell>
+
                         <TableCell>{row.NAME}</TableCell>
                         <TableCell> {row.MODE_OF_DONATION}</TableCell>
                         <TableCell> {row.AMOUNT}</TableCell>

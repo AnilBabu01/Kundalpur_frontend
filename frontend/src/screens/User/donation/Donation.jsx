@@ -150,7 +150,7 @@ const style = {
   boxShadow: 24,
   p: 2,
 };
-function Donation({ setshowreciept }) {
+function Donation({ setshowreciept, paymentId }) {
   const dispatch = useDispatch();
   const nagivate = useNavigate();
   const converter = new Converter(hiIN);
@@ -256,7 +256,7 @@ function Donation({ setshowreciept }) {
         DATE_OF_CHEQUE: donationdata?.date_of_sub,
         NAME_OF_BANK: donationdata?.name_of_bank,
         DATE_OF_DAAN: new Date(),
-        PAYMENT_ID: 0,
+        PAYMENT_ID: paymentId,
         TYPE: donationdata?.donationtype,
         REMARK: donationdata?.Remark,
         ADDRESS: donationdata?.address,

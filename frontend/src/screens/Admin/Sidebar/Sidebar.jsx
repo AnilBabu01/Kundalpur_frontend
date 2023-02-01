@@ -70,6 +70,17 @@ const Sidebar = ({ setshowsidebar }) => {
                       Donation
                     </NavLink>
                   </li>
+
+                  <li className="nav-item">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? 'active-nav-link' : 'nav-link'
+                      }
+                      to="/admin-panel/manualdonation"
+                    >
+                      Manual Donation
+                    </NavLink>
+                  </li>
                 </div>
 
                 <li className="nav-item">
@@ -318,6 +329,16 @@ const Sidebar = ({ setshowsidebar }) => {
                         isActive ? 'active-nav-link' : 'nav-link'
                       }
                       to="/admin-panel/donation"
+                    >
+                      Donation
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? 'active-nav-link' : 'nav-link'
+                      }
+                      to="/admin-panel/manualdonation"
                     >
                       Manual Donation
                     </NavLink>

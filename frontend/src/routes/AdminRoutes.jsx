@@ -25,6 +25,7 @@ import Itemdonation from '../screens/Admin/Reports/Itemdonation/Itemdonation';
 import ManualCash from '../screens/Admin/Reports/manualCash/ManualCash';
 import ManualCheque from '../screens/Admin/Reports/ManualCheque/ManualCheque';
 import PrintContent from '../screens/Admin/compoments/PrintContent';
+import AllReport from '../screens/Admin/Reports/AllReport/AllReport';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   return (
     <>
@@ -179,6 +180,18 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <PrintContent
+                setopendashboard={setopendashboard}
+                setshowreciept={setshowreciept}
+              />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/reports/allreport"
+          element={
+            <Adminprivateroute>
+              <AllReport
                 setopendashboard={setopendashboard}
                 setshowreciept={setshowreciept}
               />

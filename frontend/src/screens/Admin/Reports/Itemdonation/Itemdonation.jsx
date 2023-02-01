@@ -163,22 +163,23 @@ const Itemdonation = ({ setopendashboard }) => {
     var data = [];
     isData.map((item, index) => {
       data.push({
+        Date: Moment(item.donation_date).format('DD-MM-YYYY'),
         'Receipt No': item?.ReceiptNo,
-        Name: item?.name,
+        'Voucher No': item?.voucherNo,
         'Phone No': item?.phoneNo,
+        name: item?.name,
+        Address: item?.address,
+        'Head/Item': item?.elecItemDetails.map((row) => {
+          return row.type;
+        }),
         Amount: item?.elecItemDetails.reduce(
           (n, { amount }) => parseFloat(n) + parseFloat(amount),
           0,
         ),
-        Address: item?.address,
-        'Donation Date': Moment(item.donation_date).format('DD/MM/YYYY'),
-        Remark: item?.elecItemDetails.map((row) => {
-          return row.type;
+        remark: item?.elecItemDetails.map((row) => {
+          return row.remark;
         }),
-
-        donation_time: item?.donation_time,
-        voucherNo: item?.voucherNo,
-        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY hh:mm a'),
+        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
       });
     });
     exportFromJSON({ data, fileName, exportType });
@@ -328,23 +329,21 @@ const Itemdonation = ({ setopendashboard }) => {
           </div>
 
           <div className="table-div-maain">
-            {/* <TableContainer component={Paper}> */}
             <Table
               sx={{ minWidth: 650, width: '97%' }}
               aria-label="simple table"
             >
               <TableHead style={{ background: '#FFEEE0' }}>
                 <TableRow>
-                  <TableCell>Receipt No</TableCell>
-
-                  <TableCell>Name</TableCell>
-                  <TableCell>Phone No</TableCell>
-                  <TableCell>Amount</TableCell>
-                  <TableCell>Donation Item</TableCell>
-
-                  <TableCell>remark</TableCell>
-                  <TableCell>Address</TableCell>
                   <TableCell>Date</TableCell>
+                  <TableCell>ReceiptNo</TableCell>
+                  <TableCell>VoucherNo</TableCell>
+                  <TableCell>Phone No</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Address</TableCell>
+                  <TableCell>Head/Item</TableCell>
+                  <TableCell>Amount</TableCell>
+                  <TableCell>Remark</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -364,10 +363,21 @@ const Itemdonation = ({ setopendashboard }) => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
+                        <TableCell>
+                          {Moment(row.donation_date).format('DD/MM/YYYY')}
+                        </TableCell>
                         <TableCell>{row.ReceiptNo}</TableCell>
-
-                        <TableCell>{row.name}</TableCell>
+                        <TableCell>{row.voucherNo}</TableCell>
                         <TableCell>{row.phoneNo}</TableCell>
+                        <TableCell>{row.name}</TableCell>
+                        <TableCell> {row.address}</TableCell>
+                        <TableCell>
+                          {row.elecItemDetails.map((row) => {
+                            return (
+                              <li style={{ listStyle: 'none' }}>{row.type}</li>
+                            );
+                          })}
+                        </TableCell>
                         <TableCell>
                           {row.elecItemDetails.reduce(
                             (n, { amount }) =>
@@ -375,20 +385,15 @@ const Itemdonation = ({ setopendashboard }) => {
                             0,
                           )}
                         </TableCell>
-                        <TableCell>
-                          {row.elecItemDetails.map((row) => {
-                            return row.itemType;
-                          })}
-                        </TableCell>
 
                         <TableCell>
                           {row.elecItemDetails.map((row) => {
-                            return row.remark;
+                            return (
+                              <li style={{ listStyle: 'none' }}>
+                                {row.remark}{' '}
+                              </li>
+                            );
                           })}
-                        </TableCell>
-                        <TableCell> {row.address}</TableCell>
-                        <TableCell>
-                          {Moment(row.donation_date).format('DD/MM/YYYY')}
                         </TableCell>
                         <TableCell>
                           <RemoveRedEyeIcon
@@ -398,10 +403,10 @@ const Itemdonation = ({ setopendashboard }) => {
                               )
                             }
                           />
-
                           {userrole === 1 && (
                             <EditIcon onClick={() => upadteOpen(row)} />
                           )}
+
                           <PrintIcon
                             onClick={() =>
                               navigation('/admin-panel/reports/printcontent', {
@@ -429,7 +434,7 @@ const Itemdonation = ({ setopendashboard }) => {
                   </>
                 ) : (
                   <>
-                    <TableCell colSpan={9} align="center">
+                    <TableCell colSpan={8} align="center">
                       <CircularProgress />
                     </TableCell>
                   </>
@@ -457,16 +462,10 @@ const Itemdonation = ({ setopendashboard }) => {
                         'aria-label': 'page number',
                       },
                     }}
-                    // showFirstButton={true}
-                    // showLastButton={true}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
-                    //sx and classes prop discussed in styling section
                   />
                 </TableRow>
               </TableFooter>
             </Table>
-            {/* </TableContainer> */}
           </div>
         </div>
       </div>

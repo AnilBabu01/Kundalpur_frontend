@@ -3,7 +3,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import EditIcon from '@mui/icons-material/Edit';
@@ -25,18 +25,19 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DownloadIcon from '@mui/icons-material/Download';
 import ClearIcon from '@mui/icons-material/Clear';
 import exportFromJSON from 'export-from-json';
-import ElectronicDonation from '../../Donation/Donation/ElectronicDonation/ElectronicDonation';
+import Moment from 'moment-js';
+import CashDonation from '../../Donation/Donation/CashDonation';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
-import './Electornic.css';
-import Moment from 'moment-js';
 import CircularProgress from '@mui/material/CircularProgress';
 import { ExportPdfmanul } from '../../compoments/ExportPdf';
+
 const style = {
   position: 'absolute',
   top: '40%',
@@ -62,15 +63,16 @@ const openupadtestyle = {
 };
 
 const donationColorTheme = {
-  electronic: '#e96d00',
+  cash: '#48a828',
 };
-const Electornic = ({ setopendashboard }) => {
+
+const AllReport = ({ setopendashboard }) => {
+  const navigation = useNavigate();
   const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [showalert, setshowalert] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const navigation = useNavigate();
   const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState('');
   const [updateData, setupdateData] = useState('');
@@ -78,14 +80,17 @@ const Electornic = ({ setopendashboard }) => {
   const [showUpdateBtn, setshowUpdateBtn] = useState(true);
   const [phone, setphone] = useState('');
   const [date, setdate] = useState('');
-  const [typedonation, settypedonation] = useState('');
+  const [typedonation, settypedonation] = useState(2);
   const [name, setname] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [updateId, setupdateId] = useState('');
+  const [showsearchData, setshowsearchData] = useState(false);
+
   const [userrole, setuserrole] = useState('');
+  console.log(userrole);
   const handleOpen = (id) => {
-    setOpen(true);
     setupdateId(id);
+    setOpen(true);
   };
   const handleClose = () => setOpen(false);
   const upadteClose = () => {
@@ -127,9 +132,7 @@ const Electornic = ({ setopendashboard }) => {
   const getall_donation = () => {
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '1');
-
-        setisData(filterData);
+        setisData(res.data);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
@@ -145,6 +148,7 @@ const Electornic = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   const printreceipt = (row) => {
     if (row.active === '0') {
     } else {
@@ -156,8 +160,18 @@ const Electornic = ({ setopendashboard }) => {
     }
   };
 
+  // date,
+  //   recipt,
+  //   voucher,
+  //   phone,
+  //   name,
+  //   address,
+  //   item / type,
+  //   amout,
+  //   remark,
+  //   action;
   const ExportToExcel = () => {
-    const fileName = 'ManualElectronicReport';
+    const fileName = 'ManualCashReport';
     const exportType = 'xls';
     var data = [];
     isData.map((item, index) => {
@@ -183,6 +197,7 @@ const Electornic = ({ setopendashboard }) => {
     });
     exportFromJSON({ data, fileName, exportType });
   };
+
   const filterdata = async () => {
     axios.defaults.headers.get[
       'Authorization'
@@ -191,12 +206,13 @@ const Electornic = ({ setopendashboard }) => {
     const res = await axios.get(
       `${backendApiUrl}user/search-donation?name=${name}&type=${typedonation}&date=${date}&phone=${phone}`,
     );
-    console.log('dilter data is', res);
+    console.log('filter data is', res);
     if (res.data.status) {
       setshowsearchData(!showsearchData);
       setisData(res.data.data);
     }
   };
+
   const get_donation_tyeps = () => {
     try {
       Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
@@ -218,7 +234,7 @@ const Electornic = ({ setopendashboard }) => {
     setopendashboard(true);
     get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, [showalert, open]);
+  }, [showalert, openupdate, open]);
 
   return (
     <>
@@ -257,7 +273,7 @@ const Electornic = ({ setopendashboard }) => {
                 <h2>Cancel electronic donation </h2>
                 <CloseIcon onClick={() => handleClose()} />
               </div>
-              <Cancel handleClose={handleClose} updateId={updateId} type={1} />
+              <Cancel handleClose={handleClose} updateId={updateId} type={2} />
             </div>
           </Box>
         </Fade>
@@ -280,9 +296,9 @@ const Electornic = ({ setopendashboard }) => {
               },
             }}
           >
-            <ElectronicDonation
+            <CashDonation
               handleClose={upadteClose}
-              themeColor={donationColorTheme.electronic}
+              themeColor={donationColorTheme.cash}
               updateData={updateData}
               showUpdateBtn={showUpdateBtn}
             />
@@ -292,43 +308,56 @@ const Electornic = ({ setopendashboard }) => {
       <div className="dashboarddiv">
         <div>
           <div className="main_center_header10">
-            <h2 className="Cheque_text">Electronic donation report</h2>
-            <div className="search-header">
+            <h2 className="Cheque_text"> Donations Report</h2>
+            <div className="search-header-div-center">
               <div className="search-inner-div-reports">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={name}
-                  name="name"
-                  onChange={(e) => setname(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Phone No"
-                  value={phone}
-                  name="phone"
-                  onChange={(e) => setphone(e.target.value)}
-                />
-                <input type="date" placeholder="Date" />
-                <select name="cars" id="cars">
-                  <option>Select option</option>
-                  {donationTypes.map((item, idx) => {
-                    return <option value={item.id}>{item.type_hi}</option>;
-                  })}
-                </select>
-                <button onClick={() => filterdata()}>Search</button>
-                <button onClick={() => getall_donation()}>Reset</button>
-                <SimCardAlertIcon onClick={() => ExportToExcel()} />
-                <PictureAsPdfIcon
-                  onClick={() =>
-                    ExportPdfmanul(isData, 'ManualElectronicReport')
-                  }
-                />
+                <div className="Center_main_dic_filetr">
+                  <label>From Date</label>
+                  <input type="date" placeholder="From" />
+                </div>
+
+                <div className="Center_main_dic_filetr">
+                  <label>From Voucher</label>
+                  <input type="text" placeholder="From" />
+                </div>
+                <div className="Center_main_dic_filetr">
+                  <label>To Voucher</label>
+                  <input type="text" placeholder="From" />
+                </div>
+                <div className="Center_main_dic_filetr">
+                  <label>To Date</label>
+                  <input type="date" placeholder="From" />
+                </div>
+
+                <div className="Center_main_dic_filetr">
+                  <label>Head/Item</label>
+                  <select name="cars" id="cars">
+                    <option>Select option</option>
+                    {donationTypes.map((item, idx) => {
+                      return <option value={item.id}>{item.type_hi}</option>;
+                    })}
+                  </select>
+                </div>
+
+                <div className="Center_main_dic_filetr">
+                  <label>&nbsp;</label>
+                  <button onClick={() => filterdata()}>Search</button>
+                </div>
+                <div className="Center_main_dic_filetr">
+                  <label>&nbsp;</label>
+                  <button onClick={() => getall_donation()}>Reset</button>
+                </div>
               </div>
               <div></div>
             </div>
           </div>
-
+          <div className="search-header-print">
+            <SimCardAlertIcon onClick={() => ExportToExcel()} />
+            &nbsp;&nbsp;
+            <PictureAsPdfIcon
+              onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+            />
+          </div>
           <div className="table-div-maain">
             <Table
               sx={{ minWidth: 650, width: '97%' }}
@@ -474,4 +503,4 @@ const Electornic = ({ setopendashboard }) => {
   );
 };
 
-export default Electornic;
+export default AllReport;

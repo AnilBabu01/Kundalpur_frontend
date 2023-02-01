@@ -13,9 +13,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-
+import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
-
+import Moment from 'moment-js';
 import IconButton from '@mui/material/IconButton';
 import Modal from '@mui/material/Modal';
 import PrintIcon from '@mui/icons-material/Print';
@@ -23,6 +23,7 @@ import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
+import CancelIcon from '@mui/icons-material/Cancel';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -34,6 +35,7 @@ import CashDonation from './CashDonation';
 import ItemDonation from './ItemDonation';
 import ChequeDonation from './ChequeDonation';
 import UnderlinedTab from './common/UnderlinedTab';
+import DownloadIcon from '@mui/icons-material/Download';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -76,7 +78,7 @@ const Donation = ({ setopendashboard }) => {
   const [open, setOpen] = React.useState(true);
   const [open3, setOpen3] = React.useState(false);
   const [tabValue, setTabValue] = React.useState(0);
-
+  const [userrole, setuserrole] = useState('');
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -177,6 +179,7 @@ const Donation = ({ setopendashboard }) => {
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
+    setuserrole(Number(sessionStorage.getItem('userrole')));
   }, [showalert, open]);
 
   const tabs = React.useMemo(
@@ -311,80 +314,116 @@ const Donation = ({ setopendashboard }) => {
           </div>
 
           <div className="table-div-maain">
-            {/* <TableContainer component={Paper}> */}
             <Table
               sx={{ minWidth: 650, width: '97%' }}
               aria-label="simple table"
             >
-              <TableHead style={{ background: '#f1f0f0' }}>
+              <TableHead style={{ background: '#FFEEE0' }}>
                 <TableRow>
-                  <TableCell>Receipt No</TableCell>
-                  <TableCell>Name</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>ReceiptNo</TableCell>
+                  <TableCell>VoucherNo</TableCell>
                   <TableCell>Phone No</TableCell>
-                  <TableCell>Amount</TableCell>
-                  <TableCell>Type of donation</TableCell>
-                  <TableCell>Mode of donation</TableCell>
+                  <TableCell>Name</TableCell>
                   <TableCell>Address</TableCell>
+                  <TableCell>Head/Item</TableCell>
+                  <TableCell>Amount</TableCell>
+                  <TableCell>Remark</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.phoneNo}</TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.reduce(
-                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                        0,
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return (
-                          <li style={{ listStyle: 'none' }}>{row.type} </li>
-                        );
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      {(row.modeOfDonation === '2' && 'Cash') ||
-                        (row.modeOfDonation === '3' && 'Cheque') ||
-                        (row.modeOfDonation === '1' && 'Electronic') ||
-                        (row.modeOfDonation === '4' && 'Item')}
-                    </TableCell>
-
-                    <TableCell> {row.address}</TableCell>
-
-                    <TableCell>
-                      <RemoveRedEyeIcon
-                        onClick={() =>
-                          navigation(`/admin-panel/infoElectronic/${row.id}`)
-                        }
-                      />
-
-                      <DeleteForeverIcon
-                        onClick={() => handleClickOpen1(row.id)}
-                      />
-                      <PrintIcon
-                        onClick={() => {
-                          voucherexhauted(row);
+                {isData ? (
+                  <>
+                    {(rowsPerPage > 0
+                      ? isData.slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
+                      : isData
+                    ).map((row, index) => (
+                      <TableRow
+                        key={row.id}
+                        sx={{
+                          '&:last-child td, &:last-child th': { border: 0 },
                         }}
-                      />
+                      >
+                        <TableCell>
+                          {Moment(row.donation_date).format('DD/MM/YYYY')}
+                        </TableCell>
+                        <TableCell>{row.ReceiptNo}</TableCell>
+                        <TableCell>{row.voucherNo}</TableCell>
+                        <TableCell>{row.phoneNo}</TableCell>
+                        <TableCell>{row.name}</TableCell>
+                        <TableCell> {row.address}</TableCell>
+                        <TableCell>
+                          {row.elecItemDetails.map((row) => {
+                            return (
+                              <li style={{ listStyle: 'none' }}>{row.type}</li>
+                            );
+                          })}
+                        </TableCell>
+                        <TableCell>
+                          {row.elecItemDetails.reduce(
+                            (n, { amount }) =>
+                              parseFloat(n) + parseFloat(amount),
+                            0,
+                          )}
+                        </TableCell>
+
+                        <TableCell>
+                          {row.elecItemDetails.map((row) => {
+                            return (
+                              <li style={{ listStyle: 'none' }}>
+                                {row.remark}{' '}
+                              </li>
+                            );
+                          })}
+                        </TableCell>
+                        <TableCell>
+                          <RemoveRedEyeIcon
+                            onClick={() =>
+                              navigation(
+                                `/admin-panel/infoElectronic/${row.id}`,
+                              )
+                            }
+                          />
+                          {/* {userrole === 1 && (
+                            <EditIcon onClick={() => upadteOpen(row)} />
+                          )} */}
+
+                          <PrintIcon
+                            onClick={() =>
+                              navigation('/admin-panel/reports/printcontent', {
+                                state: {
+                                  data: row,
+                                },
+                              })
+                            }
+                          />
+                          {row.isActive ? (
+                            <DownloadIcon
+                              onClick={() => {
+                                printreceipt(row);
+                              }}
+                            />
+                          ) : (
+                            <ClearIcon />
+                          )}
+                          {/* {userrole === 1 && (
+                            <CancelIcon onClick={() => handleOpen(row.id)} />
+                          )} */}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <TableCell colSpan={8} align="center">
+                      <CircularProgress />
                     </TableCell>
-                  </TableRow>
-                ))}
+                  </>
+                )}
               </TableBody>
               <TableFooter>
                 <TableRow>
@@ -408,16 +447,10 @@ const Donation = ({ setopendashboard }) => {
                         'aria-label': 'page number',
                       },
                     }}
-                    // showFirstButton={true}
-                    // showLastButton={true}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
-                    //sx and classes prop discussed in styling section
                   />
                 </TableRow>
               </TableFooter>
             </Table>
-            {/* </TableContainer> */}
           </div>
         </div>
       </div>

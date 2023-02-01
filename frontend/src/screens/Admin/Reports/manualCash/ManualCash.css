@@ -34,3 +34,42 @@
     margin-bottom: 1.5rem;
     font-size: 14px;
 }
+.Center_main_dic_filetr{
+    display: flex;
+    flex-direction: column;
+}
+
+.search-header-print{
+    display: flex;
+    flex-direction: row-reverse;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+}
+
+.search-header-div-center{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  
+}
+
+
+.search-header-div-center button{
+    background: #FDC99C;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    color: #05313C;
+    padding: 0.4rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.search-header-div-center  select{
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 0.4rem 1.5rem;
+    padding-left: 1rem;
+    border: 1px solid #05313C;
+}

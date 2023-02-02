@@ -161,16 +161,6 @@ const AllReport = ({ setopendashboard }) => {
     }
   };
 
-  // date,
-  //   recipt,
-  //   voucher,
-  //   phone,
-  //   name,
-  //   address,
-  //   item / type,
-  //   amout,
-  //   remark,
-  //   action;
   const ExportToExcel = () => {
     const fileName = 'ManualCashReport';
     const exportType = 'xls';
@@ -358,17 +348,6 @@ const AllReport = ({ setopendashboard }) => {
             &nbsp;&nbsp;
             <PictureAsPdfIcon
               onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
-            />
-            <button
-              className="search-header-div-center-button"
-              onClick={() => filterdata()}
-            >
-              Search
-            </button>
-            <input
-              className="search-header-div-center-input"
-              type="text"
-              placeholder="Search"
             />
           </div>
 

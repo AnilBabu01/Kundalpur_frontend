@@ -85,9 +85,9 @@ const ManualCash = ({ setopendashboard }) => {
   const [donationTypes, setDonationTypes] = useState([]);
   const [updateId, setupdateId] = useState('');
   const [showsearchData, setshowsearchData] = useState(false);
-
+  const [typeid, settypeid] = useState('');
   const [userrole, setuserrole] = useState('');
-  console.log(userrole);
+  console.log('aa', typeid);
   const handleOpen = (id) => {
     setupdateId(id);
     setOpen(true);
@@ -162,16 +162,6 @@ const ManualCash = ({ setopendashboard }) => {
     }
   };
 
-  // date,
-  //   recipt,
-  //   voucher,
-  //   phone,
-  //   name,
-  //   address,
-  //   item / type,
-  //   amout,
-  //   remark,
-  //   action;
   const ExportToExcel = () => {
     const fileName = 'ManualCashReport';
     const exportType = 'xls';
@@ -206,7 +196,7 @@ const ManualCash = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/search-donation?name=${name}&type=${typedonation}&date=${date}&phone=${phone}`,
+      `${backendApiUrl}user/search-donation?name=${name}&type=${typeid}&date=${date}&phone=${phone}&modeOfDonation=${2}`,
     );
     console.log('filter data is', res);
     if (res.data.status) {
@@ -327,8 +317,13 @@ const ManualCash = ({ setopendashboard }) => {
                   name="phone"
                   onChange={(e) => setphone(e.target.value)}
                 />
+
                 <input type="date" placeholder="Date" />
-                <select name="cars" id="cars">
+                <select
+                  name="cars"
+                  id="cars"
+                  onChange={(e) => settypeid(e.target.value)}
+                >
                   <option>Select option</option>
                   {donationTypes.map((item, idx) => {
                     return <option value={item.id}>{item.type_hi}</option>;

@@ -7,7 +7,6 @@ import { Converter, hiIN } from 'any-number-to-words';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Moment from 'moment-js';
-import moment from 'moment';
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
@@ -30,11 +29,11 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   });
 
   function printDiv() {
-    var divContents = document.getElementById('receipt').innerHTML;
-
-    a.document.write(divContents);
-
-    a.print();
+    navigation('/admin-panel/reports/printcontent', {
+      state: {
+        data: isData,
+      },
+    });
   }
 
   function down() {
@@ -514,7 +513,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
       </div>
       <div className="button_div_print_download">
         <button onClick={() => down()}>Download</button>
-        <button onClick={handlePrint}>Print</button>
+        <button onClick={() => printDiv()}>Print</button>
       </div>
     </>
   );

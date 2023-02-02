@@ -1,18 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import jwt_decode from "jwt-decode";
-import logo from "../../../../assets/sideimg.jpeg";
-import Swal from "sweetalert2";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import axios from "axios";
-import { backendApiUrl } from "../../../../config/config";
-import "./emaillogin.scss";
+import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import jwt_decode from 'jwt-decode';
+import logo from '../../../../assets/sideimg.jpeg';
+import Swal from 'sweetalert2';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import axios from 'axios';
+import { backendApiUrl } from '../../../../config/config';
+import './emaillogin.scss';
 
 const initialState = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
 
 const EmailLogin = () => {
@@ -41,15 +41,15 @@ const EmailLogin = () => {
         });
         if (res.data.status) {
           setshowprocess(false);
-          Swal.fire("Great!", "You Have Login Successfully", "success");
+          Swal.fire('Great!', 'You Have Login Successfully', 'success');
           var decoded = jwt_decode(res.data.tokens.access.token);
 
           if (decoded.role === 2) {
-            navigate("/donation");
+            navigate('/donation');
           }
 
-          sessionStorage.setItem("userrole", decoded.role);
-          sessionStorage.setItem("token", res.data.tokens.access.token);
+          sessionStorage.setItem('userrole', decoded.role);
+          sessionStorage.setItem('token', res.data.tokens.access.token);
           auth.setUser(res.data.tokens.access.token);
         }
       }
@@ -58,17 +58,20 @@ const EmailLogin = () => {
           email: email,
           password: password,
         });
-        console.log(res.data);
+        console.log('empl', res.data.user);
+
         if (res.data.user) {
           setshowprocess(false);
-          Swal.fire("Great!", "You Have Login Successfully", "success");
+          Swal.fire('Great!', 'You Have Login Successfully', 'success');
           var decoded = jwt_decode(res.data.tokens.access.token);
 
           if (decoded.role === 3) {
-            navigate("/admin-panel/dashboard");
+            navigate('/admin-panel/dashboard');
           }
-          sessionStorage.setItem("userrole", decoded.role);
-          sessionStorage.setItem("token", res.data.tokens.access.token);
+          sessionStorage.setItem('userrole', decoded.role);
+          sessionStorage.setItem('empName', res.data.user.username);
+          sessionStorage.setItem('empRole', res.data.user.Role);
+          sessionStorage.setItem('token', res.data.tokens.access.token);
           auth.setUser(res.data.tokens.access.token);
         }
       }
@@ -80,21 +83,21 @@ const EmailLogin = () => {
 
         if (res.data.user) {
           setshowprocess(false);
-          Swal.fire("Great!", "You Have Login Successfully", "success");
+          Swal.fire('Great!', 'You Have Login Successfully', 'success');
           var decoded = jwt_decode(res.data.tokens.access.token);
           if (decoded.role === 1) {
-            navigate("/admin-panel/dashboard");
+            navigate('/admin-panel/dashboard');
           }
           console.log(res.data);
 
-          sessionStorage.setItem("adminuser", res.data.user.name);
-          sessionStorage.setItem("userrole", decoded.role);
-          sessionStorage.setItem("token", res.data.tokens.access.token);
+          sessionStorage.setItem('adminName', res.data.user.name);
+          sessionStorage.setItem('userrole', decoded.role);
+          sessionStorage.setItem('token', res.data.tokens.access.token);
           auth.setUser(res.data.tokens.access.token);
         }
       }
     } catch (error) {
-      Swal.fire("Error!", error.response.data.message, "error");
+      Swal.fire('Error!', error.response.data.message, 'error');
       setshowprocess(false);
     }
   };
@@ -178,7 +181,7 @@ const EmailLogin = () => {
               <input
                 className="remove_underline"
                 required
-                type={showonldpassword ? "text" : "password"}
+                type={showonldpassword ? 'text' : 'password'}
                 id="password"
                 name="password"
                 placeholder="enter password"
@@ -193,14 +196,14 @@ const EmailLogin = () => {
               </li>
             </div>
             <Link to="/forgot" className="forget-link">
-              {"Forgot Password ?"}
+              {'Forgot Password ?'}
             </Link>
             <div className="input-group">
               <button className="login-btn">
                 {showprocess ? (
-                  <CircularProgress style={{ width: "21px", height: "21px" }} />
+                  <CircularProgress style={{ width: '21px', height: '21px' }} />
                 ) : (
-                  "Login"
+                  'Login'
                 )}
               </button>
             </div>
@@ -230,7 +233,7 @@ const EmailLogin = () => {
               <input
                 className="remove_underline"
                 required
-                type={showonldpassword ? "text" : "password"}
+                type={showonldpassword ? 'text' : 'password'}
                 id="password"
                 name="password"
                 placeholder="enter password"
@@ -246,11 +249,11 @@ const EmailLogin = () => {
             </div>
             <div className="input-group">
               <button className="login-btn">
-                {" "}
+                {' '}
                 {showprocess ? (
-                  <CircularProgress style={{ width: "21px", height: "21px" }} />
+                  <CircularProgress style={{ width: '21px', height: '21px' }} />
                 ) : (
-                  "Login"
+                  'Login'
                 )}
               </button>
             </div>
@@ -277,7 +280,7 @@ const EmailLogin = () => {
               <input
                 className="remove_underline"
                 required
-                type={showonldpassword ? "text" : "password"}
+                type={showonldpassword ? 'text' : 'password'}
                 id="password"
                 name="password"
                 placeholder="enter password"
@@ -293,11 +296,11 @@ const EmailLogin = () => {
             </div>
             <div className="input-group">
               <button className="login-btn">
-                {" "}
+                {' '}
                 {showprocess ? (
-                  <CircularProgress style={{ width: "21px", height: "21px" }} />
+                  <CircularProgress style={{ width: '21px', height: '21px' }} />
                 ) : (
-                  "Login"
+                  'Login'
                 )}
               </button>
             </div>

@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from "react";
-import search from "../../../assets/search.svg";
-import { Box } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import Badge from "@mui/material/Badge";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import { secondaryColor } from "../../../utils/colorVariables";
-import Sidebar from "../Sidebar/Sidebar";
-import { json, useNavigate } from "react-router-dom";
-import logo from "../../../assets/logo.jpg";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { useSelector } from "react-redux";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import { backendUrl } from "../../../config/config";
-import Logout from "@mui/icons-material/Logout";
-import Notification from "./Notification/Notification";
-import "./AdminHeader.css";
+import React, { useState, useEffect } from 'react';
+import search from '../../../assets/search.svg';
+import { Box } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Badge from '@mui/material/Badge';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import { secondaryColor } from '../../../utils/colorVariables';
+import Sidebar from '../Sidebar/Sidebar';
+import { json, useNavigate } from 'react-router-dom';
+import logo from '../../../assets/logo.jpg';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { useSelector } from 'react-redux';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import { backendUrl } from '../../../config/config';
+import Logout from '@mui/icons-material/Logout';
+import Notification from './Notification/Notification';
+import './AdminHeader.css';
 const AdminHeader = () => {
   const navigate = useNavigate();
   const [showsidebar, setshowsidebar] = useState(false);
@@ -46,13 +46,15 @@ const AdminHeader = () => {
     setAnchorEl1(null);
   };
   const { user } = useSelector((state) => state.userReducer);
-  const adminuser = sessionStorage.getItem("adminuser");
+  const adminName = sessionStorage.getItem('adminName');
 
-  console.log("admin", adminuser);
+  const empName = sessionStorage.getItem('empName');
+  const empRole = sessionStorage.getItem('empRole');
+  console.log('employee', empName, empRole);
   const logout = () => {
     handleClose();
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("userrole");
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userrole');
 
     setTimeout(() => {
       window.location.reload();
@@ -71,29 +73,29 @@ const AdminHeader = () => {
         PaperProps={{
           elevation: 0,
           sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 1.5,
-            "& .MuiAvatar-root": {
+            '& .MuiAvatar-root': {
               width: 22,
               height: 32,
             },
-            "&:before": {
+            '&:before': {
               content: '""',
-              display: "block",
-              position: "absolute",
+              display: 'block',
+              position: 'absolute',
               top: 0,
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
           },
         }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <Notification handleClose1={handleClose1} />
       </Menu>
@@ -106,33 +108,33 @@ const AdminHeader = () => {
         PaperProps={{
           elevation: 0,
           sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 1.5,
-            "& .MuiAvatar-root": {
+            '& .MuiAvatar-root': {
               width: 32,
               height: 32,
               ml: -0.5,
               mr: 1,
             },
-            "&:before": {
+            '&:before': {
               content: '""',
-              display: "block",
-              position: "absolute",
+              display: 'block',
+              position: 'absolute',
               top: 0,
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
           },
         }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => navigate("/changepassword")}>
+        <MenuItem onClick={() => navigate('/changepassword')}>
           <ListItemIcon>
             <LockOpenIcon fontSize="small" />
           </ListItemIcon>
@@ -153,9 +155,9 @@ const AdminHeader = () => {
             <img
               src={logo}
               alt="logo"
-              style={{ width: "70px", height: "45px" }}
+              style={{ width: '70px', height: '45px' }}
             />
-            <p>
+            <p style={{ fontSize: '14px' }}>
               श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि , कुण्डलपुर जिला दमोह
               (म.प्र.)
             </p>
@@ -182,9 +184,9 @@ const AdminHeader = () => {
             <div className="profilemaindiv">
               <Box
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 <Avatar
@@ -194,18 +196,18 @@ const AdminHeader = () => {
                   sx={{
                     width: 35,
                     height: 35,
-                    marginRight: "11px",
-                    marginTop: "5px",
-                    marginLeft: "11px",
+                    marginRight: '11px',
+                    marginTop: '5px',
+                    marginLeft: '11px',
                   }}
                 />
                 <Typography
                   sx={{
-                    size: "14px",
-                    lineHeight: "17px",
+                    size: '10px',
+                    lineHeight: '17px',
                   }}
                 >
-                  {/* {user && user?.name.slice(0, 1)} */}
+                  {empName ? empName : adminName}
                 </Typography>
                 <IconButton
                   size="small"
@@ -221,7 +223,7 @@ const AdminHeader = () => {
             </div>
           </div>
         </div>
-        <div className={showsidebar ? "open" : "sliderdiv "}>
+        <div className={showsidebar ? 'open' : 'sliderdiv '}>
           <Sidebar setshowsidebar={setshowsidebar} />
         </div>
       </div>

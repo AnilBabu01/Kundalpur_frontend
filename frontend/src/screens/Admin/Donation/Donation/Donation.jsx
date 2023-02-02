@@ -40,6 +40,8 @@ import UnderlinedTab from './common/UnderlinedTab';
 import DownloadIcon from '@mui/icons-material/Download';
 import DonationSuccessfull from './DonationSuccessfull';
 import exportFromJSON from 'export-from-json';
+import { backendApiUrl } from '../../../../config/config';
+import axios from 'axios';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -84,10 +86,19 @@ const Donation = ({ setopendashboard }) => {
   const [tabValue, setTabValue] = React.useState(0);
   const [userrole, setuserrole] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const [rowData, setrowData] = useState('');
   const [open4, setOpen4] = useState(false);
-  const handleOpen4 = () => setOpen4(true);
+  const handleOpen4 = () => {
+    // setOpen4(true);
+    // if (isData) {
+    //   navigation('/reciept', {
+    //     state: {
+    //       userdata: rowData,
+    //     },
+    //   });
+    // }
+  };
   const handleClose4 = () => setOpen4(false);
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -129,7 +140,6 @@ const Donation = ({ setopendashboard }) => {
   const handleOpen = () => {
     const role = Number(sessionStorage.getItem('userrole'));
     if (role === 3) {
-      setLoading(true);
       serverInstance('admin/voucher-get', 'get').then((res) => {
         if (res.status) {
           console.log('voucher data', res);
@@ -149,6 +159,27 @@ const Donation = ({ setopendashboard }) => {
       });
     }
   };
+
+  const voucherexhauted = async (data) => {
+    try {
+      console.log(data);
+      axios.defaults.headers.post[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
+      const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
+        voucher: data,
+      });
+
+      console.log('voucher not is ');
+      if (res.data.status === false) {
+        console.log(res);
+        handleOpen3();
+      } else {
+        setOpen(true);
+      }
+    } catch (error) {}
+  };
+
   const handleClose = React.useCallback(() => setOpen(false), []);
 
   const navigation = useNavigate();
@@ -180,20 +211,16 @@ const Donation = ({ setopendashboard }) => {
     });
     exportFromJSON({ data, fileName, exportType });
   };
-  useEffect(() => {
-    setopendashboard(true);
-    getall_donation();
-  }, [showalert, open]);
 
   const getall_donation = () => {
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
         setrowData(res.data.pop());
-        console.log('this', typeof rowData);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
+      console.log(res);
     });
   };
 
@@ -228,25 +255,6 @@ const Donation = ({ setopendashboard }) => {
           }
         },
       );
-    } catch (error) {
-      Swal.fire('Error!', error, 'error');
-    }
-  };
-  const voucherexhauted = async (row) => {
-    printreceipt(row);
-    if (res.data.status === true) {
-    }
-    try {
-      // axios.defaults.headers.post[
-      //   "Authorization"
-      // ] = `Bearer ${sessionStorage.getItem("token")}`;
-      // const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
-      //   voucher: row?.voucherNo,
-      // });
-      // if (res.data.status === false) {
-      //   console.log(res);
-      //   handleOpen3();
-      // }
     } catch (error) {
       Swal.fire('Error!', error, 'error');
     }
@@ -441,24 +449,12 @@ const Donation = ({ setopendashboard }) => {
                 <button onClick={() => handleOpen()}>+Add</button>
               </div>
             </div>
-            {/* <div></div> */}
           </div>
           <div className="search-header-print">
             <SimCardAlertIcon onClick={() => ExportToExcel()} />
             &nbsp;&nbsp;
             <PictureAsPdfIcon
               onClick={() => ExportPdfmanul(isData, 'Report')}
-            />
-            <button
-              className="search-header-div-center-button"
-              onClick={() => filterdata()}
-            >
-              Search
-            </button>
-            <input
-              className="search-header-div-center-input"
-              type="text"
-              placeholder="Search"
             />
           </div>
 

@@ -28,7 +28,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import Moment from 'moment-js';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
-
+import { useNavigate } from 'react-router-dom';
 const CashDonation = ({
   setshowalert,
   handleClose,
@@ -36,8 +36,11 @@ const CashDonation = ({
   updateData,
   showUpdateBtn,
   handleOpen4,
+  downloadReceipt,
+  isData,
 }) => {
-  console.log('upadte data is', updateData);
+  const navigation = useNavigate();
+
   const theme = createTheme({
     typography: {
       fontFamily: 'Poppins',
@@ -134,6 +137,22 @@ const CashDonation = ({
     }),
   );
 
+  const downloadAndPrintOption = () => {
+    serverInstance('admin/voucher-get', 'get').then((res) => {
+      if (res.status) {
+        console.log('voucher data', res);
+
+        navigation('/reciept', {
+          state: {
+            userdata: row,
+          },
+        });
+      } else {
+        Swal('Error', 'somthing went  wrong', 'error');
+      }
+    });
+  };
+
   const addCashDonation = async (e) => {
     axios.defaults.headers.post[
       'Authorization'
@@ -205,7 +224,7 @@ const CashDonation = ({
         if (res.data.status === true) {
           handleOpen4();
           handleClose();
-
+          downloadReceipt();
           sendsms(totalamount);
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');

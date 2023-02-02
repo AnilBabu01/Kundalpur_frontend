@@ -36,6 +36,7 @@ import CashDonation from '../../Donation/Donation/CashDonation';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
+import exportFromJSON from 'export-from-json';
 import { ExportPdfmanul } from '../../compoments/ExportPdf';
 
 const style = {
@@ -229,6 +230,7 @@ const AllReport = ({ setopendashboard }) => {
       Swal.fire('Error!', error, 'error');
     }
   };
+
   useEffect(() => {
     getall_donation();
     setopendashboard(true);

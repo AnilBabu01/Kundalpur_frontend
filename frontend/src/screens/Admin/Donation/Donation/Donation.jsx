@@ -39,6 +39,7 @@ import ChequeDonation from './ChequeDonation';
 import UnderlinedTab from './common/UnderlinedTab';
 import DownloadIcon from '@mui/icons-material/Download';
 import DonationSuccessfull from './DonationSuccessfull';
+import exportFromJSON from 'export-from-json';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -152,6 +153,33 @@ const Donation = ({ setopendashboard }) => {
 
   const navigation = useNavigate();
 
+  const ExportToExcel = () => {
+    const fileName = 'Report';
+    const exportType = 'xls';
+    var data = [];
+    isData.map((item, index) => {
+      data.push({
+        Date: Moment(item.donation_date).format('DD-MM-YYYY'),
+        'Receipt No': item?.ReceiptNo,
+        'Voucher No': item?.voucherNo,
+        'Phone No': item?.phoneNo,
+        name: item?.name,
+        Address: item?.address,
+        'Head/Item': item?.elecItemDetails.map((row) => {
+          return row.type;
+        }),
+        Amount: item?.elecItemDetails.reduce(
+          (n, { amount }) => parseFloat(n) + parseFloat(amount),
+          0,
+        ),
+        remark: item?.elecItemDetails.map((row) => {
+          return row.remark;
+        }),
+        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
+      });
+    });
+    exportFromJSON({ data, fileName, exportType });
+  };
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
@@ -419,7 +447,7 @@ const Donation = ({ setopendashboard }) => {
             <SimCardAlertIcon onClick={() => ExportToExcel()} />
             &nbsp;&nbsp;
             <PictureAsPdfIcon
-              onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+              onClick={() => ExportPdfmanul(isData, 'Report')}
             />
             <button
               className="search-header-div-center-button"

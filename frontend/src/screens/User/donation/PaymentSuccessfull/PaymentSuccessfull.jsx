@@ -1,17 +1,12 @@
-import React from "react";
-import images from "../../../../assets/images.png";
-import { useNavigate } from "react-router-dom";
-import "./PaymentSuccessfull.css";
-function PaymentSuccessfull({
-  handleClose,
-  name,
-  amount,
-  recieptno,
-  address,
-  mat,
-  remark,
-}) {
+import React, { useEffect } from 'react';
+import images from '../../../../assets/images.png';
+import { useNavigate } from 'react-router-dom';
+import './PaymentSuccessfull.css';
+function PaymentSuccessfull({ isData }) {
   const navigate = useNavigate();
+
+  useEffect(() => {}, []);
+
   return (
     <>
       <div className="PaymentSuccessfull-main-div">
@@ -20,16 +15,9 @@ function PaymentSuccessfull({
           <p>Payment successful</p>
           <button
             onClick={() => {
-              navigate("/reciept", {
+              navigate('/reciept', {
                 state: {
-                  userdata: {
-                    NAME: name,
-                    AMOUNT: amount,
-                    RECEIPT_NO: recieptno,
-                    ADDRESS: address,
-                    TYPE: mat,
-                    REMARK: remark,
-                  },
+                  userdata: isData,
                 },
               });
             }}
@@ -38,12 +26,17 @@ function PaymentSuccessfull({
             Download Receipt
           </button>
           <button
-            onClick={() => navigate("/donationhistory")}
+            onClick={() => navigate('/donationhistory')}
             className="done-btn"
           >
             Go To Donation History
           </button>
-          <button onClick={() => handleClose()} className="ok_btn">
+          <button
+            onClick={() => {
+              navigate('/donation');
+            }}
+            className="ok_btn"
+          >
             Ok
           </button>
         </div>

@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadUser } from '../../../Redux/redux/action/AuthAction';
 import donationLeft from '../../../assets/donation-left.png';
 import donationRight from '../../../assets/donation-right.png';
+
 import axios from 'axios';
 import {
   Box,
@@ -272,6 +273,7 @@ function Donation({ setshowreciept, paymentId }) {
         }
       });
     }
+
     if (
       mode === 'Cheque' &&
       donationdata.chequeno &&
@@ -375,9 +377,7 @@ function Donation({ setshowreciept, paymentId }) {
       console.log('sent sms ', res);
       if (res.data.status === true) {
       }
-    } catch (error) {
-      Swal.fire('Error!', error, 'error');
-    }
+    } catch (error) {}
   };
   return auth.verify ? (
     <>

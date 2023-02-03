@@ -89,15 +89,14 @@ const Donation = ({ setopendashboard }) => {
   const [loading, setLoading] = useState(false);
   const [rowData, setrowData] = useState('');
   const [open4, setOpen4] = useState(false);
+
+  console.log('local data is', rowData);
   const handleOpen4 = () => {
-    // setOpen4(true);
-    // if (isData) {
-    //   navigation('/reciept', {
-    //     state: {
-    //       userdata: rowData,
-    //     },
-    //   });
-    // }
+    setOpen4(true);
+    // getall_donation();
+    // setTimeout(() => {
+    //   navigation('/reciept');
+    // }, 3000);
   };
   const handleClose4 = () => setOpen4(false);
   const handleTabChange = (event, newValue) => {
@@ -216,7 +215,10 @@ const Donation = ({ setopendashboard }) => {
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
-        setrowData(res.data.pop());
+
+        setrowData(isData.pop());
+
+        console.log(res);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
@@ -261,8 +263,9 @@ const Donation = ({ setopendashboard }) => {
   };
 
   useEffect(() => {
-    setopendashboard(true);
     getall_donation();
+    setopendashboard(true);
+
     get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
   }, [showalert, open]);
@@ -277,6 +280,7 @@ const Donation = ({ setopendashboard }) => {
             handleClose={handleClose}
             themeColor={donationColorTheme.cash}
             handleOpen4={handleOpen4}
+            getall_donation={getall_donation}
           />
         ),
       },

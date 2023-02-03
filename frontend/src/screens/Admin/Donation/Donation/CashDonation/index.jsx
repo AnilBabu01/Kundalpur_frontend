@@ -36,8 +36,6 @@ const CashDonation = ({
   updateData,
   showUpdateBtn,
   handleOpen4,
-  downloadReceipt,
-  isData,
 }) => {
   const navigation = useNavigate();
 
@@ -136,23 +134,23 @@ const CashDonation = ({
       hour12: false,
     }),
   );
-
-  const downloadAndPrintOption = () => {
-    serverInstance('admin/voucher-get', 'get').then((res) => {
-      if (res.status) {
-        console.log('voucher data', res);
-
-        navigation('/reciept', {
-          state: {
-            userdata: row,
-          },
-        });
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
-      }
-    });
+  const getDonatedUserDetails = () => {
+    serverInstance(`admin/getuser-by-num?mobile=${mobileNo}`, 'get').then(
+      (res) => {
+        // if (res.status) {
+        //   setisData(res.data);
+        //   setrowData(res.data.pop());
+        // } else {
+        //   Swal('Error', 'somthing went  wrong', 'error');
+        // }
+        console.log('donated user', res);
+      },
+    );
   };
 
+  if (mobileNo) {
+    getDonatedUserDetails();
+  }
   const addCashDonation = async (e) => {
     axios.defaults.headers.post[
       'Authorization'
@@ -224,7 +222,7 @@ const CashDonation = ({
         if (res.data.status === true) {
           handleOpen4();
           handleClose();
-          downloadReceipt();
+
           sendsms(totalamount);
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');

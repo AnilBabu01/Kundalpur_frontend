@@ -20,8 +20,6 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
     setopendashboard(false);
     if (location.state) {
       setisData(location.state?.userdata);
-    } else {
-      navigation('/');
     }
   }, []);
   const handlePrint = useReactToPrint({

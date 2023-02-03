@@ -136,24 +136,24 @@ const Donation = ({ setopendashboard }) => {
     );
   };
 
-  const handleOpen = () => {
+  const handleOpen = async () => {
     const role = Number(sessionStorage.getItem('userrole'));
     if (role === 3) {
-      serverInstance('admin/voucher-get', 'get').then((res) => {
-        if (res.status) {
-          console.log('voucher data', res);
-          voucherexhauted(res.data);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-      });
+      axios.defaults.headers.get[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
+      const res = await axios.get(`${backendApiUrl}user/check-voucher`);
+
+      console.log('check couchcer not is ', res);
+      if (res.data.status === false) {
+        handleOpen3();
+      }
     } else {
       setOpen(true);
       serverInstance('admin/voucher-get', 'get').then((res) => {
         if (res.status) {
           console.log('voucher data', res);
         } else {
-          Swal('Error', 'somthing went  wrong', 'error');
         }
       });
     }

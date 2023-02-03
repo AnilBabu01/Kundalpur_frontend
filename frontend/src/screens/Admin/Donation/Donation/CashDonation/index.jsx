@@ -60,6 +60,8 @@ const CashDonation = ({
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
+  const [donatedUserDetails, setdonatedUserDetails] = useState('');
+  const [calGetdetailApi, setcalGetdetailApi] = useState(false);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -144,13 +146,14 @@ const CashDonation = ({
         //   Swal('Error', 'somthing went  wrong', 'error');
         // }
         console.log('donated user', res);
+
+        setdonatedUserDetails(res.data);
+
+        // setAddress(donated)
       },
     );
   };
 
-  if (mobileNo) {
-    getDonatedUserDetails();
-  }
   const addCashDonation = async (e) => {
     axios.defaults.headers.post[
       'Authorization'
@@ -283,7 +286,8 @@ const CashDonation = ({
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
     }
-  }, []);
+    getDonatedUserDetails();
+  }, [calGetdetailApi]);
 
   return (
     <Box>
@@ -368,7 +372,9 @@ const CashDonation = ({
                 required
                 id="mobile-no"
                 value={mobileNo}
-                onChange={(e) => setMobileNo(e.target.value)}
+                onChange={(e) => {
+                  setMobileNo(e.target.value);
+                }}
               />
             </Grid>
 

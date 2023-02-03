@@ -1,36 +1,40 @@
-import React, { useEffect, useState } from "react";
-import { backendApiUrl } from "../../../../../config/config";
-import { serverInstance } from "../../../../../API/ServerInstance";
-import Swal from "sweetalert2";
-import axios from "axios";
-import "./AddVoucherToUser.css";
+import React, { useEffect, useState } from 'react';
+import { backendApiUrl } from '../../../../../config/config';
+import { serverInstance } from '../../../../../API/ServerInstance';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import './AddVoucherToUser.css';
 
 const AddVoucherToUser = ({ setOpen }) => {
   const [refetch, setrefetch] = useState(false);
   const [isData, setisData] = React.useState([]);
-  const [Voucherprefix, setVoucherprefix] = useState("");
-  const [fromNo, setfromNo] = useState("");
-  const [toNo, settoNo] = useState("");
+  const [Voucherprefix, setVoucherprefix] = useState('');
+  const [fromNo, setfromNo] = useState('');
+  const [toNo, settoNo] = useState('');
   const [assingTo, setassingTo] = useState();
+  const [empname, setempname] = useState('');
+
+  console.log('emp', empname);
   console.log(isData);
   const handlesubmit = async () => {
     try {
-      console.log("ss", assingTo, Voucherprefix, toNo, fromNo);
+      console.log('ss', assingTo, Voucherprefix, toNo, fromNo);
 
       axios.defaults.headers.post[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("token")}`;
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.post(`${backendApiUrl}user/add-voucher-user`, {
         vPrefix: Voucherprefix,
         from: fromNo,
         to: toNo,
         user: Number(assingTo),
+        name: empname,
       });
 
       console.log(res);
       if (res.data.message) {
-        Swal.fire("Great!", "VOUCHER GENERATED SUCCESSFULLY", "success");
+        Swal.fire('Great!', 'VOUCHER GENERATED SUCCESSFULLY', 'success');
         setOpen(false);
       }
       // if (res.data.status === false) {
@@ -43,11 +47,11 @@ const AddVoucherToUser = ({ setOpen }) => {
     }
   };
   const getall_donation = () => {
-    serverInstance("admin/add-employee", "get").then((res) => {
+    serverInstance('admin/add-employee', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
-        Swal("Error", "somthing went  wrong", "error");
+        Swal('Error', 'somthing went  wrong', 'error');
       }
     });
   };
@@ -60,7 +64,7 @@ const AddVoucherToUser = ({ setOpen }) => {
       <div className="cash-donation-div">
         <div
           className="cash-donation-container-innser"
-          style={{ paddingLeft: "2rem" }}
+          style={{ paddingLeft: '2rem' }}
         >
           <div className="form-div">
             <div className="form-input-div_add_user">
@@ -109,7 +113,14 @@ const AddVoucherToUser = ({ setOpen }) => {
                 >
                   {isData &&
                     isData.map((item, index) => (
-                      <option key={index} value={item.id}>
+                      <option
+                        key={index}
+                        onChange={() => {
+                          setempname(item.Username);
+                          console.log('clkingin');
+                        }}
+                        value={item.id}
+                      >
                         {item.Username}
                       </option>
                     ))}

@@ -116,7 +116,11 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                 <TableHead style={{ background: '#F1F0F0' }}>
                   <TableRow>
                     <TableCell align="left">DATE</TableCell>
+                    <TableCell align="left">Receipt No</TableCell>
+                    <TableCell align="left">Voucher No</TableCell>
+                    <TableCell align="left">Mobile No</TableCell>
                     <TableCell align="left">NAME</TableCell>
+                    <TableCell align="left">Address</TableCell>
                     <TableCell align="left">Donation Type</TableCell>
                     <TableCell align="left">Amount</TableCell>
                     <TableCell align="left">Cheque No.</TableCell>
@@ -130,10 +134,12 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                 <TableBody>
                   {(rowsPerPage > 0
                     ? isrow &&
-                      isrow.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage,
-                      )
+                      isrow
+                        .reverse()
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
                     : isrow && isrow
                   ).map((row, index) => (
                     <TableRow

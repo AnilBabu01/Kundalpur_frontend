@@ -148,6 +148,9 @@ const Donation = ({ setopendashboard }) => {
       if (res.data.status === false) {
         handleOpen3();
       }
+      if (res.data.status === true) {
+        setOpen(true);
+      }
     } else {
       setOpen(true);
       serverInstance('admin/voucher-get', 'get').then((res) => {

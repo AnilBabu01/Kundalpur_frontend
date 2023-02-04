@@ -112,7 +112,7 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
             <p className="payment-description">
               Thank you for your donation. Your transaction has been completed
               with {donationDeatils &&
-                `Order Number: ${donationDeatils.id}`
+                `Order Number: ${donationDeatils.RECEIPT_NO}`
               }
               <br /> 
             </p>

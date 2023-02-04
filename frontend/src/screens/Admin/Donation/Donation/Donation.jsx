@@ -150,6 +150,9 @@ const Donation = ({ setopendashboard }) => {
         }
       });
     }
+    if (role === 1) {
+      setOpen(true);
+    }
   };
 
   const handleClose = React.useCallback(() => setOpen(false), []);
@@ -241,6 +244,18 @@ const Donation = ({ setopendashboard }) => {
 
     get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
+
+    const role = Number(sessionStorage.getItem('userrole'));
+    if (role === 3) {
+      serverInstance('user/check-voucher', 'get').then((res) => {
+        console.log('check couchcer not is ', res);
+
+        if (res.status === false) {
+          handleOpen3();
+          setOpen(false);
+        }
+      });
+    }
   }, [showalert, open]);
 
   const tabs = React.useMemo(

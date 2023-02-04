@@ -176,7 +176,7 @@ const CashDonation = ({
           name: fullName,
           phoneNo: mobileNo,
           address: address,
-          prefix: 'CASH',
+
           new_member: newMember,
           modeOfDonation: 2,
           donation_date: updateData?.donation_date,

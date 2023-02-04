@@ -290,7 +290,6 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           <p>दान का मद -</p>
                         </div>
                         <div className="wrap_div_child_div">
-
                           {isData &&
                             isData.elecItemDetails &&
                             isData.elecItemDetails.map((item) => {
@@ -311,6 +310,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       <span className="gray-text">
                         दान राशि अंको में - &nbsp;
                       </span>
+                      ₹
                       {isData && isData?.AMOUNT
                         ? isData?.AMOUNT
                         : isData &&
@@ -676,8 +676,6 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         </div>
 
                         <div className="wrap_div_child_div">
-
-            
                           {isData &&
                             isData.elecItemDetails &&
                             isData.elecItemDetails.map((item) => {
@@ -698,6 +696,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       <span className="gray-text">
                         दान राशि अंको में - &nbsp;
                       </span>
+                      ₹
                       {isData && isData?.AMOUNT
                         ? isData?.AMOUNT
                         : isData &&

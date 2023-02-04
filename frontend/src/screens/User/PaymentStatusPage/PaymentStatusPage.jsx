@@ -33,6 +33,7 @@ const style = {
 };
 export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
   const [transactionID, setTransactionID] = useState(false);
+  const [donationDeatils,setDonationDetails] = useState(null);
   const [open, setOpen] = useState(false);
   const [isData, setisData] = useState('');
   const handleOpen = () => setOpen(true);
@@ -50,9 +51,8 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
         return false;
       }
       try {
-        setisData(res.donation.pop());
-        if (isData) {
-        }
+        setDonationDetails(res.donation[0]);
+        console.log(res.donation[0],res,'this i');
       } catch (error) {
         Swal.fire('Error!', 'please authenticate', 'error');
       }
@@ -75,7 +75,7 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
   return (
     <>
       {' '}
-      <Modal
+      {/* <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
@@ -87,7 +87,7 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
             <PaymentSuccessfull handleClose={handleClose} isData={isData} />
           </Box>
         </Fade>
-      </Modal>
+      </Modal> */}
       <div className="payment-status-page">
         <div className="payment-status-container">
           {transactionID ? (
@@ -104,10 +104,17 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
           >
             {transactionID ? 'Payment Success!!' : 'Payment Failed'}
           </h2>
+          {
+            donationDeatils &&
+            <h3>Donated ₹{donationDeatils.AMOUNT}</h3>
+          }
           {transactionID ? (
             <p className="payment-description">
-              Thank you for your purchase. Your transaction has been completed
-              with transaction ID: {transactionID}.{' '}
+              Thank you for your donation. Your transaction has been completed
+              with {donationDeatils &&
+                `Order Number: ${donationDeatils.id}`
+              }
+              <br /> 
             </p>
           ) : (
             <p className="payment-description">
@@ -116,6 +123,10 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
               <span onClick={() => navigate('/donation')}>clicking here</span>
             </p>
           )}
+          <div className="btns-wrapper">
+            <button className="btn-donation-status" onClick={() => navigate('/reciept')}>Download Receipt</button>
+            <button className="btn-donation-status" onClick={() => navigate('/donationhistory')}>Donation History</button>
+          </div>
         </div>
       </div>
     </>

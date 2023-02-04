@@ -204,6 +204,7 @@ const ManualDonation = ({ setopendashboard }) => {
       Swal.fire('Error!', error, 'error');
     }
   };
+  
   const voucherexhauted = async (row) => {
     printreceipt(row);
     if (res.data.status === true) {

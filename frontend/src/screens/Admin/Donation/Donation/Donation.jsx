@@ -139,47 +139,17 @@ const Donation = ({ setopendashboard }) => {
   const handleOpen = async () => {
     const role = Number(sessionStorage.getItem('userrole'));
     if (role === 3) {
-      axios.defaults.headers.get[
-        'Authorization'
-      ] = `Bearer ${sessionStorage.getItem('token')}`;
-      const res = await axios.get(`${backendApiUrl}user/check-voucher`);
+      serverInstance('user/check-voucher', 'get').then((res) => {
+        console.log('check couchcer not is ', res);
 
-      console.log('check couchcer not is ', res);
-      if (res.data.status === false) {
-        handleOpen3();
-      }
-      if (res.data.status === true) {
-        setOpen(true);
-      }
-    } else {
-      setOpen(true);
-      serverInstance('admin/voucher-get', 'get').then((res) => {
-        if (res.status) {
-          console.log('voucher data', res);
-        } else {
+        if (res.status === false) {
+          handleOpen3();
+        }
+        if (res.status === true) {
+          setOpen(true);
         }
       });
     }
-  };
-
-  const voucherexhauted = async (data) => {
-    try {
-      console.log(data);
-      axios.defaults.headers.post[
-        'Authorization'
-      ] = `Bearer ${sessionStorage.getItem('token')}`;
-      const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
-        voucher: data,
-      });
-
-      console.log('voucher not is ');
-      if (res.data.status === false) {
-        console.log(res);
-        handleOpen3();
-      } else {
-        setOpen(true);
-      }
-    } catch (error) {}
   };
 
   const handleClose = React.useCallback(() => setOpen(false), []);

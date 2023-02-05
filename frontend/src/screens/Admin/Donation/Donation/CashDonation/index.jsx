@@ -35,7 +35,6 @@ const CashDonation = ({
   themeColor,
   updateData,
   showUpdateBtn,
-  handleOpen4,
 }) => {
   const navigation = useNavigate();
 
@@ -61,7 +60,7 @@ const CashDonation = ({
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [donatedUserDetails, setdonatedUserDetails] = useState('');
-  const [calGetdetailApi, setcalGetdetailApi] = useState(false);
+  const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -84,6 +83,8 @@ const CashDonation = ({
       gender: 'कु.',
     },
   ];
+
+  console.log(fullName);
 
   function addDonationItem() {
     setDonationItems([
@@ -139,21 +140,19 @@ const CashDonation = ({
   const getDonatedUserDetails = () => {
     serverInstance(`admin/getuser-by-num?mobile=${mobileNo}`, 'get').then(
       (res) => {
-        // if (res.status) {
-        //   setisData(res.data);
-        //   setrowData(res.data.pop());
-        // } else {
-        //   Swal('Error', 'somthing went  wrong', 'error');
-        // }
-        console.log('donated user', res);
-
-        setdonatedUserDetails(res.data);
-
-        // setAddress(donated)
+        if (res.status) {
+          setFullName(res.data.name);
+          setAddress(res.data.address);
+          setgenderp(res.data.gender);
+        }
       },
     );
   };
 
+  if (mobileNo.length === 10 && fetchuserdetail === true) {
+    getDonatedUserDetails();
+    setfetchuserdetail(false);
+  }
   const addCashDonation = async (e) => {
     axios.defaults.headers.post[
       'Authorization'
@@ -222,10 +221,14 @@ const CashDonation = ({
               0,
             );
 
+        console.log('donnn added ', res.data.data.data);
         if (res.data.status === true) {
-          handleOpen4();
           handleClose();
-
+          navigation('/reciept', {
+            state: {
+              userdata: res.data.data.data,
+            },
+          });
           sendsms(totalamount);
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
@@ -286,8 +289,7 @@ const CashDonation = ({
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
     }
-    getDonatedUserDetails();
-  }, [calGetdetailApi]);
+  }, []);
 
   return (
     <Box>

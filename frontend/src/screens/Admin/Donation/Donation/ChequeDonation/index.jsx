@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { alpha } from '@mui/material/styles';
-
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -34,7 +34,6 @@ const ChequeDonation = ({
   themeColor,
   updateData,
   showUpdateBtn,
-  handleOpen4,
 }) => {
   const theme = createTheme({
     typography: {
@@ -46,6 +45,8 @@ const ChequeDonation = ({
       },
     },
   });
+
+  const navigation = useNavigate();
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
 
@@ -56,6 +57,7 @@ const ChequeDonation = ({
   const [newMember, setNewMember] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
+  const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [genderp, setgenderp] = useState('श्री');
   const [donationItems, setDonationItems] = useState([
     {
@@ -113,7 +115,22 @@ const ChequeDonation = ({
       ),
     );
   }
+  const getDonatedUserDetails = () => {
+    serverInstance(`admin/getuser-by-num?mobile=${mobileNo}`, 'get').then(
+      (res) => {
+        if (res.status) {
+          setFullName(res.data.name);
+          setAddress(res.data.address);
+          setgenderp(res.data.gender);
+        }
+      },
+    );
+  };
 
+  if (mobileNo.length === 10 && fetchuserdetail === true) {
+    getDonatedUserDetails();
+    setfetchuserdetail(false);
+  }
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
   var today = new Date();
   const currDate = today
@@ -212,8 +229,11 @@ const ChequeDonation = ({
             setshowalert(true);
             handleClose();
             sendsms(totalamount);
-            handleOpen4();
-            console.log('donationItems', donationItems);
+            navigation('/reciept', {
+              state: {
+                userdata: res.data.data.data,
+              },
+            });
           } else {
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');
           }

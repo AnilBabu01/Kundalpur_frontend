@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import moment from 'moment';
@@ -22,7 +21,6 @@ import PrintIcon from '@mui/icons-material/Print';
 import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DownloadIcon from '@mui/icons-material/Download';
-import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
 import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
@@ -117,13 +115,12 @@ const Online = ({ setopendashboard }) => {
         'Receipt No': item?.RECEIPT_NO,
         Name: item?.NAME,
         'Phone No': item?.MobileNo,
-        Name: item.NAME,
         Address: item?.ADDRESS,
         'Head/Item': item?.TYPE,
         Amount: item?.AMOUNT,
         Remark: item?.REMARK,
         MODE_OF_DONATION: item?.MODE_OF_DONATION,
-        Address: item?.ADDRESS,
+
         CHEQUE_NO: item?.CHEQUE_NO,
         DATE_OF_CHEQUE: item?.DATE_OF_CHEQUE,
 

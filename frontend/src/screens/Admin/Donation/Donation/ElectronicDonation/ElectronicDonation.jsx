@@ -28,14 +28,13 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { typesOfDonation } from '../common/Data';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
-
+import { useNavigate } from 'react-router-dom';
 const ElectronicDonation = ({
   setshowalert,
   handleClose,
   themeColor,
   updateData,
   showUpdateBtn,
-  handleOpen4,
 }) => {
   const theme = createTheme({
     typography: {
@@ -47,13 +46,15 @@ const ElectronicDonation = ({
       },
     },
   });
+
+  const navigation = useNavigate();
+
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
 
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
-  // const [transactionNo, setTransactionNo] = useState('');
-  // const [bankName, setBankName] = useState('');
+  const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [newMember, setNewMember] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
@@ -112,6 +113,22 @@ const ElectronicDonation = ({
           : donationItem,
       ),
     );
+  }
+  const getDonatedUserDetails = () => {
+    serverInstance(`admin/getuser-by-num?mobile=${mobileNo}`, 'get').then(
+      (res) => {
+        if (res.status) {
+          setFullName(res.data.name);
+          setAddress(res.data.address);
+          setgenderp(res.data.gender);
+        }
+      },
+    );
+  };
+
+  if (mobileNo.length === 10 && fetchuserdetail === true) {
+    getDonatedUserDetails();
+    setfetchuserdetail(false);
   }
 
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
@@ -208,11 +225,17 @@ const ElectronicDonation = ({
                 0,
               );
 
+          console.log('rr', res);
           if (res.data.status === true) {
             setshowalert(true);
             handleClose();
             sendsms(totalamount);
-            handleOpen4();
+
+            navigation('/reciept', {
+              state: {
+                userdata: res.data.data.data,
+              },
+            });
           }
         }
       }

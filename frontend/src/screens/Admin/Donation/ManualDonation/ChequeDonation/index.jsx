@@ -280,15 +280,14 @@ const ChequeDonation = ({
       <ThemeProvider theme={theme}>
         <form onSubmit={addChequeDonation}>
           <Typography variant="h6" color={'primary'} align="center">
-            {showUpdateBtn ? 'Upadte Cheque Donation' : 'Add Cheque Donation'}
+            {showUpdateBtn
+              ? 'Upadte Manual Cheque Donation'
+              : 'Add Manual Cheque Donation'}
           </Typography>
           <Typography variant="body2" color="primary" align="right">
             {currDate} / {currTime}
           </Typography>
-          <Typography variant="body2" my={1}>
-            {updateData?.ReceiptNo ? 'Receipt No :' : ' Voucher No :'}
-            {updateData?.ReceiptNo ? updateData?.ReceiptNo : receiptNo}
-          </Typography>
+
           <Box
             sx={{
               display: 'flex',
@@ -327,6 +326,21 @@ const ChequeDonation = ({
               English
             </Button>
           </Box>
+          <Grid container rowSpacing={2} columnSpacing={5}>
+            <Grid item xs={6} md={3}>
+              <CustomInputLabel htmlFor="donation-date">
+                Receipt No
+              </CustomInputLabel>
+              <CustomInput
+                type="text"
+                id="donation-date"
+                // value={donationDate.toLocaleDateString('en-CA')}
+                // onChange={(event) => {
+                //   setDonationDate(new Date(event.target.value));
+                // }}
+              />
+            </Grid>
+          </Grid>
           <Grid container rowSpacing={2} columnSpacing={5}>
             <Grid item xs={6} md={3}>
               <CustomInputLabel htmlFor="donation-date">Date</CustomInputLabel>

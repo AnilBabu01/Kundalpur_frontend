@@ -238,7 +238,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/reports/manualcash"
                     >
-                      Manual Cash
+                      Cash
                     </NavLink>
                   </li>
                   <li className="nav-item">
@@ -248,7 +248,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/reports/electronic"
                     >
-                      Manual Electronic
+                      Electronic
                     </NavLink>
                   </li>
                   <li className="nav-item">
@@ -258,7 +258,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/reports/manualcheque"
                     >
-                      Manual Cheque
+                      Cheque
                     </NavLink>
                   </li>
                   <li className="nav-item">
@@ -268,7 +268,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/reports/manualitem"
                     >
-                      Manual Item
+                      Item
                     </NavLink>
                   </li>
                   <li className="nav-item">
@@ -376,7 +376,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/reports/manualcash"
                     >
-                      Manual Cash
+                      Cash
                     </NavLink>
                   </li>
                   <li className="nav-item">
@@ -386,7 +386,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/reports/electronic"
                     >
-                      Manual Electronic
+                      Electronic
                     </NavLink>
                   </li>
                   <li className="nav-item">
@@ -396,7 +396,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/reports/manualcheque"
                     >
-                      Manual Cheque
+                      Cheque
                     </NavLink>
                   </li>
                   <li className="nav-item">
@@ -406,7 +406,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       }
                       to="/admin-panel/reports/manualitem"
                     >
-                      Manual Item
+                      Item
                     </NavLink>
                   </li>
                 </div>

@@ -63,10 +63,10 @@ const style2 = {
 };
 
 const donationColorTheme = {
-  cash: '#48a828',
-  electronic: '#e96d00',
-  cheque: '#1C82AD',
-  item: '#d6cb00',
+  cash: '#9F2B68',
+  electronic: '#9F2B68',
+  cheque: '#808080',
+  item: '#FF0000',
 };
 
 const ManualDonation = ({ setopendashboard }) => {
@@ -204,7 +204,7 @@ const ManualDonation = ({ setopendashboard }) => {
       Swal.fire('Error!', error, 'error');
     }
   };
-  
+
   const voucherexhauted = async (row) => {
     printreceipt(row);
     if (res.data.status === true) {
@@ -235,7 +235,7 @@ const ManualDonation = ({ setopendashboard }) => {
   const tabs = React.useMemo(
     () => [
       {
-        label: 'Cash Donation',
+        label: ' Manual Cash Donation',
         component: (
           <CashDonation
             setshowalert={setshowalert}
@@ -246,7 +246,7 @@ const ManualDonation = ({ setopendashboard }) => {
         ),
       },
       {
-        label: 'Electronic Donation',
+        label: ' Manual Electronic Donation',
         component: (
           <ElectronicDonation
             setshowalert={setshowalert}
@@ -257,7 +257,7 @@ const ManualDonation = ({ setopendashboard }) => {
         ),
       },
       {
-        label: 'Cheque Donation',
+        label: ' Manual Cheque Donation',
         component: (
           <ChequeDonation
             setshowalert={setshowalert}
@@ -268,7 +268,7 @@ const ManualDonation = ({ setopendashboard }) => {
         ),
       },
       {
-        label: 'Item Donation',
+        label: ' Manual Item Donation',
         component: (
           <ItemDonation
             setshowalert={setshowalert}

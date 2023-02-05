@@ -279,8 +279,8 @@ const ElectronicDonation = ({
         <form onSubmit={addElectronicDonation}>
           <Typography variant="h6" color={themeColor} align="center">
             {showUpdateBtn
-              ? 'Update Electronic Donation'
-              : 'Add Electronic Donation'}
+              ? 'Update Manual Electronic Donation'
+              : 'Add Manual Electronic Donation'}
           </Typography>
           <Typography
             variant="body2"
@@ -291,10 +291,7 @@ const ElectronicDonation = ({
           >
             {currDate} / {currTime}
           </Typography>
-          <Typography variant="body2" my={1}>
-            {updateData?.ReceiptNo ? 'Receipt No :' : ' Voucher No :'}
-            {updateData?.ReceiptNo ? updateData?.ReceiptNo : receiptNo}
-          </Typography>
+
           <Box
             sx={{
               display: 'flex',
@@ -333,7 +330,21 @@ const ElectronicDonation = ({
               English
             </Button>
           </Box>
-
+          <Grid container rowSpacing={2} columnSpacing={5}>
+            <Grid item xs={6} md={3}>
+              <CustomInputLabel htmlFor="donation-date">
+                Receipt No
+              </CustomInputLabel>
+              <CustomInput
+                type="text"
+                id="donation-date"
+                // value={donationDate.toLocaleDateString('en-CA')}
+                // onChange={(event) => {
+                //   setDonationDate(new Date(event.target.value));
+                // }}
+              />
+            </Grid>
+          </Grid>
           <Grid container rowSpacing={2} columnSpacing={5}>
             <Grid item xs={6} md={3}>
               <CustomInputLabel htmlFor="donation-date">Date</CustomInputLabel>

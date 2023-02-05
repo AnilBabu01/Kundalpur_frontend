@@ -12,6 +12,10 @@ const converter = new Converter(hiIN);
 function PrintContent({ setopendashboard, setshowreciept }) {
   const location = useLocation();
   const componentRef = useRef();
+  const adminName = sessionStorage.getItem('adminName');
+
+  const empName = sessionStorage.getItem('empName');
+
   const [isData, setisData] = useState(null);
 
   const handlePrint = useReactToPrint({
@@ -473,8 +477,9 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               )}
             </div>
           </div>
+
           <div className="gray-text-div extra_bottom_margin">
-            <p>(SHASHANK ASATI)</p>
+            <p>( {empName ? empName : adminName})</p>
           </div>
           <div>
             {isData?.active === '0' && (
@@ -614,6 +619,18 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     </p>
                   </>
                 )}
+                {isData && isData.modeOfDonation === 2 && (
+                  <>
+                    <p className="common_margin_p">
+                      <span className="gray-text">
+                        विवरण - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                      </span>
+                      {isData && isData?.REMARK
+                        ? isData?.REMARK
+                        : isData && isData.elecItemDetails[0].remark}
+                    </p>
+                  </>
+                )}
                 {isData && isData.CHEQUE_NO && (
                   <>
                     <p className="common_margin_p">
@@ -714,9 +731,10 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               </div>
             </div>
             <div>
-              {isData && isData?.modeOfDonation === '4' ? (
+              {(isData && isData?.modeOfDonation === '4') ||
+              (isData && isData?.modeOfDonation === 4) ? (
                 <>
-                  <p style={{ textAlign: 'center' }}>
+                  <p style={{ textAlign: 'center' }} className="gray-text">
                     आपके द्वारा प्रदत्त उपहार दान स्वरूप सधन्यवाद प्राप्त हुआ।
                   </p>
                 </>
@@ -728,7 +746,6 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         <div className="gray-text_div">
                           <p>दान का मद -</p>
                         </div>
-
                         <div className="wrap_div_child_div">
                           {isData &&
                             isData.elecItemDetails &&
@@ -776,7 +793,32 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </>
                     )}
 
+                    {isData && isData.modeOfDonation === 3 && (
+                      <>
+                        <p className="common_margin_p margin_left_is">
+                          <span className="gray-text">
+                            विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </span>
+                          {isData && isData?.REMARK
+                            ? isData?.REMARK
+                            : isData && isData.elecItemDetails[0].remark}
+                        </p>
+                      </>
+                    )}
+
                     {isData && isData.modeOfDonation === '1' && (
+                      <>
+                        <p className="common_margin_p margin_left_is">
+                          <span className="gray-text">विवरण - &nbsp;</span>
+                          {isData && isData?.REMARK
+                            ? isData?.REMARK
+                            : isData && isData.elecItemDetails[0].remark}
+                        </p>
+                      </>
+                    )}
+
+                    {isData && isData.modeOfDonation === 1 && (
                       <>
                         <p className="common_margin_p margin_left_is">
                           <span className="gray-text">विवरण - &nbsp;</span>
@@ -827,7 +869,18 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                             रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
                           </span>
                         )}
+                        {isData && isData?.modeOfDonation === 2 && (
+                          <span className="gray-text">
+                            {' '}
+                            रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                          </span>
+                        )}
                         {isData && isData?.modeOfDonation === '1' && (
+                          <span className="gray-text">
+                            रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                          </span>
+                        )}
+                        {isData && isData?.modeOfDonation === 1 && (
                           <span className="gray-text">
                             रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
                           </span>
@@ -837,20 +890,25 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                             चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
                           </span>
                         )}
+                        {isData && isData?.modeOfDonation === 3 && (
+                          <span className="gray-text">
+                            चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                          </span>
+                        )}
                       </>
                     ) : (
                       <>
                         {isData && isData?.MODE_OF_DONATION === 'ONLINE' && (
-                          <>
+                          <span className="gray-text">
                             {isData && converter.toWords(isData?.AMOUNT)}, रूपये
                             ऑनलाइन द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
-                          </>
+                          </span>
                         )}
                         {isData && isData?.MODE_OF_DONATION === 'CHEQUE' && (
-                          <>
+                          <span span className="gray-text">
                             {isData && converter.toWords(isData?.AMOUNT)}, रूपये
                             ऑनलाइन चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
-                          </>
+                          </span>
                         )}
                       </>
                     )}
@@ -859,8 +917,9 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               )}
             </div>
           </div>
+
           <div className="gray-text-div">
-            <p>(SHASHANK ASATI)</p>
+            <p>( {empName ? empName : adminName})</p>
           </div>
         </div>
       </div>

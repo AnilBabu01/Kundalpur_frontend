@@ -238,6 +238,19 @@ const Donation = ({ setopendashboard }) => {
     }
   };
 
+  const filterdata = () => {
+    serverInstance(
+      `user/search-donation?name=${name}&type=${typedonation}&date=${date}&phone=${phone}',
+      'get`,
+    ).then((res) => {
+      console.log('dilter data is', res);
+      if (res.data.status) {
+        setshowsearchData(!showsearchData);
+        setisData(res.data.data);
+      }
+    });
+  };
+
   useEffect(() => {
     getall_donation();
     setopendashboard(true);

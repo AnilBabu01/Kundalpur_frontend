@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { alpha } from '@mui/material/styles';
-
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -48,6 +48,7 @@ const CashDonation = ({
       },
     },
   });
+  const navigation = useNavigate();
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
   const [voucher, setvoucher] = useState('');
@@ -57,6 +58,7 @@ const CashDonation = ({
   const [bankName, setBankName] = useState('');
   const [newMember, setNewMember] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
+  const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [donationItems, setDonationItems] = useState([
@@ -111,7 +113,23 @@ const CashDonation = ({
       ),
     );
   }
+  const getDonatedUserDetails = () => {
+    serverInstance(
+      `admin/getuser-by-num-manual?mobile=${mobileNo}`,
+      'get',
+    ).then((res) => {
+      if (res.status) {
+        setFullName(res.data.name);
+        setAddress(res.data.address);
+        setgenderp(res.data.gender);
+      }
+    });
+  };
 
+  if (mobileNo.length === 10 && fetchuserdetail === true) {
+    getDonatedUserDetails();
+    setfetchuserdetail(false);
+  }
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
   var today = new Date();
   const currDate = today
@@ -151,23 +169,27 @@ const CashDonation = ({
         donationItems[0].type &&
         mobileNo
       ) {
-        const res = await axios.put(`${backendApiUrl}user/add-elecDonation`, {
-          id: updateData?.id,
-          name: fullName,
-          phoneNo: mobileNo,
-          address: address,
-          prefix: 'CASH',
-          new_member: newMember,
-          modeOfDonation: 2,
-          donation_date: updateData?.donation_date,
-          donation_time: updateData?.donation_date,
-          donation_item: donationItems,
-        });
+        const res = await axios.put(
+          `${backendApiUrl}admin/edit-manual-cash-donation`,
+          {
+            id: updateData?.id,
+            name: fullName,
+            phoneNo: mobileNo,
+            ReceiptNo: receiptNo,
+            address: address,
+            new_member: newMember,
+            modeOfDonation: 2,
+            donation_date: updateData?.donation_date,
+            donation_time: updateData?.donation_date,
+            donation_item: donationItems,
+          },
+        );
 
+        console.log('update', res);
         if (res.data.status === true) {
-          setshowalert(true);
-          handleClose();
-          setshowDownButton(true);
+          // setshowalert(true);
+          // handleClose();
+          // setshowDownButton(true);
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
         }
@@ -181,12 +203,12 @@ const CashDonation = ({
         donationItems[0].type &&
         mobileNo
       ) {
-        const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
+        const res = await axios.post(`${backendApiUrl}admin/manual-donation`, {
           name: fullName,
           gender: genderp,
           phoneNo: mobileNo,
           address: address,
-          prefix: 'CASH',
+          ReceiptNo: receiptNo,
           new_member: newMember,
           modeOfDonation: 2,
           donation_date: donationDate,
@@ -202,8 +224,13 @@ const CashDonation = ({
               0,
             );
 
+        console.log('added', res);
         if (res.data.status === true) {
-          handleOpen4();
+          navigation('/manualreceipt', {
+            state: {
+              userdata: res.data.data.data,
+            },
+          });
           handleClose();
 
           sendsms(totalamount);
@@ -240,10 +267,6 @@ const CashDonation = ({
         } else {
           Swal.fire('Error', 'somthing went  wrong', 'error');
         }
-        if (item.status) {
-          setReceiptNo(item.data);
-        }
-        console.log('sss', res, item);
       });
     } catch (error) {
       Swal.fire('Error!', error, 'error');
@@ -264,7 +287,7 @@ const CashDonation = ({
       setAddress(updateData?.address);
       setFullName(updateData?.name);
       setMobileNo(updateData?.phoneNo);
-      setDonationItems(updateData?.elecItemDetails);
+      setDonationItems(updateData?.manualItemDetails);
     }
   }, []);
 
@@ -322,16 +345,16 @@ const CashDonation = ({
 
           <Grid container rowSpacing={2} columnSpacing={5}>
             <Grid item xs={6} md={3}>
-              <CustomInputLabel htmlFor="donation-date">
+              <CustomInputLabel htmlFor="receiptNo">
                 Receipt No
               </CustomInputLabel>
               <CustomInput
                 type="text"
-                id="donation-date"
-                // value={donationDate.toLocaleDateString('en-CA')}
-                // onChange={(event) => {
-                //   setDonationDate(new Date(event.target.value));
-                // }}
+                id="receiptNo"
+                value={receiptNo}
+                onChange={(event) => {
+                  setReceiptNo(event.target.value);
+                }}
               />
             </Grid>
           </Grid>

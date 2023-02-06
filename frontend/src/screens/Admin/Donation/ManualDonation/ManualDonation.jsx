@@ -31,6 +31,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Request from './Request';
 import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import exportFromJSON from 'export-from-json';
 import './Donation.css';
 import ElectronicDonation from './ElectronicDonation/ElectronicDonation';
 import CashDonation from './CashDonation';
@@ -158,7 +159,7 @@ const ManualDonation = ({ setopendashboard }) => {
   }, [showalert, open]);
 
   const getall_donation = () => {
-    serverInstance('user/add-elecDonation', 'get').then((res) => {
+    serverInstance('admin/manual-donation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
         setrowData(res.data.pop());
@@ -181,7 +182,7 @@ const ManualDonation = ({ setopendashboard }) => {
   const printreceipt = (row) => {
     if (row.active === '0') {
     } else {
-      navigation('/reciept', {
+      navigation('/manualreceipt', {
         state: {
           userdata: row,
         },
@@ -205,6 +206,33 @@ const ManualDonation = ({ setopendashboard }) => {
     }
   };
 
+  const ExportToExcel = () => {
+    const fileName = 'ManualDonationReport';
+    const exportType = 'xls';
+    var data = [];
+    isData.map((item, index) => {
+      data.push({
+        Date: Moment(item.donation_date).format('DD-MM-YYYY'),
+        'Receipt No': item?.ReceiptNo,
+
+        'Phone No': item?.phoneNo,
+        name: item?.name,
+        Address: item?.address,
+        'Head/Item': item?.manualItemDetails.map((row) => {
+          return row.type;
+        }),
+        Amount: item?.manualItemDetails.reduce(
+          (n, { amount }) => parseFloat(n) + parseFloat(amount),
+          0,
+        ),
+        remark: item?.manualItemDetails.map((row) => {
+          return row.remark;
+        }),
+        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
+      });
+    });
+    exportFromJSON({ data, fileName, exportType });
+  };
   const voucherexhauted = async (row) => {
     printreceipt(row);
     if (res.data.status === true) {
@@ -369,29 +397,18 @@ const ManualDonation = ({ setopendashboard }) => {
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div
-            className="search-header-div-center"
-            style={{ paddingLeft: '1rem' }}
-          >
+          <div className="search-header" style={{ paddingLeft: '1rem' }}>
             <div className="search-inner-div-reports">
-              <div className="Center_main_dic_filetr">
+              <div className="Center_main_dic_filetr1">
                 <label>From Date</label>
                 <input type="date" placeholder="From" />
               </div>
-              <div className="Center_main_dic_filetr">
+              <div className="Center_main_dic_filetr1">
                 <label>To Date</label>
                 <input type="date" placeholder="From" />
               </div>
-              <div className="Center_main_dic_filetr">
-                <label>From Voucher</label>
-                <input type="text" placeholder="From" />
-              </div>
-              <div className="Center_main_dic_filetr">
-                <label>To Voucher</label>
-                <input type="text" placeholder="From" />
-              </div>
 
-              <div className="Center_main_dic_filetr">
+              <div className="Center_main_dic_filetr1">
                 <label>Head/Item</label>
                 <select name="cars" id="cars">
                   <option>Select option</option>
@@ -422,17 +439,6 @@ const ManualDonation = ({ setopendashboard }) => {
             <PictureAsPdfIcon
               onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
             />
-            <button
-              className="search-header-div-center-button"
-              onClick={() => filterdata()}
-            >
-              Search
-            </button>
-            <input
-              className="search-header-div-center-input"
-              type="text"
-              placeholder="Search"
-            />
           </div>
 
           <div className="table-div-maain">
@@ -445,7 +451,6 @@ const ManualDonation = ({ setopendashboard }) => {
                   <TableCell>Date</TableCell>
                   <TableCell>ReceiptNo</TableCell>
 
-                  <TableCell>VoucherNo</TableCell>
                   <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Address</TableCell>
@@ -472,13 +477,6 @@ const ManualDonation = ({ setopendashboard }) => {
                   />
                 </TableCell>
 
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Voucher"
-                  />
-                </TableCell>
                 <TableCell>
                   <input
                     className="cuolms_search"
@@ -553,19 +551,18 @@ const ManualDonation = ({ setopendashboard }) => {
                         </TableCell>
                         <TableCell>{row.ReceiptNo}</TableCell>
 
-                        <TableCell>{row.voucherNo}</TableCell>
                         <TableCell>{row.phoneNo}</TableCell>
                         <TableCell>{row.name}</TableCell>
                         <TableCell> {row.address}</TableCell>
                         <TableCell>
-                          {row.elecItemDetails.map((row) => {
+                          {row.manualItemDetails.map((row) => {
                             return (
                               <li style={{ listStyle: 'none' }}>{row.type}</li>
                             );
                           })}
                         </TableCell>
                         <TableCell>
-                          {row.elecItemDetails.reduce(
+                          {row.manualItemDetails.reduce(
                             (n, { amount }) =>
                               parseFloat(n) + parseFloat(amount),
                             0,
@@ -573,7 +570,7 @@ const ManualDonation = ({ setopendashboard }) => {
                         </TableCell>
                         <TableCell>&nbsp;</TableCell>
                         <TableCell>
-                          {row.elecItemDetails.map((row) => {
+                          {row.manualItemDetails.map((row) => {
                             return (
                               <li style={{ listStyle: 'none' }}>
                                 {row.remark}{' '}
@@ -595,7 +592,7 @@ const ManualDonation = ({ setopendashboard }) => {
 
                           <PrintIcon
                             onClick={() =>
-                              navigation('/admin-panel/reports/printcontent', {
+                              navigation('/admin-panel/printContentmanul', {
                                 state: {
                                   data: row,
                                 },

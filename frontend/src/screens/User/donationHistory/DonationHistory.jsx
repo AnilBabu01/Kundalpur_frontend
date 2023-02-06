@@ -12,7 +12,7 @@ import ChequeSuccessfull from '../donation/chequeSuccessfull/ChequeSuccessfull';
 import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import './DonationHistory.css';
@@ -40,7 +40,7 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
   const [useindonationhistory, setuseindonationhistory] = useState(false);
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
-
+  const { user } = useSelector((state) => state.userReducer);
   console.log(isrow);
   React.useEffect(() => {
     gettable();
@@ -117,7 +117,7 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                   <TableRow>
                     <TableCell align="left">DATE</TableCell>
                     <TableCell align="left">Receipt No</TableCell>
-                    <TableCell align="left">Voucher No</TableCell>
+
                     <TableCell align="left">Mobile No</TableCell>
                     <TableCell align="left">NAME</TableCell>
                     <TableCell align="left">Address</TableCell>
@@ -154,7 +154,11 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                       <TableCell align="left">
                         {moment(row?.DATE_OF_DAAN).format('DD/MM/YYYY')}
                       </TableCell>
+                      <TableCell align="left">{row.RECEIPT_NO}</TableCell>
+                      <TableCell align="left"> {user?.mobileNo}</TableCell>
+
                       <TableCell align="left">{row.NAME}</TableCell>
+                      <TableCell align="left">{row.ADDRESS}</TableCell>
                       <TableCell align="left">{row.MODE_OF_DONATION}</TableCell>
                       <TableCell align="left">{row.AMOUNT}</TableCell>
                       <TableCell align="left">
@@ -199,7 +203,7 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                       page={page}
                       onPageChange={handleChangePage}
                       onRowsPerPageChange={handleChangeRowsPerPage}
-                      rowsPerPageOptions={[5, 10, 25]}
+                      rowsPerPageOptions={[3, 10, 25]}
                       labelRowsPerPage={<span>Rows:</span>}
                       labelDisplayedRows={({ page }) => {
                         return `Page: ${page}`;

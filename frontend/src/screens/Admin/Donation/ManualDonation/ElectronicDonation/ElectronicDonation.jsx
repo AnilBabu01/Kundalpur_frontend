@@ -52,8 +52,7 @@ const ElectronicDonation = ({
 
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
-  // const [transactionNo, setTransactionNo] = useState('');
-  // const [bankName, setBankName] = useState('');
+  const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [newMember, setNewMember] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
@@ -113,7 +112,23 @@ const ElectronicDonation = ({
       ),
     );
   }
+  const getDonatedUserDetails = () => {
+    serverInstance(
+      `admin/getuser-by-num-manual?mobile=${mobileNo}`,
+      'get',
+    ).then((res) => {
+      if (res.status) {
+        setFullName(res.data.name);
+        setAddress(res.data.address);
+        setgenderp(res.data.gender);
+      }
+    });
+  };
 
+  if (mobileNo.length === 10 && fetchuserdetail === true) {
+    getDonatedUserDetails();
+    setfetchuserdetail(false);
+  }
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
   var today = new Date();
   const currDate = today
@@ -155,18 +170,21 @@ const ElectronicDonation = ({
           donationItems[0].type &&
           mobileNo
         ) {
-          const res = await axios.put(`${backendApiUrl}user/add-elecDonation`, {
-            id: updateData?.id,
-            name: fullName,
-            phoneNo: mobileNo,
-            prefix: 'ELEC',
-            address: address,
-            new_member: newMember,
-            modeOfDonation: 1,
-            donation_date: updateData?.donation_date,
-            donation_time: updateData?.donation_time,
-            donation_item: donationItems,
-          });
+          const res = await axios.put(
+            `${backendApiUrl}admin/edit-manual-elec-donation`,
+            {
+              id: updateData?.id,
+              name: fullName,
+              phoneNo: mobileNo,
+              ReceiptNo: receiptNo,
+              address: address,
+              new_member: newMember,
+              modeOfDonation: 1,
+              donation_date: updateData?.donation_date,
+              donation_time: updateData?.donation_time,
+              donation_item: donationItems,
+            },
+          );
 
           if (res.data.status === true) {
             setshowalert(true);
@@ -185,12 +203,12 @@ const ElectronicDonation = ({
           mobileNo
         ) {
           const res = await axios.post(
-            `${backendApiUrl}user/add-elecDonation`,
+            `${backendApiUrl}admin/manual-donation`,
             {
               name: fullName,
               gender: genderp,
               phoneNo: mobileNo,
-              prefix: 'ELEC',
+              ReceiptNo: receiptNo,
               address: address,
               new_member: newMember,
               modeOfDonation: 1,
@@ -239,9 +257,6 @@ const ElectronicDonation = ({
           console.log(res.data);
         } else {
           Swal.fire('Error', 'somthing went  wrong', 'error');
-        }
-        if (item.status) {
-          setReceiptNo(item.data);
         }
 
         console.log('sss', res, item);
@@ -332,16 +347,16 @@ const ElectronicDonation = ({
           </Box>
           <Grid container rowSpacing={2} columnSpacing={5}>
             <Grid item xs={6} md={3}>
-              <CustomInputLabel htmlFor="donation-date">
+              <CustomInputLabel htmlFor="receiptNo">
                 Receipt No
               </CustomInputLabel>
               <CustomInput
                 type="text"
-                id="donation-date"
-                // value={donationDate.toLocaleDateString('en-CA')}
-                // onChange={(event) => {
-                //   setDonationDate(new Date(event.target.value));
-                // }}
+                id="receiptNo"
+                value={receiptNo}
+                onChange={(event) => {
+                  setReceiptNo(event.target.value);
+                }}
               />
             </Grid>
           </Grid>

@@ -162,7 +162,7 @@ const AllReport = ({ setopendashboard }) => {
   };
 
   const ExportToExcel = () => {
-    const fileName = 'ManualCashReport';
+    const fileName = 'AllDonationReport';
     const exportType = 'xls';
     var data = [];
     isData.map((item, index) => {

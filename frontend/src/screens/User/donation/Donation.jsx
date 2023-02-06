@@ -336,6 +336,11 @@ function Donation({ setshowreciept, paymentId }) {
     if (!values.name_of_bank) {
       errors.name_of_bank = 'Please enter name of bank';
     }
+
+    if (!values.donationtype) {
+      errors.donationtype = 'Please enter name of donationtype';
+    }
+
     if (mode === 'Cheque' && !cheqing) {
       errors.chequeImg = 'Upload cheque image';
     }

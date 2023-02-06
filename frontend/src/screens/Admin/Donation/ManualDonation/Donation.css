@@ -321,3 +321,8 @@ td {
 .cuolms_search:focus{
   outline: none;
 }
+
+.search-inner-div-reports-div {
+  display: contents;
+  padding-right: 1rem;
+}

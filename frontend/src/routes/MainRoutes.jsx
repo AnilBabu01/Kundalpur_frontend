@@ -8,12 +8,13 @@ import CreatePassword from '../screens/User/Auth/createPassword/CreatePassword';
 import Donation from '../screens/User/donation/Donation';
 import Auth from '../screens/User/Auth/Auth';
 import Profile from '../screens/User/profile/Profile';
-import Reciept from '../screens/Admin/Reciept/Reciept';
 import DonationHistory from '../screens/User/donationHistory/DonationHistory';
 import ChangePassword from '../screens/User/ChangePassword/ChangePassword';
 import PrivateRoutes from '../components/PrivateRoutes/PrivateRoutes';
 import AboutUs from '../screens/User/Aboutus/AboutUs';
 import PaymentStatusPage from '../screens/User/PaymentStatusPage/PaymentStatusPage';
+import Reciept from '../screens/Admin/Reciept/Reciept';
+import ReceiptManual from '../screens/Admin/Reciept/RecieptManual';
 function MainRoutes({
   setopendashboard,
   setshowreciept,
@@ -74,6 +75,17 @@ function MainRoutes({
           element={
             <PrivateRoutes>
               <Reciept
+                setopendashboard={setopendashboard}
+                setshowreciept={setshowreciept}
+              />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/manualreceipt"
+          element={
+            <PrivateRoutes>
+              <ReceiptManual
                 setopendashboard={setopendashboard}
                 setshowreciept={setshowreciept}
               />

@@ -116,7 +116,7 @@
     display: flex;
     padding: 0rem 1rem 0rem 1rem;
     gap: 8px;
-    padding-bottom: 16px;
+
     width: 100%;
     align-items: baseline;
   }
@@ -168,7 +168,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
-    width: 70%;
+
   
   }
   .main-certificate .reciptimg .reciptbody .leftdata .leftitems{
@@ -179,7 +179,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
-    width: 30%;
+ 
 
   }
   .main-certificate .reciptimg .reciptbody .rightdata .rightitems{
@@ -364,6 +364,7 @@
   }
   .main_div_center{
     display: flex;
+    height: 45px;
   }  
   .margin_left_div{
     

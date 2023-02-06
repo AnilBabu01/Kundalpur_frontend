@@ -7,6 +7,7 @@ import { Converter, hiIN } from 'any-number-to-words';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Moment from 'moment-js';
+import moment from 'moment';
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
@@ -44,6 +45,22 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
       pdf.save('download.pdf');
     });
   }
+
+  var options = { year: 'numeric', month: 'short', day: '2-digit' };
+  const convertTime = (today) => {
+    const currDate = today
+      .toLocaleDateString('en-IN', options)
+      .replace(/-/g, ' ');
+    const currTime = today.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    });
+
+    let dateAndTime = `${currDate}: ${currTime}`;
+
+    return dateAndTime;
+  };
 
   return (
     <>
@@ -85,7 +102,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                 </span>
                 <span className="leftitems">
                   <h2>दान दातार :</h2>
-                  <div className="warp_text">
+                  <div>
                     <h2 className="font_bold_in_donation">
                       {isData && isData?.gender
                         ? isData && isData?.gender
@@ -216,12 +233,15 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                   <h2>दिनांक :</h2>
                   <h2 className="font_bold_in_donation">
                     {isData && isData?.elecItemDetails ? (
-                      Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
+                      <>
+                        {Moment(isData?.donation_date).format('DD-MM-YYYY')}:
+                        {moment(isData?.donation_time, 'HH:mm:ss').format(
+                          'hh:mm A',
+                        )}
+                      </>
                     ) : (
                       <>
-                        {isData?.DATE_OF_CHEQUE
-                          ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
-                          : Moment(isData?.donation_date).format('DD-MM-YYYY')}
+                        {Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')}-
                       </>
                     )}
                   </h2>
@@ -489,7 +509,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                 )}
 
                 {isData && isData?.modeOfDonation === '2' && (
-                  <span className="rightitems2 ">
+                  <div className="rightitems2 ">
                     <div className="dan_ka_mad">
                       <h2>दान का मद :</h2>
                     </div>
@@ -506,7 +526,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                         </>
                       )}
                     </span>
-                  </span>
+                  </div>
                 )}
 
                 {isData && isData?.modeOfDonation === 2 && (

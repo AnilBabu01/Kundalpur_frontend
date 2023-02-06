@@ -1,13 +1,13 @@
-import React from "react";
-import axios from "axios";
-import Swal from "sweetalert2";
-import { backendApiUrl } from "../../../../config/config";
-import "./Request.css";
+import React from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { backendApiUrl } from '../../../../config/config';
+import './Request.css';
 function Request({ handleClose }) {
   const handlesubmit = async () => {
     axios.defaults.headers.post[
-      "Authorization"
-    ] = `Bearer ${sessionStorage.getItem("token")}`;
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(`${backendApiUrl}user/req-voucher`);
 
@@ -15,11 +15,12 @@ function Request({ handleClose }) {
 
     if (res.data.status === true) {
       handleClose();
-      Swal.fire("Great!", res.data.data, "success");
+      Swal.fire('Great!', res.data.data, 'success');
     } else {
-      Swal.fire("Error!", "Somthing went wrong!!", "error");
+      Swal.fire('Error!', 'Somthing went wrong!!', 'error');
     }
   };
+
   return (
     <>
       <div>

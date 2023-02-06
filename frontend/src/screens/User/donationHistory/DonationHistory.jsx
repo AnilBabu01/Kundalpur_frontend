@@ -36,7 +36,7 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
   const [isrow, setisrow] = useState([]);
   const [page, setPage] = useState(0);
   const [open1, setOpen1] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
   const [useindonationhistory, setuseindonationhistory] = useState(false);
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
@@ -190,7 +190,7 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
                           color: status === '0' ? 'red' : '',
                         }}
                       >
-                        downolod
+                        download
                       </TableCell>
                     </TableRow>
                   ))}

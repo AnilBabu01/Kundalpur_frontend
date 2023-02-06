@@ -240,9 +240,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                         )}
                       </>
                     ) : (
-                      <>
-                        {Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')}-
-                      </>
+                      <>{Moment(isData?.DATE_OF_DAAN).format('DD-MM-YYYY')}</>
                     )}
                   </h2>
                 </span>
@@ -444,7 +442,43 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                     </span>
                   </span>
                 )}
+                {isData && isData.CHEQUE_NO === '' && (
+                  <>
+                    <span className="rightitems2 ">
+                      <div className="dan_ka_mad">
+                        <h2>दान का मद :</h2>
+                      </div>
+                      <span className="center_receipt_format">
+                        {isData && (
+                          <>
+                            <h2>
+                              <b>{isData.TYPE}</b>
+                            </h2>
+                          </>
+                        )}
+                      </span>
+                    </span>
+                  </>
+                )}
 
+                {isData && isData.CHEQUE_NO && (
+                  <>
+                    <span className="rightitems2 ">
+                      <div className="dan_ka_mad">
+                        <h2>दान का मद :</h2>
+                      </div>
+                      <span className="center_receipt_format">
+                        {isData && (
+                          <>
+                            <h2>
+                              <b>{isData.TYPE}</b>
+                            </h2>
+                          </>
+                        )}
+                      </span>
+                    </span>
+                  </>
+                )}
                 {isData && isData?.modeOfDonation === 1 && (
                   <span className="rightitems2 ">
                     <div className="dan_ka_mad">

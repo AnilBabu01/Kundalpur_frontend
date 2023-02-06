@@ -76,7 +76,7 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
   return (
     <>
       {' '}
-      <Modal
+      {/* <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
@@ -88,7 +88,7 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
             <PaymentSuccessfull handleClose={handleClose} isData={isData} />
           </Box>
         </Fade>
-      </Modal>
+      </Modal> */}
       <div className="payment-status-page">
         <div className="payment-status-container">
           {transactionID ? (

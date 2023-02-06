@@ -89,14 +89,14 @@ const Donation = ({ setopendashboard }) => {
   const [loading, setLoading] = useState(false);
   const [rowData, setrowData] = useState('');
   const [open4, setOpen4] = useState(false);
+  const [datefrom, setdatefrom] = useState('');
+  const [dateto, setdateto] = useState('');
+  const [voucherfrom, setvoucherfrom] = useState('');
+  const [voucherto, setvoucherto] = useState('');
 
   console.log('local data is', rowData);
   const handleOpen4 = () => {
     setOpen4(true);
-    // getall_donation();
-    // setTimeout(() => {
-    //   navigation('/reciept');
-    // }, 3000);
   };
   const handleClose4 = () => setOpen4(false);
   const handleTabChange = (event, newValue) => {
@@ -221,6 +221,7 @@ const Donation = ({ setopendashboard }) => {
       });
     }
   };
+
   const get_donation_tyeps = () => {
     try {
       Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
@@ -240,7 +241,7 @@ const Donation = ({ setopendashboard }) => {
 
   const filterdata = () => {
     serverInstance(
-      `user/search-donation?name=${name}&type=${typedonation}&date=${date}&phone=${phone}',
+      `user/searchAllDonation?type=${2}&fromDate=${datefrom}&toDate=${dateto}&fromVoucher${voucherfrom}&toVoucher${voucherto}',
       'get`,
     ).then((res) => {
       console.log('dilter data is', res);
@@ -416,19 +417,51 @@ const Donation = ({ setopendashboard }) => {
             <div className="search-inner-div-reports">
               <div className="Center_main_dic_filetr">
                 <label>From Date</label>
-                <input type="date" placeholder="From" />
+                <input
+                  type="date"
+                  placeholder="From"
+                  value={datefrom}
+                  name="datefrom"
+                  onChange={(e) => {
+                    setdatefrom(e.target.value);
+                  }}
+                />
               </div>
               <div className="Center_main_dic_filetr">
                 <label>To Date</label>
-                <input type="date" placeholder="From" />
+                <input
+                  type="date"
+                  placeholder="From"
+                  value={dateto}
+                  name="dateto"
+                  onChange={(e) => {
+                    setdateto(e.target.value);
+                  }}
+                />
               </div>
               <div className="Center_main_dic_filetr">
                 <label>From Voucher</label>
-                <input type="text" placeholder="From" />
+                <input
+                  type="text"
+                  placeholder="From"
+                  value={voucherfrom}
+                  name="voucherfrom"
+                  onChange={(e) => {
+                    setvoucherfrom(e.target.value);
+                  }}
+                />
               </div>
               <div className="Center_main_dic_filetr">
                 <label>To Voucher</label>
-                <input type="text" placeholder="From" />
+                <input
+                  type="text"
+                  placeholder="From"
+                  value={voucherto}
+                  name="voucherto"
+                  onChange={(e) => {
+                    setvoucherto(e.target.value);
+                  }}
+                />
               </div>
 
               <div className="Center_main_dic_filetr">

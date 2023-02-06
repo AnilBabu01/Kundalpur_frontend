@@ -265,7 +265,8 @@ function Donation({ setshowreciept, paymentId }) {
       }).then((res) => {
         if (res.status === true) {
           window.location.href =
-            'http://localhost:3003/about?order_id=' + res.data.id;
+            'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
+            res.data.id;
           // handleOpen();
           // sendsms();
         } else {

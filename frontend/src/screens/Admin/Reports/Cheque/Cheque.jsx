@@ -138,7 +138,7 @@ const Cheque = ({ setopendashboard }) => {
         'Receipt No': item?.RECEIPT_NO,
         Name: item?.NAME,
         'Phone No': item?.MobileNo,
-        Name: item.NAME,
+
         Address: item?.ADDRESS,
         'Head/Item': item?.TYPE,
         Amount: item?.AMOUNT,

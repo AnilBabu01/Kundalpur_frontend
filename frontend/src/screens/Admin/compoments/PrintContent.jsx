@@ -592,12 +592,16 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   <span className="gray-text">
                     दिनांक - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                   </span>
-                  {isData?.DATE_OF_CHEQUE
-                    ? Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')
-                    : Moment(isData?.donation_date).format('DD-MM-YYYY')}
-
-                  {isData?.DATE_OF_CHEQUE &&
-                    Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')}
+                  {isData && isData?.elecItemDetails ? (
+                    <>
+                      {Moment(isData?.donation_date).format('DD-MM-YYYY')}:
+                      {moment(isData?.donation_time, 'HH:mm:ss').format(
+                        'hh:mm A',
+                      )}
+                    </>
+                  ) : (
+                    <>{Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')}-</>
+                  )}
                 </p>
                 <p className="common_margin_p">
                   <span className="gray-text">

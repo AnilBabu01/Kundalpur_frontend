@@ -8,6 +8,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Moment from 'moment-js';
 import moment from 'moment';
+import { serverInstance } from '../../../API/ServerInstance';
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
@@ -16,16 +17,6 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const navigation = useNavigate();
   const { user } = useSelector((state) => state.userReducer);
   console.log('data form', isData);
-  useEffect(() => {
-    setshowreciept(true);
-    setopendashboard(false);
-    if (location.state) {
-      setisData(location.state?.userdata);
-    }
-  }, []);
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
 
   function printDiv() {
     navigation('/admin-panel/reports/printcontent', {
@@ -62,6 +53,30 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
     return dateAndTime;
   };
 
+  const getonlinedonation = () => {
+    serverInstance('user/donation-list', 'get').then((res) => {
+      console.log(res);
+      try {
+        isData(res.donation);
+      } catch (error) {}
+    });
+  };
+
+  useEffect(() => {
+    setshowreciept(true);
+    setopendashboard(false);
+    if (location.state) {
+      setisData(location.state?.userdata);
+    }
+
+    if (!isData) {
+      getonlinedonation();
+    }
+  }, []);
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   return (
     <>
       <div>

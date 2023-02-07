@@ -67,7 +67,6 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
         setTransactionID(value);
         setpaymentId(value);
         get_all_donatiin();
-        handleOpen();
       }
     } else {
       setTransactionID(false);

@@ -49,3 +49,40 @@
   margin-left: 46%;
 
 }
+.center_search_client{
+  display: flex;
+  justify-content: space-between;
+}
+.donation-history-serah_btn_div
+{
+  display: flex;
+  justify-content: space-between;
+  width: 69%;
+  padding: 2rem;
+}
+
+.donation-history-serah_btn_div input{
+  height: 37px;
+  width: 195px;
+  padding-left: 6px;
+  border-radius: 5px;
+  border: 1px solid #e96d00;
+  /* border: 1px solid #05313C; */
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.donation-history-serah_btn_div input:focus{
+  outline: none;
+}
+
+.donation-history-serah_btn_div button{
+  border: none;
+  background-color: #e96d00;
+  color: white;
+  height: 42px;
+  border-radius: 5px;
+  width: 18%;
+  font-size: 18px;
+}
+
+

@@ -3,58 +3,54 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
-import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
+import EditIcon from '@mui/icons-material/Edit';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import EditIcon from '@mui/icons-material/Edit';
-import Box from '@mui/material/Box';
-import Moment from 'moment-js';
-import IconButton from '@mui/material/IconButton';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import PrintIcon from '@mui/icons-material/Print';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
+import Cancel from '../../compoments/Cancel';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import CancelIcon from '@mui/icons-material/Cancel';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Request from './Request';
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import './Donation.css';
-import ElectronicDonation from './ElectronicDonation/ElectronicDonation';
-import CashDonation from './CashDonation';
-import ItemDonation from './ItemDonation';
-import ChequeDonation from './ChequeDonation';
-import UnderlinedTab from './common/UnderlinedTab';
 import DownloadIcon from '@mui/icons-material/Download';
-import DonationSuccessfull from './DonationSuccessfull';
 import ClearIcon from '@mui/icons-material/Clear';
 import exportFromJSON from 'export-from-json';
+import Moment from 'moment-js';
+import CashDonation from '../../Donation/Donation/CashDonation';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
+import { ExportPdfmanul } from '../../compoments/ExportPdf';
+
 const style = {
   position: 'absolute',
-  top: '50%',
+  top: '40%',
   left: '50%',
-
   transform: 'translate(-50%, -50%)',
+  width: '30%',
   bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
-  borderRadius: '15px',
+  borderRadius: '5px',
 };
-const style2 = {
+
+const openupadtestyle = {
   position: 'absolute',
   top: '40%',
   left: '50%',
@@ -68,48 +64,46 @@ const style2 = {
 
 const donationColorTheme = {
   cash: '#48a828',
-  electronic: '#e96d00',
-  cheque: '#1C82AD',
-  item: '#d6cb00',
 };
 
-const Donation = ({ setopendashboard }) => {
-  const [isData, setisData] = React.useState([]);
+const HeadReport = ({ setopendashboard }) => {
+  const navigation = useNavigate();
+  const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [open1, setOpen1] = React.useState(false);
   const [showalert, setshowalert] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState('');
-  const [checkVoucher, setcheckVoucher] = useState(false);
-  const [msg, setmsg] = useState('');
-  const [open, setOpen] = React.useState(true);
-  const [open3, setOpen3] = React.useState(false);
-  const [tabValue, setTabValue] = React.useState(0);
-  const [userrole, setuserrole] = useState('');
+  const [updateData, setupdateData] = useState('');
+  const [openupdate, setopenupdate] = useState(false);
+  const [showUpdateBtn, setshowUpdateBtn] = useState(true);
+  const [phone, setphone] = useState('');
+  const [date, setdate] = useState('');
+  const [typedonation, settypedonation] = useState(2);
+  const [name, setname] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [rowData, setrowData] = useState('');
-  const [open4, setOpen4] = useState(false);
-  const [datefrom, setdatefrom] = useState('');
-  const [dateto, setdateto] = useState('');
-  const [voucherfrom, setvoucherfrom] = useState('');
-  const [voucherto, setvoucherto] = useState('');
+  const [updateId, setupdateId] = useState('');
+  const [showsearchData, setshowsearchData] = useState(false);
+  const [typeid, settypeid] = useState('');
+  const [userrole, setuserrole] = useState('');
+  console.log('aa', typeid);
+  const handleOpen = (id) => {
+    setupdateId(id);
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+  const upadteClose = () => {
+    setopenupdate(false);
+  };
+  const upadteOpen = (row) => {
+    setupdateData(row);
+    setopenupdate(true);
+  };
 
-  console.log('local data is', rowData);
-  const handleOpen4 = () => {
-    setOpen4(true);
-  };
-  const handleClose4 = () => setOpen4(false);
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
-  const handleOpen3 = () => setOpen3(true);
-  const handleClose3 = () => setOpen3(false);
-  console.log('check data ', isData);
   const handleClickOpen1 = (id) => {
     setOpen1(true);
     setdeleteId(id);
-    console.log(id);
   };
 
   const handleClose1 = () => {
@@ -126,9 +120,7 @@ const Donation = ({ setopendashboard }) => {
             'Eletronic donation delete successfully',
             'success',
           );
-          setshowalert(!showalert);
-
-          setOpen1(false);
+          setshowalert(true);
         } else {
           Swal('Error', 'somthing went  wrong', 'error');
         }
@@ -137,65 +129,12 @@ const Donation = ({ setopendashboard }) => {
     );
   };
 
-  const handleOpen = async () => {
-    const role = Number(sessionStorage.getItem('userrole'));
-    if (role === 3) {
-      serverInstance('user/check-voucher', 'get').then((res) => {
-        console.log('check couchcer not is ', res);
-
-        if (res.status === false) {
-          handleOpen3();
-        }
-        if (res.status === true) {
-          setOpen(true);
-        }
-      });
-    }
-    if (role === 1) {
-      setOpen(true);
-    }
-  };
-
-  const handleClose = React.useCallback(() => setOpen(false), []);
-
-  const navigation = useNavigate();
-
-  const ExportToExcel = () => {
-    const fileName = 'Report';
-    const exportType = 'xls';
-    var data = [];
-    isData.map((item, index) => {
-      data.push({
-        Date: Moment(item.donation_date).format('DD-MM-YYYY'),
-        'Receipt No': item?.ReceiptNo,
-        'Voucher No': item?.voucherNo,
-        'Phone No': item?.phoneNo,
-        name: item?.name,
-        Address: item?.address,
-        'Head/Item': item?.elecItemDetails.map((row) => {
-          return row.type;
-        }),
-        Amount: item?.elecItemDetails.reduce(
-          (n, { amount }) => parseFloat(n) + parseFloat(amount),
-          0,
-        ),
-        remark: item?.elecItemDetails.map((row) => {
-          return row.remark;
-        }),
-        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
-      });
-    });
-    exportFromJSON({ data, fileName, exportType });
-  };
-
   const getall_donation = () => {
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
-        setisData(res.data);
+        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
 
-        setrowData(isData.pop());
-
-        console.log(res);
+        setisData(filterData);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
@@ -223,6 +162,49 @@ const Donation = ({ setopendashboard }) => {
     }
   };
 
+  const ExportToExcel = () => {
+    const fileName = 'ManualCashReport';
+    const exportType = 'xls';
+    var data = [];
+    isData.map((item, index) => {
+      data.push({
+        Date: Moment(item.donation_date).format('DD-MM-YYYY'),
+        'Receipt No': item?.ReceiptNo,
+        'Voucher No': item?.voucherNo,
+        'Phone No': item?.phoneNo,
+        name: item?.name,
+        Address: item?.address,
+        'Head/Item': item?.elecItemDetails.map((row) => {
+          return row.type;
+        }),
+        Amount: item?.elecItemDetails.reduce(
+          (n, { amount }) => parseFloat(n) + parseFloat(amount),
+          0,
+        ),
+        remark: item?.elecItemDetails.map((row) => {
+          return row.remark;
+        }),
+        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
+      });
+    });
+    exportFromJSON({ data, fileName, exportType });
+  };
+
+  const filterdata = async () => {
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+    const res = await axios.get(
+      `${backendApiUrl}user/search-donation?name=${name}&type=${typeid}&date=${date}&phone=${phone}&modeOfDonation=${2}`,
+    );
+    console.log('filter data is', res);
+    if (res.data.status) {
+      setshowsearchData(!showsearchData);
+      setisData(res.data.data);
+    }
+  };
+
   const get_donation_tyeps = () => {
     try {
       Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
@@ -239,107 +221,15 @@ const Donation = ({ setopendashboard }) => {
       Swal.fire('Error!', error, 'error');
     }
   };
-
-  const filterdata = () => {
-    serverInstance(
-      `user/searchAllDonation?type=${2}&fromDate=${datefrom}&toDate=${dateto}&fromVoucher${voucherfrom}&toVoucher${voucherto}',
-      'get`,
-    ).then((res) => {
-      console.log('dilter data is', res);
-      if (res.data.status) {
-        setshowsearchData(!showsearchData);
-        setisData(res.data.data);
-      }
-    });
-  };
-
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
-
     get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
-
-    const role = Number(sessionStorage.getItem('userrole'));
-    if (role === 3) {
-      serverInstance('user/check-voucher', 'get').then((res) => {
-        console.log('check couchcer not is ', res);
-
-        if (res.status === false) {
-          handleOpen3();
-          setOpen(false);
-        }
-      });
-    }
-  }, [showalert, open]);
-
-  const tabs = React.useMemo(
-    () => [
-      {
-        label: 'Cash Donation',
-        component: (
-          <CashDonation
-            setshowalert={setshowalert}
-            handleClose={handleClose}
-            themeColor={donationColorTheme.cash}
-            handleOpen4={handleOpen4}
-            getall_donation={getall_donation}
-          />
-        ),
-      },
-      {
-        label: 'Electronic Donation',
-        component: (
-          <ElectronicDonation
-            setshowalert={setshowalert}
-            handleClose={handleClose}
-            themeColor={donationColorTheme.electronic}
-            handleOpen4={handleOpen4}
-          />
-        ),
-      },
-      {
-        label: 'Cheque Donation',
-        component: (
-          <ChequeDonation
-            setshowalert={setshowalert}
-            handleClose={handleClose}
-            themeColor={donationColorTheme.cheque}
-            handleOpen4={handleOpen4}
-          />
-        ),
-      },
-      {
-        label: 'Item Donation',
-        component: (
-          <ItemDonation
-            setshowalert={setshowalert}
-            handleClose={handleClose}
-            themeColor={donationColorTheme.item}
-            handleOpen4={handleOpen4}
-          />
-        ),
-      },
-    ],
-    [],
-  );
+  }, [showalert, openupdate, open]);
 
   return (
     <>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open4}
-        onClose={handleClose4}
-        closeAfterTransition
-      >
-        <Fade in={open4}>
-          <Box sx={style}>
-            <DonationSuccessfull handleClose={handleClose4} isData={rowData} />
-          </Box>
-        </Fade>
-      </Modal>
-
       <Dialog
         open={open1}
         onClose={handleClose1}
@@ -369,132 +259,85 @@ const Donation = ({ setopendashboard }) => {
         closeAfterTransition
       >
         <Fade in={open}>
-          <Box
-            sx={{
-              ...style,
-              width: {
-                xs: '90%',
-                sm: '70%',
-                md: '70%',
-              },
-            }}
-          >
-            <UnderlinedTab
-              tabs={tabs}
-              handleClose={handleClose}
-              themeColor={donationColorTheme}
-            />
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div1">
+                <h2>Cancel electronic donation </h2>
+                <CloseIcon onClick={() => handleClose()} />
+              </div>
+              <Cancel handleClose={handleClose} updateId={updateId} type={2} />
+            </div>
           </Box>
         </Fade>
       </Modal>
-
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        open={open3}
-        onClose={handleClose3}
+        open={openupdate}
+        onClose={upadteClose}
         closeAfterTransition
       >
-        <Fade in={open3}>
-          <Box sx={style2}>
-            <div>
-              <div className="add-div-close-div1">
-                <h2 style={{ textAlign: 'center', marginLeft: '24%' }}>
-                  Request Vouchers
-                </h2>
-                <CloseIcon onClick={() => handleClose3()} />
-              </div>
-              <Request handleClose={handleClose3} />
-            </div>
+        <Fade in={openupdate}>
+          <Box
+            sx={{
+              ...openupadtestyle,
+              width: {
+                xs: '90%',
+                sm: '70%',
+                md: '60%',
+              },
+            }}
+          >
+            <CashDonation
+              handleClose={upadteClose}
+              themeColor={donationColorTheme.cash}
+              updateData={updateData}
+              showUpdateBtn={showUpdateBtn}
+            />
           </Box>
         </Fade>
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div
-            className="search-header-div-center"
-            style={{ paddingLeft: '1rem' }}
-          >
-            <div className="search-inner-div-reports">
-              <div className="Center_main_dic_filetr">
-                <label>From Date</label>
-                <input
-                  type="date"
-                  placeholder="From"
-                  value={datefrom}
-                  name="datefrom"
-                  onChange={(e) => {
-                    setdatefrom(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="Center_main_dic_filetr">
-                <label>To Date</label>
-                <input
-                  type="date"
-                  placeholder="From"
-                  value={dateto}
-                  name="dateto"
-                  onChange={(e) => {
-                    setdateto(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="Center_main_dic_filetr">
-                <label>From Voucher</label>
+          <div className="main_center_header10">
+            <h2 className="Cheque_text">Head Donation Report</h2>
+            <div className="search-header">
+              <div className="search-inner-div-reports">
                 <input
                   type="text"
-                  placeholder="From"
-                  value={voucherfrom}
-                  name="voucherfrom"
-                  onChange={(e) => {
-                    setvoucherfrom(e.target.value);
-                  }}
+                  placeholder="Name"
+                  value={name}
+                  name="name"
+                  onChange={(e) => setname(e.target.value)}
                 />
-              </div>
-              <div className="Center_main_dic_filetr">
-                <label>To Voucher</label>
                 <input
                   type="text"
-                  placeholder="From"
-                  value={voucherto}
-                  name="voucherto"
-                  onChange={(e) => {
-                    setvoucherto(e.target.value);
-                  }}
+                  placeholder="Phone No"
+                  value={phone}
+                  name="phone"
+                  onChange={(e) => setphone(e.target.value)}
                 />
-              </div>
 
-              <div className="Center_main_dic_filetr">
-                <label>Head/Item</label>
-                <select name="cars" id="cars">
+                <input type="date" placeholder="Date" />
+                <select
+                  name="cars"
+                  id="cars"
+                  onChange={(e) => settypeid(e.target.value)}
+                >
                   <option>Select option</option>
-                  {/* {donationTypes.map((item, idx) => {
+                  {donationTypes.map((item, idx) => {
                     return <option value={item.id}>{item.type_hi}</option>;
-                  })} */}
+                  })}
                 </select>
-              </div>
-
-              <div className="Center_main_dic_filetr">
-                <label>&nbsp;</label>
                 <button onClick={() => filterdata()}>Search</button>
-              </div>
-              <div className="Center_main_dic_filetr">
-                <label>&nbsp;</label>
                 <button onClick={() => getall_donation()}>Reset</button>
+                <SimCardAlertIcon onClick={() => ExportToExcel()} />
+                <PictureAsPdfIcon
+                  onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+                />
               </div>
-              <div className="Center_main_dic_filetr">
-                <label>&nbsp;</label>
-                <button onClick={() => handleOpen()}>+Add</button>
-              </div>
+              <div></div>
             </div>
-          </div>
-          <div className="search-header-print">
-            <SimCardAlertIcon onClick={() => ExportToExcel()} />
-            &nbsp;&nbsp;
-            <PictureAsPdfIcon
-              onClick={() => ExportPdfmanul(isData, 'Report')}
-            />
           </div>
 
           <div className="table-div-maain">
@@ -506,7 +349,6 @@ const Donation = ({ setopendashboard }) => {
                 <TableRow>
                   <TableCell>Date</TableCell>
                   <TableCell>ReceiptNo</TableCell>
-
                   <TableCell>VoucherNo</TableCell>
                   <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
@@ -533,7 +375,6 @@ const Donation = ({ setopendashboard }) => {
                     placeholder="Search Receipt"
                   />
                 </TableCell>
-
                 <TableCell>
                   <input
                     className="cuolms_search"
@@ -584,7 +425,6 @@ const Donation = ({ setopendashboard }) => {
                     })}
                   </select>
                 </TableCell>
-
                 <TableCell>
                   <input
                     className="cuolms_search"
@@ -614,7 +454,6 @@ const Donation = ({ setopendashboard }) => {
                           {Moment(row.donation_date).format('DD/MM/YYYY')}
                         </TableCell>
                         <TableCell>{row.ReceiptNo}</TableCell>
-
                         <TableCell>{row.voucherNo}</TableCell>
                         <TableCell>{row.phoneNo}</TableCell>
                         <TableCell>{row.name}</TableCell>
@@ -651,9 +490,9 @@ const Donation = ({ setopendashboard }) => {
                               )
                             }
                           />
-                          {/* {userrole === 1 && (
+                          {userrole === 1 && (
                             <EditIcon onClick={() => upadteOpen(row)} />
-                          )} */}
+                          )}
 
                           <PrintIcon
                             onClick={() =>
@@ -673,9 +512,9 @@ const Donation = ({ setopendashboard }) => {
                           ) : (
                             <ClearIcon />
                           )}
-                          {/* {userrole === 1 && (
+                          {userrole === 1 && (
                             <CancelIcon onClick={() => handleOpen(row.id)} />
-                          )} */}
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -721,4 +560,4 @@ const Donation = ({ setopendashboard }) => {
   );
 };
 
-export default Donation;
+export default HeadReport;

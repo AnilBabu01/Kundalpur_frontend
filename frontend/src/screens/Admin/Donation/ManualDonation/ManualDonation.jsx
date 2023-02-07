@@ -33,10 +33,10 @@ import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import exportFromJSON from 'export-from-json';
 import './Donation.css';
-import ElectronicDonation from './ElectronicDonation/ElectronicDonation';
-import CashDonation from './CashDonation';
-import ItemDonation from './ItemDonation';
-import ChequeDonation from './ChequeDonation';
+import ElectronicDonation from '../ManualDonation/ElectronicDonationManual/ElectronicDonation';
+import CashDonation from './CashDonationManaul';
+import ItemDonation from './ItemDonationManual';
+import ChequeDonation from './ChequeDonationManual';
 import UnderlinedTab from './common/UnderlinedTab';
 import DownloadIcon from '@mui/icons-material/Download';
 import DonationSuccessfull from './DonationSuccessfull';
@@ -162,7 +162,7 @@ const ManualDonation = ({ setopendashboard }) => {
     serverInstance('admin/manual-donation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
-        setrowData(res.data.pop());
+        // setrowData(res.data.pop());
         console.log('this', typeof rowData);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
@@ -433,7 +433,7 @@ const ManualDonation = ({ setopendashboard }) => {
             </div>
             {/* <div></div> */}
           </div>
-          
+
           <div className="search-header-print">
             <SimCardAlertIcon onClick={() => ExportToExcel()} />
             &nbsp;&nbsp;
@@ -580,13 +580,13 @@ const ManualDonation = ({ setopendashboard }) => {
                           })}
                         </TableCell>
                         <TableCell>
-                          <RemoveRedEyeIcon
+                          {/* <RemoveRedEyeIcon
                             onClick={() =>
                               navigation(
                                 `/admin-panel/infoElectronic/${row.id}`,
                               )
                             }
-                          />
+                          /> */}
                           {/* {userrole === 1 && (
                             <EditIcon onClick={() => upadteOpen(row)} />
                           )} */}

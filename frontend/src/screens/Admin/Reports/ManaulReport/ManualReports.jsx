@@ -18,7 +18,7 @@ import Modal from '@mui/material/Modal';
 import PrintIcon from '@mui/icons-material/Print';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
-import Cancel from '../../compoments/Cancel';
+import Cancel from '../../compoments/Cancel1';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -30,15 +30,16 @@ import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DownloadIcon from '@mui/icons-material/Download';
 import ClearIcon from '@mui/icons-material/Clear';
-// import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
-import CashDonation from '../../Donation/Donation/CashDonation';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import exportFromJSON from 'export-from-json';
 import { ExportPdfmanul } from '../../compoments/ExportPdf';
-
+import UpdateCash from '../../Donation/ManualDonation/UpdateComponents/UpdateCash';
+import UpdateChe from '../../Donation/ManualDonation/UpdateComponents/UpdateChe';
+import UpdateElec from '../../Donation/ManualDonation/UpdateComponents/UpdateElec';
+import UpdateTtem from '../../Donation/ManualDonation/UpdateComponents/UpdateTtem';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -56,7 +57,7 @@ const openupadtestyle = {
   top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '30%',
+
   bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
@@ -137,7 +138,7 @@ const ManualReports = ({ setopendashboard }) => {
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
-      console.log(res);
+      console.log('all donation', res);
     });
   };
 
@@ -153,7 +154,11 @@ const ManualReports = ({ setopendashboard }) => {
   const printreceipt = (row) => {
     if (row.active === '0') {
     } else {
-      navigation('/reciept');
+      navigation('/manualreceipt', {
+        state: {
+          userdata: row,
+        },
+      });
     }
   };
 
@@ -226,27 +231,6 @@ const ManualReports = ({ setopendashboard }) => {
 
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you want to delete'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -284,12 +268,46 @@ const ManualReports = ({ setopendashboard }) => {
               },
             }}
           >
-            <CashDonation
-              handleClose={upadteClose}
-              themeColor={donationColorTheme.cash}
-              updateData={updateData}
-              showUpdateBtn={showUpdateBtn}
-            />
+            {updateData?.modeOfDonation === '2' && (
+              <>
+                <UpdateCash
+                  handleClose={upadteClose}
+                  themeColor={donationColorTheme.cash}
+                  updateData={updateData}
+                  showUpdateBtn={showUpdateBtn}
+                />
+              </>
+            )}
+            {updateData?.modeOfDonation === '3' && (
+              <>
+                <UpdateChe
+                  handleClose={upadteClose}
+                  themeColor={donationColorTheme.cash}
+                  updateData={updateData}
+                  showUpdateBtn={showUpdateBtn}
+                />
+              </>
+            )}
+            {updateData?.modeOfDonation === '1' && (
+              <>
+                <UpdateElec
+                  handleClose={upadteClose}
+                  themeColor={donationColorTheme.cash}
+                  updateData={updateData}
+                  showUpdateBtn={showUpdateBtn}
+                />
+              </>
+            )}
+            {updateData?.modeOfDonation === '4' && (
+              <>
+                <UpdateTtem
+                  handleClose={upadteClose}
+                  themeColor={donationColorTheme.cash}
+                  updateData={updateData}
+                  showUpdateBtn={showUpdateBtn}
+                />
+              </>
+            )}
           </Box>
         </Fade>
       </Modal>
@@ -473,13 +491,13 @@ const ManualReports = ({ setopendashboard }) => {
                           })}
                         </TableCell>
                         <TableCell>
-                          <RemoveRedEyeIcon
+                          {/* <RemoveRedEyeIcon
                             onClick={() =>
                               navigation(
                                 `/admin-panel/infoElectronic/${row.id}`,
                               )
                             }
-                          />
+                          /> */}
                           {userrole === 1 && (
                             <EditIcon onClick={() => upadteOpen(row)} />
                           )}

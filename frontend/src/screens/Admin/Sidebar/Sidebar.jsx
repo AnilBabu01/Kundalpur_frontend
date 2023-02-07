@@ -236,7 +236,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       className={({ isActive }) =>
                         isActive ? 'active-nav-link' : 'nav-link'
                       }
-                      to="/admin-panel/reports/allreport"
+                      to="/admin-panel/head/report"
                     >
                       Head Donation Report
                     </NavLink>
@@ -246,7 +246,7 @@ const Sidebar = ({ setshowsidebar }) => {
                       className={({ isActive }) =>
                         isActive ? 'active-nav-link' : 'nav-link'
                       }
-                      to="/admin-panel/reports/allreport"
+                      to="/admin-panel/consolidated/report"
                     >
                       Consolidated Cash Report
                     </NavLink>

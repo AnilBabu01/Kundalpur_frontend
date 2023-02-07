@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { alpha } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -25,11 +25,11 @@ import Select from '@mui/material/Select';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import Moment from 'moment-js';
+import { typesOfDonation } from '../common/Data';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
 
-const CashDonation = ({
+const ElectronicDonation = ({
   setshowalert,
   handleClose,
   themeColor,
@@ -37,7 +37,6 @@ const CashDonation = ({
   showUpdateBtn,
   handleOpen4,
 }) => {
-  console.log('upadte data is', updateData);
   const theme = createTheme({
     typography: {
       fontFamily: 'Poppins',
@@ -48,17 +47,14 @@ const CashDonation = ({
       },
     },
   });
-  const navigation = useNavigate();
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
-  const [voucher, setvoucher] = useState('');
+
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
-  const [transactionNo, setTransactionNo] = useState('');
-  const [bankName, setBankName] = useState('');
+  const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [newMember, setNewMember] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
-  const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [donationItems, setDonationItems] = useState([
@@ -66,9 +62,23 @@ const CashDonation = ({
       type: '',
       amount: '',
       remark: '',
+      transactionNo: '',
+      BankName: '',
     },
   ]);
-  console.log('this is gender', genderp);
+
+  function addDonationItem() {
+    setDonationItems([
+      ...donationItems,
+      {
+        type: '',
+        amount: '',
+        remark: '',
+        transactionNo: '',
+        BankName: '',
+      },
+    ]);
+  }
   const genderoptiins = [
     {
       id: 2,
@@ -83,17 +93,6 @@ const CashDonation = ({
       gender: 'कु.',
     },
   ];
-
-  function addDonationItem() {
-    setDonationItems([
-      ...donationItems,
-      {
-        type: '',
-        amount: '',
-        remark: '',
-      },
-    ]);
-  }
   function removeDonationItem(item) {
     setDonationItems(
       donationItems.filter((donationItem) => donationItem !== item),
@@ -152,107 +151,99 @@ const CashDonation = ({
     }),
   );
 
-  const addCashDonation = async (e) => {
-    axios.defaults.headers.post[
-      'Authorization'
-    ] = `Bearer ${sessionStorage.getItem('token')}`;
-    axios.defaults.headers.put[
-      'Authorization'
-    ] = `Bearer ${sessionStorage.getItem('token')}`;
-    e.preventDefault();
-    if (showUpdateBtn) {
-      console.log('upadte');
-
-      if (
-        fullName &&
-        donationItems[0].amount &&
-        donationItems[0].type &&
-        mobileNo
-      ) {
-        const res = await axios.put(
-          `${backendApiUrl}admin/edit-manual-cash-donation`,
-          {
-            id: updateData?.id,
-            name: fullName,
-            phoneNo: mobileNo,
-            ReceiptNo: receiptNo,
-            address: address,
-            new_member: newMember,
-            modeOfDonation: 2,
-            donation_date: updateData?.donation_date,
-            donation_time: updateData?.donation_date,
-            donation_item: donationItems,
-          },
-        );
-
-        console.log('update', res);
-        if (res.data.status === true) {
-          // setshowalert(true);
-          // handleClose();
-          // setshowDownButton(true);
-        } else {
-          Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-        }
-      }
-    } else {
-      console.log('clicked');
-
-      if (
-        fullName &&
-        donationItems[0].amount &&
-        donationItems[0].type &&
-        mobileNo
-      ) {
-        const res = await axios.post(`${backendApiUrl}admin/manual-donation`, {
-          name: fullName,
-          gender: genderp,
-          phoneNo: mobileNo,
-          address: address,
-          ReceiptNo: receiptNo,
-          new_member: newMember,
-          modeOfDonation: 2,
-          donation_date: donationDate,
-          donation_time: donationTime,
-          donation_item: donationItems,
-        });
-
-        let totalamount = donationItems?.amount
-          ? donationItems?.amount
-          : donationItems &&
-            donationItems.reduce(
-              (n, { amount }) => parseFloat(n) + parseFloat(amount),
-              0,
-            );
-
-        console.log('added', res);
-        if (res.data.status === true) {
-          navigation('/manualreceipt', {
-            state: {
-              userdata: res.data.data.data,
-            },
-          });
-          handleClose();
-
-          sendsms(totalamount);
-        } else {
-          Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-        }
-      }
-    }
-  };
-
-  const sendsms = async (totalamount) => {
+  const addElectronicDonation = async (e) => {
     try {
+      e.preventDefault();
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
-      const res = await axios.post(`${backendApiUrl}user/sms`, {
-        mobile: mobileNo,
-        amount: totalamount,
-        url: '',
-      });
-      console.log('sent sms ', res);
-    } catch (error) {}
+      axios.defaults.headers.put[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+      if (showUpdateBtn) {
+        console.log('upadte');
+
+        if (
+          fullName &&
+          donationItems[0].amount &&
+          donationItems[0].type &&
+          mobileNo
+        ) {
+          const res = await axios.put(
+            `${backendApiUrl}admin/edit-manual-elec-donation`,
+            {
+              id: updateData?.id,
+              name: fullName,
+              phoneNo: mobileNo,
+              ReceiptNo: receiptNo,
+              address: address,
+              new_member: newMember,
+              modeOfDonation: 1,
+              donation_date: updateData?.donation_date,
+              donation_time: updateData?.donation_time,
+              donation_item: donationItems,
+            },
+          );
+
+          if (res.data.status === true) {
+            setshowalert(true);
+            handleClose();
+          } else {
+            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+          }
+        }
+      } else {
+        console.log('clicked');
+
+        if (
+          fullName &&
+          donationItems[0].amount &&
+          donationItems[0].type &&
+          mobileNo
+        ) {
+          const res = await axios.post(
+            `${backendApiUrl}admin/manual-donation`,
+            {
+              name: fullName,
+              gender: genderp,
+              phoneNo: mobileNo,
+              ReceiptNo: receiptNo,
+              address: address,
+              new_member: newMember,
+              modeOfDonation: 1,
+              donation_date: donationDate,
+              donation_time: donationTime,
+              donation_item: donationItems,
+            },
+          );
+
+          let totalamount = donationItems?.amount
+            ? donationItems?.amount
+            : donationItems &&
+              donationItems.reduce(
+                (n, { amount }) => parseFloat(n) + parseFloat(amount),
+                0,
+              );
+
+          if (res.data.status === true) {
+            setshowalert(true);
+            handleClose();
+            sendsms(totalamount);
+            handleOpen4();
+          }
+        }
+      }
+    } catch (error) {
+      Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+    }
+  };
+  const validate = (name, amount, phoneNo, donationtype) => {
+    const errors = {};
+    if (!name) {
+      errors.name = 'Please enter name';
+    }
+    return errors;
   };
 
   const getall_donatiions = () => {
@@ -267,40 +258,52 @@ const CashDonation = ({
         } else {
           Swal.fire('Error', 'somthing went  wrong', 'error');
         }
+
+        console.log('sss', res, item);
       });
     } catch (error) {
       Swal.fire('Error!', error, 'error');
     }
-
-    serverInstance('admin/voucher-get', 'get').then((res) => {
-      if (res.status) {
-        console.log('voucher data', res);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
-      }
-    });
   };
 
+  const sendsms = async (totalamount) => {
+    try {
+      axios.defaults.headers.post[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
+      const res = await axios.post(`${backendApiUrl}user/sms`, {
+        mobile: mobileNo,
+        amount: totalamount,
+        url: '',
+      });
+    } catch (error) {}
+  };
   useEffect(() => {
     getall_donatiions();
+    setDonationTypes(typesOfDonation);
     if (updateData) {
       setAddress(updateData?.address);
       setFullName(updateData?.name);
       setMobileNo(updateData?.phoneNo);
-      setDonationItems(updateData?.manualItemDetails);
+      setDonationItems(updateData?.elecItemDetails);
     }
   }, []);
-
   return (
     <Box>
       <ThemeProvider theme={theme}>
-        <form onSubmit={addCashDonation}>
-          <Typography variant="h6" color={'primary'} align="center">
+        <form onSubmit={addElectronicDonation}>
+          <Typography variant="h6" color={themeColor} align="center">
             {showUpdateBtn
-              ? 'Update  Manual Cash Donation'
-              : 'Add  Manual Cash Donation'}
+              ? 'Update Manual Electronic Donation'
+              : 'Add Manual Electronic Donation'}
           </Typography>
-          <Typography variant="body2" color="primary" align="right">
+          <Typography
+            variant="body2"
+            sx={{
+              color: themeColor,
+            }}
+            align="right"
+          >
             {currDate} / {currTime}
           </Typography>
 
@@ -342,7 +345,6 @@ const CashDonation = ({
               English
             </Button>
           </Box>
-
           <Grid container rowSpacing={2} columnSpacing={5}>
             <Grid item xs={6} md={3}>
               <CustomInputLabel htmlFor="receiptNo">
@@ -358,11 +360,11 @@ const CashDonation = ({
               />
             </Grid>
           </Grid>
-
           <Grid container rowSpacing={2} columnSpacing={5}>
             <Grid item xs={6} md={3}>
               <CustomInputLabel htmlFor="donation-date">Date</CustomInputLabel>
               <CustomInput
+                required
                 type="date"
                 id="donation-date"
                 value={donationDate.toLocaleDateString('en-CA')}
@@ -374,6 +376,7 @@ const CashDonation = ({
             <Grid item xs={6} md={3}>
               <CustomInputLabel htmlFor="donation-time">Time</CustomInputLabel>
               <CustomInput
+                required
                 type="time"
                 id="donation-time"
                 value={donationTime}
@@ -433,8 +436,8 @@ const CashDonation = ({
                 Full Name
               </CustomInputLabel>
               <CustomInput
-                id="full-name"
                 required
+                id="full-name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
               />
@@ -494,8 +497,38 @@ const CashDonation = ({
                       </IconButton>
                     </Box>
                   </TableCell>
-                  <TableCell align="center">Amount*</TableCell>
-                  <TableCell align="center">Remark</TableCell>
+                  <TableCell
+                    sx={{
+                      minWidth: 100,
+                    }}
+                    align="center"
+                  >
+                    Amount*
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      minWidth: 120,
+                    }}
+                    align="center"
+                  >
+                    Bank Name*
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      minWidth: 150,
+                    }}
+                    align="center"
+                  >
+                    Transaction No.
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      minWidth: 100,
+                    }}
+                    align="center"
+                  >
+                    Remark
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -560,6 +593,31 @@ const CashDonation = ({
                     </TableCell>
                     <TableCell align="center">
                       <CustomTableInput
+                        required
+                        value={item.BankName}
+                        onChange={(e) =>
+                          handleDonationItemUpdate(
+                            item,
+                            'BankName',
+                            e.target.value,
+                          )
+                        }
+                      />
+                    </TableCell>
+                    <TableCell align="center">
+                      <CustomTableInput
+                        value={item.transactionNo}
+                        onChange={(e) =>
+                          handleDonationItemUpdate(
+                            item,
+                            'transactionNo',
+                            e.target.value,
+                          )
+                        }
+                      />
+                    </TableCell>
+                    <TableCell align="center">
+                      <CustomTableInput
                         value={item.remark}
                         onChange={(e) =>
                           handleDonationItemUpdate(
@@ -589,7 +647,6 @@ const CashDonation = ({
                     </TableCell>
                   </TableRow>
                 ))}
-
                 <TotalAmountRow donationItems={donationItems} />
               </TableBody>
             </Table>
@@ -628,7 +685,6 @@ const CashDonation = ({
                 Save
               </Button>
             )}
-
             <Button
               sx={{
                 textTransform: 'none',
@@ -647,4 +703,5 @@ const CashDonation = ({
     </Box>
   );
 };
-export default CashDonation;
+
+export default ElectronicDonation;

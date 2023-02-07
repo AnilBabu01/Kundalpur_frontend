@@ -102,16 +102,16 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   </>
                 )}
                 {isData &&
-                isData.manualitemDetails &&
-                isData.manualitemDetails[0].itemType ? (
+                isData.manualItemDetails &&
+                isData.manualItemDetails[0].itemType ? (
                   <></>
                 ) : (
                   <>{isData && isData.modeOfDonation && <></>}</>
                 )}
 
                 {isData &&
-                  isData.manualitemDetails &&
-                  isData.manualitemDetails[0].itemType && (
+                  isData.manualItemDetails &&
+                  isData.manualItemDetails[0].itemType && (
                     <>
                       <p className="common_margin_p">
                         <span className="gray-text">
@@ -119,8 +119,8 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         </span>
                         {isData &&
-                          isData.manualitemDetails &&
-                          isData.manualitemDetails[0].type}
+                          isData.manualItemDetails &&
+                          isData.manualItemDetails[0].type}
                       </p>
 
                       <p className="common_margin_p">
@@ -129,16 +129,16 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
                         </span>
                         {isData &&
-                          isData.manualitemDetails &&
-                          isData.manualitemDetails[0].quantity}
+                          isData.manualItemDetails &&
+                          isData.manualItemDetails[0].quantity}
                       </p>
                       <p className="common_margin_p">
                         <span className="gray-text">
                           वजन -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                           &nbsp; &nbsp;&nbsp; &nbsp;
                         </span>
-                        {isData && isData.manualitemDetails[0].size} &nbsp;
-                        {isData && isData.manualitemDetails[0].unit}
+                        {isData && isData.manualItemDetails[0].size} &nbsp;
+                        {isData && isData.manualItemDetails[0].unit}
                       </p>
                     </>
                   )}
@@ -148,7 +148,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   <span className="gray-text">
                     दिनांक - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                   </span>
-                  {isData && isData?.manualitemDetails ? (
+                  {isData && isData?.manualItemDetails ? (
                     <>
                       {Moment(isData?.donation_date).format('DD-MM-YYYY')}:
                       {moment(isData?.donation_time, 'HH:mm:ss').format(
@@ -179,7 +179,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </span>
                       {isData && isData?.REMARK
                         ? isData?.REMARK
-                        : isData && isData.manualitemDetails[0].remark}
+                        : isData && isData.manualItemDetails[0].remark}
                     </p>
                   </>
                 )}
@@ -191,7 +191,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </span>
                       {isData && isData?.REMARK
                         ? isData?.REMARK
-                        : isData && isData.manualitemDetails[0].remark}
+                        : isData && isData.manualItemDetails[0].remark}
                     </p>
                   </>
                 )}
@@ -223,8 +223,8 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                 <div>
                   <div>
                     {isData &&
-                      isData.manualitemDetails &&
-                      isData.manualitemDetails[0].ChequeNo && (
+                      isData.manualItemDetails &&
+                      isData.manualItemDetails[0].ChequeNo && (
                         <>
                           <p className="common_margin_p">
                             <span className="gray-text">
@@ -234,13 +234,13 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                             {isData && isData?.TYPE
                               ? isData?.TYPE
                               : isData &&
-                                isData.manualitemDetails &&
-                                isData.manualitemDetails[0].BankName}
+                                isData.manualItemDetails &&
+                                isData.manualItemDetails[0].BankName}
                             {isData && isData?.TYPE
                               ? isData?.TYPE
                               : isData &&
-                                isData.manualitemDetails &&
-                                isData.manualitemDetails[0].ChequeNo}
+                                isData.manualItemDetails &&
+                                isData.manualItemDetails[0].ChequeNo}
                           </p>
                         </>
                       )}
@@ -250,8 +250,8 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                 <div>
                   {isData &&
                     isData.modeOfDonation === '1' &&
-                    isData.manualitemDetails &&
-                    isData.manualitemDetails[0].BankName && (
+                    isData.manualItemDetails &&
+                    isData.manualItemDetails[0].BankName && (
                       <>
                         <p className="common_margin_p">
                           <span className="gray-text">
@@ -261,20 +261,20 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           {isData && isData?.TYPE
                             ? isData?.TYPE
                             : isData &&
-                              isData.manualitemDetails &&
-                              isData.manualitemDetails[0].BankName}
+                              isData.manualItemDetails &&
+                              isData.manualItemDetails[0].BankName}
                         </p>
                       </>
                     )}
                 </div>
                 {isData &&
-                  isData.manualitemDetails &&
-                  isData.manualitemDetails[0].itemType && (
+                  isData.manualItemDetails &&
+                  isData.manualItemDetails[0].itemType && (
                     <p className="common_margin_p">
                       <span className="gray-text">सामग्री का नाम -</span>
                       {isData &&
-                        isData.manualitemDetails &&
-                        isData.manualitemDetails[0].itemType}
+                        isData.manualItemDetails &&
+                        isData.manualItemDetails[0].itemType}
                     </p>
                   )}
 
@@ -286,7 +286,8 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </span>
                       {/* {isData && isData?.TYPE
                         ? isData?.TYPE
-                        : isData && isData.manualitemDetails
+                        : isData && isData.manualItemDetails
+
 
 
 
@@ -310,15 +311,15 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               ) : (
                 <>
                   <div className="div_center_text_is">
-                    {isData && isData.manualitemDetails && (
+                    {isData && isData.manualItemDetails && (
                       <>
                         <div className="gray-text_div">
                           <p>दान का मद -</p>
                         </div>
                         <div className="wrap_div_child_div">
                           {isData &&
-                            isData.manualitemDetails &&
-                            isData.manualitemDetails.map((item) => {
+                            isData.manualItemDetails &&
+                            isData.manualItemDetails.map((item) => {
                               return (
                                 <p className="common_margin_p">
                                   {' '}
@@ -340,7 +341,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       {isData && isData?.AMOUNT
                         ? isData?.AMOUNT
                         : isData &&
-                          isData.manualitemDetails.reduce(
+                          isData.manualItemDetails.reduce(
                             (n, { amount }) =>
                               parseFloat(n) + parseFloat(amount),
                             0,
@@ -357,7 +358,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           </span>
                           {isData && isData?.REMARK
                             ? isData?.REMARK
-                            : isData && isData.manualitemDetails[0].remark}
+                            : isData && isData.manualItemDetails[0].remark}
                         </p>
                       </>
                     )}
@@ -371,7 +372,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           </span>
                           {isData && isData?.REMARK
                             ? isData?.REMARK
-                            : isData && isData.manualitemDetails[0].remark}
+                            : isData && isData.manualItemDetails[0].remark}
                         </p>
                       </>
                     )}
@@ -382,7 +383,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           <span className="gray-text">विवरण - &nbsp;</span>
                           {isData && isData?.REMARK
                             ? isData?.REMARK
-                            : isData && isData.manualitemDetails[0].remark}
+                            : isData && isData.manualItemDetails[0].remark}
                         </p>
                       </>
                     )}
@@ -393,7 +394,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           <span className="gray-text">विवरण - &nbsp;</span>
                           {isData && isData?.REMARK
                             ? isData?.REMARK
-                            : isData && isData.manualitemDetails[0].remark}
+                            : isData && isData.manualItemDetails[0].remark}
                         </p>
                       </>
                     )}
@@ -403,7 +404,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       दान राशि शब्दों में - &nbsp;
                     </span>
 
-                    {isData && isData.manualitemDetails ? (
+                    {isData && isData.manualItemDetails ? (
                       <>
                         {isData && isData?.AMOUNT
                           ? converter.toWords(
@@ -415,13 +416,13 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           : isData &&
                             converter.toWords(
                               isData &&
-                                isData.manualitemDetails.reduce(
+                                isData.manualItemDetails.reduce(
                                   (n, { amount }) =>
                                     parseFloat(n) + parseFloat(amount),
                                   0,
                                 )
                                 ? isData &&
-                                    isData.manualitemDetails.reduce(
+                                    isData.manualItemDetails.reduce(
                                       (n, { amount }) =>
                                         parseFloat(n) + parseFloat(amount),
                                       0,
@@ -551,16 +552,16 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   </>
                 )}
                 {isData &&
-                isData.manualitemDetails &&
-                isData.manualitemDetails[0].itemType ? (
+                isData.manualItemDetails &&
+                isData.manualItemDetails[0].itemType ? (
                   <></>
                 ) : (
                   <>{isData && isData.modeOfDonation && <></>}</>
                 )}
 
                 {isData &&
-                  isData.manualitemDetails &&
-                  isData.manualitemDetails[0].itemType && (
+                  isData.manualItemDetails &&
+                  isData.manualItemDetails[0].itemType && (
                     <>
                       <p className="common_margin_p">
                         <span className="gray-text">
@@ -568,8 +569,8 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         </span>
                         {isData &&
-                          isData.manualitemDetails &&
-                          isData.manualitemDetails[0].type}
+                          isData.manualItemDetails &&
+                          isData.manualItemDetails[0].type}
                       </p>
 
                       <p className="common_margin_p">
@@ -578,16 +579,16 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
                         </span>
                         {isData &&
-                          isData.manualitemDetails &&
-                          isData.manualitemDetails[0].quantity}
+                          isData.manualItemDetails &&
+                          isData.manualItemDetails[0].quantity}
                       </p>
                       <p className="common_margin_p">
                         <span className="gray-text">
                           वजन -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                           &nbsp; &nbsp;&nbsp; &nbsp;
                         </span>
-                        {isData && isData.manualitemDetails[0].size} &nbsp;
-                        {isData && isData.manualitemDetails[0].unit}
+                        {isData && isData.manualItemDetails[0].size} &nbsp;
+                        {isData && isData.manualItemDetails[0].unit}
                       </p>
                     </>
                   )}
@@ -597,7 +598,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   <span className="gray-text">
                     दिनांक - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                   </span>
-                  {isData && isData?.manualitemDetails ? (
+                  {isData && isData?.manualItemDetails ? (
                     <>
                       {Moment(isData?.donation_date).format('DD-MM-YYYY')}:
                       {moment(isData?.donation_time, 'HH:mm:ss').format(
@@ -628,7 +629,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </span>
                       {isData && isData?.REMARK
                         ? isData?.REMARK
-                        : isData && isData.manualitemDetails[0].remark}
+                        : isData && isData.manualItemDetails[0].remark}
                     </p>
                   </>
                 )}
@@ -640,7 +641,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </span>
                       {isData && isData?.REMARK
                         ? isData?.REMARK
-                        : isData && isData.manualitemDetails[0].remark}
+                        : isData && isData.manualItemDetails[0].remark}
                     </p>
                   </>
                 )}
@@ -672,8 +673,8 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                 <div>
                   <div>
                     {isData &&
-                      isData.manualitemDetails &&
-                      isData.manualitemDetails[0].ChequeNo && (
+                      isData.manualItemDetails &&
+                      isData.manualItemDetails[0].ChequeNo && (
                         <>
                           <p className="common_margin_p">
                             <span className="gray-text">
@@ -683,13 +684,13 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                             {isData && isData?.TYPE
                               ? isData?.TYPE
                               : isData &&
-                                isData.manualitemDetails &&
-                                isData.manualitemDetails[0].BankName}
+                                isData.manualItemDetails &&
+                                isData.manualItemDetails[0].BankName}
                             {isData && isData?.TYPE
                               ? isData?.TYPE
                               : isData &&
-                                isData.manualitemDetails &&
-                                isData.manualitemDetails[0].ChequeNo}
+                                isData.manualItemDetails &&
+                                isData.manualItemDetails[0].ChequeNo}
                           </p>
                         </>
                       )}
@@ -699,8 +700,8 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                 <div>
                   {isData &&
                     isData.modeOfDonation === '1' &&
-                    isData.manualitemDetails &&
-                    isData.manualitemDetails[0].BankName && (
+                    isData.manualItemDetails &&
+                    isData.manualItemDetails[0].BankName && (
                       <>
                         <p className="common_margin_p">
                           <span className="gray-text">
@@ -710,20 +711,20 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           {isData && isData?.TYPE
                             ? isData?.TYPE
                             : isData &&
-                              isData.manualitemDetails &&
-                              isData.manualitemDetails[0].BankName}
+                              isData.manualItemDetails &&
+                              isData.manualItemDetails[0].BankName}
                         </p>
                       </>
                     )}
                 </div>
                 {isData &&
-                  isData.manualitemDetails &&
-                  isData.manualitemDetails[0].itemType && (
+                  isData.manualItemDetails &&
+                  isData.manualItemDetails[0].itemType && (
                     <p className="common_margin_p">
                       <span className="gray-text">सामग्री का नाम -</span>
                       {isData &&
-                        isData.manualitemDetails &&
-                        isData.manualitemDetails[0].itemType}
+                        isData.manualItemDetails &&
+                        isData.manualItemDetails[0].itemType}
                     </p>
                   )}
 
@@ -735,7 +736,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </span>
                       {isData && isData?.TYPE
                         ? isData?.TYPE
-                        : isData && isData.manualitemDetails[0].remark}
+                        : isData && isData.manualItemDetails[0].remark}
                     </p>
                   </>
                 ) : (
@@ -754,15 +755,15 @@ function PrintContent({ setopendashboard, setshowreciept }) {
               ) : (
                 <>
                   <div className="div_center_text_is">
-                    {isData && isData.manualitemDetails && (
+                    {isData && isData.manualItemDetails && (
                       <>
                         <div className="gray-text_div">
                           <p>दान का मद -</p>
                         </div>
                         <div className="wrap_div_child_div">
                           {isData &&
-                            isData.manualitemDetails &&
-                            isData.manualitemDetails.map((item) => {
+                            isData.manualItemDetails &&
+                            isData.manualItemDetails.map((item) => {
                               return (
                                 <p className="common_margin_p">
                                   {' '}
@@ -784,7 +785,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       {isData && isData?.AMOUNT
                         ? isData?.AMOUNT
                         : isData &&
-                          isData.manualitemDetails.reduce(
+                          isData.manualItemDetails.reduce(
                             (n, { amount }) =>
                               parseFloat(n) + parseFloat(amount),
                             0,
@@ -801,7 +802,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           </span>
                           {isData && isData?.REMARK
                             ? isData?.REMARK
-                            : isData && isData.manualitemDetails[0].remark}
+                            : isData && isData.manualItemDetails[0].remark}
                         </p>
                       </>
                     )}
@@ -815,7 +816,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           </span>
                           {isData && isData?.REMARK
                             ? isData?.REMARK
-                            : isData && isData.manualitemDetails[0].remark}
+                            : isData && isData.manualItemDetails[0].remark}
                         </p>
                       </>
                     )}
@@ -826,7 +827,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           <span className="gray-text">विवरण - &nbsp;</span>
                           {isData && isData?.REMARK
                             ? isData?.REMARK
-                            : isData && isData.manualitemDetails[0].remark}
+                            : isData && isData.manualItemDetails[0].remark}
                         </p>
                       </>
                     )}
@@ -837,7 +838,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           <span className="gray-text">विवरण - &nbsp;</span>
                           {isData && isData?.REMARK
                             ? isData?.REMARK
-                            : isData && isData.manualitemDetails[0].remark}
+                            : isData && isData.manualItemDetails[0].remark}
                         </p>
                       </>
                     )}
@@ -847,7 +848,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       दान राशि शब्दों में - &nbsp;
                     </span>
 
-                    {isData && isData.manualitemDetails ? (
+                    {isData && isData.manualItemDetails ? (
                       <>
                         {isData && isData?.AMOUNT
                           ? converter.toWords(
@@ -859,13 +860,13 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           : isData &&
                             converter.toWords(
                               isData &&
-                                isData.manualitemDetails.reduce(
+                                isData.manualItemDetails.reduce(
                                   (n, { amount }) =>
                                     parseFloat(n) + parseFloat(amount),
                                   0,
                                 )
                                 ? isData &&
-                                    isData.manualitemDetails.reduce(
+                                    isData.manualItemDetails.reduce(
                                       (n, { amount }) =>
                                         parseFloat(n) + parseFloat(amount),
                                       0,

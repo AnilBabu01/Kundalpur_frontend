@@ -263,14 +263,14 @@ const EmailLogin = () => {
         {unchecked2 && (
           <>
             <div className="input-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">UserName</label>
               <input
                 className="remove_underline"
                 required
-                type="email"
+                type="test"
                 id="email"
                 name="email"
-                placeholder="enter email"
+                placeholder="enter username"
                 value={email}
                 onChange={handleInputChange}
               />

@@ -216,31 +216,10 @@ const ManualCheque = ({ setopendashboard }) => {
     setopendashboard(true);
     get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, [showalert, open]);
+  }, [showalert, open, openupdate]);
 
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you want to delete'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

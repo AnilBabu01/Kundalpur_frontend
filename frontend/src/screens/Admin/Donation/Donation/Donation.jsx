@@ -80,7 +80,6 @@ const Donation = ({ setopendashboard }) => {
   const [open1, setOpen1] = React.useState(false);
   const [showalert, setshowalert] = useState(false);
   const [deleteId, setdeleteId] = useState('');
-  const [checkVoucher, setcheckVoucher] = useState(false);
   const [msg, setmsg] = useState('');
   const [open, setOpen] = React.useState(true);
   const [open3, setOpen3] = React.useState(false);
@@ -95,7 +94,6 @@ const Donation = ({ setopendashboard }) => {
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
 
-  console.log('local data is', rowData);
   const handleOpen4 = () => {
     setOpen4(true);
   };
@@ -242,7 +240,7 @@ const Donation = ({ setopendashboard }) => {
 
   const filterdata = () => {
     serverInstance(
-      `user/searchAllDonation?type=${2}&fromDate=${datefrom}&toDate=${dateto}&fromVoucher${voucherfrom}&toVoucher${voucherto}',
+      `user/searchAllDonation?type=${2}&fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
       'get`,
     ).then((res) => {
       console.log('dilter data is', res);

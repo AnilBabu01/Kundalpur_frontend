@@ -218,7 +218,7 @@ const Electornic = ({ setopendashboard }) => {
     setopendashboard(true);
     get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, [showalert, open]);
+  }, [showalert, open, openupdate]);
 
   return (
     <>

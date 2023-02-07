@@ -176,7 +176,6 @@ const ElectronicDonation = ({
             id: updateData?.id,
             name: fullName,
             phoneNo: mobileNo,
-            prefix: 'ELEC',
             address: address,
             new_member: newMember,
             modeOfDonation: 1,
@@ -186,7 +185,6 @@ const ElectronicDonation = ({
           });
 
           if (res.data.status === true) {
-            setshowalert(true);
             handleClose();
           } else {
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');

@@ -195,25 +195,32 @@ const ItemDonation = ({
           donationItems[0].type &&
           mobileNo
         ) {
-          const res = await axios.put(`${backendApiUrl}user/add-elecDonation`, {
-            id: updateData?.id,
-            name: fullName,
-            phoneNo: mobileNo,
-            address: address,
-            prefix: 'ITEM',
-            new_member: newMember,
-            modeOfDonation: 4,
-            donation_date: updateData?.donation_date,
-            donation_time: updateData?.donation_time,
-            donation_item: modifiedDonationItems,
-          });
+          if (
+            fullName &&
+            donationItems[0].amount &&
+            donationItems[0].type &&
+            mobileNo
+          ) {
+            const res = await axios.put(
+              `${backendApiUrl}user/edit-item-donation`,
+              {
+                id: updateData?.id,
+                name: fullName,
+                phoneNo: mobileNo,
+                address: address,
+                new_member: newMember,
+                modeOfDonation: 1,
+                donation_date: updateData?.donation_date,
+                donation_time: updateData?.donation_time,
+                donation_item: donationItems,
+              },
+            );
 
-          if (res.data.status === true) {
-            setshowalert(true);
-            handleClose();
-            handleOpen4();
-          } else {
-            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+            if (res.data.status === true) {
+              handleClose();
+            } else {
+              Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+            }
           }
         }
       } else {
@@ -241,7 +248,6 @@ const ItemDonation = ({
               gender: genderp,
               phoneNo: mobileNo,
               address: address,
-              prefix: 'ITEM',
               new_member: newMember,
               modeOfDonation: 4,
               donation_date: donationDate,

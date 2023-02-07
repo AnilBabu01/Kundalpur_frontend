@@ -171,12 +171,11 @@ const CashDonation = ({
         donationItems[0].type &&
         mobileNo
       ) {
-        const res = await axios.put(`${backendApiUrl}user/add-elecDonation`, {
+        const res = await axios.put(`${backendApiUrl}user/edit-cash-donation`, {
           id: updateData?.id,
           name: fullName,
           phoneNo: mobileNo,
           address: address,
-
           new_member: newMember,
           modeOfDonation: 2,
           donation_date: updateData?.donation_date,
@@ -185,9 +184,7 @@ const CashDonation = ({
         });
 
         if (res.data.status === true) {
-          setshowalert(true);
           handleClose();
-          setshowDownButton(true);
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
         }

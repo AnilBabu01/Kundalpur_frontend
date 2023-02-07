@@ -303,28 +303,14 @@ const HeadReport = ({ setopendashboard }) => {
             <h2 className="Cheque_text">Head Donation Report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={name}
-                  name="name"
-                  onChange={(e) => setname(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Phone No"
-                  value={phone}
-                  name="phone"
-                  onChange={(e) => setphone(e.target.value)}
-                />
-
-                <input type="date" placeholder="Date" />
+                <input type="date" />
+                <input type="date" />
                 <select
                   name="cars"
                   id="cars"
                   onChange={(e) => settypeid(e.target.value)}
                 >
-                  <option>Select option</option>
+                  <option>Select user</option>
                   {donationTypes.map((item, idx) => {
                     return <option value={item.id}>{item.type_hi}</option>;
                   })}

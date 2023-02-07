@@ -172,21 +172,22 @@ const ChequeDonation = ({
           donationItems[0].type &&
           mobileNo
         ) {
-          const res = await axios.put(`${backendApiUrl}user/add-elecDonation`, {
-            id: updateData?.id,
-            name: fullName,
-            phoneNo: mobileNo,
-            address: address,
-            prefix: 'CHEQ',
-            new_member: newMember,
-            modeOfDonation: 3,
-            donation_date: updateData?.donation_date,
-            donation_time: updateData?.donation_time,
-            donation_item: donationItems,
-          });
+          const res = await axios.put(
+            `${backendApiUrl}user/edit-cheque-donation`,
+            {
+              id: updateData?.id,
+              name: fullName,
+              phoneNo: mobileNo,
+              address: address,
+              new_member: newMember,
+              modeOfDonation: 3,
+              donation_date: updateData?.donation_date,
+              donation_time: updateData?.donation_time,
+              donation_item: donationItems,
+            },
+          );
 
           if (res.data.status === true) {
-            setshowalert(true);
             handleClose();
           } else {
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');
@@ -226,7 +227,6 @@ const ChequeDonation = ({
               );
 
           if (res.data.status === true) {
-            setshowalert(true);
             handleClose();
             sendsms(totalamount);
             navigation('/reciept', {

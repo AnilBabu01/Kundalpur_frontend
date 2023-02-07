@@ -21,6 +21,8 @@ function MainRoutes({
   setHeaderFooter,
   paymentId,
   setpaymentId,
+  setonlineId,
+  onlineId,
 }) {
   return (
     <>
@@ -55,7 +57,11 @@ function MainRoutes({
           element={
             // route is protected
             <PrivateRoutes>
-              <Donation setshowreciept={setshowreciept} paymentId={paymentId} />
+              <Donation
+                setshowreciept={setshowreciept}
+                paymentId={paymentId}
+                setonlineId={setonlineId}
+              />
             </PrivateRoutes>
           }
         />
@@ -77,6 +83,7 @@ function MainRoutes({
               <Reciept
                 setopendashboard={setopendashboard}
                 setshowreciept={setshowreciept}
+                onlineId={onlineId}
               />
             </PrivateRoutes>
           }

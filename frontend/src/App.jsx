@@ -20,7 +20,7 @@ function App() {
   const [showreciept, setshowreciept] = useState(false);
   const [noHeaderFooter, setHeaderFooter] = useState(false);
   const [paymentId, setpaymentId] = useState('');
-
+  const [onlineId, setonlineId] = useState('');
   if (!sessionStorage.getItem('token')) {
   }
 
@@ -44,6 +44,8 @@ function App() {
           setHeaderFooter={setHeaderFooter}
           paymentId={paymentId}
           setpaymentId={setpaymentId}
+          onlineId={onlineId}
+          setonlineId={setonlineId}
         />
         <AdminRoutes
           setopendashboard={setopendashboard}

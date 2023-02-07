@@ -10,13 +10,13 @@ import Moment from 'moment-js';
 import moment from 'moment';
 import { serverInstance } from '../../../API/ServerInstance';
 const converter = new Converter(hiIN);
-const CashRecipt = ({ setopendashboard, setshowreciept }) => {
+const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   const location = useLocation();
   const componentRef = useRef();
   const [isData, setisData] = React.useState(null);
   const navigation = useNavigate();
   const { user } = useSelector((state) => state.userReducer);
-  console.log('data form', isData);
+  console.log('data form', isData, 'receipt', onlineId);
 
   function printDiv() {
     navigation('/admin-panel/reports/printcontent', {
@@ -57,7 +57,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
     serverInstance('user/donation-list', 'get').then((res) => {
       console.log(res);
       try {
-        isData(res.donation);
+        isData(res.donation.pop());
       } catch (error) {}
     });
   };
@@ -70,7 +70,12 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
     }
 
     if (!isData) {
-      getonlinedonation();
+      serverInstance('user/donation-list', 'get').then((res) => {
+        console.log(res);
+        try {
+          isData(res.donation.pop());
+        } catch (error) {}
+      });
     }
   }, []);
 

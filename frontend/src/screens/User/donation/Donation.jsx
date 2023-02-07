@@ -151,7 +151,7 @@ const style = {
   boxShadow: 24,
   p: 2,
 };
-function Donation({ setshowreciept, paymentId }) {
+function Donation({ setshowreciept, paymentId, setonlineId }) {
   const dispatch = useDispatch();
   const nagivate = useNavigate();
   const converter = new Converter(hiIN);
@@ -263,12 +263,14 @@ function Donation({ setshowreciept, paymentId }) {
         ADDRESS: donationdata?.address,
         MobileNo: user?.mobileNo,
       }).then((res) => {
+        console.log('rers of online', res);
         if (res.status === true) {
           window.location.href =
             'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
             res.data.id;
           // handleOpen();
           // sendsms();
+          setonlineId(res.data.id);
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
         }

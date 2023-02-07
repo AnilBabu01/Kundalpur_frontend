@@ -4,19 +4,22 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 function Cancel1({ handleClose, updateId, type }) {
   const [reasonmsg, setreasonmsg] = useState('');
-  console.log(reasonmsg);
+  console.log('update id', updateId);
   const handlesubmit = async () => {
     handleClose();
     axios.defaults.headers.post[
       'Authorization'
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-    const { data } = await axios.post(`${backendApiUrl}admin/change-elec `, {
-      id: updateId,
-      status: false,
-      rsn: reasonmsg,
-      type: type,
-    });
+    const { data } = await axios.post(
+      `${backendApiUrl}admin/change-manualDonation`,
+      {
+        id: updateId.id,
+        status: false,
+        rsn: reasonmsg,
+        type: updateId.modeOfDonation,
+      },
+    );
 
     console.log('cancel1', data);
     if (data.status) {

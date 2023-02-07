@@ -112,27 +112,9 @@ const ManualReports = ({ setopendashboard }) => {
     setOpen1(false);
   };
 
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, 'delete').then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire(
-            'Great!',
-            'Eletronic donation delete successfully',
-            'success',
-          );
-          setshowalert(true);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-        console.log(res);
-      },
-    );
-  };
-
   const getall_donation = () => {
     serverInstance('admin/manual-donation', 'get').then((res) => {
+      console.log(res);
       if (res.status) {
         setisData(res.data);
       } else {
@@ -521,7 +503,7 @@ const ManualReports = ({ setopendashboard }) => {
                             <ClearIcon />
                           )}
                           {userrole === 1 && (
-                            <CancelIcon onClick={() => handleOpen(row.id)} />
+                            <CancelIcon onClick={() => handleOpen(row)} />
                           )}
                         </TableCell>
                       </TableRow>

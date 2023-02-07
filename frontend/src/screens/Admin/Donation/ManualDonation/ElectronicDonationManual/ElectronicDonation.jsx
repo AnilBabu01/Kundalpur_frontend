@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { alpha } from '@mui/material/styles';
-
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -47,6 +47,7 @@ const ElectronicDonation = ({
       },
     },
   });
+  const navigation = useNavigate();
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
 
@@ -230,7 +231,11 @@ const ElectronicDonation = ({
             setshowalert(true);
             handleClose();
             sendsms(totalamount);
-            handleOpen4();
+            navigation('/manualreceipt', {
+              state: {
+                userdata: res.data.data.data,
+              },
+            });
           }
         }
       }

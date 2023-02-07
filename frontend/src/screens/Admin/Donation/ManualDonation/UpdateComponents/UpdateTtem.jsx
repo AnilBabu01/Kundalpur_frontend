@@ -179,104 +179,37 @@ const UpdateTtem = ({
     }),
   );
 
-  const addItemDonation = async (e) => {
+  const addElectronicDonation = async (e) => {
     try {
-      axios.defaults.headers.post[
-        'Authorization'
-      ] = `Bearer ${sessionStorage.getItem('token')}`;
+      e.preventDefault();
+
       axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
-      e.preventDefault();
 
-      if (showUpdateBtn) {
-        console.log('upadte');
+      console.log('upadte');
 
-        if (
-          fullName &&
-          donationItems[0].amount &&
-          donationItems[0].type &&
-          mobileNo
-        ) {
-          const res = await axios.put(
-            `${backendApiUrl}admin/edit-manual-item-donation`,
-            {
-              id: updateData?.id,
-              name: fullName,
-              phoneNo: mobileNo,
-              address: address,
-              ReceiptNo: receiptNo,
-              new_member: newMember,
-              modeOfDonation: 4,
-              donation_date: updateData?.donation_date,
-              donation_time: updateData?.donation_time,
-              donation_item: modifiedDonationItems,
-            },
-          );
+      const res = await axios.put(
+        `${backendApiUrl}user/edit-manual-item-donation`,
+        {
+          id: updateData?.id,
+          name: fullName,
+          phoneNo: mobileNo,
+          ReceiptNo: receiptNo,
+          address: address,
+          new_member: newMember,
+          modeOfDonation: 1,
+          donation_date: updateData?.donation_date,
+          donation_time: updateData?.donation_time,
+          donation_item: donationItems,
+        },
+      );
 
-          if (res.data.status === true) {
-            setshowalert(true);
-            handleClose();
-            navigation('/reciept', {
-              state: {
-                userdata: res.data.data.data,
-              },
-            });
-          } else {
-            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-          }
-        }
+      console.log('update Item', res.data.status);
+      if (res.data.status === true) {
+        handleClose();
       } else {
-        console.log('clicked');
-
-        if (
-          fullName &&
-          donationItems[0].itemType &&
-          donationItems[0].type &&
-          mobileNo
-        ) {
-          const modifiedDonationItems = donationItems.map((donationItem) => {
-            return {
-              ...donationItem,
-              amount:
-                Number(donationItem.quantity) *
-                Number(donationItem.approxValue),
-            };
-          });
-
-          const res = await axios.post(
-            `${backendApiUrl}admin/manual-donation`,
-            {
-              name: fullName,
-              gender: genderp,
-              phoneNo: mobileNo,
-              address: address,
-              ReceiptNo: receiptNo,
-              new_member: newMember,
-              modeOfDonation: 4,
-              donation_date: donationDate,
-              donation_time: donationTime,
-              donation_item: modifiedDonationItems,
-            },
-          );
-          let totalamount = modifiedDonationItems?.amount
-            ? modifiedDonationItems?.amount
-            : modifiedDonationItems &&
-              modifiedDonationItems.reduce(
-                (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                0,
-              );
-
-          console.log('item', res);
-          if (res.data.status === true) {
-            setshowalert(true);
-            handleClose();
-            sendsms(totalamount);
-            handleOpen4();
-          } else {
-            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-          }
-        }
+        Swal.fire('Error!', 'Somthing went wrong!!', 'error');
       }
     } catch (error) {
       Swal.fire('Error!', 'Somthing went wrong!!', 'error');
@@ -308,23 +241,12 @@ const UpdateTtem = ({
     }
   };
 
-  const sendsms = async (totalamount) => {
-    try {
-      axios.defaults.headers.post[
-        'Authorization'
-      ] = `Bearer ${sessionStorage.getItem('token')}`;
-      const res = await axios.post(`${backendApiUrl}user/sms`, {
-        mobile: mobileNo,
-        amount: totalamount,
-        url: '',
-      });
-    } catch (error) {}
-  };
   useEffect(() => {
     getall_donatiions();
     if (updateData) {
       setAddress(updateData?.address);
       setFullName(updateData?.name);
+      setReceiptNo(updateData?.ReceiptNo);
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.manualItemDetails);
     }
@@ -333,7 +255,7 @@ const UpdateTtem = ({
   return (
     <Box>
       <ThemeProvider theme={theme}>
-        <form onSubmit={addItemDonation}>
+        <form onSubmit={addElectronicDonation}>
           <Typography variant="h6" color={themeColor} align="center">
             {showUpdateBtn
               ? 'Upadte Manual Cheque Donation'

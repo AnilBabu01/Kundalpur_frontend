@@ -271,7 +271,11 @@ const ItemDonation = ({
             setshowalert(true);
             handleClose();
             sendsms(totalamount);
-            handleOpen4();
+            navigation('/manualreceipt', {
+              state: {
+                userdata: res.data.data.data,
+              },
+            });
           } else {
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');
           }

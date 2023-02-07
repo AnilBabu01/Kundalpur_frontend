@@ -170,7 +170,7 @@ const UpdateCommon = ({
         mobileNo
       ) {
         const res = await axios.put(
-          `${backendApiUrl}admin/edit-manual-cash-donation`,
+          `${backendApiUrl}user/edit-manual-cash-donation`,
           {
             id: updateData?.id,
             name: fullName,
@@ -185,30 +185,14 @@ const UpdateCommon = ({
           },
         );
 
-        console.log('update', res);
+        console.log('update', res.data);
         if (res.data.status === true) {
-          // setshowalert(true);
-          // handleClose();
-          // setshowDownButton(true);
+          handleClose();
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
         }
       }
     }
-  };
-
-  const sendsms = async (totalamount) => {
-    try {
-      axios.defaults.headers.post[
-        'Authorization'
-      ] = `Bearer ${sessionStorage.getItem('token')}`;
-      const res = await axios.post(`${backendApiUrl}user/sms`, {
-        mobile: mobileNo,
-        amount: totalamount,
-        url: '',
-      });
-      console.log('sent sms ', res);
-    } catch (error) {}
   };
 
   const getall_donatiions = () => {
@@ -243,6 +227,7 @@ const UpdateCommon = ({
       setAddress(updateData?.address);
       setFullName(updateData?.name);
       setMobileNo(updateData?.phoneNo);
+      setReceiptNo(updateData?.ReceiptNo);
       setDonationItems(updateData?.manualItemDetails);
     }
   }, []);

@@ -154,85 +154,33 @@ const UpdateElec = ({
   const addElectronicDonation = async (e) => {
     try {
       e.preventDefault();
-      axios.defaults.headers.post[
-        'Authorization'
-      ] = `Bearer ${sessionStorage.getItem('token')}`;
+
       axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-      if (showUpdateBtn) {
-        console.log('upadte');
+      console.log('upadte');
 
-        if (
-          fullName &&
-          donationItems[0].amount &&
-          donationItems[0].type &&
-          mobileNo
-        ) {
-          const res = await axios.put(
-            `${backendApiUrl}admin/edit-manual-elec-donation`,
-            {
-              id: updateData?.id,
-              name: fullName,
-              phoneNo: mobileNo,
-              ReceiptNo: receiptNo,
-              address: address,
-              new_member: newMember,
-              modeOfDonation: 1,
-              donation_date: updateData?.donation_date,
-              donation_time: updateData?.donation_time,
-              donation_item: donationItems,
-            },
-          );
+      const res = await axios.put(
+        `${backendApiUrl}user/edit-manual-elec-donation`,
+        {
+          id: updateData?.id,
+          name: fullName,
+          phoneNo: mobileNo,
+          ReceiptNo: receiptNo,
+          address: address,
+          new_member: newMember,
+          modeOfDonation: 1,
+          donation_date: updateData?.donation_date,
+          donation_time: updateData?.donation_time,
+          donation_item: donationItems,
+        },
+      );
 
-          if (res.data.status === true) {
-            setshowalert(true);
-            handleClose();
-          } else {
-            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-          }
-        }
+      if (res.data.status === true) {
+        handleClose();
       } else {
-        console.log('clicked');
-
-        if (
-          fullName &&
-          donationItems[0].amount &&
-          donationItems[0].type &&
-          mobileNo
-        ) {
-          const res = await axios.post(
-            `${backendApiUrl}admin/manual-donation`,
-            {
-              name: fullName,
-              gender: genderp,
-              phoneNo: mobileNo,
-              ReceiptNo: receiptNo,
-              address: address,
-              new_member: newMember,
-              modeOfDonation: 1,
-              donation_date: donationDate,
-              donation_time: donationTime,
-              donation_item: donationItems,
-            },
-          );
-
-          let totalamount = donationItems?.amount
-            ? donationItems?.amount
-            : donationItems &&
-              donationItems.reduce(
-                (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                0,
-              );
-
-          if (res.data.status === true) {
-            setshowalert(true);
-            handleClose();
-            sendsms(totalamount);
-            handleOpen4();
-          }
-        }
+        Swal.fire('Error!', 'Somthing went wrong!!', 'error');
       }
     } catch (error) {
       Swal.fire('Error!', 'Somthing went wrong!!', 'error');
@@ -285,6 +233,7 @@ const UpdateElec = ({
       setAddress(updateData?.address);
       setFullName(updateData?.name);
       setMobileNo(updateData?.phoneNo);
+      setReceiptNo(updateData?.ReceiptNo);
       setDonationItems(updateData?.manualItemDetails);
     }
   }, []);

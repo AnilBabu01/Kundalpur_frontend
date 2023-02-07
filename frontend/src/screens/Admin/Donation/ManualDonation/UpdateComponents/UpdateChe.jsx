@@ -172,7 +172,7 @@ const UpdateChe = ({
           mobileNo
         ) {
           const res = await axios.put(
-            `${backendApiUrl}admin/edit-manual-cheque-donation`,
+            `${backendApiUrl}user/edit-manual-cheque-donation`,
             {
               id: updateData?.id,
               name: fullName,
@@ -188,51 +188,7 @@ const UpdateChe = ({
           );
 
           if (res.data.status === true) {
-            setshowalert(true);
             handleClose();
-          } else {
-            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-          }
-        }
-      } else {
-        console.log('clicked');
-
-        if (
-          fullName &&
-          donationItems[0].amount &&
-          donationItems[0].type &&
-          mobileNo
-        ) {
-          const res = await axios.post(
-            `${backendApiUrl}admin/manual-donation`,
-            {
-              name: fullName,
-              gender: genderp,
-              phoneNo: mobileNo,
-              address: address,
-              ReceiptNo: receiptNo,
-              new_member: newMember,
-              modeOfDonation: 3,
-              donation_date: donationDate,
-              donation_time: donationTime,
-              donation_item: donationItems,
-            },
-          );
-
-          let totalamount = donationItems?.amount
-            ? donationItems?.amount
-            : donationItems &&
-              donationItems.reduce(
-                (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                0,
-              );
-
-          if (res.data.status === true) {
-            setshowalert(true);
-            handleClose();
-            sendsms(totalamount);
-            handleOpen4();
-            console.log('donationItems', donationItems);
           } else {
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');
           }
@@ -287,6 +243,7 @@ const UpdateChe = ({
       setAddress(updateData?.address);
       setFullName(updateData?.name);
       setMobileNo(updateData?.phoneNo);
+      setReceiptNo(updateData?.ReceiptNo);
       setDonationItems(updateData?.manualItemDetails);
     }
   }, []);

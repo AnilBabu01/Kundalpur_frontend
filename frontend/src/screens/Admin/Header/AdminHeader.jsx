@@ -25,6 +25,8 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { backendUrl } from '../../../config/config';
 import Logout from '@mui/icons-material/Logout';
 import Notification from './Notification/Notification';
+import UploadIcon from '@mui/icons-material/Upload';
+import Person2Icon from '@mui/icons-material/Person2';
 import './AdminHeader.css';
 const AdminHeader = () => {
   const navigate = useNavigate();
@@ -50,6 +52,7 @@ const AdminHeader = () => {
 
   const empName = sessionStorage.getItem('empName');
   const empRole = sessionStorage.getItem('empRole');
+
   console.log('employee', empName, empRole);
   const logout = () => {
     handleClose();
@@ -136,9 +139,15 @@ const AdminHeader = () => {
       >
         <MenuItem onClick={() => navigate('/changepassword')}>
           <ListItemIcon>
+            <UploadIcon fontSize="small" />
+          </ListItemIcon>
+          Upload signature
+        </MenuItem>
+        <MenuItem onClick={() => navigate('/changepassword')}>
+          <ListItemIcon>
             <LockOpenIcon fontSize="small" />
           </ListItemIcon>
-          Change Password
+          Change password
         </MenuItem>
 
         <Divider />

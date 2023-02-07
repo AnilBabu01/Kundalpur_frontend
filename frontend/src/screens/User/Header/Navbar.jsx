@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from "react";
-import style from "./Navbar.module.css";
-import { Box } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
-import { secondaryColor } from "../../../utils/colorVariables";
-import { NavLink, useNavigate } from "react-router-dom";
-import { backendUrl, backendApiUrl } from "../../../config/config";
-import { useLocation } from "react-router-dom";
-import CloseIcon from "@mui/icons-material/Close";
-import MenuIcon from "@mui/icons-material/Menu";
-import Logo from "../../../assets/logo1.jpeg";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import Logout from "@mui/icons-material/Logout";
-import { useSelector, useDispatch } from "react-redux";
-import { loadUser } from "../../../Redux/redux/action/AuthAction";
+import React, { useState, useEffect } from 'react';
+import style from './Navbar.module.css';
+import { Box } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import { secondaryColor } from '../../../utils/colorVariables';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { backendUrl, backendApiUrl } from '../../../config/config';
+import { useLocation } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
+import Logo from '../../../assets/logo1.jpeg';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import Logout from '@mui/icons-material/Logout';
+import { useSelector, useDispatch } from 'react-redux';
+import UploadIcon from '@mui/icons-material/Upload';
+import { loadUser } from '../../../Redux/redux/action/AuthAction';
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const [isMobile, setisMobile] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
-  const [profileimg, setprofileimg] = useState("");
+  const [profileimg, setprofileimg] = useState('');
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,21 +40,21 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const token = sessionStorage.getItem("token");
+  const token = sessionStorage.getItem('token');
   useEffect(() => {
     dispatch(loadUser());
   }, [isMobile, token, profileimg]);
 
   const logout = () => {
     handleClose();
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("userrole");
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userrole');
     setTimeout(() => {
       window.location.reload();
     }, 1000);
   };
 
-  let userrole = sessionStorage.getItem("userrole");
+  let userrole = sessionStorage.getItem('userrole');
   return (
     <>
       <Menu
@@ -65,43 +66,48 @@ const Navbar = () => {
         PaperProps={{
           elevation: 0,
           sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 1.5,
-            "& .MuiAvatar-root": {
+            '& .MuiAvatar-root': {
               width: 32,
               height: 32,
               ml: -0.5,
               mr: 1,
             },
-            "&:before": {
+            '&:before': {
               content: '""',
-              display: "block",
-              position: "absolute",
+              display: 'block',
+              position: 'absolute',
               top: 0,
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
           },
         }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => navigate("/profile")}>
+        <MenuItem onClick={() => navigate('/profile')}>
           <Avatar /> Profile
         </MenuItem>
-
-        <MenuItem onClick={() => navigate("/changepassword")}>
+        <MenuItem onClick={() => navigate('/profile')}>
+          <ListItemIcon>
+            <UploadIcon fontSize="small" />
+          </ListItemIcon>
+          Upload signature
+        </MenuItem>
+        <MenuItem onClick={() => navigate('/changepassword')}>
           <ListItemIcon>
             <LockOpenIcon fontSize="small" />
           </ListItemIcon>
           Change Password
         </MenuItem>
-        <MenuItem onClick={() => navigate("/donationhistory")}>
+        <MenuItem onClick={() => navigate('/donationhistory')}>
           <ListItemIcon>
             <VolunteerActivismIcon fontSize="small" />
           </ListItemIcon>
@@ -115,7 +121,7 @@ const Navbar = () => {
         </MenuItem>
         {userrole === 1 && (
           <>
-            <MenuItem onClick={() => navigate("/admin-panel/dashboard")}>
+            <MenuItem onClick={() => navigate('/admin-panel/dashboard')}>
               <ListItemIcon>
                 <DashboardIcon fontSize="small" />
               </ListItemIcon>
@@ -174,14 +180,14 @@ const Navbar = () => {
             </NavLink>
           </li>
 
-          {sessionStorage.getItem("token") ? (
+          {sessionStorage.getItem('token') ? (
             <li>
               <div className={style.profilemaindivheader}>
                 <Box
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
                   <Avatar
@@ -222,17 +228,17 @@ const Navbar = () => {
           )}
         </ul>
         <i
-          style={{ marginRight: "20px" }}
+          style={{ marginRight: '20px' }}
           onClick={() => setisMobile(!isMobile)}
           className={style.mobileMenuIcon}
         >
           {isMobile ? (
             <>
-              <CloseIcon style={{ height: "40px" }} className={style.burger} />
+              <CloseIcon style={{ height: '40px' }} className={style.burger} />
             </>
           ) : (
             <>
-              <MenuIcon style={{ height: "40px" }} className={style.burger} />
+              <MenuIcon style={{ height: '40px' }} className={style.burger} />
             </>
           )}
         </i>

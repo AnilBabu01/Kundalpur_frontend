@@ -86,7 +86,11 @@ const HeadReport = ({ setopendashboard }) => {
   const [updateId, setupdateId] = useState('');
   const [showsearchData, setshowsearchData] = useState(false);
   const [typeid, settypeid] = useState('');
+  const [empylist, setempylist] = useState('');
   const [userrole, setuserrole] = useState('');
+  const [empId, setempId] = useState('');
+  const [datefrom, setdatefrom] = useState('');
+  const [dateto, setdateto] = useState('');
   console.log('aa', typeid);
   const handleOpen = (id) => {
     setupdateId(id);
@@ -151,15 +155,14 @@ const HeadReport = ({ setopendashboard }) => {
     setPage(0);
   };
 
-  const printreceipt = (row) => {
-    if (row.active === '0') {
-    } else {
-      navigation('/reciept', {
-        state: {
-          userdata: row,
-        },
-      });
-    }
+  const getAllEmp = () => {
+    serverInstance('admin/add-employee', 'get').then((res) => {
+      if (res.status) {
+        setempylist(res.data);
+      } else {
+        Swal('Error', 'somthing went  wrong', 'error');
+      }
+    });
   };
 
   const ExportToExcel = () => {
@@ -224,96 +227,49 @@ const HeadReport = ({ setopendashboard }) => {
   useEffect(() => {
     getall_donation();
     setopendashboard(true);
+    getAllEmp();
     get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
   }, [showalert, openupdate, open]);
 
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you want to delete'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <div>
-              <div className="add-div-close-div1">
-                <h2>Cancel electronic donation </h2>
-                <CloseIcon onClick={() => handleClose()} />
-              </div>
-              <Cancel handleClose={handleClose} updateId={updateId} type={2} />
-            </div>
-          </Box>
-        </Fade>
-      </Modal>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={openupdate}
-        onClose={upadteClose}
-        closeAfterTransition
-      >
-        <Fade in={openupdate}>
-          <Box
-            sx={{
-              ...openupadtestyle,
-              width: {
-                xs: '90%',
-                sm: '70%',
-                md: '60%',
-              },
-            }}
-          >
-            <CashDonation
-              handleClose={upadteClose}
-              themeColor={donationColorTheme.cash}
-              updateData={updateData}
-              showUpdateBtn={showUpdateBtn}
-            />
-          </Box>
-        </Fade>
-      </Modal>
       <div className="dashboarddiv">
         <div>
           <div className="main_center_header10">
             <h2 className="Cheque_text">Head Donation Report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
-                <input type="date" />
-                <input type="date" />
+                <input
+                  type="date"
+                  placeholder="From"
+                  value={datefrom}
+                  name="datefrom"
+                  onChange={(e) => {
+                    setdatefrom(e.target.value);
+                  }}
+                />
+                <input
+                  type="date"
+                  placeholder="From"
+                  value={dateto}
+                  name="dateto"
+                  onChange={(e) => {
+                    setdateto(e.target.value);
+                  }}
+                />
                 <select
-                  name="cars"
-                  id="cars"
-                  onChange={(e) => settypeid(e.target.value)}
+                  value={empId}
+                  name="empId"
+                  onChange={(e) => setempId(e.target.value)}
                 >
-                  <option>Select user</option>
-                  {donationTypes.map((item, idx) => {
-                    return <option value={item.id}>{item.type_hi}</option>;
-                  })}
+                  <option>Select User</option>
+                  {empylist &&
+                    empylist.map((item, index) => (
+                      <option key={index} value={item.id}>
+                        {item.Username}
+                      </option>
+                    ))}
                 </select>
                 <button onClick={() => filterdata()}>Search</button>
                 <button onClick={() => getall_donation()}>Reset</button>
@@ -333,92 +289,16 @@ const HeadReport = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: '#FFEEE0' }}>
                 <TableRow>
-                  <TableCell>Date</TableCell>
-                  <TableCell>ReceiptNo</TableCell>
-                  <TableCell>VoucherNo</TableCell>
-                  <TableCell>Phone No</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Address</TableCell>
-                  <TableCell>Head/Item</TableCell>
-                  <TableCell>Amount</TableCell>
-                  <TableCell>User</TableCell>
-                  <TableCell>Remark</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell>Head Name</TableCell>
+                  <TableCell>Count </TableCell>
+                  <TableCell>Amount Cheque</TableCell>
+                  <TableCell>Amount Electronic</TableCell>
+                  <TableCell>Amount Item</TableCell>
+                  <TableCell>Amount Cash</TableCell>
+                  <TableCell>Total</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Date"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Receipt"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Voucher"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Phone"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    type="text"
-                    className="cuolms_search"
-                    placeholder="Name"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Address"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    type="text"
-                    className="cuolms_search"
-                    placeholder="Search Head"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Amount"
-                  />
-                </TableCell>
-                <TableCell>
-                  <select name="cars" id="cars" className="cuolms_search">
-                    <option>Select user</option>
-                    {donationTypes.map((item, idx) => {
-                      return <option value={item.id}>{item.type_hi}</option>;
-                    })}
-                  </select>
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Remark"
-                  />
-                </TableCell>
-                <TableCell>&nbsp;</TableCell>
                 {isData ? (
                   <>
                     {(rowsPerPage > 0
@@ -450,57 +330,6 @@ const HeadReport = ({ setopendashboard }) => {
                               <li style={{ listStyle: 'none' }}>{row.type}</li>
                             );
                           })}
-                        </TableCell>
-                        <TableCell>
-                          {row.elecItemDetails.reduce(
-                            (n, { amount }) =>
-                              parseFloat(n) + parseFloat(amount),
-                            0,
-                          )}
-                        </TableCell>
-                        <TableCell>&nbsp;</TableCell>
-                        <TableCell>
-                          {row.elecItemDetails.map((row) => {
-                            return (
-                              <li style={{ listStyle: 'none' }}>
-                                {row.remark}{' '}
-                              </li>
-                            );
-                          })}
-                        </TableCell>
-                        <TableCell>
-                          <RemoveRedEyeIcon
-                            onClick={() =>
-                              navigation(
-                                `/admin-panel/infoElectronic/${row.id}`,
-                              )
-                            }
-                          />
-                          {userrole === 1 && (
-                            <EditIcon onClick={() => upadteOpen(row)} />
-                          )}
-
-                          <PrintIcon
-                            onClick={() =>
-                              navigation('/admin-panel/reports/printcontent', {
-                                state: {
-                                  data: row,
-                                },
-                              })
-                            }
-                          />
-                          {row.isActive ? (
-                            <DownloadIcon
-                              onClick={() => {
-                                printreceipt(row);
-                              }}
-                            />
-                          ) : (
-                            <ClearIcon />
-                          )}
-                          {userrole === 1 && (
-                            <CancelIcon onClick={() => handleOpen(row.id)} />
-                          )}
                         </TableCell>
                       </TableRow>
                     ))}

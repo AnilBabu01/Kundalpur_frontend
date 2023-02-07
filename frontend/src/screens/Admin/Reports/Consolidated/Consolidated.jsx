@@ -86,8 +86,10 @@ const Consolidated = ({ setopendashboard }) => {
   const [updateId, setupdateId] = useState('');
   const [showsearchData, setshowsearchData] = useState(false);
   const [typeid, settypeid] = useState('');
+  const [empylist, setempylist] = useState('');
   const [userrole, setuserrole] = useState('');
-  console.log('aa', typeid);
+  const [empId, setempId] = useState('');
+  console.log('empId', empId);
   const handleOpen = (id) => {
     setupdateId(id);
     setOpen(true);
@@ -151,17 +153,6 @@ const Consolidated = ({ setopendashboard }) => {
     setPage(0);
   };
 
-  const printreceipt = (row) => {
-    if (row.active === '0') {
-    } else {
-      navigation('/reciept', {
-        state: {
-          userdata: row,
-        },
-      });
-    }
-  };
-
   const ExportToExcel = () => {
     const fileName = 'ManualCashReport';
     const exportType = 'xls';
@@ -221,7 +212,17 @@ const Consolidated = ({ setopendashboard }) => {
       Swal.fire('Error!', error, 'error');
     }
   };
+  const getAllEmp = () => {
+    serverInstance('admin/add-employee', 'get').then((res) => {
+      if (res.status) {
+        setempylist(res.data);
+      } else {
+        Swal('Error', 'somthing went  wrong', 'error');
+      }
+    });
+  };
   useEffect(() => {
+    getAllEmp();
     getall_donation();
     setopendashboard(true);
     get_donation_tyeps();
@@ -230,107 +231,37 @@ const Consolidated = ({ setopendashboard }) => {
 
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you want to delete'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <div>
-              <div className="add-div-close-div1">
-                <h2>Cancel electronic donation </h2>
-                <CloseIcon onClick={() => handleClose()} />
-              </div>
-              <Cancel handleClose={handleClose} updateId={updateId} type={2} />
-            </div>
-          </Box>
-        </Fade>
-      </Modal>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={openupdate}
-        onClose={upadteClose}
-        closeAfterTransition
-      >
-        <Fade in={openupdate}>
-          <Box
-            sx={{
-              ...openupadtestyle,
-              width: {
-                xs: '90%',
-                sm: '70%',
-                md: '60%',
-              },
-            }}
-          >
-            <CashDonation
-              handleClose={upadteClose}
-              themeColor={donationColorTheme.cash}
-              updateData={updateData}
-              showUpdateBtn={showUpdateBtn}
-            />
-          </Box>
-        </Fade>
-      </Modal>
       <div className="dashboarddiv">
         <div>
           <div className="main_center_header10">
             <h2 className="Cheque_text">Consolidated Cash Report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={name}
-                  name="name"
-                  onChange={(e) => setname(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Phone No"
-                  value={phone}
-                  name="phone"
-                  onChange={(e) => setphone(e.target.value)}
-                />
+                <input type="date" />
+                <input type="date" />
 
-                <input type="date" placeholder="Date" />
                 <select
                   name="cars"
                   id="cars"
                   onChange={(e) => settypeid(e.target.value)}
                 >
-                  <option>Select option</option>
-                  {donationTypes.map((item, idx) => {
-                    return <option value={item.id}>{item.type_hi}</option>;
-                  })}
+                  <option
+                    value={empId}
+                    name="empId"
+                    onChange={(e) => setempId(e.target.value)}
+                  >
+                    Select User
+                  </option>
+                  {empylist &&
+                    empylist.map((item, index) => (
+                      <option key={index} value={item.id}>
+                        {item.Username}
+                      </option>
+                    ))}
                 </select>
                 <button onClick={() => filterdata()}>Search</button>
                 <button onClick={() => getall_donation()}>Reset</button>
+
                 <SimCardAlertIcon onClick={() => ExportToExcel()} />
                 <PictureAsPdfIcon
                   onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
@@ -338,6 +269,7 @@ const Consolidated = ({ setopendashboard }) => {
               </div>
               <div></div>
             </div>
+            <h2 style={{ marginBottom: '1rem' }}>Donation Detials</h2>
           </div>
 
           <div className="table-div-maain">
@@ -347,92 +279,13 @@ const Consolidated = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: '#FFEEE0' }}>
                 <TableRow>
-                  <TableCell>Date</TableCell>
-                  <TableCell>ReceiptNo</TableCell>
-                  <TableCell>VoucherNo</TableCell>
-                  <TableCell>Phone No</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Address</TableCell>
-                  <TableCell>Head/Item</TableCell>
+                  <TableCell>S.No</TableCell>
+                  <TableCell>Date </TableCell>
                   <TableCell>Amount</TableCell>
                   <TableCell>User</TableCell>
-                  <TableCell>Remark</TableCell>
-                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Date"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Receipt"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Voucher"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Phone"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    type="text"
-                    className="cuolms_search"
-                    placeholder="Name"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Address"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    type="text"
-                    className="cuolms_search"
-                    placeholder="Search Head"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Amount"
-                  />
-                </TableCell>
-                <TableCell>
-                  <select name="cars" id="cars" className="cuolms_search">
-                    <option>Select user</option>
-                    {donationTypes.map((item, idx) => {
-                      return <option value={item.id}>{item.type_hi}</option>;
-                    })}
-                  </select>
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Remark"
-                  />
-                </TableCell>
-                <TableCell>&nbsp;</TableCell>
                 {isData ? (
                   <>
                     {(rowsPerPage > 0
@@ -456,66 +309,6 @@ const Consolidated = ({ setopendashboard }) => {
                         <TableCell>{row.ReceiptNo}</TableCell>
                         <TableCell>{row.voucherNo}</TableCell>
                         <TableCell>{row.phoneNo}</TableCell>
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell> {row.address}</TableCell>
-                        <TableCell>
-                          {row.elecItemDetails.map((row) => {
-                            return (
-                              <li style={{ listStyle: 'none' }}>{row.type}</li>
-                            );
-                          })}
-                        </TableCell>
-                        <TableCell>
-                          {row.elecItemDetails.reduce(
-                            (n, { amount }) =>
-                              parseFloat(n) + parseFloat(amount),
-                            0,
-                          )}
-                        </TableCell>
-                        <TableCell>&nbsp;</TableCell>
-                        <TableCell>
-                          {row.elecItemDetails.map((row) => {
-                            return (
-                              <li style={{ listStyle: 'none' }}>
-                                {row.remark}{' '}
-                              </li>
-                            );
-                          })}
-                        </TableCell>
-                        <TableCell>
-                          <RemoveRedEyeIcon
-                            onClick={() =>
-                              navigation(
-                                `/admin-panel/infoElectronic/${row.id}`,
-                              )
-                            }
-                          />
-                          {userrole === 1 && (
-                            <EditIcon onClick={() => upadteOpen(row)} />
-                          )}
-
-                          <PrintIcon
-                            onClick={() =>
-                              navigation('/admin-panel/reports/printcontent', {
-                                state: {
-                                  data: row,
-                                },
-                              })
-                            }
-                          />
-                          {row.isActive ? (
-                            <DownloadIcon
-                              onClick={() => {
-                                printreceipt(row);
-                              }}
-                            />
-                          ) : (
-                            <ClearIcon />
-                          )}
-                          {userrole === 1 && (
-                            <CancelIcon onClick={() => handleOpen(row.id)} />
-                          )}
-                        </TableCell>
                       </TableRow>
                     ))}
                   </>

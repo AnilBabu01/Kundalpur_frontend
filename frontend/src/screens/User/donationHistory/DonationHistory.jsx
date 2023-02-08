@@ -41,6 +41,8 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
   const { user } = useSelector((state) => state.userReducer);
+
+  console.log('sss', isrow);
   console.log(isrow);
   React.useEffect(() => {
     gettable();
@@ -50,15 +52,10 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
   }, []);
 
   const gettable = () => {
-    serverInstance('user/donation-list', 'get').then((res) => {
-      if (res.status === 404) {
-        Swal.fire('Error!', 'please authenticate', 'error');
-        return false;
-      }
-      try {
-        setisrow(res.donation);
-      } catch (error) {
-        Swal.fire('Error!', 'please authenticate', 'error');
+    serverInstance('admin/donation-list', 'get').then((res) => {
+      if (res.status) {
+        console.log(res);
+        setisrow(res.data);
       }
     });
   };

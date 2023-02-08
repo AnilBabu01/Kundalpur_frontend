@@ -156,7 +156,12 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       )}
                     </>
                   ) : (
-                    <>{Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')}-</>
+                    <>
+                      {Moment(isData?.DATE_OF_DAAN).format('DD-MM-YYYY')}:
+                      {moment(isData?.TIME_OF_DAAN, 'HH:mm:ss').format(
+                        'hh:mm A',
+                      )}
+                    </>
                   )}
                 </p>
                 <p className="common_margin_p">
@@ -600,7 +605,12 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       )}
                     </>
                   ) : (
-                    <>{Moment(isData?.DATE_OF_CHEQUE).format('DD-MM-YYYY')}-</>
+                    <>
+                      {Moment(isData?.DATE_OF_DAAN).format('DD-MM-YYYY')}:
+                      {moment(isData?.TIME_OF_DAAN, 'HH:mm:ss').format(
+                        'hh:mm A',
+                      )}
+                    </>
                   )}
                 </p>
                 <p className="common_margin_p">

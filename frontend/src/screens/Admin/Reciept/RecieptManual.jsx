@@ -74,8 +74,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
           <div className="main-head">
             <div className="main-head-container">
               <span className="head-sn">
-                <p>रसीद क्र:</p>
-                <h4>0001</h4>
+                <p>&nbsp;</p>
+                <h4>&nbsp;</h4>
               </span>
               <span className="head-name">
                 <h2>श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि</h2>

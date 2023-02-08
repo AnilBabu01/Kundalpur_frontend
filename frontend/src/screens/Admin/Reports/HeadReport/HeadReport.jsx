@@ -133,19 +133,6 @@ const HeadReport = ({ setopendashboard }) => {
     );
   };
 
-  const getall_donation = () => {
-    serverInstance('user/add-elecDonation', 'get').then((res) => {
-      if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
-
-        setisData(filterData);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
-      }
-      console.log(res);
-    });
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -199,9 +186,9 @@ const HeadReport = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/search-donation?name=${name}&type=${typeid}&date=${date}&phone=${phone}&modeOfDonation=${2}`,
+      `${backendApiUrl}admin/donation-report?user=${empId}&fromDate=${datefrom}&toDate=${dateto}`,
     );
-    console.log('filter data is', res);
+    console.log('filter data is now', res.data.data);
     if (res.data.status) {
       setshowsearchData(!showsearchData);
       setisData(res.data.data);
@@ -225,7 +212,6 @@ const HeadReport = ({ setopendashboard }) => {
     }
   };
   useEffect(() => {
-    getall_donation();
     setopendashboard(true);
     getAllEmp();
     get_donation_tyeps();
@@ -316,29 +302,30 @@ const HeadReport = ({ setopendashboard }) => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
+                        <TableCell>{row.type}</TableCell>
+                        <TableCell>{row.count}</TableCell>
                         <TableCell>
-                          {Moment(row.donation_date).format('DD/MM/YYYY')}
+                          {row.cheque_amount ? row.cheque_amount : '0'}
                         </TableCell>
-                        <TableCell>{row.ReceiptNo}</TableCell>
-                        <TableCell>{row.voucherNo}</TableCell>
-                        <TableCell>{row.phoneNo}</TableCell>
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell> {row.address}</TableCell>
                         <TableCell>
-                          {row.elecItemDetails.map((row) => {
-                            return (
-                              <li style={{ listStyle: 'none' }}>{row.type}</li>
-                            );
-                          })}
+                          {row.electric_amount ? row.electric_amount : '0'}
                         </TableCell>
+                        <TableCell>
+                          {row.item_amount ? row.item_amount : '0'}
+                        </TableCell>
+                        <TableCell>
+                          {' '}
+                          {row.cash_amount ? row.cash_amount : '0'}
+                        </TableCell>
+                        <TableCell>{row.total_amount}</TableCell>
                       </TableRow>
                     ))}
                   </>
                 ) : (
                   <>
-                    <TableCell colSpan={8} align="center">
+                    {/* <TableCell colSpan={8} align="center">
                       <CircularProgress />
-                    </TableCell>
+                    </TableCell> */}
                   </>
                 )}
               </TableBody>

@@ -216,6 +216,13 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
   const onChange = (e) => {
     setDonationdata({ ...donationdata, [e.target.name]: e.target.value });
   };
+
+  var today = new Date();
+
+  let h = today.getHours();
+  let m = today.getMinutes();
+  let s = today.getSeconds();
+  const currTime = `${h}:${m}:${s}`;
   const handlesubmit = async (e) => {
     setFormerror(validate(donationdata));
     formData.set(
@@ -236,6 +243,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
     formData.set('CHEQUE_NO', donationdata?.chequeno);
     formData.set('chequeImg', cheqing);
     formData.set('MobileNo', user?.mobileNo);
+    formData.set('TIME_OF_DAAN', currTime);
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
     }
@@ -245,7 +253,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
       return false;
     }
 
-    if (mode === 'Online' && amount) {
+    if (mode === 'Online' && amount && donationtype) {
       serverInstance('user/add-donation', 'POST', {
         NAME:
           donationdata.selected === 'yes1' && user.name
@@ -262,6 +270,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
         REMARK: donationdata?.Remark,
         ADDRESS: donationdata?.address,
         MobileNo: user?.mobileNo,
+        TIME_OF_DAAN: currTime,
       }).then((res) => {
         console.log('rers of online', res);
         if (res.status === true) {

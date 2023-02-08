@@ -3,10 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './PaymentStatusPage.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
+import { serverInstance } from '../../../API/ServerInstance';
 import Modal from '@mui/material/Modal';
 import Swal from 'sweetalert2';
 import Fade from '@mui/material/Fade';
-import { serverInstance } from '../../../API/ServerInstance';
+
 import {
   Box,
   Button,
@@ -45,32 +46,22 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
     setHeaderFooter(true);
   }, []);
 
-  const get_all_donatiin = () => {
-    serverInstance('user/donation-list', 'get').then((res) => {
-      if (res.status === 404) {
-        Swal.fire('Error!', 'please authenticate', 'error');
-        return false;
-      }
-      try {
-        setDonationDetails(res.donation[0]);
-        console.log(res.donation[0], res, 'this i');
-      } catch (error) {
-        Swal.fire('Error!', 'please authenticate', 'error');
-      }
-    });
-  };
-
   useEffect(() => {
     if (search) {
       let value = new URLSearchParams(search).get('t');
       if (value) {
         setTransactionID(value);
         setpaymentId(value);
-        get_all_donatiin();
       }
     } else {
       setTransactionID(false);
     }
+
+    serverInstance(`admin/donation-list`, 'get').then((res) => {
+      if (res.status) {
+        setDonationDetails(res.data[0]);
+      }
+    });
   }, [search]);
   return (
     <>

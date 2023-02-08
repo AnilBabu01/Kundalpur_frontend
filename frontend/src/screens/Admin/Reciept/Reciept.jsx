@@ -53,35 +53,22 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
     return dateAndTime;
   };
 
-  const getonlinedonation = () => {
-    serverInstance('user/donation-list', 'get').then((res) => {
-      console.log(res);
-      try {
-        isData(res.donation.pop());
-      } catch (error) {}
-    });
-  };
-
   useEffect(() => {
     setshowreciept(true);
     setopendashboard(false);
     if (location.state) {
       setisData(location.state?.userdata);
-    }
-
-    if (!isData) {
-      serverInstance('user/donation-list', 'get').then((res) => {
-        console.log(res);
-        try {
-          isData(res.donation.pop());
-        } catch (error) {}
-      });
+    } else {
+      serverInstance(`admin/donation-list?id=${onlineId}`, 'get').then(
+        (res) => {
+          if (res.status) {
+            setisData(res.data[0]);
+          }
+        },
+      );
     }
   }, []);
 
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
   return (
     <>
       <div>
@@ -94,8 +81,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
           <div className="main-head">
             <div className="main-head-container">
               <span className="head-sn">
-                <p>रसीद क्र:</p>
-                <h4>0001</h4>
+                <p>&nbsp;</p>
+                <h4>&nbsp;</h4>
               </span>
               <span className="head-name">
                 <h2>श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि</h2>
@@ -260,7 +247,12 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
                         )}
                       </>
                     ) : (
-                      <>{Moment(isData?.DATE_OF_DAAN).format('DD-MM-YYYY')}</>
+                      <>
+                        {Moment(isData?.DATE_OF_DAAN).format('DD-MM-YYYY')}:
+                        {moment(isData?.TIME_OF_DAAN, 'HH:mm:ss').format(
+                          'hh:mm A',
+                        )}
+                      </>
                     )}
                   </h2>
                 </span>

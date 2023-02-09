@@ -1,16 +1,18 @@
-import React from "react";
-import lefttop from "../../../assets/lefttop.jpeg";
-import innear from "../../../assets/innear.jpeg";
-import rightbottom from "../../../assets/rightbottom.jpeg";
-import check from "../../../assets/check.jpeg";
-import img3 from "../../../assets/img3.jpeg";
-import img1 from "../../../assets/img2.jpeg";
-import img4 from "../../../assets/img4.jpeg";
-import img2 from "../../../assets/img2.jpeg";
-import img5 from "../../../assets/img5.jpeg";
-import money from "../../../assets/money.jpeg";
-import "./Aboutus.css";
+import React from 'react';
+import lefttop from '../../../assets/lefttop.jpeg';
+import innear from '../../../assets/innear.jpeg';
+import rightbottom from '../../../assets/rightbottom.jpeg';
+import check from '../../../assets/check.jpeg';
+import img3 from '../../../assets/img3.jpeg';
+import img1 from '../../../assets/img2.jpeg';
+import img4 from '../../../assets/img4.jpeg';
+import img2 from '../../../assets/img2.jpeg';
+import img5 from '../../../assets/img5.jpeg';
+import money from '../../../assets/money.jpeg';
+import { useNavigate } from 'react-router-dom';
+import './Aboutus.css';
 function Aboutus() {
+  const navigation = useNavigate();
   return (
     <>
       <div className="supper-main-div1">
@@ -37,15 +39,15 @@ function Aboutus() {
               </div>
               <div className="check-main-div">
                 <div className="check-inear-div">
-                  <img src={check} alt="check" style={{ marginLeft: "10px" }} />
+                  <img src={check} alt="check" style={{ marginLeft: '10px' }} />
                   <p>~अपरिग्रह</p>
                 </div>
                 <div className="check-inear-div">
-                  <img src={check} alt="check" style={{ marginLeft: "10px" }} />
+                  <img src={check} alt="check" style={{ marginLeft: '10px' }} />
                   <p>~अचौर्य (अस्तेय) </p>
                 </div>
                 <div className="check-inear-div">
-                  <img src={check} alt="check" style={{ marginLeft: "10px" }} />
+                  <img src={check} alt="check" style={{ marginLeft: '10px' }} />
                   <p>~ ब्रह्मचर्य </p>
                 </div>
               </div>
@@ -91,7 +93,12 @@ function Aboutus() {
         <div className="donation-center">
           <div className="main-start-btn-div">
             <img src={money} alt="money" />
-            <button className="donation-now-btn">Donate Now</button>
+            <button
+              className="donation-now-btn"
+              onClick={() => navigation('/donation')}
+            >
+              Donate Now
+            </button>
           </div>
         </div>
       </div>

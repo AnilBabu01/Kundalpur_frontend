@@ -41,9 +41,9 @@ function PrintContent({ setopendashboard, setshowreciept }) {
   return (
     <>
       <div className="button_div_print_download">
-        <button onClick={() => navigation('/admin-panel/manualdonation')}>
+        {/* <button onClick={() => navigation('/admin-panel/manualdonation')}>
           Back
-        </button>
+        </button> */}
         <div style={{ width: '60%' }} />
       </div>
       <div className="super_main_divsss" ref={componentRef}>

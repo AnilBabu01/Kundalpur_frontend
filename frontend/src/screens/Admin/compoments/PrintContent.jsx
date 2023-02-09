@@ -41,7 +41,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
   return (
     <>
       <div className="button_div_print_download">
-        {isData && isData.elecItemDetails ? (
+        {/* {isData && isData.elecItemDetails ? (
           <>
             <button onClick={() => navigation('/admin-panel/donation')}>
               Back
@@ -49,9 +49,9 @@ function PrintContent({ setopendashboard, setshowreciept }) {
           </>
         ) : (
           <>
-            <button onClick={() => navigation('/donation')}>Back user</button>
+            <button onClick={() => navigation('/donation')}>Back</button>
           </>
-        )}
+        )} */}
         <div style={{ width: '60%' }} />
       </div>
       <div className="super_main_divsss" ref={componentRef}>

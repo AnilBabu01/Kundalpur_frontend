@@ -65,12 +65,12 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   return (
     <>
       <div>
-        <div className="button_div_print_download">
+        {/* <div className="button_div_print_download">
           <button onClick={() => navigation('/admin-panel/manualdonation')}>
             Back
           </button>
           <div />
-        </div>
+        </div> */}
         <div className="main-certificate" id="receipt" ref={componentRef}>
           <div className="topinfo-flex">
             <p>E-mail:badebaba.kundalpur@gmail.com</p>

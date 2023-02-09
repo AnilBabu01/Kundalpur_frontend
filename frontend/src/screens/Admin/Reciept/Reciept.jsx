@@ -56,7 +56,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
     <>
       <div>
         <div className="button_div_print_download">
-          {isData && isData.elecItemDetails ? (
+          {/* {isData && isData.elecItemDetails ? (
             <>
               <button onClick={() => navigation('/admin-panel/donation')}>
                 Back
@@ -64,9 +64,9 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
             </>
           ) : (
             <>
-              <button onClick={() => navigation('/donation')}>Back user</button>
+              <button onClick={() => navigation('/donation')}>Back</button>
             </>
-          )}
+          )} */}
 
           <div />
         </div>

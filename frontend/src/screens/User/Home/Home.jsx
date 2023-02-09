@@ -1,9 +1,11 @@
-import React from "react";
-import logo from "../../../assets/sideimg.jpeg";
-import money from "../../../assets/money.jpeg";
-import "./Home.css";
-import Aboutus from "../about/Aboutus";
+import React from 'react';
+import logo from '../../../assets/sideimg.jpeg';
+import money from '../../../assets/money.jpeg';
+import Aboutus from '../about/Aboutus';
+import { useNavigate } from 'react-router-dom';
+import './Home.css';
 const Home = () => {
+  const navigation = useNavigate();
   return (
     <>
       <div>
@@ -33,7 +35,12 @@ const Home = () => {
               </div>
               <div className="main-start-btn-div">
                 <img src={money} alt="money" />
-                <button className="donation-now-btn">Donate Now</button>
+                <button
+                  onClick={() => navigation('/donation')}
+                  className="donation-now-btn"
+                >
+                  Donate Now
+                </button>
               </div>
             </div>
           </div>

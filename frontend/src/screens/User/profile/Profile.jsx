@@ -35,7 +35,7 @@ function Profile() {
       formData.set('anniversary_date', anniversary_date);
       formData.set('address', address);
       formData.set('profile_image', profile_image);
-      formData.set('signature', signature);
+      formData.set('sign', signature);
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;

@@ -253,7 +253,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
       return false;
     }
 
-    if (mode === 'Online' && amount && donationtype) {
+    if (mode === 'Online' && amount) {
       serverInstance('user/add-donation', 'POST', {
         NAME:
           donationdata.selected === 'yes1' && user.name

@@ -1,0 +1,21 @@
+.btn_signature{
+    background: #FDC99C;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    color: #05313C;
+    padding: 0.4rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-right: 1rem;
+    width: 100%;
+}
+
+.centerSignatire{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    margin-top: 6rem;
+  
+}

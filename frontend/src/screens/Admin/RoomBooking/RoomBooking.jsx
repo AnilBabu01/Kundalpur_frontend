@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import "./RoomBooking.css";
+import React, { useEffect } from 'react';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import './RoomBooking.css';
 function RoomBooking({ setopendashboard }) {
   useEffect(() => {
     setopendashboard(true);
@@ -18,7 +18,7 @@ function RoomBooking({ setopendashboard }) {
             </div>
             <div></div>
           </div>
-          <hr style={{ color: "#e96d00" }} />
+          <hr style={{ color: '#e96d00' }} />
           <div className="add-btn-user">
             <button>+Add</button>
           </div>
@@ -83,7 +83,7 @@ function RoomBooking({ setopendashboard }) {
                 <td>
                   <RemoveRedEyeIcon /> <DeleteForeverIcon />
                 </td>
-              </tr>{" "}
+              </tr>{' '}
               <tr>
                 <td>1</td>
                 <td>Mr</td>

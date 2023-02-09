@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from "react";
-import CloseIcon from "@mui/icons-material/Close";
-import { Box } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import { serverInstance } from "../../../../API/ServerInstance";
-import Fade from "@mui/material/Fade";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import { useNavigate } from "react-router-dom";
-import EditIcon from "@mui/icons-material/Edit";
-import { backendApiUrl } from "../../../../config/config";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import UpdateDonationType from "./UpdateDonationType";
-import CheckIcon from "@mui/icons-material/Check";
-import Swal from "sweetalert2";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box } from '@mui/material';
+import Modal from '@mui/material/Modal';
+import { serverInstance } from '../../../../API/ServerInstance';
+import Fade from '@mui/material/Fade';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
+import { useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import { backendApiUrl } from '../../../../config/config';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import UpdateDonationType from './UpdateDonationType';
+import CheckIcon from '@mui/icons-material/Check';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 const style = {
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "30%",
-  bgcolor: "background.paper",
+  position: 'absolute',
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '30%',
+  bgcolor: 'background.paper',
   borderRadius: 3,
   boxShadow: 24,
   p: 4,
@@ -44,12 +44,12 @@ function IntemMaster() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isData, setisData] = React.useState([]);
   const [refetch, setrefetch] = useState(false);
-  const [donationtype_in_hindi, setdonationtype_in_hindi] = useState("");
-  const [donationtype_in_eng, setdonationtype_in_eng] = useState("");
+  const [donationtype_in_hindi, setdonationtype_in_hindi] = useState('');
+  const [donationtype_in_eng, setdonationtype_in_eng] = useState('');
   const [open1, setOpen1] = React.useState(false);
-  const [deleteId, setdeleteId] = useState("");
+  const [deleteId, setdeleteId] = useState('');
   const [open3, setOpen3] = React.useState(false);
-  const [data, setdata] = useState("");
+  const [data, setdata] = useState('');
   const [manageActivation, setmanageActivation] = useState(false);
   let status;
   const handleOpen3 = (data) => {
@@ -69,16 +69,16 @@ function IntemMaster() {
 
   const handleClose2 = () => {
     setOpen1(false);
-    serverInstance(`admin/donation-type?id=${deleteId}`, "delete").then(
+    serverInstance(`admin/donation-type?id=${deleteId}`, 'delete').then(
       (res) => {
         if (res.status === true) {
-          Swal.fire("Great!", "User delete successfully", "success");
+          Swal.fire('Great!', 'User delete successfully', 'success');
           setrefetch(!refetch);
         } else {
-          Swal("Error", "somthing went  wrong", "error");
+          Swal('Error', 'somthing went  wrong', 'error');
         }
         console.log(res);
-      }
+      },
     );
   };
   const handleOpen = () => setOpen(true);
@@ -97,37 +97,37 @@ function IntemMaster() {
     try {
       e.preventDefault();
       axios.defaults.headers.post[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("token")}`;
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
       const { data } = await axios.post(`${backendApiUrl}admin/donation-type`, {
         modeOfType: 2,
         itemType_en: donationtype_in_eng,
         itemType_hi: donationtype_in_hindi,
       });
       if (data.status === true) {
-        Swal.fire("Great!", "User Added Successfully", "success");
+        Swal.fire('Great!', 'User Added Successfully', 'success');
         handleClose();
-        setdonationtype_in_eng("");
-        setdonationtype_in_hindi("");
+        setdonationtype_in_eng('');
+        setdonationtype_in_hindi('');
       }
     } catch (error) {
-      Swal.fire("Error!", error.response.data.message, "error");
+      Swal.fire('Error!', error.response.data.message, 'error');
       handleClose();
     }
   };
 
   const getall_donatiions = () => {
     try {
-      serverInstance(`admin/donation-type?type=2`, "get").then((res) => {
+      serverInstance(`admin/donation-type?type=2`, 'get').then((res) => {
         if (res.status === true) {
           setisData(res.data);
         } else {
-          Swal("Error", "somthing went  wrong", "error");
+          Swal('Error', 'somthing went  wrong', 'error');
         }
-        console.log("ss", res);
+        console.log('ss', res);
       });
     } catch (error) {
-      Swal.fire("Error!", error, "error");
+      Swal.fire('Error!', error, 'error');
     }
   };
 
@@ -145,57 +145,36 @@ function IntemMaster() {
 
       setmanageActivation(!manageActivation);
       axios.defaults.headers.post[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("token")}`;
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
       const { data } = await axios.post(
         `${backendApiUrl}admin/change-donation-type`,
         {
           id: id,
           status: status,
           type: 2,
-        }
+        },
       );
 
       console.log(data.data);
 
       if (data.data.status === true) {
         Swal.fire(
-          "Great!",
+          'Great!',
           !manageActivation
-            ? "Donation Item Deactivate"
-            : "Donation Item Activate",
-          "success"
+            ? 'Donation Item Deactivate'
+            : 'Donation Item Activate',
+          'success',
         );
         setrefetch(!refetch);
       }
-      console.log("ss", res);
+      console.log('ss', res);
     } catch (error) {
-      Swal("Error", error, "error");
+      Swal('Error', error, 'error');
     }
   };
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Do you want to delete"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -269,16 +248,16 @@ function IntemMaster() {
         </Fade>
       </Modal>
       <div>
-        <hr style={{ color: "#e96d00" }} />
+        <hr style={{ color: '#e96d00' }} />
         <div className="add-btn-user">
           <button onClick={handleOpen}>+Add</button>
         </div>
         <div className="table-div-maain">
           <Table
-            sx={{ minWidth: 650, width: "100%" }}
+            sx={{ minWidth: 650, width: '100%' }}
             aria-label="simple table"
           >
-            <TableHead style={{ background: "#F1F0F0" }}>
+            <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
                 <TableCell>S.No.</TableCell>
 
@@ -293,21 +272,21 @@ function IntemMaster() {
                 (rowsPerPage > 0
                   ? isData.slice(
                       page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
+                      page * rowsPerPage + rowsPerPage,
                     )
                   : isData
                 ).map((row, index) => (
                   <TableRow
                     key={index}
                     sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
+                      '&:last-child td, &:last-child th': { border: 0 },
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{row.itemType_hi}</TableCell>
                     <TableCell>{row.itemType_en}</TableCell>
                     <TableCell>
-                      {row.status === 1 ? "Active" : "Deactive"}
+                      {row.status === 1 ? 'Active' : 'Deactive'}
                     </TableCell>
                     <TableCell>
                       <EditIcon onClick={() => handleOpen3(row)} />
@@ -338,12 +317,12 @@ function IntemMaster() {
                     return `Page: ${page}`;
                   }}
                   backIconButtonProps={{
-                    color: "secondary",
+                    color: 'secondary',
                   }}
-                  nextIconButtonProps={{ color: "secondary" }}
+                  nextIconButtonProps={{ color: 'secondary' }}
                   SelectProps={{
                     inputProps: {
-                      "aria-label": "page number",
+                      'aria-label': 'page number',
                     },
                   }}
                   // showFirstButton={true}

@@ -155,10 +155,12 @@ function UserMaster() {
   const filterdata = async () => {
     try {
       serverInstance(
-        `get-users?phone=${searchPhonne}&name=${searchName}`,
+        `admin/get-users?phone=${searchPhonne}&name=${searchName}`,
         'get',
       ).then((res) => {
         console.log('filter', res);
+
+        setisData(res.data);
       });
     } catch (error) {
       Swal('Error', error, 'error');
@@ -170,27 +172,6 @@ function UserMaster() {
 
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you want to delete'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

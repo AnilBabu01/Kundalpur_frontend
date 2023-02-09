@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import Swal from "sweetalert2";
-import { backendApiUrl } from "../../../config/config";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import axios from "axios";
-import "./ChangePassword.css";
+import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
+import { backendApiUrl } from '../../../config/config';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import axios from 'axios';
+import './ChangePassword.css';
 function ChangePassword() {
-  const [oldpassword, setoldpassword] = useState("");
-  const [newpassword, setnewpassword] = useState("");
-  const [confirmpassword, setconfirmpassword] = useState("");
+  const [oldpassword, setoldpassword] = useState('');
+  const [newpassword, setnewpassword] = useState('');
+  const [confirmpassword, setconfirmpassword] = useState('');
   const [formerror, setFormerror] = useState({});
 
   const [showprocess, setshowprocess] = useState(false);
@@ -23,8 +23,8 @@ function ChangePassword() {
       setFormerror(validate(oldpassword, newpassword, confirmpassword));
 
       axios.defaults.headers.post[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("token")}`;
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.post(
         `${backendApiUrl}user/user-forgot-password`,
@@ -32,16 +32,16 @@ function ChangePassword() {
         {
           oldpassword: oldpassword,
           newPassword: confirmpassword,
-        }
+        },
       );
       console.log(donationdata);
 
       if (res.data.status === true) {
-        Swal.fire("Great!", res.data.msg, "success");
+        Swal.fire('Great!', res.data.msg, 'success');
         setshowprocess(false);
       }
     } catch (error) {
-      Swal.fire("Error!", error.response.data.message, "error");
+      Swal.fire('Error!', error.response.data.message, 'error');
       setshowprocess(false);
     }
   };
@@ -50,14 +50,15 @@ function ChangePassword() {
     const errors = {};
 
     if (!oldpassword) {
-      errors.oldpassword = "Please old password";
+      errors.oldpassword = 'Please old password';
     }
     if (newpassword != confirmpassword) {
-      errors.confirm = "Password not match";
+      errors.confirm = 'Password not match';
     }
 
     return errors;
   };
+
   return (
     <>
       <div className="mainbghomediv">
@@ -76,13 +77,13 @@ function ChangePassword() {
                 >
                   <label>Old Password</label>
                   <input
-                    type={showonldpassword ? "text" : "password"}
+                    type={showonldpassword ? 'text' : 'password'}
                     name="oldpassword"
                     placeholder="Enter Old Password"
                     value={oldpassword}
                     onChange={(e) => setoldpassword(e.target.value)}
                   />
-                  <p style={{ color: "red", marginTop: "5px" }}>
+                  <p style={{ color: 'red', marginTop: '5px' }}>
                     {formerror.oldpassword}
                   </p>
 
@@ -108,13 +109,13 @@ function ChangePassword() {
                 >
                   <label>New Password</label>
                   <input
-                    type={shownewpassword ? "text" : "password"}
+                    type={shownewpassword ? 'text' : 'password'}
                     name="newpassword"
                     placeholder="Enter New Password"
                     value={newpassword}
                     onChange={(e) => setnewpassword(e.target.value)}
                   />
-                  <p style={{ color: "red", marginTop: "5px" }}>
+                  <p style={{ color: 'red', marginTop: '5px' }}>
                     {formerror.confirm}
                   </p>
                   <li
@@ -140,13 +141,13 @@ function ChangePassword() {
                 >
                   <label>Confirm Password</label>
                   <input
-                    type={showconfirmpassword ? "text" : "password"}
+                    type={showconfirmpassword ? 'text' : 'password'}
                     name="confirmpassword"
                     placeholder="Enter Confirm Password"
                     value={confirmpassword}
                     onChange={(e) => setconfirmpassword(e.target.value)}
                   />
-                  <p style={{ color: "red", marginTop: "5px" }}>
+                  <p style={{ color: 'red', marginTop: '5px' }}>
                     {formerror.confirm}
                   </p>
                   <li
@@ -169,14 +170,14 @@ function ChangePassword() {
               </div>
               <div className="btn_div_change_password">
                 <button className="ChangePassword_btn">
-                  {" "}
+                  {' '}
                   {showprocess ? (
                     <CircularProgress
-                      style={{ width: "21px", height: "21px" }}
+                      style={{ width: '21px', height: '21px' }}
                     />
                   ) : (
-                    "Change Password"
-                  )}{" "}
+                    'Change Password'
+                  )}{' '}
                 </button>
                 <button className="cancel_btn_password">Cancel</button>
               </div>

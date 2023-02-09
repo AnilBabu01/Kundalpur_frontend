@@ -324,7 +324,7 @@
     }
     #receipt{
     height: 100%;
-      margin-top: 4rem;
+   
     }
     
     .button_div_print_download{
@@ -366,6 +366,7 @@
     display: flex;
     height: 45px;
   }  
-  .margin_left_div{
-    
+  .back-to-donation{
+    margin-left: 3%;
+    margin-top: 1%;
   }

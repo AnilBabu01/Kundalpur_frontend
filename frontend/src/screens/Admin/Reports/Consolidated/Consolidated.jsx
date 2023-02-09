@@ -87,9 +87,10 @@ const Consolidated = ({ setopendashboard }) => {
   const [showsearchData, setshowsearchData] = useState(false);
   const [typeid, settypeid] = useState('');
   const [empylist, setempylist] = useState('');
+  const [empylist1, setempylist1] = useState('');
   const [userrole, setuserrole] = useState('');
   const [empId, setempId] = useState('');
-  console.log('empId', empId);
+  console.log('dddd', empylist);
   const handleOpen = (id) => {
     setupdateId(id);
     setOpen(true);
@@ -110,38 +111,6 @@ const Consolidated = ({ setopendashboard }) => {
 
   const handleClose1 = () => {
     setOpen1(false);
-  };
-
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, 'delete').then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire(
-            'Great!',
-            'Eletronic donation delete successfully',
-            'success',
-          );
-          setshowalert(true);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-        console.log(res);
-      },
-    );
-  };
-
-  const getall_donation = () => {
-    serverInstance('user/add-elecDonation', 'get').then((res) => {
-      if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
-
-        setisData(filterData);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
-      }
-      console.log(res);
-    });
   };
 
   const handleChangePage = (event, newPage) => {
@@ -212,18 +181,31 @@ const Consolidated = ({ setopendashboard }) => {
       Swal.fire('Error!', error, 'error');
     }
   };
+
   const getAllEmp = () => {
     serverInstance('admin/add-employee', 'get').then((res) => {
       if (res.status) {
-        setempylist(res.data);
+        setempylist1(res.data);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
     });
   };
+  const getAllDonationDetails = () => {
+    serverInstance('admin/user-report?user=1   ', 'get').then((res) => {
+      console.log('report', res.data);
+      setempylist(res.data);
+
+      // if (res.status) {
+      //   isData(res.data.data);
+      // } else {
+      //   Swal('Error', 'somthing went  wrong', 'error');
+      // }
+    });
+  };
   useEffect(() => {
+    getAllDonationDetails();
     getAllEmp();
-    getall_donation();
     setopendashboard(true);
     get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
@@ -252,8 +234,8 @@ const Consolidated = ({ setopendashboard }) => {
                   >
                     Select User
                   </option>
-                  {empylist &&
-                    empylist.map((item, index) => (
+                  {empylist1 &&
+                    empylist1.map((item, index) => (
                       <option key={index} value={item.id}>
                         {item.Username}
                       </option>
@@ -286,16 +268,16 @@ const Consolidated = ({ setopendashboard }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {isData ? (
+                {empylist ? (
                   <>
                     {(rowsPerPage > 0
-                      ? isData
+                      ? empylist
                           .reverse()
                           .slice(
                             page * rowsPerPage,
                             page * rowsPerPage + rowsPerPage,
                           )
-                      : isData
+                      : empylist
                     ).map((row, index) => (
                       <TableRow
                         key={row.id}
@@ -303,27 +285,27 @@ const Consolidated = ({ setopendashboard }) => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
+                        <TableCell>{row.created_by}</TableCell>
                         <TableCell>
                           {Moment(row.donation_date).format('DD/MM/YYYY')}
                         </TableCell>
-                        <TableCell>{row.ReceiptNo}</TableCell>
-                        <TableCell>{row.voucherNo}</TableCell>
-                        <TableCell>{row.phoneNo}</TableCell>
+                        <TableCell>{row.name}</TableCell>
+                        <TableCell>{row.totalDonationAmount}</TableCell>
                       </TableRow>
                     ))}
                   </>
                 ) : (
                   <>
-                    <TableCell colSpan={8} align="center">
+                    {/* <TableCell colSpan={8} align="center">
                       <CircularProgress />
-                    </TableCell>
+                    </TableCell> */}
                   </>
                 )}
               </TableBody>
               <TableFooter>
                 <TableRow>
                   <TablePagination
-                    count={isData.length}
+                    count={empylist.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

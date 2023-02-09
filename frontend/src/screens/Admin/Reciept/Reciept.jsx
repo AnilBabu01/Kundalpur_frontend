@@ -1,6 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { useReactToPrint } from 'react-to-print';
-import './cashrecipt.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Converter, hiIN } from 'any-number-to-words';
@@ -9,6 +7,7 @@ import jsPDF from 'jspdf';
 import Moment from 'moment-js';
 import moment from 'moment';
 import { serverInstance } from '../../../API/ServerInstance';
+import './cashrecipt.css';
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   const location = useLocation();
@@ -37,22 +36,6 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
     });
   }
 
-  var options = { year: 'numeric', month: 'short', day: '2-digit' };
-  const convertTime = (today) => {
-    const currDate = today
-      .toLocaleDateString('en-IN', options)
-      .replace(/-/g, ' ');
-    const currTime = today.toLocaleString('en-US', {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true,
-    });
-
-    let dateAndTime = `${currDate}: ${currTime}`;
-
-    return dateAndTime;
-  };
-
   useEffect(() => {
     setshowreciept(true);
     setopendashboard(false);
@@ -72,6 +55,21 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   return (
     <>
       <div>
+        <div className="button_div_print_download">
+          {isData && isData.elecItemDetails ? (
+            <>
+              <button onClick={() => navigation('/admin-panel/donation')}>
+                Back
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => navigation('/donation')}>Back user</button>
+            </>
+          )}
+
+          <div />
+        </div>
         <div className="main-certificate" id="receipt" ref={componentRef}>
           <div className="topinfo-flex">
             <p>E-mail:badebaba.kundalpur@gmail.com</p>

@@ -1,37 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { backendApiUrl } from "../../../../config/config";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { backendApiUrl } from '../../../../config/config';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 
-import Swal from "sweetalert2";
-import axios from "axios";
+import Swal from 'sweetalert2';
+import axios from 'axios';
 function UpdateDonationType({ data, handleClose3 }) {
   const location = useLocation();
 
+  console.log('data', data);
+
   const navigation = useNavigate();
   const [isData, setisData] = React.useState([]);
-  const [donationtype_in_hindi, setdonationtype_in_hindi] = useState("");
-  const [donationtype_in_eng, setdonationtype_in_eng] = useState("");
-  const [id, setid] = useState("");
-  console.log("aaa", data.type_en);
+  const [donationtype_in_hindi, setdonationtype_in_hindi] = useState('');
+  const [donationtype_in_eng, setdonationtype_in_eng] = useState('');
+  const [id, setid] = useState('');
+  console.log('aaa', data.type_en);
   const handlesubmit = async () => {
     try {
       axios.defaults.headers.put[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("token")}`;
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
       const res = await axios.put(`${backendApiUrl}admin/donation-type`, {
         id: id,
-        modeOfType: 1,
+        modeOfType: 2,
         type_en: donationtype_in_eng,
         type_hi: donationtype_in_hindi,
       });
       console.log(res);
       if (res.data.status === true) {
-        Swal.fire("Great!", "User Added Successfully", "success");
+        Swal.fire('Great!', 'User Added Successfully', 'success');
 
         handleClose3();
       }
     } catch (error) {
-      Swal.fire("Error!", error.response.data.message, "error");
+      Swal.fire('Error!', error.response.data.message, 'error');
       handleClose3();
     }
   };
@@ -39,8 +41,8 @@ function UpdateDonationType({ data, handleClose3 }) {
   useEffect(() => {
     if (data) {
       setisData(data?.data);
-      setdonationtype_in_eng(data.type_en);
-      setdonationtype_in_hindi(data.type_hi);
+      setdonationtype_in_eng(data.itemType_en);
+      setdonationtype_in_hindi(data.itemType_hi);
       setid(data.id);
     }
   }, []);
@@ -75,7 +77,7 @@ function UpdateDonationType({ data, handleClose3 }) {
 
           <div className="save-div-btn">
             <button onClick={() => handlesubmit()} className="save-btn1">
-              Update{" "}
+              Update{' '}
             </button>
           </div>
         </div>

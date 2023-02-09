@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import { Converter, hiIN } from 'any-number-to-words';
 import html2canvas from 'html2canvas';
@@ -12,6 +12,7 @@ const converter = new Converter(hiIN);
 function PrintContent({ setopendashboard, setshowreciept }) {
   const location = useLocation();
   const componentRef = useRef();
+  const navigation = useNavigate();
   const adminName = sessionStorage.getItem('adminName');
 
   const empName = sessionStorage.getItem('empName');
@@ -39,6 +40,20 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
   return (
     <>
+      <div className="button_div_print_download">
+        {isData && isData.elecItemDetails ? (
+          <>
+            <button onClick={() => navigation('/admin-panel/donation')}>
+              Back
+            </button>
+          </>
+        ) : (
+          <>
+            <button onClick={() => navigation('/donation')}>Back user</button>
+          </>
+        )}
+        <div style={{ width: '60%' }} />
+      </div>
       <div className="super_main_divsss" ref={componentRef}>
         <div>
           <div>

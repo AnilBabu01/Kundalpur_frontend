@@ -31,7 +31,7 @@ import PrintContentManul from '../screens/Admin/compoments/PrintContentManual';
 import ManualReports from '../screens/Admin/Reports/ManaulReport/ManualReports';
 import Consolidated from '../screens/Admin/Reports/Consolidated/Consolidated';
 import HeadReport from '../screens/Admin/Reports/HeadReport/HeadReport';
-
+import Signature from '../screens/Admin/Signature/Signature';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   return (
     <>
@@ -308,6 +308,14 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <EmployeeUserInfo setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/masters/signature"
+          element={
+            <Adminprivateroute>
+              <Signature setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

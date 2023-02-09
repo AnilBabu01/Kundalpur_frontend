@@ -137,7 +137,7 @@ const AdminHeader = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => navigate('/changepassword')}>
+        <MenuItem onClick={() => navigate('/admin-panel/masters/signature')}>
           <ListItemIcon>
             <UploadIcon fontSize="small" />
           </ListItemIcon>

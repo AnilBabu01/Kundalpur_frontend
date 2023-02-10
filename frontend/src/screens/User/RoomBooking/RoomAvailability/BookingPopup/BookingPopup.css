@@ -1,0 +1,99 @@
+.mian_input_div_flex{
+    display: flex;
+    justify-content: space-between; 
+  
+    margin-bottom: 2%;
+}
+
+.mian_input_div_flex1{
+    display: flex;
+
+ 
+    margin-bottom: 2%;
+}
+.add_left_margins{
+    margin-left: 4.2%!important;
+}
+.proces_btn_main_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.Proceed_btn{
+    width: 233px;
+    height: 45px;
+    background: #FA7401;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    margin-right: 49px;
+}
+
+.Proceed_btn_go{
+    width: 233px;
+    height: 45px;
+    border: 1px solid #FA7401;
+    border-radius: 4px;
+  
+    color: #FA7401;
+}
+.previous_detalts_div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #DEDEDE;
+    margin-bottom: 2%;
+}
+
+.previous_detalts_div_innear{
+    border-right: 1px solid #DEDEDE ;
+
+}
+.previous_detalts_div_innear p{
+    font-size: 13px;
+    text-align: center;
+}
+.previous_detalts_div_innear1{
+    padding: 1px;
+}
+.previous_detalts_div_innear1 p{
+    font-size: 13px; 
+    text-align: center;
+}
+
+.flex_gender_options{
+    display: flex;
+    width: 200px;
+}
+
+.cennn_form{
+  
+    width: 36%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.gendr_innear_div{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+@media screen and (max-width: 780px) {
+    .add_left_margins{
+        margin-left: 0%;
+    }
+
+
+    .mian_input_div_flex {
+       
+        flex-wrap: wrap;
+       
+    }
+    
+.mian_input_div_flex1{
+    flex-wrap: wrap;
+}
+  }
+  

@@ -33,11 +33,59 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+export const CustomInput1 = styled(InputBase)(({ theme }) => ({
+  width: '100%',
+
+  '& .MuiInputBase-input': {
+    width: 300,
+    borderRadius: 6,
+    position: 'relative',
+    backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
+    border: '1px solid #C8C6D3',
+    fontSize: 14,
+    padding: 8,
+    transition: theme.transitions.create([
+      'border-color',
+      'background-color',
+      'box-shadow',
+    ]),
+    // Use the system font instead of the default Roboto font.
+    '&:focus': {
+      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}));
+
+export const CustomInput2 = styled(InputBase)(({ theme }) => ({
+  width: '100%',
+
+  '& .MuiInputBase-input': {
+    width: '100%',
+    borderRadius: 6,
+    position: 'relative',
+    backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
+    border: '1px solid #C8C6D3',
+    fontSize: 14,
+
+    transition: theme.transitions.create([
+      'border-color',
+      'background-color',
+      'box-shadow',
+    ]),
+    // Use the system font instead of the default Roboto font.
+    '&:focus': {
+      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}));
+
 export const CustomTableInput = styled(InputBase)(({ theme }) => ({
   width: '100%',
   border: '1px solid #C8C6D3',
   '& .MuiInputBase-input': {
-    padding: "8px 4px",
+    padding: '8px 4px',
     // width: '100%',
     position: 'relative',
     backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',

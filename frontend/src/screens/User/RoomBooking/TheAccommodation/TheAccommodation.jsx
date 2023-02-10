@@ -1,13 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import RoomBookCard from '../RoomBookCard';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import RoomPopup from '../RoomPopup';
 import './TheAccommodation.css';
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  p: 2,
+  boxShadow: 24,
+  borderRadius: '15px',
+};
 function TheAccommodation({ setshowRoomOptions }) {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   useEffect(() => {
     setshowRoomOptions(true);
   }, []);
 
   return (
     <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+      >
+        <Fade in={open}>
+          <Box
+            sx={{
+              ...style,
+              width: {
+                xs: '70%',
+                sm: '60%',
+                md: '45%',
+              },
+            }}
+          >
+            <RoomPopup handleClose={handleClose} />
+          </Box>
+        </Fade>
+      </Modal>
       <div className="main_room_availabilty">
         <div className="room_home_main_supper">
           <div className="room_home_main">
@@ -55,15 +95,15 @@ function TheAccommodation({ setshowRoomOptions }) {
         </div>
       </div>
       <div className="center_main_div_room_card">
-        <RoomBookCard />
-        <RoomBookCard />
-        <RoomBookCard />
-        <RoomBookCard />
-        <RoomBookCard />
-        <RoomBookCard />
-        <RoomBookCard />
-        <RoomBookCard />
-        <RoomBookCard />
+        <RoomBookCard handleOpen={handleOpen} />
+        <RoomBookCard handleOpen={handleOpen} />
+        <RoomBookCard handleOpen={handleOpen} />
+        <RoomBookCard handleOpen={handleOpen} />
+        <RoomBookCard handleOpen={handleOpen} />
+        <RoomBookCard handleOpen={handleOpen} />
+        <RoomBookCard handleOpen={handleOpen} />
+        <RoomBookCard handleOpen={handleOpen} />
+        <RoomBookCard handleOpen={handleOpen} />
       </div>
     </>
   );

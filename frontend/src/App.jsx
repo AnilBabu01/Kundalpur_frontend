@@ -21,6 +21,7 @@ function App() {
   const [noHeaderFooter, setHeaderFooter] = useState(false);
   const [paymentId, setpaymentId] = useState('');
   const [onlineId, setonlineId] = useState('');
+  const [showRoomOptions, setshowRoomOptions] = useState(false);
   if (!sessionStorage.getItem('token')) {
   }
 
@@ -36,7 +37,11 @@ function App() {
   return (
     <>
       <Router>
-        {!opendashboard && !showreciept && !noHeaderFooter ? <Navbar /> : ''}
+        {!opendashboard && !showreciept && !noHeaderFooter ? (
+          <Navbar showRoomOptions={showRoomOptions} />
+        ) : (
+          ''
+        )}
         {opendashboard && <MainAdmin />}
         <MainRoutes
           setopendashboard={setopendashboard}
@@ -46,6 +51,7 @@ function App() {
           setpaymentId={setpaymentId}
           onlineId={onlineId}
           setonlineId={setonlineId}
+          setshowRoomOptions={setshowRoomOptions}
         />
         <AdminRoutes
           setopendashboard={setopendashboard}

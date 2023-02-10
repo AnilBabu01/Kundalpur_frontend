@@ -23,7 +23,7 @@ import Logout from '@mui/icons-material/Logout';
 import { useSelector, useDispatch } from 'react-redux';
 import UploadIcon from '@mui/icons-material/Upload';
 import { loadUser } from '../../../Redux/redux/action/AuthAction';
-const Navbar = () => {
+const Navbar = ({ showRoomOptions }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -149,36 +149,73 @@ const Navbar = () => {
           className={isMobile ? style.mobilelinks : style.navlinks}
           onClick={() => setisMobile(false)}
         >
-          <li>
-            <NavLink
-              to="/donation"
-              className={({ isActive }) =>
-                isActive ? style.active : style.about
-              }
-            >
-              Donation
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/paymenthistory"
-              className={({ isActive }) =>
-                isActive ? style.active : style.about
-              }
-            >
-              Room Booking
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                isActive ? style.active : style.about
-              }
-            >
-              About us
-            </NavLink>
-          </li>
+          {showRoomOptions ? (
+            <>
+              <li>
+                <NavLink
+                  to="/roombooking/servicesandfacilities"
+                  className={({ isActive }) =>
+                    isActive ? style.active : style.about
+                  }
+                >
+                  Services & Facilities
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/roombooking/theaccommodation"
+                  className={({ isActive }) =>
+                    isActive ? style.active : style.about
+                  }
+                >
+                  The Accommodation
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/roombooking/tariffsandpolicies"
+                  className={({ isActive }) =>
+                    isActive ? style.active : style.about
+                  }
+                >
+                  Tariffs & Policies
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <NavLink
+                  to="/donation"
+                  className={({ isActive }) =>
+                    isActive ? style.active : style.about
+                  }
+                >
+                  Donation
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/paymenthistory"
+                  className={({ isActive }) =>
+                    isActive ? style.active : style.about
+                  }
+                >
+                  Room Booking
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/about"
+                  className={({ isActive }) =>
+                    isActive ? style.active : style.about
+                  }
+                >
+                  About us
+                </NavLink>
+              </li>
+            </>
+          )}
 
           {sessionStorage.getItem('token') ? (
             <li>

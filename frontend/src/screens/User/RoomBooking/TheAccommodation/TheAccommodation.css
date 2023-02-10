@@ -1,0 +1,9 @@
+.center_main_div_room_card{
+    align-items: center;
+    padding-top: 10%;
+    padding-left: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-right: 10%;
+}

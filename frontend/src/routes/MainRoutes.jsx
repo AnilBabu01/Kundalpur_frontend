@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../screens/User/Home/Home';
 import EmailLogin from '../screens/User/Auth/EmailLogin/EmailLogin';
@@ -15,6 +15,10 @@ import AboutUs from '../screens/User/Aboutus/AboutUs';
 import PaymentStatusPage from '../screens/User/PaymentStatusPage/PaymentStatusPage';
 import Reciept from '../screens/Admin/Reciept/Reciept';
 import ReceiptManual from '../screens/Admin/Reciept/RecieptManual';
+import RoomAvailability from '../screens/User/RoomBooking/RoomAvailability/RoomAvailability';
+import TheAccommodation from '../screens/User/RoomBooking/TheAccommodation/TheAccommodation';
+import ServicesandFacilities from '../screens/User/RoomBooking/Services&Facilities/ServicesandFacilities';
+import TariffsandPolicies from '../screens/User/RoomBooking/Tariffs&Policies/TariffsandPolicies';
 function MainRoutes({
   setopendashboard,
   setshowreciept,
@@ -23,11 +27,15 @@ function MainRoutes({
   setpaymentId,
   setonlineId,
   onlineId,
+  setshowRoomOptions,
 }) {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home setshowRoomOptions={setshowRoomOptions} />}
+        />
         <Route path="/login" element={<EmailLogin />} />
         <Route path="/phonelogin" element={<NewLogin />} />
         <Route path="/forgot" element={<Forgot />} />
@@ -95,6 +103,55 @@ function MainRoutes({
               <ReceiptManual
                 setopendashboard={setopendashboard}
                 setshowreciept={setshowreciept}
+              />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/roombooking"
+          element={
+            <PrivateRoutes>
+              <RoomAvailability
+                setopendashboard={setopendashboard}
+                setshowreciept={setshowreciept}
+                setshowRoomOptions={setshowRoomOptions}
+              />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/roombooking/theaccommodation"
+          element={
+            <PrivateRoutes>
+              <TheAccommodation
+                setopendashboard={setopendashboard}
+                setshowreciept={setshowreciept}
+                setshowRoomOptions={setshowRoomOptions}
+              />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/roombooking/servicesandfacilities"
+          element={
+            <PrivateRoutes>
+              <ServicesandFacilities
+                setopendashboard={setopendashboard}
+                setshowreciept={setshowreciept}
+                setshowRoomOptions={setshowRoomOptions}
+              />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/roombooking/tariffsandpolicies"
+          element={
+            <PrivateRoutes>
+              <TariffsandPolicies
+                setopendashboard={setopendashboard}
+                setshowreciept={setshowreciept}
+                setshowRoomOptions={setshowRoomOptions}
               />
             </PrivateRoutes>
           }

@@ -21,6 +21,7 @@ function Profile() {
   const [previewprofile, setpreviewprofile] = useState('');
   const [profileimg, setprofileimg] = useState('');
   const [signature, setsignature] = useState('');
+
   const { user } = useSelector((state) => state.userReducer);
   console.log(user);
   const submitHandler = async (e) => {

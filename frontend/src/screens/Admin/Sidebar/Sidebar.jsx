@@ -11,11 +11,14 @@ const Sidebar = ({ setshowsidebar }) => {
   const [showdropdownmenu3, setshowdropdownmenu3] = useState(false);
   const [showdropdownmenu4, setshowdropdownmenu4] = useState(false);
   const [userrole, setuserrole] = useState('');
-  console.log(userrole);
 
+  console.log('dd', showdropdownmenu4);
   useEffect(() => {
     setuserrole(Number(sessionStorage.getItem('userrole')));
+
     setshowdropdownmenu4(localStorage.getItem('showdropdownmenu4'));
+
+    // console.log(localStorage.getItem('showdropdownmenu4'));
   }, []);
 
   return (
@@ -44,10 +47,6 @@ const Sidebar = ({ setshowsidebar }) => {
                     className="nav-link"
                     onClick={() => {
                       setshowdropdownmenu2(!showdropdownmenu2);
-                      localStorage.setItem(
-                        'showdropdownmenu1',
-                        showdropdownmenu1,
-                      );
                     }}
                   >
                     Donation
@@ -88,10 +87,6 @@ const Sidebar = ({ setshowsidebar }) => {
                     className="nav-link"
                     onClick={() => {
                       setshowdropdownmenu3(!showdropdownmenu3);
-                      localStorage.setItem(
-                        'showdropdownmenu3',
-                        showdropdownmenu3,
-                      );
                     }}
                   >
                     Masters
@@ -131,10 +126,6 @@ const Sidebar = ({ setshowsidebar }) => {
                     className="nav-link"
                     onClick={() => {
                       setshowdropdownmenu1(!showdropdownmenu1);
-                      localStorage.setItem(
-                        'showdropdownmenu1',
-                        showdropdownmenu1,
-                      );
                     }}
                   >
                     System Management
@@ -205,9 +196,10 @@ const Sidebar = ({ setshowsidebar }) => {
                     className="nav-link"
                     onClick={() => {
                       setshowdropdownmenu4(!showdropdownmenu4);
+
                       localStorage.setItem(
                         'showdropdownmenu4',
-                        showdropdownmenu4,
+                        !showdropdownmenu4,
                       );
                     }}
                   >

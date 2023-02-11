@@ -167,7 +167,8 @@ const ItemDonation = ({
     hour12: true,
   });
 
-  const [donationDate, setDonationDate] = useState(today);
+  var date = today.toISOString().substring(0, 10);
+  const [donationDate, setDonationDate] = useState(date);
 
   const [donationTime, setDonationTime] = useState(
     today.toLocaleTimeString('it-IT', {
@@ -405,9 +406,11 @@ const ItemDonation = ({
               <CustomInput
                 type="date"
                 id="donation-date"
-                value={donationDate.toLocaleDateString('en-CA')}
+                value={donationDate}
                 onChange={(event) => {
-                  setDonationDate(new Date(event.target.value));
+                  setDonationDate(
+                    new Date(event.target.value).toISOString().substring(0, 10),
+                  );
                 }}
               />
             </Grid>

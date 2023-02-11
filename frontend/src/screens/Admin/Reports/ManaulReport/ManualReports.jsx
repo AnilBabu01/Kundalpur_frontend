@@ -426,12 +426,10 @@ const ManualReports = ({ setopendashboard }) => {
                 {isData ? (
                   <>
                     {(rowsPerPage > 0
-                      ? isData
-                          .reverse()
-                          .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage,
-                          )
+                      ? isData.slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
                       : isData
                     ).map((row, index) => (
                       <TableRow

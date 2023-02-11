@@ -167,17 +167,9 @@ const UpdateTtem = ({
     minute: 'numeric',
     hour12: true,
   });
+  const [donationDate, setDonationDate] = useState('');
 
-  const [donationDate, setDonationDate] = useState(today);
-
-  const [donationTime, setDonationTime] = useState(
-    today.toLocaleTimeString('it-IT', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-    }),
-  );
+  const [donationTime, setDonationTime] = useState('');
 
   const addElectronicDonation = async (e) => {
     try {
@@ -249,6 +241,11 @@ const UpdateTtem = ({
       setReceiptNo(updateData?.ReceiptNo);
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.manualItemDetails);
+      setDonationTime(updateData?.donation_time);
+      var today = new Date(updateData?.donation_date);
+      var date = today.toISOString().substring(0, 10);
+
+      setDonationDate(date);
     }
   }, []);
 
@@ -324,9 +321,11 @@ const UpdateTtem = ({
               <CustomInput
                 type="date"
                 id="donation-date"
-                value={donationDate.toLocaleDateString('en-CA')}
+                value={donationDate}
                 onChange={(event) => {
-                  setDonationDate(new Date(event.target.value));
+                  setDonationDate(
+                    new Date(event.target.value).toISOString().substring(0, 10),
+                  );
                 }}
               />
             </Grid>

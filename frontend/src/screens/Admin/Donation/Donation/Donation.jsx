@@ -79,7 +79,7 @@ const Donation = ({ setopendashboard }) => {
   const [dateto, setdateto] = useState('');
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
-
+  const [type, settype] = useState('');
   const handleOpen4 = () => {
     setOpen4(true);
   };
@@ -226,13 +226,13 @@ const Donation = ({ setopendashboard }) => {
 
   const filterdata = () => {
     serverInstance(
-      `user/searchAllDonation?type=${2}&fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
+      `user/searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
       'get`,
     ).then((res) => {
-      console.log('dilter data is', res);
-      if (res.data.status) {
-        setshowsearchData(!showsearchData);
-        setisData(res.data.data);
+      console.log('filter data is', res.data);
+
+      if (res.data) {
+        setisData(res.data);
       }
     });
   };
@@ -583,28 +583,28 @@ const Donation = ({ setopendashboard }) => {
                         <TableCell>{row.name}</TableCell>
                         <TableCell> {row.address}</TableCell>
                         <TableCell>
-                          {row.elecItemDetails.map((row) => {
+                          {/* {row.elecItemDetails.map((row) => {
                             return (
                               <li style={{ listStyle: 'none' }}>{row.type}</li>
                             );
-                          })}
+                          })} */}
                         </TableCell>
                         <TableCell>
-                          {row.elecItemDetails.reduce(
+                          {/* {row.elecItemDetails.reduce(
                             (n, { amount }) =>
                               parseFloat(n) + parseFloat(amount),
                             0,
-                          )}
+                          )} */}
                         </TableCell>
                         <TableCell>&nbsp;</TableCell>
                         <TableCell>
-                          {row.elecItemDetails.map((row) => {
+                          {/* {row.elecItemDetails.map((row) => {
                             return (
                               <li style={{ listStyle: 'none' }}>
                                 {row.remark}{' '}
                               </li>
                             );
-                          })}
+                          })} */}
                         </TableCell>
                         <TableCell>
                           <RemoveRedEyeIcon

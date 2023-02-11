@@ -198,11 +198,12 @@ const ManualCash = ({ setopendashboard }) => {
     const res = await axios.get(
       `${backendApiUrl}user/search-donation?name=${name}&type=${typeid}&date=${date}&phone=${phone}&modeOfDonation=${2}`,
     );
-    console.log('filter data is', res);
-    if (res.data.status) {
-      setshowsearchData(!showsearchData);
-      setisData(res.data.data);
-    }
+
+    console.log('filter data is', res.data.data);
+    // if (res.data.status) {
+    //   setshowsearchData(!showsearchData);
+    //   setisData(res.data.data);
+    // }
   };
 
   const get_donation_tyeps = () => {
@@ -230,27 +231,6 @@ const ManualCash = ({ setopendashboard }) => {
 
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you want to delete'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -318,7 +298,13 @@ const ManualCash = ({ setopendashboard }) => {
                   onChange={(e) => setphone(e.target.value)}
                 />
 
-                <input type="date" placeholder="Date" />
+                <input
+                  type="date"
+                  placeholder="Date"
+                  name="date"
+                  value={date}
+                  onChange={(e) => setdate(e.target.value)}
+                />
                 <select
                   name="cars"
                   id="cars"

@@ -80,6 +80,7 @@ const Donation = ({ setopendashboard }) => {
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
   const [type, settype] = useState('');
+
   const handleOpen4 = () => {
     setOpen4(true);
   };
@@ -94,31 +95,6 @@ const Donation = ({ setopendashboard }) => {
     setOpen1(true);
     setdeleteId(id);
     console.log(id);
-  };
-
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
-
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, 'delete').then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire(
-            'Great!',
-            'Eletronic donation delete successfully',
-            'success',
-          );
-          setshowalert(!showalert);
-
-          setOpen1(false);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-        console.log(res);
-      },
-    );
   };
 
   const handleOpen = async () => {
@@ -156,16 +132,22 @@ const Donation = ({ setopendashboard }) => {
         'Phone No': item?.phoneNo,
         name: item?.name,
         Address: item?.address,
-        'Head/Item': item?.elecItemDetails.map((row) => {
-          return row.type;
-        }),
-        Amount: item?.elecItemDetails.reduce(
-          (n, { amount }) => parseFloat(n) + parseFloat(amount),
-          0,
-        ),
-        remark: item?.elecItemDetails.map((row) => {
-          return row.remark;
-        }),
+        'Head/Item': item?.elecItemDetails
+          ? item?.elecItemDetails.map((row) => {
+              return row.type;
+            })
+          : item?.type,
+        Amount: item?.elecItemDetails
+          ? item?.elecItemDetails.reduce(
+              (n, { amount }) => parseFloat(n) + parseFloat(amount),
+              0,
+            )
+          : item?.Amount,
+        remark: item?.elecItemDetails
+          ? item?.elecItemDetails.map((row) => {
+              return row.remark;
+            })
+          : item?.remark,
         'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
       });
     });
@@ -431,10 +413,12 @@ const Donation = ({ setopendashboard }) => {
               <div className="Center_main_dic_filetr">
                 <label>Head/Item</label>
                 <select name="cars" id="cars">
-                  <option>Select option</option>
-                  {/* {donationTypes.map((item, idx) => {
-                    return <option value={item.id}>{item.type_hi}</option>;
-                  })} */}
+                  <option onChange={(e) => settype(e.target.value)}>
+                    Select option
+                  </option>
+                  {donationTypes.map((item, idx) => {
+                    return <option value={item.type_hi}>{item.type_hi}</option>;
+                  })}
                 </select>
               </div>
 
@@ -583,28 +567,49 @@ const Donation = ({ setopendashboard }) => {
                         <TableCell>{row.name}</TableCell>
                         <TableCell> {row.address}</TableCell>
                         <TableCell>
-                          {/* {row.elecItemDetails.map((row) => {
-                            return (
-                              <li style={{ listStyle: 'none' }}>{row.type}</li>
-                            );
-                          })} */}
+                          {row.elecItemDetails ? (
+                            row.elecItemDetails.map((row) => {
+                              return (
+                                <li style={{ listStyle: 'none' }}>
+                                  {row.type}
+                                </li>
+                              );
+                            })
+                          ) : (
+                            <>
+                              <li style={{ listStyle: 'none' }}>{row.type}</li>{' '}
+                            </>
+                          )}
                         </TableCell>
                         <TableCell>
-                          {/* {row.elecItemDetails.reduce(
-                            (n, { amount }) =>
-                              parseFloat(n) + parseFloat(amount),
-                            0,
-                          )} */}
+                          {row.elecItemDetails ? (
+                            row.elecItemDetails.reduce(
+                              (n, { amount }) =>
+                                parseFloat(n) + parseFloat(amount),
+                              0,
+                            )
+                          ) : (
+                            <>{row.amount} </>
+                          )}
                         </TableCell>
                         <TableCell>&nbsp;</TableCell>
                         <TableCell>
-                          {/* {row.elecItemDetails.map((row) => {
-                            return (
+                          {row.elecItemDetails ? (
+                            row.elecItemDetails.map((row) => {
+                              return (
+                                <li style={{ listStyle: 'none' }}>
+                                  {row.remark}{' '}
+                                </li>
+                              );
+                            })
+                          ) : (
+                            <>
+                              {' '}
                               <li style={{ listStyle: 'none' }}>
                                 {row.remark}{' '}
                               </li>
-                            );
-                          })} */}
+                            </>
+                          )}
                         </TableCell>
                         <TableCell>
                           <RemoveRedEyeIcon

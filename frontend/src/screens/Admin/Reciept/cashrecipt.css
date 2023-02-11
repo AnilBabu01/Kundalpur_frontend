@@ -370,3 +370,95 @@
     margin-left: 3%;
     margin-top: 1%;
   }
+
+
+  @media screen and (max-width: 780px) {
+    .main-certificate {
+      width: 100%;
+   }
+
+
+   .main-certificate .topinfo-flex p {
+   font-size: 8px;
+}
+
+.main-head .main-head-container .head-name ,p,h2,h4{
+   font-size: 8px;
+}
+
+.main-head .main-head-container .head-name h2 {
+  color: blue;
+  word-spacing: 10px;
+  font-size: 10px;
+}
+
+.main-certificate .reciptimg .reciptbody .leftdata .leftitems {
+
+  gap: 4px;
+}
+
+.main-certificate .reciptimg .reciptbody h2 {
+  font-size: 11px;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.main-certificate .reciptimg .rightitems2 h2 {
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.main-certificate .reciptimg .rightitems2 {
+  
+  gap: 0px;
+ 
+}
+
+.main-certificate .reciept-footer {
+  height: 100%;
+  padding: 0px;
+}
+
+.main-certificate .reciept-footer p {
+
+  font-size: 9px;
+  padding: 1px;
+}
+
+.main-certificate .reciept-footer span {
+ 
+  font-weight: 400;
+  font-size: 9px;
+}
+
+.button_div_print_download button {
+ 
+  width: 34%;
+ 
+}
+
+.center_receipt_format {
+  width: 89%;
+  display: flex;
+ 
+}
+.dan_ka_mad {
+  width: 15%;
+}
+
+.main-certificate .bankdetail-container .bankdetails {
+ width: 100%;
+}
+
+.main-certificate .bankdetail-container .bankdetails .banks1, .banks2, .banks3, h5 {
+  color: #c7630b;
+  font-size: 8px;
+}
+
+.main-certificate .reciptimg .bankjankari h3 {
+ 
+  width: 59%;
+ 
+}
+  }
+  

@@ -196,7 +196,7 @@ const ManualCash = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/search-donation?name=${name}&type=${typeid}&date=${date}&phone=${phone}&modeOfDonation=${2}`,
+      `${backendApiUrl}user/search-donation?name=${name}&date=${date}&phone=${phone}&modeOfDonation=${2}`,
     );
 
     console.log('filter data is', res.data.data);

@@ -100,7 +100,26 @@ const AdminHeader = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <Notification handleClose1={handleClose1} />
+        <MenuItem onClick={() => navigate('/admin-panel/masters/signature')}>
+          <ListItemIcon>
+            <UploadIcon fontSize="small" />
+          </ListItemIcon>
+          Upload signature
+        </MenuItem>
+        <MenuItem onClick={() => navigate('/changepassword')}>
+          <ListItemIcon>
+            <LockOpenIcon fontSize="small" />
+          </ListItemIcon>
+          Change password
+        </MenuItem>
+
+        <Divider />
+        <MenuItem onClick={() => logout()}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
       </Menu>
       <Menu
         anchorEl={anchorEl}

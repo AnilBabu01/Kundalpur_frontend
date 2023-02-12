@@ -86,3 +86,23 @@
 }
 
 
+
+@media screen and (max-width: 780px) {
+  
+.container {
+  overflow-x: auto;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  padding: 10px;
+  margin: 10px;
+}
+.table-div-maain-donation-table-main {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 5px;
+}
+
+}
+

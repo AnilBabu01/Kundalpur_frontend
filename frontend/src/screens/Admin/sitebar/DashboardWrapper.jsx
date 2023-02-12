@@ -24,6 +24,8 @@ import UploadIcon from '@mui/icons-material/Upload';
 import Divider from '@mui/material/Divider';
 import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
+import Badge from '@mui/material/Badge';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -203,7 +205,7 @@ const DashboardWrapper = () => {
                 variant="h6"
                 noWrap
                 component="div"
-                sx={{ display: { xs: 'none', sm: 'block' } }}
+                sx={{ display: { xs: 'none', sm: 'block' }, ml: 2 }}
               >
                 Donation
               </Typography>
@@ -219,7 +221,7 @@ const DashboardWrapper = () => {
                     variant="h6"
                     noWrap
                     component="div"
-                    sx={{ display: { xs: 'none', sm: 'block' } }}
+                    sx={{ display: { xs: 'none', sm: 'block' }, ml: 2 }}
                   >
                     Donation
                   </Typography>
@@ -239,6 +241,15 @@ const DashboardWrapper = () => {
             />
           </Search>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={17} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
             <Box
               sx={{
                 display: 'flex',

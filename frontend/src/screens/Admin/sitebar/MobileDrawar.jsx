@@ -61,21 +61,21 @@ const AccountRoute = [
 const navigationTabs = [
   {
     id: 1,
-    name: 'Donation',
+    name: 'Masters',
     active: false,
-    icon: <img src={side6} style={{ width: '25px' }} />,
+    icon: <img src={side2} style={{ width: '25px' }} />,
     subTabs: [
       {
         id: 1.1,
-        name: 'Donation',
-        link: 'buyAccount',
+        name: 'Masters',
+        link: 'master',
         active: false,
         icon: <StorefrontIcon />,
         subTabs: [],
       },
       {
         id: 1.2,
-        name: 'Manual Donation',
+        name: 'Other Masters',
         link: 'sellAccount',
         active: false,
         icon: <SellIcon />,
@@ -85,38 +85,62 @@ const navigationTabs = [
   },
   {
     id: 2,
+    name: 'Donation',
+    active: false,
+    icon: <img src={side6} style={{ width: '25px' }} />,
+    subTabs: [
+      {
+        id: 2.1,
+        name: 'Donation',
+        link: 'donation',
+        active: false,
+        icon: <StorefrontIcon />,
+        subTabs: [],
+      },
+      {
+        id: 2.2,
+        name: 'Manual Donation',
+        link: 'manualdonation',
+        active: false,
+        icon: <SellIcon />,
+        subTabs: [],
+      },
+    ],
+  },
+  {
+    id: 3,
     name: 'System',
     active: false,
     icon: <img src={side5} style={{ width: '25px' }} />,
     subTabs: [
       {
-        id: 2.1,
+        id: 3.1,
         name: 'User Management',
-        link: 'promdotion',
+        link: 'usermanagement',
         active: false,
         icon: <PublicIcon />,
         subTabs: [],
       },
       {
-        id: 2.2,
+        id: 3.2,
         name: 'Role Management',
-        link: 'sponsodrship',
+        link: 'rolemanagement',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
       },
       {
-        id: 2.3,
+        id: 3.3,
         name: 'Generate Voucher',
-        link: 'sponsodrship',
+        link: 'vouchermanagement',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
       },
       {
-        id: 2.4,
+        id: 3.4,
         name: 'Assign Voucher',
-        link: 'sponsodrip',
+        link: 'assign',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
@@ -127,87 +151,88 @@ const navigationTabs = [
 
 const navigationTabs1 = [
   {
-    id: 3,
+    id: 4,
     name: 'Reports',
     active: false,
     icon: <img src={side3} style={{ width: '25px' }} />,
     subTabs: [
       {
-        id: 3.1,
+        id: 4.1,
         name: 'Manual Report',
-        link: 'promdtion',
+        link: 'manualreports',
         active: false,
         icon: <PublicIcon />,
         subTabs: [],
       },
       {
-        id: 3.2,
+        id: 4.2,
         name: 'Consolidated Cash',
-        link: 'sponsodrship',
+        link: 'consolidated/report',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
       },
       {
-        id: 3.3,
+        id: 4.3,
         name: 'Head Donation',
-        link: 'sponsodrship',
+        link: 'head/report',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
       },
       {
-        id: 3.4,
+        id: 4.4,
+        name: 'Donations Report',
+        link: 'reports/allreport',
+        active: false,
+        icon: <AccountBalanceIcon />,
+        subTabs: [],
+      },
+      {
+        id: 4.5,
         name: 'Cash',
-        link: 'sponsdr',
+        link: 'reports/manualcash',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
       },
       {
-        id: 3.5,
+        id: 4.6,
         name: 'Electronic',
-        link: 'sposodr',
+        link: 'reports/electronic',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
       },
       {
-        id: 3.6,
+        id: 4.7,
         name: 'Cheque',
-        link: 'sponodr',
+        link: 'reports/manualcheque',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
       },
       {
-        id: 3.7,
+        id: 4.8,
         name: 'Item',
-        link: 'spoodr',
+        link: 'reports/manualitem',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
       },
+
       {
-        id: 3.8,
-        name: 'Cheque',
-        link: 'spood',
-        active: false,
-        icon: <AccountBalanceIcon />,
-        subTabs: [],
-      },
-      {
-        id: 3.9,
+        id: 4.9,
         name: 'Cheque donation',
-        link: 'spood',
+        link: 'reports/cheque',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
       },
       {
-        id: 3.9,
+        id: 5.1,
         name: 'Online donation',
-        link: 'spood',
+        link: 'reports/online',
         active: false,
         icon: <AccountBalanceIcon />,
         subTabs: [],
@@ -215,13 +240,13 @@ const navigationTabs1 = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     name: 'Dharamshala',
     active: false,
     icon: <img src={side4} style={{ width: '25px' }} />,
     subTabs: [
       {
-        id: 2.1,
+        id: 5.1,
         name: 'Dharamshala',
         link: 'promdoion',
         active: false,
@@ -230,7 +255,7 @@ const navigationTabs1 = [
       },
 
       {
-        id: 2.3,
+        id: 5.3,
         name: 'Category',
         link: 'sponsodrhip',
         active: false,
@@ -238,7 +263,7 @@ const navigationTabs1 = [
         subTabs: [],
       },
       {
-        id: 2.4,
+        id: 5.4,
         name: 'Facilities',
         link: 'sponsodrip',
         active: false,
@@ -246,7 +271,7 @@ const navigationTabs1 = [
         subTabs: [],
       },
       {
-        id: 2.4,
+        id: 5.4,
         name: 'Room',
         link: 'sponsodrip',
         active: false,
@@ -257,13 +282,13 @@ const navigationTabs1 = [
   },
 
   {
-    id: 5,
+    id: 6,
     name: 'Room Booking',
     active: false,
     icon: <img src={side4} style={{ width: '25px' }} />,
     subTabs: [
       {
-        id: 5.1,
+        id: 6.1,
         name: 'Checkin',
         link: 'promdon',
         active: false,
@@ -272,7 +297,7 @@ const navigationTabs1 = [
       },
 
       {
-        id: 5.3,
+        id: 6.3,
         name: 'Hold',
         link: 'sponship',
         active: false,
@@ -280,7 +305,7 @@ const navigationTabs1 = [
         subTabs: [],
       },
       {
-        id: 5.4,
+        id: 6.4,
         name: 'Room Shift',
         link: 'sponsodrip',
         active: false,
@@ -288,7 +313,7 @@ const navigationTabs1 = [
         subTabs: [],
       },
       {
-        id: 5.4,
+        id: 6.4,
         name: 'Room',
         link: 'sponsodrip',
         active: false,
@@ -409,7 +434,10 @@ const MobileDrawer = ({ open, handleDrawerClose }) => {
         <ListItem disablePadding sx={{ display: 'block' }}>
           <StyledListItemButton
             // classes={{ selected: styles.listActive }}
-
+            onClick={() => {
+              handleDrawerClose();
+              navigate('/admin-panel/dashboard');
+            }}
             selected={activeTabId === 0}
             sx={{
               minHeight: 48,
@@ -470,7 +498,7 @@ const MobileDrawer = ({ open, handleDrawerClose }) => {
                       // classes={{ selected: styles.listActive }}
                       selected={subTab.id === activeTabId}
                       onClick={() => {
-                        navigate('/dashboard/' + subTab.link);
+                        navigate('/admin-panel/' + subTab.link);
                         setActiveTabId(subTab.id);
                         handleDrawerClose();
                       }}
@@ -543,8 +571,9 @@ const MobileDrawer = ({ open, handleDrawerClose }) => {
                     <StyledListItemButton
                       selected={subTab.id === activeTabId}
                       onClick={() => {
-                        navigate('/dashboard/' + subTab.link);
+                        navigate('/admin-panel/' + subTab.link);
                         setActiveTabId(subTab.id);
+                        handleDrawerClose();
                       }}
                       sx={{ pl: 4 }}
                     >

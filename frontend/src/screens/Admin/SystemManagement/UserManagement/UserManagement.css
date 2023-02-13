@@ -11,8 +11,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
-    width: 97%;
+    padding-right: 1.5%;
+    padding-left: 0.3%;
+    width: 100%;
    
 }
 .search-header-employee input{

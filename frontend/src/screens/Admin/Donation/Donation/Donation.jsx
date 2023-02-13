@@ -27,6 +27,9 @@ import UnderlinedTab from './common/UnderlinedTab';
 import DownloadIcon from '@mui/icons-material/Download';
 import DonationSuccessfull from './DonationSuccessfull';
 import ClearIcon from '@mui/icons-material/Clear';
+import Print from '../../../../assets/Print.png';
+import ExportPdf from '../../../../assets/ExportPdf.png';
+import ExportExcel from '../../../../assets/ExportExcel.png';
 import exportFromJSON from 'export-from-json';
 import './Donation.css';
 const style = {
@@ -358,7 +361,7 @@ const Donation = ({ setopendashboard }) => {
         <div>
           <div
             className="search-header-div-center"
-            style={{ paddingLeft: '1rem' }}
+            style={{ paddingLeft: '1.5%' }}
           >
             <div className="search-inner-div-reports">
               <div className="Center_main_dic_filetr">
@@ -436,12 +439,38 @@ const Donation = ({ setopendashboard }) => {
               </div>
             </div>
           </div>
-          <div className="search-header-print">
-            <SimCardAlertIcon onClick={() => ExportToExcel()} />
-            &nbsp;&nbsp;
-            <PictureAsPdfIcon
-              onClick={() => ExportPdfmanul(isData, 'Report')}
-            />
+
+          <div
+            className="search-header-print"
+            style={{
+              paddingRight: '1.5%',
+              paddingBottom: '1rem',
+              paddingLeft: '1.5%',
+            }}
+          >
+            <div
+              className="search-header-print"
+              style={{
+                borderBottom: '1px  solid gray',
+                width: '100%',
+                borderTop: ' 1px solid gray',
+                paddingTop: '1%',
+              }}
+            >
+              <img
+                onClick={() => ExportToExcel()}
+                src={ExportExcel}
+                alt="cc"
+                style={{ width: '25px' }}
+              />
+              &nbsp;&nbsp;
+              <img
+                onClick={() => ExportPdfmanul(isData, 'Report')}
+                src={ExportPdf}
+                alt="cc"
+                style={{ width: '25px' }}
+              />
+            </div>
           </div>
 
           <div className="table-div-maain">
@@ -623,7 +652,8 @@ const Donation = ({ setopendashboard }) => {
                             <EditIcon onClick={() => upadteOpen(row)} />
                           )} */}
 
-                          <PrintIcon
+                          <img
+                            style={{ width: '20px' }}
                             onClick={() =>
                               navigation('/admin-panel/reports/printcontent', {
                                 state: {
@@ -631,7 +661,10 @@ const Donation = ({ setopendashboard }) => {
                                 },
                               })
                             }
+                            src={Print}
+                            alt=" Print"
                           />
+
                           {row.isActive ? (
                             <DownloadIcon
                               onClick={() => {

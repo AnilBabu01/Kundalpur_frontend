@@ -589,6 +589,17 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                     </div>
                   )}
 
+                  {isData && isData?.modeOfDonation === 1 && (
+                    <div className="rightitems2  margin_left_div">
+                      <h2 style={{ marginLeft: '38%' }}>विवरण :</h2>
+                      <h2 className="font_bold_in_donation">
+                        {isData &&
+                          isData.manualItemDetails &&
+                          isData.manualItemDetails[0].remark}
+                      </h2>
+                    </div>
+                  )}
+
                   {isData && isData?.modeOfDonation === '3' && (
                     <span className="rightitems2  margin_left_div">
                       <h2 style={{ marginLeft: '38%' }}>विवरण :</h2>
@@ -684,7 +695,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
               <div className="bankdetails">
                 <div className="banks1">
                   <h5>AXIS BANK, DAMOH</h5>
-                  <h4>9100100000535130</h4>
+                  <h4>910010000535130</h4>
                   <p>UTIB0000770</p>
                 </div>
                 <div className="banks2">

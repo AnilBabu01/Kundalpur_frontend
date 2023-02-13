@@ -11,7 +11,6 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Box, Typography } from '@mui/material';
-// import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Collapse from '@mui/material/Collapse';
 import Divider from '@mui/material/Divider';
 import MuiDrawer from '@mui/material/Drawer';
@@ -22,19 +21,20 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../../assets/logo.jpeg';
 import logo1 from '../../../assets/logo1.jpeg';
-import side1 from '../../../assets/side1.jpeg';
-import side2 from '../../../assets/side2.jpeg';
-import side3 from '../../../assets/side3.jpeg';
-import side4 from '../../../assets/side4.jpeg';
-import side5 from '../../../assets/side4.jpeg';
-import side6 from '../../../assets/side5.jpeg';
+import f1 from '../../../assets/f1.png';
+import f2 from '../../../assets/f2.png';
+import f3 from '../../../assets/f3.png';
+import f4 from '../../../assets/f4.png';
+import f5 from '../../../assets/f5.png';
+import f6 from '../../../assets/f6.png';
+import croppedlogo from '../../../assets/croppedlogo.png';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 
 const drawerWidth = '17%';
@@ -148,12 +148,13 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
   const navigate = useNavigate();
   const [openedTab, setOpenedTab] = React.useState(0); // for opening subtabs
   const [activeTabId, setActiveTabId] = React.useState(1); // for showing tab as active
+  const [userrole, setuserrole] = React.useState('');
   const navigationTabs = [
     {
       id: 1,
       name: 'Masters',
       active: false,
-      icon: <img src={side2} style={{ width: '25px' }} />,
+      icon: <img src={f5} alt="f5" style={{ width: '25px' }} />,
       subTabs: [
         {
           id: 1.1,
@@ -177,7 +178,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       id: 2,
       name: 'Donation',
       active: false,
-      icon: <img src={side6} style={{ width: '25px' }} />,
+      icon: <img src={f4} alt="f4" style={{ width: '25px' }} />,
       subTabs: [
         {
           id: 2.1,
@@ -201,7 +202,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       id: 3,
       name: 'System',
       active: false,
-      icon: <img src={side5} style={{ width: '25px' }} />,
+      icon: <img src={f3} alt="f3" style={{ width: '25px' }} />,
       subTabs: [
         {
           id: 3.1,
@@ -239,12 +240,38 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
     },
   ];
 
+  const navigationEmpTabs = [
+    {
+      id: 1,
+      name: 'Donation',
+      active: false,
+      icon: <img src={f4} alt="f4" style={{ width: '25px' }} />,
+      subTabs: [
+        {
+          id: 1.1,
+          name: 'Donation',
+          link: 'donation',
+          active: false,
+          icon: <StorefrontIcon />,
+          subTabs: [],
+        },
+        {
+          id: 1.2,
+          name: 'Manual Donation',
+          link: 'manualdonation',
+          active: false,
+          icon: <SellIcon />,
+          subTabs: [],
+        },
+      ],
+    },
+  ];
   const navigationTabs1 = [
     {
       id: 4,
       name: 'Reports',
       active: false,
-      icon: <img src={side3} style={{ width: '25px' }} />,
+      icon: <img src={f2} alt="f2" style={{ width: '25px' }} />,
       subTabs: [
         {
           id: 4.1,
@@ -333,7 +360,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       id: 5,
       name: 'Dharamshala',
       active: false,
-      icon: <img src={side4} style={{ width: '25px' }} />,
+      icon: <img src={f1} alt="f1" style={{ width: '25px' }} />,
       subTabs: [
         {
           id: 5.1,
@@ -375,7 +402,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       id: 6,
       name: 'Room Booking',
       active: false,
-      icon: <img src={side4} style={{ width: '25px' }} />,
+      icon: <img src={f1} alt="f1" style={{ width: '25px' }} />,
       subTabs: [
         {
           id: 6.1,
@@ -413,6 +440,184 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       ],
     },
   ];
+  const navigationEmpTabs1 = [
+    {
+      id: 4,
+      name: 'Reports',
+      active: false,
+      icon: <img src={f2} alt="f2" style={{ width: '25px' }} />,
+      subTabs: [
+        {
+          id: 4.1,
+          name: 'Manual Report',
+          link: 'manualreports',
+          active: false,
+          icon: <PublicIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.2,
+          name: 'Consolidated Cash',
+          link: 'consolidated/report',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.3,
+          name: 'Head Donation',
+          link: 'head/report',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.4,
+          name: 'Donations Report',
+          link: 'reports/allreport',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.5,
+          name: 'Cash',
+          link: 'reports/manualcash',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.6,
+          name: 'Electronic',
+          link: 'reports/electronic',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.7,
+          name: 'Cheque',
+          link: 'reports/manualcheque',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.8,
+          name: 'Item',
+          link: 'reports/manualitem',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+
+        {
+          id: 4.9,
+          name: 'Cheque donation',
+          link: 'reports/cheque',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 5.1,
+          name: 'Online donation',
+          link: 'reports/online',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+      ],
+    },
+    {
+      id: 5,
+      name: 'Dharamshala',
+      active: false,
+      icon: <img src={f1} alt="f1" style={{ width: '25px' }} />,
+      subTabs: [
+        {
+          id: 5.1,
+          name: 'Dharamshala',
+          link: 'promdoion',
+          active: false,
+          icon: <PublicIcon />,
+          subTabs: [],
+        },
+
+        {
+          id: 5.3,
+          name: 'Category',
+          link: 'sponsodrhip',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 5.4,
+          name: 'Facilities',
+          link: 'sponsodrip',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 5.4,
+          name: 'Room',
+          link: 'sponsodrip',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+      ],
+    },
+
+    {
+      id: 6,
+      name: 'Room Booking',
+      active: false,
+      icon: <img src={f1} alt="f1" style={{ width: '25px' }} />,
+      subTabs: [
+        {
+          id: 6.1,
+          name: 'Checkin',
+          link: 'promdon',
+          active: false,
+          icon: <PublicIcon />,
+          subTabs: [],
+        },
+
+        {
+          id: 6.3,
+          name: 'Hold',
+          link: 'sponship',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 6.4,
+          name: 'Room Shift',
+          link: 'sponsodrip',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 6.4,
+          name: 'Room',
+          link: 'sponsodrip',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+      ],
+    },
+  ];
+  useEffect(() => {
+    setuserrole(Number(sessionStorage.getItem('userrole')));
+  }, []);
+
   return (
     <Drawer
       variant="permanent"
@@ -435,11 +640,12 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
           {open ? (
             <>
               <img
-                src={logo1}
+                src={croppedlogo}
                 style={{
                   width: '180px',
                   height: '50px',
                   borderRadius: '50%',
+                  marginRight: '20%',
                 }}
                 alt="Logo"
               />
@@ -491,7 +697,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                   justifyContent: 'center',
                 }}
               >
-                <img src={side1} style={{ width: '25px' }} />
+                <img src={f6} alt="f6" style={{ width: '25px' }} />
               </ListItemIcon>
               <ListItemText
                 classes={{ root: stylesag.ListText }}
@@ -503,48 +709,101 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         </ListItem>
         <Divider style={{ padding: '5px 0px' }} />
 
-        {/* Navigation Tabs from here */}
+        {/* Admin Navigation Tabs */}
 
-        {navigationTabs.map((Tab, i) => (
-          <React.Fragment key={i}>
-            <StyledListItemButton
-              selected={Tab.id === activeTabId}
-              onClick={() => {
-                setActiveTabId(Tab.id);
-                setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
-              }}
-            >
-              <ListItemIcon>{Tab.icon}</ListItemIcon>
-              <ListItemText primary={Tab.name} />
+        {userrole === 1
+          ? navigationTabs.map((Tab, i) => (
+              <React.Fragment key={i}>
+                <StyledListItemButton
+                  selected={Tab.id === activeTabId}
+                  onClick={() => {
+                    setActiveTabId(Tab.id);
+                    setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
+                  }}
+                >
+                  <ListItemIcon>{Tab.icon}</ListItemIcon>
+                  <ListItemText primary={Tab.name} />
 
-              {Tab.id === activeTabId && openedTab !== 0 ? (
-                <ExpandLess />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </StyledListItemButton>
+                  {Tab.id === activeTabId && openedTab !== 0 ? (
+                    <ExpandLess />
+                  ) : (
+                    <ChevronRightIcon />
+                  )}
+                </StyledListItemButton>
 
-            <Collapse in={Tab.id === openedTab} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                {Tab.subTabs.map((subTab, index) => (
-                  <React.Fragment key={index}>
-                    <StyledListItemButton
-                      selected={subTab.id === activeTabId}
-                      onClick={() => {
-                        navigate('/admin-panel/' + subTab.link);
-                        setActiveTabId(subTab.id);
-                      }}
-                      sx={{ pl: 4 }}
-                    >
-                      <ListItemIcon>{subTab.icon}</ListItemIcon>
-                      <ListItemText primary={subTab.name} />
-                    </StyledListItemButton>
-                  </React.Fragment>
-                ))}
-              </List>
-            </Collapse>
-          </React.Fragment>
-        ))}
+                <Collapse
+                  in={Tab.id === openedTab}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List component="div" disablePadding>
+                    {Tab.subTabs.map((subTab, index) => (
+                      <React.Fragment key={index}>
+                        <StyledListItemButton
+                          selected={subTab.id === activeTabId}
+                          onClick={() => {
+                            navigate('/admin-panel/' + subTab.link);
+                            setActiveTabId(subTab.id);
+                            handleDrawerClose();
+                            setOpenedTab(null);
+                          }}
+                          sx={{ pl: 4 }}
+                        >
+                          <ListItemIcon>{subTab.icon}</ListItemIcon>
+                          <ListItemText primary={subTab.name} />
+                        </StyledListItemButton>
+                      </React.Fragment>
+                    ))}
+                  </List>
+                </Collapse>
+              </React.Fragment>
+            ))
+          : navigationEmpTabs.map((Tab, i) => (
+              <React.Fragment key={i}>
+                <StyledListItemButton
+                  selected={Tab.id === activeTabId}
+                  onClick={() => {
+                    setActiveTabId(Tab.id);
+                    setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
+                  }}
+                >
+                  <ListItemIcon>{Tab.icon}</ListItemIcon>
+                  <ListItemText primary={Tab.name} />
+
+                  {Tab.id === activeTabId && openedTab !== 0 ? (
+                    <ExpandLess />
+                  ) : (
+                    <ChevronRightIcon />
+                  )}
+                </StyledListItemButton>
+
+                <Collapse
+                  in={Tab.id === openedTab}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List component="div" disablePadding>
+                    {Tab.subTabs.map((subTab, index) => (
+                      <React.Fragment key={index}>
+                        <StyledListItemButton
+                          selected={subTab.id === activeTabId}
+                          onClick={() => {
+                            navigate('/admin-panel/' + subTab.link);
+                            setActiveTabId(subTab.id);
+                            handleDrawerClose();
+                            setOpenedTab(null);
+                          }}
+                          sx={{ pl: 4 }}
+                        >
+                          <ListItemIcon>{subTab.icon}</ListItemIcon>
+                          <ListItemText primary={subTab.name} />
+                        </StyledListItemButton>
+                      </React.Fragment>
+                    ))}
+                  </List>
+                </Collapse>
+              </React.Fragment>
+            ))}
       </List>
 
       <ListItem disablePadding sx={{ display: 'block' }}>
@@ -568,7 +827,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
               justifyContent: 'center',
             }}
           >
-            <img src={side6} style={{ width: '25px' }} />
+            <img src={f4} alt="f3" style={{ width: '25px' }} />
           </ListItemIcon>
           <ListItemText
             classes={{ root: stylesag.ListText }}
@@ -580,46 +839,99 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       <List>
         {/* Navigation Tabs from here */}
 
-        {navigationTabs1.map((Tab, i) => (
-          <React.Fragment key={i}>
-            <StyledListItemButton
-              selected={Tab.id === activeTabId}
-              onClick={() => {
-                setActiveTabId(Tab.id);
-                setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
-              }}
-            >
-              <ListItemIcon>{Tab.icon}</ListItemIcon>
-              <ListItemText primary={Tab.name} />
+        {userrole === 1
+          ? navigationTabs1.map((Tab, i) => (
+              <React.Fragment key={i}>
+                <StyledListItemButton
+                  selected={Tab.id === activeTabId}
+                  onClick={() => {
+                    setActiveTabId(Tab.id);
+                    setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
+                  }}
+                >
+                  <ListItemIcon>{Tab.icon}</ListItemIcon>
+                  <ListItemText primary={Tab.name} />
 
-              {Tab.id === activeTabId && openedTab !== 0 ? (
-                <ExpandLess />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </StyledListItemButton>
+                  {Tab.id === activeTabId && openedTab !== 0 ? (
+                    <ExpandLess />
+                  ) : (
+                    <ChevronRightIcon />
+                  )}
+                </StyledListItemButton>
 
-            <Collapse in={Tab.id === openedTab} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                {Tab.subTabs.map((subTab, index) => (
-                  <React.Fragment key={index}>
-                    <StyledListItemButton
-                      selected={subTab.id === activeTabId}
-                      onClick={() => {
-                        navigate('/admin-panel/' + subTab.link);
-                        setActiveTabId(subTab.id);
-                      }}
-                      sx={{ pl: 4 }}
-                    >
-                      <ListItemIcon>{subTab.icon}</ListItemIcon>
-                      <ListItemText primary={subTab.name} />
-                    </StyledListItemButton>
-                  </React.Fragment>
-                ))}
-              </List>
-            </Collapse>
-          </React.Fragment>
-        ))}
+                <Collapse
+                  in={Tab.id === openedTab}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List component="div" disablePadding>
+                    {Tab.subTabs.map((subTab, index) => (
+                      <React.Fragment key={index}>
+                        <StyledListItemButton
+                          selected={subTab.id === activeTabId}
+                          onClick={() => {
+                            navigate('/admin-panel/' + subTab.link);
+                            setActiveTabId(subTab.id);
+                            handleDrawerClose();
+                            setOpenedTab(null);
+                          }}
+                          sx={{ pl: 4 }}
+                        >
+                          <ListItemIcon>{subTab.icon}</ListItemIcon>
+                          <ListItemText primary={subTab.name} />
+                        </StyledListItemButton>
+                      </React.Fragment>
+                    ))}
+                  </List>
+                </Collapse>
+              </React.Fragment>
+            ))
+          : navigationEmpTabs1.map((Tab, i) => (
+              <React.Fragment key={i}>
+                <StyledListItemButton
+                  selected={Tab.id === activeTabId}
+                  onClick={() => {
+                    setActiveTabId(Tab.id);
+                    setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
+                  }}
+                >
+                  <ListItemIcon>{Tab.icon}</ListItemIcon>
+                  <ListItemText primary={Tab.name} />
+
+                  {Tab.id === activeTabId && openedTab !== 0 ? (
+                    <ExpandLess />
+                  ) : (
+                    <ChevronRightIcon />
+                  )}
+                </StyledListItemButton>
+
+                <Collapse
+                  in={Tab.id === openedTab}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List component="div" disablePadding>
+                    {Tab.subTabs.map((subTab, index) => (
+                      <React.Fragment key={index}>
+                        <StyledListItemButton
+                          selected={subTab.id === activeTabId}
+                          onClick={() => {
+                            navigate('/admin-panel/' + subTab.link);
+                            setActiveTabId(subTab.id);
+                            handleDrawerClose();
+                            setOpenedTab(null);
+                          }}
+                          sx={{ pl: 4 }}
+                        >
+                          <ListItemIcon>{subTab.icon}</ListItemIcon>
+                          <ListItemText primary={subTab.name} />
+                        </StyledListItemButton>
+                      </React.Fragment>
+                    ))}
+                  </List>
+                </Collapse>
+              </React.Fragment>
+            ))}
       </List>
     </Drawer>
   );

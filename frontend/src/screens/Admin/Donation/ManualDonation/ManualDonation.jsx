@@ -40,6 +40,9 @@ import ChequeDonation from './ChequeDonationManual';
 import UnderlinedTab from './common/UnderlinedTab';
 import DownloadIcon from '@mui/icons-material/Download';
 import DonationSuccessfull from './DonationSuccessfull';
+import Print from '../../../../assets/Print.png';
+import ExportPdf from '../../../../assets/ExportPdf.png';
+import ExportExcel from '../../../../assets/ExportExcel.png';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -233,6 +236,7 @@ const ManualDonation = ({ setopendashboard }) => {
     });
     exportFromJSON({ data, fileName, exportType });
   };
+
   const voucherexhauted = async (row) => {
     printreceipt(row);
     if (res.data.status === true) {
@@ -326,27 +330,6 @@ const ManualDonation = ({ setopendashboard }) => {
         </Fade>
       </Modal>
 
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you want to delete'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -397,7 +380,10 @@ const ManualDonation = ({ setopendashboard }) => {
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div className="search-header" style={{ paddingLeft: '1rem' }}>
+          <div
+            className="search-header"
+            style={{ paddingLeft: '1.5%', paddingRight: '1.5%' }}
+          >
             <div className="search-inner-div-reports">
               <div className="Center_main_dic_filetr1">
                 <label>From Date</label>
@@ -434,12 +420,37 @@ const ManualDonation = ({ setopendashboard }) => {
             {/* <div></div> */}
           </div>
 
-          <div className="search-header-print">
-            <SimCardAlertIcon onClick={() => ExportToExcel()} />
-            &nbsp;&nbsp;
-            <PictureAsPdfIcon
-              onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
-            />
+          <div
+            className="search-header-print"
+            style={{
+              paddingRight: '1.5%',
+              paddingBottom: '1rem',
+              paddingLeft: '1.5%',
+            }}
+          >
+            <div
+              className="search-header-print"
+              style={{
+                borderBottom: '1px  solid gray',
+                width: '100%',
+                borderTop: ' 1px solid gray',
+                paddingTop: '1%',
+              }}
+            >
+              <img
+                onClick={() => ExportToExcel()}
+                src={ExportExcel}
+                alt="cc"
+                style={{ width: '25px' }}
+              />
+              &nbsp;&nbsp;
+              <img
+                onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+                src={ExportPdf}
+                alt="cc"
+                style={{ width: '25px' }}
+              />
+            </div>
           </div>
 
           <div className="table-div-maain">
@@ -590,8 +601,7 @@ const ManualDonation = ({ setopendashboard }) => {
                           {/* {userrole === 1 && (
                             <EditIcon onClick={() => upadteOpen(row)} />
                           )} */}
-
-                          <PrintIcon
+                          <img
                             onClick={() =>
                               navigation('/admin-panel/printContentmanul', {
                                 state: {
@@ -599,7 +609,11 @@ const ManualDonation = ({ setopendashboard }) => {
                                 },
                               })
                             }
+                            src={Print}
+                            alt="Print"
+                            style={{ width: '20px' }}
                           />
+
                           {row.isActive ? (
                             <DownloadIcon
                               onClick={() => {

@@ -20,12 +20,18 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import UploadIcon from '@mui/icons-material/Upload';
 import Divider from '@mui/material/Divider';
 import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { ListItemButton } from '@mui/material';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -66,6 +72,112 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const notificationMenuItems = [
+  {
+    title: 'Title for notification',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed turpis vitae lorem aliquam ultricies. lorem aliquam ultricies. lorem aliquam ultricies.',
+    icon: (
+      <Avatar
+        sx={{
+          bgcolor: 'colors.green',
+        }}
+      >
+        <NotificationsNoneOutlinedIcon
+          fontSize="large"
+          sx={{
+            color: 'common.white',
+          }}
+        />
+      </Avatar>
+    ),
+  },
+  {
+    title: 'Title for notification',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed turpis vitae lorem aliquam ultricies. lorem aliquam ultricies. lorem aliquam ultricies.',
+    icon: (
+      <Avatar
+        sx={{
+          bgcolor: 'colors.green',
+        }}
+      >
+        <NotificationsNoneOutlinedIcon
+          fontSize="large"
+          sx={{
+            color: 'common.white',
+          }}
+        />
+      </Avatar>
+    ),
+  },
+  {
+    title: 'Title for notification',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed turpis vitae lorem aliquam ultricies. lorem aliquam ultricies. lorem aliquam ultricies.',
+    icon: (
+      <Avatar
+        sx={{
+          bgcolor: 'colors.green',
+        }}
+      >
+        <NotificationsNoneOutlinedIcon
+          fontSize="large"
+          sx={{
+            color: 'common.white',
+          }}
+        />
+      </Avatar>
+    ),
+  },
+];
+const RenderNotification1 = () => {
+  return (
+    <>
+      {notificationMenuItems.map(({ title, icon, description }) => {
+        return (
+          <div key={title}>
+            <ListItem alignItems="flex-start" disableGutters disablePadding>
+              <ListItemButton>
+                <ListItemAvatar>{icon}</ListItemAvatar>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontWeight: 700,
+                  }}
+                  primary={title}
+                  secondary={<p>{description.slice(0, 30)}</p>}
+                />
+              </ListItemButton>
+            </ListItem>
+            <Divider
+              sx={{
+                borderBottomWidth: 2,
+              }}
+            />
+          </div>
+        );
+      })}
+
+      <Box
+        sx={{
+          flex: 1,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Typography
+          component="a"
+          sx={{
+            cursor: 'pointer',
+          }}
+        >
+          See more
+        </Typography>
+      </Box>
+    </>
+  );
+};
 const DashboardWrapper = () => {
   const navigate = useNavigate();
   const resize = WindowResize();
@@ -83,6 +195,17 @@ const DashboardWrapper = () => {
   const handleClose = () => {
     setAnchorEl1(null);
   };
+
+  const [anchorEl2, setAnchorEl2] = useState(false);
+  const open2 = Boolean(anchorEl2);
+
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
+
   const handleDrawerOpen = () => {
     setOpen(true);
     console.log('open');
@@ -102,6 +225,44 @@ const DashboardWrapper = () => {
   };
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
+
+  const RenderNotification = (
+    <Menu
+      anchorEl={anchorEl2}
+      id="account-menu"
+      open={open2}
+      onClose={handleClose2}
+      onClick={handleClose2}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          overflow: 'visible',
+          filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+          mt: 1.5,
+          '& .MuiAvatar-root': {
+            width: 22,
+            height: 32,
+          },
+          '&:before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            right: 14,
+            width: 10,
+            height: 10,
+            bgcolor: 'background.paper',
+            transform: 'translateY(-50%) rotate(45deg)',
+            zIndex: 0,
+          },
+        },
+      }}
+      transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+    >
+      <RenderNotification1 />
+    </Menu>
+  );
 
   const renderMobileMenu = (
     <Menu
@@ -165,7 +326,7 @@ const DashboardWrapper = () => {
       <AppBar
         elevation={0}
         position="static"
-        sx={{ bgcolor: 'white', color: 'black', paddingLeft: '3%' }}
+        sx={{ bgcolor: 'white', color: 'black', paddingLeft: '2.3%' }}
       >
         <Toolbar>
           {resize.isMobile ? (
@@ -245,6 +406,7 @@ const DashboardWrapper = () => {
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
+              onClick={handleClick2}
             >
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
@@ -329,6 +491,7 @@ const DashboardWrapper = () => {
         </Box>
       </Box>
       {renderMobileMenu}
+      {RenderNotification}
     </Box>
   );
 };

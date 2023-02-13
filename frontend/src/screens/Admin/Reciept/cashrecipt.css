@@ -339,7 +339,7 @@
       background: blue;
       border: navajowhite;
       color: white;
-      width: 7%;
+      width: 10%;
       border-radius: 5px;
       font-size: 16px;
       font-weight: 600;
@@ -371,7 +371,11 @@
     margin-top: 1%;
   }
 
-
+.close_btn_div_popup_receipt{
+  display: flex;
+  margin-left: 96%;
+  padding-top: 1rem;
+}
   @media screen and (max-width: 780px) {
     .main-certificate {
       width: 100%;

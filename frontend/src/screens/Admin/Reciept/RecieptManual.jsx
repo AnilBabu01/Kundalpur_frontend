@@ -16,16 +16,6 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const navigation = useNavigate();
   const { user } = useSelector((state) => state.userReducer);
   console.log('data form', isData);
-  useEffect(() => {
-    setshowreciept(true);
-    setopendashboard(false);
-    if (location.state) {
-      setisData(location.state?.userdata);
-    }
-  }, []);
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
 
   function printDiv() {
     navigation('/admin-panel/printContentmanul', {
@@ -61,7 +51,13 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
 
     return dateAndTime;
   };
-
+  useEffect(() => {
+    // setshowreciept(true);
+    // setopendashboard(false);
+    if (location.state) {
+      setisData(location.state?.userdata);
+    }
+  }, []);
   return (
     <>
       <div>

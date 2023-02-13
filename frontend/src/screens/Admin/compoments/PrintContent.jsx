@@ -25,8 +25,8 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
   console.log(isData);
   useEffect(() => {
-    setshowreciept(true);
-    setopendashboard(false);
+    // setshowreciept(true);
+    // setopendashboard(false);
 
     if (location.state) {
       setisData(location.state?.data);

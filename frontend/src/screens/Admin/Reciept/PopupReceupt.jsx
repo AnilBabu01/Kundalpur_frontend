@@ -6,10 +6,17 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Moment from 'moment-js';
 import moment from 'moment';
+import CloseIcon from '@mui/icons-material/Close';
 import { serverInstance } from '../../../API/ServerInstance';
 import './cashrecipt.css';
 const converter = new Converter(hiIN);
-const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
+const PopupReceupt = ({
+  setopendashboard,
+  setshowreciept,
+  onlineId,
+  handleClose,
+  rowData,
+}) => {
   const location = useLocation();
   const componentRef = useRef();
   const [isData, setisData] = React.useState(null);
@@ -37,40 +44,25 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   }
 
   useEffect(() => {
-    // setshowreciept(true);
-    // setopendashboard(false);
-    if (location.state) {
-      setisData(location.state?.userdata);
-    } else {
-      serverInstance(`admin/donation-list?id=${onlineId}`, 'get').then(
-        (res) => {
-          if (res.status) {
-            setisData(res.data[0]);
-          }
-        },
-      );
+    if (rowData) {
+      setisData(rowData);
     }
   }, []);
 
   return (
     <>
       <div>
-        <div className="button_div_print_download">
-          {/* {isData && isData.elecItemDetails ? (
-            <>
-              <button onClick={() => navigation('/admin-panel/donation')}>
-                Back
-              </button>
-            </>
-          ) : (
-            <>
-              <button onClick={() => navigation('/donation')}>Back</button>
-            </>
-          )} */}
+        <div className="close_btn_div_popup_receipt">
+          <CloseIcon onClick={() => handleClose()} />
 
           <div />
         </div>
-        <div className="main-certificate" id="receipt" ref={componentRef}>
+        <div
+          className="main-certificate"
+          id="receipt"
+          ref={componentRef}
+          style={{ width: '90%' }}
+        >
           <div className="topinfo-flex">
             <p>E-mail:badebaba.kundalpur@gmail.com</p>
             <p>॥ श्री बड़े बाबा नम:॥</p>
@@ -783,4 +775,4 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   );
 };
 
-export default CashRecipt;
+export default PopupReceupt;

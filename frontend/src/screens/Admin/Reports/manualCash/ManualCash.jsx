@@ -73,20 +73,17 @@ const ManualCash = ({ setopendashboard }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [showalert, setshowalert] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const [open1, setOpen1] = React.useState(false);
-  const [deleteId, setdeleteId] = useState('');
   const [updateData, setupdateData] = useState('');
   const [openupdate, setopenupdate] = useState(false);
   const [showUpdateBtn, setshowUpdateBtn] = useState(true);
   const [phone, setphone] = useState('');
   const [date, setdate] = useState('');
-  const [typedonation, settypedonation] = useState(2);
   const [name, setname] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [updateId, setupdateId] = useState('');
-  const [showsearchData, setshowsearchData] = useState(false);
   const [typeid, settypeid] = useState('');
   const [userrole, setuserrole] = useState('');
+  const [type, settype] = useState('');
   console.log('aa', typeid);
   const handleOpen = (id) => {
     setupdateId(id);
@@ -99,34 +96,6 @@ const ManualCash = ({ setopendashboard }) => {
   const upadteOpen = (row) => {
     setupdateData(row);
     setopenupdate(true);
-  };
-
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-  };
-
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
-
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, 'delete').then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire(
-            'Great!',
-            'Eletronic donation delete successfully',
-            'success',
-          );
-          setshowalert(true);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-        console.log(res);
-      },
-    );
   };
 
   const getall_donation = () => {
@@ -196,14 +165,11 @@ const ManualCash = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/search-donation?name=${name}&date=${date}&phone=${phone}&modeOfDonation=${2}`,
+      `${backendApiUrl}user/search-donation?type=${type}&name=${name}&date=${date}&phone=${phone}&modeOfDonation=${2}`,
     );
-
-    console.log('filter data is', res.data.data);
-    // if (res.data.status) {
-    //   setshowsearchData(!showsearchData);
-    //   setisData(res.data.data);
-    // }
+    if (res.data.status) {
+      setisData(res.data.data);
+    }
   };
 
   const get_donation_tyeps = () => {
@@ -305,14 +271,10 @@ const ManualCash = ({ setopendashboard }) => {
                   value={date}
                   onChange={(e) => setdate(e.target.value)}
                 />
-                <select
-                  name="cars"
-                  id="cars"
-                  onChange={(e) => settypeid(e.target.value)}
-                >
+                <select id="cars" onChange={(e) => settype(e.target.value)}>
                   <option>Select option</option>
                   {donationTypes.map((item, idx) => {
-                    return <option value={item.id}>{item.type_hi}</option>;
+                    return <option value={item.type_hi}>{item.type_hi}</option>;
                   })}
                 </select>
                 <button onClick={() => filterdata()}>Search</button>

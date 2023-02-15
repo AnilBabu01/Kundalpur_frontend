@@ -23,6 +23,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 import Adduser from './Adduser/Adduser';
+import Typography from '@mui/material/Typography';
 import './UserManagement.css';
 
 const style = {
@@ -30,11 +31,11 @@ const style = {
   top: '48%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-
+  background: '#FFFFFF',
+  borderRadius: '15px',
   bgcolor: 'background.paper',
-  p: 2,
+  p: 1,
   boxShadow: 24,
-  borderRadius: '5px',
 };
 const UserManagement = ({ setopendashboard }) => {
   const navigate = useNavigate();
@@ -83,6 +84,16 @@ const UserManagement = ({ setopendashboard }) => {
     });
   };
 
+  var options = { year: 'numeric', month: 'short', day: '2-digit' };
+  var today = new Date();
+  const currDate = today
+    .toLocaleDateString('en-IN', options)
+    .replace(/-/g, ' ');
+  const currTime = today.toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -129,8 +140,14 @@ const UserManagement = ({ setopendashboard }) => {
         <Fade in={open}>
           <Box sx={style}>
             <div>
-              <div className="add-div-close-div1">
-                <h2> Add User</h2>
+              <div className="add-div-close-div-user-add">
+                <div>
+                  <h2 className="add_text_only"> Add User</h2>
+                  <Typography variant="body2" color="primary" align="right">
+                    {currDate} / {currTime}
+                  </Typography>
+                </div>
+
                 <CloseIcon onClick={() => handleClose()} />
               </div>
 

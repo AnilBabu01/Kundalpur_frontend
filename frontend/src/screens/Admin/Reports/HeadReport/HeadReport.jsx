@@ -67,71 +67,15 @@ const donationColorTheme = {
 };
 
 const HeadReport = ({ setopendashboard }) => {
-  const navigation = useNavigate();
   const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [showalert, setshowalert] = useState(false);
-  const [open, setOpen] = React.useState(false);
-  const [open1, setOpen1] = React.useState(false);
-  const [deleteId, setdeleteId] = useState('');
-  const [updateData, setupdateData] = useState('');
-  const [openupdate, setopenupdate] = useState(false);
-  const [showUpdateBtn, setshowUpdateBtn] = useState(true);
-  const [phone, setphone] = useState('');
-  const [date, setdate] = useState('');
-  const [typedonation, settypedonation] = useState(2);
-  const [name, setname] = useState('');
-  const [donationTypes, setDonationTypes] = useState([]);
-  const [updateId, setupdateId] = useState('');
-  const [showsearchData, setshowsearchData] = useState(false);
-  const [typeid, settypeid] = useState('');
   const [empylist, setempylist] = useState('');
   const [userrole, setuserrole] = useState('');
   const [empId, setempId] = useState('');
   const [datefrom, setdatefrom] = useState('');
   const [dateto, setdateto] = useState('');
-  console.log('aa', typeid);
-  const handleOpen = (id) => {
-    setupdateId(id);
-    setOpen(true);
-  };
-  const handleClose = () => setOpen(false);
-  const upadteClose = () => {
-    setopenupdate(false);
-  };
-  const upadteOpen = (row) => {
-    setupdateData(row);
-    setopenupdate(true);
-  };
-
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-  };
-
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
-
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, 'delete').then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire(
-            'Great!',
-            'Eletronic donation delete successfully',
-            'success',
-          );
-          setshowalert(true);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-        console.log(res);
-      },
-    );
-  };
+  const [SearchHead, setSearchHead] = useState('');
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -153,33 +97,60 @@ const HeadReport = ({ setopendashboard }) => {
   };
 
   const ExportToExcel = () => {
-    const fileName = 'ManualCashReport';
+    const fileName = 'HeadReport';
     const exportType = 'xls';
     var data = [];
     isData.map((item, index) => {
       data.push({
-        Date: Moment(item.donation_date).format('DD-MM-YYYY'),
-        'Receipt No': item?.ReceiptNo,
-        'Voucher No': item?.voucherNo,
-        'Phone No': item?.phoneNo,
-        name: item?.name,
-        Address: item?.address,
-        'Head/Item': item?.elecItemDetails.map((row) => {
-          return row.type;
-        }),
-        Amount: item?.elecItemDetails.reduce(
-          (n, { amount }) => parseFloat(n) + parseFloat(amount),
-          0,
-        ),
-        remark: item?.elecItemDetails.map((row) => {
-          return row.remark;
-        }),
+        Head: item?.type,
+        Count: item?.count,
+        'Amount Cheque': item?.cheque_amount ? item?.cheque_amount : '0',
+        'Amount Electronic': item?.electric_amount
+          ? item?.electric_amount
+          : '0',
+        'Amount Item': item?.item_amount ? item?.item_amount : '0',
+        'Amount Cash': item?.cash_amount ? item?.cash_amount : '0',
+        Total: item?.total_amount ? item?.total_amount : '0',
         'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
       });
     });
     exportFromJSON({ data, fileName, exportType });
   };
 
+  const ExportToExcel1 = () => {
+    const fileName = 'Report';
+    const exportType = 'xls';
+    var data = [];
+    SearchHead &&
+      SearchHead.map((item, index) => {
+        data.push({
+          Date: Moment(item.donation_date).format('DD-MM-YYYY'),
+          'Receipt No': item?.ReceiptNo,
+          'Voucher No': item?.voucherNo,
+          'Phone No': item?.phoneNo,
+          name: item?.name,
+          Address: item?.address,
+          'Head/Item': item?.elecItemDetails
+            ? item?.elecItemDetails.map((row) => {
+                return row.type;
+              })
+            : item?.type,
+          Amount: item?.elecItemDetails
+            ? item?.elecItemDetails.reduce(
+                (n, { amount }) => parseFloat(n) + parseFloat(amount),
+                0,
+              )
+            : item?.Amount,
+          remark: item?.elecItemDetails
+            ? item?.elecItemDetails.map((row) => {
+                return row.remark;
+              })
+            : item?.remark,
+          'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
+        });
+      });
+    exportFromJSON({ data, fileName, exportType });
+  };
   const filterdata = async () => {
     axios.defaults.headers.get[
       'Authorization'
@@ -190,33 +161,30 @@ const HeadReport = ({ setopendashboard }) => {
     );
     console.log('filter data is now', res.data.data);
     if (res.data.status) {
-      setshowsearchData(!showsearchData);
       setisData(res.data.data);
     }
   };
 
-  const get_donation_tyeps = () => {
-    try {
-      Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
-        ([res, item]) => {
-          if (res.status) {
-            setDonationTypes(res.data);
-            console.log(res.data);
-          } else {
-            Swal.fire('Error', 'somthing went  wrong', 'error');
-          }
-        },
-      );
-    } catch (error) {
-      Swal.fire('Error!', error, 'error');
+  const filterHead = async (type) => {
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+    const res = await axios.get(
+      `${backendApiUrl}user/searchAllDonation?employeeid=${empId}&type=${type}&fromDate=${datefrom}&toDate=${dateto}`,
+    );
+    console.log('Head data is ', res.data.data);
+    if (res.data.status) {
+      setSearchHead(res.data.data);
     }
   };
+
   useEffect(() => {
     setopendashboard(true);
     getAllEmp();
-    get_donation_tyeps();
+
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, [showalert, openupdate, open]);
+  }, []);
 
   return (
     <>
@@ -261,7 +229,7 @@ const HeadReport = ({ setopendashboard }) => {
                 <button onClick={() => getall_donation()}>Reset</button>
                 <SimCardAlertIcon onClick={() => ExportToExcel()} />
                 <PictureAsPdfIcon
-                  onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+                  onClick={() => ExportPdfmanul(isData, 'HeadReport')}
                 />
               </div>
               <div></div>
@@ -302,7 +270,9 @@ const HeadReport = ({ setopendashboard }) => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
-                        <TableCell>{row.type}</TableCell>
+                        <TableCell onClick={() => filterHead(row.type)}>
+                          {row.type}
+                        </TableCell>
                         <TableCell>{row.count}</TableCell>
                         <TableCell>
                           {row.cheque_amount ? row.cheque_amount : '0'}
@@ -328,6 +298,10 @@ const HeadReport = ({ setopendashboard }) => {
                     </TableCell> */}
                   </>
                 )}
+                <TableRow>
+                  <TableCell rowSpan={5}>Total</TableCell>
+                  <TableCell rowSpan={5}>0</TableCell>
+                </TableRow>
               </TableBody>
               <TableFooter>
                 <TableRow>
@@ -356,6 +330,128 @@ const HeadReport = ({ setopendashboard }) => {
               </TableFooter>
             </Table>
           </div>
+
+          {SearchHead && (
+            <>
+              <div className="main_center_header10">
+                <h2 className="Cheque_text">Head Report</h2>
+
+                <SimCardAlertIcon onClick={() => ExportToExcel1()} />
+                <PictureAsPdfIcon
+                  onClick={() => ExportPdfmanul(isData, 'HeadReport')}
+                />
+              </div>
+              <div className="table-div-maain">
+                <Table
+                  sx={{ minWidth: 650, width: '97%' }}
+                  aria-label="simple table"
+                >
+                  <TableHead style={{ background: '#FFEEE0' }}>
+                    <TableRow>
+                      <TableCell>Date</TableCell>
+                      <TableCell>ReceiptNo</TableCell>
+
+                      <TableCell>VoucherNo</TableCell>
+                      <TableCell>Phone No</TableCell>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Address</TableCell>
+                      <TableCell>Head/Item</TableCell>
+                      <TableCell>Amount</TableCell>
+
+                      <TableCell>Remark</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {SearchHead ? (
+                      <>
+                        {(rowsPerPage > 0
+                          ? SearchHead.slice(
+                              page * rowsPerPage,
+                              page * rowsPerPage + rowsPerPage,
+                            )
+                          : SearchHead
+                        ).map((row, index) => (
+                          <TableRow
+                            key={row.id}
+                            sx={{
+                              '&:last-child td, &:last-child th': { border: 0 },
+                            }}
+                          >
+                            <TableCell>
+                              {Moment(row.donation_date).format('DD/MM/YYYY')}
+                            </TableCell>
+                            <TableCell>{row.ReceiptNo}</TableCell>
+
+                            <TableCell>{row.voucherNo}</TableCell>
+                            <TableCell>{row.phoneNo}</TableCell>
+                            <TableCell>{row.name}</TableCell>
+                            <TableCell> {row.address}</TableCell>
+                            <TableCell>
+                              {row.elecItemDetails.map((row) => {
+                                return (
+                                  <li style={{ listStyle: 'none' }}>
+                                    {row.type}
+                                  </li>
+                                );
+                              })}
+                            </TableCell>
+                            <TableCell>
+                              {row.elecItemDetails.reduce(
+                                (n, { amount }) =>
+                                  parseFloat(n) + parseFloat(amount),
+                                0,
+                              )}
+                            </TableCell>
+
+                            <TableCell>
+                              {row.elecItemDetails.map((row) => {
+                                return (
+                                  <li style={{ listStyle: 'none' }}>
+                                    {row.remark}{' '}
+                                  </li>
+                                );
+                              })}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <TableCell colSpan={8} align="center">
+                          <CircularProgress />
+                        </TableCell>
+                      </>
+                    )}
+                  </TableBody>
+                  <TableFooter>
+                    <TableRow>
+                      <TablePagination
+                        count={SearchHead.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        rowsPerPageOptions={[5, 10, 25]}
+                        labelRowsPerPage={<span>Rows:</span>}
+                        labelDisplayedRows={({ page }) => {
+                          return `Page: ${page}`;
+                        }}
+                        backIconButtonProps={{
+                          color: 'secondary',
+                        }}
+                        nextIconButtonProps={{ color: 'secondary' }}
+                        SelectProps={{
+                          inputProps: {
+                            'aria-label': 'page number',
+                          },
+                        }}
+                      />
+                    </TableRow>
+                  </TableFooter>
+                </Table>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

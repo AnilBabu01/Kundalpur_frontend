@@ -49,3 +49,28 @@
 .uemploye_main{
     padding-left: 1rem;
 }
+
+
+.add-div-close-div-user-add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    /* border-bottom: 1px solid gray; */
+    padding-bottom: 18px;
+    padding-left: 4%;
+    padding-right: 7%;
+}
+
+.add_text_only{
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 25px;
+line-height: 38px;
+/* identical to box height */
+
+
+color: #05313C;
+
+}

@@ -90,43 +90,29 @@ const ManualDonation = ({ setopendashboard }) => {
 
   const [rowData, setrowData] = useState('');
   const [open4, setOpen4] = useState(false);
+  const [datefrom, setdatefrom] = useState('');
+  const [dateto, setdateto] = useState('');
+  const [type, settype] = useState('');
+
   const handleOpen4 = () => setOpen4(true);
   const handleClose4 = () => setOpen4(false);
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
+
   const handleOpen3 = () => setOpen3(true);
   const handleClose3 = () => setOpen3(false);
   console.log('check data ', isData);
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-    console.log(id);
-  };
 
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
+  const filterdata = () => {
+    console.log('ccc');
+    serverInstance(
+      `user//manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}',
+      'get`,
+    ).then((res) => {
+      console.log('filter data is', res.data);
 
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, 'delete').then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire(
-            'Great!',
-            'Eletronic donation delete successfully',
-            'success',
-          );
-          setshowalert(!showalert);
-
-          setOpen1(false);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-        console.log(res);
-      },
-    );
+      if (res.data) {
+        setisData(res.data);
+      }
+    });
   };
 
   const handleOpen = () => {
@@ -165,7 +151,7 @@ const ManualDonation = ({ setopendashboard }) => {
     serverInstance('admin/manual-donation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
-        // setrowData(res.data.pop());
+
         console.log('this', typeof rowData);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
@@ -242,16 +228,6 @@ const ManualDonation = ({ setopendashboard }) => {
     if (res.data.status === true) {
     }
     try {
-      // axios.defaults.headers.post[
-      //   "Authorization"
-      // ] = `Bearer ${sessionStorage.getItem("token")}`;
-      // const res = await axios.post(`${backendApiUrl}user/check-voucher`, {
-      //   voucher: row?.voucherNo,
-      // });
-      // if (res.data.status === false) {
-      //   console.log(res);
-      //   handleOpen3();
-      // }
     } catch (error) {
       Swal.fire('Error!', error, 'error');
     }
@@ -357,27 +333,6 @@ const ManualDonation = ({ setopendashboard }) => {
         </Fade>
       </Modal>
 
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open3}
-        onClose={handleClose3}
-        closeAfterTransition
-      >
-        <Fade in={open3}>
-          <Box sx={style2}>
-            <div>
-              <div className="add-div-close-div1">
-                <h2 style={{ textAlign: 'center', marginLeft: '24%' }}>
-                  Request Vouchers
-                </h2>
-                <CloseIcon onClick={() => handleClose3()} />
-              </div>
-              <Request handleClose={handleClose3} />
-            </div>
-          </Box>
-        </Fade>
-      </Modal>
       <div className="dashboarddiv">
         <div>
           <div
@@ -385,25 +340,41 @@ const ManualDonation = ({ setopendashboard }) => {
             style={{ paddingLeft: '1.5%', paddingRight: '1.5%' }}
           >
             <div className="search-inner-div-reports">
-              <div className="Center_main_dic_filetr1">
+              <div className="Center_main_dic_filetr">
                 <label>From Date</label>
-                <input type="date" placeholder="From" />
-              </div>
-              <div className="Center_main_dic_filetr1">
-                <label>To Date</label>
-                <input type="date" placeholder="From" />
+                <input
+                  type="date"
+                  placeholder="From"
+                  value={datefrom}
+                  name="datefrom"
+                  onChange={(e) => {
+                    setdatefrom(e.target.value);
+                  }}
+                />
               </div>
 
-              <div className="Center_main_dic_filetr1">
+              <div className="Center_main_dic_filetr">
+                <label>To Date</label>
+                <input
+                  type="date"
+                  placeholder="From"
+                  value={dateto}
+                  name="dateto"
+                  onChange={(e) => {
+                    setdateto(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div className="Center_main_dic_filetr">
                 <label>Head/Item</label>
-                <select name="cars" id="cars">
+                <select onChange={(e) => settype(e.target.value)} id="cars">
                   <option>Select option</option>
-                  {/* {donationTypes.map((item, idx) => {
-                    return <option value={item.id}>{item.type_hi}</option>;
-                  })} */}
+                  {donationTypes.map((item, idx) => {
+                    return <option value={item.type_hi}>{item.type_hi}</option>;
+                  })}
                 </select>
               </div>
-
               <div className="Center_main_dic_filetr">
                 <label>&nbsp;</label>
                 <button onClick={() => filterdata()}>Search</button>

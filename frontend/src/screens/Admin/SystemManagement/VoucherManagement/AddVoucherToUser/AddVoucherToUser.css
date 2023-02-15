@@ -1,9 +1,9 @@
 .inner-input-div1-select12 {
-    height: 27px;
-    /* width: 120px; */
-    border-radius: 5px;
-    padding-left: 6px;
-    border: 1px solid black;
+    width: 280px;
+    height: 35px;
+    background: #FFFFFF;
+    border: 1px solid #C5BFBF;
+    border-radius: 7px;
 }
 .inner-input-div1-select12:focus{
     outline: none;

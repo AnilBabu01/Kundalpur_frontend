@@ -87,7 +87,9 @@ const ManualReports = ({ setopendashboard }) => {
   const [donationTypes, setDonationTypes] = useState([]);
   const [updateId, setupdateId] = useState('');
   const [showsearchData, setshowsearchData] = useState(false);
-
+  const [datefrom, setdatefrom] = useState('');
+  const [dateto, setdateto] = useState('');
+  const [type, settype] = useState('');
   const [userrole, setuserrole] = useState('');
   console.log(userrole);
   const handleOpen = (id) => {
@@ -101,15 +103,6 @@ const ManualReports = ({ setopendashboard }) => {
   const upadteOpen = (row) => {
     setupdateData(row);
     setopenupdate(true);
-  };
-
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-  };
-
-  const handleClose1 = () => {
-    setOpen1(false);
   };
 
   const getall_donation = () => {
@@ -172,19 +165,18 @@ const ManualReports = ({ setopendashboard }) => {
     exportFromJSON({ data, fileName, exportType });
   };
 
-  const filterdata = async () => {
-    axios.defaults.headers.get[
-      'Authorization'
-    ] = `Bearer ${sessionStorage.getItem('token')}`;
+  const filterdata = () => {
+    console.log('ccc');
+    serverInstance(
+      `user//manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}',
+      'get`,
+    ).then((res) => {
+      console.log('filter data is', res.data);
 
-    const res = await axios.get(
-      `${backendApiUrl}user/search-donation?name=${name}&type=${typedonation}&date=${date}&phone=${phone}`,
-    );
-    console.log('filter data is', res);
-    if (res.data.status) {
-      setshowsearchData(!showsearchData);
-      setisData(res.data.data);
-    }
+      if (res.data) {
+        setisData(res.data);
+      }
+    });
   };
 
   const get_donation_tyeps = () => {
@@ -297,22 +289,39 @@ const ManualReports = ({ setopendashboard }) => {
         <div>
           <div className="search-header" style={{ paddingLeft: '1rem' }}>
             <div className="search-inner-div-reports">
-              <div className="Center_main_dic_filetr1">
+              <div className="Center_main_dic_filetr">
                 <label>From Date</label>
-                <input type="date" placeholder="From" />
-              </div>
-              <div className="Center_main_dic_filetr1">
-                <label>To Date</label>
-                <input type="date" placeholder="From" />
+                <input
+                  type="date"
+                  placeholder="From"
+                  value={datefrom}
+                  name="datefrom"
+                  onChange={(e) => {
+                    setdatefrom(e.target.value);
+                  }}
+                />
               </div>
 
-              <div className="Center_main_dic_filetr1">
+              <div className="Center_main_dic_filetr">
+                <label>To Date</label>
+                <input
+                  type="date"
+                  placeholder="From"
+                  value={dateto}
+                  name="dateto"
+                  onChange={(e) => {
+                    setdateto(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div className="Center_main_dic_filetr">
                 <label>Head/Item</label>
-                <select name="cars" id="cars">
+                <select onChange={(e) => settype(e.target.value)} id="cars">
                   <option>Select option</option>
-                  {/* {donationTypes.map((item, idx) => {
-                    return <option value={item.id}>{item.type_hi}</option>;
-                  })} */}
+                  {donationTypes.map((item, idx) => {
+                    return <option value={item.type_hi}>{item.type_hi}</option>;
+                  })}
                 </select>
               </div>
 

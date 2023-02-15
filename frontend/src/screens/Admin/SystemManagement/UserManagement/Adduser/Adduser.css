@@ -4,15 +4,14 @@
 }
 
 .forminput_add_user {
-    height: 29px;
-    width: 228px;
-    padding-left: 6px;
-    border-radius: 5px;
-    border: 1px solid black;
-    margin-top: 2px;
-    margin-bottom: 2px;
+  width: 280px;
+  height: 35px;
+  background: #FFFFFF;
+  border: 1px solid #C5BFBF;
+  border-radius: 7px;
   }
 
+  
   .forminput_add_user:focus{
     outline: none;
   }
@@ -41,9 +40,34 @@
     outline: none;
   }
   .inner-input-div1-select_add{
-    height: 29px;
-    width: 227px;
-    padding-left: 6px;
-    border-radius: 5px;
-    border: 1px solid black;
+    width: 280px;
+    height: 35px;
+   
+    
+    background: #FFFFFF;
+    border: 1px solid #C5BFBF;
+    border-radius: 7px;
+  }
+
+  .maindivemp{
+    background: #FFFFFF;
+    border-radius: 15px;
+  }
+
+  
+.save-div-btn-btn{
+  background: #F1DAC6;
+  border: 1px solid #FA7401;
+  border-radius: 7px;
+  width: 149px;
+  height: 40px;
+  color: #FA7401;
+  margin-right: 1rem;
+  }
+  .save-div-btn-btn-cancel{
+  width: 149px;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #9B9797;
+  border-radius: 7px;
   }

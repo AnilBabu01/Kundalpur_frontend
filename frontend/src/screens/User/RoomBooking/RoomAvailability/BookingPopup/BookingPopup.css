@@ -95,5 +95,12 @@
 .mian_input_div_flex1{
     flex-wrap: wrap;
 }
+
+
+
+.addscrollbar_div_lala1 {
+    height: 600px;
+    overflow-y: scroll;
+}
   }
   

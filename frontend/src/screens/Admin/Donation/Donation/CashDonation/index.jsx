@@ -30,6 +30,7 @@ import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
 import { useNavigate } from 'react-router-dom';
 
+import { useTranslation, Trans } from 'react-i18next';
 const CashDonation = ({
   setshowalert,
   handleClose,
@@ -38,7 +39,7 @@ const CashDonation = ({
   showUpdateBtn,
 }) => {
   const navigation = useNavigate();
-
+  const { t, i18n } = useTranslation();
   const theme = createTheme({
     typography: {
       fontFamily: 'Poppins',

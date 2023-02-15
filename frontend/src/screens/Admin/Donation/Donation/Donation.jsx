@@ -30,8 +30,6 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
-import ShowReceiptPopup from '../../compoments/ShowReceiptPopup';
-import Reciept from '../../Reciept/PopupReceupt';
 import exportFromJSON from 'export-from-json';
 import './Donation.css';
 const style = {
@@ -45,7 +43,6 @@ const style = {
   boxShadow: 24,
   borderRadius: '15px',
 };
-
 const style2 = {
   position: 'absolute',
   top: '40%',
@@ -56,17 +53,6 @@ const style2 = {
   p: 2,
   boxShadow: 24,
   borderRadius: '5px',
-};
-const style3 = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
-
-  boxShadow: 24,
-  borderRadius: '15px',
 };
 
 const donationColorTheme = {
@@ -92,19 +78,17 @@ const Donation = ({ setopendashboard }) => {
   const [loading, setLoading] = useState(false);
   const [rowData, setrowData] = useState('');
   const [open4, setOpen4] = useState(false);
-  const [open5, setOpen5] = useState(false);
   const [datefrom, setdatefrom] = useState('');
   const [dateto, setdateto] = useState('');
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
   const [type, settype] = useState('');
 
-  const handleOpen4 = () => setOpen4(true);
+  console.log(type);
+  const handleOpen4 = () => {
+    setOpen4(true);
+  };
   const handleClose4 = () => setOpen4(false);
-
-  const handleOpen5 = () => setOpen5(true);
-  const handleClose5 = () => setOpen5(false);
-
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -199,8 +183,14 @@ const Donation = ({ setopendashboard }) => {
   };
 
   const printreceipt = (row) => {
-    handleOpen5();
-    setrowData(row);
+    if (row.active === '0') {
+    } else {
+      navigation('/reciept', {
+        state: {
+          userdata: row,
+        },
+      });
+    }
   };
 
   const get_donation_tyeps = () => {
@@ -306,28 +296,6 @@ const Donation = ({ setopendashboard }) => {
 
   return (
     <>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open5}
-        onClose={handleClose5}
-        closeAfterTransition
-      >
-        <Fade in={open5}>
-          <Box
-            sx={{
-              ...style3,
-              width: {
-                xs: '90%',
-                sm: '70%',
-                md: '70%',
-              },
-            }}
-          >
-            <Reciept handleClose={handleClose5} rowData={rowData} />
-          </Box>
-        </Fade>
-      </Modal>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -448,10 +416,8 @@ const Donation = ({ setopendashboard }) => {
 
               <div className="Center_main_dic_filetr">
                 <label>Head/Item</label>
-                <select name="cars" id="cars">
-                  <option onChange={(e) => settype(e.target.value)}>
-                    Select option
-                  </option>
+                <select onChange={(e) => settype(e.target.value)} id="cars">
+                  <option>Select option</option>
                   {donationTypes.map((item, idx) => {
                     return <option value={item.type_hi}>{item.type_hi}</option>;
                   })}
@@ -629,49 +595,28 @@ const Donation = ({ setopendashboard }) => {
                         <TableCell>{row.name}</TableCell>
                         <TableCell> {row.address}</TableCell>
                         <TableCell>
-                          {row.elecItemDetails ? (
-                            row.elecItemDetails.map((row) => {
-                              return (
-                                <li style={{ listStyle: 'none' }}>
-                                  {row.type}
-                                </li>
-                              );
-                            })
-                          ) : (
-                            <>
-                              <li style={{ listStyle: 'none' }}>{row.type}</li>{' '}
-                            </>
-                          )}
+                          {row.elecItemDetails.map((row) => {
+                            return (
+                              <li style={{ listStyle: 'none' }}>{row.type}</li>
+                            );
+                          })}
                         </TableCell>
                         <TableCell>
-                          {row.elecItemDetails ? (
-                            row.elecItemDetails.reduce(
-                              (n, { amount }) =>
-                                parseFloat(n) + parseFloat(amount),
-                              0,
-                            )
-                          ) : (
-                            <>{row.amount} </>
+                          {row.elecItemDetails.reduce(
+                            (n, { amount }) =>
+                              parseFloat(n) + parseFloat(amount),
+                            0,
                           )}
                         </TableCell>
                         <TableCell>&nbsp;</TableCell>
                         <TableCell>
-                          {row.elecItemDetails ? (
-                            row.elecItemDetails.map((row) => {
-                              return (
-                                <li style={{ listStyle: 'none' }}>
-                                  {row.remark}{' '}
-                                </li>
-                              );
-                            })
-                          ) : (
-                            <>
-                              {' '}
+                          {row.elecItemDetails.map((row) => {
+                            return (
                               <li style={{ listStyle: 'none' }}>
                                 {row.remark}{' '}
                               </li>
-                            </>
-                          )}
+                            );
+                          })}
                         </TableCell>
                         <TableCell>
                           <RemoveRedEyeIcon

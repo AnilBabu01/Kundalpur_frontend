@@ -17,10 +17,11 @@
     justify-content: center;
 }
 .inner-input-div1-select1 {
-    height: 25px;
-    width: 62px;
-    padding-left: 6px;
-    border: 1px solid black;
+    width: 280px;
+  height: 35px;
+  background: #FFFFFF;
+  border: 1px solid #C5BFBF;
+  border-radius: 7px;
 }
 
 .inner-input-div1-select1:focus{

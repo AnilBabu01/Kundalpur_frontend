@@ -42,8 +42,8 @@ function RoomBooking() {
             sx={{
               ...style,
               width: {
-                xs: '70%',
-                sm: '60%',
+                xs: '90%',
+                sm: '50%',
                 md: '45%',
               },
             }}
@@ -52,7 +52,7 @@ function RoomBooking() {
           </Box>
         </Fade>
       </Modal>
-      <div className="room_home_main_supper">
+      <div className="room_home_main_supper" id="roomsss">
         <div className="room_home_main">
           <div className="room_home_main_overlay">
             <div>

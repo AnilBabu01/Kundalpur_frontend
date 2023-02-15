@@ -147,7 +147,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
 
   const navigate = useNavigate();
   const [openedTab, setOpenedTab] = React.useState(0); // for opening subtabs
-  const [activeTabId, setActiveTabId] = React.useState(1); // for showing tab as active
+  const [activeTabId, setActiveTabId] = React.useState(0); // for showing tab as active
   const [userrole, setuserrole] = React.useState('');
   const navigationTabs = [
     {
@@ -745,7 +745,6 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                             navigate('/admin-panel/' + subTab.link);
                             setActiveTabId(subTab.id);
                             handleDrawerClose();
-                            setOpenedTab(null);
                           }}
                           sx={{ pl: 4 }}
                         >
@@ -791,7 +790,6 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                             navigate('/admin-panel/' + subTab.link);
                             setActiveTabId(subTab.id);
                             handleDrawerClose();
-                            setOpenedTab(null);
                           }}
                           sx={{ pl: 4 }}
                         >
@@ -873,7 +871,6 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                             navigate('/admin-panel/' + subTab.link);
                             setActiveTabId(subTab.id);
                             handleDrawerClose();
-                            setOpenedTab(null);
                           }}
                           sx={{ pl: 4 }}
                         >
@@ -919,7 +916,6 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                             navigate('/admin-panel/' + subTab.link);
                             setActiveTabId(subTab.id);
                             handleDrawerClose();
-                            setOpenedTab(null);
                           }}
                           sx={{ pl: 4 }}
                         >

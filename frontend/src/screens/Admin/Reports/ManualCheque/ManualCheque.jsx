@@ -71,8 +71,6 @@ const ManualCheque = ({ setopendashboard }) => {
   const [showalert, setshowalert] = useState(false);
   const [open, setOpen] = React.useState(false);
   const navigation = useNavigate();
-  const [open1, setOpen1] = React.useState(false);
-  const [deleteId, setdeleteId] = useState('');
   const [updateId, setupdateId] = useState('');
   const [updateData, setupdateData] = useState('');
   const [openupdate, setopenupdate] = useState(false);
@@ -90,37 +88,12 @@ const ManualCheque = ({ setopendashboard }) => {
     setupdateData(row);
     setopenupdate(true);
   };
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-  };
 
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
   const handleOpen = (id) => {
     setOpen(true);
     setupdateId(id);
   };
   const handleClose = () => setOpen(false);
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, 'delete').then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire(
-            'Great!',
-            'Eletronic donation delete successfully',
-            'success',
-          );
-          setshowalert(true);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-        console.log(res);
-      },
-    );
-  };
 
   const getall_donation = () => {
     serverInstance('user/add-elecDonation', 'get').then((res) => {
@@ -187,11 +160,9 @@ const ManualCheque = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/search-donation?name=${name}&type=${typedonation}&date=${date}&phone=${phone}`,
+      `${backendApiUrl}user/search-donation?type=${type}&name=${name}&type=${typedonation}&date=${date}&phone=${phone}`,
     );
-    console.log('dilter data is', res);
     if (res.data.status) {
-      setshowsearchData(!showsearchData);
       setisData(res.data.data);
     }
   };
@@ -286,7 +257,14 @@ const ManualCheque = ({ setopendashboard }) => {
                   name="phone"
                   onChange={(e) => setphone(e.target.value)}
                 />
-                <input type="date" placeholder="Date" />
+
+                <input
+                  type="date"
+                  placeholder="Date"
+                  name="date"
+                  value={date}
+                  onChange={(e) => setdate(e.target.value)}
+                />
                 <select name="cars" id="cars">
                   <option>Select option</option>
                   {donationTypes.map((item, idx) => {

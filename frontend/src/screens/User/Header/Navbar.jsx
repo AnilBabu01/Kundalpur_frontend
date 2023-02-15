@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import style from './Navbar.module.css';
+import { Link, animateScroll as scroll } from 'react-scroll';
 import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
@@ -10,7 +11,6 @@ import { backendUrl, backendApiUrl } from '../../../config/config';
 import { useLocation } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
-import Logo from '../../../assets/logo1.jpeg';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -23,6 +23,7 @@ import Logout from '@mui/icons-material/Logout';
 import { useSelector, useDispatch } from 'react-redux';
 import UploadIcon from '@mui/icons-material/Upload';
 import { loadUser } from '../../../Redux/redux/action/AuthAction';
+import Logo from '../../../assets/croppedlogo.png';
 const Navbar = ({ showRoomOptions }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -195,14 +196,9 @@ const Navbar = ({ showRoomOptions }) => {
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to="/paymenthistory"
-                  className={({ isActive }) =>
-                    isActive ? style.active : style.about
-                  }
-                >
+                <a href="#roomsss" className={style.about}>
                   Room Booking
-                </NavLink>
+                </a>
               </li>
               <li>
                 <NavLink

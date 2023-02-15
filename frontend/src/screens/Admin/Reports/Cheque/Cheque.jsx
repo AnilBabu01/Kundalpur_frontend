@@ -13,12 +13,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import PrintIcon from '@mui/icons-material/Print';
@@ -28,8 +22,9 @@ import ChangeStatus from './ChangeStatus';
 import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DownloadIcon from '@mui/icons-material/Download';
-import CancelIcon from '@mui/icons-material/Cancel';
 import exportFromJSON from 'export-from-json';
+import axios from 'axios';
+import { backendApiUrl } from '../../../../config/config';
 import Moment from 'moment-js';
 import CircularProgress from '@mui/material/CircularProgress';
 import { ExportPdfUserCheque } from '../../compoments/ExportPdf';
@@ -51,35 +46,15 @@ const Cheque = ({ setopendashboard }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [refetch, setrefetch] = useState(false);
   const navigation = useNavigate();
-  const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState('');
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-  };
-
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
-
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(
-      `admin/donation-list?id=${deleteId}&mode=${2}`,
-      'delete',
-    ).then((res) => {
-      if (res.status === true) {
-        Swal.fire('Great!', 'Cheque donation delete successfully', 'success');
-        setrefetch(!refetch);
-        console.log(res);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
-      }
-      console.log(res);
-    });
-  };
-
+  const [phone, setphone] = useState('');
+  const [date, setdate] = useState('');
+  const [name, setname] = useState('');
+  const [donationTypes, setDonationTypes] = useState([]);
+  const [updateId, setupdateId] = useState('');
+  const [userrole, setuserrole] = useState('');
+  const [type, settype] = useState('');
   const handleOpen = (id) => {
     setOpen(true);
     setdeleteId(id);
@@ -117,16 +92,6 @@ const Cheque = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const printreceipt = (row) => {
-    if (row.active === '0') {
-    } else {
-      navigation('/reciept', {
-        state: {
-          userdata: row,
-        },
-      });
-    }
-  };
 
   const ExportToExcel = () => {
     const fileName = 'OnlineChequeReport';
@@ -152,33 +117,42 @@ const Cheque = ({ setopendashboard }) => {
     });
     exportFromJSON({ data, fileName, exportType });
   };
+
+  const filterdata = async () => {
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+    const res = await axios.get(
+      `${backendApiUrl}user/search-donation?type=${type}&name=${name}&date=${date}&phone=${phone}&modeOfDonation=${1}`,
+    );
+    if (res.data.status) {
+      setisData(res.data.data);
+    }
+  };
+  const get_donation_tyeps = () => {
+    try {
+      Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
+        ([res, item]) => {
+          if (res.status) {
+            setDonationTypes(res.data);
+            console.log(res.data);
+          } else {
+            Swal.fire('Error', 'somthing went  wrong', 'error');
+          }
+        },
+      );
+    } catch (error) {
+      Swal.fire('Error!', error, 'error');
+    }
+  };
   useEffect(() => {
     getall_donation();
+    get_donation_tyeps;
     setopendashboard(true);
   }, [refetch]);
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you want to delete'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -204,18 +178,35 @@ const Cheque = ({ setopendashboard }) => {
             <h2 className="Cheque_text">Cheque donation report</h2>
             <div className="search-header">
               <div className="search-inner-div-reports">
-                <input type="text" placeholder="Name" />
-                <input type="text" placeholder="Phone No" />
-                <input type="date" placeholder="Date" />
-                <select name="cars" id="cars">
-                  <option value="volvo">Select option</option>
-                  <option value="saab">Cash donation</option>
-                  <option value="mercedes">cheque donation</option>
-                  <option value="audi">Electronic donation</option>
-                  <option value="audi">Item donation</option>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={name}
+                  name="name"
+                  onChange={(e) => setname(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Phone No"
+                  value={phone}
+                  name="phone"
+                  onChange={(e) => setphone(e.target.value)}
+                />
+                <input
+                  type="date"
+                  placeholder="Date"
+                  name="date"
+                  value={date}
+                  onChange={(e) => setdate(e.target.value)}
+                />
+                <select onChange={(e) => settype(e.target.value)} id="cars">
+                  <option>Select option</option>
+                  {donationTypes.map((item, idx) => {
+                    return <option value={item.type_hi}>{item.type_hi}</option>;
+                  })}
                 </select>
-                <button>Search</button>
-                <button>Reset</button>
+                <button onClick={() => filterdata()}>Search</button>
+                <button onClick={() => getall_donation()}>Reset</button>
                 <SimCardAlertIcon onClick={() => ExportToExcel()} />
                 <PictureAsPdfIcon
                   onClick={() =>

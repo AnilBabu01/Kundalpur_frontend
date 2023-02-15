@@ -71,18 +71,16 @@ const Itemdonation = ({ setopendashboard }) => {
   const [showalert, setshowalert] = useState(false);
   const [open, setOpen] = React.useState(false);
   const navigation = useNavigate();
-  const [open1, setOpen1] = React.useState(false);
-  const [deleteId, setdeleteId] = useState('');
   const [updateData, setupdateData] = useState('');
   const [openupdate, setopenupdate] = useState(false);
   const [showUpdateBtn, setshowUpdateBtn] = useState(true);
   const [phone, setphone] = useState('');
   const [date, setdate] = useState('');
-  const [typedonation, settypedonation] = useState('');
   const [name, setname] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [updateId, setupdateId] = useState('');
   const [userrole, setuserrole] = useState('');
+  const [type, settype] = useState('');
   const handleOpen = (id) => {
     setOpen(true);
     setupdateId(id);
@@ -94,34 +92,6 @@ const Itemdonation = ({ setopendashboard }) => {
   const upadteOpen = (row) => {
     setupdateData(row);
     setopenupdate(true);
-  };
-
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-  };
-
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
-
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`user/add-elecDonation?id=${deleteId}`, 'delete').then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire(
-            'Great!',
-            'Eletronic donation delete successfully',
-            'success',
-          );
-          setshowalert(true);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-        console.log(res);
-      },
-    );
   };
 
   const getall_donation = () => {
@@ -190,17 +160,16 @@ const Itemdonation = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/search-donation?name=${name}&type=${typedonation}&date=${date}&phone=${phone}`,
+      `${backendApiUrl}user/search-donation?type=${type}&name=${name}&date=${date}&phone=${phone}&modeOfDonation=${4}`,
     );
-    console.log('dilter data is', res);
+
     if (res.data.status) {
-      setshowsearchData(!showsearchData);
       setisData(res.data.data);
     }
   };
   const get_donation_tyeps = () => {
     try {
-      Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
+      Promise.all([serverInstance('admin/donation-type?type=2', 'get')]).then(
         ([res, item]) => {
           if (res.status) {
             setDonationTypes(res.data);
@@ -223,27 +192,6 @@ const Itemdonation = ({ setopendashboard }) => {
 
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you want to delete'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -310,11 +258,21 @@ const Itemdonation = ({ setopendashboard }) => {
                   name="phone"
                   onChange={(e) => setphone(e.target.value)}
                 />
-                <input type="date" placeholder="Date" />
-                <select name="cars" id="cars">
+                <input
+                  type="date"
+                  placeholder="Date"
+                  name="date"
+                  value={date}
+                  onChange={(e) => setdate(e.target.value)}
+                />
+                <select onChange={(e) => settype(e.target.value)} id="cars">
                   <option>Select option</option>
                   {donationTypes.map((item, idx) => {
-                    return <option value={item.id}>{item.type_hi}</option>;
+                    return (
+                      <option value={item.itemType_hi}>
+                        {item.itemType_hi}
+                      </option>
+                    );
                   })}
                 </select>
                 <button onClick={() => filterdata()}>Search</button>

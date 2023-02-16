@@ -95,7 +95,7 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
           >
             {transactionID ? 'Payment Success!!' : 'Payment Failed'}
           </h2>
-          {donationDeatils && <h3>Donated ₹{donationDeatils.AMOUNT}</h3>}
+          {transactionID && <h3>Donated ₹{donationDeatils?.AMOUNT}</h3>}
           {transactionID ? (
             <p className="payment-description">
               Thank you for your donation. Your transaction has been completed
@@ -110,20 +110,25 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
               <span onClick={() => navigate('/donation')}>clicking here</span>
             </p>
           )}
-          <div className="btns-wrapper">
-            <button
-              className="btn-donation-status"
-              onClick={() => navigate('/onlinereceipt')}
-            >
-              Download Receipt
-            </button>
-            <button
-              className="btn-donation-status"
-              onClick={() => navigate('/donationhistory')}
-            >
-              Donation History
-            </button>
-          </div>
+
+          {transactionID && (
+            <>
+              <div className="btns-wrapper">
+                <button
+                  className="btn-donation-status"
+                  onClick={() => navigate('/onlinereceipt')}
+                >
+                  Download Receipt
+                </button>
+                <button
+                  className="btn-donation-status"
+                  onClick={() => navigate('/donationhistory')}
+                >
+                  Donation History
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

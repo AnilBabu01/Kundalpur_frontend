@@ -200,9 +200,17 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       icon: <img src={f2} alt="f2" style={{ width: '25px' }} />,
       subTabs: [
         {
+          id: 4.5,
+          name: 'Donation',
+          link: 'electronicReports',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
           id: 4.1,
-          name: 'Manual Report',
-          link: 'manualreports',
+          name: 'Manual Donation',
+          link: 'manualReports',
           active: false,
           icon: <PublicIcon />,
           subTabs: [],
@@ -231,14 +239,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
           icon: <AccountBalanceIcon />,
           subTabs: [],
         },
-        {
-          id: 4.5,
-          name: 'Cash',
-          link: 'reports/manualcash',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
+
         {
           id: 4.6,
           name: 'Electronic',

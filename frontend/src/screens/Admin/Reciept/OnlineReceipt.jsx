@@ -59,15 +59,20 @@ const OnlineReceipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   return (
     <>
       <div>
-        <div
+        {/* <div
           className="button_div_print_download"
           style={{ marginBottom: '1rem' }}
         >
-          <button onClick={() => navigation(-1)}>Back</button>
+          <button onClick={() => navigation('/')}>Back</button>
 
           <div />
-        </div>
-        <div className="main-certificate" id="receipt" ref={componentRef}>
+        </div> */}
+        <div
+          className="main-certificate"
+          id="receipt"
+          ref={componentRef}
+          style={{ marginTop: '1rem' }}
+        >
           <div className="topinfo-flex">
             <p>E-mail:badebaba.kundalpur@gmail.com</p>
             <p>॥ श्री बड़े बाबा नम:॥</p>

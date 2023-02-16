@@ -11,8 +11,6 @@ import VoucherManagement from '../screens/Admin/SystemManagement/VoucherManageme
 import InfoElectronic from '../screens/Admin/Donation/Donation/InfoElectronic';
 import Cheque from '../screens/Admin/Reports/Cheque/Cheque';
 import Online from '../screens/Admin/Reports/Online/Online';
-import Userinfo from '../screens/Admin/masters/Usermaster/Userinfo';
-import Updateuser from '../screens/Admin/masters/Usermaster/Updateuser';
 import Adminprivateroute from '../components/AdminOutlate/Adminprivateroute';
 import ChangeStatus from '../screens/Admin/Reports/Cheque/ChangeStatus';
 import UpdateDonationType from '../screens/Admin/masters/Donationmaster/UpdateDonationType';
@@ -20,18 +18,15 @@ import EmployeeUserInfo from '../screens/Admin/SystemManagement/UserManagement/E
 import Assign from '../screens/Admin/SystemManagement/Assign/Assign';
 import Chequeinfo from '../screens/Admin/Reports/Cheque/Chequeinfo';
 import Request from '../screens/Admin/SystemManagement/Request/Request';
-import Electronic from '../screens/Admin/Reports/Electornic/Electornic';
-import Itemdonation from '../screens/Admin/Reports/Itemdonation/Itemdonation';
-import ManualCash from '../screens/Admin/Reports/manualCash/ManualCash';
-import ManualCheque from '../screens/Admin/Reports/ManualCheque/ManualCheque';
 import PrintContent from '../screens/Admin/compoments/PrintContent';
 import AllReport from '../screens/Admin/Reports/AllReport/AllReport';
-import ManualDonation from '../screens/Admin/Donation/ManualDonation/ManualDonation';
 import PrintContentManul from '../screens/Admin/compoments/PrintContentManual';
-import ManualReports from '../screens/Admin/Reports/ManaulReport/ManualReports';
+import ManualDonation from '../screens/Admin/Donation/ManualDonation/ManualDonation';
 import Consolidated from '../screens/Admin/Reports/Consolidated/Consolidated';
 import HeadReport from '../screens/Admin/Reports/HeadReport/HeadReport';
 import Signature from '../screens/Admin/Signature/Signature';
+import DonationReportTap from '../screens/Admin/Reports/DonationReport/DonationReportTap';
+import ManualDonationTap from '../screens/Admin/Reports/ManualDonationReports/ManualDonationTap';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   return (
     <>
@@ -52,6 +47,24 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
             </Adminprivateroute>
           }
         />
+        <Route
+          path="/admin-panel/electronicReports"
+          element={
+            <Adminprivateroute>
+              <DonationReportTap setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/manualReports"
+          element={
+            <Adminprivateroute>
+              <ManualDonationTap setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
         <Route
           path="/admin-panel/donatedusers"
           element={
@@ -156,56 +169,10 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
         />
 
         <Route
-          path="/admin-panel/reports/electronic"
-          element={
-            <Adminprivateroute>
-              <Electronic setopendashboard={setopendashboard} />
-            </Adminprivateroute>
-          }
-        />
-
-        <Route
-          path="/admin-panel/reports/manualcash"
-          element={
-            <Adminprivateroute>
-              <ManualCash setopendashboard={setopendashboard} />
-            </Adminprivateroute>
-          }
-        />
-
-        <Route
-          path="/admin-panel/reports/manualcheque"
-          element={
-            <Adminprivateroute>
-              <ManualCheque setopendashboard={setopendashboard} />
-            </Adminprivateroute>
-          }
-        />
-
-        <Route
-          path="/admin-panel/reports/manualitem"
-          element={
-            <Adminprivateroute>
-              <Itemdonation setopendashboard={setopendashboard} />
-            </Adminprivateroute>
-          }
-        />
-        <Route
           path="/admin-panel/reports/printcontent"
           element={
             <Adminprivateroute>
               <PrintContent
-                setopendashboard={setopendashboard}
-                setshowreciept={setshowreciept}
-              />
-            </Adminprivateroute>
-          }
-        />
-        <Route
-          path="/admin-panel/manualreports"
-          element={
-            <Adminprivateroute>
-              <ManualReports
                 setopendashboard={setopendashboard}
                 setshowreciept={setshowreciept}
               />
@@ -256,24 +223,6 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
                 setopendashboard={setopendashboard}
                 setshowreciept={setshowreciept}
               />
-            </Adminprivateroute>
-          }
-        />
-
-        <Route
-          path="/admin-panel/masters/userinfo"
-          element={
-            <Adminprivateroute>
-              <Userinfo setopendashboard={setopendashboard} />
-            </Adminprivateroute>
-          }
-        />
-
-        <Route
-          path="/admin-panel/masters/updateuser"
-          element={
-            <Adminprivateroute>
-              <Updateuser setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

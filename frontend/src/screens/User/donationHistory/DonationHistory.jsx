@@ -32,7 +32,11 @@ const style = {
   p: 2,
 };
 let status;
-function DonationHistory({ setopendashboard, setshowreciept }) {
+function DonationHistory({
+  setopendashboard,
+  setshowreciept,
+  setHeaderFooter,
+}) {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const [isrow, setisrow] = useState([]);
@@ -47,10 +51,13 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
   console.log('sss', isrow);
   console.log(isrow);
   React.useEffect(() => {
-    gettable();
+    setopendashboard(false),
+      setshowreciept(false),
+      setHeaderFooter(false),
+      gettable();
   }, []);
   useEffect(() => {
-    setshowreciept(false);
+    // setshowreciept(false);
   }, []);
 
   const gettable = () => {
@@ -103,146 +110,142 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
         </Fade>
       </Modal>
       <div className="DonationHistory-main-div">
-        <div>
-          <div className="table-div-maain-donation-table-main">
-            <div className="center_search_client">
-              <div className="donation-history-text">
-                <h2>DONATIONS</h2>
-                <p>All Donations History</p>
-              </div>
-              {/* <div className="donation-history-serah_btn_div">
+        <div className="table-div-maain-donation-table-main">
+          <div className="center_search_client">
+            <div className="donation-history-text">
+              <h2>DONATIONS</h2>
+              <p>All Donations History</p>
+            </div>
+            {/* <div className="donation-history-serah_btn_div">
                 <input type="date" />
                 <input type="time" />
                 <button>Search</button>
                 <button>Reset</button>
               </div> */}
-            </div>
+          </div>
 
-            <div className="container">
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead style={{ background: '#F1F0F0' }}>
-                  <TableRow>
-                    <TableCell align="left">DATE</TableCell>
-                    <TableCell align="left">Receipt No</TableCell>
-                    <TableCell align="left">Mobile No</TableCell>
-                    <TableCell align="left">NAME</TableCell>
-                    <TableCell align="left">Address</TableCell>
-                    <TableCell align="left">Donation Type</TableCell>
-                    <TableCell align="left">Amount</TableCell>
-                    <TableCell align="left">Cheque No.</TableCell>
-                    <TableCell align="left">Date Of submission</TableCell>
-                    <TableCell align="left">Name of Bank</TableCell>
-                    <TableCell align="left">Payment id</TableCell>
-                    <TableCell align="left">Status</TableCell>
-                    <TableCell align="left">certificate</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {isrow && (
-                    <>
-                      {(rowsPerPage > 0
-                        ? isrow &&
-                          isrow
-                            .reverse()
-                            .slice(
-                              page * rowsPerPage,
-                              page * rowsPerPage + rowsPerPage,
-                            )
-                        : isrow && isrow
-                      ).map((row, index) => (
-                        <TableRow
-                          key={index}
-                          sx={{
-                            '&:last-child td, &:last-child th': { border: 0 },
+          <div className="container">
+            <Table sx={{ minWidth: 360 }} aria-label="simple table">
+              <TableHead style={{ background: '#F1F0F0' }}>
+                <TableRow>
+                  <TableCell align="left">DATE</TableCell>
+                  <TableCell align="left">Receipt No</TableCell>
+                  <TableCell align="left">Mobile No</TableCell>
+                  <TableCell align="left">NAME</TableCell>
+                  <TableCell align="left">Address</TableCell>
+                  <TableCell align="left">Donation Type</TableCell>
+                  <TableCell align="left">Amount</TableCell>
+                  <TableCell align="left">Cheque No.</TableCell>
+                  <TableCell align="left">Date Of submission</TableCell>
+                  <TableCell align="left">Name of Bank</TableCell>
+                  <TableCell align="left">Payment id</TableCell>
+                  <TableCell align="left">Status</TableCell>
+                  <TableCell align="left">certificate</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {isrow && (
+                  <>
+                    {(rowsPerPage > 0
+                      ? isrow &&
+                        isrow
+                          .reverse()
+                          .slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage,
+                          )
+                      : isrow && isrow
+                    ).map((row, index) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          '&:last-child td, &:last-child th': { border: 0 },
+                        }}
+                      >
+                        <div style={{ display: 'none' }}>
+                          {(status = row.active)}
+                        </div>
+                        <TableCell align="left">
+                          {moment(row?.DATE_OF_DAAN).format('DD/MM/YYYY')}
+                        </TableCell>
+                        <TableCell align="left">{row.RECEIPT_NO}</TableCell>
+                        <TableCell align="left"> {user?.mobileNo}</TableCell>
+
+                        <TableCell align="left">{row.NAME}</TableCell>
+                        <TableCell align="left">{row.ADDRESS}</TableCell>
+                        <TableCell align="left">
+                          {row.MODE_OF_DONATION}
+                        </TableCell>
+                        <TableCell align="left">{row.AMOUNT}</TableCell>
+                        <TableCell align="left">
+                          {row.CHEQUE_NO ? row.CHEQUE_NO : '-'}
+                        </TableCell>
+                        <TableCell align="left">
+                          {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : '-'}
+                        </TableCell>
+                        <TableCell align="left">
+                          {row.NAME_OF_BANK ? row.NAME_OF_BANK : '-'}
+                        </TableCell>
+                        <TableCell align="left">
+                          {row.PAYMENT_ID ? row.PAYMENT_ID : '-'}
+                        </TableCell>
+                        <TableCell align="left">
+                          {row.PAYMENT_STATUS === true
+                            ? 'Payment succrssfull'
+                            : 'Payment failed'}
+                        </TableCell>
+                        <TableCell
+                          onClick={() => {
+                            downloadrecept(row);
+                          }}
+                          align="left"
+                          style={{
+                            cursor: 'pointer',
+                            color: status === '0' ? 'red' : '',
                           }}
                         >
-                          <div style={{ display: 'none' }}>
-                            {(status = row.active)}
-                          </div>
-                          <TableCell align="left">
-                            {moment(row?.DATE_OF_DAAN).format('DD/MM/YYYY')}
-                          </TableCell>
-                          <TableCell align="left">{row.RECEIPT_NO}</TableCell>
-                          <TableCell align="left"> {user?.mobileNo}</TableCell>
-
-                          <TableCell align="left">{row.NAME}</TableCell>
-                          <TableCell align="left">{row.ADDRESS}</TableCell>
-                          <TableCell align="left">
-                            {row.MODE_OF_DONATION}
-                          </TableCell>
-                          <TableCell align="left">{row.AMOUNT}</TableCell>
-                          <TableCell align="left">
-                            {row.CHEQUE_NO ? row.CHEQUE_NO : '-'}
-                          </TableCell>
-                          <TableCell align="left">
-                            {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : '-'}
-                          </TableCell>
-                          <TableCell align="left">
-                            {row.NAME_OF_BANK ? row.NAME_OF_BANK : '-'}
-                          </TableCell>
-                          <TableCell align="left">
-                            {row.PAYMENT_ID ? row.PAYMENT_ID : '-'}
-                          </TableCell>
-                          <TableCell align="left">
-                            {row.PAYMENT_ID
-                              ? '-'
-                              : row.active === '0'
-                              ? 'Not Approved'
-                              : 'Approved'}
-                          </TableCell>
-                          <TableCell
-                            onClick={() => {
-                              downloadrecept(row);
-                            }}
-                            align="left"
-                            style={{
-                              cursor: 'pointer',
-                              color: status === '0' ? 'red' : '',
-                            }}
-                          >
-                            download
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                          download
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                )}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  {isrow && (
+                    <>
+                      <TablePagination
+                        count={isrow.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        rowsPerPageOptions={[3, 10, 25]}
+                        labelRowsPerPage={<span>Rows:</span>}
+                        labelDisplayedRows={({ page }) => {
+                          return `Page: ${page}`;
+                        }}
+                        backIconButtonProps={{
+                          color: 'secondary',
+                        }}
+                        nextIconButtonProps={{ color: 'secondary' }}
+                        SelectProps={{
+                          inputProps: {
+                            'aria-label': 'page number',
+                          },
+                        }}
+                        // showFirstButton={true}
+                        // showLastButton={true}
+                        //ActionsComponent={TablePaginationActions}
+                        //component={Box}
+                        //sx and classes prop discussed in styling section
+                      />
                     </>
                   )}
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    {isrow && (
-                      <>
-                        <TablePagination
-                          count={isrow.length}
-                          rowsPerPage={rowsPerPage}
-                          page={page}
-                          onPageChange={handleChangePage}
-                          onRowsPerPageChange={handleChangeRowsPerPage}
-                          rowsPerPageOptions={[3, 10, 25]}
-                          labelRowsPerPage={<span>Rows:</span>}
-                          labelDisplayedRows={({ page }) => {
-                            return `Page: ${page}`;
-                          }}
-                          backIconButtonProps={{
-                            color: 'secondary',
-                          }}
-                          nextIconButtonProps={{ color: 'secondary' }}
-                          SelectProps={{
-                            inputProps: {
-                              'aria-label': 'page number',
-                            },
-                          }}
-                          // showFirstButton={true}
-                          // showLastButton={true}
-                          //ActionsComponent={TablePaginationActions}
-                          //component={Box}
-                          //sx and classes prop discussed in styling section
-                        />
-                      </>
-                    )}
-                  </TableRow>
-                </TableFooter>
-              </Table>
-            </div>
+                </TableRow>
+              </TableFooter>
+            </Table>
           </div>
         </div>
       </div>

@@ -30,6 +30,8 @@ import ExportExcel from '../../../../assets/ExportExcel.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import Print from '../../../../assets/Print.png';
 import Edit from '../../../../assets/Edit.png';
+import Updateuser from './Updateuser';
+import Userinfo from './Userinfo';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -55,34 +57,50 @@ function UserMaster() {
   const [password, setpassword] = useState('');
   const [refetch, setrefetch] = useState(false);
   const [open1, setOpen1] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
   const [deleteId, setdeleteId] = useState('');
+  const [userdata, setuserdata] = useState('');
   const [manageActivation, setmanageActivation] = useState(false);
   const [searchName, setsearchName] = useState('');
   const [searchPhonne, setsearchPhonne] = useState('');
   let status;
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-  };
 
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
-
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`admin/del-users?id=${deleteId}`, 'delete').then((res) => {
-      if (res.status === true) {
-        Swal.fire('Great!', 'User delete successfully', 'success');
-        setrefetch(!refetch);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
-      }
-      console.log(res);
-    });
-  };
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleOpen1 = (data) => {
+    setOpen1(true);
+    setuserdata(data);
+  };
+  const handleClose1 = () => setOpen1(false);
+
+  const handleOpen2 = (data) => {
+    setOpen2(true);
+    setuserdata(data);
+  };
+  const handleClose2 = () => setOpen2(false);
+
+  // const handleClickOpen1 = (id) => {
+  //   setOpen1(true);
+  //   setdeleteId(id);
+  // };
+
+  // const handleClose1 = () => {
+  //   setOpen1(false);
+  // };
+
+  // const handleClose2 = () => {
+  //   setOpen1(false);
+  //   serverInstance(`admin/del-users?id=${deleteId}`, 'delete').then((res) => {
+  //     if (res.status === true) {
+  //       Swal.fire('Great!', 'User delete successfully', 'success');
+  //       setrefetch(!refetch);
+  //     } else {
+  //       Swal('Error', 'somthing went  wrong', 'error');
+  //     }
+  //     console.log(res);
+  //   });
+  // };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -254,6 +272,34 @@ function UserMaster() {
         </Fade>
       </Modal>
 
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open1}
+        onClose={handleClose1}
+        closeAfterTransition
+      >
+        <Fade in={open1}>
+          <Box sx={style}>
+            <Updateuser userdata={userdata} handleClose={handleClose1} />
+          </Box>
+        </Fade>
+      </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open2}
+        onClose={handleClose2}
+        closeAfterTransition
+      >
+        <Fade in={open2}>
+          <Box sx={style}>
+            <Userinfo userdata={userdata} handleClose={handleClose2} />
+          </Box>
+        </Fade>
+      </Modal>
+
       <div>
         <hr style={{ color: '#e96d00' }} />
         <div className="search-header" style={{ marginTop: '1rem' }}>
@@ -336,23 +382,9 @@ function UserMaster() {
                     {row.status === true ? 'Avtive' : 'Deactivate'}
                   </TableCell>
                   <TableCell>
-                    <RemoveRedEyeIcon
-                      onClick={() =>
-                        navigation(`/admin-panel/masters/userinfo`, {
-                          state: {
-                            userdata: row,
-                          },
-                        })
-                      }
-                    />
+                    <RemoveRedEyeIcon onClick={() => handleOpen2(row)} />
                     <img
-                      onClick={() =>
-                        navigation(`/admin-panel/masters/updateuser`, {
-                          state: {
-                            userdata: row,
-                          },
-                        })
-                      }
+                      onClick={() => handleOpen1(row)}
                       style={{ width: '20px' }}
                       src={Edit}
                       alt=" Print"

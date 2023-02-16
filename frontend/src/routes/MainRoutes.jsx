@@ -81,6 +81,7 @@ function MainRoutes({
               <DonationHistory
                 setopendashboard={setopendashboard}
                 setshowreciept={setshowreciept}
+                setHeaderFooter={setHeaderFooter}
               />
             </PrivateRoutes>
           }

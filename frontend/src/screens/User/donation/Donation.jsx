@@ -253,6 +253,12 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
       return false;
     }
 
+    if (!donationdata.address) {
+      return;
+    }
+    if (!donationdata?.donationtype) {
+      return;
+    }
     if (mode === 'Online' && amount) {
       serverInstance('user/add-donation', 'POST', {
         NAME:
@@ -349,7 +355,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
     }
 
     if (!values.donationtype) {
-      errors.donationtype = 'Please enter name of donationtype';
+      errors.donationtype = 'Please enter name of donation type';
     }
 
     if (mode === 'Cheque' && !cheqing) {
@@ -625,7 +631,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                             );
                           })}
                         </Select>
-                        Name
+                        Name*
                       </CustomInputLabel>
                       <CustomInput
                         id="name"
@@ -648,7 +654,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <CustomInputLabel htmlFor="donation-type">
-                        Donation Type
+                        Donation Type*
                       </CustomInputLabel>
 
                       <Select
@@ -723,7 +729,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                     <Grid item xs={12} container>
                       <Grid item xs={12}>
                         <CustomInputLabel htmlFor="donation-amount">
-                          Donation Amount
+                          Donation Amount*
                         </CustomInputLabel>
                       </Grid>
                       <Grid container item xs={12} columnSpacing={2}>
@@ -798,7 +804,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                       <>
                         <Grid item xs={12}>
                           <CustomInputLabel htmlFor="cheque-no">
-                            Cheque No
+                            Cheque No*
                           </CustomInputLabel>
                           <CustomInput
                             id="cheque-no"
@@ -813,7 +819,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                         </Grid>
                         <Grid item xs={12}>
                           <CustomInputLabel htmlFor="bank-name">
-                            Bank Name
+                            Bank Name*
                           </CustomInputLabel>
                           <CustomInput
                             id="bank-name"
@@ -829,7 +835,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                         </Grid>
                         <Grid item md={6} xs={12}>
                           <CustomInputLabel htmlFor="cheque-date">
-                            Date
+                            Date*
                           </CustomInputLabel>
                           <CustomInput
                             id="cheque-date"
@@ -845,7 +851,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                         </Grid>
                         <Grid item md={6} xs={12}>
                           <CustomInputLabel htmlFor="cheque-upload">
-                            Upload Cheque{' '}
+                            Upload Cheque*
                           </CustomInputLabel>
                           <CustomInput
                             id="cheque-upload"

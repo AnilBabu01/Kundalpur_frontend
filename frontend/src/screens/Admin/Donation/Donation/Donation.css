@@ -10,6 +10,16 @@
   font-weight: 300;
 }
 
+.search-inner-div-reports-add-donations{
+    padding-right: 1rem;
+    border-bottom: 1px solid gray;
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-top: 1px solid gray;
+    padding-top: 0.2%;
+}
 .center_info_main {
   display: flex;
   justify-content: center;

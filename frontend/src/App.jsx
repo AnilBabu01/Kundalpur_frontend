@@ -26,6 +26,8 @@ function App() {
   useEffect(() => {
     gett();
     setHeaderFooter(false);
+    setshowreciept(false);
+    setopendashboard(false);
   }, []);
 
   return (

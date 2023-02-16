@@ -67,7 +67,7 @@ function DonationHistory({ setopendashboard, setshowreciept }) {
       handleOpen1();
       setuseindonationhistory(true);
     } else {
-      navigation('/reciept', {
+      navigation('/onlinereceipt', {
         state: {
           userdata: row,
         },

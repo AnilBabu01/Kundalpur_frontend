@@ -15,7 +15,10 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   const [isData, setisData] = React.useState(null);
   const navigation = useNavigate();
   const { user } = useSelector((state) => state.userReducer);
-  console.log('data form', isData, 'receipt', onlineId);
+
+  const adminName = sessionStorage.getItem('adminName');
+
+  const empName = sessionStorage.getItem('empName');
 
   function printDiv() {
     navigation('/admin-panel/reports/printcontent', {
@@ -37,8 +40,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   }
 
   useEffect(() => {
-    // setshowreciept(true);
-    // setopendashboard(false);
+    setopendashboard(true);
+
     if (location.state) {
       setisData(location.state?.userdata);
     } else {
@@ -55,18 +58,11 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   return (
     <>
       <div>
-        <div className="button_div_print_download">
-          {/* {isData && isData.elecItemDetails ? (
-            <>
-              <button onClick={() => navigation('/admin-panel/donation')}>
-                Back
-              </button>
-            </>
-          ) : (
-            <>
-              <button onClick={() => navigation('/donation')}>Back</button>
-            </>
-          )} */}
+        <div
+          className="button_div_print_download"
+          style={{ marginBottom: '1rem' }}
+        >
+          <button onClick={() => navigation(-1)}>Back</button>
 
           <div />
         </div>
@@ -771,7 +767,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
           </div>
           <div className="signature-point">
             <p>हस्ताक्षर दानदातार</p>
-            <p>हस्ताक्षर प्राप्तकर्ता</p>
+
+            <p>हस्ताक्षर प्राप्तकर्ता,({adminName ? adminName : empName})</p>
           </div>
         </div>
       </div>

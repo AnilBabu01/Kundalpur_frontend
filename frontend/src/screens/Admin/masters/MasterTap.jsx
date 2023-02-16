@@ -1,116 +1,89 @@
-import React, { useEffect } from "react";
-import SwipeableViews from "react-swipeable-views";
-import { useTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import { Box } from "@mui/material";
-import UserMaster from "./Usermaster/UserMaster";
-import DonationMaster from "./Donationmaster/DonationMaster";
-import RoomMaster from "./RoomMaster/RoomMaster";
-import IntemMaster from "./Itemmaster/IntemMaster";
-import ReceiptMater from "./Receiptmaster/ReceiptMater";
-import "./MasterTap.css";
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import DonationMaster from './Donationmaster/DonationMaster';
+import IntemMaster from './Itemmaster/IntemMaster';
+import ReceiptMater from './Receiptmaster/ReceiptMater';
+import UserMaster from './Usermaster/UserMaster';
+import './MasterTap.css';
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+const MasterTap = ({ setopendashboard }) => {
+  const [toggleState, setToggleState] = useState(1);
 
-function a11yProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
+  const toggleTab = (index) => {
+    setToggleState(index);
   };
-}
 
-export default function MasterTap({ setopendashboard }) {
   useEffect(() => {
     setopendashboard(true);
   }, []);
 
-  const theme = useTheme();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
-
   return (
     <>
-      {" "}
-      <div className="dashboarddiv">
-        <Box sx={{ bgcolor: "background.paper" }}>
-          <AppBar position="static">
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              indicatorColor="secondary"
-              textColor="inherit"
-              variant="fullWidth"
-              aria-label="full width tabs example"
-              sx={{ 
-                background: "#F1F0F0",
-              "& .MuiButtonBase-root":{
-                color: "#05313C",
-                opacity: 1,
-                textTransform: "capitalize",
-                fontSize: "16px",
-              },
-              "& .MuiTabs-indicator":{
-                background: "#05313C",
-              },
-            }}
+      <div className="mobilewidth">
+        <div className="container1">
+          <div className="bloc-tabs1">
+            <button
+              className={toggleState === 1 ? 'tabs2 ' : 'tabs1'}
+              onClick={() => toggleTab(1)}
             >
-              <Tab label="User Master" {...a11yProps(0)} />
-              <Tab label="Donation Type Master" {...a11yProps(1)} />
-              <Tab label="Donation Item Master" {...a11yProps(2)} />
-              <Tab label="Receipt Master" {...a11yProps(3)} />
-              {/* <Tab label="Room Master" {...a11yProps(2)} /> */}
-            </Tabs>
-          </AppBar>
-          <SwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={value}
-            onChangeIndex={handleChangeIndex}
-          >
-            <TabPanel value={value} index={0} dir={theme.direction}>
+              {/* <img className="fasti" src={fastimg} alt="fast" /> */}
+              Donated User Master
+            </button>
+            <button
+              className={toggleState === 2 ? 'tabs2 ' : 'tabs1'}
+              onClick={() => toggleTab(2)}
+            >
+              Donation Type Master
+            </button>
+            <button
+              className={toggleState === 3 ? 'tabs2 ' : 'tabs1'}
+              onClick={() => toggleTab(3)}
+            >
+              Donation Item Master
+            </button>
+            <button
+              className={toggleState === 4 ? 'tabs2 ' : 'tabs1'}
+              onClick={() => toggleTab(4)}
+            >
+              Receipt Master
+            </button>
+          </div>
+
+          <div className="content-tabs">
+            <div
+              className={
+                toggleState === 1 ? 'content  active-content' : 'content'
+              }
+            >
               <UserMaster />
-            </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}>
+            </div>
+
+            <div
+              className={
+                toggleState === 2 ? 'content  active-content' : 'content'
+              }
+            >
               <DonationMaster />
-            </TabPanel>
-            <TabPanel value={value} index={2} dir={theme.direction}>
+            </div>
+            <div
+              className={
+                toggleState === 3 ? 'content  active-content' : 'content'
+              }
+            >
               <IntemMaster />
-            </TabPanel>
-            <TabPanel value={value} index={3} dir={theme.direction}>
+            </div>
+            <div
+              className={
+                toggleState === 4 ? 'content  active-content' : 'content'
+              }
+            >
               <ReceiptMater />
-            </TabPanel>
-            {/* <TabPanel value={value} index={2} dir={theme.direction}>
-              <RoomMaster />
-            </TabPanel> */}
-          </SwipeableViews>
-        </Box>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
-}
+};
+
+export default MasterTap;

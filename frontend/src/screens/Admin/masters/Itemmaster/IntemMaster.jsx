@@ -190,7 +190,7 @@ function IntemMaster() {
                   <h2>Add New Donation Type</h2>
                   <CloseIcon onClick={() => handleClose()} />
                 </div>
-                <hr />
+
                 <div className="main-input-div1">
                   <div className="inner-input-div1">
                     <label htmlFor="donationtype_in_hindi">
@@ -241,7 +241,7 @@ function IntemMaster() {
                 <h2>Update Donation Type</h2>
                 <CloseIcon onClick={() => handleClose3()} />
               </div>
-              <hr />
+
               <UpdateDonationType data={data} handleClose3={handleClose3} />
             </div>
           </Box>

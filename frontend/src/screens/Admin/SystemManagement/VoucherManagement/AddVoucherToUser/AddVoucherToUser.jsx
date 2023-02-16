@@ -6,26 +6,21 @@ import axios from 'axios';
 import './AddVoucherToUser.css';
 
 const AddVoucherToUser = ({ setOpen }) => {
-  const [refetch, setrefetch] = useState(false);
   const [isData, setisData] = React.useState([]);
-  const [Voucherprefix, setVoucherprefix] = useState('');
   const [fromNo, setfromNo] = useState('');
   const [toNo, settoNo] = useState('');
   const [assingTo, setassingTo] = useState();
   const [empname, setempname] = useState('');
 
-  console.log('emp', empname);
-  console.log(isData);
+  console.log(empname, assingTo);
+
   const handlesubmit = async () => {
     try {
-      console.log('ss', assingTo, Voucherprefix, toNo, fromNo);
-
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.post(`${backendApiUrl}user/add-voucher-user`, {
-        vPrefix: Voucherprefix,
         from: fromNo,
         to: toNo,
         user: Number(assingTo),
@@ -58,7 +53,7 @@ const AddVoucherToUser = ({ setOpen }) => {
 
   useEffect(() => {
     getall_donation();
-  }, [refetch, open]);
+  }, [open]);
   return (
     <>
       <div className="cash-donation-div">
@@ -69,15 +64,15 @@ const AddVoucherToUser = ({ setOpen }) => {
           <div className="form-div">
             <div className="form-input-div_add_user">
               <div className="inner-input-div2">
-                <label htmlFor="Voucherprefix">Voucher Prefix </label>
+                <label htmlFor="fromNo">From Number</label>
                 <input
-                  id="Voucherprefix"
-                  text="text"
-                  placeholder="Voucher Prefix"
+                  type="number"
+                  id="fromNo"
+                  placeholder="From VC"
                   className="forminput_add_user"
-                  value={Voucherprefix}
-                  name="Voucherprefix"
-                  onChange={(e) => setVoucherprefix(e.target.value)}
+                  value={fromNo}
+                  name="fromNo"
+                  onChange={(e) => setfromNo(e.target.value)}
                 />
                 <label htmlFor="toNo">To Number </label>
                 <input
@@ -93,16 +88,6 @@ const AddVoucherToUser = ({ setOpen }) => {
             </div>
             <div className="form-input-div_add_user">
               <div className="inner-input-div2">
-                <label htmlFor="fromNo">From Number</label>
-                <input
-                  type="number"
-                  id="fromNo"
-                  placeholder="From VC"
-                  className="forminput_add_user"
-                  value={fromNo}
-                  name="fromNo"
-                  onChange={(e) => setfromNo(e.target.value)}
-                />
                 <label htmlFor="assingTo">Assign To </label>
                 <select
                   className="inner-input-div1-select12"
@@ -112,27 +97,33 @@ const AddVoucherToUser = ({ setOpen }) => {
                   onChange={(e) => setassingTo(e.target.value)}
                 >
                   {isData &&
-                    isData.map((item, index) => (
-                      <option
-                        onClick={() => {
-                          setempname(item.Username);
-                        }}
-                        key={index}
-                        value={item.id}
-                      >
-                        {item.Username}
-                      </option>
-                    ))}
+                    isData.map((item, index) => {
+                      return (
+                        <option
+                          onClick={() => {
+                            console.log('click');
+                          }}
+                          key={index}
+                          value={item.id}
+                        >
+                          {item.Username}
+                        </option>
+                      );
+                    })}
                 </select>
+                <div style={{ height: '3.6rem' }} />
               </div>
             </div>
           </div>
 
           <div className="save-div-btn">
-            <button onClick={() => handlesubmit()} className="save-btn1">
+            <button onClick={() => handlesubmit()} className="save-div-btn-btn">
               Save
             </button>
-            <button onClick={() => setOpen(false)} className="calcel-btn1">
+            <button
+              onClick={() => setOpen(false)}
+              className="save-div-btn-btn-cancel"
+            >
               Cancel
             </button>
           </div>

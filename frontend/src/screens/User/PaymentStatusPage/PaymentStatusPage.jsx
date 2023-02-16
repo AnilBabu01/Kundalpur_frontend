@@ -113,7 +113,7 @@ export default function PaymentStatusPage({ setHeaderFooter, setpaymentId }) {
           <div className="btns-wrapper">
             <button
               className="btn-donation-status"
-              onClick={() => navigate('/reciept')}
+              onClick={() => navigate('/onlinereceipt')}
             >
               Download Receipt
             </button>

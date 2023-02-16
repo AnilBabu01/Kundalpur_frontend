@@ -36,7 +36,7 @@ import f5 from '../../../assets/f5.png';
 import f6 from '../../../assets/f6.png';
 import croppedlogo from '../../../assets/croppedlogo.png';
 import ExpandLess from '@mui/icons-material/ExpandLess';
-
+import image19 from '../../../assets/image19.png';
 const drawerWidth = '17%';
 
 const openedMixin = (theme) => ({
@@ -151,54 +151,6 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
   const [userrole, setuserrole] = React.useState('');
   const navigationTabs = [
     {
-      id: 1,
-      name: 'Masters',
-      active: false,
-      icon: <img src={f5} alt="f5" style={{ width: '25px' }} />,
-      subTabs: [
-        {
-          id: 1.1,
-          name: 'Masters',
-          link: 'master',
-          active: false,
-          icon: <StorefrontIcon />,
-          subTabs: [],
-        },
-        {
-          id: 1.2,
-          name: 'Other Masters',
-          link: 'sellAccount',
-          active: false,
-          icon: <SellIcon />,
-          subTabs: [],
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Donation',
-      active: false,
-      icon: <img src={f4} alt="f4" style={{ width: '25px' }} />,
-      subTabs: [
-        {
-          id: 2.1,
-          name: 'Donation',
-          link: 'donation',
-          active: false,
-          icon: <StorefrontIcon />,
-          subTabs: [],
-        },
-        {
-          id: 2.2,
-          name: 'Manual Donation',
-          link: 'manualdonation',
-          active: false,
-          icon: <SellIcon />,
-          subTabs: [],
-        },
-      ],
-    },
-    {
       id: 3,
       name: 'System',
       active: false,
@@ -206,7 +158,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       subTabs: [
         {
           id: 3.1,
-          name: 'User Management',
+          name: 'Add Employee',
           link: 'usermanagement',
           active: false,
           icon: <PublicIcon />,
@@ -214,7 +166,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         },
         {
           id: 3.2,
-          name: 'Role Management',
+          name: 'Add Role',
           link: 'rolemanagement',
           active: false,
           icon: <AccountBalanceIcon />,
@@ -232,6 +184,98 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
           id: 3.4,
           name: 'Assign Voucher',
           link: 'assign',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+      ],
+    },
+  ];
+
+  const navigationreportTabs = [
+    {
+      id: 4,
+      name: 'Reports',
+      active: false,
+      icon: <img src={f2} alt="f2" style={{ width: '25px' }} />,
+      subTabs: [
+        {
+          id: 4.1,
+          name: 'Manual Report',
+          link: 'manualreports',
+          active: false,
+          icon: <PublicIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.2,
+          name: 'Consolidated Cash',
+          link: 'consolidated/report',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.3,
+          name: 'Head Donation',
+          link: 'head/report',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.4,
+          name: 'Donations Report',
+          link: 'reports/allreport',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.5,
+          name: 'Cash',
+          link: 'reports/manualcash',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.6,
+          name: 'Electronic',
+          link: 'reports/electronic',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.7,
+          name: 'Cheque',
+          link: 'reports/manualcheque',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 4.8,
+          name: 'Item',
+          link: 'reports/manualitem',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+
+        {
+          id: 4.9,
+          name: 'Cheque donation',
+          link: 'reports/cheque',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 5.1,
+          name: 'Online donation',
+          link: 'reports/online',
           active: false,
           icon: <AccountBalanceIcon />,
           subTabs: [],
@@ -268,95 +312,6 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
   ];
   const navigationTabs1 = [
     {
-      id: 4,
-      name: 'Reports',
-      active: false,
-      icon: <img src={f2} alt="f2" style={{ width: '25px' }} />,
-      subTabs: [
-        {
-          id: 4.1,
-          name: 'Manual Report',
-          link: 'manualreports',
-          active: false,
-          icon: <PublicIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.2,
-          name: 'Consolidated Cash',
-          link: 'consolidated/report',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.3,
-          name: 'Head Donation',
-          link: 'head/report',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.4,
-          name: 'Donations Report',
-          link: 'reports/allreport',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.5,
-          name: 'Cash',
-          link: 'reports/manualcash',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.6,
-          name: 'Electronic',
-          link: 'reports/electronic',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.7,
-          name: 'Cheque',
-          link: 'reports/manualcheque',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.8,
-          name: 'Item',
-          link: 'reports/manualitem',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-
-        {
-          id: 4.9,
-          name: 'Cheque donation',
-          link: 'reports/cheque',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 5.1,
-          name: 'Online donation',
-          link: 'reports/online',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-      ],
-    },
-    {
       id: 5,
       name: 'Dharamshala',
       active: false,
@@ -397,7 +352,30 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         },
       ],
     },
-
+    {
+      id: 2,
+      name: 'Donation',
+      active: false,
+      icon: <img src={f4} alt="f4" style={{ width: '25px' }} />,
+      subTabs: [
+        {
+          id: 2.1,
+          name: 'Donation',
+          link: 'donation',
+          active: false,
+          icon: <StorefrontIcon />,
+          subTabs: [],
+        },
+        {
+          id: 2.2,
+          name: 'Manual Donation',
+          link: 'manualdonation',
+          active: false,
+          icon: <SellIcon />,
+          subTabs: [],
+        },
+      ],
+    },
     {
       id: 6,
       name: 'Room Booking',
@@ -440,7 +418,49 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       ],
     },
   ];
+
   const navigationEmpTabs1 = [
+    {
+      id: 6,
+      name: 'Room Booking',
+      active: false,
+      icon: <img src={f1} alt="f1" style={{ width: '25px' }} />,
+      subTabs: [
+        {
+          id: 6.1,
+          name: 'Checkin',
+          link: 'promdon',
+          active: false,
+          icon: <PublicIcon />,
+          subTabs: [],
+        },
+
+        {
+          id: 6.3,
+          name: 'Hold',
+          link: 'sponship',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 6.4,
+          name: 'Room Shift',
+          link: 'sponsodrip',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+        {
+          id: 6.4,
+          name: 'Room',
+          link: 'sponsodrip',
+          active: false,
+          icon: <AccountBalanceIcon />,
+          subTabs: [],
+        },
+      ],
+    },
     {
       id: 4,
       name: 'Reports',
@@ -524,89 +544,6 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
           id: 5.1,
           name: 'Online donation',
           link: 'reports/online',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-      ],
-    },
-    {
-      id: 5,
-      name: 'Dharamshala',
-      active: false,
-      icon: <img src={f1} alt="f1" style={{ width: '25px' }} />,
-      subTabs: [
-        {
-          id: 5.1,
-          name: 'Dharamshala',
-          link: 'promdoion',
-          active: false,
-          icon: <PublicIcon />,
-          subTabs: [],
-        },
-
-        {
-          id: 5.3,
-          name: 'Category',
-          link: 'sponsodrhip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 5.4,
-          name: 'Facilities',
-          link: 'sponsodrip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 5.4,
-          name: 'Room',
-          link: 'sponsodrip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-      ],
-    },
-
-    {
-      id: 6,
-      name: 'Room Booking',
-      active: false,
-      icon: <img src={f1} alt="f1" style={{ width: '25px' }} />,
-      subTabs: [
-        {
-          id: 6.1,
-          name: 'Checkin',
-          link: 'promdon',
-          active: false,
-          icon: <PublicIcon />,
-          subTabs: [],
-        },
-
-        {
-          id: 6.3,
-          name: 'Hold',
-          link: 'sponship',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 6.4,
-          name: 'Room Shift',
-          link: 'sponsodrip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 6.4,
-          name: 'Room',
-          link: 'sponsodrip',
           active: false,
           icon: <AccountBalanceIcon />,
           subTabs: [],
@@ -627,6 +564,8 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
           backgroundColor: '#F1DAC6',
         },
       }}
+      // onMouseMove={() => handleDrawerOpen()}
+      // onMouseOut={() => handleDrawerClose()}
     >
       <DrawerHeader>
         <Box
@@ -657,7 +596,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
             <>
               <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
                 <img
-                  src={logo}
+                  src={image19}
                   style={{
                     width: '50px',
                     height: '50px',
@@ -676,7 +615,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       <Divider />
       <List>
         <ListItem disablePadding sx={{ display: 'block' }}>
-          <Tooltip title="Dashbord">
+          <Tooltip title="Dashbord" placement="left-end">
             <StyledListItemButton
               selected={activeTabId === 0}
               onClick={() => {
@@ -714,22 +653,24 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         {userrole === 1
           ? navigationTabs.map((Tab, i) => (
               <React.Fragment key={i}>
-                <StyledListItemButton
-                  selected={Tab.id === activeTabId}
-                  onClick={() => {
-                    setActiveTabId(Tab.id);
-                    setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
-                  }}
-                >
-                  <ListItemIcon>{Tab.icon}</ListItemIcon>
-                  <ListItemText primary={Tab.name} />
+                <Tooltip title={Tab.name} placement="left-end">
+                  <StyledListItemButton
+                    selected={Tab.id === activeTabId}
+                    onClick={() => {
+                      setActiveTabId(Tab.id);
+                      setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
+                    }}
+                  >
+                    <ListItemIcon>{Tab.icon}</ListItemIcon>
+                    <ListItemText primary={Tab.name} />
 
-                  {Tab.id === activeTabId && openedTab !== 0 ? (
-                    <ExpandLess />
-                  ) : (
-                    <ChevronRightIcon />
-                  )}
-                </StyledListItemButton>
+                    {Tab.id === activeTabId && openedTab !== 0 ? (
+                      <ExpandLess />
+                    ) : (
+                      <ChevronRightIcon />
+                    )}
+                  </StyledListItemButton>
+                </Tooltip>
 
                 <Collapse
                   in={Tab.id === openedTab}
@@ -739,18 +680,20 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                   <List component="div" disablePadding>
                     {Tab.subTabs.map((subTab, index) => (
                       <React.Fragment key={index}>
-                        <StyledListItemButton
-                          selected={subTab.id === activeTabId}
-                          onClick={() => {
-                            navigate('/admin-panel/' + subTab.link);
-                            setActiveTabId(subTab.id);
-                            handleDrawerClose();
-                          }}
-                          sx={{ pl: 4 }}
-                        >
-                          <ListItemIcon>{subTab.icon}</ListItemIcon>
-                          <ListItemText primary={subTab.name} />
-                        </StyledListItemButton>
+                        <Tooltip title={subTab.name} placement="left-end">
+                          <StyledListItemButton
+                            selected={subTab.id === activeTabId}
+                            onClick={() => {
+                              navigate('/admin-panel/' + subTab.link);
+                              setActiveTabId(subTab.id);
+                              handleDrawerClose();
+                            }}
+                            sx={{ pl: 4 }}
+                          >
+                            <ListItemIcon>{subTab.icon}</ListItemIcon>
+                            <ListItemText primary={subTab.name} />
+                          </StyledListItemButton>
+                        </Tooltip>
                       </React.Fragment>
                     ))}
                   </List>
@@ -759,22 +702,24 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
             ))
           : navigationEmpTabs.map((Tab, i) => (
               <React.Fragment key={i}>
-                <StyledListItemButton
-                  selected={Tab.id === activeTabId}
-                  onClick={() => {
-                    setActiveTabId(Tab.id);
-                    setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
-                  }}
-                >
-                  <ListItemIcon>{Tab.icon}</ListItemIcon>
-                  <ListItemText primary={Tab.name} />
+                <Tooltip title={Tab.name} placement="left-end">
+                  <StyledListItemButton
+                    selected={Tab.id === activeTabId}
+                    onClick={() => {
+                      setActiveTabId(Tab.id);
+                      setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
+                    }}
+                  >
+                    <ListItemIcon>{Tab.icon}</ListItemIcon>
+                    <ListItemText primary={Tab.name} />
 
-                  {Tab.id === activeTabId && openedTab !== 0 ? (
-                    <ExpandLess />
-                  ) : (
-                    <ChevronRightIcon />
-                  )}
-                </StyledListItemButton>
+                    {Tab.id === activeTabId && openedTab !== 0 ? (
+                      <ExpandLess />
+                    ) : (
+                      <ChevronRightIcon />
+                    )}
+                  </StyledListItemButton>
+                </Tooltip>
 
                 <Collapse
                   in={Tab.id === openedTab}
@@ -784,78 +729,84 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                   <List component="div" disablePadding>
                     {Tab.subTabs.map((subTab, index) => (
                       <React.Fragment key={index}>
-                        <StyledListItemButton
-                          selected={subTab.id === activeTabId}
-                          onClick={() => {
-                            navigate('/admin-panel/' + subTab.link);
-                            setActiveTabId(subTab.id);
-                            handleDrawerClose();
-                          }}
-                          sx={{ pl: 4 }}
-                        >
-                          <ListItemIcon>{subTab.icon}</ListItemIcon>
-                          <ListItemText primary={subTab.name} />
-                        </StyledListItemButton>
+                        <Tooltip title={subTab?.name} placement="left-end">
+                          <StyledListItemButton
+                            selected={subTab.id === activeTabId}
+                            onClick={() => {
+                              navigate('/admin-panel/' + subTab.link);
+                              setActiveTabId(subTab.id);
+                              handleDrawerClose();
+                            }}
+                            sx={{ pl: 4 }}
+                          >
+                            <ListItemIcon>{subTab.icon}</ListItemIcon>
+                            <ListItemText primary={subTab.name} />
+                          </StyledListItemButton>
+                        </Tooltip>
                       </React.Fragment>
                     ))}
                   </List>
                 </Collapse>
               </React.Fragment>
             ))}
-      </List>
-
-      <ListItem disablePadding sx={{ display: 'block' }}>
-        <StyledListItemButton
-          selected={activeTabId === 7}
-          onClick={() => {
-            setActiveTabId(7);
-            navigate('/admin-panel/donatedusers');
-            handleDrawerClose();
-          }}
-          sx={{
-            minHeight: 48,
-            justifyContent: open ? 'initial' : 'center',
-            px: 2,
-          }}
-        >
-          <ListItemIcon
-            sx={{
-              minWidth: 0,
-              mr: open ? 3 : 'auto',
-              justifyContent: 'center',
-            }}
-          >
-            <img src={f4} alt="f3" style={{ width: '25px' }} />
-          </ListItemIcon>
-          <ListItemText
-            classes={{ root: stylesag.ListText }}
-            primary="Donated user"
-            sx={{ opacity: open ? 1 : 0, ml: 1 }}
-          />
-        </StyledListItemButton>
-      </ListItem>
-      <List>
-        {/* Navigation Tabs from here */}
+        {userrole === 1 && (
+          <>
+            <ListItem disablePadding sx={{ display: 'block' }}>
+              <Tooltip title="Masters" placement="left-end">
+                <StyledListItemButton
+                  selected={activeTabId === 9}
+                  onClick={() => {
+                    setActiveTabId(9);
+                    handleDrawerClose();
+                    navigate('/admin-panel/masters');
+                  }}
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.2,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <img src={f5} alt="f5" style={{ width: '25px' }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    classes={{ root: stylesag.ListText }}
+                    primary="Masters"
+                    sx={{ opacity: open ? 1 : 0, ml: 1 }}
+                  />
+                </StyledListItemButton>
+              </Tooltip>
+            </ListItem>
+          </>
+        )}
 
         {userrole === 1
           ? navigationTabs1.map((Tab, i) => (
               <React.Fragment key={i}>
-                <StyledListItemButton
-                  selected={Tab.id === activeTabId}
-                  onClick={() => {
-                    setActiveTabId(Tab.id);
-                    setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
-                  }}
-                >
-                  <ListItemIcon>{Tab.icon}</ListItemIcon>
-                  <ListItemText primary={Tab.name} />
+                <Tooltip title={Tab?.name} placement="left-end">
+                  <StyledListItemButton
+                    selected={Tab.id === activeTabId}
+                    onClick={() => {
+                      setActiveTabId(Tab.id);
+                      setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
+                    }}
+                  >
+                    <ListItemIcon>{Tab.icon}</ListItemIcon>
+                    <ListItemText primary={Tab.name} />
 
-                  {Tab.id === activeTabId && openedTab !== 0 ? (
-                    <ExpandLess />
-                  ) : (
-                    <ChevronRightIcon />
-                  )}
-                </StyledListItemButton>
+                    {Tab.id === activeTabId && openedTab !== 0 ? (
+                      <ExpandLess />
+                    ) : (
+                      <ChevronRightIcon />
+                    )}
+                  </StyledListItemButton>
+                </Tooltip>
 
                 <Collapse
                   in={Tab.id === openedTab}
@@ -865,18 +816,20 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                   <List component="div" disablePadding>
                     {Tab.subTabs.map((subTab, index) => (
                       <React.Fragment key={index}>
-                        <StyledListItemButton
-                          selected={subTab.id === activeTabId}
-                          onClick={() => {
-                            navigate('/admin-panel/' + subTab.link);
-                            setActiveTabId(subTab.id);
-                            handleDrawerClose();
-                          }}
-                          sx={{ pl: 4 }}
-                        >
-                          <ListItemIcon>{subTab.icon}</ListItemIcon>
-                          <ListItemText primary={subTab.name} />
-                        </StyledListItemButton>
+                        <Tooltip title={subTab?.name} placement="left-end">
+                          <StyledListItemButton
+                            selected={subTab.id === activeTabId}
+                            onClick={() => {
+                              navigate('/admin-panel/' + subTab.link);
+                              setActiveTabId(subTab.id);
+                              handleDrawerClose();
+                            }}
+                            sx={{ pl: 4 }}
+                          >
+                            <ListItemIcon>{subTab.icon}</ListItemIcon>
+                            <ListItemText primary={subTab.name} />
+                          </StyledListItemButton>
+                        </Tooltip>
                       </React.Fragment>
                     ))}
                   </List>
@@ -885,22 +838,24 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
             ))
           : navigationEmpTabs1.map((Tab, i) => (
               <React.Fragment key={i}>
-                <StyledListItemButton
-                  selected={Tab.id === activeTabId}
-                  onClick={() => {
-                    setActiveTabId(Tab.id);
-                    setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
-                  }}
-                >
-                  <ListItemIcon>{Tab.icon}</ListItemIcon>
-                  <ListItemText primary={Tab.name} />
+                <Tooltip title={Tab?.name} placement="left-end">
+                  <StyledListItemButton
+                    selected={Tab.id === activeTabId}
+                    onClick={() => {
+                      setActiveTabId(Tab.id);
+                      setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
+                    }}
+                  >
+                    <ListItemIcon>{Tab.icon}</ListItemIcon>
+                    <ListItemText primary={Tab.name} />
 
-                  {Tab.id === activeTabId && openedTab !== 0 ? (
-                    <ExpandLess />
-                  ) : (
-                    <ChevronRightIcon />
-                  )}
-                </StyledListItemButton>
+                    {Tab.id === activeTabId && openedTab !== 0 ? (
+                      <ExpandLess />
+                    ) : (
+                      <ChevronRightIcon />
+                    )}
+                  </StyledListItemButton>
+                </Tooltip>
 
                 <Collapse
                   in={Tab.id === openedTab}
@@ -910,24 +865,116 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                   <List component="div" disablePadding>
                     {Tab.subTabs.map((subTab, index) => (
                       <React.Fragment key={index}>
-                        <StyledListItemButton
-                          selected={subTab.id === activeTabId}
-                          onClick={() => {
-                            navigate('/admin-panel/' + subTab.link);
-                            setActiveTabId(subTab.id);
-                            handleDrawerClose();
-                          }}
-                          sx={{ pl: 4 }}
-                        >
-                          <ListItemIcon>{subTab.icon}</ListItemIcon>
-                          <ListItemText primary={subTab.name} />
-                        </StyledListItemButton>
+                        <Tooltip title={subTab?.name} placement="left-end">
+                          <StyledListItemButton
+                            selected={subTab.id === activeTabId}
+                            onClick={() => {
+                              navigate('/admin-panel/' + subTab.link);
+                              setActiveTabId(subTab.id);
+                              handleDrawerClose();
+                            }}
+                            sx={{ pl: 4 }}
+                          >
+                            <ListItemIcon>{subTab.icon}</ListItemIcon>
+                            <ListItemText primary={subTab.name} />
+                          </StyledListItemButton>
+                        </Tooltip>
                       </React.Fragment>
                     ))}
                   </List>
                 </Collapse>
               </React.Fragment>
             ))}
+      </List>
+      {userrole === 1 && (
+        <>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <Tooltip title="donated users" placement="left-end">
+              <StyledListItemButton
+                selected={activeTabId === 7}
+                onClick={() => {
+                  setActiveTabId(7);
+                  navigate('/admin-panel/donatedusers');
+                  handleDrawerClose();
+                }}
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <img src={f4} alt="f3" style={{ width: '25px' }} />
+                </ListItemIcon>
+                <ListItemText
+                  classes={{ root: stylesag.ListText }}
+                  primary="Donated user"
+                  sx={{ opacity: open ? 1 : 0, ml: 1 }}
+                />
+              </StyledListItemButton>
+            </Tooltip>
+          </ListItem>
+        </>
+      )}
+
+      <List>
+        {userrole === 1
+          ? navigationreportTabs.map((Tab, i) => (
+              <React.Fragment key={i}>
+                <Tooltip title={Tab?.name} placement="left-end">
+                  <StyledListItemButton
+                    selected={Tab.id === activeTabId}
+                    onClick={() => {
+                      setActiveTabId(Tab.id);
+                      setOpenedTab(openedTab === Tab.id ? 0 : Tab.id);
+                    }}
+                  >
+                    <ListItemIcon>{Tab.icon}</ListItemIcon>
+                    <ListItemText primary={Tab.name} />
+
+                    {Tab.id === activeTabId && openedTab !== 0 ? (
+                      <ExpandLess />
+                    ) : (
+                      <ChevronRightIcon />
+                    )}
+                  </StyledListItemButton>
+                </Tooltip>
+
+                <Collapse
+                  in={Tab.id === openedTab}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List component="div" disablePadding>
+                    {Tab.subTabs.map((subTab, index) => (
+                      <React.Fragment key={index}>
+                        <Tooltip title={subTab?.name} placement="left-end">
+                          <StyledListItemButton
+                            selected={subTab.id === activeTabId}
+                            onClick={() => {
+                              navigate('/admin-panel/' + subTab.link);
+                              setActiveTabId(subTab.id);
+                              handleDrawerClose();
+                            }}
+                            sx={{ pl: 4 }}
+                          >
+                            <ListItemIcon>{subTab.icon}</ListItemIcon>
+                            <ListItemText primary={subTab.name} />
+                          </StyledListItemButton>
+                        </Tooltip>
+                      </React.Fragment>
+                    ))}
+                  </List>
+                </Collapse>
+              </React.Fragment>
+            ))
+          : ''}
       </List>
     </Drawer>
   );

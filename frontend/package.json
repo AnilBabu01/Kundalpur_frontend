@@ -29,6 +29,7 @@
     "jspdf-autotable": "^3.5.28",
     "jwt-decode": "^3.1.2",
     "material-table": "^1.69.3",
+    "mdi-material-ui": "^7.6.0",
     "moment": "^2.29.4",
     "moment-js": "^1.1.15",
     "npm-hindi-converter": "^0.1.2",

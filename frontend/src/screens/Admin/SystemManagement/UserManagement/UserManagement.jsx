@@ -142,7 +142,7 @@ const UserManagement = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div-user-add">
                 <div>
-                  <h2 className="add_text_only"> Add User</h2>
+                  <h2 clssName="add_text_only"> Add Employee</h2>
                   <Typography variant="body2" color="primary" align="right">
                     {currDate} / {currTime}
                   </Typography>

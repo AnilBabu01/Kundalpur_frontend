@@ -9,14 +9,13 @@
     outline: none;
 }
 .search-header input {
-    width: 287px;
-    /* height: 39px; */
-    /* border: 2px solid #e96d00; */
-    border-radius: 5px;
-    font-size: 14px;
-    padding: 0.4rem 1.5rem;
-    padding-left: 1rem;
-    border: 1px solid #05313C;
+  width: 280px;
+height: 35px;
+padding-left: 1rem;
+
+background: #FFFFFF;
+border: 1px solid #C5BFBF;
+border-radius: 7px;
 }
 .search-header select{
   width: 250px;
@@ -40,6 +39,8 @@
     padding: 0.4rem 1.5rem;
     border-radius: 5px;
     font-size: 1rem;
+    width: 104px;
+    height: 40px;
 }
 
 .search-header button:hover {
@@ -120,9 +121,7 @@ border: none;
     margin-bottom: 1rem;
 
 }
-.add-div-close-div h2{
-    color: #e96d00;
-}
+
     
     
 .main-input-div1 {
@@ -136,28 +135,39 @@ border: none;
     display: flex;
     flex-direction: column;
   }
-  
-  .inner-input-div1 input {
-      width: 464px;
-      height: 55px;
-      border: 3px solid #e96d00;
-      border-radius: 5px;
-      font-size: 20px;
-      padding-left: 1rem;
-      border: 3px solid #05313C;
+  .flex_div_main_add_user{
+    display: flex;
+
+    justify-content: space-between;
   }
-  
-  .inner-input-div1 input:focus{
+  .inner-input-divadd input {
+    width: 280px;
+height: 35px;
+left: 407px;
+top: 313px;
+margin-right: 1rem;
+background: #FFFFFF;
+border: 1px solid #C5BFBF;
+border-radius: 7px;
+padding-left: 1rem;
+  }
+.inner-input-divadd{
+    display: flex;
+    flex-direction: column;
+
+}  
+.inner-input-divadd input:focus{
       outline: none;
   }
-  .inner-input-div1 label {
-      font-family: "Imprima";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 25px;
-      line-height: 29px;
-      color: #827b7b;
-      margin-bottom: 1rem;
+  .inner-input-divadd  label {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    color: #05313C;
+    
   }
   
 .save-btn1{

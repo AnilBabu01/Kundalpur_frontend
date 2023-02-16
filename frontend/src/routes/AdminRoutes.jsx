@@ -45,7 +45,7 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           }
         />
         <Route
-          path="/admin-panel/master"
+          path="/admin-panel/masters"
           element={
             <Adminprivateroute>
               <MasterTap setopendashboard={setopendashboard} />

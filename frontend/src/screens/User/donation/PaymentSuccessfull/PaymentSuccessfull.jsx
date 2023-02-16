@@ -7,42 +7,7 @@ function PaymentSuccessfull({ isData }) {
 
   useEffect(() => {}, []);
 
-  return (
-    <>
-      <div className="PaymentSuccessfull-main-div">
-        <div className="PaymentSuccessfull-main-div-innear">
-          <img src={images} alt=" images " />
-          <p>Payment successful</p>
-          <button
-            onClick={() => {
-              navigate('/reciept', {
-                state: {
-                  userdata: isData,
-                },
-              });
-            }}
-            className="done-btn"
-          >
-            Download Receipt
-          </button>
-          <button
-            onClick={() => navigate('/donationhistory')}
-            className="done-btn"
-          >
-            Go To Donation History
-          </button>
-          <button
-            onClick={() => {
-              navigate('/donation');
-            }}
-            className="ok_btn"
-          >
-            Ok
-          </button>
-        </div>
-      </div>
-    </>
-  );
+  return <></>;
 }
 
 export default PaymentSuccessfull;

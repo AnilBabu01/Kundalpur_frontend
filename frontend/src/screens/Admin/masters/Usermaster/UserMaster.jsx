@@ -15,7 +15,6 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import Swal from 'sweetalert2';
-
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
@@ -27,14 +26,19 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import activate from '../../../../assets/activate.png';
 import deacivate from '../../../../assets/deacivate.png';
+import ExportExcel from '../../../../assets/ExportExcel.png';
+import ExportPdf from '../../../../assets/ExportPdf.png';
+import Print from '../../../../assets/Print.png';
+import Edit from '../../../../assets/Edit.png';
 const style = {
   position: 'absolute',
   top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '70%',
-  bgcolor: 'background.paper',
 
+  bgcolor: 'background.paper',
+  background: '#FFFFF',
+  borderRadius: '15px',
   boxShadow: 24,
   p: 4,
 };
@@ -114,7 +118,7 @@ function UserMaster() {
 
   const getall_users = () => {
     serverInstance('admin/get-users', 'get').then((res) => {
-      console.log(res);
+      console.log('list', res);
       if (res.status) {
         setisData(res.data);
       } else {
@@ -184,59 +188,63 @@ function UserMaster() {
             <div>
               <form onSubmit={handlesubmit}>
                 <div className="add-div-close-div">
-                  <h2>Add New User</h2>
+                  <h2 clssName="add_text_only">Add New User</h2>
                   <CloseIcon onClick={() => handleClose()} />
                 </div>
-                <hr />
-                <div></div>
 
-                <div className="main-input-div1">
-                  <div className="inner-input-div1">
-                    <label htmlFor="name">Full name</label>
-                    <input
-                      id="name"
-                      text="text"
-                      name="name"
-                      value={name}
-                      onChange={(e) => setname(e.target.value)}
-                    />
+                <div className="flex_div_main_add_user">
+                  <div className="main-input-div1">
+                    <div className="inner-input-divadd">
+                      <label htmlFor="name">Full name</label>
+                      <input
+                        id="name"
+                        text="text"
+                        name="name"
+                        value={name}
+                        onChange={(e) => setname(e.target.value)}
+                      />
+                    </div>
+                    <div className="inner-input-divadd">
+                      <label htmlFor="phone">Mobile Number</label>
+                      <input
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        value={phone}
+                        onChange={(e) => setphone(e.target.value)}
+                      />
+                    </div>
                   </div>
-                  <div className="inner-input-div1">
-                    <label htmlFor="phone">Mobile Number</label>
-                    <input
-                      type="text"
-                      id="phone"
-                      name="phone"
-                      value={phone}
-                      onChange={(e) => setphone(e.target.value)}
-                    />
+                  <div className="main-input-div1">
+                    <div className="inner-input-divadd">
+                      <label htmlFor="email">Email</label>
+                      <input
+                        text="text"
+                        id="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setemail(e.target.value)}
+                      />
+                    </div>
+                    <div className="inner-input-divadd">
+                      <label htmlFor="password">Password</label>
+                      <input
+                        text="password"
+                        id="password"
+                        name="password"
+                        value={password}
+                        onChange={(e) => setpassword(e.target.value)}
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="main-input-div1">
-                  <div className="inner-input-div1">
-                    <label htmlFor="email">Email</label>
-                    <input
-                      text="text"
-                      id="email"
-                      name="email"
-                      value={email}
-                      onChange={(e) => setemail(e.target.value)}
-                    />
-                  </div>
-                  <div className="inner-input-div1">
-                    <label htmlFor="password">Password</label>
-                    <input
-                      text="password"
-                      id="password"
-                      name="password"
-                      value={password}
-                      onChange={(e) => setpassword(e.target.value)}
-                    />
-                  </div>
-                </div>
+
                 <div className="save-div-btn">
-                  <button className="save-btn1">Add User</button>
-                  <button onClick={() => handleClose()} className="calcel-btn">
+                  <button className="save-div-btn-btn">Add User</button>
+                  <button
+                    onClick={() => handleClose()}
+                    className="save-div-btn-btn-cancel"
+                  >
                     Cancel
                   </button>
                 </div>
@@ -247,7 +255,8 @@ function UserMaster() {
       </Modal>
 
       <div>
-        <div className="search-header">
+        <hr style={{ color: '#e96d00' }} />
+        <div className="search-header" style={{ marginTop: '1rem' }}>
           <div className="search-inner-div">
             <input
               type="text"
@@ -265,12 +274,28 @@ function UserMaster() {
             />
             <button onClick={() => filterdata()}>Search</button>
             <button onClick={() => getall_users()}>Reset</button>
+            <button onClick={handleOpen}>+Add</button>
+            <div>
+              <img
+                style={{ width: '25px', marginLeft: '1rem' }}
+                src={Print}
+                alt=" Print"
+              />
+              <img
+                style={{ width: '25px', marginLeft: '1rem' }}
+                src={ExportExcel}
+                alt=" Print"
+              />
+              <img
+                style={{ width: '25px', marginLeft: '1rem' }}
+                src={ExportPdf}
+                alt=" Print"
+              />
+            </div>
           </div>
         </div>
         <hr style={{ color: '#e96d00' }} />
-        <div className="add-btn-user">
-          <button onClick={handleOpen}>+Add</button>
-        </div>
+
         <div className="table-div-maain">
           <Table
             sx={{ minWidth: 650, width: '100%' }}
@@ -279,8 +304,8 @@ function UserMaster() {
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
                 <TableCell>Sn</TableCell>
-
                 <TableCell>Name</TableCell>
+                <TableCell>Address</TableCell>
                 <TableCell>Contact No</TableCell>
                 <TableCell>Email-Id</TableCell>
                 <TableCell>Status</TableCell>
@@ -304,6 +329,7 @@ function UserMaster() {
                   <TableCell>{index + 1}</TableCell>
 
                   <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.address ? row.address : '-'}</TableCell>
                   <TableCell>{row.mobileNo}</TableCell>
                   <TableCell>{row.email}</TableCell>
                   <TableCell>
@@ -319,7 +345,7 @@ function UserMaster() {
                         })
                       }
                     />
-                    <EditIcon
+                    <img
                       onClick={() =>
                         navigation(`/admin-panel/masters/updateuser`, {
                           state: {
@@ -327,6 +353,9 @@ function UserMaster() {
                           },
                         })
                       }
+                      style={{ width: '20px' }}
+                      src={Edit}
+                      alt=" Print"
                     />
 
                     {row.status === true ? (

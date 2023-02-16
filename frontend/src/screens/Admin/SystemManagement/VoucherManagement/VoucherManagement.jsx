@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from "react";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { serverInstance } from "../../../../API/ServerInstance";
-import Swal from "sweetalert2";
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import { Box } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import CloseIcon from "@mui/icons-material/Close";
-import "./VoucherManagement.css";
-import AddVoucherToUser from "./AddVoucherToUser/AddVoucherToUser";
+import React, { useEffect, useState } from 'react';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { serverInstance } from '../../../../API/ServerInstance';
+import Swal from 'sweetalert2';
+import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
+import { Box } from '@mui/material';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import CloseIcon from '@mui/icons-material/Close';
+import './VoucherManagement.css';
+import AddVoucherToUser from './AddVoucherToUser/AddVoucherToUser';
 const style = {
-  position: "absolute",
-  top: "27%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '27%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
 
-  bgcolor: "background.paper",
+  background: '#FFFFFF',
+  borderRadius: '15px',
+  bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
-  borderRadius: "5px",
 };
 const VoucherManagement = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
@@ -37,25 +38,25 @@ const VoucherManagement = ({ setopendashboard }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigation = useNavigate();
-  console.log("asss", isData);
+  console.log('asss', isData);
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
   }, []);
 
   const getall_donation = () => {
-    serverInstance("user/add-voucher-user", "get").then((res) => {
+    serverInstance('user/add-voucher-user', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
-        Swal("Error", "somthing went  wrong", "error");
+        Swal('Error', 'somthing went  wrong', 'error');
       }
       console.log(res);
     });
   };
 
   const downloadrecept = (row) => {
-    navigation("/reciept", {
+    navigation('/reciept', {
       state: {
         userdata: row,
       },
@@ -82,8 +83,8 @@ const VoucherManagement = ({ setopendashboard }) => {
         <Fade in={open}>
           <Box sx={style}>
             <div>
-              <div className="add-div-close-div1">
-                <h2>Generate Voucher</h2>
+              <div className="add-div-close-div-user-add">
+                <h2 clssName="add_text_only">Generate Voucher</h2>
                 <CloseIcon onClick={() => handleClose()} />
               </div>
 
@@ -103,10 +104,10 @@ const VoucherManagement = ({ setopendashboard }) => {
           <div className="table-div-maain">
             {/* <TableContainer component={Paper}> */}
             <Table
-              sx={{ minWidth: 650, width: "97%" }}
+              sx={{ minWidth: 650, width: '97%' }}
               aria-label="simple table"
             >
-              <TableHead style={{ background: "#F1F0F0" }}>
+              <TableHead style={{ background: '#F1F0F0' }}>
                 <TableRow>
                   <TableCell>Userid</TableCell>
                   <TableCell>Compnay Name</TableCell>
@@ -120,21 +121,21 @@ const VoucherManagement = ({ setopendashboard }) => {
                 {(rowsPerPage > 0
                   ? isData.slice(
                       page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
+                      page * rowsPerPage + rowsPerPage,
                     )
                   : isData
                 ).map((row, index) => (
                   <TableRow
                     key={index}
                     sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
+                      '&:last-child td, &:last-child th': { border: 0 },
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
 
                     <TableCell>Kundarpur</TableCell>
                     <TableCell> {`${row.from} to ${row.to}`}</TableCell>
-                    <TableCell> {row.status ? "Active" : "pasive"}</TableCell>
+                    <TableCell> {row.status ? 'Active' : 'pasive'}</TableCell>
 
                     <TableCell>
                       <button className="Accepted_btn">Accepted</button>
@@ -156,12 +157,12 @@ const VoucherManagement = ({ setopendashboard }) => {
                       return `Page: ${page}`;
                     }}
                     backIconButtonProps={{
-                      color: "secondary",
+                      color: 'secondary',
                     }}
-                    nextIconButtonProps={{ color: "secondary" }}
+                    nextIconButtonProps={{ color: 'secondary' }}
                     SelectProps={{
                       inputProps: {
-                        "aria-label": "page number",
+                        'aria-label': 'page number',
                       },
                     }}
                     // showFirstButton={true}

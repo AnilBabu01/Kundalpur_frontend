@@ -19,6 +19,7 @@ import RoomAvailability from '../screens/User/RoomBooking/RoomAvailability/RoomA
 import TheAccommodation from '../screens/User/RoomBooking/TheAccommodation/TheAccommodation';
 import ServicesandFacilities from '../screens/User/RoomBooking/Services&Facilities/ServicesandFacilities';
 import TariffsandPolicies from '../screens/User/RoomBooking/Tariffs&Policies/TariffsandPolicies';
+import OnlineReceipt from '../screens/Admin/Reciept/OnlineReceipt';
 function MainRoutes({
   setopendashboard,
   setshowreciept,
@@ -89,6 +90,18 @@ function MainRoutes({
           element={
             <PrivateRoutes>
               <Reciept
+                setopendashboard={setopendashboard}
+                setshowreciept={setshowreciept}
+                onlineId={onlineId}
+              />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/onlinereceipt"
+          element={
+            <PrivateRoutes>
+              <OnlineReceipt
                 setopendashboard={setopendashboard}
                 setshowreciept={setshowreciept}
                 onlineId={onlineId}

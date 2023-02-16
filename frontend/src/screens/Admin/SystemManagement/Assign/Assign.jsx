@@ -86,7 +86,6 @@ const Assign = ({ setopendashboard }) => {
       <div className="dashboarddiv">
         <div>
           <div className="table-div-maain">
-            {/* <TableContainer component={Paper}> */}
             <Table
               sx={{ minWidth: 650, width: '97%' }}
               aria-label="simple table"
@@ -96,7 +95,6 @@ const Assign = ({ setopendashboard }) => {
                   <TableCell>EmpId</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Role</TableCell>
-
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -151,16 +149,10 @@ const Assign = ({ setopendashboard }) => {
                         'aria-label': 'page number',
                       },
                     }}
-                    // showFirstButton={true}
-                    // showLastButton={true}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
-                    //sx and classes prop discussed in styling section
                   />
                 </TableRow>
               </TableFooter>
             </Table>
-            {/* </TableContainer> */}
           </div>
         </div>
       </div>

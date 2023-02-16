@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import "./AddRoleuser.css";
+import React, { useEffect, useState } from 'react';
+import './AddRoleuser.css';
 
 const AddRoleuser = ({ setOpen }) => {
-  const [donationtype, setdonationtype] = useState("");
+  const [donationtype, setdonationtype] = useState('');
 
   return (
     <>
@@ -35,11 +35,11 @@ const AddRoleuser = ({ setOpen }) => {
               <table class="styled-table">
                 <thead>
                   <tr>
-                    <th style={{ textAlign: "center" }}>Module Name</th>
-                    <th style={{ textAlign: "center" }}>Add</th>
-                    <th style={{ textAlign: "center" }}>Edit</th>
-                    <th style={{ textAlign: "center" }}>Delete</th>
-                    <th style={{ textAlign: "center" }}>Enquire</th>
+                    <th style={{ textAlign: 'center' }}>Module Name</th>
+                    <th style={{ textAlign: 'center' }}>Add</th>
+                    <th style={{ textAlign: 'center' }}>Edit</th>
+                    <th style={{ textAlign: 'center' }}>Delete</th>
+                    <th style={{ textAlign: 'center' }}>Enquire</th>
                   </tr>
                 </thead>
                 <tbody>

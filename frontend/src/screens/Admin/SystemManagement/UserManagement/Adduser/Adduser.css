@@ -9,6 +9,7 @@
   background: #FFFFFF;
   border: 1px solid #C5BFBF;
   border-radius: 7px;
+  padding-left: 0.5rem;
   }
 
   
@@ -42,7 +43,7 @@
   .inner-input-div1-select_add{
     width: 280px;
     height: 35px;
-   
+    padding-left: 0.5rem;
     
     background: #FFFFFF;
     border: 1px solid #C5BFBF;

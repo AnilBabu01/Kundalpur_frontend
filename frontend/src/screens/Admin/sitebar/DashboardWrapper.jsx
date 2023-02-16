@@ -32,6 +32,7 @@ import { useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { ListItemButton } from '@mui/material';
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -326,7 +327,7 @@ const DashboardWrapper = () => {
       <AppBar
         elevation={0}
         position="static"
-        sx={{ bgcolor: 'white', color: 'black', paddingLeft: '2.3%' }}
+        sx={{ bgcolor: 'white', color: 'black', paddingLeft: '3.7%' }}
       >
         <Toolbar>
           {resize.isMobile ? (
@@ -352,42 +353,31 @@ const DashboardWrapper = () => {
                 component="div"
                 sx={{ display: { xs: 'none', sm: 'block' } }}
               >
-                Donation
+                श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि
               </Typography>
             </>
           ) : (
             <>
-              <img
-                src={logoApp}
-                alt=" logoApp"
-                style={{ width: '25px', height: '25px' }}
-              />
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ display: { xs: 'none', sm: 'block' }, ml: 2 }}
+              <span
+                style={{ marginLeft: open ? '14%' : '0.1%', display: 'flex' }}
               >
-                Donation
-              </Typography>
-
-              {open && (
-                <span style={{ marginLeft: '4.5%', display: 'flex' }}>
-                  <img
-                    src={logoApp}
-                    alt=" logoApp"
-                    style={{ width: '25px', height: '25px' }}
-                  />
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="div"
-                    sx={{ display: { xs: 'none', sm: 'block' }, ml: 2 }}
-                  >
-                    Donation
-                  </Typography>
-                </span>
-              )}
+                <img
+                  src={logoApp}
+                  alt=" logoApp"
+                  style={{ width: '25px', height: '25px' }}
+                />
+                <Typography
+                  variant="h5"
+                  noWrap
+                  component="div"
+                  sx={{
+                    display: { xs: 'none', sm: 'block', fontWeight: '500' },
+                    ml: 2,
+                  }}
+                >
+                  श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि
+                </Typography>
+              </span>
             </>
           )}
 

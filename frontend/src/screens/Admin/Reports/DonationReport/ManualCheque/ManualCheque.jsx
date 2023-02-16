@@ -239,7 +239,6 @@ const ManualCheque = ({ setopendashboard }) => {
       </Modal>
 
       <div>
-        <h2 className="Cheque_text">Cheque donation report</h2>
         <div className="search-header">
           <div className="search-inner-div-reports">
             <input

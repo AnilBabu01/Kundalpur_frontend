@@ -36,6 +36,7 @@ const CashDonation = ({
   updateData,
   showUpdateBtn,
   handleOpen4,
+  setopendashboard,
 }) => {
   console.log('upadte data is', updateData);
   const theme = createTheme({
@@ -290,6 +291,7 @@ const CashDonation = ({
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.manualItemDetails);
     }
+    setopendashboard(true);
   }, []);
 
   return (

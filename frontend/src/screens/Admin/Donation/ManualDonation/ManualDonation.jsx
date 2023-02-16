@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
-import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,24 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
 import Moment from 'moment-js';
-import IconButton from '@mui/material/IconButton';
 import Modal from '@mui/material/Modal';
-import PrintIcon from '@mui/icons-material/Print';
 import Fade from '@mui/material/Fade';
-import CloseIcon from '@mui/icons-material/Close';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import CancelIcon from '@mui/icons-material/Cancel';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Request from './Request';
-import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import exportFromJSON from 'export-from-json';
 import './Donation.css';
 import ElectronicDonation from '../ManualDonation/ElectronicDonationManual/ElectronicDonation';
@@ -43,6 +25,7 @@ import DonationSuccessfull from './DonationSuccessfull';
 import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
+import ClearIcon from '@mui/icons-material/Clear';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -116,27 +99,7 @@ const ManualDonation = ({ setopendashboard }) => {
   };
 
   const handleOpen = () => {
-    const role = Number(sessionStorage.getItem('userrole'));
-    if (role === 3) {
-      setLoading(true);
-      serverInstance('admin/voucher-get', 'get').then((res) => {
-        if (res.status) {
-          console.log('voucher data', res);
-          voucherexhauted(res.data);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-      });
-    } else {
-      setOpen(true);
-      serverInstance('admin/voucher-get', 'get').then((res) => {
-        if (res.status) {
-          console.log('voucher data', res);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-      });
-    }
+    setOpen(true);
   };
   const handleClose = React.useCallback(() => setOpen(false), []);
 
@@ -250,6 +213,7 @@ const ManualDonation = ({ setopendashboard }) => {
             handleClose={handleClose}
             themeColor={donationColorTheme.cash}
             handleOpen4={handleOpen4}
+            setopendashboard={setopendashboard}
           />
         ),
       },
@@ -261,6 +225,7 @@ const ManualDonation = ({ setopendashboard }) => {
             handleClose={handleClose}
             themeColor={donationColorTheme.electronic}
             handleOpen4={handleOpen4}
+            setopendashboard={setopendashboard}
           />
         ),
       },
@@ -272,6 +237,7 @@ const ManualDonation = ({ setopendashboard }) => {
             handleClose={handleClose}
             themeColor={donationColorTheme.cheque}
             handleOpen4={handleOpen4}
+            setopendashboard={setopendashboard}
           />
         ),
       },
@@ -283,6 +249,7 @@ const ManualDonation = ({ setopendashboard }) => {
             handleClose={handleClose}
             themeColor={donationColorTheme.item}
             handleOpen4={handleOpen4}
+            setopendashboard={setopendashboard}
           />
         ),
       },

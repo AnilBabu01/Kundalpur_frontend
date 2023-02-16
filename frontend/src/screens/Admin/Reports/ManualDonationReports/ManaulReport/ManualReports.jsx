@@ -31,6 +31,12 @@ import UpdateCash from '../../../Donation/ManualDonation/UpdateComponents/Update
 import UpdateChe from '../../../Donation/ManualDonation/UpdateComponents/UpdateChe';
 import UpdateElec from '../../../Donation/ManualDonation/UpdateComponents/UpdateElec';
 import UpdateTtem from '../../../Donation/ManualDonation/UpdateComponents/UpdateTtem';
+import Print from '../../../../../assets/Print.png';
+import ExportPdf from '../../../../../assets/ExportPdf.png';
+import ExportExcel from '../../../../../assets/ExportExcel.png';
+import Edit from '../../../../../assets/Edit.png';
+import eye from '../../../../../assets/eye.png';
+
 const style = {
   position: 'absolute',
   top: '40%',
@@ -92,7 +98,9 @@ const ManualReports = ({ setopendashboard }) => {
   const getall_donation = () => {
     serverInstance('admin/manual-donation', 'get').then((res) => {
       if (res.status) {
-        setisData(res.data);
+        let filterData = res.data.filter((item) => item.modeOfDonation === '3');
+        console.log(filterData);
+        setisData(filterData);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
@@ -317,15 +325,25 @@ const ManualReports = ({ setopendashboard }) => {
               <button onClick={() => getall_donation()}>Reset</button>
             </div>
           </div>
+          <div className="Center_main_dic_filetr">
+            <label>&nbsp;</label>
+            <img
+              onClick={() => ExportToExcel()}
+              src={ExportExcel}
+              alt="s"
+              style={{ width: '30px' }}
+            />
+          </div>
+          <div className="Center_main_dic_filetr">
+            <label>&nbsp;</label>
+            <img
+              onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+              src={ExportPdf}
+              alt="ss"
+              style={{ width: '30px' }}
+            />
+          </div>
           <div></div>
-        </div>
-
-        <div className="search-header-print">
-          <SimCardAlertIcon onClick={() => ExportToExcel()} />
-          &nbsp;&nbsp;
-          <PictureAsPdfIcon
-            onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
-          />
         </div>
 
         <div className="table-div-maain">
@@ -468,10 +486,14 @@ const ManualReports = ({ setopendashboard }) => {
                             }
                           /> */}
                         {userrole === 1 && (
-                          <EditIcon onClick={() => upadteOpen(row)} />
+                          <img
+                            onClick={() => upadteOpen(row)}
+                            src={Edit}
+                            alt="print"
+                            style={{ width: '20px', marginRight: '2px' }}
+                          />
                         )}
-
-                        <PrintIcon
+                        <img
                           onClick={() =>
                             navigation('/admin-panel/printContentmanul', {
                               state: {
@@ -479,6 +501,9 @@ const ManualReports = ({ setopendashboard }) => {
                               },
                             })
                           }
+                          src={Print}
+                          alt="print"
+                          style={{ width: '20px', marginRight: '2px' }}
                         />
                         {row.isActive ? (
                           <DownloadIcon

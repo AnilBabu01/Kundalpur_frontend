@@ -37,6 +37,11 @@ import { backendApiUrl } from '../../../../../config/config';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import { ExportPdfmanul } from '../../../compoments/ExportPdf';
+import Print from '../../../../../assets/Print.png';
+import ExportPdf from '../../../../../assets/ExportPdf.png';
+import ExportExcel from '../../../../../assets/ExportExcel.png';
+import Edit from '../../../../../assets/Edit.png';
+import eye from '../../../../../assets/eye.png';
 import './ManualCash.css';
 const style = {
   position: 'absolute',
@@ -246,7 +251,6 @@ const ManualCash = ({ setopendashboard }) => {
 
       <div>
         <div>
-          <h2 className="Cheque_text">Cash donation report</h2>
           <div className="search-header">
             <div className="search-inner-div-reports">
               <input
@@ -279,9 +283,20 @@ const ManualCash = ({ setopendashboard }) => {
               </select>
               <button onClick={() => filterdata()}>Search</button>
               <button onClick={() => getall_donation()}>Reset</button>
-              <SimCardAlertIcon onClick={() => ExportToExcel()} />
-              <PictureAsPdfIcon
+
+              <img
+                onClick={() => ExportPdfmanul(isData, 'ManualElectronicReport')}
+                src={ExportExcel}
+                alt="s"
+                style={{ width: '30px' }}
+              />
+
+              <label>&nbsp;</label>
+              <img
                 onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+                src={ExportPdf}
+                alt="ss"
+                style={{ width: '30px' }}
               />
             </div>
             <div></div>
@@ -428,16 +443,25 @@ const ManualCash = ({ setopendashboard }) => {
                         })}
                       </TableCell>
                       <TableCell>
-                        <RemoveRedEyeIcon
+                        <img
                           onClick={() =>
                             navigation(`/admin-panel/infoElectronic/${row.id}`)
                           }
+                          src={eye}
+                          alt="print"
+                          style={{ width: '20px', marginRight: '2px' }}
                         />
+
                         {userrole === 1 && (
-                          <EditIcon onClick={() => upadteOpen(row)} />
+                          <img
+                            onClick={() => upadteOpen(row)}
+                            src={Edit}
+                            alt="print"
+                            style={{ width: '20px', marginRight: '2px' }}
+                          />
                         )}
 
-                        <PrintIcon
+                        <img
                           onClick={() =>
                             navigation('/admin-panel/reports/printcontent', {
                               state: {
@@ -445,6 +469,9 @@ const ManualCash = ({ setopendashboard }) => {
                               },
                             })
                           }
+                          src={Print}
+                          alt="print"
+                          style={{ width: '20px', marginRight: '2px' }}
                         />
                         {row.isActive ? (
                           <DownloadIcon

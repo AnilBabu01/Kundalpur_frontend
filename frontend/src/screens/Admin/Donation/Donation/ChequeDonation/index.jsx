@@ -29,11 +29,11 @@ import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
 
 const ChequeDonation = ({
-  setshowalert,
   handleClose,
   themeColor,
   updateData,
   showUpdateBtn,
+  setopendashboard,
 }) => {
   const theme = createTheme({
     typography: {
@@ -294,6 +294,7 @@ const ChequeDonation = ({
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
     }
+    setopendashboard(true);
   }, []);
 
   return (

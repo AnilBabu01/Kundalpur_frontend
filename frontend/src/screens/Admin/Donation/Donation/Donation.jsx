@@ -13,12 +13,9 @@ import TablePagination from '@mui/material/TablePagination';
 import Box from '@mui/material/Box';
 import Moment from 'moment-js';
 import Modal from '@mui/material/Modal';
-import PrintIcon from '@mui/icons-material/Print';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import Request from './Request';
-import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import ElectronicDonation from './ElectronicDonation/ElectronicDonation';
 import CashDonation from './CashDonation';
 import ItemDonation from './ItemDonation';
@@ -254,6 +251,7 @@ const Donation = ({ setopendashboard }) => {
             themeColor={donationColorTheme.cash}
             handleOpen4={handleOpen4}
             getall_donation={getall_donation}
+            setopendashboard={setopendashboard}
           />
         ),
       },
@@ -265,6 +263,7 @@ const Donation = ({ setopendashboard }) => {
             handleClose={handleClose}
             themeColor={donationColorTheme.electronic}
             handleOpen4={handleOpen4}
+            setopendashboard={setopendashboard}
           />
         ),
       },
@@ -276,6 +275,7 @@ const Donation = ({ setopendashboard }) => {
             handleClose={handleClose}
             themeColor={donationColorTheme.cheque}
             handleOpen4={handleOpen4}
+            setopendashboard={setopendashboard}
           />
         ),
       },
@@ -287,6 +287,7 @@ const Donation = ({ setopendashboard }) => {
             handleClose={handleClose}
             themeColor={donationColorTheme.item}
             handleOpen4={handleOpen4}
+            setopendashboard={setopendashboard}
           />
         ),
       },
@@ -362,7 +363,7 @@ const Donation = ({ setopendashboard }) => {
         <div>
           <div
             className="search-header-div-center"
-            style={{ paddingLeft: '1.5%' }}
+            style={{ paddingLeft: '1.5%', paddingRight: '1.3rem' }}
           >
             <div className="search-inner-div-reports">
               <div className="Center_main_dic_filetr">

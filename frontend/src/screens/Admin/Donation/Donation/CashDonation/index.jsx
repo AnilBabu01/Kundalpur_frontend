@@ -32,11 +32,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { useTranslation, Trans } from 'react-i18next';
 const CashDonation = ({
-  setshowalert,
   handleClose,
   themeColor,
   updateData,
   showUpdateBtn,
+  setopendashboard,
 }) => {
   const navigation = useNavigate();
   const { t, i18n } = useTranslation();
@@ -289,6 +289,8 @@ const CashDonation = ({
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
     }
+
+    setopendashboard(true);
   }, []);
 
   return (

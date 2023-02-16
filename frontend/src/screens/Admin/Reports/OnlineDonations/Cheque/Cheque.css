@@ -7,26 +7,21 @@
 }
 
 .search-inner-div-reports input {
-    width: 191px;
-    /* height: 39px; */
-    border: 2px solid #e96d00;
-    border: 1px solid #05313C;
-    padding-left: 1rem;
-    height: auto;
-    padding: 0.4rem ;
-    padding-left: 0.8rem;
-    
-    border-radius: 5px;
-    font-size: 14px;
+    width: 280px;
+    height: 35px;
+  
+    background: #FFFFFF;
+    border: 1px solid #C5BFBF;
+    border-radius: 7px;
 }
-
-.Cheque_text{
-    /* color: #e96d00; */
-    margin-bottom: 16px;
-    font-weight: 500;
-    color: #05313C;
+.search-inner-div-reports  select{
+    width: 280px;
+    height: 35px;
+  
+    background: #FFFFFF;
+    border: 1px solid #C5BFBF;
+    border-radius: 7px;
 }
-
 .Status_main_div{
     background: linear-gradient(
         90.65deg,

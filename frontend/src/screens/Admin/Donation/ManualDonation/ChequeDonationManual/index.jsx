@@ -35,6 +35,7 @@ const ChequeDonation = ({
   updateData,
   showUpdateBtn,
   handleOpen4,
+  setopendashboard,
 }) => {
   const theme = createTheme({
     typography: {
@@ -294,6 +295,7 @@ const ChequeDonation = ({
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
     }
+    setopendashboard(true);
   }, []);
 
   return (

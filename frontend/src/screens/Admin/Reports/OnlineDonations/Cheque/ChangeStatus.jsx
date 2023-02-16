@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { backendApiUrl } from '../../../../config/config';
+import { backendApiUrl } from '../../../../../config/config';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';

@@ -9,14 +9,12 @@ import RoleManagement from '../screens/Admin/SystemManagement/RoleManagement/Rol
 import UserManagement from '../screens/Admin/SystemManagement/UserManagement/UserManagement';
 import VoucherManagement from '../screens/Admin/SystemManagement/VoucherManagement/VoucherManagement';
 import InfoElectronic from '../screens/Admin/Donation/Donation/InfoElectronic';
-import Cheque from '../screens/Admin/Reports/Cheque/Cheque';
-import Online from '../screens/Admin/Reports/Online/Online';
 import Adminprivateroute from '../components/AdminOutlate/Adminprivateroute';
-import ChangeStatus from '../screens/Admin/Reports/Cheque/ChangeStatus';
+import ChangeStatus from '../screens/Admin/Reports/OnlineDonations/Cheque/ChangeStatus';
 import UpdateDonationType from '../screens/Admin/masters/Donationmaster/UpdateDonationType';
 import EmployeeUserInfo from '../screens/Admin/SystemManagement/UserManagement/EmployeeUserInfo';
 import Assign from '../screens/Admin/SystemManagement/Assign/Assign';
-import Chequeinfo from '../screens/Admin/Reports/Cheque/Chequeinfo';
+import Chequeinfo from '../screens/Admin/Reports/OnlineDonations/Cheque/Chequeinfo';
 import Request from '../screens/Admin/SystemManagement/Request/Request';
 import PrintContent from '../screens/Admin/compoments/PrintContent';
 import AllReport from '../screens/Admin/Reports/AllReport/AllReport';
@@ -27,6 +25,7 @@ import HeadReport from '../screens/Admin/Reports/HeadReport/HeadReport';
 import Signature from '../screens/Admin/Signature/Signature';
 import DonationReportTap from '../screens/Admin/Reports/DonationReport/DonationReportTap';
 import ManualDonationTap from '../screens/Admin/Reports/ManualDonationReports/ManualDonationTap';
+import OnlineTap from '../screens/Admin/Reports/OnlineDonations/OnlineTap';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   return (
     <>
@@ -52,6 +51,15 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <DonationReportTap setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/OnlineReports"
+          element={
+            <Adminprivateroute>
+              <OnlineTap setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />
@@ -147,23 +155,6 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <InfoElectronic setopendashboard={setopendashboard} />
-            </Adminprivateroute>
-          }
-        />
-
-        <Route
-          path="/admin-panel/reports/online"
-          element={
-            <Adminprivateroute>
-              <Online setopendashboard={setopendashboard} />
-            </Adminprivateroute>
-          }
-        />
-        <Route
-          path="/admin-panel/reports/cheque"
-          element={
-            <Adminprivateroute>
-              <Cheque setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

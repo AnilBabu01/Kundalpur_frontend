@@ -36,7 +36,7 @@ const ItemDonation = ({
   themeColor,
   updateData,
   showUpdateBtn,
-  handleOpen4,
+  setopendashboard,
 }) => {
   const theme = createTheme({
     typography: {
@@ -332,6 +332,8 @@ const ItemDonation = ({
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
     }
+
+    setopendashboard(true);
   }, []);
 
   return (

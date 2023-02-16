@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { backendUrl } from "../../../../config/config";
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { backendUrl } from '../../../../../config/config';
 function Chequeinfo({ setopendashboard }) {
   const location = useLocation();
   const [data, setdata] = useState([]);
-  console.log("cheque", data);
+  console.log('cheque', data);
   useEffect(() => {
     if (location.state) {
       setdata(location.state?.data);
     } else {
-      navigation("/admin-panel/reports");
+      navigation('/admin-panel/reports');
     }
     setopendashboard(true);
   }, []);

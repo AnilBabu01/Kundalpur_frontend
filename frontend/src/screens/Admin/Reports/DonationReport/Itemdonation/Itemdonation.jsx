@@ -240,7 +240,6 @@ const Itemdonation = ({ setopendashboard }) => {
       </Modal>
 
       <div>
-        <h2 className="Cheque_text">Item donation report</h2>
         <div className="search-header">
           <div className="search-inner-div-reports">
             <input

@@ -280,6 +280,7 @@ const ManualElectronic = ({ setopendashboard }) => {
             <div className="Center_main_dic_filetr">
               <label>From Date</label>
               <input
+                style={{ width: '15rem' }}
                 type="date"
                 placeholder="From"
                 value={datefrom}
@@ -293,6 +294,7 @@ const ManualElectronic = ({ setopendashboard }) => {
             <div className="Center_main_dic_filetr">
               <label>To Date</label>
               <input
+                style={{ width: '15rem' }}
                 type="date"
                 placeholder="From"
                 value={dateto}

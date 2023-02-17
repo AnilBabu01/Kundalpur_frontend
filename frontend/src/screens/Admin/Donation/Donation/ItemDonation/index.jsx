@@ -55,7 +55,6 @@ const ItemDonation = ({
   themeColor,
   updateData,
   showUpdateBtn,
-  setopendashboard,
 }) => {
   const theme = createTheme({
     typography: {
@@ -354,8 +353,6 @@ const ItemDonation = ({
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
     }
-
-    setopendashboard(true);
   }, []);
 
   return (
@@ -491,7 +488,7 @@ const ItemDonation = ({
                     style={custumstyle}
                     id="full-name"
                     required
-                    value={text}
+                    value={fullName}
                     onChangeText={(text) => {
                       setText(text);
                     }}
@@ -522,9 +519,9 @@ const ItemDonation = ({
                     style={custumstyle}
                     required
                     id="address"
-                    value={addText}
-                    onChangeText={(addText) => {
-                      setaddText(addText);
+                    value={address}
+                    onChangeText={(address) => {
+                      setAddress(address);
                     }}
                     onChange={(e) => setAddress(e.target.value)}
                     lang="hi"
@@ -711,6 +708,7 @@ const ItemDonation = ({
                           },
                         }}
                         value={item.unit}
+                        defaultValue={item.unit}
                         onChange={(e) =>
                           handleDonationItemUpdate(item, 'unit', e.target.value)
                         }
@@ -720,7 +718,7 @@ const ItemDonation = ({
                           sx={{
                             fontSize: 14,
                           }}
-                          value={''}
+                          value={item.unit}
                         >
                           Please select
                         </MenuItem>
@@ -768,39 +766,83 @@ const ItemDonation = ({
                     <TableCell align="center">
                       {!newMember ? (
                         <>
-                          <div className="centerMain_remove_item">
-                            <ReactTransliterate
-                              style={custommStyleInputTable}
-                              required
-                              value={hindiremark}
-                              onChangeText={(hindiremark) => {
-                                sethindiremark(hindiremark);
-                              }}
-                              onChange={(e) =>
-                                handleDonationItemUpdate(
-                                  item,
-                                  'remark',
-                                  e.target.value,
-                                )
-                              }
-                              lang="hi"
-                            />
-                            <div className="centerMain_remove_item_overLay">
-                              {idx > 0 && (
-                                <IconButton
-                                  sx={{
-                                    padding: '4px',
+                          {showUpdateBtn ? (
+                            <>
+                              <div className="centerMain_remove_item">
+                                <ReactTransliterate
+                                  style={custommStyleInputTable}
+                                  required
+                                  value={item.remark}
+                                  onChangeText={(item) => {
+                                    handleDonationItemUpdate(
+                                      item,
+                                      'remark',
+                                      e.target.value,
+                                    );
                                   }}
-                                  onClick={() => removeDonationItem(item)}
-                                >
-                                  <RemoveCircleOutlineIcon
-                                    color="primary"
-                                    fontSize="small"
-                                  />
-                                </IconButton>
-                              )}
-                            </div>
-                          </div>
+                                  onChange={(e) =>
+                                    handleDonationItemUpdate(
+                                      item,
+                                      'remark',
+                                      e.target.value,
+                                    )
+                                  }
+                                  lang="hi"
+                                />
+                                <div className="centerMain_remove_item_overLay">
+                                  {idx > 0 && (
+                                    <IconButton
+                                      sx={{
+                                        padding: '4px',
+                                      }}
+                                      onClick={() => removeDonationItem(item)}
+                                    >
+                                      <RemoveCircleOutlineIcon
+                                        color="primary"
+                                        fontSize="small"
+                                      />
+                                    </IconButton>
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="centerMain_remove_item">
+                                <ReactTransliterate
+                                  style={custommStyleInputTable}
+                                  required
+                                  value={hindiremark}
+                                  onChangeText={(hindiremark) => {
+                                    sethindiremark(hindiremark);
+                                  }}
+                                  onChange={(e) =>
+                                    handleDonationItemUpdate(
+                                      item,
+                                      'remark',
+                                      e.target.value,
+                                    )
+                                  }
+                                  lang="hi"
+                                />
+                                <div className="centerMain_remove_item_overLay">
+                                  {idx > 0 && (
+                                    <IconButton
+                                      sx={{
+                                        padding: '4px',
+                                      }}
+                                      onClick={() => removeDonationItem(item)}
+                                    >
+                                      <RemoveCircleOutlineIcon
+                                        color="primary"
+                                        fontSize="small"
+                                      />
+                                    </IconButton>
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </>
                       ) : (
                         <>

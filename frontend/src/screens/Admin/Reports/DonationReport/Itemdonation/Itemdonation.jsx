@@ -225,7 +225,7 @@ const Itemdonation = ({ setopendashboard }) => {
               width: {
                 xs: '90%',
                 sm: '70%',
-                md: '60%',
+                md: '70%',
               },
             }}
           >

@@ -280,7 +280,7 @@ const ManualItem = ({ setopendashboard }) => {
             <div className="Center_main_dic_filetr">
               <label>From Date</label>
               <input
-                style={{ width: '19%' }}
+                style={{ width: '15rem' }}
                 type="date"
                 placeholder="From"
                 value={datefrom}
@@ -294,7 +294,7 @@ const ManualItem = ({ setopendashboard }) => {
             <div className="Center_main_dic_filetr">
               <label>To Date</label>
               <input
-                style={{ width: '19%' }}
+                style={{ width: '15rem' }}
                 type="date"
                 placeholder="From"
                 value={dateto}
@@ -308,7 +308,7 @@ const ManualItem = ({ setopendashboard }) => {
             <div className="Center_main_dic_filetr">
               <label>Head/Item</label>
               <select
-                style={{ width: '19%' }}
+                style={{ width: '17.5rem' }}
                 onChange={(e) => settype(e.target.value)}
                 id="cars"
               >
@@ -317,6 +317,14 @@ const ManualItem = ({ setopendashboard }) => {
                   return <option value={item.type_hi}>{item.type_hi}</option>;
                 })}
               </select>
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <button onClick={() => filterdata()}>Search</button>
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <button onClick={() => getall_donation()}>Reset</button>
             </div>
 
             <div className="Center_main_dic_filetr">

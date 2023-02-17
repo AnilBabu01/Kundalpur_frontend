@@ -362,13 +362,14 @@ const Donation = ({ setopendashboard }) => {
       <div className="dashboarddiv">
         <div>
           <div
-            className="search-header-div-center"
+            className="search-header "
             style={{ paddingLeft: '1.5%', paddingRight: '1.3rem' }}
           >
             <div className="search-inner-div-reports">
               <div className="Center_main_dic_filetr">
                 <label>From Date</label>
                 <input
+                  style={{ width: '100%' }}
                   type="date"
                   placeholder="From"
                   value={datefrom}
@@ -381,6 +382,7 @@ const Donation = ({ setopendashboard }) => {
               <div className="Center_main_dic_filetr">
                 <label>To Date</label>
                 <input
+                  style={{ width: '100%' }}
                   type="date"
                   placeholder="From"
                   value={dateto}
@@ -393,6 +395,7 @@ const Donation = ({ setopendashboard }) => {
               <div className="Center_main_dic_filetr">
                 <label>From Voucher</label>
                 <input
+                  style={{ width: '100%' }}
                   type="text"
                   placeholder="From"
                   value={voucherfrom}
@@ -405,6 +408,7 @@ const Donation = ({ setopendashboard }) => {
               <div className="Center_main_dic_filetr">
                 <label>To Voucher</label>
                 <input
+                  style={{ width: '100%' }}
                   type="text"
                   placeholder="From"
                   value={voucherto}
@@ -417,7 +421,11 @@ const Donation = ({ setopendashboard }) => {
 
               <div className="Center_main_dic_filetr">
                 <label>Head/Item</label>
-                <select onChange={(e) => settype(e.target.value)} id="cars">
+                <select
+                  style={{ width: '100%' }}
+                  onChange={(e) => settype(e.target.value)}
+                  id="cars"
+                >
                   <option>Select option</option>
                   {donationTypes.map((item, idx) => {
                     return <option value={item.type_hi}>{item.type_hi}</option>;

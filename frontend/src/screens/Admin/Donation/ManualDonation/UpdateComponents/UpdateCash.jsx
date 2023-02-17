@@ -28,7 +28,26 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import Moment from 'moment-js';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
+import { ReactTransliterate } from 'react-transliterate';
 
+const custumstyle = {
+  width: '100%',
+  borderRadius: 6,
+  position: 'relative',
+  backgroundColor: '#fcfcfb',
+  border: '1px solid #C8C6D3',
+  fontSize: 14,
+  padding: 9.5,
+};
+
+const custommStyleInputTable = {
+  width: '100%',
+  position: 'relative',
+
+  border: '1px solid #C8C6D3',
+  fontSize: 14,
+  padding: 9.5,
+};
 const UpdateCommon = ({
   setshowalert,
   handleClose,
@@ -49,6 +68,9 @@ const UpdateCommon = ({
     },
   });
   const navigation = useNavigate();
+  const [text, setText] = useState('');
+  const [addText, setaddText] = useState('');
+  const [hindiremark, sethindiremark] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
   const [voucher, setvoucher] = useState('');
@@ -375,24 +397,61 @@ const UpdateCommon = ({
                 </Select>
                 Full Name
               </CustomInputLabel>
-              <CustomInput
-                id="full-name"
-                required
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-              />
+              {!newMember ? (
+                <>
+                  <ReactTransliterate
+                    style={custumstyle}
+                    id="full-name"
+                    required
+                    value={fullName}
+                    onChangeText={(fullName) => {
+                      setFullName(fullName);
+                    }}
+                    onChange={(e) => setFullName(e.target.value)}
+                    lang="hi"
+                  />
+                </>
+              ) : (
+                <>
+                  <CustomInput
+                    id="full-name"
+                    required
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                  />
+                </>
+              )}
             </Grid>
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="address">
                 Address
               </CustomInputLabel>
-              <CustomInput
-                required
-                id="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
+
+              {!newMember ? (
+                <>
+                  <ReactTransliterate
+                    style={custumstyle}
+                    required
+                    id="address"
+                    value={address}
+                    onChangeText={(address) => {
+                      setAddress(address);
+                    }}
+                    onChange={(e) => setAddress(e.target.value)}
+                    lang="hi"
+                  />
+                </>
+              ) : (
+                <>
+                  <CustomInput
+                    required
+                    id="address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </>
+              )}
             </Grid>
           </Grid>
           <TableContainer
@@ -508,33 +567,77 @@ const UpdateCommon = ({
                         />
                       </TableCell>
                       <TableCell align="center">
-                        <CustomTableInput
-                          value={item.remark}
-                          onChange={(e) =>
-                            handleDonationItemUpdate(
-                              item,
-                              'remark',
-                              e.target.value,
-                            )
-                          }
-                          endAdornment={
-                            idx > 0 && (
-                              <InputAdornment position="start">
-                                <IconButton
-                                  sx={{
-                                    padding: '4px',
-                                  }}
-                                  onClick={() => removeDonationItem(item)}
-                                >
-                                  <RemoveCircleOutlineIcon
-                                    color="primary"
-                                    fontSize="small"
-                                  />
-                                </IconButton>
-                              </InputAdornment>
-                            )
-                          }
-                        />
+                        {!newMember ? (
+                          <>
+                            <div className="centerMain_remove_item">
+                              <ReactTransliterate
+                                style={custommStyleInputTable}
+                                required
+                                value={item.remark}
+                                onChangeText={(item) => {
+                                  handleDonationItemUpdate(
+                                    item,
+                                    'remark',
+                                    e.target.value,
+                                  );
+                                }}
+                                onChange={(e) =>
+                                  handleDonationItemUpdate(
+                                    item,
+                                    'remark',
+                                    e.target.value,
+                                  )
+                                }
+                                lang="hi"
+                              />
+                              <div className="centerMain_remove_item_overLay">
+                                {idx > 0 && (
+                                  <IconButton
+                                    sx={{
+                                      padding: '4px',
+                                    }}
+                                    onClick={() => removeDonationItem(item)}
+                                  >
+                                    <RemoveCircleOutlineIcon
+                                      color="primary"
+                                      fontSize="small"
+                                    />
+                                  </IconButton>
+                                )}
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <CustomTableInput
+                              value={item.remark}
+                              onChange={(e) =>
+                                handleDonationItemUpdate(
+                                  item,
+                                  'remark',
+                                  e.target.value,
+                                )
+                              }
+                              endAdornment={
+                                idx > 0 && (
+                                  <InputAdornment position="start">
+                                    <IconButton
+                                      sx={{
+                                        padding: '4px',
+                                      }}
+                                      onClick={() => removeDonationItem(item)}
+                                    >
+                                      <RemoveCircleOutlineIcon
+                                        color="primary"
+                                        fontSize="small"
+                                      />
+                                    </IconButton>
+                                  </InputAdornment>
+                                )
+                              }
+                            />
+                          </>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}

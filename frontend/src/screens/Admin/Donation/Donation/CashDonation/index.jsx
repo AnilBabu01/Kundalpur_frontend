@@ -31,12 +31,15 @@ import TotalAmountRow from '../common/TotalAmountRow';
 import { useNavigate } from 'react-router-dom';
 
 import { useTranslation, Trans } from 'react-i18next';
+
+import { ReactTransliterate } from 'react-transliterate';
+
 const CashDonation = ({
+  setshowalert,
   handleClose,
   themeColor,
   updateData,
   showUpdateBtn,
-  setopendashboard,
 }) => {
   const navigation = useNavigate();
   const { t, i18n } = useTranslation();
@@ -50,19 +53,40 @@ const CashDonation = ({
       },
     },
   });
+
+  const custumstyle = {
+    width: '100%',
+    borderRadius: 6,
+    position: 'relative',
+    backgroundColor: '#fcfcfb',
+    border: '1px solid #C8C6D3',
+    fontSize: 14,
+    padding: 9.5,
+  };
+
+  const custommStyleInputTable = {
+    width: '100%',
+    position: 'relative',
+
+    border: '1px solid #C8C6D3',
+    fontSize: 14,
+    padding: 9.5,
+  };
+  const [text, setText] = useState('');
+  const [addText, setaddText] = useState('');
+  const [hindiremark, sethindiremark] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
   const [voucher, setvoucher] = useState('');
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
-  const [transactionNo, setTransactionNo] = useState('');
-  const [bankName, setBankName] = useState('');
   const [newMember, setNewMember] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [donatedUserDetails, setdonatedUserDetails] = useState('');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
+  console.log(newMember);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -289,8 +313,6 @@ const CashDonation = ({
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
     }
-
-    setopendashboard(true);
   }, []);
 
   return (
@@ -422,24 +444,62 @@ const CashDonation = ({
                 </Select>
                 Full Name
               </CustomInputLabel>
-              <CustomInput
-                id="full-name"
-                required
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-              />
+
+              {!newMember ? (
+                <>
+                  <ReactTransliterate
+                    style={custumstyle}
+                    id="full-name"
+                    required
+                    value={text}
+                    onChangeText={(text) => {
+                      setText(text);
+                    }}
+                    onChange={(e) => setFullName(e.target.value)}
+                    lang="hi"
+                  />
+                </>
+              ) : (
+                <>
+                  <CustomInput
+                    id="full-name"
+                    required
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                  />
+                </>
+              )}
             </Grid>
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="address">
                 Address
               </CustomInputLabel>
-              <CustomInput
-                required
-                id="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
+
+              {!newMember ? (
+                <>
+                  <ReactTransliterate
+                    style={custumstyle}
+                    required
+                    id="address"
+                    value={addText}
+                    onChangeText={(addText) => {
+                      setaddText(addText);
+                    }}
+                    onChange={(e) => setAddress(e.target.value)}
+                    lang="hi"
+                  />
+                </>
+              ) : (
+                <>
+                  <CustomInput
+                    required
+                    id="address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </>
+              )}
             </Grid>
           </Grid>
           <TableContainer
@@ -549,33 +609,73 @@ const CashDonation = ({
                       />
                     </TableCell>
                     <TableCell align="center">
-                      <CustomTableInput
-                        value={item.remark}
-                        onChange={(e) =>
-                          handleDonationItemUpdate(
-                            item,
-                            'remark',
-                            e.target.value,
-                          )
-                        }
-                        endAdornment={
-                          idx > 0 && (
-                            <InputAdornment position="start">
-                              <IconButton
-                                sx={{
-                                  padding: '4px',
-                                }}
-                                onClick={() => removeDonationItem(item)}
-                              >
-                                <RemoveCircleOutlineIcon
-                                  color="primary"
-                                  fontSize="small"
-                                />
-                              </IconButton>
-                            </InputAdornment>
-                          )
-                        }
-                      />
+                      {!newMember ? (
+                        <>
+                          <div className="centerMain_remove_item">
+                            <ReactTransliterate
+                              style={custommStyleInputTable}
+                              required
+                              value={hindiremark}
+                              onChangeText={(hindiremark) => {
+                                sethindiremark(hindiremark);
+                              }}
+                              onChange={(e) =>
+                                handleDonationItemUpdate(
+                                  item,
+                                  'remark',
+                                  e.target.value,
+                                )
+                              }
+                              lang="hi"
+                            />
+                            <div className="centerMain_remove_item_overLay">
+                              {idx > 0 && (
+                                <IconButton
+                                  sx={{
+                                    padding: '4px',
+                                  }}
+                                  onClick={() => removeDonationItem(item)}
+                                >
+                                  <RemoveCircleOutlineIcon
+                                    color="primary"
+                                    fontSize="small"
+                                  />
+                                </IconButton>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <CustomTableInput
+                            value={item.remark}
+                            onChange={(e) =>
+                              handleDonationItemUpdate(
+                                item,
+                                'remark',
+                                e.target.value,
+                              )
+                            }
+                            endAdornment={
+                              idx > 0 && (
+                                <InputAdornment position="start">
+                                  <IconButton
+                                    sx={{
+                                      padding: '4px',
+                                    }}
+                                    onClick={() => removeDonationItem(item)}
+                                  >
+                                    <RemoveCircleOutlineIcon
+                                      color="primary"
+                                      fontSize="small"
+                                    />
+                                  </IconButton>
+                                </InputAdornment>
+                              )
+                            }
+                          />
+                        </>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

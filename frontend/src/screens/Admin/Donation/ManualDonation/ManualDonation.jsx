@@ -310,6 +310,7 @@ const ManualDonation = ({ setopendashboard }) => {
               <div className="Center_main_dic_filetr">
                 <label>From Date</label>
                 <input
+                  style={{ width: '100%' }}
                   type="date"
                   placeholder="From"
                   value={datefrom}
@@ -323,6 +324,7 @@ const ManualDonation = ({ setopendashboard }) => {
               <div className="Center_main_dic_filetr">
                 <label>To Date</label>
                 <input
+                  style={{ width: '100%' }}
                   type="date"
                   placeholder="From"
                   value={dateto}

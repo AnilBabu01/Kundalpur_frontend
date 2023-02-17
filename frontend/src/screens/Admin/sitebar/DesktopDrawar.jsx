@@ -523,8 +523,8 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
           backgroundColor: '#F1DAC6',
         },
       }}
-      // onMouseMove={() => handleDrawerOpen()}
-      // onMouseOut={() => handleDrawerClose()}
+      onMouseMove={() => handleDrawerOpen()}
+      onMouseOut={() => handleDrawerClose()}
     >
       <DrawerHeader>
         <Box

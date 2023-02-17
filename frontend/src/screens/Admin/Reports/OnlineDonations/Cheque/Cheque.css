@@ -7,7 +7,17 @@
 }
 
 .search-inner-div-reports input {
-    width: 280px;
+    width: 19%;
+    height: 35px;
+  
+    background: #FFFFFF;
+    border: 1px solid #C5BFBF;
+    border-radius: 7px;
+}
+
+
+.search-inner-div-reports10 input {
+    width: 19%;
     height: 35px;
   
     background: #FFFFFF;

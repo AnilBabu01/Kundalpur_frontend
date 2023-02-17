@@ -280,6 +280,7 @@ const ManualItem = ({ setopendashboard }) => {
             <div className="Center_main_dic_filetr">
               <label>From Date</label>
               <input
+                style={{ width: '19%' }}
                 type="date"
                 placeholder="From"
                 value={datefrom}
@@ -293,6 +294,7 @@ const ManualItem = ({ setopendashboard }) => {
             <div className="Center_main_dic_filetr">
               <label>To Date</label>
               <input
+                style={{ width: '19%' }}
                 type="date"
                 placeholder="From"
                 value={dateto}
@@ -305,7 +307,11 @@ const ManualItem = ({ setopendashboard }) => {
 
             <div className="Center_main_dic_filetr">
               <label>Head/Item</label>
-              <select onChange={(e) => settype(e.target.value)} id="cars">
+              <select
+                style={{ width: '19%' }}
+                onChange={(e) => settype(e.target.value)}
+                id="cars"
+              >
                 <option>Select option</option>
                 {donationTypes.map((item, idx) => {
                   return <option value={item.type_hi}>{item.type_hi}</option>;

@@ -331,3 +331,13 @@ td {
 .cuolms_search:focus{
   outline: none;
 }
+
+.centerMain_remove_item{
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.centerMain_remove_item_overLay{
+  position: absolute;
+  left: 80%;
+}

@@ -18,6 +18,20 @@ import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import './RoleManagement.css';
 import AddRoleuser from './AddRoleuser/AddRoleuser';
+import Print from '../../../../assets/Print.png';
+import ExportPdf from '../../../../assets/ExportPdf.png';
+import ExportExcel from '../../../../assets/ExportExcel.png';
+import Edit from '../../../../assets/Edit.png';
+import eye from '../../../../assets/eye.png';
+import Delete from '../../../../assets/Delete.png';
+import exportFromJSON from 'export-from-json';
+import Tooltip from '@mui/material/Tooltip';
+import Moment from 'moment-js';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { format } from 'date-fns';
+import UpdateRole from './UpdateRole';
+
 const style = {
   position: 'absolute',
   top: '48%',
@@ -36,6 +50,10 @@ const RoleManagement = ({ setopendashboard }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [open1, setOpen1] = React.useState(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
   const navigation = useNavigate();
 
   useEffect(() => {
@@ -83,11 +101,32 @@ const RoleManagement = ({ setopendashboard }) => {
           <Box sx={style}>
             <div>
               <div className="add-div-close-div1">
-                <h2> Add Role Details</h2>
+                <h2 clssName="add_text_only"> Add Role</h2>
                 <CloseIcon onClick={() => handleClose()} />
               </div>
 
               <AddRoleuser setOpen={setOpen} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open1}
+        onClose={handleClose1}
+        closeAfterTransition
+      >
+        <Fade in={open1}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div1">
+                <h2 clssName="add_text_only">Update Role</h2>
+                <CloseIcon onClick={() => handleClose1()} />
+              </div>
+
+              <UpdateRole setOpen={setOpen} />
             </div>
           </Box>
         </Fade>
@@ -97,7 +136,33 @@ const RoleManagement = ({ setopendashboard }) => {
           <div className="main_center_header">
             <div className="add-btn-user2">
               <p>Role Management</p>
-              <button onClick={() => handleOpen()}>+Add</button>
+              <div className="add_role_icons_div">
+                <button className="addd-role" onClick={() => handleOpen()}>
+                  +Add
+                </button>
+                <Tooltip title="Export Excel File">
+                  <img
+                    // onClick={() => ExportToExcel()}
+                    src={ExportExcel}
+                    style={{
+                      width: '30px',
+                      height: '35px',
+                      marginRight: '0.2rem',
+                    }}
+                  />
+                </Tooltip>
+                <Tooltip title="Export Pdf File">
+                  <img
+                    // onClick={() => ExportPdfmanul('Employee_list')}
+                    src={ExportPdf}
+                    style={{
+                      width: '30px',
+                      height: '35px',
+                      marginRight: '0.2rem',
+                    }}
+                  />
+                </Tooltip>
+              </div>
             </div>
           </div>
 
@@ -112,16 +177,34 @@ const RoleManagement = ({ setopendashboard }) => {
                   <TableCell>Role Name</TableCell>
                   <TableCell>Role Description</TableCell>
 
-                  <TableCell>Edit/Delete</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableCell>ACCOUNTS</TableCell>
 
                 <TableCell>ACCOUNTING</TableCell>
+
                 <TableCell>
-                  <RemoveRedEyeIcon />
-                  <DeleteForeverIcon />
+                  {/* <Tooltip title="View Details">
+                    <img
+                      src={eye}
+                      style={{ width: '20px', marginRight: '0.2rem' }}
+                    />
+                  </Tooltip> */}
+                  <Tooltip title="Edit Role">
+                    <img
+                      onClick={() => handleOpen1()}
+                      src={Edit}
+                      style={{ width: '20px', marginRight: '0.2rem' }}
+                    />
+                  </Tooltip>
+                  <Tooltip title="Delete Role">
+                    <img
+                      src={Delete}
+                      style={{ width: '20px', marginRight: '0.2rem' }}
+                    />
+                  </Tooltip>
                 </TableCell>
                 {/* {(rowsPerPage > 0
                   ? isData.slice(

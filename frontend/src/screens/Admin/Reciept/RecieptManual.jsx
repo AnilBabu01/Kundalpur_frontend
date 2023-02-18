@@ -610,6 +610,17 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                       </h2>
                     </span>
                   )}
+
+                  {isData && isData?.modeOfDonation === 3 && (
+                    <span className="rightitems2  margin_left_div">
+                      <h2 style={{ marginLeft: '38%' }}>विवरण :</h2>
+                      <h2 className="font_bold_in_donation">
+                        {isData &&
+                          isData.manualItemDetails &&
+                          isData.manualItemDetails[0].remark}
+                      </h2>
+                    </span>
+                  )}
                 </div>
 
                 <span className="rightitems2 ">

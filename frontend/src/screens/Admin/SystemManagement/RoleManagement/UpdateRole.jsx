@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './AddRoleuser.css';
 
-const AddRoleuser = ({ setOpen }) => {
+const UpdateRole = ({ setOpen }) => {
   const [donationtype, setdonationtype] = useState('');
 
   return (
@@ -106,7 +105,7 @@ const AddRoleuser = ({ setOpen }) => {
             </div>
 
             <div className="save-div-btn">
-              <button className="save-div-btn-btn">Save</button>
+              <button className="save-div-btn-btn">Update</button>
               <button
                 onClick={() => setOpen(false)}
                 className="save-div-btn-btn-cancel"
@@ -121,4 +120,4 @@ const AddRoleuser = ({ setOpen }) => {
   );
 };
 
-export default AddRoleuser;
+export default UpdateRole;

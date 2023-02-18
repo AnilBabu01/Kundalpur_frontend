@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Electornic from './Electornic/Electornic';
-import ManualCash from './manualCash/ManualCash';
-import ManualCheque from './ManualCheque/ManualCheque';
-import Itemdonation from './Itemdonation/Itemdonation';
-import HeadReport from './HeadReport/HeadReport';
-import Consolidated from './Consolidated/Consolidated';
-import f1 from '../../../../assets/f4.png';
-const DonationReportTap = ({ setopendashboard }) => {
+import f1 from '../../../assets/f1.png';
+const RoomBookingTap = ({ setopendashboard }) => {
   const [toggleState, setToggleState] = useState(1);
 
   const toggleTab = (index) => {
@@ -31,7 +25,7 @@ const DonationReportTap = ({ setopendashboard }) => {
                 src={f1}
                 alt="fast"
               />
-              Cash Report
+              Checkin
             </button>
             <button
               className={toggleState === 2 ? 'tabs2 ' : 'tabs1'}
@@ -42,7 +36,7 @@ const DonationReportTap = ({ setopendashboard }) => {
                 src={f1}
                 alt="fast"
               />
-              Electronic Report
+              Hold
             </button>
             <button
               className={toggleState === 3 ? 'tabs2 ' : 'tabs1'}
@@ -53,7 +47,7 @@ const DonationReportTap = ({ setopendashboard }) => {
                 src={f1}
                 alt="fast"
               />
-              Cheque Report
+              Room Shift
             </button>
             <button
               className={toggleState === 4 ? 'tabs2 ' : 'tabs1'}
@@ -64,29 +58,7 @@ const DonationReportTap = ({ setopendashboard }) => {
                 src={f1}
                 alt="fast"
               />
-              Item Report
-            </button>
-            <button
-              className={toggleState === 5 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(5)}
-            >
-              <img
-                style={{ marginRight: '4%', width: '20px' }}
-                src={f1}
-                alt="fast"
-              />
-              Head Report
-            </button>
-            <button
-              className={toggleState === 6 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(6)}
-            >
-              <img
-                style={{ marginRight: '4%', width: '20px' }}
-                src={f1}
-                alt="fast"
-              />
-              Consolidated
+              Room
             </button>
           </div>
 
@@ -96,7 +68,7 @@ const DonationReportTap = ({ setopendashboard }) => {
                 toggleState === 1 ? 'content  active-content' : 'content'
               }
             >
-              <ManualCash setopendashboard={setopendashboard} />
+              ggggggggggggggggg
             </div>
 
             <div
@@ -104,35 +76,29 @@ const DonationReportTap = ({ setopendashboard }) => {
                 toggleState === 2 ? 'content  active-content' : 'content'
               }
             >
-              <Electornic setopendashboard={setopendashboard} />
+              zzz
             </div>
             <div
               className={
                 toggleState === 3 ? 'content  active-content' : 'content'
               }
             >
-              <ManualCheque setopendashboard={setopendashboard} />
+              zzzz
             </div>
             <div
               className={
                 toggleState === 4 ? 'content  active-content' : 'content'
               }
             >
-              <Itemdonation setopendashboard={setopendashboard} />
+              ddx
             </div>
-            <div
-              className={
-                toggleState === 5 ? 'content  active-content' : 'content'
-              }
-            >
-              <HeadReport setopendashboard={setopendashboard} />
-            </div>
+
             <div
               className={
                 toggleState === 6 ? 'content  active-content' : 'content'
               }
             >
-              <Consolidated setopendashboard={setopendashboard} />
+              dd
             </div>
           </div>
         </div>
@@ -141,4 +107,4 @@ const DonationReportTap = ({ setopendashboard }) => {
   );
 };
 
-export default DonationReportTap;
+export default RoomBookingTap;

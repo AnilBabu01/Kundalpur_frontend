@@ -99,7 +99,7 @@ const ManualReports = ({ setopendashboard }) => {
     serverInstance('admin/manual-donation', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter((item) => item.modeOfDonation === '3');
-        console.log(filterData);
+
         setisData(filterData);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
@@ -157,15 +157,18 @@ const ManualReports = ({ setopendashboard }) => {
   };
 
   const filterdata = () => {
-    console.log('ccc');
+    setdatefrom('');
+    setdateto('');
     serverInstance(
-      `user//manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}',
+      `user/manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}&modeOfDonation=${3}',
       'get`,
     ).then((res) => {
       console.log('filter data is', res.data);
 
       if (res.data) {
-        setisData(res.data);
+        let filterData = res.data.filter((item) => item.modeOfDonation === '3');
+
+        setisData(filterData);
       }
     });
   };

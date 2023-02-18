@@ -482,7 +482,7 @@ const ChequeDonation = ({
                     id="address"
                     value={address}
                     onChangeText={(address) => {
-                      setAddress(address);
+                      setAddress(addresss);
                     }}
                     onChange={(e) => setAddress(e.target.value)}
                     lang="hi"

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { serverInstance } from '../../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import EditIcon from '@mui/icons-material/Edit';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -15,18 +12,9 @@ import TablePagination from '@mui/material/TablePagination';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import PrintIcon from '@mui/icons-material/Print';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import Cancel from '../../../compoments/Cancel';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DownloadIcon from '@mui/icons-material/Download';
 import ClearIcon from '@mui/icons-material/Clear';
 import exportFromJSON from 'export-from-json';
@@ -37,6 +25,11 @@ import axios from 'axios';
 import './ManualCheque.css';
 import Moment from 'moment-js';
 import { ExportPdfmanul } from '../../../compoments/ExportPdf';
+import Print from '../../../../../assets/Print.png';
+import ExportPdf from '../../../../../assets/ExportPdf.png';
+import ExportExcel from '../../../../../assets/ExportExcel.png';
+import Edit from '../../../../../assets/Edit.png';
+import eye from '../../../../../assets/eye.png';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -96,6 +89,9 @@ const ManualCheque = ({ setopendashboard }) => {
   const handleClose = () => setOpen(false);
 
   const getall_donation = () => {
+    setdate('');
+    setphone('');
+    setname('');
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter((item) => item.modeOfDonation === '3');
@@ -233,6 +229,7 @@ const ManualCheque = ({ setopendashboard }) => {
               themeColor={donationColorTheme.cheque}
               updateData={updateData}
               showUpdateBtn={showUpdateBtn}
+              setopendashboard={setopendashboard}
             />
           </Box>
         </Fade>
@@ -271,9 +268,20 @@ const ManualCheque = ({ setopendashboard }) => {
             </select>
             <button onClick={() => filterdata()}>Search</button>
             <button onClick={() => getall_donation()}>Reset</button>
-            <SimCardAlertIcon onClick={() => ExportToExcel()} />
-            <PictureAsPdfIcon
+
+            <img
+              onClick={() => ExportToExcel()}
+              src={ExportExcel}
+              alt="s"
+              style={{ width: '30px' }}
+            />
+
+            <label>&nbsp;</label>
+            <img
               onClick={() => ExportPdfmanul(isData, 'ManualChequeReport')}
+              src={ExportPdf}
+              alt="ss"
+              style={{ width: '30px' }}
             />
           </div>
           <div></div>
@@ -413,16 +421,25 @@ const ManualCheque = ({ setopendashboard }) => {
                       })}
                     </TableCell>
                     <TableCell>
-                      <RemoveRedEyeIcon
+                      <img
                         onClick={() =>
                           navigation(`/admin-panel/infoElectronic/${row.id}`)
                         }
+                        src={eye}
+                        alt="print"
+                        style={{ width: '20px', marginRight: '2px' }}
                       />
+
                       {userrole === 1 && (
-                        <EditIcon onClick={() => upadteOpen(row)} />
+                        <img
+                          onClick={() => upadteOpen(row)}
+                          src={Edit}
+                          alt="print"
+                          style={{ width: '20px', marginRight: '2px' }}
+                        />
                       )}
 
-                      <PrintIcon
+                      <img
                         onClick={() =>
                           navigation('/admin-panel/reports/printcontent', {
                             state: {
@@ -430,6 +447,9 @@ const ManualCheque = ({ setopendashboard }) => {
                             },
                           })
                         }
+                        src={Print}
+                        alt="print"
+                        style={{ width: '20px', marginRight: '2px' }}
                       />
                       {row.isActive ? (
                         <DownloadIcon

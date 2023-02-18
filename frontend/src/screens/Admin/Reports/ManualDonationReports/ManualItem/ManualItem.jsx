@@ -154,22 +154,25 @@ const ManualItem = ({ setopendashboard }) => {
   };
 
   const filterdata = () => {
-    console.log('ccc');
+    setdatefrom('');
+    setdateto('');
     serverInstance(
-      `user//manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}',
+      `user/manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}&modeOfDonation=${4}',
       'get`,
     ).then((res) => {
       console.log('filter data is', res.data);
 
       if (res.data) {
-        setisData(res.data);
+        let filterData = res.data.filter((item) => item.modeOfDonation === '4');
+
+        setisData(filterData);
       }
     });
   };
 
   const get_donation_tyeps = () => {
     try {
-      Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
+      Promise.all([serverInstance('admin/donation-type?type=2', 'get')]).then(
         ([res, item]) => {
           if (res.status) {
             setDonationTypes(res.data);
@@ -314,7 +317,9 @@ const ManualItem = ({ setopendashboard }) => {
               >
                 <option>Select option</option>
                 {donationTypes.map((item, idx) => {
-                  return <option value={item.type_hi}>{item.type_hi}</option>;
+                  return (
+                    <option value={item.itemType_hi}>{item.itemType_hi}</option>
+                  );
                 })}
               </select>
             </div>

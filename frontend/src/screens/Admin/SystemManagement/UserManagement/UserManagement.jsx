@@ -24,6 +24,19 @@ import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 import Adduser from './Adduser/Adduser';
 import Typography from '@mui/material/Typography';
+import UpdateEmployee from './Adduser/UpdateEmployee';
+import Print from '../../../../assets/Print.png';
+import ExportPdf from '../../../../assets/ExportPdf.png';
+import ExportExcel from '../../../../assets/ExportExcel.png';
+import Edit from '../../../../assets/Edit.png';
+import eye from '../../../../assets/eye.png';
+import Delete from '../../../../assets/Delete.png';
+import exportFromJSON from 'export-from-json';
+import Tooltip from '@mui/material/Tooltip';
+import Moment from 'moment-js';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { format } from 'date-fns';
 import './UserManagement.css';
 
 const style = {
@@ -46,7 +59,16 @@ const UserManagement = ({ setopendashboard }) => {
   const [refetch, setrefetch] = useState(false);
   const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState('');
+  const [empdata, setempdata] = useState('');
+  const [open3, setOpen3] = React.useState(false);
+  const handleClickOpen3 = (data) => {
+    setOpen3(true);
+    setempdata(data);
+  };
 
+  const handleClose3 = () => {
+    setOpen3(false);
+  };
   const handleClickOpen1 = (id) => {
     setOpen1(true);
     setdeleteId(id);
@@ -103,6 +125,64 @@ const UserManagement = ({ setopendashboard }) => {
     setPage(0);
   };
 
+  const ExportToExcel = () => {
+    const fileName = 'EmployeeList';
+    const exportType = 'xls';
+    var data = [];
+
+    isData.map((item, index) => {
+      data.push({
+        userid: item?.id,
+        Username: item?.Username,
+        Email: item?.Email,
+        'Phone No': item?.Mobile,
+        Role: item?.Role,
+        Address: item?.Address,
+
+        'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
+      });
+    });
+
+    exportFromJSON({ data, fileName, exportType });
+  };
+
+  const ExportPdfmanul = (fileName) => {
+    const doc = new jsPDF();
+
+    const tableColumn = [
+      'Userid',
+      'UserName',
+      'Email',
+      'Phone No',
+      'Role',
+      'Address',
+    ];
+
+    const tableRows = [];
+
+    isData.forEach((item) => {
+      const ticketData = [
+        item?.id,
+        item?.Username,
+        item?.Email,
+        item?.Mobile,
+        item?.Role,
+        item?.Address,
+      ];
+
+      tableRows.push(ticketData);
+    });
+
+    doc.autoTable(tableColumn, tableRows, { startY: 20 });
+    const date = Date().split(' ');
+
+    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+
+    doc.text(`Report of ${fileName}`, 8, 9);
+    doc.setFont('Lato-Regular', 'normal');
+    doc.setFontSize(28);
+    doc.save(`${fileName}_${dateStr}.pdf`);
+  };
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
@@ -143,7 +223,12 @@ const UserManagement = ({ setopendashboard }) => {
               <div className="add-div-close-div-user-add">
                 <div>
                   <h2 clssName="add_text_only"> Add Employee</h2>
-                  <Typography variant="body2" color="primary" align="right">
+                  <Typography
+                    style={{ marginTop: '0.5rem' }}
+                    variant="body2"
+                    color="primary"
+                    align="right"
+                  >
                     {currDate} / {currTime}
                   </Typography>
                 </div>
@@ -156,36 +241,65 @@ const UserManagement = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open3}
+        onClose={handleClose3}
+        closeAfterTransition
+      >
+        <Fade in={open3}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div-user-add">
+                <div>
+                  <h2 clssName="add_text_only"> Update Employee</h2>
+                  <Typography
+                    style={{ marginTop: '0.5rem' }}
+                    variant="body2"
+                    color="primary"
+                    align="right"
+                  >
+                    {currDate} / {currTime}
+                  </Typography>
+                </div>
+
+                <CloseIcon onClick={() => handleClose3()} />
+              </div>
+
+              <UpdateEmployee setOpen={setOpen3} empdata={empdata} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
       <div className="dashboarddiv">
         <div className="uemploye_main">
-          <div className="search-header-employee" style={{ width: '59%' }}>
+          <div className="search-header-employee">
             <div className="search-inner-div">
               <input type="text" placeholder="Name" />
               <input type="text" placeholder="Phone No" />
               <button>Search</button>
               <button>Reset</button>
+              <button onClick={() => handleOpen()}>+Add</button>
+              <Tooltip title="Export Excel File">
+                <img
+                  onClick={() => ExportToExcel()}
+                  src={ExportExcel}
+                  style={{ width: '30px', marginRight: '0.2rem' }}
+                />
+              </Tooltip>
+              <Tooltip title="Export Pdf File">
+                <img
+                  onClick={() => ExportPdfmanul('Employee_list')}
+                  src={ExportPdf}
+                  style={{ width: '30px', marginRight: '0.2rem' }}
+                />
+              </Tooltip>
             </div>
           </div>
 
           <div>
-            <div className="main_center_header">
-              <div
-                className="add-btn-user"
-                style={{
-                  marginTop: '1rem',
-                  width: '98.1%',
-                  borderBottom: ' 1px solid gray',
-                  orderTop: '1px solid gray',
-                  paddingTop: '1rem',
-                  marginRight: '1.1%',
-                  borderTop: '1px solid gray',
-                  marginBlock: '1rem',
-                }}
-              >
-                <button onClick={() => handleOpen()}>+Add</button>
-              </div>
-            </div>
-
             <div
               className="table-div-maain"
               style={{ paddingRight: '1.5%', paddingLeft: '0.4%' }}
@@ -232,19 +346,36 @@ const UserManagement = ({ setopendashboard }) => {
                       </TableCell>
 
                       <TableCell>
-                        <RemoveRedEyeIcon
-                          onClick={() =>
-                            navigate('/admin-panel/masters/employeeUserInfo', {
-                              state: {
-                                userdata: row,
-                              },
-                            })
-                          }
-                        />
-                        <EditIcon />
-                        <DeleteForeverIcon
-                          onClick={() => handleClickOpen1(row.id)}
-                        />
+                        <Tooltip title="View Details">
+                          <img
+                            onClick={() =>
+                              navigate(
+                                '/admin-panel/masters/employeeUserInfo',
+                                {
+                                  state: {
+                                    userdata: row,
+                                  },
+                                },
+                              )
+                            }
+                            src={eye}
+                            style={{ width: '20px', marginRight: '0.2rem' }}
+                          />
+                        </Tooltip>
+                        <Tooltip title="Edit Employee">
+                          <img
+                            onClick={() => handleClickOpen3(row)}
+                            src={Edit}
+                            style={{ width: '20px', marginRight: '0.2rem' }}
+                          />
+                        </Tooltip>
+                        <Tooltip title="Delete Employee">
+                          <img
+                            onClick={() => handleClickOpen1(row.id)}
+                            src={Delete}
+                            style={{ width: '20px', marginRight: '0.2rem' }}
+                          />
+                        </Tooltip>
                       </TableCell>
                     </TableRow>
                   ))}

@@ -279,7 +279,26 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
                 )}
                 {isData &&
                   isData.elecItemDetails &&
-                  isData.elecItemDetails[0].ChequeNo && (
+                  isData.modeOfDonation === 3 && (
+                    <>
+                      <span className="rightitems">
+                        <h2>माध्यम :</h2>
+
+                        <h2 className="font_bold_in_donation">
+                          {isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails[0].BankName}
+                          {isData &&
+                            isData.elecItemDetails &&
+                            isData.elecItemDetails[0].ChequeNo}
+                        </h2>
+                      </span>
+                    </>
+                  )}
+
+                {isData &&
+                  isData.elecItemDetails &&
+                  isData.modeOfDonation === '3' && (
                     <>
                       <span className="rightitems">
                         <h2>माध्यम :</h2>
@@ -633,6 +652,17 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
                   )}
 
                   {isData && isData?.modeOfDonation === '3' && (
+                    <span className="rightitems2  margin_left_div">
+                      <h2 style={{ marginLeft: '38%' }}>विवरण :</h2>
+                      <h2 className="font_bold_in_donation">
+                        {isData &&
+                          isData.elecItemDetails &&
+                          isData.elecItemDetails[0].remark}
+                      </h2>
+                    </span>
+                  )}
+
+                  {isData && isData?.modeOfDonation === 3 && (
                     <span className="rightitems2  margin_left_div">
                       <h2 style={{ marginLeft: '38%' }}>विवरण :</h2>
                       <h2 className="font_bold_in_donation">

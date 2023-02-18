@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { serverInstance } from '../../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import moment from 'moment';
@@ -17,11 +16,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import PrintIcon from '@mui/icons-material/Print';
-import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import DownloadIcon from '@mui/icons-material/Download';
-import EditIcon from '@mui/icons-material/Edit';
 import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
 import CircularProgress from '@mui/material/CircularProgress';

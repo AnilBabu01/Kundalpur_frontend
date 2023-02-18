@@ -104,6 +104,9 @@ const ManualCash = ({ setopendashboard }) => {
   };
 
   const getall_donation = () => {
+    setdate('');
+    setphone('');
+    setname('');
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter((item) => item.modeOfDonation === '2');
@@ -244,6 +247,7 @@ const ManualCash = ({ setopendashboard }) => {
               themeColor={donationColorTheme.cash}
               updateData={updateData}
               showUpdateBtn={showUpdateBtn}
+              setopendashboard={setopendashboard}
             />
           </Box>
         </Fade>
@@ -285,7 +289,7 @@ const ManualCash = ({ setopendashboard }) => {
               <button onClick={() => getall_donation()}>Reset</button>
 
               <img
-                onClick={() => ExportPdfmanul(isData, 'ManualElectronicReport')}
+                onClick={() => ExportToExcel()}
                 src={ExportExcel}
                 alt="s"
                 style={{ width: '30px' }}

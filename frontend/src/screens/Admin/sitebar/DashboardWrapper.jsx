@@ -353,7 +353,7 @@ const DashboardWrapper = () => {
                 component="div"
                 sx={{ display: { xs: 'none', sm: 'block' } }}
               >
-                श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि
+                श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि कुण्डलपुर दमोह (म.प्र.)
               </Typography>
             </>
           ) : (
@@ -375,7 +375,8 @@ const DashboardWrapper = () => {
                     ml: 2,
                   }}
                 >
-                  श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि
+                  श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि कुण्डलपुर दमोह
+                  (म.प्र.)
                 </Typography>
               </span>
             </>
@@ -421,14 +422,28 @@ const DashboardWrapper = () => {
                   marginLeft: '11px',
                 }}
               />
-              <Typography
-                sx={{
-                  size: '10px',
-                  lineHeight: '17px',
+              <div
+                style={{
+                  paddingRight: '1rem',
+                  paddingTop: '0.5rem',
+                  paddingLeft: '1rem',
+
+                  border: '1px solid gray',
+
+                  paddingBottom: '0.5rem',
+                  borderRadius: '5px',
                 }}
               >
-                {empName ? empName : adminName}
-              </Typography>
+                <Typography
+                  sx={{
+                    size: '10px',
+                    lineHeight: '17px',
+                  }}
+                >
+                  {empName ? empName : adminName}
+                </Typography>
+              </div>
+
               <IconButton size="small" aria-label="more" onClick={handleClick1}>
                 <ArrowDropDownOutlinedIcon
                   size="large"

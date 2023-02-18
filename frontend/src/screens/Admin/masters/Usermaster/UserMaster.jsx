@@ -30,6 +30,8 @@ import ExportExcel from '../../../../assets/ExportExcel.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import Print from '../../../../assets/Print.png';
 import Edit from '../../../../assets/Edit.png';
+import eye from '../../../../assets/eye.png';
+import Tooltip from '@mui/material/Tooltip';
 import Updateuser from './Updateuser';
 import Userinfo from './Userinfo';
 const style = {
@@ -318,25 +320,32 @@ function UserMaster() {
               name="searchPhonne"
               onChange={(e) => setsearchPhonne(e.target.value)}
             />
-            <button onClick={() => filterdata()}>Search</button>
-            <button onClick={() => getall_users()}>Reset</button>
-            <button onClick={handleOpen}>+Add</button>
+            <Tooltip title="Search">
+              <button onClick={() => filterdata()}>Search</button>
+            </Tooltip>
+
+            <Tooltip title="Get all donator">
+              <button onClick={() => getall_users()}>Reset</button>
+            </Tooltip>
+
+            <Tooltip title="Add new donator">
+              <button onClick={handleOpen}>+Add</button>
+            </Tooltip>
             <div>
-              <img
-                style={{ width: '25px', marginLeft: '1rem' }}
-                src={Print}
-                alt=" Print"
-              />
-              <img
-                style={{ width: '25px', marginLeft: '1rem' }}
-                src={ExportExcel}
-                alt=" Print"
-              />
-              <img
-                style={{ width: '25px', marginLeft: '1rem' }}
-                src={ExportPdf}
-                alt=" Print"
-              />
+              <Tooltip title="Export Excel file">
+                <img
+                  style={{ width: '25px', marginLeft: '1rem' }}
+                  src={ExportExcel}
+                  alt=" Print"
+                />
+              </Tooltip>
+              <Tooltip title="Export Pdf file">
+                <img
+                  style={{ width: '25px', marginLeft: '1rem' }}
+                  src={ExportPdf}
+                  alt=" Print"
+                />
+              </Tooltip>
             </div>
           </div>
         </div>
@@ -382,28 +391,41 @@ function UserMaster() {
                     {row.status === true ? 'Avtive' : 'Deactivate'}
                   </TableCell>
                   <TableCell>
-                    <RemoveRedEyeIcon onClick={() => handleOpen2(row)} />
-                    <img
-                      onClick={() => handleOpen1(row)}
-                      style={{ width: '20px' }}
-                      src={Edit}
-                      alt=" Print"
-                    />
+                    <Tooltip title="View Details">
+                      <img
+                        onClick={() => handleOpen2(row)}
+                        style={{ width: '20px', marginRight: '0.8%' }}
+                        src={eye}
+                        alt=" Print"
+                      />
+                    </Tooltip>
+                    <Tooltip title="Edit Donator">
+                      <img
+                        onClick={() => handleOpen1(row)}
+                        style={{ width: '20px', marginRight: '0.3%' }}
+                        src={Edit}
+                        alt=" Print"
+                      />
+                    </Tooltip>
 
                     {row.status === true ? (
-                      <img
-                        src={deacivate}
-                        alt="deacivate"
-                        className="activate-icon"
-                        onClick={() => deacivateAndactivateuser(row.id)}
-                      />
+                      <Tooltip title="Donator deactivated">
+                        <img
+                          src={deacivate}
+                          alt="deacivate"
+                          className="activate-icon"
+                          onClick={() => deacivateAndactivateuser(row.id)}
+                        />
+                      </Tooltip>
                     ) : (
-                      <img
-                        src={activate}
-                        alt="deacivate"
-                        className="activate-icon"
-                        onClick={() => deacivateAndactivateuser(row.id)}
-                      />
+                      <Tooltip title="Donator active">
+                        <img
+                          src={activate}
+                          alt="deacivate"
+                          className="activate-icon"
+                          onClick={() => deacivateAndactivateuser(row.id)}
+                        />
+                      </Tooltip>
                     )}
                   </TableCell>
                 </TableRow>

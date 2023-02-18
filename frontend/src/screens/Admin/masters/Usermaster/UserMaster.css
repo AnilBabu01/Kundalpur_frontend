@@ -61,14 +61,19 @@ border-radius: 7px;
 }
 .add-btn-user button {
   border: none;
-  /* background: #e96d00; */
-    background: #FDC99C;
+  height: 40px;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 24px;
+padding-left: 1rem;
+padding-right: 1rem;
 
-    /* height: 29px; */
-    color: #05313C;
-    padding: 0.4rem 1.5rem;
-    border-radius: 5px;
-    font-size: 1rem;
+
+color: #05313C;
+
+background: #FDC99C;
+border-radius: 7px;
     
   }
   .add-btn-user button:hover {

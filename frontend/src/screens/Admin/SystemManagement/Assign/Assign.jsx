@@ -16,7 +16,8 @@ import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
-import AddVoucherToUser from '../VoucherManagement/AddVoucherToUser/AddVoucherToUser';
+import AcceptRequest from './AcceptRequest';
+import './Assign.css';
 const style = {
   position: 'absolute',
   top: '27%',
@@ -33,7 +34,11 @@ const Assign = ({ setopendashboard }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const [empdata, setempdata] = useState('');
+  const handleOpen = (data) => {
+    setOpen(true);
+    setempdata(data);
+  };
   const handleClose = () => setOpen(false);
   const navigation = useNavigate();
   console.log('ass', isData);
@@ -73,12 +78,12 @@ const Assign = ({ setopendashboard }) => {
         <Fade in={open}>
           <Box sx={style}>
             <div>
-              <div className="add-div-close-div1">
+              <div className="add-div-close-div1222">
                 <h2>Generate Voucher</h2>
                 <CloseIcon onClick={() => handleClose()} />
               </div>
 
-              <AddVoucherToUser setOpen={setOpen} />
+              <AcceptRequest setOpen={setOpen} empdata={empdata} />
             </div>
           </Box>
         </Fade>
@@ -118,7 +123,7 @@ const Assign = ({ setopendashboard }) => {
 
                     <TableCell>
                       <button
-                        onClick={() => handleOpen()}
+                        onClick={() => handleOpen(row)}
                         className="Accepted_btn"
                       >
                         Accepted

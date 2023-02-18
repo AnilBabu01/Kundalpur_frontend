@@ -97,7 +97,7 @@ const VoucherManagement = ({ setopendashboard }) => {
         <div>
           <div className="main_center_header">
             <div className="add-btn-user">
-              <button onClick={() => handleOpen()}>+Add</button>
+              <button onClick={() => handleOpen()}>Generate Voucher</button>
             </div>
           </div>
 
@@ -109,11 +109,10 @@ const VoucherManagement = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: '#F1F0F0' }}>
                 <TableRow>
-                  <TableCell>Userid</TableCell>
-                  <TableCell>Compnay Name</TableCell>
+                  <TableCell>Employee id</TableCell>
+                  <TableCell>Empoyee Name</TableCell>
                   <TableCell>Voucher</TableCell>
                   <TableCell>Status</TableCell>
-
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -131,11 +130,14 @@ const VoucherManagement = ({ setopendashboard }) => {
                       '&:last-child td, &:last-child th': { border: 0 },
                     }}
                   >
-                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{row?.id}</TableCell>
 
-                    <TableCell>Kundarpur</TableCell>
+                    <TableCell>{row?.name}</TableCell>
                     <TableCell> {`${row.from} to ${row.to}`}</TableCell>
-                    <TableCell> {row.status ? 'Active' : 'pasive'}</TableCell>
+                    <TableCell>
+                      {' '}
+                      {row.status ? 'Allocated' : 'Not Used'}
+                    </TableCell>
 
                     <TableCell>
                       <button className="Accepted_btn">Accepted</button>

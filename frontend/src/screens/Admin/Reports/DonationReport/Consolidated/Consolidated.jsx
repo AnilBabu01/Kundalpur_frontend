@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { serverInstance } from '../../../../API/ServerInstance';
+
+import { serverInstance } from '../../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import { useNavigate, Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
@@ -12,32 +11,20 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { Box } from '@mui/material';
-import Modal from '@mui/material/Modal';
-import PrintIcon from '@mui/icons-material/Print';
-import Fade from '@mui/material/Fade';
-import CloseIcon from '@mui/icons-material/Close';
-import Cancel from '../../compoments/Cancel';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import DownloadIcon from '@mui/icons-material/Download';
-import ClearIcon from '@mui/icons-material/Clear';
 import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
-import CashDonation from '../../Donation/Donation/CashDonation';
-import { backendApiUrl } from '../../../../config/config';
+import { backendApiUrl } from '../../../../../config/config';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
-import { ExportPdfmanul } from '../../compoments/ExportPdf';
 
+import { ExportPdfmanul } from '../../../compoments/ExportPdf';
+import Print from '../../../../../assets/Print.png';
+import ExportPdf from '../../../../../assets/ExportPdf.png';
+import ExportExcel from '../../../../../assets/ExportExcel.png';
+import Edit from '../../../../../assets/Edit.png';
+import eye from '../../../../../assets/eye.png';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -213,122 +200,126 @@ const Consolidated = ({ setopendashboard }) => {
 
   return (
     <>
-      <div className="dashboarddiv">
+      <div>
         <div>
-          <div className="main_center_header10">
-            <h2 className="Cheque_text">Consolidated Cash Report</h2>
-            <div className="search-header">
-              <div className="search-inner-div-reports">
-                <input type="date" />
-                <input type="date" />
-
-                <select
-                  name="cars"
-                  id="cars"
-                  onChange={(e) => settypeid(e.target.value)}
+          <div className="search-header">
+            <div className="search-inner-div-reports">
+              <input type="date" />
+              <input type="date" />
+              <select
+                name="cars"
+                id="cars"
+                onChange={(e) => settypeid(e.target.value)}
+              >
+                <option
+                  value={empId}
+                  name="empId"
+                  onChange={(e) => setempId(e.target.value)}
                 >
-                  <option
-                    value={empId}
-                    name="empId"
-                    onChange={(e) => setempId(e.target.value)}
-                  >
-                    Select User
-                  </option>
-                  {empylist1 &&
-                    empylist1.map((item, index) => (
-                      <option key={index} value={item.id}>
-                        {item.Username}
-                      </option>
-                    ))}
-                </select>
-                <button onClick={() => filterdata()}>Search</button>
-                <button onClick={() => getall_donation()}>Reset</button>
-
-                <SimCardAlertIcon onClick={() => ExportToExcel()} />
-                <PictureAsPdfIcon
-                  onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
-                />
-              </div>
-              <div></div>
+                  Select User
+                </option>
+                {empylist1 &&
+                  empylist1.map((item, index) => (
+                    <option key={index} value={item.id}>
+                      {item.Username}
+                    </option>
+                  ))}
+              </select>
+              <button onClick={() => filterdata()}>Search</button>
+              <button onClick={() => getall_donation()}>Reset</button>
+              <img
+                onClick={() => ExportToExcel()}
+                src={ExportExcel}
+                alt="s"
+                style={{ width: '30px' }}
+              />
+              <label>&nbsp;</label>
+              <img
+                onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+                src={ExportPdf}
+                alt="ss"
+                style={{ width: '30px' }}
+              />
             </div>
-            <h2 style={{ marginBottom: '1rem' }}>Donation Detials</h2>
+            <div></div>
           </div>
+          <h2 style={{ marginBottom: '1rem' }}>Donation Detials</h2>
+        </div>
 
-          <div className="table-div-maain">
-            <Table
-              sx={{ minWidth: 650, width: '97%' }}
-              aria-label="simple table"
-            >
-              <TableHead style={{ background: '#FFEEE0' }}>
-                <TableRow>
-                  <TableCell>S.No</TableCell>
-                  <TableCell>Date </TableCell>
-                  <TableCell>Amount</TableCell>
-                  <TableCell>User</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {empylist ? (
-                  <>
-                    {(rowsPerPage > 0
-                      ? empylist
-                          .reverse()
-                          .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage,
-                          )
-                      : empylist
-                    ).map((row, index) => (
-                      <TableRow
-                        key={row.id}
-                        sx={{
-                          '&:last-child td, &:last-child th': { border: 0 },
-                        }}
-                      >
-                        <TableCell>{row.created_by}</TableCell>
-                        <TableCell>
-                          {Moment(row.donation_date).format('DD/MM/YYYY')}
-                        </TableCell>
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell>{row.totalDonationAmount}</TableCell>
-                      </TableRow>
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    {/* <TableCell colSpan={8} align="center">
+        <div className="table-div-maain">
+          <Table
+            sx={{ minWidth: 650, width: '100%' }}
+            aria-label="simple table"
+          >
+            <TableHead style={{ background: '#FFEEE0' }}>
+              <TableRow>
+                <TableCell>S.No</TableCell>
+                <TableCell>Date </TableCell>
+                <TableCell>User</TableCell>
+                <TableCell>Amount</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {empylist ? (
+                <>
+                  {(rowsPerPage > 0
+                    ? empylist
+                        .reverse()
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
+                    : empylist
+                  ).map((row, index) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell>{row.created_by}</TableCell>
+                      <TableCell>
+                        {Moment(row.donation_date).format('DD/MM/YYYY')}
+                      </TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.totalDonationAmount}</TableCell>
+                    </TableRow>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {/* <TableCell colSpan={8} align="center">
                       <CircularProgress />
                     </TableCell> */}
-                  </>
-                )}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    count={empylist.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowsPerPageOptions={[5, 10, 25]}
-                    labelRowsPerPage={<span>Rows:</span>}
-                    labelDisplayedRows={({ page }) => {
-                      return `Page: ${page}`;
-                    }}
-                    backIconButtonProps={{
-                      color: 'secondary',
-                    }}
-                    nextIconButtonProps={{ color: 'secondary' }}
-                    SelectProps={{
-                      inputProps: {
-                        'aria-label': 'page number',
-                      },
-                    }}
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </div>
+                </>
+              )}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  count={empylist.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  rowsPerPageOptions={[5, 10, 25]}
+                  labelRowsPerPage={<span>Rows:</span>}
+                  labelDisplayedRows={({ page }) => {
+                    return `Page: ${page}`;
+                  }}
+                  backIconButtonProps={{
+                    color: 'secondary',
+                  }}
+                  nextIconButtonProps={{ color: 'secondary' }}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'page number',
+                    },
+                  }}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
         </div>
       </div>
     </>

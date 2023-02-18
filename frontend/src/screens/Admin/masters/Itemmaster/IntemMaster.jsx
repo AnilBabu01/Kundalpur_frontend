@@ -23,6 +23,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import UpdateDonationType from './UpdateDonationType';
 import CheckIcon from '@mui/icons-material/Check';
+import Tooltip from '@mui/material/Tooltip';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 const style = {
@@ -250,7 +251,9 @@ function IntemMaster() {
       <div>
         <hr style={{ color: '#e96d00' }} />
         <div className="add-btn-user">
-          <button onClick={handleOpen}>+Add</button>
+          <Tooltip title="Add new items head">
+            <button onClick={handleOpen}>+Add</button>
+          </Tooltip>
         </div>
         <div className="table-div-maain">
           <Table
@@ -289,15 +292,22 @@ function IntemMaster() {
                       {row.status === 1 ? 'Active' : 'Deactive'}
                     </TableCell>
                     <TableCell>
-                      <EditIcon onClick={() => handleOpen3(row)} />
+                      <Tooltip title="Edit Item head">
+                        <EditIcon onClick={() => handleOpen3(row)} />
+                      </Tooltip>
+
                       {row.status === 1 ? (
-                        <CloseIcon
-                          onClick={() => deacivateAndactivateuser(row.id)}
-                        />
+                        <Tooltip title="Now active">
+                          <CloseIcon
+                            onClick={() => deacivateAndactivateuser(row.id)}
+                          />
+                        </Tooltip>
                       ) : (
-                        <CheckIcon
-                          onClick={() => deacivateAndactivateuser(row.id)}
-                        />
+                        <Tooltip title="Now Deactivate">
+                          <CheckIcon
+                            onClick={() => deacivateAndactivateuser(row.id)}
+                          />
+                        </Tooltip>
                       )}
                     </TableCell>
                   </TableRow>

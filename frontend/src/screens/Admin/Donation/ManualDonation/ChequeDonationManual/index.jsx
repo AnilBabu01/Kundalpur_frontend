@@ -467,9 +467,9 @@ const ChequeDonation = ({
                     style={custumstyle}
                     id="full-name"
                     required
-                    value={text}
-                    onChangeText={(text) => {
-                      setText(text);
+                    value={fullName}
+                    onChangeText={(fullName) => {
+                      setFullName(fullName);
                     }}
                     onChange={(e) => setFullName(e.target.value)}
                     lang="hi"
@@ -498,9 +498,9 @@ const ChequeDonation = ({
                     style={custumstyle}
                     required
                     id="address"
-                    value={addText}
-                    onChangeText={(addText) => {
-                      setaddText(addText);
+                    value={address}
+                    onChangeText={(address) => {
+                      setAddress(address);
                     }}
                     onChange={(e) => setAddress(e.target.value)}
                     lang="hi"

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../screens/Admin/Dashboard/Dashboard';
 import MasterTap from '../screens/Admin/masters/MasterTap';
 import DonatedUsers from '../screens/Admin/Donatedusers/DonatedUsers';
-import RoomBooking from '../screens/Admin/RoomBooking/RoomBooking';
 import Donation from '../screens/Admin/Donation/Donation/Donation';
 import RoleManagement from '../screens/Admin/SystemManagement/RoleManagement/RoleManagement';
 import UserManagement from '../screens/Admin/SystemManagement/UserManagement/UserManagement';
@@ -20,13 +19,14 @@ import PrintContent from '../screens/Admin/compoments/PrintContent';
 import AllReport from '../screens/Admin/Reports/AllReport/AllReport';
 import PrintContentManul from '../screens/Admin/compoments/PrintContentManual';
 import ManualDonation from '../screens/Admin/Donation/ManualDonation/ManualDonation';
-import Consolidated from '../screens/Admin/Reports/Consolidated/Consolidated';
-import HeadReport from '../screens/Admin/Reports/HeadReport/HeadReport';
 import Signature from '../screens/Admin/Signature/Signature';
 import DonationReportTap from '../screens/Admin/Reports/DonationReport/DonationReportTap';
 import ManualDonationTap from '../screens/Admin/Reports/ManualDonationReports/ManualDonationTap';
 import OnlineTap from '../screens/Admin/Reports/OnlineDonations/OnlineTap';
+import DharamshalaTap from '../screens/Admin/Dharamshala/DharamshalaTap';
+import RoomBookingTap from '../screens/Admin/RoomBooking/RoomBookingTap';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
+  const [addleftmargin, setaddleftmargin] = useState(false);
   return (
     <>
       <Routes>
@@ -65,6 +65,24 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
         />
 
         <Route
+          path="/admin-panel/Dharamshala"
+          element={
+            <Adminprivateroute>
+              <DharamshalaTap setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/roombooking"
+          element={
+            <Adminprivateroute>
+              <RoomBookingTap setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
           path="/admin-panel/manualReports"
           element={
             <Adminprivateroute>
@@ -78,14 +96,6 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <DonatedUsers setopendashboard={setopendashboard} />
-            </Adminprivateroute>
-          }
-        />
-        <Route
-          path="/admin-panel/roombooking"
-          element={
-            <Adminprivateroute>
-              <RoomBooking setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />
@@ -171,29 +181,6 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           }
         />
 
-        <Route
-          path="/admin-panel/consolidated/report"
-          element={
-            <Adminprivateroute>
-              <Consolidated
-                setopendashboard={setopendashboard}
-                setshowreciept={setshowreciept}
-              />
-            </Adminprivateroute>
-          }
-        />
-
-        <Route
-          path="/admin-panel/head/report"
-          element={
-            <Adminprivateroute>
-              <HeadReport
-                setopendashboard={setopendashboard}
-                setshowreciept={setshowreciept}
-              />
-            </Adminprivateroute>
-          }
-        />
         <Route
           path="/admin-panel/printContentmanul"
           element={

@@ -15,6 +15,7 @@ function App() {
   const [noHeaderFooter, setHeaderFooter] = useState(false);
   const [paymentId, setpaymentId] = useState('');
   const [onlineId, setonlineId] = useState('');
+  const [userrole, setuserrole] = useState('');
   const [showRoomOptions, setshowRoomOptions] = useState(false);
   if (!sessionStorage.getItem('token')) {
   }
@@ -25,19 +26,25 @@ function App() {
 
   useEffect(() => {
     gett();
-    setHeaderFooter(false);
-    setshowreciept(false);
-    setopendashboard(false);
+
+    setuserrole(Number(sessionStorage.getItem('userrole')));
   }, []);
 
   return (
     <>
       <Router>
-        {!opendashboard && !showreciept && !noHeaderFooter ? (
-          <Navbar showRoomOptions={showRoomOptions} />
+        {showreciept ? (
+          <></>
         ) : (
-          ''
+          <>
+            {!opendashboard || noHeaderFooter || userrole === 2 ? (
+              <Navbar showRoomOptions={showRoomOptions} />
+            ) : (
+              ''
+            )}
+          </>
         )}
+
         {opendashboard && <MainAdmin />}
         <MainRoutes
           setopendashboard={setopendashboard}

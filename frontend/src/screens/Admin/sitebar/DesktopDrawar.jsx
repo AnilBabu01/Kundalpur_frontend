@@ -204,7 +204,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
           name: 'Donation',
           link: 'electronicReports',
           active: false,
-          icon: <AccountBalanceIcon />,
+          icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
         },
         {
@@ -212,7 +212,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
           name: 'Manual Donation',
           link: 'manualReports',
           active: false,
-          icon: <PublicIcon />,
+          icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
         },
         {
@@ -220,23 +220,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
           name: 'Online donation',
           link: 'OnlineReports',
           active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.2,
-          name: 'Consolidated Cash',
-          link: 'consolidated/report',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.3,
-          name: 'Head Donation',
-          link: 'head/report',
-          active: false,
-          icon: <AccountBalanceIcon />,
+          icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
         },
       ],
@@ -271,47 +255,6 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
   ];
   const navigationTabs1 = [
     {
-      id: 5,
-      name: 'Dharamshala',
-      active: false,
-      icon: <img src={f1} alt="f1" style={{ width: '25px' }} />,
-      subTabs: [
-        {
-          id: 5.1,
-          name: 'Dharamshala',
-          link: 'promdoion',
-          active: false,
-          icon: <PublicIcon />,
-          subTabs: [],
-        },
-
-        {
-          id: 5.3,
-          name: 'Category',
-          link: 'sponsodrhip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 5.4,
-          name: 'Facilities',
-          link: 'sponsodrip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 5.4,
-          name: 'Room',
-          link: 'sponsodrip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-      ],
-    },
-    {
       id: 2,
       name: 'Donation',
       active: false,
@@ -335,91 +278,9 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         },
       ],
     },
-    {
-      id: 6,
-      name: 'Room Booking',
-      active: false,
-      icon: <img src={f1} alt="f1" style={{ width: '25px' }} />,
-      subTabs: [
-        {
-          id: 6.1,
-          name: 'Checkin',
-          link: 'promdon',
-          active: false,
-          icon: <PublicIcon />,
-          subTabs: [],
-        },
-
-        {
-          id: 6.3,
-          name: 'Hold',
-          link: 'sponship',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 6.4,
-          name: 'Room Shift',
-          link: 'sponsodrip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 6.4,
-          name: 'Room',
-          link: 'sponsodrip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-      ],
-    },
   ];
 
   const navigationEmpTabs1 = [
-    {
-      id: 6,
-      name: 'Room Booking',
-      active: false,
-      icon: <img src={f1} alt="f1" style={{ width: '25px' }} />,
-      subTabs: [
-        {
-          id: 6.1,
-          name: 'Checkin',
-          link: 'promdon',
-          active: false,
-          icon: <PublicIcon />,
-          subTabs: [],
-        },
-
-        {
-          id: 6.3,
-          name: 'Hold',
-          link: 'sponship',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 6.4,
-          name: 'Room Shift',
-          link: 'sponsodrip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 6.4,
-          name: 'Room',
-          link: 'sponsodrip',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-      ],
-    },
     {
       id: 4,
       name: 'Reports',
@@ -427,84 +288,27 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       icon: <img src={f2} alt="f2" style={{ width: '25px' }} />,
       subTabs: [
         {
-          id: 4.1,
-          name: 'Manual Report',
-          link: 'manualreports',
-          active: false,
-          icon: <PublicIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.2,
-          name: 'Consolidated Cash',
-          link: 'consolidated/report',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.3,
-          name: 'Head Donation',
-          link: 'head/report',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.4,
-          name: 'Donations Report',
-          link: 'reports/allreport',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
           id: 4.5,
-          name: 'Cash',
-          link: 'reports/manualcash',
+          name: 'Donation',
+          link: 'electronicReports',
           active: false,
-          icon: <AccountBalanceIcon />,
+          icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
         },
         {
-          id: 4.6,
-          name: 'Electronic',
-          link: 'reports/electronic',
+          id: 4.1,
+          name: 'Manual Donation',
+          link: 'manualReports',
           active: false,
-          icon: <AccountBalanceIcon />,
+          icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
         },
-        {
-          id: 4.7,
-          name: 'Cheque',
-          link: 'reports/manualcheque',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 4.8,
-          name: 'Item',
-          link: 'reports/manualitem',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-
         {
           id: 4.9,
-          name: 'Cheque donation',
-          link: 'reports/cheque',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 5.1,
           name: 'Online donation',
-          link: 'reports/online',
+          link: 'OnlineReports',
           active: false,
-          icon: <AccountBalanceIcon />,
+          icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
         },
       ],
@@ -600,7 +404,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
               <ListItemText
                 classes={{ root: stylesag.ListText }}
                 primary="Dashboard"
-                sx={{ opacity: open ? 1 : 0, ml: 1 }}
+                sx={{ opacity: open ? 1 : 0, ml: 0.8 }}
               />
             </StyledListItemButton>
           </Tooltip>
@@ -737,7 +541,44 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                   <ListItemText
                     classes={{ root: stylesag.ListText }}
                     primary="Masters"
-                    sx={{ opacity: open ? 1 : 0, ml: 1 }}
+                    sx={{ opacity: open ? 1 : 0, ml: 0.8 }}
+                  />
+                </StyledListItemButton>
+              </Tooltip>
+            </ListItem>
+          </>
+        )}
+
+        {userrole === 1 && (
+          <>
+            <ListItem disablePadding sx={{ display: 'block' }}>
+              <Tooltip title="Masters" placement="left-end">
+                <StyledListItemButton
+                  selected={activeTabId === 10}
+                  onClick={() => {
+                    setActiveTabId(10);
+                    handleDrawerClose();
+                    navigate('/admin-panel/Dharamshala');
+                  }}
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.2,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <img src={f1} alt="f5" style={{ width: '25px' }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    classes={{ root: stylesag.ListText }}
+                    primary="Dharamshala"
+                    sx={{ opacity: open ? 1 : 0, ml: 0.8 }}
                   />
                 </StyledListItemButton>
               </Tooltip>
@@ -845,6 +686,39 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
               </React.Fragment>
             ))}
       </List>
+
+      <ListItem disablePadding sx={{ display: 'block' }}>
+        <Tooltip title="Masters" placement="left-end">
+          <StyledListItemButton
+            selected={activeTabId === 11}
+            onClick={() => {
+              setActiveTabId(11);
+              handleDrawerClose();
+              navigate('/admin-panel/roombooking');
+            }}
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.2,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}
+            >
+              <img src={f1} alt="f5" style={{ width: '25px' }} />
+            </ListItemIcon>
+            <ListItemText
+              classes={{ root: stylesag.ListText }}
+              primary="Room Booking"
+              sx={{ opacity: open ? 1 : 0, ml: 0.8 }}
+            />
+          </StyledListItemButton>
+        </Tooltip>
+      </ListItem>
       {userrole === 1 && (
         <>
           <ListItem disablePadding sx={{ display: 'block' }}>

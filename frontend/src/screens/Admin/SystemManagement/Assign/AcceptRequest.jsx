@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { backendApiUrl } from '../../../../../config/config';
-import { serverInstance } from '../../../../../API/ServerInstance';
+import { backendApiUrl } from '../../../../config/config';
+import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import './AddVoucherToUser.css';
 
-const AddVoucherToUser = ({ setOpen }) => {
+const AcceptRequest = ({ setOpen, empdata }) => {
   const [isData, setisData] = React.useState([]);
   const [fromNo, setfromNo] = useState('');
   const [toNo, settoNo] = useState('');
@@ -41,18 +40,10 @@ const AddVoucherToUser = ({ setOpen }) => {
       setOpen(false);
     }
   };
-  const getall_donation = () => {
-    serverInstance('admin/add-employee', 'get').then((res) => {
-      if (res.status) {
-        setisData(res.data);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
-      }
-    });
-  };
 
   useEffect(() => {
-    getall_donation();
+    setassingTo(empdata?.id);
+    setempname(empdata?.Username);
   }, [open]);
   return (
     <>
@@ -88,30 +79,18 @@ const AddVoucherToUser = ({ setOpen }) => {
                   onChange={(e) => settoNo(e.target.value)}
                 />
               </div>
+
               <div className="inner-input-div2">
-                <label htmlFor="assingTo">Assign To </label>
-                <select
-                  className="inner-input-div1-select12"
+                <label htmlFor="toNo">Assing To </label>
+                <input
                   id="assingTo"
+                  className="forminput_add_user"
+                  type="text"
+                  placeholder="To VC"
                   value={assingTo}
                   name="assingTo"
                   onChange={(e) => setassingTo(e.target.value)}
-                >
-                  {isData &&
-                    isData.map((item, index) => {
-                      return (
-                        <option
-                          onClick={() => {
-                            console.log('click');
-                          }}
-                          key={index}
-                          value={item.id}
-                        >
-                          {item.Username}
-                        </option>
-                      );
-                    })}
-                </select>
+                />
               </div>
             </div>
           </div>
@@ -133,4 +112,4 @@ const AddVoucherToUser = ({ setOpen }) => {
   );
 };
 
-export default AddVoucherToUser;
+export default AcceptRequest;

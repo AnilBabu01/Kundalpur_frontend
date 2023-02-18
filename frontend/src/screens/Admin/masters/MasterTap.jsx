@@ -4,6 +4,7 @@ import DonationMaster from './Donationmaster/DonationMaster';
 import IntemMaster from './Itemmaster/IntemMaster';
 import ReceiptMater from './Receiptmaster/ReceiptMater';
 import UserMaster from './Usermaster/UserMaster';
+import f1 from '../../../assets/f5.png';
 import './MasterTap.css';
 
 const MasterTap = ({ setopendashboard }) => {
@@ -26,25 +27,44 @@ const MasterTap = ({ setopendashboard }) => {
               className={toggleState === 1 ? 'tabs2 ' : 'tabs1'}
               onClick={() => toggleTab(1)}
             >
-              {/* <img className="fasti" src={fastimg} alt="fast" /> */}
+              <img
+                style={{ marginRight: '4%', width: '20px' }}
+                src={f1}
+                alt="fast"
+              />
               Donated User Master
             </button>
             <button
               className={toggleState === 2 ? 'tabs2 ' : 'tabs1'}
               onClick={() => toggleTab(2)}
             >
+              <img
+                style={{ marginRight: '4%', width: '20px' }}
+                src={f1}
+                alt="fast"
+              />
               Donation Type Master
             </button>
             <button
               className={toggleState === 3 ? 'tabs2 ' : 'tabs1'}
               onClick={() => toggleTab(3)}
             >
+              <img
+                style={{ marginRight: '4%', width: '20px' }}
+                src={f1}
+                alt="fast"
+              />
               Donation Item Master
             </button>
             <button
               className={toggleState === 4 ? 'tabs2 ' : 'tabs1'}
               onClick={() => toggleTab(4)}
             >
+              <img
+                style={{ marginRight: '4%', width: '20px' }}
+                src={f1}
+                alt="fast"
+              />
               Receipt Master
             </button>
           </div>

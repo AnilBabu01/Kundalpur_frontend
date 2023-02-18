@@ -27,4 +27,8 @@
 
   }
 
-
+.add_role_icons_div{
+    display: flex;
+    width: 16%;
+    justify-content: space-between;
+}

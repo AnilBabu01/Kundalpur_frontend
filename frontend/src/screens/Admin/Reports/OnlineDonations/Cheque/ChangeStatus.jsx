@@ -22,7 +22,7 @@ function ChangeStatus({ id, handleClose }) {
       });
       if (res.data.status) {
         Swal.fire('Great!', res.data.msg, 'success');
-        navigate('/admin-panel/reports/cheque');
+
         handleClose(false);
       }
       console.log(res);

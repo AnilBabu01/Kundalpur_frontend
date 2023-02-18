@@ -120,7 +120,7 @@ const EmailLogin = () => {
                 setunchecked3(false);
               }}
             />
-            <label htmlFor="adiovalue1">User</label>
+            <label htmlFor="adiovalue1">Donator</label>
           </div>
           <div className="admin_radio_innear">
             <input

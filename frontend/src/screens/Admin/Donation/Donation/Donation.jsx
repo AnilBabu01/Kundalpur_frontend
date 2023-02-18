@@ -28,6 +28,7 @@ import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
 import exportFromJSON from 'export-from-json';
+import CircularProgress from '@mui/material/CircularProgress';
 import './Donation.css';
 const style = {
   position: 'absolute',
@@ -122,9 +123,10 @@ const Donation = ({ setopendashboard }) => {
   const navigation = useNavigate();
 
   const ExportToExcel = () => {
-    const fileName = 'Report';
+    const fileName = 'ElectronicReport';
     const exportType = 'xls';
     var data = [];
+
     isData.map((item, index) => {
       data.push({
         Date: Moment(item.donation_date).format('DD-MM-YYYY'),
@@ -152,10 +154,16 @@ const Donation = ({ setopendashboard }) => {
         'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
       });
     });
+
     exportFromJSON({ data, fileName, exportType });
   };
 
   const getall_donation = () => {
+    setdatefrom('');
+    setdateto('');
+    setvoucherfrom('');
+    setvoucherto('');
+    settype('');
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
@@ -490,7 +498,6 @@ const Donation = ({ setopendashboard }) => {
                 <TableRow>
                   <TableCell>Date</TableCell>
                   <TableCell>ReceiptNo</TableCell>
-
                   <TableCell>VoucherNo</TableCell>
                   <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
@@ -560,6 +567,7 @@ const Donation = ({ setopendashboard }) => {
                     placeholder="Search Amount"
                   />
                 </TableCell>
+
                 <TableCell>
                   <select name="cars" id="cars" className="cuolms_search">
                     <option>Select user</option>
@@ -670,7 +678,7 @@ const Donation = ({ setopendashboard }) => {
                   </>
                 ) : (
                   <>
-                    <TableCell colSpan={8} align="center">
+                    <TableCell colSpan={11} align="center">
                       <CircularProgress />
                     </TableCell>
                   </>

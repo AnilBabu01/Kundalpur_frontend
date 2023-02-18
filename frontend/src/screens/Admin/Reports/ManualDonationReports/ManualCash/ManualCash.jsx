@@ -154,15 +154,18 @@ const ManualCash = ({ setopendashboard }) => {
   };
 
   const filterdata = () => {
-    console.log('ccc');
+    setdatefrom('');
+    setdateto('');
     serverInstance(
-      `user//manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}',
+      `user/manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}&modeOfDonation=${2}',
       'get`,
     ).then((res) => {
       console.log('filter data is', res.data);
 
       if (res.data) {
-        setisData(res.data);
+        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
+
+        setisData(filterData);
       }
     });
   };

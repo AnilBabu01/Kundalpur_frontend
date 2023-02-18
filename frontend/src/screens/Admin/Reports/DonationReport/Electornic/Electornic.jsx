@@ -96,6 +96,10 @@ const Electornic = ({ setopendashboard }) => {
   };
 
   const getall_donation = () => {
+    setdate('');
+    setphone('');
+    setname('');
+
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter((item) => item.modeOfDonation === '1');
@@ -233,6 +237,7 @@ const Electornic = ({ setopendashboard }) => {
               themeColor={donationColorTheme.electronic}
               updateData={updateData}
               showUpdateBtn={showUpdateBtn}
+              setopendashboard={setopendashboard}
             />
           </Box>
         </Fade>

@@ -154,15 +154,18 @@ const ManualElectronic = ({ setopendashboard }) => {
   };
 
   const filterdata = () => {
-    console.log('ccc');
+    setdatefrom('');
+    setdateto('');
     serverInstance(
-      `user//manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}',
+      `user/manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}&modeOfDonation=${1}',
       'get`,
     ).then((res) => {
       console.log('filter data is', res.data);
 
       if (res.data) {
-        setisData(res.data);
+        let filterData = res.data.filter((item) => item.modeOfDonation === '1');
+
+        setisData(filterData);
       }
     });
   };

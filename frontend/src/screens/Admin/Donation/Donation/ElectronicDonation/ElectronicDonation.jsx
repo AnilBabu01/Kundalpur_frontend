@@ -28,7 +28,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { typesOfDonation } from '../common/Data';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
-import { useNavigate } from 'react-router-dom';
+import { useActionData, useNavigate } from 'react-router-dom';
 import { ReactTransliterate } from 'react-transliterate';
 
 const custumstyle = {
@@ -72,7 +72,6 @@ const ElectronicDonation = ({
   const [hindiremark, sethindiremark] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
-
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
@@ -80,6 +79,7 @@ const ElectronicDonation = ({
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
+  const [genderp1, setgenderp1] = useState('SHRI');
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -114,6 +114,17 @@ const ElectronicDonation = ({
     {
       id: 4,
       gender: 'कु.',
+    },
+  ];
+
+  const genderoptiins1 = [
+    {
+      id: 2,
+      gender: 'SMT',
+    },
+    {
+      id: 3,
+      gender: 'M/s',
     },
   ];
   function removeDonationItem(item) {
@@ -197,6 +208,7 @@ const ElectronicDonation = ({
           const res = await axios.put(`${backendApiUrl}user/add-elecDonation`, {
             id: updateData?.id,
             name: fullName,
+            gender: newMember ? genderp1 : genderp,
             phoneNo: mobileNo,
             address: address,
             new_member: newMember,
@@ -225,9 +237,8 @@ const ElectronicDonation = ({
             `${backendApiUrl}user/add-elecDonation`,
             {
               name: fullName,
-              gender: genderp,
+              gender: newMember ? genderp1 : genderp,
               phoneNo: mobileNo,
-              prefix: 'ELEC',
               address: address,
               new_member: newMember,
               modeOfDonation: 1,
@@ -314,6 +325,10 @@ const ElectronicDonation = ({
       setFullName(updateData?.name);
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
+      setgenderp(updateData?.gender);
+      setgenderp1(updateData?.gender);
+
+      console.log(updateData);
     }
   }, []);
   return (
@@ -418,40 +433,81 @@ const ElectronicDonation = ({
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="full-name">
-                <Select
-                  required
-                  sx={{
-                    width: '20%',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      padding: '1px',
-                    },
-                  }}
-                  value={genderp}
-                  onChange={(e) => setgenderp(e.target.value)}
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={'श्री'}
-                  >
-                    श्री
-                  </MenuItem>
-                  {genderoptiins.map((item, idx) => {
-                    return (
+                {!newMember ? (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp}
+                      onChange={(e) => setgenderp(e.target.value)}
+                    >
                       <MenuItem
                         sx={{
                           fontSize: 14,
                         }}
-                        key={item.id}
-                        value={item.gender}
+                        value={'श्री'}
                       >
-                        {item.gender}
+                        श्री
                       </MenuItem>
-                    );
-                  })}
-                </Select>
+                      {genderoptiins.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                ) : (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp1}
+                      onChange={(e) => setgenderp1(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'SHRI'}
+                      >
+                        SHRI
+                      </MenuItem>
+                      {genderoptiins1.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                )}
                 Full Name
               </CustomInputLabel>
               {!newMember ? (

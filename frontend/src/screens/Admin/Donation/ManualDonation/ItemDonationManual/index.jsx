@@ -82,6 +82,7 @@ const ItemDonation = ({
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
+  const [genderp1, setgenderp1] = useState('SHRI');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [donationItems, setDonationItems] = useState([
     {
@@ -92,7 +93,7 @@ const ItemDonation = ({
       size: '',
       quantity: '',
       approxValue: '',
-      unit: '',
+      unit: 'G',
     },
   ]);
 
@@ -106,7 +107,7 @@ const ItemDonation = ({
         size: '',
         quantity: '',
         approxValue: '',
-        unit: '',
+        unit: 'G',
       },
     ]);
   }
@@ -129,12 +130,17 @@ const ItemDonation = ({
       gender: 'कु.',
     },
   ];
-
-  const unitss = [
+  const genderoptiins1 = [
     {
       id: 2,
-      unit: 'G',
+      gender: 'SMT',
     },
+    {
+      id: 3,
+      gender: 'M/s',
+    },
+  ];
+  const unitss = [
     {
       id: 3,
       unit: 'KG',
@@ -206,102 +212,55 @@ const ItemDonation = ({
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
-      axios.defaults.headers.put[
-        'Authorization'
-      ] = `Bearer ${sessionStorage.getItem('token')}`;
+
       e.preventDefault();
 
-      if (showUpdateBtn) {
-        console.log('upadte');
+      if (
+        fullName &&
+        donationItems[0].itemType &&
+        donationItems[0].type &&
+        mobileNo
+      ) {
+        const modifiedDonationItems = donationItems.map((donationItem) => {
+          return {
+            ...donationItem,
+            amount:
+              Number(donationItem.quantity) * Number(donationItem.approxValue),
+          };
+        });
 
-        if (
-          fullName &&
-          donationItems[0].amount &&
-          donationItems[0].type &&
-          mobileNo
-        ) {
-          const res = await axios.put(
-            `${backendApiUrl}admin/edit-manual-item-donation`,
-            {
-              id: updateData?.id,
-              name: fullName,
-              phoneNo: mobileNo,
-              address: address,
-              ReceiptNo: receiptNo,
-              new_member: newMember,
-              modeOfDonation: 4,
-              donation_date: updateData?.donation_date,
-              donation_time: updateData?.donation_time,
-              donation_item: modifiedDonationItems,
+        const res = await axios.post(`${backendApiUrl}admin/manual-donation`, {
+          name: fullName,
+          gender: newMember ? genderp1 : genderp,
+          phoneNo: mobileNo,
+          address: address,
+          ReceiptNo: receiptNo,
+          new_member: newMember,
+          modeOfDonation: 4,
+          donation_date: donationDate,
+          donation_time: donationTime,
+          donation_item: modifiedDonationItems,
+        });
+        let totalamount = modifiedDonationItems?.amount
+          ? modifiedDonationItems?.amount
+          : modifiedDonationItems &&
+            modifiedDonationItems.reduce(
+              (n, { amount }) => parseFloat(n) + parseFloat(amount),
+              0,
+            );
+
+        console.log('item', res);
+        if (res.data.status === true) {
+          setshowalert(true);
+          handleClose();
+          sendsms(totalamount);
+          navigation('/manualreceipt', {
+            state: {
+              userdata: res.data.data.data,
             },
-          );
-
-          if (res.data.status === true) {
-            setshowalert(true);
-            handleClose();
-            navigation('/reciept', {
-              state: {
-                userdata: res.data.data.data,
-              },
-            });
-          } else {
-            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-          }
-        }
-      } else {
-        console.log('clicked');
-
-        if (
-          fullName &&
-          donationItems[0].itemType &&
-          donationItems[0].type &&
-          mobileNo
-        ) {
-          const modifiedDonationItems = donationItems.map((donationItem) => {
-            return {
-              ...donationItem,
-              amount:
-                Number(donationItem.quantity) *
-                Number(donationItem.approxValue),
-            };
           });
-
-          const res = await axios.post(
-            `${backendApiUrl}admin/manual-donation`,
-            {
-              name: fullName,
-              gender: genderp,
-              phoneNo: mobileNo,
-              address: address,
-              ReceiptNo: receiptNo,
-              new_member: newMember,
-              modeOfDonation: 4,
-              donation_date: donationDate,
-              donation_time: donationTime,
-              donation_item: modifiedDonationItems,
-            },
-          );
-          let totalamount = modifiedDonationItems?.amount
-            ? modifiedDonationItems?.amount
-            : modifiedDonationItems &&
-              modifiedDonationItems.reduce(
-                (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                0,
-              );
-
-          console.log('item', res);
-          if (res.data.status === true) {
-            setshowalert(true);
-            handleClose();
-            sendsms(totalamount);
-            navigation('/manualreceipt', {
-              state: {
-                userdata: res.data.data.data,
-              },
-            });
-          } else {
-            Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-          }
+        } else {
+          Swal.fire('Error!', 'Somthing went wrong!!', 'error');
         }
       }
     } catch (error) {
@@ -462,40 +421,81 @@ const ItemDonation = ({
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="full-name">
-                <Select
-                  required
-                  sx={{
-                    width: '20%',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      padding: '1px',
-                    },
-                  }}
-                  value={genderp}
-                  onChange={(e) => setgenderp(e.target.value)}
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={'श्री'}
-                  >
-                    श्री
-                  </MenuItem>
-                  {genderoptiins.map((item, idx) => {
-                    return (
+                {!newMember ? (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp}
+                      onChange={(e) => setgenderp(e.target.value)}
+                    >
                       <MenuItem
                         sx={{
                           fontSize: 14,
                         }}
-                        key={item.id}
-                        value={item.gender}
+                        value={'श्री'}
                       >
-                        {item.gender}
+                        श्री
                       </MenuItem>
-                    );
-                  })}
-                </Select>
+                      {genderoptiins.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                ) : (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp1}
+                      onChange={(e) => setgenderp1(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'SHRI'}
+                      >
+                        SHRI
+                      </MenuItem>
+                      {genderoptiins1.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                )}
                 Full Name
               </CustomInputLabel>
               {!newMember ? (
@@ -724,6 +724,7 @@ const ItemDonation = ({
                           },
                         }}
                         value={item.unit}
+                        defaultValue={item.unit}
                         onChange={(e) =>
                           handleDonationItemUpdate(item, 'unit', e.target.value)
                         }
@@ -733,9 +734,9 @@ const ItemDonation = ({
                           sx={{
                             fontSize: 14,
                           }}
-                          value={''}
+                          value={'G'}
                         >
-                          Please select
+                          G
                         </MenuItem>
                         {unitss.map((item, idx) => {
                           return (

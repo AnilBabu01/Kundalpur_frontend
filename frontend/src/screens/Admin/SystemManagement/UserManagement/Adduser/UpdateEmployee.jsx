@@ -29,6 +29,7 @@ const UpdateEmployee = ({ setOpen, empdata }) => {
           Password: password,
           Role: role,
           Rid: 2,
+          id: empdata?.id,
           Status: status === 'true' ? true : false,
         });
         console.log(res.data);

@@ -572,9 +572,11 @@ const ManualDonation = ({ setopendashboard }) => {
                   </>
                 ) : (
                   <>
-                    <TableCell colSpan={8} align="center">
-                      <CircularProgress />
-                    </TableCell>
+                    <TableRow>
+                      <TableCell colSpan={13} align="center">
+                        <CircularProgress />
+                      </TableCell>
+                    </TableRow>
                   </>
                 )}
               </TableBody>

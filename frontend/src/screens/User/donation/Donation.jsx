@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  serverInstance,
-  PaymentserverInstance,
-} from '../../../API/ServerInstance';
+import { serverInstance } from '../../../API/ServerInstance';
 import badebaba from '../../../assets/badebaba.jpg';
 import { displayRazorpay } from '../../../RazorPay/RazorPay';
 import PaymentSuccessfull from './PaymentSuccessfull/PaymentSuccessfull';

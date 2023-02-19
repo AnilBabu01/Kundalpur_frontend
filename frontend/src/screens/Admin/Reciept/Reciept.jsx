@@ -7,6 +7,7 @@ import jsPDF from 'jspdf';
 import Moment from 'moment-js';
 import moment from 'moment';
 import { serverInstance } from '../../../API/ServerInstance';
+import { backendUrl } from '../../../config/config';
 import './cashrecipt.css';
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
@@ -53,6 +54,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
         },
       );
     }
+
+    console.log('data', isData);
   }, []);
 
   return (
@@ -287,7 +290,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
                         <h2 className="font_bold_in_donation">
                           {isData &&
                             isData.elecItemDetails &&
-                            isData.elecItemDetails[0].BankName}
+                            isData.elecItemDetails[0]?.BankName}
                           {isData &&
                             isData.elecItemDetails &&
                             isData.elecItemDetails[0].ChequeNo}
@@ -796,9 +799,24 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
             <p>PAN NO- AAHTS0546A</p>
           </div>
           <div className="signature-point">
-            <p>हस्ताक्षर दानदातार</p>
+            <div className="main_div_signature">
+              <p>हस्ताक्षर दानदातार</p>
+            </div>
 
-            <p>हस्ताक्षर प्राप्तकर्ता,({adminName ? adminName : empName})</p>
+            <div className="main_div_signature">
+              {sessionStorage.getItem('adminSignature') && (
+                <>
+                  <img
+                    src={`${backendUrl}uploads/images/${sessionStorage.getItem(
+                      'adminSignature',
+                    )}`}
+                    alt="signature"
+                  />
+                </>
+              )}
+
+              <p>हस्ताक्षर प्राप्तकर्ता,({adminName ? adminName : empName})</p>
+            </div>
           </div>
         </div>
       </div>

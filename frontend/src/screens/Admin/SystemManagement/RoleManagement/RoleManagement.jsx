@@ -135,9 +135,13 @@ const RoleManagement = ({ setopendashboard }) => {
         <div>
           <div className="main_center_header">
             <div className="add-btn-user2">
-              <p>Role Management</p>
+              <p style={{ marginTop: '0.6%' }}>Role Management</p>
               <div className="add_role_icons_div">
-                <button className="addd-role" onClick={() => handleOpen()}>
+                <button
+                  style={{ height: '40px' }}
+                  className="addd-role"
+                  onClick={() => handleOpen()}
+                >
                   +Add
                 </button>
                 <Tooltip title="Export Excel File">

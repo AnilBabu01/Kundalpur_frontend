@@ -84,6 +84,7 @@ const CashDonation = ({
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
+  const [genderp1, setgenderp1] = useState('SHRI');
   const [donatedUserDetails, setdonatedUserDetails] = useState('');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
   console.log(newMember);
@@ -107,6 +108,17 @@ const CashDonation = ({
     {
       id: 4,
       gender: 'कु.',
+    },
+  ];
+
+  const genderoptiins1 = [
+    {
+      id: 2,
+      gender: 'SMT',
+    },
+    {
+      id: 3,
+      gender: 'M/s',
     },
   ];
 
@@ -200,6 +212,7 @@ const CashDonation = ({
         const res = await axios.put(`${backendApiUrl}user/edit-cash-donation`, {
           id: updateData?.id,
           name: fullName,
+          gender: newMember ? genderp1 : genderp,
           phoneNo: mobileNo,
           address: address,
           new_member: newMember,
@@ -226,7 +239,7 @@ const CashDonation = ({
       ) {
         const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
           name: fullName,
-          gender: genderp,
+          gender: newMember ? genderp1 : genderp,
           phoneNo: mobileNo,
           address: address,
           prefix: 'CASH',
@@ -312,7 +325,11 @@ const CashDonation = ({
       setFullName(updateData?.name);
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
+      setgenderp(updateData?.gender);
+      setgenderp1(updateData?.gender);
     }
+
+    console.log(updateData);
   }, []);
 
   return (
@@ -408,40 +425,81 @@ const CashDonation = ({
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="full-name">
-                <Select
-                  required
-                  sx={{
-                    width: '20%',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      padding: '1px',
-                    },
-                  }}
-                  value={genderp}
-                  onChange={(e) => setgenderp(e.target.value)}
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={'श्री'}
-                  >
-                    श्री
-                  </MenuItem>
-                  {genderoptiins.map((item, idx) => {
-                    return (
+                {!newMember ? (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp}
+                      onChange={(e) => setgenderp(e.target.value)}
+                    >
                       <MenuItem
                         sx={{
                           fontSize: 14,
                         }}
-                        key={item.id}
-                        value={item.gender}
+                        value={'श्री'}
                       >
-                        {item.gender}
+                        श्री
                       </MenuItem>
-                    );
-                  })}
-                </Select>
+                      {genderoptiins.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                ) : (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp1}
+                      onChange={(e) => setgenderp1(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'SHRI'}
+                      >
+                        SHRI
+                      </MenuItem>
+                      {genderoptiins1.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                )}
                 Full Name
               </CustomInputLabel>
 
@@ -528,7 +586,7 @@ const CashDonation = ({
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell style={{ width: '35%' }}>
                     <Box
                       sx={{
                         paddingInline: '10px',
@@ -613,7 +671,10 @@ const CashDonation = ({
                         <>
                           {showUpdateBtn ? (
                             <>
-                              <div className="centerMain_remove_item">
+                              <div
+                                className="centerMain_remove_item"
+                                style={{ width: '35%' }}
+                              >
                                 <ReactTransliterate
                                   style={custommStyleInputTable}
                                   required

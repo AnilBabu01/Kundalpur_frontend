@@ -83,6 +83,7 @@ const UpdateCommon = ({
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
+  const [genderp1, setgenderp1] = useState('SHRI');
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -105,7 +106,16 @@ const UpdateCommon = ({
       gender: 'कु.',
     },
   ];
-
+  const genderoptiins1 = [
+    {
+      id: 2,
+      gender: 'SMT',
+    },
+    {
+      id: 3,
+      gender: 'M/s',
+    },
+  ];
   function addDonationItem() {
     setDonationItems([
       ...donationItems,
@@ -169,9 +179,6 @@ const UpdateCommon = ({
   const [donationTime, setDonationTime] = useState('');
 
   const addCashDonation = async (e) => {
-    axios.defaults.headers.post[
-      'Authorization'
-    ] = `Bearer ${sessionStorage.getItem('token')}`;
     axios.defaults.headers.put[
       'Authorization'
     ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -190,6 +197,7 @@ const UpdateCommon = ({
           {
             id: updateData?.id,
             name: fullName,
+            gender: newMember ? genderp1 : genderp,
             phoneNo: mobileNo,
             ReceiptNo: receiptNo,
             address: address,
@@ -239,6 +247,15 @@ const UpdateCommon = ({
   console.log(donationDate);
   useEffect(() => {
     getall_donatiions();
+    setAddress('');
+    setFullName('');
+    setReceiptNo('');
+    setMobileNo('');
+    setDonationItems('');
+    setDonationTime('');
+    setgenderp('');
+    setgenderp1('');
+    setDonationDate('');
     if (updateData) {
       setAddress(updateData?.address);
       setFullName(updateData?.name);
@@ -248,7 +265,8 @@ const UpdateCommon = ({
       setDonationTime(updateData?.donation_time);
       var today = new Date(updateData?.donation_date);
       var date = today.toISOString().substring(0, 10);
-
+      setgenderp(updateData?.gender);
+      setgenderp1(updateData?.gender);
       setDonationDate(date);
     }
   }, []);
@@ -360,41 +378,81 @@ const UpdateCommon = ({
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="full-name">
-                <Select
-                  required
-                  sx={{
-                    width: '20%',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      padding: '1px',
-                    },
-                  }}
-                  value={genderp}
-                  onChange={(e) => setgenderp(e.target.value)}
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={'श्री'}
-                  >
-                    श्री
-                  </MenuItem>
-                  {genderoptiins &&
-                    genderoptiins.map((item, idx) => {
-                      return (
-                        <MenuItem
-                          sx={{
-                            fontSize: 14,
-                          }}
-                          key={item.id}
-                          value={item.gender}
-                        >
-                          {item.gender}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
+                {!newMember ? (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp}
+                      onChange={(e) => setgenderp(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'श्री'}
+                      >
+                        श्री
+                      </MenuItem>
+                      {genderoptiins.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                ) : (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp1}
+                      onChange={(e) => setgenderp1(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'SHRI'}
+                      >
+                        SHRI
+                      </MenuItem>
+                      {genderoptiins1.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                )}
                 Full Name
               </CustomInputLabel>
               {!newMember ? (
@@ -480,7 +538,7 @@ const UpdateCommon = ({
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell style={{ width: '35%' }}>
                     <Box
                       sx={{
                         paddingInline: '10px',

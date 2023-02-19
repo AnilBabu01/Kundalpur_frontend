@@ -60,6 +60,7 @@ const UpdateTtem = ({
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
+  const [genderp1, setgenderp1] = useState('SHRI');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [donationItems, setDonationItems] = useState([
     {
@@ -107,23 +108,28 @@ const UpdateTtem = ({
       gender: 'कु.',
     },
   ];
-
-  const unitss = [
+  const genderoptiins1 = [
     {
       id: 2,
-      unit: 'g',
+      gender: 'SMT',
     },
     {
       id: 3,
-      unit: 'kg',
+      gender: 'M/s',
+    },
+  ];
+  const unitss = [
+    {
+      id: 3,
+      unit: 'KG',
     },
     {
       id: 4,
-      unit: 'mg',
+      unit: 'MG',
     },
     {
       id: 5,
-      unit: 'µg',
+      unit: 'UG',
     },
   ];
   console.log('donationItems', donationItems);
@@ -186,6 +192,7 @@ const UpdateTtem = ({
         {
           id: updateData?.id,
           name: fullName,
+          gender: newMember ? genderp1 : genderp,
           phoneNo: mobileNo,
           ReceiptNo: receiptNo,
           address: address,
@@ -235,6 +242,16 @@ const UpdateTtem = ({
 
   useEffect(() => {
     getall_donatiions();
+
+    setAddress('');
+    setFullName('');
+    setReceiptNo('');
+    setMobileNo('');
+    setDonationItems('');
+    setDonationTime('');
+    setgenderp('');
+    setgenderp1('');
+    setDonationDate('');
     if (updateData) {
       setAddress(updateData?.address);
       setFullName(updateData?.name);
@@ -244,9 +261,12 @@ const UpdateTtem = ({
       setDonationTime(updateData?.donation_time);
       var today = new Date(updateData?.donation_date);
       var date = today.toISOString().substring(0, 10);
-
+      setgenderp(updateData?.gender);
+      setgenderp1(updateData?.gender);
       setDonationDate(date);
     }
+
+    console.log('data', updateData);
   }, []);
 
   return (
@@ -254,9 +274,7 @@ const UpdateTtem = ({
       <ThemeProvider theme={theme}>
         <form onSubmit={addElectronicDonation}>
           <Typography variant="h6" color={themeColor} align="center">
-            {showUpdateBtn
-              ? 'Upadte Manual Cheque Donation'
-              : 'Add Manual Item Donation'}
+            Update Manual Item Donation
           </Typography>
           <Typography variant="body2" color="primary" align="right">
             {currDate} / {currTime}
@@ -354,41 +372,81 @@ const UpdateTtem = ({
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="full-name">
-                <Select
-                  required
-                  sx={{
-                    width: '20%',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      padding: '1px',
-                    },
-                  }}
-                  value={genderp}
-                  onChange={(e) => setgenderp(e.target.value)}
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={'श्री'}
-                  >
-                    श्री
-                  </MenuItem>
-                  {genderoptiins &&
-                    genderoptiins.map((item, idx) => {
-                      return (
-                        <MenuItem
-                          sx={{
-                            fontSize: 14,
-                          }}
-                          key={item.id}
-                          value={item.gender}
-                        >
-                          {item.gender}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
+                {!newMember ? (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp}
+                      onChange={(e) => setgenderp(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'श्री'}
+                      >
+                        श्री
+                      </MenuItem>
+                      {genderoptiins.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                ) : (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp1}
+                      onChange={(e) => setgenderp1(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'SHRI'}
+                      >
+                        SHRI
+                      </MenuItem>
+                      {genderoptiins1.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                )}
                 Full Name
               </CustomInputLabel>
               <CustomInput
@@ -590,6 +648,7 @@ const UpdateTtem = ({
                             },
                           }}
                           value={item.unit}
+                          defaultValue={item.unit}
                           onChange={(e) =>
                             handleDonationItemUpdate(
                               item,
@@ -603,9 +662,9 @@ const UpdateTtem = ({
                             sx={{
                               fontSize: 14,
                             }}
-                            value={''}
+                            value={'G'}
                           >
-                            Please select
+                            G
                           </MenuItem>
                           {unitss.map((item, idx) => {
                             return (

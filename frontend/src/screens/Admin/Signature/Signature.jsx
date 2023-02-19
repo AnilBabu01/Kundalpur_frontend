@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../config/config';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 const formData = new FormData();
 import './Signature.css';
-function Signature({ setopendashboard }) {
+function Signature({ setOpen3 }) {
+  const navigate = useNavigate();
   const [sign, setsign] = useState('');
 
-  const submitHandler = async (e) => {
+  const submitHandler = async () => {
     try {
-      e.preventDefault();
       if (!sign) {
         Swal.fire('Error!', 'please select signature', 'error');
       }
@@ -29,8 +30,8 @@ function Signature({ setopendashboard }) {
         config,
       );
 
-      console.log('signature', res.data);
       if (res.data.status) {
+        setOpen3(false);
         Swal.fire('Great!', res.data.msg, 'success');
         dispatch(loadUser());
       }
@@ -39,28 +40,30 @@ function Signature({ setopendashboard }) {
     }
   };
 
-  useEffect(() => {
-    setopendashboard(true);
-  }, []);
+  useEffect(() => {}, []);
   return (
     <>
-      <div className="dashboarddiv">
-        <form onSubmit={submitHandler}>
-          <div className="centerSignatire">
-            <div className="input-group-profile">
-              <label htmlFor="anniversary_date">Upload Signature</label>
-              <input
-                type="file"
-                name="sign"
-                onChange={(e) => {
-                  setsign(e.target.files[0]);
-                  console.log(e.target.files[0]);
-                }}
-              />
-              <button className="btn_signature">Upload</button>
-            </div>
-          </div>
-        </form>
+      <div className="adminprofile_input">
+        <input
+          type="file"
+          name="sign"
+          onChange={(e) => {
+            setsign(e.target.files[0]);
+            console.log(e.target.files[0]);
+          }}
+        />
+      </div>
+
+      <div className="save-div-btn">
+        <button onClick={() => submitHandler()} className="save-div-btn-btn">
+          Upload
+        </button>
+        <button
+          onClick={() => setOpen3(false)}
+          className="save-div-btn-btn-cancel"
+        >
+          Cancel
+        </button>
       </div>
     </>
   );

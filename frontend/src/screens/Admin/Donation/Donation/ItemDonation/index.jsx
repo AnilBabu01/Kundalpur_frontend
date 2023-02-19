@@ -81,6 +81,7 @@ const ItemDonation = ({
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
+  const [genderp1, setgenderp1] = useState('SHRI');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [donationItems, setDonationItems] = useState([
     {
@@ -91,7 +92,7 @@ const ItemDonation = ({
       size: '',
       quantity: '',
       approxValue: '',
-      unit: '',
+      unit: 'G',
     },
   ]);
 
@@ -128,12 +129,17 @@ const ItemDonation = ({
       gender: 'कु.',
     },
   ];
-
-  const unitss = [
+  const genderoptiins1 = [
     {
       id: 2,
-      unit: 'G',
+      gender: 'SMT',
     },
+    {
+      id: 3,
+      gender: 'M/s',
+    },
+  ];
+  const unitss = [
     {
       id: 3,
       unit: 'KG',
@@ -229,6 +235,7 @@ const ItemDonation = ({
               {
                 id: updateData?.id,
                 name: fullName,
+                gender: newMember ? genderp1 : genderp,
                 phoneNo: mobileNo,
                 address: address,
                 new_member: newMember,
@@ -268,7 +275,7 @@ const ItemDonation = ({
             `${backendApiUrl}user/add-elecDonation`,
             {
               name: fullName,
-              gender: genderp,
+              gender: newMember ? genderp1 : genderp,
               phoneNo: mobileNo,
               address: address,
               new_member: newMember,
@@ -353,6 +360,8 @@ const ItemDonation = ({
       setFullName(updateData?.name);
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.elecItemDetails);
+      setgenderp(updateData?.gender);
+      setgenderp1(updateData?.gender);
     }
     setopendashboard(true);
   }, []);
@@ -448,40 +457,81 @@ const ItemDonation = ({
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="full-name">
-                <Select
-                  required
-                  sx={{
-                    width: '20%',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      padding: '1px',
-                    },
-                  }}
-                  value={genderp}
-                  onChange={(e) => setgenderp(e.target.value)}
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={'श्री'}
-                  >
-                    श्री
-                  </MenuItem>
-                  {genderoptiins.map((item, idx) => {
-                    return (
+                {!newMember ? (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp}
+                      onChange={(e) => setgenderp(e.target.value)}
+                    >
                       <MenuItem
                         sx={{
                           fontSize: 14,
                         }}
-                        key={item.id}
-                        value={item.gender}
+                        value={'श्री'}
                       >
-                        {item.gender}
+                        श्री
                       </MenuItem>
-                    );
-                  })}
-                </Select>
+                      {genderoptiins.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                ) : (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp1}
+                      onChange={(e) => setgenderp1(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'SHRI'}
+                      >
+                        SHRI
+                      </MenuItem>
+                      {genderoptiins1.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                )}
                 Full Name
               </CustomInputLabel>
               {!newMember ? (
@@ -720,9 +770,9 @@ const ItemDonation = ({
                           sx={{
                             fontSize: 14,
                           }}
-                          value={item.unit}
+                          value={'G'}
                         >
-                          Please select
+                          G
                         </MenuItem>
                         {unitss.map((item, idx) => {
                           return (

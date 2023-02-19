@@ -10,6 +10,40 @@
   padding-right: 24rem;
 }
 
+.Profile-main-div1 {
+  padding-top: 8rem;
+  height: 813px;
+  background: linear-gradient(
+    90.42deg,
+    #fdc99c 0.3%,
+    rgba(253, 201, 156, 0) 99.58%
+  );
+  padding-left: 24rem;
+  padding-right: 24rem;
+}
+
+.profile-img-div1{
+  width: 100%;
+  height: 79px;
+  background: #ffffff;
+  border: 1px solid #613916;
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.profile-img-div1 img{
+  width: 95%;
+  height: 95%;
+  background: #ffffff;
+
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .main-inear-prifile-div {
   display: flex;
   justify-content: space-between;

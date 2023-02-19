@@ -48,7 +48,6 @@ const UpdateChe = ({
   });
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
-
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
@@ -57,14 +56,15 @@ const UpdateChe = ({
   const [mobileNo, setMobileNo] = useState('');
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
+  const [genderp1, setgenderp1] = useState('SHRI');
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
       amount: '',
       remark: '',
-      chequeNo: '',
+      ChequeNo: '',
       BankName: '',
-      ChequeDate: '',
+      chequeDate: '',
     },
   ]);
   const genderoptiins = [
@@ -81,6 +81,16 @@ const UpdateChe = ({
       gender: 'कु.',
     },
   ];
+  const genderoptiins1 = [
+    {
+      id: 2,
+      gender: 'SMT',
+    },
+    {
+      id: 3,
+      gender: 'M/s',
+    },
+  ];
   function addDonationItem() {
     setDonationItems([
       ...donationItems,
@@ -88,9 +98,9 @@ const UpdateChe = ({
         type: '',
         amount: '',
         remark: '',
-        chequeNo: '',
+        ChequeNo: '',
         BankName: '',
-        ChequeDate: '',
+        chequeDate: '',
       },
     ]);
   }
@@ -146,9 +156,6 @@ const UpdateChe = ({
 
   const addChequeDonation = async (e) => {
     try {
-      axios.defaults.headers.post[
-        'Authorization'
-      ] = `Bearer ${sessionStorage.getItem('token')}`;
       axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -168,6 +175,7 @@ const UpdateChe = ({
             {
               id: updateData?.id,
               name: fullName,
+              gender: newMember ? genderp1 : genderp,
               phoneNo: mobileNo,
               address: address,
               ReceiptNo: receiptNo,
@@ -231,6 +239,15 @@ const UpdateChe = ({
   };
   useEffect(() => {
     getall_donatiions();
+    setAddress('');
+    setFullName('');
+    setReceiptNo('');
+    setMobileNo('');
+    setDonationItems('');
+    setDonationTime('');
+    setgenderp('');
+    setgenderp1('');
+    setDonationDate('');
     if (updateData) {
       setAddress(updateData?.address);
       setFullName(updateData?.name);
@@ -240,7 +257,8 @@ const UpdateChe = ({
       setDonationTime(updateData?.donation_time);
       var today = new Date(updateData?.donation_date);
       var date = today.toISOString().substring(0, 10);
-
+      setgenderp(updateData?.gender);
+      setgenderp1(updateData?.gender);
       setDonationDate(date);
     }
   }, []);
@@ -350,40 +368,81 @@ const UpdateChe = ({
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="full-name">
-                <Select
-                  required
-                  sx={{
-                    width: '20%',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      padding: '1px',
-                    },
-                  }}
-                  value={genderp}
-                  onChange={(e) => setgenderp(e.target.value)}
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={'श्री'}
-                  >
-                    श्री
-                  </MenuItem>
-                  {genderoptiins.map((item, idx) => {
-                    return (
+                {!newMember ? (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp}
+                      onChange={(e) => setgenderp(e.target.value)}
+                    >
                       <MenuItem
                         sx={{
                           fontSize: 14,
                         }}
-                        key={item.id}
-                        value={item.gender}
+                        value={'श्री'}
                       >
-                        {item.gender}
+                        श्री
                       </MenuItem>
-                    );
-                  })}
-                </Select>
+                      {genderoptiins.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                ) : (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp1}
+                      onChange={(e) => setgenderp1(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'SHRI'}
+                      >
+                        SHRI
+                      </MenuItem>
+                      {genderoptiins1.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                )}
                 Full Name
               </CustomInputLabel>
               <CustomInput
@@ -554,11 +613,11 @@ const UpdateChe = ({
                     <TableCell align="center">
                       <CustomTableInput
                         required
-                        value={item.chequeNo}
+                        value={item.ChequeNo}
                         onChange={(e) =>
                           handleDonationItemUpdate(
                             item,
-                            'chequeNo',
+                            'ChequeNo',
                             e.target.value,
                           )
                         }
@@ -581,11 +640,11 @@ const UpdateChe = ({
                     <TableCell align="center">
                       <CustomTableInput
                         required
-                        value={item.ChequeDate}
+                        value={item.chequeDate}
                         onChange={(e) =>
                           handleDonationItemUpdate(
                             item,
-                            'ChequeDate',
+                            'chequeDate',
                             e.target.value,
                           )
                         }

@@ -75,6 +75,8 @@ function IntemMaster() {
         if (res.status === true) {
           Swal.fire('Great!', 'User delete successfully', 'success');
           setrefetch(!refetch);
+          setdonationtype_in_hindi('');
+          setdonationtype_in_eng('');
         } else {
           Swal('Error', 'somthing went  wrong', 'error');
         }

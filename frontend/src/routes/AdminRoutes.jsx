@@ -25,6 +25,7 @@ import ManualDonationTap from '../screens/Admin/Reports/ManualDonationReports/Ma
 import OnlineTap from '../screens/Admin/Reports/OnlineDonations/OnlineTap';
 import DharamshalaTap from '../screens/Admin/Dharamshala/DharamshalaTap';
 import RoomBookingTap from '../screens/Admin/RoomBooking/RoomBookingTap';
+import ProfileAdminAndEmp from '../screens/Admin/Profile/ProfileAdminAndEmp';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   const [addleftmargin, setaddleftmargin] = useState(false);
   return (
@@ -43,6 +44,14 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <MasterTap setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/updateprofle"
+          element={
+            <Adminprivateroute>
+              <ProfileAdminAndEmp setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />
@@ -239,7 +248,7 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           }
         />
         <Route
-          path="/admin-panel/masters/signature"
+          path="/admin-panel/signature"
           element={
             <Adminprivateroute>
               <Signature setopendashboard={setopendashboard} />

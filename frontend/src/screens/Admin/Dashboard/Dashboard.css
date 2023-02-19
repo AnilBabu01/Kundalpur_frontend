@@ -81,6 +81,13 @@
     padding-right: 1rem;
     flex-wrap: wrap;
 }
+
+.main_dasi_details{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (max-width: 780px) {
   .dashboarddiv {
     margin-left: 0px;

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
@@ -21,11 +19,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import EditIcon from '@mui/icons-material/Edit';
 import Adduser from './Adduser/Adduser';
 import Typography from '@mui/material/Typography';
 import UpdateEmployee from './Adduser/UpdateEmployee';
-import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
 import Edit from '../../../../assets/Edit.png';
@@ -312,10 +308,11 @@ const UserManagement = ({ setopendashboard }) => {
                 <TableHead style={{ background: '#F1F0F0' }}>
                   <TableRow>
                     <TableCell>Sr No.</TableCell>
-                    <TableCell>Username</TableCell>
-                    <TableCell>Email</TableCell>
                     <TableCell>Mobile</TableCell>
+                    <TableCell>Username</TableCell>
                     <TableCell>Address</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Role</TableCell>
                     <TableCell>Status</TableCell>
                     <TableCell>Edit/Delete</TableCell>
                   </TableRow>
@@ -335,12 +332,11 @@ const UserManagement = ({ setopendashboard }) => {
                       }}
                     >
                       <TableCell>{index + 1}</TableCell>
-
-                      <TableCell>{row.Username}</TableCell>
-                      <TableCell>{row.Email}</TableCell>
                       <TableCell> {row.Mobile}</TableCell>
+                      <TableCell>{row.Username}</TableCell>
                       <TableCell> {row.Address}</TableCell>
-
+                      <TableCell>{row.Email}</TableCell>
+                      <TableCell>{row.Role}</TableCell>
                       <TableCell>
                         {row.Status ? 'Active' : 'De-Active'}
                       </TableCell>

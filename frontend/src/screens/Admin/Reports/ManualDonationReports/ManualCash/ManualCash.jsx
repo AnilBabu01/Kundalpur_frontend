@@ -438,10 +438,12 @@ const ManualCash = ({ setopendashboard }) => {
               {isData ? (
                 <>
                   {(rowsPerPage > 0
-                    ? isData.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage,
-                      )
+                    ? isData
+                        .reverse()
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
                     : isData
                   ).map((row, index) => (
                     <TableRow
@@ -527,9 +529,11 @@ const ManualCash = ({ setopendashboard }) => {
                 </>
               ) : (
                 <>
-                  <TableCell colSpan={8} align="center">
-                    <CircularProgress />
-                  </TableCell>
+                  <TableRow>
+                    <TableCell colSpan={13} align="center">
+                      <CircularProgress />
+                    </TableCell>
+                  </TableRow>
                 </>
               )}
             </TableBody>

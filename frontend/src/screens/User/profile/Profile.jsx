@@ -145,6 +145,17 @@ function Profile() {
                     onChange={(e) => setdob(e.target.value)}
                   />
                 </div>
+
+                <div className="profile-img-div1">
+                  <img
+                    src={
+                      user?.signature
+                        ? `${backendUrl}uploads/images/${user?.signature}`
+                        : ''
+                    }
+                    alt="profileimg"
+                  />
+                </div>
               </div>
               <div>
                 <div>

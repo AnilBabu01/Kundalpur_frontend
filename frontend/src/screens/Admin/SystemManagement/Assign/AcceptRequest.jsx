@@ -87,9 +87,9 @@ const AcceptRequest = ({ setOpen, empdata }) => {
                   className="forminput_add_user"
                   type="text"
                   placeholder="To VC"
-                  value={assingTo}
-                  name="assingTo"
-                  onChange={(e) => setassingTo(e.target.value)}
+                  value={empname}
+                  name="empname"
+                  onChange={(e) => setempname(e.target.value)}
                 />
               </div>
             </div>

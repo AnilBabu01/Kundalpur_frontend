@@ -30,9 +30,53 @@ import Divider from '@mui/material/Divider';
 import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
+import Person2Icon from '@mui/icons-material/Person2';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { ListItemButton } from '@mui/material';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import CloseIcon from '@mui/icons-material/Close';
+import Signature from '../Signature/Signature';
+import ProfileAdminAndEmp from '../Profile/ProfileAdminAndEmp';
+import ChangePassword from '../ChangePassword/ChangePassword';
+const style = {
+  position: 'absolute',
+  top: '48%',
+  left: '50%',
+  width: '40%',
+  transform: 'translate(-50%, -50%)',
+  background: '#FFFFFF',
+  borderRadius: '15px',
+  bgcolor: 'background.paper',
+  p: 2,
+  boxShadow: 24,
+};
 
+const style1 = {
+  position: 'absolute',
+  top: '48%',
+  left: '50%',
+  width: '20.5%',
+  transform: 'translate(-50%, -50%)',
+  background: '#FFFFFF',
+  borderRadius: '15px',
+  bgcolor: 'background.paper',
+  p: 2,
+  boxShadow: 24,
+};
+
+const style3 = {
+  position: 'absolute',
+  top: '48%',
+  left: '50%',
+  width: '30%',
+  transform: 'translate(-50%, -50%)',
+  background: '#FFFFFF',
+  borderRadius: '15px',
+  bgcolor: 'background.paper',
+  p: 2,
+  boxShadow: 24,
+};
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -183,20 +227,17 @@ const DashboardWrapper = () => {
   const navigate = useNavigate();
   const resize = WindowResize();
   const adminName = sessionStorage.getItem('adminName');
-
   const empName = sessionStorage.getItem('empName');
   const empRole = sessionStorage.getItem('empRole');
   const [open, setOpen] = React.useState(false);
   const [anchorEl1, setAnchorEl1] = useState(false);
   const open1 = Boolean(anchorEl1);
-
   const handleClick1 = (event) => {
     setAnchorEl1(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl1(null);
   };
-
   const [anchorEl2, setAnchorEl2] = useState(false);
   const open2 = Boolean(anchorEl2);
 
@@ -215,6 +256,33 @@ const DashboardWrapper = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const [open3, setOpen3] = React.useState(false);
+  const handleClickOpen3 = () => {
+    setOpen3(true);
+  };
+
+  const handleClose3 = () => {
+    setOpen3(false);
+  };
+
+  const [open4, setOpen4] = React.useState(false);
+  const handleClickOpen4 = () => {
+    setOpen4(true);
+  };
+
+  const handleClose4 = () => {
+    setOpen4(false);
+  };
+
+  const [open5, setOpen5] = React.useState(false);
+  const handleClickOpen5 = () => {
+    setOpen5(true);
+  };
+
+  const handleClose5 = () => {
+    setOpen5(false);
+  };
+
   const logout = () => {
     handleClose();
     sessionStorage.removeItem('token');
@@ -299,13 +367,20 @@ const DashboardWrapper = () => {
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      <MenuItem onClick={() => navigate('/admin-panel/masters/signature')}>
+      <MenuItem onClick={() => handleClickOpen3()}>
         <ListItemIcon>
           <UploadIcon fontSize="small" />
         </ListItemIcon>
         Upload signature
       </MenuItem>
-      <MenuItem onClick={() => navigate('/changepassword')}>
+
+      <MenuItem onClick={() => handleClickOpen4()}>
+        <ListItemIcon>
+          <Person2Icon fontSize="small" />
+        </ListItemIcon>
+        Profile
+      </MenuItem>
+      <MenuItem onClick={() => handleClickOpen5()}>
         <ListItemIcon>
           <LockOpenIcon fontSize="small" />
         </ListItemIcon>
@@ -322,6 +397,79 @@ const DashboardWrapper = () => {
     </Menu>
   );
 
+  const renderModal = (
+    <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open3}
+        onClose={handleClose3}
+        closeAfterTransition
+      >
+        <Fade in={open3}>
+          <Box sx={style1}>
+            <div>
+              <div className="add-div-close-div-user-add">
+                <div>
+                  <h2 clssName="add_text_only">Upload Signature</h2>
+                </div>
+
+                <CloseIcon onClick={() => handleClose3()} />
+              </div>
+
+              <Signature setOpen3={setOpen3} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open4}
+        onClose={handleClose4}
+        closeAfterTransition
+      >
+        <Fade in={open4}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div-user-add">
+                <div>
+                  <h2 clssName="add_text_only">Update Profile</h2>
+                </div>
+
+                <CloseIcon onClick={() => handleClose4()} />
+              </div>
+
+              <ProfileAdminAndEmp setOpen4={setOpen4} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open5}
+        onClose={handleClose5}
+        closeAfterTransition
+      >
+        <Fade in={open5}>
+          <Box sx={style3}>
+            <div>
+              <div className="add-div-close-div-user-add">
+                <div>
+                  <h2 clssName="add_text_only"> Change new Password </h2>
+                </div>
+
+                <CloseIcon onClick={() => handleClose5()} />
+              </div>
+
+              <ChangePassword setOpen5={setOpen5} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+    </>
+  );
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -351,7 +499,7 @@ const DashboardWrapper = () => {
                 variant="h6"
                 noWrap
                 component="div"
-                sx={{ display: { xs: 'none', sm: 'block' } }}
+                sx={{ display: { xs: 'none', sm: 'block', fontWeight: '800' } }}
               >
                 श्री दिगम्बर जैन सिद्धक्षेत्र कुण्डलगिरि कुण्डलपुर दमोह (म.प्र.)
               </Typography>
@@ -367,11 +515,11 @@ const DashboardWrapper = () => {
                   style={{ width: '25px', height: '25px' }}
                 />
                 <Typography
-                  variant="h5"
+                  variant="h6"
                   noWrap
                   component="div"
                   sx={{
-                    display: { xs: 'none', sm: 'block', fontWeight: '500' },
+                    display: { xs: 'none', sm: 'block', fontWeight: '800' },
                     ml: 2,
                   }}
                 >
@@ -497,6 +645,7 @@ const DashboardWrapper = () => {
       </Box>
       {renderMobileMenu}
       {RenderNotification}
+      {renderModal}
     </Box>
   );
 };

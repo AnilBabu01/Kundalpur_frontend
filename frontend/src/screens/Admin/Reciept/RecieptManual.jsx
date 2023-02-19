@@ -8,6 +8,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Moment from 'moment-js';
 import moment from 'moment';
+import { backendUrl } from '../../../config/config';
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
@@ -59,6 +60,8 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
     if (location.state) {
       setisData(location.state?.userdata);
     }
+
+    console.log(isData);
   }, []);
   return (
     <>
@@ -281,7 +284,26 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
                 )}
                 {isData &&
                   isData.manualItemDetails &&
-                  isData.manualItemDetails[0].ChequeNo && (
+                  isData.modeOfDonation === '3' && (
+                    <>
+                      <span className="rightitems">
+                        <h2>माध्यम :</h2>
+
+                        <h2 className="font_bold_in_donation">
+                          {isData &&
+                            isData.manualItemDetails &&
+                            isData.manualItemDetails[0].BankName}
+                          {isData &&
+                            isData.manualItemDetails &&
+                            isData.manualItemDetails[0].ChequeNo}
+                        </h2>
+                      </span>
+                    </>
+                  )}
+
+                {isData &&
+                  isData.manualItemDetails &&
+                  isData.modeOfDonation === 3 && (
                     <>
                       <span className="rightitems">
                         <h2>माध्यम :</h2>
@@ -745,8 +767,24 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
             <p>PAN NO- AAHTS0546A</p>
           </div>
           <div className="signature-point">
-            <p>हस्ताक्षर दानदातार</p>
-            <p>हस्ताक्षर प्राप्तकर्ता,({adminName ? adminName : empName})</p>
+            <div className="main_div_signature">
+              <p>हस्ताक्षर दानदातार</p>
+            </div>
+
+            <div className="main_div_signature">
+              {sessionStorage.getItem('adminSignature') && (
+                <>
+                  <img
+                    src={`${backendUrl}uploads/images/${sessionStorage.getItem(
+                      'adminSignature',
+                    )}`}
+                    alt="signature"
+                  />
+                </>
+              )}
+
+              <p>हस्ताक्षर प्राप्तकर्ता,({adminName ? adminName : empName})</p>
+            </div>
           </div>
         </div>
       </div>

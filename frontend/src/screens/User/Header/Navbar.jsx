@@ -96,12 +96,7 @@ const Navbar = ({ showRoomOptions }) => {
         <MenuItem onClick={() => navigate('/profile')}>
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem onClick={() => navigate('/profile')}>
-          <ListItemIcon>
-            <UploadIcon fontSize="small" />
-          </ListItemIcon>
-          Upload signature
-        </MenuItem>
+
         <MenuItem onClick={() => navigate('/changepassword')}>
           <ListItemIcon>
             <LockOpenIcon fontSize="small" />
@@ -120,16 +115,6 @@ const Navbar = ({ showRoomOptions }) => {
           </ListItemIcon>
           Room Booking History
         </MenuItem>
-        {userrole === 1 && (
-          <>
-            <MenuItem onClick={() => navigate('/admin-panel/dashboard')}>
-              <ListItemIcon>
-                <DashboardIcon fontSize="small" />
-              </ListItemIcon>
-              Dashboard
-            </MenuItem>
-          </>
-        )}
 
         <Divider />
         <MenuItem onClick={() => logout()}>

@@ -71,6 +71,7 @@ const EmailLogin = () => {
           sessionStorage.setItem('userrole', decoded.role);
           sessionStorage.setItem('empName', res.data.user.username);
           sessionStorage.setItem('empRole', res.data.user.Role);
+          sessionStorage.setItem('adminSignature', res.data.user.signature);
           sessionStorage.setItem('token', res.data.tokens.access.token);
           auth.setUser(res.data.tokens.access.token);
         }
@@ -81,6 +82,7 @@ const EmailLogin = () => {
           password: password,
         });
 
+        console.log('admin data', res);
         if (res.data.user) {
           setshowprocess(false);
           Swal.fire('Great!', 'You Have Login Successfully', 'success');
@@ -91,6 +93,7 @@ const EmailLogin = () => {
           console.log(res.data);
 
           sessionStorage.setItem('adminName', res.data.user.name);
+          sessionStorage.setItem('adminSignature', res.data.user.signature);
           sessionStorage.setItem('userrole', decoded.role);
           sessionStorage.setItem('token', res.data.tokens.access.token);
           auth.setUser(res.data.tokens.access.token);

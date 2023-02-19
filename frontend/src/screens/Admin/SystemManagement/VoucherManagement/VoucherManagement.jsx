@@ -18,6 +18,18 @@ import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import './VoucherManagement.css';
 import AddVoucherToUser from './AddVoucherToUser/AddVoucherToUser';
+import Print from '../../../../assets/Print.png';
+import ExportPdf from '../../../../assets/ExportPdf.png';
+import ExportExcel from '../../../../assets/ExportExcel.png';
+import Edit from '../../../../assets/Edit.png';
+import eye from '../../../../assets/eye.png';
+import Delete from '../../../../assets/Delete.png';
+import exportFromJSON from 'export-from-json';
+import Tooltip from '@mui/material/Tooltip';
+import Moment from 'moment-js';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { format } from 'date-fns';
 const style = {
   position: 'absolute',
   top: '27%',
@@ -96,10 +108,39 @@ const VoucherManagement = ({ setopendashboard }) => {
       <div className="dashboarddiv">
         <div>
           <div className="main_center_header">
-            <div className="add-btn-user">
-              <button onClick={() => handleOpen()}>Generate Voucher</button>
+            <div className="add-btn-user2">
+              <p style={{ marginTop: '0.6%' }}>Voucher Management</p>
+              <div className="add_role_icons_div" style={{ width: '30%' }}>
+                <button style={{ height: '40px' }} onClick={() => handleOpen()}>
+                  +Generate Voucher
+                </button>
+
+                <Tooltip title="Export Excel File">
+                  <img
+                    // onClick={() => ExportToExcel()}
+                    src={ExportExcel}
+                    style={{
+                      width: '30px',
+                      height: '35px',
+                      marginRight: '0.2rem',
+                    }}
+                  />
+                </Tooltip>
+                <Tooltip title="Export Pdf File">
+                  <img
+                    // onClick={() => ExportPdfmanul('Employee_list')}
+                    src={ExportPdf}
+                    style={{
+                      width: '30px',
+                      height: '35px',
+                      marginRight: '0.2rem',
+                    }}
+                  />
+                </Tooltip>
+              </div>
             </div>
           </div>
+          <div className="main_center_header"></div>
 
           <div className="table-div-maain">
             {/* <TableContainer component={Paper}> */}
@@ -109,9 +150,10 @@ const VoucherManagement = ({ setopendashboard }) => {
             >
               <TableHead style={{ background: '#F1F0F0' }}>
                 <TableRow>
-                  <TableCell>Employee id</TableCell>
+                  <TableCell>Sno.</TableCell>
                   <TableCell>Empoyee Name</TableCell>
                   <TableCell>Voucher</TableCell>
+
                   <TableCell>Status</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -130,10 +172,10 @@ const VoucherManagement = ({ setopendashboard }) => {
                       '&:last-child td, &:last-child th': { border: 0 },
                     }}
                   >
-                    <TableCell>{row?.id}</TableCell>
-
+                    <TableCell> {index + 1}</TableCell>
                     <TableCell>{row?.name}</TableCell>
                     <TableCell> {`${row.from} to ${row.to}`}</TableCell>
+
                     <TableCell>
                       {' '}
                       {row.status ? 'Allocated' : 'Not Used'}

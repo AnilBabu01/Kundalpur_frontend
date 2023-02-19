@@ -7,6 +7,7 @@ import jsPDF from 'jspdf';
 import Moment from 'moment-js';
 import moment from 'moment';
 import { serverInstance } from '../../../API/ServerInstance';
+import { backendUrl } from '../../../config/config';
 import './cashrecipt.css';
 const converter = new Converter(hiIN);
 const OnlineReceipt = ({ setopendashboard, setshowreciept, onlineId }) => {
@@ -54,6 +55,8 @@ const OnlineReceipt = ({ setopendashboard, setshowreciept, onlineId }) => {
         },
       );
     }
+
+    console.log('data', isData);
   }, []);
 
   return (
@@ -771,10 +774,33 @@ const OnlineReceipt = ({ setopendashboard, setshowreciept, onlineId }) => {
             </span>
             <p>PAN NO- AAHTS0546A</p>
           </div>
-          <div className="signature-point">
-            <p>हस्ताक्षर दानदातार</p>
 
-            <p>हस्ताक्षर प्राप्तकर्ता,({adminName ? adminName : empName})</p>
+
+          <div className="signature-point">
+            <div className="main_div_signature">
+              {isData?.signature && (
+                <>
+                  <img
+                    src={`${backendUrl}uploads/images/${isData?.signature}`}
+                    alt="signature"
+                  />
+                </>
+              )}
+              <p>हस्ताक्षर दानदातार</p>
+            </div>
+
+            <div className="main_div_signature">
+              {isData?.adminSignature && (
+                <>
+                  <img
+                    src={`${backendUrl}uploads/images/${isData?.adminSignature}`}
+                    alt="signature"
+                  />
+                </>
+              )}
+
+              <p>हस्ताक्षर प्राप्तकर्ता</p>
+            </div>
           </div>
         </div>
       </div>

@@ -6,7 +6,6 @@ import { serverInstance } from '../../../../../API/ServerInstance';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -84,6 +83,7 @@ const CashDonation = ({
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
+  const [genderp1, setgenderp1] = useState('SHRI');
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -106,7 +106,16 @@ const CashDonation = ({
       gender: 'कु.',
     },
   ];
-
+  const genderoptiins1 = [
+    {
+      id: 2,
+      gender: 'SMT',
+    },
+    {
+      id: 3,
+      gender: 'M/s',
+    },
+  ];
   function addDonationItem() {
     setDonationItems([
       ...donationItems,
@@ -180,87 +189,48 @@ const CashDonation = ({
     axios.defaults.headers.post[
       'Authorization'
     ] = `Bearer ${sessionStorage.getItem('token')}`;
-    axios.defaults.headers.put[
-      'Authorization'
-    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
     e.preventDefault();
-    if (showUpdateBtn) {
-      console.log('upadte');
 
-      if (
-        fullName &&
-        donationItems[0].amount &&
-        donationItems[0].type &&
-        mobileNo
-      ) {
-        const res = await axios.put(
-          `${backendApiUrl}admin/edit-manual-cash-donation`,
-          {
-            id: updateData?.id,
-            name: fullName,
-            phoneNo: mobileNo,
-            ReceiptNo: receiptNo,
-            address: address,
-            new_member: newMember,
-            modeOfDonation: 2,
-            donation_date: updateData?.donation_date,
-            donation_time: updateData?.donation_date,
-            donation_item: donationItems,
+    if (
+      fullName &&
+      donationItems[0].amount &&
+      donationItems[0].type &&
+      mobileNo
+    ) {
+      const res = await axios.post(`${backendApiUrl}admin/manual-donation`, {
+        name: fullName,
+        gender: newMember ? genderp1 : genderp,
+        phoneNo: mobileNo,
+        address: address,
+        ReceiptNo: receiptNo,
+        new_member: newMember,
+        modeOfDonation: 2,
+        donation_date: donationDate,
+        donation_time: donationTime,
+        donation_item: donationItems,
+      });
+
+      let totalamount = donationItems?.amount
+        ? donationItems?.amount
+        : donationItems &&
+          donationItems.reduce(
+            (n, { amount }) => parseFloat(n) + parseFloat(amount),
+            0,
+          );
+
+      console.log('added', res);
+      if (res.data.status === true) {
+        navigation('/manualreceipt', {
+          state: {
+            userdata: res.data.data.data,
           },
-        );
-
-        console.log('update', res);
-        if (res.data.status === true) {
-          // setshowalert(true);
-          // handleClose();
-          // setshowDownButton(true);
-        } else {
-          Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-        }
-      }
-    } else {
-      console.log('clicked');
-
-      if (
-        fullName &&
-        donationItems[0].amount &&
-        donationItems[0].type &&
-        mobileNo
-      ) {
-        const res = await axios.post(`${backendApiUrl}admin/manual-donation`, {
-          name: fullName,
-          gender: genderp,
-          phoneNo: mobileNo,
-          address: address,
-          ReceiptNo: receiptNo,
-          new_member: newMember,
-          modeOfDonation: 2,
-          donation_date: donationDate,
-          donation_time: donationTime,
-          donation_item: donationItems,
         });
+        handleClose();
 
-        let totalamount = donationItems?.amount
-          ? donationItems?.amount
-          : donationItems &&
-            donationItems.reduce(
-              (n, { amount }) => parseFloat(n) + parseFloat(amount),
-              0,
-            );
-
-        console.log('added', res);
-        if (res.data.status === true) {
-          navigation('/manualreceipt', {
-            state: {
-              userdata: res.data.data.data,
-            },
-          });
-          handleClose();
-
-          sendsms(totalamount);
-        } else {
-          Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-        }
+        sendsms(totalamount);
+      } else {
+        Swal.fire('Error!', 'Somthing went wrong!!', 'error');
       }
     }
   };
@@ -312,6 +282,8 @@ const CashDonation = ({
       setFullName(updateData?.name);
       setMobileNo(updateData?.phoneNo);
       setDonationItems(updateData?.manualItemDetails);
+      setgenderp(updateData?.gender);
+      setgenderp1(updateData?.gender);
     }
     setopendashboard(true);
   }, []);
@@ -321,9 +293,7 @@ const CashDonation = ({
       <ThemeProvider theme={theme}>
         <form onSubmit={addCashDonation}>
           <Typography variant="h6" color={'primary'} align="center">
-            {showUpdateBtn
-              ? 'Update  Manual Cash Donation'
-              : 'Add  Manual Cash Donation'}
+            Add Manual Cash Donation
           </Typography>
           <Typography variant="body2" color="primary" align="right">
             {currDate} / {currTime}
@@ -423,41 +393,81 @@ const CashDonation = ({
 
             <Grid item xs={12} md={6}>
               <CustomInputLabel required htmlFor="full-name">
-                <Select
-                  required
-                  sx={{
-                    width: '20%',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      padding: '1px',
-                    },
-                  }}
-                  value={genderp}
-                  onChange={(e) => setgenderp(e.target.value)}
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={'श्री'}
-                  >
-                    श्री
-                  </MenuItem>
-                  {genderoptiins &&
-                    genderoptiins.map((item, idx) => {
-                      return (
-                        <MenuItem
-                          sx={{
-                            fontSize: 14,
-                          }}
-                          key={item.id}
-                          value={item.gender}
-                        >
-                          {item.gender}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
+                {!newMember ? (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp}
+                      onChange={(e) => setgenderp(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'श्री'}
+                      >
+                        श्री
+                      </MenuItem>
+                      {genderoptiins.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                ) : (
+                  <>
+                    <Select
+                      required
+                      sx={{
+                        width: '20%',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          padding: '1px',
+                        },
+                      }}
+                      value={genderp1}
+                      onChange={(e) => setgenderp1(e.target.value)}
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'SHRI'}
+                      >
+                        SHRI
+                      </MenuItem>
+                      {genderoptiins1.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.gender}
+                          >
+                            {item.gender}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                )}
                 Full Name
               </CustomInputLabel>
               {!newMember ? (
@@ -543,7 +553,7 @@ const CashDonation = ({
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell style={{ width: '35%' }}>
                     <Box
                       sx={{
                         paddingInline: '10px',

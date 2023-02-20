@@ -9,6 +9,7 @@ function Signature({ setOpen3 }) {
   const navigate = useNavigate();
   const [sign, setsign] = useState('');
 
+  const [userrole, setuserrole] = React.useState('');
   const submitHandler = async () => {
     try {
       if (!sign) {
@@ -24,23 +25,38 @@ function Signature({ setOpen3 }) {
           'Content-Type': 'multipart/form-data',
         },
       };
-      const res = await axios.put(
-        `${backendApiUrl}admin/signature-upload-emplo`,
-        formData,
-        config,
-      );
+      if (userrole === 1) {
+        const res = await axios.put(
+          `${backendApiUrl}admin/signature-upload-emplo`,
+          formData,
+          config,
+        );
 
-      if (res.data.status) {
-        setOpen3(false);
-        Swal.fire('Great!', res.data.msg, 'success');
-        dispatch(loadUser());
+        if (res.data.status) {
+          setOpen3(false);
+          Swal.fire('Great!', res.data.msg, 'success');
+        }
+      }
+      if (userrole === 3) {
+        const res = await axios.put(
+          `${backendApiUrl}admin/signature-upload-emplo`,
+          formData,
+          config,
+        );
+
+        if (res.data.status) {
+          setOpen3(false);
+          Swal.fire('Great!', res.data.msg, 'success');
+        }
       }
     } catch (error) {
       //   Swal.fire('Error!', error.response.data.message, 'error');
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setuserrole(Number(sessionStorage.getItem('userrole')));
+  }, []);
   return (
     <>
       <div className="adminprofile_input">

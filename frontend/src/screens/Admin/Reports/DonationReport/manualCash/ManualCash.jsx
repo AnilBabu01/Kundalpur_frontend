@@ -15,19 +15,9 @@ import TablePagination from '@mui/material/TablePagination';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import PrintIcon from '@mui/icons-material/Print';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import Cancel from '../../../compoments/Cancel';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
-import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DownloadIcon from '@mui/icons-material/Download';
 import ClearIcon from '@mui/icons-material/Clear';
 import exportFromJSON from 'export-from-json';
@@ -42,7 +32,69 @@ import ExportPdf from '../../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../../assets/ExportExcel.png';
 import Edit from '../../../../../assets/Edit.png';
 import eye from '../../../../../assets/eye.png';
+import ElectronicTotal from '../../../compoments/ElectronicTotal';
+import { styled, alpha } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
+import PrintElectronic from '../../../compoments/PrintElectronic';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
 import './ManualCash.css';
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+
+  color: '#FDC99C',
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  zIndex: 2,
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  left: '11px',
+  bottom: '0px',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    height: '17px',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
+
+const style5 = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  width: '70%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  p: 2,
+
+  boxShadow: 24,
+  borderRadius: '15px',
+};
 const style = {
   position: 'absolute',
   top: '40%',
@@ -89,7 +141,14 @@ const ManualCash = ({ setopendashboard }) => {
   const [typeid, settypeid] = useState('');
   const [userrole, setuserrole] = useState('');
   const [type, settype] = useState('');
-  console.log('aa', typeid);
+  const [datefrom, setdatefrom] = useState('');
+  const [dateto, setdateto] = useState('');
+  const [voucherfrom, setvoucherfrom] = useState('');
+  const [voucherto, setvoucherto] = useState('');
+  const [open5, setOpen5] = React.useState(false);
+  const handleOpen5 = () => setOpen5(true);
+  const handleClose5 = () => setOpen5(false);
+
   const handleOpen = (id) => {
     setupdateId(id);
     setOpen(true);
@@ -104,9 +163,11 @@ const ManualCash = ({ setopendashboard }) => {
   };
 
   const getall_donation = () => {
-    setdate('');
-    setphone('');
-    setname('');
+    setdatefrom('');
+    setdateto('');
+    setvoucherfrom('');
+    setvoucherto('');
+
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter((item) => item.modeOfDonation === '2');
@@ -168,16 +229,16 @@ const ManualCash = ({ setopendashboard }) => {
   };
 
   const filterdata = async () => {
-    axios.defaults.headers.get[
-      'Authorization'
-    ] = `Bearer ${sessionStorage.getItem('token')}`;
+    serverInstance(
+      `user/searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
+      'get`,
+    ).then((res) => {
+      if (res.data) {
+        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
 
-    const res = await axios.get(
-      `${backendApiUrl}user/search-donation?type=${type}&name=${name}&date=${date}&phone=${phone}&modeOfDonation=${2}`,
-    );
-    if (res.data.status) {
-      setisData(res.data.data);
-    }
+        setisData(filterData);
+      }
+    });
   };
 
   const get_donation_tyeps = () => {
@@ -205,6 +266,20 @@ const ManualCash = ({ setopendashboard }) => {
 
   return (
     <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open5}
+        onClose={handleClose5}
+        closeAfterTransition
+      >
+        <Fade in={open5}>
+          <Box sx={style5}>
+            <PrintElectronic isData={isData} handleClose={handleClose5} />
+          </Box>
+        </Fade>
+      </Modal>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -254,56 +329,126 @@ const ManualCash = ({ setopendashboard }) => {
       </Modal>
 
       <div>
-        <div>
-          <div className="search-header">
-            <div className="search-inner-div-reports">
+        <div className="search-header ">
+          <div className="search-inner-div-reports">
+            <div className="Center_main_dic_filetr">
+              <label>From Date</label>
               <input
-                type="text"
-                placeholder="Name"
-                value={name}
-                name="name"
-                onChange={(e) => setname(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Phone No"
-                value={phone}
-                name="phone"
-                onChange={(e) => setphone(e.target.value)}
-              />
-
-              <input
+                style={{ width: '220px' }}
                 type="date"
-                placeholder="Date"
-                name="date"
-                value={date}
-                onChange={(e) => setdate(e.target.value)}
-              />
-              <select id="cars" onChange={(e) => settype(e.target.value)}>
-                <option>Select option</option>
-                {donationTypes.map((item, idx) => {
-                  return <option value={item.type_hi}>{item.type_hi}</option>;
-                })}
-              </select>
-              <button onClick={() => filterdata()}>Search</button>
-              <button onClick={() => getall_donation()}>Reset</button>
-
-              <img
-                onClick={() => ExportToExcel()}
-                src={ExportExcel}
-                alt="s"
-                style={{ width: '30px' }}
-              />
-
-              <label>&nbsp;</label>
-              <img
-                onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
-                src={ExportPdf}
-                alt="ss"
-                style={{ width: '30px' }}
+                placeholder="From"
+                value={datefrom}
+                name="datefrom"
+                onChange={(e) => {
+                  setdatefrom(e.target.value);
+                }}
               />
             </div>
-            <div></div>
+            <div className="Center_main_dic_filetr">
+              <label>To Date</label>
+              <input
+                style={{ width: '220px' }}
+                type="date"
+                placeholder="From"
+                value={dateto}
+                name="dateto"
+                onChange={(e) => {
+                  setdateto(e.target.value);
+                }}
+              />
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>From Voucher</label>
+              <input
+                style={{ width: '220px' }}
+                type="text"
+                placeholder="From"
+                value={voucherfrom}
+                name="voucherfrom"
+                onChange={(e) => {
+                  setvoucherfrom(e.target.value);
+                }}
+              />
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>To Voucher</label>
+              <input
+                style={{ width: '220px' }}
+                type="text"
+                placeholder="From"
+                value={voucherto}
+                name="voucherto"
+                onChange={(e) => {
+                  setvoucherto(e.target.value);
+                }}
+              />
+            </div>
+
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+            </div>
+
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <button onClick={() => filterdata()}>Search</button>
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <button onClick={() => getall_donation()}>Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="search-header-print">
+          <div
+            className="search-header-print"
+            style={{
+              borderBottom: '1px  solid gray',
+              width: '100%',
+              borderTop: ' 1px solid gray',
+              paddingTop: '1%',
+            }}
+          >
+            <Tooltip title="Export Excel File">
+              <IconButton>
+                <img
+                  onClick={() => ExportToExcel()}
+                  src={ExportExcel}
+                  alt="cc"
+                  style={{ width: '30px', marginLeft: '0rem' }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Export Pdf File">
+              <IconButton>
+                <img
+                  onClick={() => ExportPdfmanul(isData, 'Report')}
+                  src={ExportPdf}
+                  alt="cc"
+                  style={{ width: '30px' }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Print Report">
+              <IconButton>
+                <img
+                  style={{ width: '30px' }}
+                  onClick={() => handleOpen5()}
+                  src={Print}
+                  alt=" Print"
+                />
+              </IconButton>
+            </Tooltip>
+            &nbsp;&nbsp;
           </div>
         </div>
 
@@ -445,36 +590,44 @@ const ManualCash = ({ setopendashboard }) => {
                         })}
                       </TableCell>
                       <TableCell>
-                        <img
-                          onClick={() =>
-                            navigation(`/admin-panel/infoElectronic/${row.id}`)
-                          }
-                          src={eye}
-                          alt="print"
-                          style={{ width: '20px', marginRight: '2px' }}
-                        />
-
-                        {userrole === 1 && (
+                        <Tooltip title="Vew Details">
                           <img
-                            onClick={() => upadteOpen(row)}
-                            src={Edit}
+                            onClick={() =>
+                              navigation(
+                                `/admin-panel/infoElectronic/${row.id}`,
+                              )
+                            }
+                            src={eye}
                             alt="print"
                             style={{ width: '20px', marginRight: '2px' }}
                           />
+                        </Tooltip>
+
+                        {userrole === 1 && (
+                          <Tooltip title="Edit Donation">
+                            <img
+                              onClick={() => upadteOpen(row)}
+                              src={Edit}
+                              alt="print"
+                              style={{ width: '20px', marginRight: '2px' }}
+                            />
+                          </Tooltip>
                         )}
 
-                        <img
-                          onClick={() =>
-                            navigation('/admin-panel/reports/printcontent', {
-                              state: {
-                                data: row,
-                              },
-                            })
-                          }
-                          src={Print}
-                          alt="print"
-                          style={{ width: '20px', marginRight: '2px' }}
-                        />
+                        <Tooltip title="Print Certificate">
+                          <img
+                            onClick={() =>
+                              navigation('/admin-panel/reports/printcontent', {
+                                state: {
+                                  data: row,
+                                },
+                              })
+                            }
+                            src={Print}
+                            alt="print"
+                            style={{ width: '20px', marginRight: '2px' }}
+                          />
+                        </Tooltip>
                         {row.isActive ? (
                           <DownloadIcon
                             onClick={() => {
@@ -485,11 +638,28 @@ const ManualCash = ({ setopendashboard }) => {
                           <ClearIcon />
                         )}
                         {userrole === 1 && (
-                          <CancelIcon onClick={() => handleOpen(row.id)} />
+                          <Tooltip title="Cancel Certificate">
+                            <CancelIcon onClick={() => handleOpen(row.id)} />
+                          </Tooltip>
                         )}
                       </TableCell>
                     </TableRow>
                   ))}
+                  <TableRow>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell>Amount</TableCell>
+                    <TableCell>
+                      <ElectronicTotal data={isData} />
+                    </TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                  </TableRow>
                 </>
               ) : (
                 <>

@@ -61,7 +61,7 @@ function DonationHistory({
   }, []);
 
   const gettable = () => {
-    serverInstance('admin/donation-list', 'get').then((res) => {
+    serverInstance('user/donation-list', 'get').then((res) => {
       if (res.status) {
         console.log(res);
         setisrow(res.data);

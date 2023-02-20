@@ -4,14 +4,14 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { Converter, hiIN } from 'any-number-to-words';
 
-const ElectronicTotal = ({ data }) => {
+const ManualTotal = ({ data }) => {
   let totalAmount = 0;
   if (data) {
     data &&
       data.map((item, inx) => {
         totalAmount =
           totalAmount +
-          item.elecItemDetails.reduce(
+          item.manualItemDetails.reduce(
             (n, { amount }) => parseFloat(n) + parseFloat(amount),
             0,
           );
@@ -27,4 +27,4 @@ const ElectronicTotal = ({ data }) => {
   );
 };
 
-export default ElectronicTotal;
+export default ManualTotal;

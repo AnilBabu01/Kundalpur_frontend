@@ -57,6 +57,8 @@ const UserManagement = ({ setopendashboard }) => {
   const [deleteId, setdeleteId] = useState('');
   const [empdata, setempdata] = useState('');
   const [open3, setOpen3] = React.useState(false);
+  const [name, setname] = useState('');
+  const [phoneno, setphoneno] = useState('');
   const handleClickOpen3 = (data) => {
     setOpen3(true);
     setempdata(data);
@@ -92,6 +94,8 @@ const UserManagement = ({ setopendashboard }) => {
   const handleClose = () => setOpen(false);
 
   const getall_donation = () => {
+    setname('');
+    setphoneno('');
     serverInstance('admin/add-employee', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
@@ -179,10 +183,22 @@ const UserManagement = ({ setopendashboard }) => {
     doc.setFontSize(28);
     doc.save(`${fileName}_${dateStr}.pdf`);
   };
+
+  const filterdata = async () => {
+    serverInstance(
+      `admin/add-employee?name=${name}&phone=${phoneno}',
+      'get`,
+    ).then((res) => {
+      if (res.data) {
+        setisData(res.data);
+      }
+    });
+  };
+
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
-  }, [refetch, open, open1]);
+  }, [refetch, open, open1, open3]);
   return (
     <>
       <Dialog
@@ -273,10 +289,22 @@ const UserManagement = ({ setopendashboard }) => {
         <div className="uemploye_main">
           <div className="search-header-employee">
             <div className="search-inner-div">
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="Phone No" />
-              <button>Search</button>
-              <button>Reset</button>
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={name}
+                onChange={(e) => setname(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Phone No"
+                name="phoneno"
+                value={phoneno}
+                onChange={(e) => setphoneno(e.target.value)}
+              />
+              <button onClick={() => filterdata()}>Search</button>
+              <button onClick={() => getall_donation()}>Reset</button>
               <button onClick={() => handleOpen()}>+Add</button>
               <Tooltip title="Export Excel File">
                 <img

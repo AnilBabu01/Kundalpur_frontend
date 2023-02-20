@@ -22,7 +22,10 @@
    opacity: 0.5;
    transform: rotate(50deg);
 }
-
+.margintop_add td,th {
+padding-right: 1.5rem;
+ 
+}
 .top_name_date{
     display: flex;
     justify-content: space-between;

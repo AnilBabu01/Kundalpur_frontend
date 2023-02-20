@@ -30,7 +30,54 @@ import ExportExcel from '../../../../assets/ExportExcel.png';
 import exportFromJSON from 'export-from-json';
 import CircularProgress from '@mui/material/CircularProgress';
 import ElectronicTotal from '../../compoments/ElectronicTotal';
+import { styled, alpha } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
+import PrintElectronic from '../../compoments/PrintElectronic';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
 import './Donation.css';
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+
+  color: '#FDC99C',
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  zIndex: 2,
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  left: '11px',
+  bottom: '0px',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    height: '17px',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
 const style = {
   position: 'absolute',
   top: '50%',
@@ -38,6 +85,19 @@ const style = {
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   p: 2,
+  boxShadow: 24,
+  borderRadius: '15px',
+};
+
+const style5 = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  width: '70%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  p: 2,
+
   boxShadow: 24,
   borderRadius: '15px',
 };
@@ -81,6 +141,9 @@ const Donation = ({ setopendashboard }) => {
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
   const [type, settype] = useState('');
+  const [open5, setOpen5] = React.useState(false);
+  const handleOpen5 = () => setOpen5(true);
+  const handleClose5 = () => setOpen5(false);
 
   console.log(type);
   const handleOpen4 = () => {
@@ -163,12 +226,10 @@ const Donation = ({ setopendashboard }) => {
     setdateto('');
     setvoucherfrom('');
     setvoucherto('');
-    settype('');
+
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
-
-        setrowData(isData.pop());
 
         console.log(res);
       } else {
@@ -217,7 +278,7 @@ const Donation = ({ setopendashboard }) => {
 
   const filterdata = () => {
     serverInstance(
-      `user/searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
+      `user/searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
       'get`,
     ).then((res) => {
       console.log('filter data is', res.data);
@@ -305,6 +366,20 @@ const Donation = ({ setopendashboard }) => {
 
   return (
     <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open5}
+        onClose={handleClose5}
+        closeAfterTransition
+      >
+        <Fade in={open5}>
+          <Box sx={style5}>
+            <PrintElectronic isData={isData} handleClose={handleClose5} />
+          </Box>
+        </Fade>
+      </Modal>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -428,22 +503,16 @@ const Donation = ({ setopendashboard }) => {
               </div>
 
               <div className="Center_main_dic_filetr">
-                <label>Search</label>
-                <input
-                  style={{ width: '100%' }}
-                  type="text"
-                  placeholder="Search"
-                  // value={voucherto}
-                  // name="voucherto"
-                  // onChange={(e) => {
-                  //   setvoucherto(e.target.value);
-                  // }}
-                />
-              </div>
-
-              <div className="Center_main_dic_filetr">
-                <label> Total Amount</label>
-                <ElectronicTotal data={isData} />
+                <label>&nbsp;</label>
+                <Search>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Search…"
+                    inputProps={{ 'aria-label': 'search' }}
+                  />
+                </Search>
               </div>
 
               <div className="Center_main_dic_filetr">
@@ -478,19 +547,37 @@ const Donation = ({ setopendashboard }) => {
                 paddingTop: '1%',
               }}
             >
-              <img
-                onClick={() => ExportToExcel()}
-                src={ExportExcel}
-                alt="cc"
-                style={{ width: '25px' }}
-              />
+              <Tooltip title="Export Excel File">
+                <IconButton>
+                  <img
+                    onClick={() => ExportToExcel()}
+                    src={ExportExcel}
+                    alt="cc"
+                    style={{ width: '30px', marginLeft: '0rem' }}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Export Pdf File">
+                <IconButton>
+                  <img
+                    onClick={() => ExportPdfmanul(isData, 'Report')}
+                    src={ExportPdf}
+                    alt="cc"
+                    style={{ width: '30px' }}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Print Report">
+                <IconButton>
+                  <img
+                    style={{ width: '30px' }}
+                    onClick={() => handleOpen5()}
+                    src={Print}
+                    alt=" Print"
+                  />
+                </IconButton>
+              </Tooltip>
               &nbsp;&nbsp;
-              <img
-                onClick={() => ExportPdfmanul(isData, 'Report')}
-                src={ExportPdf}
-                alt="cc"
-                style={{ width: '25px' }}
-              />
             </div>
           </div>
 
@@ -646,45 +733,59 @@ const Donation = ({ setopendashboard }) => {
                           })}
                         </TableCell>
                         <TableCell>
-                          <RemoveRedEyeIcon
-                            onClick={() =>
-                              navigation(
-                                `/admin-panel/infoElectronic/${row.id}`,
-                              )
-                            }
-                          />
                           {/* {userrole === 1 && (
                             <EditIcon onClick={() => upadteOpen(row)} />
                           )} */}
-
-                          <img
-                            style={{ width: '20px' }}
-                            onClick={() =>
-                              navigation('/admin-panel/reports/printcontent', {
-                                state: {
-                                  data: row,
-                                },
-                              })
-                            }
-                            src={Print}
-                            alt=" Print"
-                          />
-
-                          {row.isActive ? (
-                            <DownloadIcon
-                              onClick={() => {
-                                printreceipt(row);
-                              }}
+                          <Tooltip title="Print Certificate">
+                            <img
+                              style={{ width: '20px' }}
+                              onClick={() =>
+                                navigation(
+                                  '/admin-panel/reports/printcontent',
+                                  {
+                                    state: {
+                                      data: row,
+                                    },
+                                  },
+                                )
+                              }
+                              src={Print}
+                              alt=" Print"
                             />
-                          ) : (
-                            <ClearIcon />
-                          )}
-                          {/* {userrole === 1 && (
+                          </Tooltip>
+
+                          <Tooltip title="Download Receipt">
+                            {row.isActive ? (
+                              <DownloadIcon
+                                onClick={() => {
+                                  printreceipt(row);
+                                }}
+                              />
+                            ) : (
+                              <ClearIcon />
+                            )}
+                            {/* {userrole === 1 && (
                             <CancelIcon onClick={() => handleOpen(row.id)} />
                           )} */}
+                          </Tooltip>
                         </TableCell>
                       </TableRow>
                     ))}
+                    <TableRow>
+                      <TableCell> &nbsp;</TableCell>
+                      <TableCell> &nbsp;</TableCell>
+                      <TableCell> &nbsp;</TableCell>
+                      <TableCell> &nbsp;</TableCell>
+                      <TableCell> &nbsp;</TableCell>
+                      <TableCell> &nbsp;</TableCell>
+                      <TableCell>Amount</TableCell>
+                      <TableCell>
+                        <ElectronicTotal data={isData} />
+                      </TableCell>
+                      <TableCell> &nbsp;</TableCell>
+                      <TableCell> &nbsp;</TableCell>
+                      <TableCell> &nbsp;</TableCell>
+                    </TableRow>
                   </>
                 ) : (
                   <>

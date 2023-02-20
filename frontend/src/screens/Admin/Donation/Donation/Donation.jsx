@@ -29,12 +29,12 @@ import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
 import exportFromJSON from 'export-from-json';
 import CircularProgress from '@mui/material/CircularProgress';
+import ElectronicTotal from '../../compoments/ElectronicTotal';
 import './Donation.css';
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
-
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   p: 2,
@@ -92,7 +92,7 @@ const Donation = ({ setopendashboard }) => {
   };
   const handleOpen3 = () => setOpen3(true);
   const handleClose3 = () => setOpen3(false);
-  console.log('check data ', isData);
+
   const handleClickOpen1 = (id) => {
     setOpen1(true);
     setdeleteId(id);
@@ -428,17 +428,22 @@ const Donation = ({ setopendashboard }) => {
               </div>
 
               <div className="Center_main_dic_filetr">
-                <label>Head/Item</label>
-                <select
+                <label>Search</label>
+                <input
                   style={{ width: '100%' }}
-                  onChange={(e) => settype(e.target.value)}
-                  id="cars"
-                >
-                  <option>Select option</option>
-                  {donationTypes.map((item, idx) => {
-                    return <option value={item.type_hi}>{item.type_hi}</option>;
-                  })}
-                </select>
+                  type="text"
+                  placeholder="Search"
+                  // value={voucherto}
+                  // name="voucherto"
+                  // onChange={(e) => {
+                  //   setvoucherto(e.target.value);
+                  // }}
+                />
+              </div>
+
+              <div className="Center_main_dic_filetr">
+                <label> Total Amount</label>
+                <ElectronicTotal data={isData} />
               </div>
 
               <div className="Center_main_dic_filetr">
@@ -554,11 +559,18 @@ const Donation = ({ setopendashboard }) => {
                   />
                 </TableCell>
                 <TableCell>
-                  <input
-                    type="text"
-                    className="cuolms_search"
-                    placeholder="Search Head"
-                  />
+                  <select
+                    style={{ width: '100%' }}
+                    onChange={(e) => settype(e.target.value)}
+                    id="cars"
+                  >
+                    <option>Select option</option>
+                    {donationTypes.map((item, idx) => {
+                      return (
+                        <option value={item.type_hi}>{item.type_hi}</option>
+                      );
+                    })}
+                  </select>
                 </TableCell>
                 <TableCell>
                   <input

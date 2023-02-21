@@ -28,6 +28,7 @@ import Moment from 'moment-js';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format } from 'date-fns';
+
 const style = {
   position: 'absolute',
   top: '27%',

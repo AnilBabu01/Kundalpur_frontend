@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,7 +15,6 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import './VoucherManagement.css';
-import AddVoucherToUser from './AddVoucherToUser/AddVoucherToUser';
 import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
@@ -29,37 +26,34 @@ import Tooltip from '@mui/material/Tooltip';
 import Moment from 'moment-js';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import axios from 'axios';
+import { backendApiUrl } from '../../../../config/config';
 import { format } from 'date-fns';
-const style = {
-  position: 'absolute',
-  top: '27%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
 
-  background: '#FFFFFF',
-  borderRadius: '15px',
-  bgcolor: 'background.paper',
-  p: 2,
-  boxShadow: 24,
-};
 const ParticularUserVoucher = ({ setopendashboard }) => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [open, setOpen] = React.useState(false);
-  const [isData, setisData] = useState('');
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const location = useLocation();
   const navigation = useNavigate();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [isData, setisData] = useState('');
+  const [refetchdata, setrefetchdata] = useState(false);
+  const [Data, setData] = useState('');
 
-  const getall_donation = () => {
-    serverInstance('user/add-voucher-user', 'get').then((res) => {
-      if (res.status) {
-        setisData(res.data);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
-      }
-      console.log(res);
+  const cancelVouhcer = async (row) => {
+    axios.defaults.headers.post[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+    const res = await axios.post(`${backendApiUrl}admin/cancel-each-voucher`, {
+      voucherNo: Number(row?.voucherNo),
+      voucherId: Number(Data?.assign),
     });
+    console.log('empl', res.data.data);
+
+    if (res.data.data.status === 'success') {
+      setrefetchdata(!refetchdata);
+
+      Swal.fire('Great!', res.data.data.message, 'success');
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -72,13 +66,34 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
   };
 
   useEffect(() => {
-    getall_donation();
+    if (location.state) {
+      setData(location.state?.userdata);
+
+      serverInstance(
+        `admin/allocated-vouchers?userId=${Number(
+          location.state?.userdata?.assign,
+        )}`,
+        'get',
+      ).then((res) => {
+        if (res.status) {
+          setisData(res.data);
+        } else {
+          Swal('Error', 'somthing went  wrong', 'error');
+        }
+        console.log(res);
+      });
+    }
+
     setopendashboard(true);
-  }, []);
+  }, [refetchdata]);
   return (
     <>
       <div className="dashboarmain1">
         <div>
+          <div className="backebj_voucher">
+            <button onClick={() => navigation(-1)}>Back</button>
+          </div>
+
           <div className="table-div-maain">
             {/* <TableContainer component={Paper}> */}
             <Table
@@ -89,7 +104,7 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                 <TableRow>
                   <TableCell>S.No</TableCell>
                   <TableCell>Empoyee Name</TableCell>
-                  <TableCell>Voucher</TableCell>
+
                   <TableCell>Voucher Number</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Action</TableCell>
@@ -113,14 +128,28 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                       >
                         <TableCell> {index + 1}</TableCell>
                         <TableCell>{row?.name}</TableCell>
-                        <TableCell> {`${row.from} to ${row.to}`}</TableCell>
-                        <TableCell>{row?.voucher}</TableCell>
+
+                        <TableCell>{row?.voucherNo}</TableCell>
+                        <TableCell>{row.status}</TableCell>
                         <TableCell>
-                          {row.status ? 'Allocated' : 'Not Used'}
-                        </TableCell>
-                        <TableCell>
-                          <button className="Accepted_btn">Accepted</button>
-                          <button className="Cancel_btnN">Cancel</button>
+                          {row.status === 'unallocated' ? (
+                            <>
+                              {' '}
+                              <button
+                                onClick={() => cancelVouhcer(row)}
+                                className="Cancel_btnN"
+                              >
+                                Cancel
+                              </button>{' '}
+                            </>
+                          ) : (
+                            <>
+                              {' '}
+                              <button className="Accepted_btn">
+                                Accepted
+                              </button>{' '}
+                            </>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -135,7 +164,7 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={[20, 25, 40]}
                     labelRowsPerPage={<span>Rows:</span>}
                     labelDisplayedRows={({ page }) => {
                       return `Page: ${page}`;

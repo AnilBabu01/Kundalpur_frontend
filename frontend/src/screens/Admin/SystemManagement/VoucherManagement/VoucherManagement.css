@@ -16,6 +16,16 @@
     border-radius: 5px;
 }
 
+
+.Canceled_btnN{
+    background: yellow;
+    border: none;
+    color: black;
+    width: 94px;
+    height: 29px;
+    border-radius: 5px;
+}
+
 .backebj_voucher{
 margin-left: 1.3rem;
 margin-bottom: 1rem;

@@ -45,7 +45,7 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
   const location = useLocation();
   const navigation = useNavigate();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [isData, setisData] = useState('');
   const [refetchdata, setrefetchdata] = useState(false);
   const [Data, setData] = useState('');
@@ -56,22 +56,6 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-  const cancelVouhcer = async (row) => {
-    axios.defaults.headers.post[
-      'Authorization'
-    ] = `Bearer ${sessionStorage.getItem('token')}`;
-    const res = await axios.post(`${backendApiUrl}admin/cancel-each-voucher`, {
-      voucherNo: Number(row?.voucherNo),
-      voucherId: Number(Data?.assign),
-    });
-    console.log('empl', res.data.data);
-
-    if (res.data.data.status === 'success') {
-      setrefetchdata(!refetchdata);
-
-      Swal.fire('Great!', res.data.data.message, 'success');
-    }
-  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -174,22 +158,28 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                         <TableCell>{row?.voucherNo}</TableCell>
                         <TableCell>{row.status}</TableCell>
                         <TableCell>
-                          {row.status === 'unallocated' ? (
+                          {row.status === 'unallocated' && (
                             <>
-                              {' '}
                               <button
                                 onClick={() => handleOpen(row)}
                                 className="Cancel_btnN"
                               >
                                 Cancel
-                              </button>{' '}
+                              </button>
                             </>
-                          ) : (
+                          )}
+
+                          {row.status === 'cancelled' && (
                             <>
-                              {' '}
-                              <button className="Accepted_btn">
-                                Accepted
-                              </button>{' '}
+                              <button className="Canceled_btnN">
+                                {row.status}
+                              </button>
+                            </>
+                          )}
+
+                          {row.status === 'allocated' && (
+                            <>
+                              <button className="Accepted_btn">Accepted</button>{' '}
                             </>
                           )}
                         </TableCell>
@@ -206,7 +196,7 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowsPerPageOptions={[20, 25, 40]}
+                    rowsPerPageOptions={[10, 25, 40]}
                     labelRowsPerPage={<span>Rows:</span>}
                     labelDisplayedRows={({ page }) => {
                       return `Page: ${page}`;

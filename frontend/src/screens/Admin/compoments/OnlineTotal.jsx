@@ -3,17 +3,12 @@ import Typography from '@mui/material/Typography';
 
 const OnlineTotal = ({ data }) => {
   let totalAmount = 0;
-  //   if (data) {
-  //     data &&
-  //       data.map((item, inx) => {
-  //         totalAmount =
-  //           totalAmount +
-  //           item.AMOUNT.reduce(
-  //             (n, { amount }) => parseFloat(n) + parseFloat(amount),
-  //             0,
-  //           );
-  //       });
-  //   }
+  if (data) {
+    data &&
+      data.map((item, inx) => {
+        totalAmount = totalAmount + parseInt(item.AMOUNT);
+      });
+  }
 
   return (
     <>

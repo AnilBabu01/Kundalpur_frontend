@@ -28,13 +28,18 @@ import Edit from '../../../../../assets/Edit.png';
 import eye from '../../../../../assets/eye.png';
 import './Online.css';
 import { ExportPdfmanulElectronic } from '../../../compoments/ExportPdf';
-import ManualTotal from '../../../compoments/ManualTotal';
+import OnlineTotal from '../../../compoments/OnlineTotal';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import PrintManual from '../../../compoments/PrintManual';
+import PrintOnline from '../../../compoments/PrintOnline';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+
+import { Box } from '@mui/material';
+import Modal from '@mui/material/Modal';
+
+import Fade from '@mui/material/Fade';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -104,6 +109,9 @@ const Online = ({ setopendashboard }) => {
   const [userrole, setuserrole] = useState('');
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
+  const [open5, setOpen5] = React.useState(false);
+  const handleOpen5 = () => setOpen5(true);
+  const handleClose5 = () => setOpen5(false);
   const handleClickOpen1 = (id) => {
     setOpen1(true);
     setdeleteId(id);
@@ -203,6 +211,19 @@ const Online = ({ setopendashboard }) => {
 
   return (
     <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open5}
+        onClose={handleClose5}
+        closeAfterTransition
+      >
+        <Fade in={open5}>
+          <Box sx={style5}>
+            <PrintOnline isData={isData} handleClose={handleClose5} />
+          </Box>
+        </Fade>
+      </Modal>
       <Dialog
         open={open1}
         onClose={handleClose1}
@@ -348,7 +369,7 @@ const Online = ({ setopendashboard }) => {
               <IconButton>
                 <img
                   style={{ width: '30px' }}
-                  // onClick={() => handleOpen5()}
+                  onClick={() => handleOpen5()}
                   src={Print}
                   alt=" Print"
                 />
@@ -439,6 +460,18 @@ const Online = ({ setopendashboard }) => {
                       </TableCell>
                     </TableRow>
                   ))}
+                  <TableRow>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell>Total Amount</TableCell>
+                    <TableCell>
+                      <OnlineTotal data={isData} />
+                    </TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                  </TableRow>
                 </>
               ) : (
                 <>

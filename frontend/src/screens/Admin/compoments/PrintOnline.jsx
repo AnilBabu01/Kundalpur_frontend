@@ -8,6 +8,7 @@ import ManualTotal from '../compoments/ManualTotal';
 import { useReactToPrint } from 'react-to-print';
 import Moment from 'moment-js';
 import TableContainer from '@mui/material/TableContainer';
+import moment from 'moment';
 function PrintOnline({ isData, handleClose }) {
   const componentRef = useRef();
 
@@ -32,52 +33,33 @@ function PrintOnline({ isData, handleClose }) {
               style={{ borderBottom: '1px solid gray', fontSize: '14px' }}
             >
               <th>Date</th>
-              <th>ReceiptNo</th>
-
-              <th>Phone No</th>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Head/Item</th>
+              <th>Receipt No</th>
+              <th>Name </th>
+              <th>Donation Type</th>
               <th>Amount</th>
-              <th>Remark</th>
+              <th>Cheque No.</th>
+              <th>Date Of submission</th>
+              <th>Name of Bank</th>
             </tr>
-            {/* {isData &&
+            {isData &&
               isData.map((row) => {
                 return (
                   <tr
                     className="margintop_add"
                     style={{ borderBottom: '1px solid gray', fontSize: '14px' }}
                   >
-                    <td>{Moment(row.donation_date).format('DD/MM/YYYY')}</td>
-                    <td>{row.ReceiptNo}</td>
+                    <td> {moment(row?.DATE_OF_DAAN).format('DD/MM/YYYY')}</td>
+                    <td>{row?.RECEIPT_NO}</td>
 
-                    <td>{row.phoneNo}</td>
-                    <td>{row.name}</td>
-                    <td> {row.address}</td>
-                    <td style={{ width: '5rem' }}>
-                      {row.manualItemDetails.map((row) => {
-                        return (
-                          <li style={{ listStyle: 'none' }}>{row.type}</li>
-                        );
-                      })}
-                    </td>
-
-                    <td>
-                      {row.manualItemDetails.reduce(
-                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                        0,
-                      )}
-                    </td>
-                    <td>
-                      {row.manualItemDetails.map((row) => {
-                        return (
-                          <li style={{ listStyle: 'none' }}>{row.remark} </li>
-                        );
-                      })}
-                    </td>
+                    <td>{row.NAME}</td>
+                    <td> {row.MODE_OF_DONATION}</td>
+                    <td> {row.AMOUNT}</td>
+                    <td> {row.CHEQUE_NO ? row.CHEQUE_NO : '-'}</td>
+                    <td> {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : '-'}</td>
+                    <td> {row.NAME_OF_BANK ? row.NAME_OF_BANK : '-'}</td>
                   </tr>
                 );
-              })} */}
+              })}
             <tr
               className="margintop_add"
               style={{ borderBottom: '1px solid gray', fontSize: '14px' }}

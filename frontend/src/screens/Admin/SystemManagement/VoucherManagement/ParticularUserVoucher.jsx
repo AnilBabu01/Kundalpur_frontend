@@ -29,7 +29,18 @@ import 'jspdf-autotable';
 import axios from 'axios';
 import { backendApiUrl } from '../../../../config/config';
 import { format } from 'date-fns';
-
+import CancelVoucher from './CancelVoucher';
+const style = {
+  position: 'absolute',
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '30%',
+  bgcolor: 'background.paper',
+  p: 2,
+  boxShadow: 24,
+  borderRadius: '5px',
+};
 const ParticularUserVoucher = ({ setopendashboard }) => {
   const location = useLocation();
   const navigation = useNavigate();
@@ -38,7 +49,13 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
   const [isData, setisData] = useState('');
   const [refetchdata, setrefetchdata] = useState(false);
   const [Data, setData] = useState('');
-
+  const [cancelData, setcancelData] = useState('');
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = (data) => {
+    setcancelData(data);
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
   const cancelVouhcer = async (row) => {
     axios.defaults.headers.post[
       'Authorization'
@@ -88,6 +105,31 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
   }, [refetchdata]);
   return (
     <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+      >
+        <Fade in={open}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div1">
+                <h2>Update cheque status</h2>
+                <CloseIcon onClick={() => handleClose()} />
+              </div>
+              <CancelVoucher
+                row={cancelData}
+                Data={Data}
+                handleClose={handleClose}
+                setrefetchdata={setrefetchdata}
+                refetchdata={refetchdata}
+              />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
       <div className="dashboarmain1">
         <div>
           <div className="backebj_voucher">
@@ -136,7 +178,7 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                             <>
                               {' '}
                               <button
-                                onClick={() => cancelVouhcer(row)}
+                                onClick={() => handleOpen(row)}
                                 className="Cancel_btnN"
                               >
                                 Cancel

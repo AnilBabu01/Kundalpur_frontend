@@ -474,7 +474,7 @@ const DashboardWrapper = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         elevation={0}
-        position="static"
+        position="fixed"
         sx={{ bgcolor: 'white', color: 'black', paddingLeft: '3.7%' }}
       >
         <Toolbar>

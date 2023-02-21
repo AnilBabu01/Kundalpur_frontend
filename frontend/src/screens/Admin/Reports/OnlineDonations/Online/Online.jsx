@@ -27,6 +27,68 @@ import ExportExcel from '../../../../../assets/ExportExcel.png';
 import Edit from '../../../../../assets/Edit.png';
 import eye from '../../../../../assets/eye.png';
 import './Online.css';
+import { ExportPdfmanulElectronic } from '../../../compoments/ExportPdf';
+import ManualTotal from '../../../compoments/ManualTotal';
+import { styled, alpha } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
+import PrintManual from '../../../compoments/PrintManual';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+
+  color: '#FDC99C',
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  zIndex: 2,
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  left: '11px',
+  bottom: '0px',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    height: '17px',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
+
+const style5 = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  width: '70%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  p: 2,
+
+  boxShadow: 24,
+  borderRadius: '15px',
+};
 const Online = ({ setopendashboard }) => {
   const navigation = useNavigate();
   const [isData, setisData] = React.useState('');
@@ -36,7 +98,12 @@ const Online = ({ setopendashboard }) => {
   const [refetch, setrefetch] = useState(false);
   const [open1, setOpen1] = React.useState(false);
   const [deleteId, setdeleteId] = useState('');
+  const [datefrom, setdatefrom] = useState('');
+  const [dateto, setdateto] = useState('');
 
+  const [userrole, setuserrole] = useState('');
+  const [voucherfrom, setvoucherfrom] = useState('');
+  const [voucherto, setvoucherto] = useState('');
   const handleClickOpen1 = (id) => {
     setOpen1(true);
     setdeleteId(id);
@@ -159,36 +226,134 @@ const Online = ({ setopendashboard }) => {
       </Dialog>
 
       <div>
-        <div>
-          <div className="search-header">
-            <div className="search-inner-div-reports">
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="Phone No" />
-              <input type="date" placeholder="Date" />
-              <select name="cars" id="cars">
-                <option value="volvo">Select option</option>
-                <option value="saab">Cash donation</option>
-                <option value="mercedes">cheque donation</option>
-                <option value="audi">Electronic donation</option>
-                <option value="audi">Item donation</option>
-              </select>
-              <button>Search</button>
-              <button>Reset</button>
-
-              <img
-                onClick={() => ExportToExcel()}
-                src={ExportExcel}
-                alt="s"
-                style={{ width: '30px' }}
-              />
-              <img
-                onClick={() => ExportPdfUser(isData, 'OnlineReport')}
-                src={ExportPdf}
-                alt="ss"
-                style={{ width: '30px' }}
+        <div className="search-header">
+          <div className="search-inner-div-reports">
+            <div className="Center_main_dic_filetr">
+              <label>From Date</label>
+              <input
+                style={{ width: '250px' }}
+                type="date"
+                placeholder="From"
+                value={datefrom}
+                name="datefrom"
+                onChange={(e) => {
+                  setdatefrom(e.target.value);
+                }}
               />
             </div>
-            <div></div>
+
+            <div className="Center_main_dic_filetr">
+              <label>To Date</label>
+              <input
+                style={{ width: '250px' }}
+                type="date"
+                placeholder="From"
+                value={dateto}
+                name="dateto"
+                onChange={(e) => {
+                  setdateto(e.target.value);
+                }}
+              />
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>From Voucher</label>
+              <input
+                style={{ width: '100%' }}
+                type="text"
+                placeholder="From"
+                value={voucherfrom}
+                name="voucherfrom"
+                onChange={(e) => {
+                  setvoucherfrom(e.target.value);
+                }}
+              />
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>To Voucher</label>
+              <input
+                style={{ width: '100%' }}
+                type="text"
+                placeholder="From"
+                value={voucherto}
+                name="voucherto"
+                onChange={(e) => {
+                  setvoucherto(e.target.value);
+                }}
+              />
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+            </div>
+
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <button onClick={() => filterdata()}>Search</button>
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <button onClick={() => getall_donation()}>Reset</button>
+            </div>
+          </div>
+          {/* <div></div> */}
+        </div>
+
+        <div
+          className="search-header-prin"
+          style={{
+            paddingBottom: '1rem',
+          }}
+        >
+          <div
+            className="search-header-print"
+            style={{
+              borderBottom: '1px  solid gray',
+              width: '100%',
+              borderTop: ' 1px solid gray',
+              paddingTop: '1%',
+            }}
+          >
+            <Tooltip title="Export Excel File">
+              <IconButton>
+                <img
+                  onClick={() => ExportToExcel()}
+                  src={ExportExcel}
+                  alt="cc"
+                  style={{ width: '30px' }}
+                />
+              </IconButton>
+            </Tooltip>
+            &nbsp;&nbsp;
+            <Tooltip title="Export Pdf File">
+              <IconButton>
+                <img
+                  onClick={() =>
+                    ExportPdfmanulElectronic(isData, 'ManualCashReport')
+                  }
+                  src={ExportPdf}
+                  alt="cc"
+                  style={{ width: '30px' }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Print Report">
+              <IconButton>
+                <img
+                  style={{ width: '30px' }}
+                  // onClick={() => handleOpen5()}
+                  src={Print}
+                  alt=" Print"
+                />
+              </IconButton>
+            </Tooltip>
           </div>
         </div>
 

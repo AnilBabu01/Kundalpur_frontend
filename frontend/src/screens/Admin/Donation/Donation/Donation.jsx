@@ -36,6 +36,11 @@ import InputBase from '@mui/material/InputBase';
 import PrintElectronic from '../../compoments/PrintElectronic';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import {
+  ExportPdfmanul,
+  ExportPdfUser,
+  ExportPdfUserCheque,
+} from '../../compoments/ExportPdf';
 import './Donation.css';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

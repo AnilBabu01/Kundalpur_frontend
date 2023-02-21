@@ -775,7 +775,6 @@ const OnlineReceipt = ({ setopendashboard, setshowreciept, onlineId }) => {
             <p>PAN NO- AAHTS0546A</p>
           </div>
 
-
           <div className="signature-point">
             <div className="main_div_signature">
               {isData?.signature && (

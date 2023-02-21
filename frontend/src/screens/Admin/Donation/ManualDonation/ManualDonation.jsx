@@ -33,6 +33,7 @@ import InputBase from '@mui/material/InputBase';
 import PrintManual from '../../compoments/PrintManual';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import { ExportPdfmanulElectronic } from '../../compoments/ExportPdf';
 import './Donation.css';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -138,7 +139,8 @@ const ManualDonation = ({ setopendashboard }) => {
   const [dateto, setdateto] = useState('');
   const [type, settype] = useState('');
   const [open5, setOpen5] = React.useState(false);
-
+  const [voucherfrom, setvoucherfrom] = useState('');
+  const [voucherto, setvoucherto] = useState('');
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
 
@@ -150,9 +152,8 @@ const ManualDonation = ({ setopendashboard }) => {
   console.log('check data ', isData);
 
   const filterdata = () => {
-    console.log('ccc');
     serverInstance(
-      `user//manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}',
+      `user/manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}',
       'get`,
     ).then((res) => {
       console.log('filter data is', res.data);
@@ -388,7 +389,7 @@ const ManualDonation = ({ setopendashboard }) => {
               <div className="Center_main_dic_filetr">
                 <label>From Date</label>
                 <input
-                  style={{ width: '250px' }}
+                  style={{ width: '100%' }}
                   type="date"
                   placeholder="From"
                   value={datefrom}
@@ -402,7 +403,7 @@ const ManualDonation = ({ setopendashboard }) => {
               <div className="Center_main_dic_filetr">
                 <label>To Date</label>
                 <input
-                  style={{ width: '250px' }}
+                  style={{ width: '100%' }}
                   type="date"
                   placeholder="From"
                   value={dateto}
@@ -412,6 +413,46 @@ const ManualDonation = ({ setopendashboard }) => {
                   }}
                 />
               </div>
+              <div className="Center_main_dic_filetr">
+                <label>To Date</label>
+                <input
+                  style={{ width: '100%' }}
+                  type="date"
+                  placeholder="From"
+                  value={dateto}
+                  name="dateto"
+                  onChange={(e) => {
+                    setdateto(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="Center_main_dic_filetr">
+                <label>From Voucher</label>
+                <input
+                  style={{ width: '100%' }}
+                  type="text"
+                  placeholder="From"
+                  value={voucherfrom}
+                  name="voucherfrom"
+                  onChange={(e) => {
+                    setvoucherfrom(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="Center_main_dic_filetr">
+                <label>To Voucher</label>
+                <input
+                  style={{ width: '100%' }}
+                  type="text"
+                  placeholder="From"
+                  value={voucherto}
+                  name="voucherto"
+                  onChange={(e) => {
+                    setvoucherto(e.target.value);
+                  }}
+                />
+              </div>
+
               <div className="Center_main_dic_filetr">
                 <label>&nbsp;</label>
                 <Search>
@@ -469,10 +510,12 @@ const ManualDonation = ({ setopendashboard }) => {
                 </IconButton>
               </Tooltip>
               &nbsp;&nbsp;
-              <Tooltip title="Export Excel File">
+              <Tooltip title="Export Pdf File">
                 <IconButton>
                   <img
-                    onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+                    onClick={() =>
+                      ExportPdfmanulElectronic(isData, 'ManualCashReport')
+                    }
                     src={ExportPdf}
                     alt="cc"
                     style={{ width: '30px' }}

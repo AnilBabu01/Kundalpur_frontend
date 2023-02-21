@@ -6,3 +6,12 @@
     height: 29px;
     border-radius: 5px;
 }
+
+.Cancel_btnN{
+    background: red;
+    border: none;
+    color: white;
+    width: 94px;
+    height: 29px;
+    border-radius: 5px;
+}

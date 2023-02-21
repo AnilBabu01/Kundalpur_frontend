@@ -19,7 +19,7 @@ const ManualDonationTap = ({ setopendashboard }) => {
 
   return (
     <>
-      <div className="mobilewidth">
+      <div className="mobilewidth dashboarmain">
         <div className="container1">
           <div className="bloc-tabs1">
             <button

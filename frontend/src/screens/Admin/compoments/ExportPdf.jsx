@@ -51,6 +51,55 @@ const ExportPdfmanul = (isData, fileName) => {
   doc.save(`${fileName}_${dateStr}.pdf`);
 };
 
+const ExportPdfmanulElectronic = (isData, fileName) => {
+  const doc = new jsPDF();
+
+  const tableColumn = [
+    'Date',
+    'Receipt',
+    'Voucher',
+    'Phone',
+    'Name',
+    'Address',
+    'type',
+    'amout',
+  ];
+
+  const tableRows = [];
+
+  isData.forEach((item) => {
+    const ticketData = [
+      Moment(item.donation_date).format('DD/MM/YYYY'),
+      item?.ReceiptNo,
+      item?.voucherNo,
+      item?.phoneNo,
+      item?.name,
+      item?.address,
+      item?.manualItemDetails.map((item) => {
+        return item.remark;
+      }),
+      item?.manualItemDetails.reduce(
+        (n, { amount }) => parseFloat(n) + parseFloat(amount),
+        0,
+      ),
+
+      format(new Date(item.createdAt), 'yyyy-MM-dd'),
+    ];
+
+    tableRows.push(ticketData);
+  });
+
+  doc.autoTable(tableColumn, tableRows, { startY: 20 });
+  const date = Date().split(' ');
+
+  const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+
+  doc.text(`Report of ${fileName}`, 8, 9);
+  doc.setFont('Lato-Regular', 'normal');
+  doc.setFontSize(28);
+  doc.save(`${fileName}_${dateStr}.pdf`);
+};
+
 const ExportPdfUser = (isData, fileName) => {
   const doc = new jsPDF();
 
@@ -189,4 +238,9 @@ const ExportPdfUserCheque = (isData, fileName) => {
   doc.save(`${fileName}_${dateStr}.pdf`);
 };
 
-export { ExportPdfmanul, ExportPdfUser, ExportPdfUserCheque };
+export {
+  ExportPdfmanul,
+  ExportPdfUser,
+  ExportPdfUserCheque,
+  ExportPdfmanulElectronic,
+};

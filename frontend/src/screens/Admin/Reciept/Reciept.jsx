@@ -804,12 +804,10 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
             </div>
 
             <div className="main_div_signature">
-              {sessionStorage.getItem('adminSignature') && (
+              {isData?.createdBySignature && (
                 <>
                   <img
-                    src={`${backendUrl}uploads/images/${sessionStorage.getItem(
-                      'adminSignature',
-                    )}`}
+                    src={`${backendUrl}uploads/images/${isData?.createdBySignature}`}
                     alt="signature"
                   />
                 </>

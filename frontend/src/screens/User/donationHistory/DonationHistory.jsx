@@ -62,10 +62,7 @@ function DonationHistory({
 
   const gettable = () => {
     serverInstance('user/donation-list', 'get').then((res) => {
-      if (res.status) {
-        console.log(res);
-        setisrow(res.data);
-      }
+      setisrow(res.donation);
     });
   };
 
@@ -116,12 +113,6 @@ function DonationHistory({
               <h2>DONATIONS</h2>
               <p>All Donations History</p>
             </div>
-            {/* <div className="donation-history-serah_btn_div">
-                <input type="date" />
-                <input type="time" />
-                <button>Search</button>
-                <button>Reset</button>
-              </div> */}
           </div>
 
           <div className="container">

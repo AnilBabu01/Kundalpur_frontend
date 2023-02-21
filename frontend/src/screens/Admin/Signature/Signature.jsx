@@ -27,7 +27,7 @@ function Signature({ setOpen3 }) {
       };
       if (userrole === 1) {
         const res = await axios.put(
-          `${backendApiUrl}admin/signature-upload-emplo`,
+          `${backendApiUrl}admin/signature-upload`,
           formData,
           config,
         );

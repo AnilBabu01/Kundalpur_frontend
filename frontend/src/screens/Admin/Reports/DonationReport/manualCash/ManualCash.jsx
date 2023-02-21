@@ -652,7 +652,7 @@ const ManualCash = ({ setopendashboard }) => {
                     <TableCell> &nbsp;</TableCell>
                     <TableCell> &nbsp;</TableCell>
                     <TableCell> &nbsp;</TableCell>
-                    <TableCell>Amount</TableCell>
+                    <TableCell>Total Amount</TableCell>
                     <TableCell>
                       <ElectronicTotal data={isData} />
                     </TableCell>

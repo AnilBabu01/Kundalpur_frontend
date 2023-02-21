@@ -12,7 +12,10 @@ const DashbordTap = ({ setopendashboard }) => {
 
   return (
     <>
-      <div style={{ marginLeft: '5.3%', marginRight: '1%' }}>
+      <div
+        className="dashboarddiv"
+        style={{ marginLeft: '5.3%', marginRight: '1%' }}
+      >
         <div style={{ marginBottom: '2rem' }}>
           <Donation setopendashboard={setopendashboard} />
         </div>

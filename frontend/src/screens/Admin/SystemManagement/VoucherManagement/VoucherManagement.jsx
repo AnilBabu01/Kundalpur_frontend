@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import moment from 'moment';
@@ -43,10 +41,13 @@ const style = {
   boxShadow: 24,
 };
 const VoucherManagement = ({ setopendashboard }) => {
+  const navigate = useNavigate();
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = React.useState(false);
+  const [showAnPartularEmpVoucher, setshowAnPartularEmpVoucher] =
+    useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigation = useNavigate();
@@ -64,14 +65,6 @@ const VoucherManagement = ({ setopendashboard }) => {
         Swal('Error', 'somthing went  wrong', 'error');
       }
       console.log(res);
-    });
-  };
-
-  const downloadrecept = (row) => {
-    navigation('/reciept', {
-      state: {
-        userdata: row,
-      },
     });
   };
 
@@ -107,119 +100,139 @@ const VoucherManagement = ({ setopendashboard }) => {
       </Modal>
       <div className="dashboarddiv">
         <div>
-          <div className="main_center_header">
-            <div className="add-btn-user2">
-              <p style={{ marginTop: '0.6%' }}>Voucher Management</p>
-              <div className="add_role_icons_div" style={{ width: '30%' }}>
-                <button style={{ height: '40px' }} onClick={() => handleOpen()}>
-                  +Generate Voucher
-                </button>
+          {showAnPartularEmpVoucher ? (
+            <>
+              <h2>view</h2>
+            </>
+          ) : (
+            <>
+              <div className="main_center_header">
+                <div className="add-btn-user2">
+                  <p style={{ marginTop: '0.6%' }}>Voucher Management</p>
+                  <div className="add_role_icons_div" style={{ width: '30%' }}>
+                    <button
+                      style={{ height: '40px' }}
+                      onClick={() => handleOpen()}
+                    >
+                      +Generate Voucher
+                    </button>
 
-                <Tooltip title="Export Excel File">
-                  <img
-                    // onClick={() => ExportToExcel()}
-                    src={ExportExcel}
-                    style={{
-                      width: '30px',
-                      height: '35px',
-                      marginRight: '0.2rem',
-                    }}
-                  />
-                </Tooltip>
-                <Tooltip title="Export Pdf File">
-                  <img
-                    // onClick={() => ExportPdfmanul('Employee_list')}
-                    src={ExportPdf}
-                    style={{
-                      width: '30px',
-                      height: '35px',
-                      marginRight: '0.2rem',
-                    }}
-                  />
-                </Tooltip>
+                    <Tooltip title="Export Excel File">
+                      <img
+                        // onClick={() => ExportToExcel()}
+                        src={ExportExcel}
+                        style={{
+                          width: '30px',
+                          height: '35px',
+                          marginRight: '0.2rem',
+                        }}
+                      />
+                    </Tooltip>
+                    <Tooltip title="Export Pdf File">
+                      <img
+                        // onClick={() => ExportPdfmanul('Employee_list')}
+                        src={ExportPdf}
+                        style={{
+                          width: '30px',
+                          height: '35px',
+                          marginRight: '0.2rem',
+                        }}
+                      />
+                    </Tooltip>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="main_center_header"></div>
+              <div className="main_center_header"></div>
 
-          <div className="table-div-maain">
-            {/* <TableContainer component={Paper}> */}
-            <Table
-              sx={{ minWidth: 650, width: '97%' }}
-              aria-label="simple table"
-            >
-              <TableHead style={{ background: '#F1F0F0' }}>
-                <TableRow>
-                  <TableCell>Sno.</TableCell>
-                  <TableCell>Empoyee Name</TableCell>
-                  <TableCell>Voucher</TableCell>
-
-                  <TableCell>Status</TableCell>
-                  <TableCell>Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
-                    }}
-                  >
-                    <TableCell> {index + 1}</TableCell>
-                    <TableCell>{row?.name}</TableCell>
-                    <TableCell> {`${row.from} to ${row.to}`}</TableCell>
-
-                    <TableCell>
-                      {' '}
-                      {row.status ? 'Allocated' : 'Not Used'}
-                    </TableCell>
-
-                    <TableCell>
-                      <button className="Accepted_btn">Accepted</button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    count={isData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowsPerPageOptions={[5, 10, 25]}
-                    labelRowsPerPage={<span>Rows:</span>}
-                    labelDisplayedRows={({ page }) => {
-                      return `Page: ${page}`;
-                    }}
-                    backIconButtonProps={{
-                      color: 'secondary',
-                    }}
-                    nextIconButtonProps={{ color: 'secondary' }}
-                    SelectProps={{
-                      inputProps: {
-                        'aria-label': 'page number',
-                      },
-                    }}
-                    // showFirstButton={true}
-                    // showLastButton={true}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
-                    //sx and classes prop discussed in styling section
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-            {/* </TableContainer> */}
-          </div>
+              <div className="table-div-maain">
+                {/* <TableContainer component={Paper}> */}
+                <Table
+                  sx={{ minWidth: 650, width: '97%' }}
+                  aria-label="simple table"
+                >
+                  <TableHead style={{ background: '#F1F0F0' }}>
+                    <TableRow>
+                      <TableCell>S.No</TableCell>
+                      <TableCell>Empoyee Name</TableCell>
+                      <TableCell>Voucher</TableCell>
+                      <TableCell>Voucher Number</TableCell>
+                      <TableCell>Status</TableCell>
+                      <TableCell>Action</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {(rowsPerPage > 0
+                      ? isData.slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
+                      : isData
+                    ).map((row, index) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          '&:last-child td, &:last-child th': { border: 0 },
+                        }}
+                      >
+                        <TableCell> {index + 1}</TableCell>
+                        <TableCell>{row?.name}</TableCell>
+                        <TableCell> {`${row.from} to ${row.to}`}</TableCell>
+                        <TableCell>{row?.voucher}</TableCell>
+                        <TableCell>
+                          {row.status ? 'Allocated' : 'Not Used'}
+                        </TableCell>
+                        <TableCell>
+                          <button
+                            onClick={() =>
+                              navigate('/admin-panel/uservoucher', {
+                                state: {
+                                  userdata: row,
+                                },
+                              })
+                            }
+                            className="Accepted_btn"
+                          >
+                            View
+                          </button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                  <TableFooter>
+                    <TableRow>
+                      <TablePagination
+                        count={isData.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        rowsPerPageOptions={[5, 10, 25]}
+                        labelRowsPerPage={<span>Rows:</span>}
+                        labelDisplayedRows={({ page }) => {
+                          return `Page: ${page}`;
+                        }}
+                        backIconButtonProps={{
+                          color: 'secondary',
+                        }}
+                        nextIconButtonProps={{ color: 'secondary' }}
+                        SelectProps={{
+                          inputProps: {
+                            'aria-label': 'page number',
+                          },
+                        }}
+                        // showFirstButton={true}
+                        // showLastButton={true}
+                        //ActionsComponent={TablePaginationActions}
+                        //component={Box}
+                        //sx and classes prop discussed in styling section
+                      />
+                    </TableRow>
+                  </TableFooter>
+                </Table>
+                {/* </TableContainer> */}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

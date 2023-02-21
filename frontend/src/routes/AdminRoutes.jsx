@@ -26,6 +26,7 @@ import OnlineTap from '../screens/Admin/Reports/OnlineDonations/OnlineTap';
 import DharamshalaTap from '../screens/Admin/Dharamshala/DharamshalaTap';
 import RoomBookingTap from '../screens/Admin/RoomBooking/RoomBookingTap';
 import ProfileAdminAndEmp from '../screens/Admin/Profile/ProfileAdminAndEmp';
+import ParticularUserVoucher from '../screens/Admin/SystemManagement/VoucherManagement/ParticularUserVoucher';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   const [addleftmargin, setaddleftmargin] = useState(false);
   return (
@@ -52,6 +53,15 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <ProfileAdminAndEmp setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/uservoucher"
+          element={
+            <Adminprivateroute>
+              <ParticularUserVoucher setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

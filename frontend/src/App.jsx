@@ -6,7 +6,11 @@ import Footer from './screens/User/Footer/Footer';
 import MainRoutes from './routes/MainRoutes';
 import AdminRoutes from './routes/AdminRoutes';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadUser } from './Redux/redux/action/AuthAction';
+import {
+  loadUser,
+  loadAdminprofile,
+  loademployeeprofile,
+} from './Redux/redux/action/AuthAction';
 import './i18n';
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +25,17 @@ function App() {
   }
 
   const gett = () => {
-    dispatch(loadUser());
+    // if (userrole === 1) {
+    //   dispatch(loadAdminprofile());
+    // }
+
+    if (userrole === 2) {
+      dispatch(loadUser());
+    }
+
+    // if (userrole === 3) {
+    //   dispatch(loademployeeprofile());
+    // }
   };
 
   useEffect(() => {

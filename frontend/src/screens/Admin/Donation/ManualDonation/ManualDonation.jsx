@@ -413,19 +413,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   }}
                 />
               </div>
-              <div className="Center_main_dic_filetr">
-                <label>To Date</label>
-                <input
-                  style={{ width: '100%' }}
-                  type="date"
-                  placeholder="From"
-                  value={dateto}
-                  name="dateto"
-                  onChange={(e) => {
-                    setdateto(e.target.value);
-                  }}
-                />
-              </div>
+
               <div className="Center_main_dic_filetr">
                 <label>From Voucher</label>
                 <input

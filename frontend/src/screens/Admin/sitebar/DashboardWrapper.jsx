@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -24,6 +24,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
+import axios from 'axios';
+import { backendApiUrl, backendUrl } from '../../../config/config';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import UploadIcon from '@mui/icons-material/Upload';
 import Divider from '@mui/material/Divider';
@@ -77,45 +79,6 @@ const style3 = {
   p: 2,
   boxShadow: 24,
 };
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-
-  border: '1px solid #FDC99C',
-  color: '#FDC99C',
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
 
 const notificationMenuItems = [
   {
@@ -231,6 +194,8 @@ const DashboardWrapper = () => {
   const empRole = sessionStorage.getItem('empRole');
   const [open, setOpen] = React.useState(false);
   const [anchorEl1, setAnchorEl1] = useState(false);
+  const [userrole, setuserrole] = React.useState('');
+  const [profileimg, setprofileimg] = useState('');
   const open1 = Boolean(anchorEl1);
   const handleClick1 = (event) => {
     setAnchorEl1(event.currentTarget);
@@ -292,6 +257,38 @@ const DashboardWrapper = () => {
       window.location.reload();
     }, 1000);
   };
+
+  console.log('profile', profileimg);
+  const adminprofile = async () => {
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+    const res = await axios.get(`${backendApiUrl}admin/update-admin-prof`);
+
+    setprofileimg(res.data.data.profile_image);
+  };
+
+  const empprofile = async () => {
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+    const res = await axios.get(`${backendApiUrl}admin/update-employee-prof`);
+
+    console.log('profile emp', res.data.data);
+    setprofileimg(res.data.data.profile_image);
+  };
+
+  if (userrole === 1) {
+    adminprofile();
+  }
+  if (userrole === 3) {
+    empprofile();
+  }
+  useEffect(() => {
+    setuserrole(Number(sessionStorage.getItem('userrole')));
+  }, []);
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
 
@@ -559,9 +556,8 @@ const DashboardWrapper = () => {
               }}
             >
               <Avatar
-                // alt={adminuser && adminuser?.adminuser}
-                // src={`${backendUrl}uploads/images/${user?.profile_image}`}
-
+                alt={empName ? empName : adminName}
+                src={`${backendUrl}uploads/images/${profileimg}`}
                 sx={{
                   width: 35,
                   height: 35,

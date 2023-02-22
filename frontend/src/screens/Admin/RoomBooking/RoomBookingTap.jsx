@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import f1 from '../../../assets/f1.png';
+import Dashbord from './Dashbord/Dashbord';
+import CheckIn from './CheckIn/CheckIn';
+import Hold from './Hold/Hold';
+import RoomShift from './RoomShift/RoomShift';
 const RoomBookingTap = ({ setopendashboard }) => {
   const [toggleState, setToggleState] = useState(1);
 
@@ -13,7 +17,7 @@ const RoomBookingTap = ({ setopendashboard }) => {
 
   return (
     <>
-      <div className="mobilewidth">
+      <div className="mobilewidth dashboarmain">
         <div className="container1">
           <div className="bloc-tabs1">
             <button
@@ -25,7 +29,7 @@ const RoomBookingTap = ({ setopendashboard }) => {
                 src={f1}
                 alt="fast"
               />
-              Checkin
+              Dashbord
             </button>
             <button
               className={toggleState === 2 ? 'tabs2 ' : 'tabs1'}
@@ -36,7 +40,7 @@ const RoomBookingTap = ({ setopendashboard }) => {
                 src={f1}
                 alt="fast"
               />
-              Hold
+              Checkin
             </button>
             <button
               className={toggleState === 3 ? 'tabs2 ' : 'tabs1'}
@@ -47,7 +51,7 @@ const RoomBookingTap = ({ setopendashboard }) => {
                 src={f1}
                 alt="fast"
               />
-              Room Shift
+              Hold
             </button>
             <button
               className={toggleState === 4 ? 'tabs2 ' : 'tabs1'}
@@ -58,7 +62,7 @@ const RoomBookingTap = ({ setopendashboard }) => {
                 src={f1}
                 alt="fast"
               />
-              Room
+              Room Shift
             </button>
           </div>
 
@@ -68,7 +72,7 @@ const RoomBookingTap = ({ setopendashboard }) => {
                 toggleState === 1 ? 'content  active-content' : 'content'
               }
             >
-              ggggggggggggggggg
+              <Dashbord setopendashboard={setopendashboard} />
             </div>
 
             <div
@@ -76,29 +80,21 @@ const RoomBookingTap = ({ setopendashboard }) => {
                 toggleState === 2 ? 'content  active-content' : 'content'
               }
             >
-              zzz
+              <CheckIn setopendashboard={setopendashboard} />
             </div>
             <div
               className={
                 toggleState === 3 ? 'content  active-content' : 'content'
               }
             >
-              zzzz
+              <Hold setopendashboard={setopendashboard} />
             </div>
             <div
               className={
                 toggleState === 4 ? 'content  active-content' : 'content'
               }
             >
-              ddx
-            </div>
-
-            <div
-              className={
-                toggleState === 6 ? 'content  active-content' : 'content'
-              }
-            >
-              dd
+              <RoomShift setopendashboard={setopendashboard} />
             </div>
           </div>
         </div>

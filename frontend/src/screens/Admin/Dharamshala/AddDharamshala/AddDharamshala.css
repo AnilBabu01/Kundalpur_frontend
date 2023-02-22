@@ -1,0 +1,18 @@
+.add_btn_main_dhara{
+width: 104px;
+height: 40px;
+background: #FDC99C!important;
+border-radius: 7px;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 24px;
+color: #05313C!important;
+}
+.main_text_dhar{
+    font-size: 20px;
+}
+
+.add_btn_main_dhara:hover{
+    background: #f0d0b4!important;
+}

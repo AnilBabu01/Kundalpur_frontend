@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import profileimgs from '../../../assets/profileimg.jpg';
 import { useNavigate } from 'react-router-dom';
-import { backendUrl, backendApiUrl } from '../../../config/config';
+import { backendApiUrl } from '../../../config/config';
 import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadUser } from '../../../Redux/redux/action/AuthAction';
@@ -15,52 +15,109 @@ function ProfileAdminAndEmp({ setOpen4 }) {
   const [name, setname] = useState('');
   const [mobile, setmobile] = useState('');
   const [email, setemail] = useState('');
-
+  const [userrole, setuserrole] = React.useState('');
   const [address, setaddress] = useState('');
   const [profile_image, setprofile_image] = useState('');
   const [previewprofile, setpreviewprofile] = useState('');
   const [profileimg, setprofileimg] = useState('');
-  const [signature, setsignature] = useState('');
 
-  const { user } = useSelector((state) => state.userReducer);
-  console.log(user);
-  const submitHandler = async (e) => {
+  const adminprofile = async () => {
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+    const res = await axios.get(`${backendApiUrl}admin/update-admin-prof`);
+
+    setname(res.data.data.name);
+    setemail(res.data.data.email);
+    setaddress(res.data.data.Address);
+    setmobile(res.data.data.mobileNo);
+
+    console.log('profile admin', res);
+  };
+
+  const empprofile = async () => {
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+    const res = await axios.get(`${backendApiUrl}admin/update-employee-prof`);
+
+    console.log('profile employee', res.data.data);
+    setname(res.data.data.Username);
+    setemail(res.data.data.Email);
+    setaddress(res.data.data.Address);
+    setmobile(res.data.data.Mobile);
+  };
+
+  const submitHandler = async () => {
     try {
-      e.preventDefault();
+      if (userrole === 1) {
+        formData.set('name', name);
+        formData.set('mobile', mobile);
+        formData.set('email', email);
+        formData.set('address', address);
+        formData.set('profile_image', profile_image);
 
-      formData.set('name', name);
-      formData.set('mobile', mobile);
-      formData.set('email', email);
-      formData.set('password', password);
-      formData.set('dob', dob);
-      formData.set('anniversary_date', anniversary_date);
-      formData.set('address', address);
-      formData.set('profile_image', profile_image);
-      formData.set('sign', signature);
-      axios.defaults.headers.post[
-        'Authorization'
-      ] = `Bearer ${sessionStorage.getItem('token')}`;
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-      const res = await axios.post(
-        `${backendApiUrl}user/update-profile`,
+        axios.defaults.headers.put[
+          'Authorization'
+        ] = `Bearer ${sessionStorage.getItem('token')}`;
+        const config = {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        };
+        const res = await axios.put(
+          `${backendApiUrl}admin/update-admin-prof`,
+          formData,
+          config,
+        );
 
-        formData,
-        config,
-      );
+        console.log(res.data.data);
+        if (res.data.data.status) {
+          Swal.fire('Great!', res.data.data.message, 'success');
+          setOpen4(false);
+        }
+      }
 
-      if (res.data.status) {
-        Swal.fire('Great!', res.data.msg, 'success');
-        dispatch(loadUser());
+      if (userrole === 3) {
+        axios.defaults.headers.put[
+          'Authorization'
+        ] = `Bearer ${sessionStorage.getItem('token')}`;
+        const config = {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        };
+
+        formData.set('profile_image', profile_image);
+        const res = await axios.put(
+          `${backendApiUrl}admin/update-employee-prof`,
+
+          formData,
+          config,
+        );
+
+        console.log(res.data.data);
+        if (res.data.data.status) {
+          Swal.fire('Great!', res.data.data.message, 'success');
+          setOpen4(false);
+        }
       }
     } catch (error) {
       Swal.fire('Error!', error.response.data.message, 'error');
+      setOpen4(false);
     }
   };
   console.log('url', profileimg);
+
+  if (userrole === 1) {
+    adminprofile();
+  }
+  if (userrole === 3) {
+    empprofile();
+  }
+
   useEffect(() => {
     // if (user) {
     //   setname(user?.name);
@@ -71,6 +128,8 @@ function ProfileAdminAndEmp({ setOpen4 }) {
     //   setdob(user?.dob);
     //   setprofileimg(`${backendUrl}uploads/images/${user?.profile_image}`);
     // }
+
+    setuserrole(Number(sessionStorage.getItem('userrole')));
   }, []);
 
   return (
@@ -147,15 +206,21 @@ function ProfileAdminAndEmp({ setOpen4 }) {
                 />
               </div>
               <div className="adminprofile_input">
-                <label htmlFor="address">Address</label>
-                <input
-                  type="address"
-                  id="address"
-                  name="address"
-                  placeholder="enter address"
-                  value={address}
-                  onChange={(e) => setaddress(e.target.value)}
-                />
+                {userrole === 1 ? (
+                  <></>
+                ) : (
+                  <>
+                    <label htmlFor="address">Address</label>
+                    <input
+                      type="address"
+                      id="address"
+                      name="address"
+                      placeholder="enter address"
+                      value={address}
+                      onChange={(e) => setaddress(e.target.value)}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>

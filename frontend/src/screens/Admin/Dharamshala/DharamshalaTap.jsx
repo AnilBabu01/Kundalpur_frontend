@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import f1 from '../../../assets/f1.png';
+import AddDharamshala from './AddDharamshala/AddDharamshala';
+import AddCategory from './AddCategory/AddCategory';
+import AddFacilities from './AddFacilities/AddFacilities';
+import AddRoom from './AddRoom/AddRoom';
 const DharamshalaTap = ({ setopendashboard }) => {
   const [toggleState, setToggleState] = useState(1);
 
@@ -13,7 +17,7 @@ const DharamshalaTap = ({ setopendashboard }) => {
 
   return (
     <>
-      <div className="mobilewidth">
+      <div className="mobilewidth , dashboarmain">
         <div className="container1">
           <div className="bloc-tabs1">
             <button
@@ -68,7 +72,7 @@ const DharamshalaTap = ({ setopendashboard }) => {
                 toggleState === 1 ? 'content  active-content' : 'content'
               }
             >
-              dddd
+              <AddDharamshala setopendashboard={setopendashboard} />
             </div>
 
             <div
@@ -76,29 +80,21 @@ const DharamshalaTap = ({ setopendashboard }) => {
                 toggleState === 2 ? 'content  active-content' : 'content'
               }
             >
-              zzz
+              <AddCategory setopendashboard={setopendashboard} />
             </div>
             <div
               className={
                 toggleState === 3 ? 'content  active-content' : 'content'
               }
             >
-              zzzz
+              <AddFacilities setopendashboard={setopendashboard} />
             </div>
             <div
               className={
                 toggleState === 4 ? 'content  active-content' : 'content'
               }
             >
-              ddx
-            </div>
-
-            <div
-              className={
-                toggleState === 6 ? 'content  active-content' : 'content'
-              }
-            >
-              dd
+              <AddRoom setopendashboard={setopendashboard} />
             </div>
           </div>
         </div>

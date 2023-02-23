@@ -74,6 +74,7 @@ const UpdateEmployee = ({ setOpen, empdata }) => {
                     type="text"
                     id="mobile"
                     name="mobile"
+                    required
                     value={mobile}
                     onChange={(e) => setmobile(e.target.value)}
                     className="forminput_add_user"
@@ -84,6 +85,7 @@ const UpdateEmployee = ({ setOpen, empdata }) => {
                     type="text"
                     id="address"
                     name="address"
+                    required
                     value={address}
                     onChange={(e) => setaddress(e.target.value)}
                     className="forminput_add_user"
@@ -97,6 +99,7 @@ const UpdateEmployee = ({ setOpen, empdata }) => {
                     text="text"
                     id="username"
                     name="username"
+                    required
                     value={username}
                     onChange={(e) => setusername(e.target.value)}
                     className="forminput_add_user"
@@ -106,6 +109,7 @@ const UpdateEmployee = ({ setOpen, empdata }) => {
                     htmlFor="password"
                     text="password"
                     id="password"
+                    required
                     name="password"
                     value={password}
                     onChange={(e) => setpassword(e.target.value)}
@@ -123,6 +127,7 @@ const UpdateEmployee = ({ setOpen, empdata }) => {
                   <input
                     text="email"
                     type="email"
+                    required
                     id="email"
                     name="email"
                     value={email}
@@ -139,6 +144,7 @@ const UpdateEmployee = ({ setOpen, empdata }) => {
                     className="inner-input-div1-select_add"
                     type="text"
                     id="role"
+                    required
                     name="role"
                     value={role}
                     onChange={(e) => setrole(e.target.value)}
@@ -166,6 +172,7 @@ const UpdateEmployee = ({ setOpen, empdata }) => {
                     className="inner-input-div1-select_add"
                     id="status"
                     name="status"
+                    required
                     value={status}
                     onChange={(e) => setstatus(e.target.value)}
                   >

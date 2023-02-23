@@ -3,8 +3,6 @@ import profileimgs from '../../../assets/profileimg.jpg';
 import { useNavigate } from 'react-router-dom';
 import { backendApiUrl } from '../../../config/config';
 import Swal from 'sweetalert2';
-import { useSelector, useDispatch } from 'react-redux';
-import { loadUser } from '../../../Redux/redux/action/AuthAction';
 import axios from 'axios';
 import './ProfileAdminAndEmp.css';
 const formData = new FormData();

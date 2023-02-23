@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
-import moment from 'moment';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -45,7 +44,7 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
   const location = useLocation();
   const navigation = useNavigate();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
   const [isData, setisData] = useState('');
   const [refetchdata, setrefetchdata] = useState(false);
   const [Data, setData] = useState('');
@@ -123,17 +122,17 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
           <div className="table-div-maain">
             {/* <TableContainer component={Paper}> */}
             <Table
-              sx={{ minWidth: 650, width: '97%' }}
+              sx={{ minWidth: 650, width: '97%', marginTop: '3rem' }}
               aria-label="simple table"
             >
               <TableHead style={{ background: '#F1F0F0' }}>
                 <TableRow>
-                  <TableCell>S.No</TableCell>
-                  <TableCell>Empoyee Name</TableCell>
+                  <TableCell align="center">S.No</TableCell>
+                  <TableCell align="center">Empoyee Name</TableCell>
 
-                  <TableCell>Voucher Number</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell align="center">Voucher Number</TableCell>
+                  <TableCell align="center">Status</TableCell>
+                  <TableCell align="center">Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -152,12 +151,12 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
-                        <TableCell> {index + 1}</TableCell>
-                        <TableCell>{row?.name}</TableCell>
+                        <TableCell align="center"> {index + 1}</TableCell>
+                        <TableCell align="center">{row?.name}</TableCell>
 
-                        <TableCell>{row?.voucherNo}</TableCell>
-                        <TableCell>{row.status}</TableCell>
-                        <TableCell>
+                        <TableCell align="center">{row?.voucherNo}</TableCell>
+                        <TableCell align="center">{row.status}</TableCell>
+                        <TableCell align="center">
                           {row.status === 'unallocated' && (
                             <>
                               <button
@@ -196,7 +195,7 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowsPerPageOptions={[10, 25, 40]}
+                    rowsPerPageOptions={[20, 30, 40]}
                     labelRowsPerPage={<span>Rows:</span>}
                     labelDisplayedRows={({ page }) => {
                       return `Page: ${page}`;

@@ -28,7 +28,8 @@
 
 .backebj_voucher{
 margin-left: 1.3rem;
-margin-bottom: 1rem;
+margin-bottom: 5rem;
+position:fixed ;
 }
 .backebj_voucher button{
  width: 149px;

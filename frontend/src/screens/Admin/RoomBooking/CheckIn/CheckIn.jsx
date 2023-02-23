@@ -16,7 +16,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
 import CircularProgress from '@mui/material/CircularProgress';
-import { ExportPdfmanul } from '../../../Admin/compoments/ExportPdf';
 import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';

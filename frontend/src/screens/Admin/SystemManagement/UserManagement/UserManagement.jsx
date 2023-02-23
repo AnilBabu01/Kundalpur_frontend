@@ -21,6 +21,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Adduser from './Adduser/Adduser';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 import UpdateEmployee from './Adduser/UpdateEmployee';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
@@ -244,8 +245,9 @@ const UserManagement = ({ setopendashboard }) => {
                     {currDate} / {currTime}
                   </Typography>
                 </div>
-
-                <CloseIcon onClick={() => handleClose()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose()} />
+                </IconButton>
               </div>
 
               <Adduser setOpen={setOpen} />
@@ -276,8 +278,9 @@ const UserManagement = ({ setopendashboard }) => {
                     {currDate} / {currTime}
                   </Typography>
                 </div>
-
-                <CloseIcon onClick={() => handleClose3()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose3()} />
+                </IconButton>
               </div>
 
               <UpdateEmployee setOpen={setOpen3} empdata={empdata} />

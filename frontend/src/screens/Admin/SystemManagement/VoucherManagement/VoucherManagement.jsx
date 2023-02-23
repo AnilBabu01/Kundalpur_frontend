@@ -107,7 +107,10 @@ const VoucherManagement = ({ setopendashboard }) => {
             </>
           ) : (
             <>
-              <div className="main_center_header">
+              <div
+                className="main_center_header"
+                style={{ marginLeft: '1.5rem' }}
+              >
                 <div className="add-btn-user2">
                   <p style={{ marginTop: '0.6%' }}>Voucher Management</p>
                   <div className="add_role_icons_div" style={{ width: '30%' }}>
@@ -146,19 +149,18 @@ const VoucherManagement = ({ setopendashboard }) => {
               <div className="main_center_header"></div>
 
               <div className="table-div-maain">
-                {/* <TableContainer component={Paper}> */}
                 <Table
                   sx={{ minWidth: 650, width: '97%' }}
                   aria-label="simple table"
                 >
                   <TableHead style={{ background: '#F1F0F0' }}>
                     <TableRow>
-                      <TableCell>S.No</TableCell>
-                      <TableCell>Empoyee Name</TableCell>
-                      <TableCell>Voucher</TableCell>
-                      <TableCell>Voucher Number</TableCell>
-                      <TableCell>Status</TableCell>
-                      <TableCell>Action</TableCell>
+                      <TableCell align="center">S.No</TableCell>
+                      <TableCell align="center">Empoyee Name</TableCell>
+                      <TableCell align="center">Voucher</TableCell>
+                      <TableCell align="center">Voucher Number</TableCell>
+                      <TableCell align="center">Status</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -175,14 +177,17 @@ const VoucherManagement = ({ setopendashboard }) => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
-                        <TableCell> {index + 1}</TableCell>
-                        <TableCell>{row?.name}</TableCell>
-                        <TableCell> {`${row.from} to ${row.to}`}</TableCell>
-                        <TableCell>{row?.voucher}</TableCell>
-                        <TableCell>
+                        <TableCell align="center"> {index + 1}</TableCell>
+                        <TableCell align="center">{row?.name}</TableCell>
+                        <TableCell align="center">
+                          {' '}
+                          {`${row.from} to ${row.to}`}
+                        </TableCell>
+                        <TableCell align="center">{row?.voucher}</TableCell>
+                        <TableCell align="center">
                           {row.status ? 'Allocated' : 'Not Used'}
                         </TableCell>
-                        <TableCell>
+                        <TableCell align="center">
                           <button
                             onClick={() =>
                               navigate('/admin-panel/uservoucher', {
@@ -221,16 +226,10 @@ const VoucherManagement = ({ setopendashboard }) => {
                             'aria-label': 'page number',
                           },
                         }}
-                        // showFirstButton={true}
-                        // showLastButton={true}
-                        //ActionsComponent={TablePaginationActions}
-                        //component={Box}
-                        //sx and classes prop discussed in styling section
                       />
                     </TableRow>
                   </TableFooter>
                 </Table>
-                {/* </TableContainer> */}
               </div>
             </>
           )}

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
-import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -53,14 +50,6 @@ const Request = ({ setopendashboard }) => {
     });
   };
 
-  const downloadrecept = (row) => {
-    navigation('/reciept', {
-      state: {
-        userdata: row,
-      },
-    });
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -100,7 +89,6 @@ const Request = ({ setopendashboard }) => {
           </div>
 
           <div className="table-div-maain">
-            {/* <TableContainer component={Paper}> */}
             <Table
               sx={{ minWidth: 650, width: '97%' }}
               aria-label="simple table"
@@ -159,16 +147,10 @@ const Request = ({ setopendashboard }) => {
                         'aria-label': 'page number',
                       },
                     }}
-                    // showFirstButton={true}
-                    // showLastButton={true}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
-                    //sx and classes prop discussed in styling section
                   />
                 </TableRow>
               </TableFooter>
             </Table>
-            {/* </TableContainer> */}
           </div>
         </div>
       </div>

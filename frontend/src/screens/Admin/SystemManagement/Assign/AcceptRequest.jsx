@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../config/config';
-import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const AcceptRequest = ({ setOpen, empdata }) => {
-  const [isData, setisData] = React.useState([]);
   const [fromNo, setfromNo] = useState('');
   const [toNo, settoNo] = useState('');
   const [assingTo, setassingTo] = useState();

@@ -16,6 +16,9 @@ const AddVoucherToUser = ({ setOpen }) => {
 
   const handlesubmit = async () => {
     try {
+      if (!fromNo && !toNo && !assingTo) {
+        Swal.fire('Error!', 'All fields required', 'error');
+      }
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -68,6 +71,7 @@ const AddVoucherToUser = ({ setOpen }) => {
                 <input
                   type="number"
                   id="fromNo"
+                  required
                   placeholder="From VC"
                   className="forminput_add_user"
                   value={fromNo}
@@ -80,6 +84,7 @@ const AddVoucherToUser = ({ setOpen }) => {
                 <label htmlFor="toNo">To Number </label>
                 <input
                   id="toNo"
+                  required
                   className="forminput_add_user"
                   type="number"
                   placeholder="To VC"
@@ -94,6 +99,7 @@ const AddVoucherToUser = ({ setOpen }) => {
                   className="inner-input-div1-select12"
                   id="assingTo"
                   value={assingTo}
+                  required
                   name="assingTo"
                   onChange={(e) => setassingTo(e.target.value)}
                 >

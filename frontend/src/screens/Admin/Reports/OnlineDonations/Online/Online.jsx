@@ -21,6 +21,8 @@ import Moment from 'moment-js';
 import DownloadIcon from '@mui/icons-material/Download';
 import CircularProgress from '@mui/material/CircularProgress';
 import { ExportPdfUser } from '../../../compoments/ExportPdf';
+import axios from 'axios';
+import { backendApiUrl } from '../../../../../config/config';
 import Print from '../../../../../assets/Print.png';
 import ExportPdf from '../../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../../assets/ExportExcel.png';
@@ -105,7 +107,7 @@ const Online = ({ setopendashboard }) => {
   const [deleteId, setdeleteId] = useState('');
   const [datefrom, setdatefrom] = useState('');
   const [dateto, setdateto] = useState('');
-
+  const [searchvalue, setsearchvalue] = useState('');
   const [userrole, setuserrole] = useState('');
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
@@ -203,6 +205,33 @@ const Online = ({ setopendashboard }) => {
       });
     });
     exportFromJSON({ data, fileName, exportType });
+  };
+
+  const filterdata = async () => {
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+    if (searchvalue) {
+      const res = await axios.get(
+        `${backendApiUrl}/admin/search-online-cheque?search=${searchvalue}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
+      }
+    } else {
+      const res = await axios.get(
+        `${backendApiUrl}/admin/filter-online-cheque?fromDate=${datefrom}&toDate=${dateto}&fromRec=${voucherfrom}&toRec=${voucherto}&type=${1}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
+      }
+    }
   };
   useEffect(() => {
     getall_donation();

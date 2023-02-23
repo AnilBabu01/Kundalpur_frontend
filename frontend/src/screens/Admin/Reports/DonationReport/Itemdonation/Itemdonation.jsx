@@ -138,6 +138,7 @@ const Itemdonation = ({ setopendashboard }) => {
   const [userrole, setuserrole] = useState('');
   const [type, settype] = useState('');
   const [datefrom, setdatefrom] = useState('');
+  const [searchvalue, setsearchvalue] = useState('');
   const [dateto, setdateto] = useState('');
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
@@ -158,9 +159,11 @@ const Itemdonation = ({ setopendashboard }) => {
   };
 
   const getall_donation = () => {
-    setdate('');
-    setphone('');
-    setname('');
+    setdatefrom('');
+    setdateto('');
+    setvoucherfrom('');
+    setvoucherto('');
+    setsearchvalue('');
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter((item) => item.modeOfDonation === '4');
@@ -221,16 +224,35 @@ const Itemdonation = ({ setopendashboard }) => {
     exportFromJSON({ data, fileName, exportType });
   };
   const filterdata = async () => {
-    serverInstance(
-      `user/searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
-      'get`,
-    ).then((res) => {
-      if (res.data) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '3');
+    if (searchvalue) {
+      axios.defaults.headers.get[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-        setisData(filterData);
+      const res = await axios.get(
+        `${backendApiUrl}admin/search-electric?search=${searchvalue}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
       }
-    });
+    } else {
+      axios.defaults.headers.get[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+      const res = await axios.get(
+        `${backendApiUrl}user/search-donation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}&modeOfDonation=${4}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
+      }
+    }
   };
   const get_donation_tyeps = () => {
     try {
@@ -382,6 +404,9 @@ const Itemdonation = ({ setopendashboard }) => {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
+                value={searchvalue}
+                name="searchvalue"
+                onChange={(e) => setsearchvalue(e.target.value)}
               />
             </Search>
           </div>

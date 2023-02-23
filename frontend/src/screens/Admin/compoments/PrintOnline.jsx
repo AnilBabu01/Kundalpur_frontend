@@ -4,7 +4,7 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import ManualTotal from '../compoments/ManualTotal';
+import OnlineTotal from '../compoments/OnlineTotal';
 import { useReactToPrint } from 'react-to-print';
 import Moment from 'moment-js';
 import TableContainer from '@mui/material/TableContainer';
@@ -64,16 +64,16 @@ function PrintOnline({ isData, handleClose }) {
               className="margintop_add"
               style={{ borderBottom: '1px solid gray', fontSize: '14px' }}
             >
-              {/* <td> &nbsp;</td>
               <td> &nbsp;</td>
               <td> &nbsp;</td>
               <td> &nbsp;</td>
               <td> &nbsp;</td>
               <td> &nbsp;</td>
-              <td>Amount</td>
+              <td> &nbsp;</td>
+              <td>Total Amount</td>
               <td>
-                <ManualTotal data={isData} />
-              </td> */}
+                <OnlineTotal data={isData} />
+              </td>
             </tr>
           </table>
         </div>

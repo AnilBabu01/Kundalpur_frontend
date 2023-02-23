@@ -2,17 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
 import { serverInstance } from '../../../../../API/ServerInstance';
-
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { alpha } from '@mui/material/styles';
-
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -49,7 +45,6 @@ const custommStyleInputTable = {
   padding: 9.5,
 };
 const ElectronicDonation = ({
-  setshowalert,
   handleClose,
   themeColor,
   updateData,
@@ -67,8 +62,6 @@ const ElectronicDonation = ({
   });
 
   const navigation = useNavigate();
-  const [text, setText] = useState('');
-  const [addText, setaddText] = useState('');
   const [hindiremark, sethindiremark] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
@@ -77,7 +70,6 @@ const ElectronicDonation = ({
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [newMember, setNewMember] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
-  const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
   const [donationItems, setDonationItems] = useState([
@@ -258,7 +250,6 @@ const ElectronicDonation = ({
 
           console.log('rr', res);
           if (res.data.status === true) {
-            setshowalert(true);
             handleClose();
             sendsms(totalamount);
 

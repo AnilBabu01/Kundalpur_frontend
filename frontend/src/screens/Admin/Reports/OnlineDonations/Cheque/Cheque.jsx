@@ -124,7 +124,7 @@ const Cheque = ({ setopendashboard }) => {
 
   const [datefrom, setdatefrom] = useState('');
   const [dateto, setdateto] = useState('');
-
+  const [searchvalue, setsearchvalue] = useState('');
   const [userrole, setuserrole] = useState('');
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
@@ -139,6 +139,11 @@ const Cheque = ({ setopendashboard }) => {
   const handleClose = () => setOpen(false);
 
   const getall_donation = () => {
+    setdatefrom('');
+    setdateto('');
+    setvoucherfrom('');
+    setvoucherto('');
+    setsearchvalue('');
     serverInstance('admin/donation-list', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter(
@@ -198,12 +203,26 @@ const Cheque = ({ setopendashboard }) => {
     axios.defaults.headers.get[
       'Authorization'
     ] = `Bearer ${sessionStorage.getItem('token')}`;
+    if (searchvalue) {
+      const res = await axios.get(
+        `${backendApiUrl}admin/search-online-cheque?search=${searchvalue}`,
+      );
 
-    const res = await axios.get(
-      `${backendApiUrl}admin/filter-online-cheque?type=${1}&fromRec=${voucherfrom}&toRec=${voucherto}&fromdate=${datefrom}&todate=${dateto}`,
-    );
-    if (res.data.status) {
-      setisData(res.data.data);
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
+      }
+    } else {
+      const res = await axios.get(
+        `${backendApiUrl}admin/filter-online-cheque?fromDate=${datefrom}&toDate=${dateto}&fromRec=${voucherfrom}&toRec=${voucherto}&type=${2}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
+      }
     }
   };
   const get_donation_tyeps = () => {
@@ -327,6 +346,9 @@ const Cheque = ({ setopendashboard }) => {
                 <StyledInputBase
                   placeholder="Search…"
                   inputProps={{ 'aria-label': 'search' }}
+                  value={searchvalue}
+                  name="searchvalue"
+                  onChange={(e) => setsearchvalue(e.target.value)}
                 />
               </Search>
             </div>

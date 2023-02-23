@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
@@ -38,11 +37,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import axios from 'axios';
 import { backendApiUrl } from '../../../../config/config';
-import {
-  ExportPdfmanul,
-  ExportPdfUser,
-  ExportPdfUserCheque,
-} from '../../compoments/ExportPdf';
+import { ExportPdfmanul } from '../../compoments/ExportPdf';
 import './Donation.css';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -131,15 +126,10 @@ const Donation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [open1, setOpen1] = React.useState(false);
-  const [showalert, setshowalert] = useState(false);
-  const [deleteId, setdeleteId] = useState('');
   const [open, setOpen] = React.useState(true);
   const [open3, setOpen3] = React.useState(false);
-  const [tabValue, setTabValue] = React.useState(0);
-  const [userrole, setuserrole] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
-  const [loading, setLoading] = useState(false);
+
   const [rowData, setrowData] = useState('');
   const [open4, setOpen4] = useState(false);
   const [datefrom, setdatefrom] = useState('');
@@ -311,7 +301,6 @@ const Donation = ({ setopendashboard }) => {
     setopendashboard(true);
 
     get_donation_tyeps();
-    setuserrole(Number(sessionStorage.getItem('userrole')));
 
     const role = Number(sessionStorage.getItem('userrole'));
     if (role === 3) {
@@ -324,7 +313,7 @@ const Donation = ({ setopendashboard }) => {
         }
       });
     }
-  }, [showalert, open]);
+  }, [open]);
 
   const tabs = React.useMemo(
     () => [
@@ -332,7 +321,6 @@ const Donation = ({ setopendashboard }) => {
         label: 'Cash Donation',
         component: (
           <CashDonation
-            setshowalert={setshowalert}
             handleClose={handleClose}
             themeColor={donationColorTheme.cash}
             handleOpen4={handleOpen4}
@@ -345,7 +333,6 @@ const Donation = ({ setopendashboard }) => {
         label: 'Electronic Donation',
         component: (
           <ElectronicDonation
-            setshowalert={setshowalert}
             handleClose={handleClose}
             themeColor={donationColorTheme.electronic}
             handleOpen4={handleOpen4}
@@ -357,7 +344,6 @@ const Donation = ({ setopendashboard }) => {
         label: 'Cheque Donation',
         component: (
           <ChequeDonation
-            setshowalert={setshowalert}
             handleClose={handleClose}
             themeColor={donationColorTheme.cheque}
             handleOpen4={handleOpen4}
@@ -369,7 +355,6 @@ const Donation = ({ setopendashboard }) => {
         label: 'Item Donation',
         component: (
           <ItemDonation
-            setshowalert={setshowalert}
             handleClose={handleClose}
             themeColor={donationColorTheme.item}
             handleOpen4={handleOpen4}

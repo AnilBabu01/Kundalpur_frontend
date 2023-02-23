@@ -165,10 +165,11 @@ const Electornic = ({ setopendashboard }) => {
   };
 
   const getall_donation = () => {
-    setdate('');
-    setphone('');
-    setname('');
-
+    setdatefrom('');
+    setdateto('');
+    setvoucherfrom('');
+    setvoucherto('');
+    setsearchvalue('');
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter((item) => item.modeOfDonation === '1');
@@ -243,16 +244,19 @@ const Electornic = ({ setopendashboard }) => {
         setisData(res.data.data);
       }
     } else {
-      serverInstance(
-        `user/searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}&modeOfDonation=${1}',
-        'get`,
-      ).then((res) => {
-        console.log('filter data is', res.data);
+      axios.defaults.headers.get[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-        if (res.data) {
-          setisData(res.data);
-        }
-      });
+      const res = await axios.get(
+        `${backendApiUrl}user/search-donation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}&modeOfDonation=${1}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
+      }
     }
   };
 

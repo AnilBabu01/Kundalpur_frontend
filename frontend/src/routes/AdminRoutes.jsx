@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../screens/Admin/Dashboard/Dashboard';
 import MasterTap from '../screens/Admin/masters/MasterTap';
-import DonatedUsers from '../screens/Admin/Donatedusers/DonatedUsers';
 import Donation from '../screens/Admin/Donation/Donation/Donation';
 import RoleManagement from '../screens/Admin/SystemManagement/RoleManagement/RoleManagement';
 import UserManagement from '../screens/Admin/SystemManagement/UserManagement/UserManagement';
@@ -106,15 +105,6 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <ManualDonationTap setopendashboard={setopendashboard} />
-            </Adminprivateroute>
-          }
-        />
-
-        <Route
-          path="/admin-panel/donatedusers"
-          element={
-            <Adminprivateroute>
-              <DonatedUsers setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

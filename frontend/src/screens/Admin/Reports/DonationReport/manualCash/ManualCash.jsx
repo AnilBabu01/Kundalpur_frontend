@@ -39,6 +39,7 @@ import InputBase from '@mui/material/InputBase';
 import PrintElectronic from '../../../compoments/PrintElectronic';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+
 import './ManualCash.css';
 
 const Search = styled('div')(({ theme }) => ({
@@ -146,6 +147,7 @@ const ManualCash = ({ setopendashboard }) => {
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
   const [open5, setOpen5] = React.useState(false);
+  const [searchvalue, setsearchvalue] = useState('');
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
 
@@ -167,7 +169,7 @@ const ManualCash = ({ setopendashboard }) => {
     setdateto('');
     setvoucherfrom('');
     setvoucherto('');
-
+    setsearchvalue('');
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter((item) => item.modeOfDonation === '2');
@@ -229,16 +231,35 @@ const ManualCash = ({ setopendashboard }) => {
   };
 
   const filterdata = async () => {
-    serverInstance(
-      `user/searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
-      'get`,
-    ).then((res) => {
-      if (res.data) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
+    if (searchvalue) {
+      axios.defaults.headers.get[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-        setisData(filterData);
+      const res = await axios.get(
+        `${backendApiUrl}admin/search-electric?search=${searchvalue}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
       }
-    });
+    } else {
+      axios.defaults.headers.get[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+      const res = await axios.get(
+        `${backendApiUrl}user/search-donation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}&modeOfDonation=${2}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
+      }
+    }
   };
 
   const get_donation_tyeps = () => {
@@ -393,6 +414,9 @@ const ManualCash = ({ setopendashboard }) => {
                 <StyledInputBase
                   placeholder="Search…"
                   inputProps={{ 'aria-label': 'search' }}
+                  value={searchvalue}
+                  name="searchvalue"
+                  onChange={(e) => setsearchvalue(e.target.value)}
                 />
               </Search>
             </div>

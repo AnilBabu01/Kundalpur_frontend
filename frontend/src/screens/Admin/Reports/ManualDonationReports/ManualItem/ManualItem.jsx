@@ -42,6 +42,8 @@ import InputBase from '@mui/material/InputBase';
 import PrintManual from '../../../compoments/PrintManual';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import axios from 'axios';
+import { backendApiUrl } from '../../../../../config/config';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -144,7 +146,7 @@ const ManualItem = ({ setopendashboard }) => {
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
   const [open5, setOpen5] = React.useState(false);
-
+  const [searchvalue, setsearchvalue] = useState('');
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
   console.log(userrole);
@@ -162,6 +164,11 @@ const ManualItem = ({ setopendashboard }) => {
   };
 
   const getall_donation = () => {
+    setsearchvalue('');
+    setdatefrom('');
+    setdateto('');
+    setvoucherfrom('');
+    setvoucherto('');
     serverInstance('admin/manual-donation', 'get').then((res) => {
       if (res.status) {
         let filterData = res.data.filter((item) => item.modeOfDonation === '4');
@@ -222,21 +229,31 @@ const ManualItem = ({ setopendashboard }) => {
     exportFromJSON({ data, fileName, exportType });
   };
 
-  const filterdata = () => {
-    setdatefrom('');
-    setdateto('');
-    serverInstance(
-      `user/manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}&modeOfDonation=${4}',
-      'get`,
-    ).then((res) => {
-      console.log('filter data is', res.data);
+  const filterdata = async () => {
+    axios.defaults.headers.get[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+    if (searchvalue) {
+      const res = await axios.get(
+        `${backendApiUrl}/admin/search-manual?search=${searchvalue}`,
+      );
 
-      if (res.data) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '4');
+      console.log('ss', res.data.data);
 
-        setisData(filterData);
+      if (res.data.status) {
+        setisData(res.data.data);
       }
-    });
+    } else {
+      const res = await axios.get(
+        `${backendApiUrl}user/manual-search-donation?fromDate=${datefrom}&toDate=${dateto}&fromReceipt=${voucherfrom}&toReceipt=${voucherto}&modeOfDonation=${4}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
+      }
+    }
   };
 
   const get_donation_tyeps = () => {
@@ -424,6 +441,9 @@ const ManualItem = ({ setopendashboard }) => {
                 <StyledInputBase
                   placeholder="Search…"
                   inputProps={{ 'aria-label': 'search' }}
+                  value={searchvalue}
+                  name="searchvalue"
+                  onChange={(e) => setsearchvalue(e.target.value)}
                 />
               </Search>
             </div>

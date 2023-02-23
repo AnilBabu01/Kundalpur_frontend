@@ -4,7 +4,6 @@ import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Fade from '@mui/material/Fade';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,15 +14,10 @@ import TablePagination from '@mui/material/TablePagination';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import { backendApiUrl } from '../../../../config/config';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import UpdateDonationType from './UpdateDonationType';
 import CheckIcon from '@mui/icons-material/Check';
 import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 const style = {
@@ -47,8 +41,6 @@ function IntemMaster() {
   const [refetch, setrefetch] = useState(false);
   const [donationtype_in_hindi, setdonationtype_in_hindi] = useState('');
   const [donationtype_in_eng, setdonationtype_in_eng] = useState('');
-  const [open1, setOpen1] = React.useState(false);
-  const [deleteId, setdeleteId] = useState('');
   const [open3, setOpen3] = React.useState(false);
   const [data, setdata] = useState('');
   const [manageActivation, setmanageActivation] = useState(false);
@@ -59,31 +51,6 @@ function IntemMaster() {
   };
   const handleClose3 = () => setOpen3(false);
 
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-  };
-
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
-
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`admin/donation-type?id=${deleteId}`, 'delete').then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire('Great!', 'User delete successfully', 'success');
-          setrefetch(!refetch);
-          setdonationtype_in_hindi('');
-          setdonationtype_in_eng('');
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-        console.log(res);
-      },
-    );
-  };
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -108,7 +75,7 @@ function IntemMaster() {
         itemType_hi: donationtype_in_hindi,
       });
       if (data.status === true) {
-        Swal.fire('Great!', 'User Added Successfully', 'success');
+        Swal.fire('Great!', 'Item Head Added Successfully', 'success');
         handleClose();
         setdonationtype_in_eng('');
         setdonationtype_in_hindi('');
@@ -191,7 +158,9 @@ function IntemMaster() {
               <form onSubmit={handlesubmit}>
                 <div className="add-div-close-div">
                   <h2>Add New Donation Type</h2>
-                  <CloseIcon onClick={() => handleClose()} />
+                  <IconButton>
+                    <CloseIcon onClick={() => handleClose()} />
+                  </IconButton>
                 </div>
 
                 <div className="main-input-div1">
@@ -201,6 +170,7 @@ function IntemMaster() {
                     </label>
                     <input
                       type="text"
+                      required
                       id="donationtype_in_hindi"
                       value={donationtype_in_hindi}
                       name="donationtype_in_hindi"
@@ -211,6 +181,7 @@ function IntemMaster() {
                     </label>
                     <input
                       type="text"
+                      required
                       id="donationtype_in_eng"
                       value={donationtype_in_eng}
                       name="donationtype_in_eng"

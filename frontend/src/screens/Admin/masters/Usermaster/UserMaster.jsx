@@ -6,10 +6,6 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { useNavigate } from 'react-router-dom';
-import EditIcon from '@mui/icons-material/Edit';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,12 +14,6 @@ import Swal from 'sweetalert2';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import activate from '../../../../assets/activate.png';
 import deacivate from '../../../../assets/deacivate.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
@@ -48,7 +38,6 @@ const style = {
 };
 import './UserMaster.css';
 function UserMaster() {
-  const navigation = useNavigate();
   const [isData, setisData] = React.useState([]);
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
@@ -60,7 +49,6 @@ function UserMaster() {
   const [refetch, setrefetch] = useState(false);
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
-  const [deleteId, setdeleteId] = useState('');
   const [userdata, setuserdata] = useState('');
   const [manageActivation, setmanageActivation] = useState(false);
   const [searchName, setsearchName] = useState('');
@@ -81,28 +69,6 @@ function UserMaster() {
     setuserdata(data);
   };
   const handleClose2 = () => setOpen2(false);
-
-  // const handleClickOpen1 = (id) => {
-  //   setOpen1(true);
-  //   setdeleteId(id);
-  // };
-
-  // const handleClose1 = () => {
-  //   setOpen1(false);
-  // };
-
-  // const handleClose2 = () => {
-  //   setOpen1(false);
-  //   serverInstance(`admin/del-users?id=${deleteId}`, 'delete').then((res) => {
-  //     if (res.status === true) {
-  //       Swal.fire('Great!', 'User delete successfully', 'success');
-  //       setrefetch(!refetch);
-  //     } else {
-  //       Swal('Error', 'somthing went  wrong', 'error');
-  //     }
-  //     console.log(res);
-  //   });
-  // };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -137,6 +103,8 @@ function UserMaster() {
   };
 
   const getall_users = () => {
+    setsearchName('');
+    setsearchPhonne('');
     serverInstance('admin/get-users', 'get').then((res) => {
       console.log('list', res);
       if (res.status) {
@@ -219,6 +187,7 @@ function UserMaster() {
                       <input
                         id="name"
                         text="text"
+                        required
                         name="name"
                         value={name}
                         onChange={(e) => setname(e.target.value)}
@@ -229,6 +198,7 @@ function UserMaster() {
                       <input
                         type="text"
                         id="phone"
+                        required
                         name="phone"
                         value={phone}
                         onChange={(e) => setphone(e.target.value)}
@@ -241,6 +211,7 @@ function UserMaster() {
                       <input
                         text="text"
                         id="email"
+                        required
                         name="email"
                         value={email}
                         onChange={(e) => setemail(e.target.value)}
@@ -251,6 +222,7 @@ function UserMaster() {
                       <input
                         text="password"
                         id="password"
+                        required
                         name="password"
                         value={password}
                         onChange={(e) => setpassword(e.target.value)}

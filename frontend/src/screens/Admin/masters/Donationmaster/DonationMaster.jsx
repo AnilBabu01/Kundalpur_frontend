@@ -4,7 +4,6 @@ import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Fade from '@mui/material/Fade';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,19 +11,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import { backendApiUrl } from '../../../../config/config';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import UpdateDonationType from './UpdateDonationType';
-import deaciva from '../../../../assets/deaciva.jpg';
 import CheckIcon from '@mui/icons-material/Check';
-import MasterTap from '../MasterTap';
+import IconButton from '@mui/material/IconButton';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 const style = {
@@ -40,7 +31,6 @@ const style = {
 };
 import './DonationMaster.css';
 function DonationMaster() {
-  const naviagte = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -59,11 +49,6 @@ function DonationMaster() {
     setdata(data);
   };
   const handleClose3 = () => setOpen3(false);
-
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-  };
 
   const handleClose1 = () => {
     setOpen1(false);
@@ -107,7 +92,7 @@ function DonationMaster() {
         type_hi: donationtype_in_hindi,
       });
       if (data.status === true) {
-        Swal.fire('Great!', 'User Added Successfully', 'success');
+        Swal.fire('Great!', 'Item Head Added Successfully', 'success');
         handleClose();
         setdonationtype_in_eng('');
         setdonationtype_in_hindi('');
@@ -177,27 +162,6 @@ function DonationMaster() {
   };
   return (
     <>
-      <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you want to delete'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            After delete you cannot get again
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose1}>Disagree</Button>
-          <Button onClick={handleClose2} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -223,6 +187,7 @@ function DonationMaster() {
                       className="input_add_donation_type"
                       type="text"
                       id="donationtype_in_hindi"
+                      required
                       value={donationtype_in_hindi}
                       name="donationtype_in_hindi"
                       onChange={(e) => setdonationtype_in_hindi(e.target.value)}
@@ -233,6 +198,7 @@ function DonationMaster() {
                     <input
                       className="input_add_donation_type"
                       type="text"
+                      required
                       id="donationtype_in_eng"
                       value={donationtype_in_eng}
                       name="donationtype_in_eng"
@@ -264,7 +230,9 @@ function DonationMaster() {
             <div>
               <div className="add-div-close-div">
                 <h2>Update Donation Type</h2>
-                <CloseIcon onClick={() => handleClose3()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose3()} />
+                </IconButton>
               </div>
               <hr />
               <UpdateDonationType data={data} handleClose3={handleClose3} />

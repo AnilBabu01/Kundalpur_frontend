@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { backendApiUrl } from "../../../../config/config";
-import { serverInstance } from "../../../../API/ServerInstance";
-import Swal from "sweetalert2";
-import axios from "axios";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
+import React, { useState, useEffect } from 'react';
+import { backendApiUrl } from '../../../../config/config';
+import { serverInstance } from '../../../../API/ServerInstance';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
 // import CheckIcon from "@mui/icons-material/Check";
 // import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CloseIcon from '@mui/icons-material/RadioButtonChecked';
-import "./ReceiptMater.css";
+import './ReceiptMater.css';
 function ReceiptMater() {
-  const [eleReceiptNo, seteleReceiptNo] = useState("");
-  const [cacgReceiptNo, setcacgReceiptNo] = useState("");
-  const [itemReceiptNo, setitemReceiptNo] = useState("");
-  const [chequeReceiptNo, setchequeReceiptNo] = useState("");
-  const [onlineReceiptNo, setOnlineReceiptNo] = useState("");
-  const [onlineChequeReceiptNo, setOnlineChequeReceiptNo] = useState("");
+  const [eleReceiptNo, seteleReceiptNo] = useState('');
+  const [cacgReceiptNo, setcacgReceiptNo] = useState('');
+  const [itemReceiptNo, setitemReceiptNo] = useState('');
+  const [chequeReceiptNo, setchequeReceiptNo] = useState('');
+  const [onlineReceiptNo, setOnlineReceiptNo] = useState('');
+  const [onlineChequeReceiptNo, setOnlineChequeReceiptNo] = useState('');
   const [eleReceipts, seteleReceipts] = useState([]);
   const [CashReceipts, setCashReceipts] = useState([]);
   const [itemReceipts, setitemReceipts] = useState([]);
@@ -38,93 +38,123 @@ function ReceiptMater() {
   const [manageActivation, setmanageActivation] = useState(false);
   let status;
   // console.log(chequeReceipts, itemReceipts, CashReceipts, eleReceipts);
-    console.log(isData)
+  console.log(isData);
   const handleSubmit = async (type) => {
     try {
       axios.defaults.headers.post[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("token")}`;
-      if (type === "eleReceiptNo") {
-        const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
-          receipt: eleReceiptNo,
-          type: 1,
-        });
-        if (res.data.status === true) {
-          Swal.fire(
-            "Great!",
-            "Electronic receiptNo. Added Successfully",
-            "success"
-          );
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
+      if (type === 'eleReceiptNo') {
+        if (eleReceiptNo) {
+          const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
+            receipt: eleReceiptNo,
+            type: 1,
+          });
+          if (res.data.status === true) {
+            Swal.fire(
+              'Great!',
+              'Electronic receiptNo. Added Successfully',
+              'success',
+            );
+          }
+        } else {
+          Swal.fire('Error!', 'Please enter receipt no', 'error');
         }
       }
-      if (type === "cacgReceiptNo") {
-        console.log(cacgReceiptNo);
-        const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
-          receipt: cacgReceiptNo,
-          type: 2,
-        });
-        if (res.data.status === true) {
-          Swal.fire("Great!", "Cash receiptNo. Added Successfully", "success");
+      if (type === 'cacgReceiptNo') {
+        if (cacgReceiptNo) {
+          const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
+            receipt: cacgReceiptNo,
+            type: 2,
+          });
+          if (res.data.status === true) {
+            Swal.fire(
+              'Great!',
+              'Cash receiptNo. Added Successfully',
+              'success',
+            );
+          }
+        } else {
+          Swal.fire('Error!', 'Please enter receipt no', 'error');
         }
       }
-      if (type ==="itemReceiptNo") {
-        const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
-          receipt: itemReceiptNo,
-          type: 4,
-        });
-        if (res.data.status === true) {
-          Swal.fire("Great!", "Item receiptNo. Added Successfully", "success");
+      if (type === 'itemReceiptNo') {
+        if (itemReceiptNo) {
+          const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
+            receipt: itemReceiptNo,
+            type: 4,
+          });
+          if (res.data.status === true) {
+            Swal.fire(
+              'Great!',
+              'Item receiptNo. Added Successfully',
+              'success',
+            );
+          }
+        } else {
+          Swal.fire('Error!', 'Please enter receipt no', 'error');
         }
       }
-      if (type ==="chequeReceiptNo") {
-        const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
-          receipt: chequeReceiptNo,
-          type: 3,
-        });
-        if (res.data.status === true) {
-          Swal.fire(
-            "Great!",
-            "Cheque receiptNo. Added Successfully",
-            "success"
-          );
+      if (type === 'chequeReceiptNo') {
+        if (chequeReceiptNo) {
+          const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
+            receipt: chequeReceiptNo,
+            type: 3,
+          });
+          if (res.data.status === true) {
+            Swal.fire(
+              'Great!',
+              'Cheque receiptNo. Added Successfully',
+              'success',
+            );
+          }
+        } else {
+          Swal.fire('Error!', 'Please enter receipt no', 'error');
         }
       }
-      if (type ==="onlineReceiptNo") {
-        const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
-          receipt: onlineReceiptNo,
-          type: 5,
-        });
-        if (res.data.status === true) {
-          Swal.fire(
-            "Great!",
-            "Online receiptNo. Added Successfully",
-            "success"
-          );
+      if (type === 'onlineReceiptNo') {
+        if (onlineReceiptNo) {
+          const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
+            receipt: onlineReceiptNo,
+            type: 5,
+          });
+          if (res.data.status === true) {
+            Swal.fire(
+              'Great!',
+              'Online receiptNo. Added Successfully',
+              'success',
+            );
+          }
+        } else {
+          Swal.fire('Error!', 'Please enter receipt no', 'error');
         }
       }
-      if (type ==="onlineChequeReceiptNo") {
-        const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
-          receipt: onlineChequeReceiptNo,
-          type: 6,
-        });
-        if (res.data.status === true) {
-          Swal.fire(
-            "Great!",
-            "Online Cheque receiptNo. Added Successfully",
-            "success"
-          );
+      if (type === 'onlineChequeReceiptNo') {
+        if (onlineChequeReceiptNo) {
+          const res = await axios.post(`${backendApiUrl}admin/create-receipt`, {
+            receipt: onlineChequeReceiptNo,
+            type: 6,
+          });
+          if (res.data.status === true) {
+            Swal.fire(
+              'Great!',
+              'Online Cheque receiptNo. Added Successfully',
+              'success',
+            );
+          }
+        } else {
+          Swal.fire('Error!', 'Please enter receipt no', 'error');
         }
       }
       getReceiptNo();
-
     } catch (error) {
-      Swal.fire("Error!", error, "error");
+      Swal.fire('Error!', error, 'error');
     }
   };
 
-  function getReceiptNo(){
+  function getReceiptNo() {
     try {
-      serverInstance("admin/get-receipt", "get").then((res) => {
+      serverInstance('admin/get-receipt', 'get').then((res) => {
         if (res.status) {
           setisData(res.data);
           let filterData1 = res.data.filter((item) => item.type === 1);
@@ -139,13 +169,13 @@ function ReceiptMater() {
           setonlineReceipts(filterData5);
           let filterData6 = res.data.filter((item) => item.type === 6);
           setonlineChequeReceipts(filterData6);
-          console.log("ress", res.data);
+          console.log('ress', res.data);
         }
       });
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Swal.fire('Error', error, 'error');
     }
-  };
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -156,11 +186,11 @@ function ReceiptMater() {
     setPage(0);
   };
 
-  const deacivateAndactivateuser = async (id, type,status) => {
+  const deacivateAndactivateuser = async (id, type, status) => {
     try {
       axios.defaults.headers.put[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("token")}`;
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
       const { data } = await axios.put(`${backendApiUrl}admin/create-receipt`, {
         id: id,
         status: status,
@@ -169,20 +199,19 @@ function ReceiptMater() {
 
       console.log(data.data);
       if (data.data.status === true) {
-         Swal.fire(
-          "Great!",
+        Swal.fire(
+          'Great!',
           !manageActivation
-            ? "Donation Type Deactivate"
-            : "Donation Type Activate",
-          "success"
+            ? 'Donation Type Deactivate'
+            : 'Donation Type Activate',
+          'success',
         );
       }
       // console.log("ss", res);
     } catch (error) {
-      Swal("Error", error, "error");
+      Swal('Error', error, 'error');
     } finally {
-    getReceiptNo();
-
+      getReceiptNo();
     }
   };
   useEffect(() => {
@@ -199,6 +228,7 @@ function ReceiptMater() {
             </label>
             <input
               type="text"
+              required
               id="eleReceiptNo"
               value={eleReceiptNo}
               name="eleReceiptNo"
@@ -213,6 +243,7 @@ function ReceiptMater() {
             </label>
             <input
               type="text"
+              required
               id="cacgReceiptNo"
               value={cacgReceiptNo}
               name="cacgReceiptNo"
@@ -227,6 +258,7 @@ function ReceiptMater() {
             </label>
             <input
               type="text"
+              required
               id="itemReceiptNo"
               value={itemReceiptNo}
               name="itemReceiptNo"
@@ -242,12 +274,15 @@ function ReceiptMater() {
             <input
               type="text"
               id="chequeReceiptNo"
+              required
               value={chequeReceiptNo}
               name="chequeReceiptNo"
               placeholder="reciept no for cheque donation"
               onChange={(e) => setchequeReceiptNo(e.target.value)}
             />
-            <button onClick={() => handleSubmit('chequeReceiptNo')}>Save</button>
+            <button onClick={() => handleSubmit('chequeReceiptNo')}>
+              Save
+            </button>
           </div>
           <div className="ineear_dave_receipt_no">
             <label htmlFor="onlineReceiptNo">
@@ -256,12 +291,15 @@ function ReceiptMater() {
             <input
               type="text"
               id="onlineReceiptNo"
+              required
               value={onlineReceiptNo}
               name="onlineReceiptNo"
               placeholder="reciept no for online donation"
               onChange={(e) => setOnlineReceiptNo(e.target.value)}
             />
-            <button onClick={() => handleSubmit('onlineReceiptNo')}>Save</button>
+            <button onClick={() => handleSubmit('onlineReceiptNo')}>
+              Save
+            </button>
           </div>
           <div className="ineear_dave_receipt_no">
             <label htmlFor="onlineChequeReceiptNo">
@@ -270,24 +308,26 @@ function ReceiptMater() {
             <input
               type="text"
               id="onlineChequeReceiptNo"
+              required
               value={onlineChequeReceiptNo}
               name="onlineChequeReceiptNo"
               placeholder="reciept no for online cheque donation"
               onChange={(e) => setOnlineChequeReceiptNo(e.target.value)}
             />
-            <button onClick={() => handleSubmit('onlineChequeReceiptNo')}>Save</button>
+            <button onClick={() => handleSubmit('onlineChequeReceiptNo')}>
+              Save
+            </button>
           </div>
         </div>
 
         <div className="table_div_recipt">
           <div className="ScrollStyle">
-           
-              <div>
+            <div>
               <div>
                 <h2>Electronic receipt no</h2>
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead style={{ background: "#FFEEE0" }}>
+                    <TableHead style={{ background: '#FFEEE0' }}>
                       <TableRow>
                         <TableCell align="left">Receipt</TableCell>
                         <TableCell align="left">Status</TableCell>
@@ -295,45 +335,45 @@ function ReceiptMater() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                    {eleReceipts && (
+                      {eleReceipts && (
                         <>
                           {(rowsPerPage > 0
                             ? eleReceipts &&
                               eleReceipts.slice(
                                 page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
+                                page * rowsPerPage + rowsPerPage,
                               )
                             : eleReceipts && eleReceipts
                           ).map((row, index) => (
                             <TableRow
                               key={index}
                               sx={{
-                                "&:last-child td, &:last-child th": {
+                                '&:last-child td, &:last-child th': {
                                   border: 0,
                                 },
                               }}
                             >
                               <TableCell align="left">{row.receipt}</TableCell>
                               <TableCell>
-                                {row.status === 1 ? "Active" : "Deactivate"}
+                                {row.status === 1 ? 'Active' : 'Deactivate'}
                               </TableCell>
                               <TableCell>
                                 {row.status === 1 ? (
                                   <CloseIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
                                       deacivateAndactivateuser(row.id, 1, 0)
                                     }
                                   />
                                 ) : (
                                   <CheckIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
-                                      deacivateAndactivateuser(row.id, 1,1 )
+                                      deacivateAndactivateuser(row.id, 1, 1)
                                     }
                                   />
                                 )}
@@ -357,12 +397,12 @@ function ReceiptMater() {
                             return `Page: ${page}`;
                           }}
                           backIconButtonProps={{
-                            color: "secondary",
+                            color: 'secondary',
                           }}
-                          nextIconButtonProps={{ color: "secondary" }}
+                          nextIconButtonProps={{ color: 'secondary' }}
                           SelectProps={{
                             inputProps: {
-                              "aria-label": "page number",
+                              'aria-label': 'page number',
                             },
                           }}
                           // showFirstButton={true}
@@ -381,7 +421,7 @@ function ReceiptMater() {
                 <h2>Item receipt no</h2>
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead style={{ background: "#FFEEE0" }}>
+                    <TableHead style={{ background: '#FFEEE0' }}>
                       <TableRow>
                         <TableCell align="left">Receipt</TableCell>
                         <TableCell align="left">Status</TableCell>
@@ -389,45 +429,43 @@ function ReceiptMater() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {itemReceipts &&
-                      Array.isArray(itemReceipts) &&
-                      (
+                      {itemReceipts && Array.isArray(itemReceipts) && (
                         <>
                           {(rowsPerPage > 0
                             ? itemReceipts &&
                               itemReceipts.slice(
                                 page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
+                                page * rowsPerPage + rowsPerPage,
                               )
                             : itemReceipts && itemReceipts
                           ).map((row, index) => (
                             <TableRow
                               key={index}
                               sx={{
-                                "&:last-child td, &:last-child th": {
+                                '&:last-child td, &:last-child th': {
                                   border: 0,
                                 },
                               }}
                             >
                               <TableCell align="left">{row.receipt}</TableCell>
                               <TableCell>
-                                {row.status === 1 ? "Avtive" : "Deactivate"}
+                                {row.status === 1 ? 'Avtive' : 'Deactivate'}
                               </TableCell>
                               <TableCell>
                                 {row.status === 1 ? (
                                   <CloseIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
-                                      deacivateAndactivateuser(row.id, 4 , 0)
+                                      deacivateAndactivateuser(row.id, 4, 0)
                                     }
                                   />
                                 ) : (
                                   <CheckIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
                                       deacivateAndactivateuser(row.id, 4, 1)
                                     }
@@ -453,12 +491,12 @@ function ReceiptMater() {
                             return `Page: ${page}`;
                           }}
                           backIconButtonProps={{
-                            color: "secondary",
+                            color: 'secondary',
                           }}
-                          nextIconButtonProps={{ color: "secondary" }}
+                          nextIconButtonProps={{ color: 'secondary' }}
                           SelectProps={{
                             inputProps: {
-                              "aria-label": "page number",
+                              'aria-label': 'page number',
                             },
                           }}
                           // showFirstButton={true}
@@ -472,14 +510,14 @@ function ReceiptMater() {
                   </Table>
                 </TableContainer>
               </div>
-              </div>
-           
-              <div>
+            </div>
+
+            <div>
               <div>
                 <h2>Cash receipt no</h2>
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead style={{ background: "#FFEEE0" }}>
+                    <TableHead style={{ background: '#FFEEE0' }}>
                       <TableRow>
                         <TableCell align="left">Receipt</TableCell>
                         <TableCell align="left">Status</TableCell>
@@ -493,37 +531,37 @@ function ReceiptMater() {
                             ? CashReceipts &&
                               CashReceipts.slice(
                                 page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
+                                page * rowsPerPage + rowsPerPage,
                               )
                             : CashReceipts && CashReceipts
                           ).map((row, index) => (
                             <TableRow
                               key={index}
                               sx={{
-                                "&:last-child td, &:last-child th": {
+                                '&:last-child td, &:last-child th': {
                                   border: 0,
                                 },
                               }}
                             >
                               <TableCell align="left">{row.receipt}</TableCell>
                               <TableCell>
-                                {row.status === 1 ? "Avtive" : "Deactivate"}
+                                {row.status === 1 ? 'Avtive' : 'Deactivate'}
                               </TableCell>
                               <TableCell>
                                 {row.status === 1 ? (
                                   <CloseIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
                                       deacivateAndactivateuser(row.id, 2, 0)
                                     }
                                   />
                                 ) : (
                                   <CheckIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
                                       deacivateAndactivateuser(row.id, 2, 1)
                                     }
@@ -549,12 +587,12 @@ function ReceiptMater() {
                             return `Page: ${page}`;
                           }}
                           backIconButtonProps={{
-                            color: "secondary",
+                            color: 'secondary',
                           }}
-                          nextIconButtonProps={{ color: "secondary" }}
+                          nextIconButtonProps={{ color: 'secondary' }}
                           SelectProps={{
                             inputProps: {
-                              "aria-label": "page number",
+                              'aria-label': 'page number',
                             },
                           }}
                           // showFirstButton={true}
@@ -572,7 +610,7 @@ function ReceiptMater() {
                 <h2>Cheque receipt no</h2>
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead style={{ background: "#FFEEE0" }}>
+                    <TableHead style={{ background: '#FFEEE0' }}>
                       <TableRow>
                         <TableCell align="left">Receipt</TableCell>
                         <TableCell align="left">Status</TableCell>
@@ -586,37 +624,37 @@ function ReceiptMater() {
                             ? chequeReceipts &&
                               chequeReceipts.slice(
                                 page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
+                                page * rowsPerPage + rowsPerPage,
                               )
                             : chequeReceipts && chequeReceipts
                           ).map((row, index) => (
                             <TableRow
                               key={index}
                               sx={{
-                                "&:last-child td, &:last-child th": {
+                                '&:last-child td, &:last-child th': {
                                   border: 0,
                                 },
                               }}
                             >
                               <TableCell align="left">{row.receipt}</TableCell>
                               <TableCell>
-                                {row.status === 1 ? "Avtive" : "Deactivate"}
+                                {row.status === 1 ? 'Avtive' : 'Deactivate'}
                               </TableCell>
                               <TableCell>
                                 {row.status === 1 ? (
                                   <CloseIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
                                       deacivateAndactivateuser(row.id, 3, 0)
                                     }
                                   />
                                 ) : (
                                   <CheckIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
                                       deacivateAndactivateuser(row.id, 3, 1)
                                     }
@@ -642,12 +680,12 @@ function ReceiptMater() {
                             return `Page: ${page}`;
                           }}
                           backIconButtonProps={{
-                            color: "secondary",
+                            color: 'secondary',
                           }}
-                          nextIconButtonProps={{ color: "secondary" }}
+                          nextIconButtonProps={{ color: 'secondary' }}
                           SelectProps={{
                             inputProps: {
-                              "aria-label": "page number",
+                              'aria-label': 'page number',
                             },
                           }}
                           // showFirstButton={true}
@@ -661,13 +699,13 @@ function ReceiptMater() {
                   </Table>
                 </TableContainer>
               </div>
-              </div>
-              <div>
+            </div>
+            <div>
               <div>
                 <h2>Online receipt no</h2>
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead style={{ background: "#FFEEE0" }}>
+                    <TableHead style={{ background: '#FFEEE0' }}>
                       <TableRow>
                         <TableCell align="left">Receipt</TableCell>
                         <TableCell align="left">Status</TableCell>
@@ -681,37 +719,37 @@ function ReceiptMater() {
                             ? onlineReceipts &&
                               onlineReceipts.slice(
                                 page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
+                                page * rowsPerPage + rowsPerPage,
                               )
                             : onlineReceipts && onlineReceipts
                           ).map((row, index) => (
                             <TableRow
                               key={index}
                               sx={{
-                                "&:last-child td, &:last-child th": {
+                                '&:last-child td, &:last-child th': {
                                   border: 0,
                                 },
                               }}
                             >
                               <TableCell align="left">{row.receipt}</TableCell>
                               <TableCell>
-                                {row.status === 1 ? "Avtive" : "Deactivate"}
+                                {row.status === 1 ? 'Avtive' : 'Deactivate'}
                               </TableCell>
                               <TableCell>
                                 {row.status === 1 ? (
                                   <CloseIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
                                       deacivateAndactivateuser(row.id, 5, 0)
                                     }
                                   />
                                 ) : (
                                   <CheckIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
                                       deacivateAndactivateuser(row.id, 5, 1)
                                     }
@@ -737,12 +775,12 @@ function ReceiptMater() {
                             return `Page: ${page}`;
                           }}
                           backIconButtonProps={{
-                            color: "secondary",
+                            color: 'secondary',
                           }}
-                          nextIconButtonProps={{ color: "secondary" }}
+                          nextIconButtonProps={{ color: 'secondary' }}
                           SelectProps={{
                             inputProps: {
-                              "aria-label": "page number",
+                              'aria-label': 'page number',
                             },
                           }}
                           // showFirstButton={true}
@@ -760,7 +798,7 @@ function ReceiptMater() {
                 <h2>Online Cheque receipt no</h2>
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead style={{ background: "#FFEEE0" }}>
+                    <TableHead style={{ background: '#FFEEE0' }}>
                       <TableRow>
                         <TableCell align="left">Receipt</TableCell>
                         <TableCell align="left">Status</TableCell>
@@ -774,37 +812,37 @@ function ReceiptMater() {
                             ? onlineChequeReceipts &&
                               onlineChequeReceipts.slice(
                                 page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
+                                page * rowsPerPage + rowsPerPage,
                               )
                             : onlineChequeReceipts && onlineChequeReceipts
                           ).map((row, index) => (
                             <TableRow
                               key={index}
                               sx={{
-                                "&:last-child td, &:last-child th": {
+                                '&:last-child td, &:last-child th': {
                                   border: 0,
                                 },
                               }}
                             >
                               <TableCell align="left">{row.receipt}</TableCell>
                               <TableCell>
-                                {row.status === 1 ? "Avtive" : "Deactivate"}
+                                {row.status === 1 ? 'Avtive' : 'Deactivate'}
                               </TableCell>
                               <TableCell>
                                 {row.status === 1 ? (
                                   <CloseIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
                                       deacivateAndactivateuser(row.id, 6, 0)
                                     }
                                   />
                                 ) : (
                                   <CheckIcon
-                                  sx={{
-                                    color:"#e96d00"
-                                  }}
+                                    sx={{
+                                      color: '#e96d00',
+                                    }}
                                     onClick={() =>
                                       deacivateAndactivateuser(row.id, 6, 1)
                                     }
@@ -830,12 +868,12 @@ function ReceiptMater() {
                             return `Page: ${page}`;
                           }}
                           backIconButtonProps={{
-                            color: "secondary",
+                            color: 'secondary',
                           }}
-                          nextIconButtonProps={{ color: "secondary" }}
+                          nextIconButtonProps={{ color: 'secondary' }}
                           SelectProps={{
                             inputProps: {
-                              "aria-label": "page number",
+                              'aria-label': 'page number',
                             },
                           }}
                           // showFirstButton={true}
@@ -849,9 +887,8 @@ function ReceiptMater() {
                   </Table>
                 </TableContainer>
               </div>
-              </div>
             </div>
-         
+          </div>
         </div>
       </div>
     </div>

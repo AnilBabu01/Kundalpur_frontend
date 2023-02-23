@@ -1,0 +1,154 @@
+.main_div_checkin_div {
+  width: 100%;
+
+  border: 1px solid #c4bfbf;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.main_div_checkin_div1 {
+  width: 100%;
+  height: 120px;
+  border: 1px solid #c4bfbf;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+}
+.date_and_time_div {
+  width: 28.2%;
+  display: flex;
+  justify-content: space-between;
+}
+.date_and_time_divinput {
+  width: 130px;
+  height: 35px;
+  background: #ffffff;
+  border: 1px solid #c5bfbf;
+  border-radius: 7px;
+}
+.inpur_div_room {
+  display: flex;
+  flex-direction: column;
+}
+
+.inpur_div_room label {
+  margin-bottom: 0.2rem;
+  margin-top: 0.2rem;
+}
+
+.minddle_div_room {
+  display: flex;
+  justify-content: space-between;
+}
+
+.minddle_div_room_innear {
+  display: flex;
+  flex-direction: column;
+}
+
+.minddle_div_room_innear input {
+  width: 280px;
+  height: 35px;
+
+  background: #ffffff;
+  border: 1px solid #c5bfbf;
+  border-radius: 7px;
+}
+
+.minddle_div_room_innear input:focus {
+  outline: none;
+}
+
+.minddle_div_room_innear label {
+  margin-bottom: 0.2rem;
+  margin-top: 0.2rem;
+}
+
+.minddle_div_room_innear_adddress {
+  display: flex;
+  flex-direction: column;
+}
+
+.minddle_div_room_innear_adddress input {
+  width: 635px;
+  height: 35px;
+
+  background: #ffffff;
+  border: 1px solid #c4bfbf;
+  border-radius: 7px;
+}
+
+.minddle_div_room_innear_adddress input:focus {
+  outline: none;
+}
+
+.minddle_div_room_innear_adddress label {
+  margin-bottom: 0.2rem;
+  margin-top: 0.2rem;
+}
+.inpur_div_room_add input {
+  width: 80px;
+  height: 35px;
+  background: #ffffff;
+  border: 1px solid #c4bfbf;
+  border-radius: 7px;
+}
+.inpur_div_room_add select {
+  width: 80px;
+  height: 35px;
+  background: #ffffff;
+  border: 1px solid #c4bfbf;
+  border-radius: 7px;
+}
+.inpur_div_room_add select:focus {
+ outline: none;
+}
+.inpur_div_room_add label {
+  margin-bottom: 0.2rem;
+  margin-top: 0.2rem;
+}
+.date_and_time_div_add {
+  display: flex;
+  margin-left: 5rem;
+  justify-content: space-between;
+}
+.inpur_div_room_add input:focus {
+  outline: none;
+}
+
+.main_Btotn_check_div {
+  display: flex;
+  justify-content: space-between;
+}
+.number_inera_div {
+  display: flex;
+  flex-direction: column;
+}
+.main_ddsh_div {
+  display: flex;
+  justify-content: space-between;
+  width: 62%;
+}
+.number_inera_div input {
+  width: 330px;
+  height: 35px;
+  left: 873px;
+  top: 710px;
+
+  background: #f1f0f0;
+  border-radius: 4px;
+}
+
+.main_Btotn_check_div_input {
+  display: flex;
+  flex-direction: column;
+}
+
+.main_Btotn_check_div_input input {
+  width: 170px;
+  height: 35px;
+
+  background: #ffffff;
+  border: 1px solid #dedede;
+  border-radius: 4px;
+}

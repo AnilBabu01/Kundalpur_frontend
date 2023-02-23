@@ -200,7 +200,7 @@ const Cheque = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}user/search-donation?type=${type}&name=${name}&date=${date}&phone=${phone}&modeOfDonation=${1}`,
+      `${backendApiUrl}admin/filter-online-cheque?type=${1}&fromRec=${voucherfrom}&toRec=${voucherto}&fromdate=${datefrom}&todate=${dateto}`,
     );
     if (res.data.status) {
       setisData(res.data.data);

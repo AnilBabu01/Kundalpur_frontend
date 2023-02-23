@@ -29,6 +29,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format } from 'date-fns';
 import f1 from '../../../../assets/f4.png';
+import IconButton from '@mui/material/IconButton';
 const Donation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
@@ -73,6 +74,14 @@ const Donation = ({ setopendashboard }) => {
             <img
               // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
               src={ExportPdf}
+              alt="cc"
+              style={{ width: '30px', marginRight: '2rem' }}
+            />
+          </Tooltip>
+          <Tooltip title="Print">
+            <img
+              // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+              src={Print}
               alt="cc"
               style={{ width: '30px', marginRight: '2rem' }}
             />

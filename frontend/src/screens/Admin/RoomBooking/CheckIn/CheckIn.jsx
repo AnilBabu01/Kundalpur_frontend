@@ -27,12 +27,15 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
+import Typography from '@mui/material/Typography';
+import CheckinForm from './CheckinForm';
+import './Checkin.css';
 const style = {
   position: 'absolute',
-  top: '40%',
+  top: '47%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '30%',
+  width: '70%',
   bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
@@ -48,7 +51,16 @@ const CheckIn = ({ setopendashboard }) => {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const handleOepn = () => setOpen(true);
-
+  var options = { year: 'numeric', month: 'short', day: '2-digit' };
+  var today = new Date();
+  const currDate = today
+    .toLocaleDateString('en-IN', options)
+    .replace(/-/g, ' ');
+  const currTime = today.toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
   const getall_donation = () => {
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
@@ -118,11 +130,19 @@ const CheckIn = ({ setopendashboard }) => {
         <Fade in={open}>
           <Box sx={style}>
             <div>
-              <div className="add-div-close-div1">
-                <h2>form modal</h2>
-                <CloseIcon onClick={() => handleClose()} />
+              <div className="add-div-close-div">
+                <div>
+                  <h2 style={{ marginBottom: '0.5rem' }}>Check In</h2>
+                  <Typography variant="body2" color="primary">
+                    {currDate} / {currTime}
+                  </Typography>
+                </div>
+
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose()} />
+                </IconButton>
               </div>
-              <h2>form model</h2>
+              <CheckinForm setOpen={setOpen} />
             </div>
           </Box>
         </Fade>

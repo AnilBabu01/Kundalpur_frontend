@@ -29,7 +29,8 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format } from 'date-fns';
 import f1 from '../../../../assets/f4.png';
-const ManualDonation = ({ setopendashboard }) => {
+import IconButton from '@mui/material/IconButton';
+const EmployeeManualDonation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -69,7 +70,7 @@ const ManualDonation = ({ setopendashboard }) => {
             />
           </Tooltip>
           &nbsp;&nbsp;
-          <Tooltip title="Print">
+          <Tooltip title="Export Pdf File">
             <img
               // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
               src={ExportPdf}
@@ -77,7 +78,7 @@ const ManualDonation = ({ setopendashboard }) => {
               style={{ width: '30px', marginRight: '2rem' }}
             />
           </Tooltip>
-          <Tooltip title="Export Pdf File">
+          <Tooltip title="Print">
             <img
               // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
               src={Print}
@@ -86,16 +87,13 @@ const ManualDonation = ({ setopendashboard }) => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p>Manual Donation (दान)</p>
+            <p>Donation(दान)</p>
           </div>
         </div>
 
         <div className="table-div-maai">
           {/* <TableContainer component={Paper}> */}
-          <Table
-            sx={{ minWidth: 650, width: '100%' }}
-            aria-label="simple table"
-          >
+          <Table sx={{ width: '100%' }} aria-label="simple table">
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
                 <TableCell>Staff Name</TableCell>
@@ -196,4 +194,4 @@ const ManualDonation = ({ setopendashboard }) => {
   );
 };
 
-export default ManualDonation;
+export default EmployeeManualDonation;

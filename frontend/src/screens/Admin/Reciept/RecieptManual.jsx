@@ -68,7 +68,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
       <div>
         <div
           className="button_div_print_download"
-          style={{ marginBottom: '1rem' }}
+          style={{ marginBottom: '1rem', marginTop: '3rem' }}
         >
           <button onClick={() => navigation(-1)}>Back</button>
 

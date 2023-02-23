@@ -77,6 +77,14 @@ const RoomBooking = ({ setopendashboard }) => {
               style={{ width: '30px', marginRight: '2rem' }}
             />
           </Tooltip>
+          <Tooltip title="Print">
+            <img
+              // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+              src={Print}
+              alt="cc"
+              style={{ width: '30px', marginRight: '2rem' }}
+            />
+          </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
             <p>Room Booking(आवास)</p>
           </div>

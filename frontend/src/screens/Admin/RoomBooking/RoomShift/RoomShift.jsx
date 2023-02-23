@@ -188,11 +188,11 @@ const RoomShift = ({ setopendashboard }) => {
           >
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>ReceiptNo</TableCell>
-                <TableCell>VoucherNo</TableCell>
-                <TableCell>Phone No</TableCell>
-                <TableCell>Name</TableCell>
+                <TableCell>S.No</TableCell>
+                <TableCell>Booking Id</TableCell>
+                <TableCell>Dharamshala - Category (Room No)</TableCell>
+                <TableCell>Customer Name</TableCell>
+
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -214,7 +214,7 @@ const RoomShift = ({ setopendashboard }) => {
                     >
                       <TableCell>{row.ReceiptNo}</TableCell>
                       <TableCell>{row.voucherNo}</TableCell>
-                      <TableCell>{row.phoneNo}</TableCell>
+
                       <TableCell>{row.name}</TableCell>
                       <TableCell> {row.address}</TableCell>
                       <TableCell>

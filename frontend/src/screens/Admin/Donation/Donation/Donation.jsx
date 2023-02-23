@@ -36,6 +36,8 @@ import InputBase from '@mui/material/InputBase';
 import PrintElectronic from '../../compoments/PrintElectronic';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import axios from 'axios';
+import { backendApiUrl } from '../../../../config/config';
 import {
   ExportPdfmanul,
   ExportPdfUser,
@@ -132,7 +134,6 @@ const Donation = ({ setopendashboard }) => {
   const [open1, setOpen1] = React.useState(false);
   const [showalert, setshowalert] = useState(false);
   const [deleteId, setdeleteId] = useState('');
-  const [msg, setmsg] = useState('');
   const [open, setOpen] = React.useState(true);
   const [open3, setOpen3] = React.useState(false);
   const [tabValue, setTabValue] = React.useState(0);
@@ -147,6 +148,9 @@ const Donation = ({ setopendashboard }) => {
   const [voucherto, setvoucherto] = useState('');
   const [type, settype] = useState('');
   const [open5, setOpen5] = React.useState(false);
+
+  const [searchvalue, setsearchvalue] = useState('');
+
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
 
@@ -155,17 +159,9 @@ const Donation = ({ setopendashboard }) => {
     setOpen4(true);
   };
   const handleClose4 = () => setOpen4(false);
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
+
   const handleOpen3 = () => setOpen3(true);
   const handleClose3 = () => setOpen3(false);
-
-  const handleClickOpen1 = (id) => {
-    setOpen1(true);
-    setdeleteId(id);
-    console.log(id);
-  };
 
   const handleOpen = async () => {
     const role = Number(sessionStorage.getItem('userrole'));
@@ -231,7 +227,7 @@ const Donation = ({ setopendashboard }) => {
     setdateto('');
     setvoucherfrom('');
     setvoucherto('');
-
+    setsearchvalue('');
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
@@ -281,17 +277,33 @@ const Donation = ({ setopendashboard }) => {
     }
   };
 
-  const filterdata = () => {
-    serverInstance(
-      `user/searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
-      'get`,
-    ).then((res) => {
-      console.log('filter data is', res.data);
+  const filterdata = async () => {
+    if (searchvalue) {
+      axios.defaults.headers.get[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-      if (res.data) {
-        setisData(res.data);
+      const res = await axios.get(
+        `${backendApiUrl}admin/search-electric?search=${searchvalue}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
       }
-    });
+    } else {
+      serverInstance(
+        `user/searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
+        'get`,
+      ).then((res) => {
+        console.log('filter data is', res.data);
+
+        if (res.data) {
+          setisData(res.data);
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -516,6 +528,9 @@ const Donation = ({ setopendashboard }) => {
                   <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
+                    value={searchvalue}
+                    name="searchvalue"
+                    onChange={(e) => setsearchvalue(e.target.value)}
                   />
                 </Search>
               </div>

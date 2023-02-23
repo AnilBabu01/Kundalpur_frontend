@@ -24,6 +24,7 @@ function CancelVoucher({
         {
           voucherNo: Number(row?.voucherNo),
           voucherId: Number(Data?.assign),
+          rns: paymentId,
         },
       );
       console.log('empl', res.data.data);

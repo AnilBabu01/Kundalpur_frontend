@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link, Outlet } from 'react-router-dom';
 import WindowResize from './WindowResize';
@@ -23,7 +20,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import axios from 'axios';
 import { backendApiUrl, backendUrl } from '../../../config/config';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
@@ -377,6 +373,7 @@ const DashboardWrapper = () => {
         </ListItemIcon>
         Profile
       </MenuItem>
+
       <MenuItem onClick={() => handleClickOpen5()}>
         <ListItemIcon>
           <LockOpenIcon fontSize="small" />
@@ -410,8 +407,9 @@ const DashboardWrapper = () => {
                 <div>
                   <h2 clssName="add_text_only">Upload Signature</h2>
                 </div>
-
-                <CloseIcon onClick={() => handleClose3()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose3()} />
+                </IconButton>
               </div>
 
               <Signature setOpen3={setOpen3} />
@@ -433,8 +431,9 @@ const DashboardWrapper = () => {
                 <div>
                   <h2 clssName="add_text_only">Update Profile</h2>
                 </div>
-
-                <CloseIcon onClick={() => handleClose4()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose4()} />
+                </IconButton>
               </div>
 
               <ProfileAdminAndEmp setOpen4={setOpen4} />
@@ -456,8 +455,9 @@ const DashboardWrapper = () => {
                 <div>
                   <h2 clssName="add_text_only"> Change new Password </h2>
                 </div>
-
-                <CloseIcon onClick={() => handleClose5()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose5()} />
+                </IconButton>
               </div>
 
               <ChangePassword setOpen5={setOpen5} />

@@ -34,6 +34,8 @@ import PrintManual from '../../compoments/PrintManual';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { ExportPdfmanulElectronic } from '../../compoments/ExportPdf';
+import axios from 'axios';
+import { backendApiUrl } from '../../../../config/config';
 import './Donation.css';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -141,27 +143,42 @@ const ManualDonation = ({ setopendashboard }) => {
   const [open5, setOpen5] = React.useState(false);
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
+  const [searchvalue, setsearchvalue] = useState('');
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
 
   const handleOpen4 = () => setOpen4(true);
   const handleClose4 = () => setOpen4(false);
 
-  const handleOpen3 = () => setOpen3(true);
-  const handleClose3 = () => setOpen3(false);
   console.log('check data ', isData);
 
-  const filterdata = () => {
-    serverInstance(
-      `user/manual-searchAllDonation?type=${type}&fromDate=${datefrom}&toDate=${dateto}',
-      'get`,
-    ).then((res) => {
-      console.log('filter data is', res.data);
+  const filterdata = async () => {
+    if (searchvalue) {
+      axios.defaults.headers.get[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-      if (res.data) {
-        setisData(res.data);
+      const res = await axios.get(
+        `${backendApiUrl}/admin/search-manual?search=${searchvalue}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
       }
-    });
+    } else {
+      serverInstance(
+        `user/manual-searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromReceipt=${voucherfrom}&toReceipt=${voucherto}',
+        'get`,
+      ).then((res) => {
+        console.log('filter data is', res.data);
+
+        if (res.data) {
+          setisData(res.data);
+        }
+      });
+    }
   };
 
   const handleOpen = () => {
@@ -177,6 +194,11 @@ const ManualDonation = ({ setopendashboard }) => {
   }, [showalert, open]);
 
   const getall_donation = () => {
+    setsearchvalue('');
+    setdatefrom('');
+    setdateto('');
+    setvoucherfrom('');
+    setvoucherto('');
     serverInstance('admin/manual-donation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
@@ -450,6 +472,9 @@ const ManualDonation = ({ setopendashboard }) => {
                   <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
+                    value={searchvalue}
+                    name="searchvalue"
+                    onChange={(e) => setsearchvalue(e.target.value)}
                   />
                 </Search>
               </div>

@@ -148,6 +148,7 @@ const Electornic = ({ setopendashboard }) => {
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
   const [open5, setOpen5] = React.useState(false);
+  const [searchvalue, setsearchvalue] = useState('');
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
   const handleOpen = (id) => {
@@ -227,17 +228,34 @@ const Electornic = ({ setopendashboard }) => {
     exportFromJSON({ data, fileName, exportType });
   };
   const filterdata = async () => {
-    serverInstance(
-      `user/searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}',
-      'get`,
-    ).then((res) => {
-      if (res.data) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '1');
+    if (searchvalue) {
+      axios.defaults.headers.get[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-        setisData(filterData);
+      const res = await axios.get(
+        `${backendApiUrl}admin/search-electric?search=${searchvalue}`,
+      );
+
+      console.log('ss', res.data.data);
+
+      if (res.data.status) {
+        setisData(res.data.data);
       }
-    });
+    } else {
+      serverInstance(
+        `user/searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}&modeOfDonation=${1}',
+        'get`,
+      ).then((res) => {
+        console.log('filter data is', res.data);
+
+        if (res.data) {
+          setisData(res.data);
+        }
+      });
+    }
   };
+
   const get_donation_tyeps = () => {
     try {
       Promise.all([serverInstance('admin/donation-type?type=1', 'get')]).then(
@@ -390,6 +408,9 @@ const Electornic = ({ setopendashboard }) => {
                 <StyledInputBase
                   placeholder="Search…"
                   inputProps={{ 'aria-label': 'search' }}
+                  value={searchvalue}
+                  name="searchvalue"
+                  onChange={(e) => setsearchvalue(e.target.value)}
                 />
               </Search>
             </div>

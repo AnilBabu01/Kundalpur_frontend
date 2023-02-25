@@ -9,7 +9,6 @@ const formData = new FormData();
 function ProfileAdminAndEmp({ setOpen4 }) {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
   const [name, setname] = useState('');
   const [mobile, setmobile] = useState('');
   const [email, setemail] = useState('');

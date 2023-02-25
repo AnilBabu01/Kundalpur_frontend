@@ -128,86 +128,80 @@ const RoleManagement = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
-      <div className="dashboarddiv">
-        <div>
-          <div className="main_center_header">
-            <div className="add-btn-user2">
-              <p style={{ marginTop: '0.6%' }}>Role Management</p>
-              <div className="add_role_icons_div">
-                <button
-                  style={{ height: '40px' }}
-                  className="addd-role"
-                  onClick={() => handleOpen()}
-                >
-                  +Add
-                </button>
-                <Tooltip title="Export Excel File">
-                  <img
-                    // onClick={() => ExportToExcel()}
-                    src={ExportExcel}
-                    style={{
-                      width: '30px',
-                      height: '35px',
-                      marginRight: '0.2rem',
-                    }}
-                  />
-                </Tooltip>
-                <Tooltip title="Export Pdf File">
-                  <img
-                    // onClick={() => ExportPdfmanul('Employee_list')}
-                    src={ExportPdf}
-                    style={{
-                      width: '30px',
-                      height: '35px',
-                      marginRight: '0.2rem',
-                    }}
-                  />
-                </Tooltip>
-              </div>
-            </div>
-          </div>
 
-          <div className="table-div-maain">
-            {/* <TableContainer component={Paper}> */}
-            <Table
-              sx={{ minWidth: 650, width: '97%' }}
-              aria-label="simple table"
-            >
-              <TableHead style={{ background: '#F1F0F0' }}>
-                <TableRow>
-                  <TableCell>Role Name</TableCell>
-                  <TableCell>Role Description</TableCell>
+      <div className="add-btn-user2">
+        <p style={{ marginTop: '0.6%' }}>Role Management</p>
+        <div className="add_role_icons_div">
+          <button
+            style={{ height: '40px' }}
+            className="addd-role"
+            onClick={() => handleOpen()}
+          >
+            +Add
+          </button>
+          <Tooltip title="Export Excel File">
+            <img
+              // onClick={() => ExportToExcel()}
+              src={ExportExcel}
+              style={{
+                width: '30px',
+                height: '35px',
+                marginRight: '0.2rem',
+              }}
+            />
+          </Tooltip>
+          <Tooltip title="Export Pdf File">
+            <img
+              // onClick={() => ExportPdfmanul('Employee_list')}
+              src={ExportPdf}
+              style={{
+                width: '30px',
+                height: '35px',
+                marginRight: '0.2rem',
+              }}
+            />
+          </Tooltip>
+        </div>
+      </div>
 
-                  <TableCell>Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableCell>ACCOUNTS</TableCell>
+      <div className="table-div-maain">
+        {/* <TableContainer component={Paper}> */}
+        <Table sx={{ width: '100%' }} aria-label="simple table">
+          <TableHead style={{ background: '#F1F0F0' }}>
+            <TableRow>
+              <TableCell>Role Name</TableCell>
+              <TableCell>Role Description</TableCell>
 
-                <TableCell>ACCOUNTING</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableCell>ACCOUNTS</TableCell>
 
-                <TableCell>
-                  {/* <Tooltip title="View Details">
+            <TableCell>ACCOUNTING</TableCell>
+
+            <TableCell>
+              {/* <Tooltip title="View Details">
                     <img
                       src={eye}
                       style={{ width: '20px', marginRight: '0.2rem' }}
                     />
                   </Tooltip> */}
-                  <Tooltip title="Edit Role">
-                    <img
-                      onClick={() => handleOpen1()}
-                      src={Edit}
-                      style={{ width: '20px', marginRight: '0.2rem' }}
-                    />
-                  </Tooltip>
-                  <Tooltip title="Delete Role">
-                    <img
-                      src={Delete}
-                      style={{ width: '20px', marginRight: '0.2rem' }}
-                    />
-                  </Tooltip>
-                </TableCell>
-                {/* {(rowsPerPage > 0
+              <Tooltip title="Edit Role">
+                <img
+                  onClick={() => handleOpen1()}
+                  src={Edit}
+                  style={{ width: '20px', marginRight: '0.2rem' }}
+                />
+              </Tooltip>
+              <Tooltip title="Delete Role">
+                <img
+                  src={Delete}
+                  style={{ width: '20px', marginRight: '0.2rem' }}
+                />
+              </Tooltip>
+            </TableCell>
+            {/* {(rowsPerPage > 0
                   ? isData.slice(
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
@@ -230,41 +224,39 @@ const RoleManagement = ({ setopendashboard }) => {
                     </TableCell>
                   </TableRow>
                 ))} */}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    count={isData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowsPerPageOptions={[5, 10, 25]}
-                    labelRowsPerPage={<span>Rows:</span>}
-                    labelDisplayedRows={({ page }) => {
-                      return `Page: ${page}`;
-                    }}
-                    backIconButtonProps={{
-                      color: 'secondary',
-                    }}
-                    nextIconButtonProps={{ color: 'secondary' }}
-                    SelectProps={{
-                      inputProps: {
-                        'aria-label': 'page number',
-                      },
-                    }}
-                    // showFirstButton={true}
-                    // showLastButton={true}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
-                    //sx and classes prop discussed in styling section
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-            {/* </TableContainer> */}
-          </div>
-        </div>
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                count={isData.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                rowsPerPageOptions={[5, 10, 25]}
+                labelRowsPerPage={<span>Rows:</span>}
+                labelDisplayedRows={({ page }) => {
+                  return `Page: ${page}`;
+                }}
+                backIconButtonProps={{
+                  color: 'secondary',
+                }}
+                nextIconButtonProps={{ color: 'secondary' }}
+                SelectProps={{
+                  inputProps: {
+                    'aria-label': 'page number',
+                  },
+                }}
+                // showFirstButton={true}
+                // showLastButton={true}
+                //ActionsComponent={TablePaginationActions}
+                //component={Box}
+                //sx and classes prop discussed in styling section
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+        {/* </TableContainer> */}
       </div>
     </>
   );

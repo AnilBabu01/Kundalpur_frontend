@@ -26,6 +26,7 @@ import DharamshalaTap from '../screens/Admin/Dharamshala/DharamshalaTap';
 import RoomBookingTap from '../screens/Admin/RoomBooking/RoomBookingTap';
 import ProfileAdminAndEmp from '../screens/Admin/Profile/ProfileAdminAndEmp';
 import ParticularUserVoucher from '../screens/Admin/SystemManagement/VoucherManagement/ParticularUserVoucher';
+import SystemTap from '../screens/Admin/SystemManagement/SystemTap';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   const [addleftmargin, setaddleftmargin] = useState(false);
   return (
@@ -44,6 +45,15 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <MasterTap setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/system"
+          element={
+            <Adminprivateroute>
+              <SystemTap setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

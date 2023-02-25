@@ -288,159 +288,140 @@ const UserManagement = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
-      <div className="dashboarddiv">
-        <div className="uemploye_main">
-          <div className="search-header-employee">
-            <div className="search-inner-div">
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                value={name}
-                onChange={(e) => setname(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Phone No"
-                name="phoneno"
-                value={phoneno}
-                onChange={(e) => setphoneno(e.target.value)}
-              />
-              <button onClick={() => filterdata()}>Search</button>
-              <button onClick={() => getall_donation()}>Reset</button>
-              <button onClick={() => handleOpen()}>+Add</button>
-              <Tooltip title="Export Excel File">
-                <img
-                  onClick={() => ExportToExcel()}
-                  src={ExportExcel}
-                  style={{ width: '30px', marginRight: '0.2rem' }}
-                />
-              </Tooltip>
-              <Tooltip title="Export Pdf File">
-                <img
-                  onClick={() => ExportPdfmanul('Employee_list')}
-                  src={ExportPdf}
-                  style={{ width: '30px', marginRight: '0.2rem' }}
-                />
-              </Tooltip>
-            </div>
-          </div>
 
-          <div>
-            <div
-              className="table-div-maain"
-              style={{ paddingRight: '1.5%', paddingLeft: '0.4%' }}
-            >
-              {/* <TableContainer component={Paper}> */}
-              <Table
-                sx={{ minWidth: 650, width: '100%' }}
-                aria-label="simple table"
-              >
-                <TableHead style={{ background: '#F1F0F0' }}>
-                  <TableRow>
-                    <TableCell>Sr No.</TableCell>
-                    <TableCell>Mobile</TableCell>
-                    <TableCell>Username</TableCell>
-                    <TableCell>Address</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Role</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Edit/Delete</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {(rowsPerPage > 0
-                    ? isData.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage,
-                      )
-                    : isData
-                  ).map((row, index) => (
-                    <TableRow
-                      key={index}
-                      sx={{
-                        '&:last-child td, &:last-child th': { border: 0 },
-                      }}
-                    >
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell> {row.Mobile}</TableCell>
-                      <TableCell>{row.Username}</TableCell>
-                      <TableCell> {row.Address}</TableCell>
-                      <TableCell>{row.Email}</TableCell>
-                      <TableCell>{row.Role}</TableCell>
-                      <TableCell>
-                        {row.Status ? 'Active' : 'De-Active'}
-                      </TableCell>
+      <div className="search-header-employee">
+        <div className="search-inner-div">
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            value={name}
+            onChange={(e) => setname(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Phone No"
+            name="phoneno"
+            value={phoneno}
+            onChange={(e) => setphoneno(e.target.value)}
+          />
+          <button onClick={() => filterdata()}>Search</button>
+          <button onClick={() => getall_donation()}>Reset</button>
+          <button onClick={() => handleOpen()}>+Add</button>
+          <Tooltip title="Export Excel File">
+            <img
+              onClick={() => ExportToExcel()}
+              src={ExportExcel}
+              style={{ width: '30px', marginRight: '0.2rem' }}
+            />
+          </Tooltip>
+          <Tooltip title="Export Pdf File">
+            <img
+              onClick={() => ExportPdfmanul('Employee_list')}
+              src={ExportPdf}
+              style={{ width: '30px', marginRight: '0.2rem' }}
+            />
+          </Tooltip>
+        </div>
+      </div>
 
-                      <TableCell>
-                        <Tooltip title="View Details">
-                          <img
-                            onClick={() =>
-                              navigate(
-                                '/admin-panel/masters/employeeUserInfo',
-                                {
-                                  state: {
-                                    userdata: row,
-                                  },
-                                },
-                              )
-                            }
-                            src={eye}
-                            style={{ width: '20px', marginRight: '0.2rem' }}
-                          />
-                        </Tooltip>
-                        <Tooltip title="Edit Employee">
-                          <img
-                            onClick={() => handleClickOpen3(row)}
-                            src={Edit}
-                            style={{ width: '20px', marginRight: '0.2rem' }}
-                          />
-                        </Tooltip>
-                        <Tooltip title="Delete Employee">
-                          <img
-                            onClick={() => handleClickOpen1(row.id)}
-                            src={Delete}
-                            style={{ width: '20px', marginRight: '0.2rem' }}
-                          />
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <TablePagination
-                      count={isData.length}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      onPageChange={handleChangePage}
-                      onRowsPerPageChange={handleChangeRowsPerPage}
-                      rowsPerPageOptions={[5, 10, 25]}
-                      labelRowsPerPage={<span>Rows:</span>}
-                      labelDisplayedRows={({ page }) => {
-                        return `Page: ${page}`;
-                      }}
-                      backIconButtonProps={{
-                        color: 'secondary',
-                      }}
-                      nextIconButtonProps={{ color: 'secondary' }}
-                      SelectProps={{
-                        inputProps: {
-                          'aria-label': 'page number',
-                        },
-                      }}
-                      // showFirstButton={true}
-                      // showLastButton={true}
-                      //ActionsComponent={TablePaginationActions}
-                      //component={Box}
-                      //sx and classes prop discussed in styling section
-                    />
-                  </TableRow>
-                </TableFooter>
-              </Table>
-              {/* </TableContainer> */}
-            </div>
-          </div>
+      <div>
+        <div className="table-div-maain">
+          <Table
+            sx={{ minWidth: 650, width: '100%' }}
+            aria-label="simple table"
+          >
+            <TableHead style={{ background: '#F1F0F0' }}>
+              <TableRow>
+                <TableCell>Sr No.</TableCell>
+                <TableCell>Mobile</TableCell>
+                <TableCell>Username</TableCell>
+                <TableCell>Address</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Role</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Edit/Delete</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? isData
+                    .reverse()
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : isData
+              ).map((row, index) => (
+                <TableRow
+                  key={index}
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                  }}
+                >
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell> {row.Mobile}</TableCell>
+                  <TableCell>{row.Username}</TableCell>
+                  <TableCell> {row.Address}</TableCell>
+                  <TableCell>{row.Email}</TableCell>
+                  <TableCell>{row.Role}</TableCell>
+                  <TableCell>{row.Status ? 'Active' : 'De-Active'}</TableCell>
+
+                  <TableCell>
+                    <Tooltip title="View Details">
+                      <img
+                        onClick={() =>
+                          navigate('/admin-panel/masters/employeeUserInfo', {
+                            state: {
+                              userdata: row,
+                            },
+                          })
+                        }
+                        src={eye}
+                        style={{ width: '20px', marginRight: '0.2rem' }}
+                      />
+                    </Tooltip>
+                    <Tooltip title="Edit Employee">
+                      <img
+                        onClick={() => handleClickOpen3(row)}
+                        src={Edit}
+                        style={{ width: '20px', marginRight: '0.2rem' }}
+                      />
+                    </Tooltip>
+                    <Tooltip title="Delete Employee">
+                      <img
+                        onClick={() => handleClickOpen1(row.id)}
+                        src={Delete}
+                        style={{ width: '20px', marginRight: '0.2rem' }}
+                      />
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  count={isData.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  rowsPerPageOptions={[5, 10, 25]}
+                  labelRowsPerPage={<span>Rows:</span>}
+                  labelDisplayedRows={({ page }) => {
+                    return `Page: ${page}`;
+                  }}
+                  backIconButtonProps={{
+                    color: 'secondary',
+                  }}
+                  nextIconButtonProps={{ color: 'secondary' }}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'page number',
+                    },
+                  }}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
         </div>
       </div>
     </>

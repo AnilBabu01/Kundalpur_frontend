@@ -149,48 +149,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
   const [openedTab, setOpenedTab] = React.useState(0); // for opening subtabs
   const [activeTabId, setActiveTabId] = React.useState(0); // for showing tab as active
   const [userrole, setuserrole] = React.useState('');
-  const navigationTabs = [
-    {
-      id: 3,
-      name: 'System',
-      active: false,
-      icon: <img src={f3} alt="f3" style={{ width: '25px' }} />,
-      subTabs: [
-        {
-          id: 3.1,
-          name: 'Add Employee',
-          link: 'usermanagement',
-          active: false,
-          icon: <PublicIcon />,
-          subTabs: [],
-        },
-        {
-          id: 3.2,
-          name: 'Add Role',
-          link: 'rolemanagement',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 3.3,
-          name: 'Generate Voucher',
-          link: 'vouchermanagement',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-        {
-          id: 3.4,
-          name: 'Assign Voucher',
-          link: 'assign',
-          active: false,
-          icon: <AccountBalanceIcon />,
-          subTabs: [],
-        },
-      ],
-    },
-  ];
+  const navigationTabs = [];
 
   const navigationreportTabs = [
     {
@@ -404,6 +363,37 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
               <ListItemText
                 classes={{ root: stylesag.ListText }}
                 primary="Dashboard"
+                sx={{ opacity: open ? 1 : 0, ml: 0.8 }}
+              />
+            </StyledListItemButton>
+          </Tooltip>
+
+          <Tooltip title="System" placement="left-end">
+            <StyledListItemButton
+              selected={activeTabId === 20}
+              onClick={() => {
+                setActiveTabId(20);
+                handleDrawerClose();
+                navigate('/admin-panel/system');
+              }}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.2,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                <img src={f3} alt="f6" style={{ width: '25px' }} />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ root: stylesag.ListText }}
+                primary="System"
                 sx={{ opacity: open ? 1 : 0, ml: 0.8 }}
               />
             </StyledListItemButton>

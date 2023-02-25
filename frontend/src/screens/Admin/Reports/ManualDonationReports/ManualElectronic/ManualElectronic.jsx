@@ -238,7 +238,7 @@ const ManualElectronic = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
     if (searchvalue) {
       const res = await axios.get(
-        `${backendApiUrl}/admin/search-manual?search=${searchvalue}`,
+        `${backendApiUrl}/admin/search-manual?search=${searchvalue}&modeOfDonation=${1}`,
       );
 
       console.log('ss', res.data.data);

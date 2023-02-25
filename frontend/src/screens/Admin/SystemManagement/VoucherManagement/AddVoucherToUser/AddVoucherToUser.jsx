@@ -107,11 +107,11 @@ const AddVoucherToUser = ({ setOpen }) => {
                     isData.map((item, index) => {
                       return (
                         <option
+                          key={index}
+                          value={item.id}
                           onClick={() => {
                             console.log('click');
                           }}
-                          key={index}
-                          value={item.id}
                         >
                           {item.Username}
                         </option>

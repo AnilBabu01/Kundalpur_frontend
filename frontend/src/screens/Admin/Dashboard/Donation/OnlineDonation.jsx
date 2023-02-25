@@ -50,13 +50,12 @@ const OnlineDonation = ({ setopendashboard }) => {
   };
   return (
     <>
-      <div>
+      <div className="main_dash_daily_main">
         <div
           className="search-header-print"
           style={{
-            borderBottom: '1px  solid gray',
             width: '100%',
-            borderTop: ' 1px solid gray',
+
             paddingTop: '1%',
           }}
         >
@@ -96,7 +95,7 @@ const OnlineDonation = ({ setopendashboard }) => {
             sx={{ minWidth: 650, width: '100%' }}
             aria-label="simple table"
           >
-            <TableHead style={{ background: '#F1F0F0' }}>
+            <TableHead>
               <TableRow>
                 <TableCell>Staff Name</TableCell>
 
@@ -137,7 +136,7 @@ const OnlineDonation = ({ setopendashboard }) => {
                 ))} */}
             </TableBody>
             <TableFooter>
-              <TableRow style={{ background: '#F1F0F0' }}>
+              <TableRow>
                 <TableCell
                   style={{
                     fontSize: '15px',

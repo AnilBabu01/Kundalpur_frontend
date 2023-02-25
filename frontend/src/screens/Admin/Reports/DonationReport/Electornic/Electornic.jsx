@@ -235,7 +235,7 @@ const Electornic = ({ setopendashboard }) => {
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.get(
-        `${backendApiUrl}admin/search-electric?search=${searchvalue}&modeOfDonation=${1}`,
+        `${backendApiUrl}admin/search-electric?search=${searchvalue}&type=${1}`,
       );
 
       console.log('ss', res.data.data);

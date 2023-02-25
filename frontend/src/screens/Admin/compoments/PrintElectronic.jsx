@@ -1,9 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
+import React, { useRef } from 'react';
+
 import ElectronicTotal from '../compoments/ElectronicTotal';
 import { useReactToPrint } from 'react-to-print';
 import Moment from 'moment-js';

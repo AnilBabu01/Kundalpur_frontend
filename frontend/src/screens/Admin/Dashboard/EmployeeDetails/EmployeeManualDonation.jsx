@@ -51,13 +51,12 @@ const EmployeeManualDonation = ({ setopendashboard }) => {
   };
   return (
     <>
-      <div>
+      <div className="main_dash_daily_main">
         <div
           className="search-header-print"
           style={{
-            borderBottom: '1px  solid gray',
             width: '100%',
-            borderTop: ' 1px solid gray',
+
             paddingTop: '1%',
           }}
         >
@@ -87,14 +86,14 @@ const EmployeeManualDonation = ({ setopendashboard }) => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p>Donation(दान)</p>
+            <p>Manual Donation(दान)</p>
           </div>
         </div>
 
         <div className="table-div-maai">
           {/* <TableContainer component={Paper}> */}
           <Table sx={{ width: '100%' }} aria-label="simple table">
-            <TableHead style={{ background: '#F1F0F0' }}>
+            <TableHead>
               <TableRow>
                 <TableCell>Staff Name</TableCell>
                 <TableCell>Cash</TableCell>
@@ -136,7 +135,7 @@ const EmployeeManualDonation = ({ setopendashboard }) => {
                 ))} */}
             </TableBody>
             <TableFooter>
-              <TableRow style={{ background: '#F1F0F0' }}>
+              <TableRow>
                 <TableCell
                   style={{
                     fontSize: '15px',

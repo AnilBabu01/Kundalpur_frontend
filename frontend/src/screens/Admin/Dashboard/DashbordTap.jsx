@@ -18,13 +18,10 @@ const DashbordTap = ({ setopendashboard }) => {
 
   return (
     <>
-      <div
-        className="dashboarddiv"
-        style={{ marginLeft: '5.3%', marginRight: '1%' }}
-      >
+      <div style={{ marginLeft: '5.3%', marginRight: '1%', marginTop: '1rem' }}>
         {userrole === 1 ? (
           <>
-            <div style={{ marginBottom: '2rem' }}>
+            <div style={{ marginBottom: '2rem', marginTop: '11.5rem' }}>
               <Donation setopendashboard={setopendashboard} />
             </div>
             <div style={{ marginBottom: '2rem' }}>
@@ -47,7 +44,7 @@ const DashbordTap = ({ setopendashboard }) => {
           </>
         ) : (
           <>
-            <div style={{ marginBottom: '2rem' }}>
+            <div style={{ marginBottom: '2rem', marginTop: '11.5rem' }}>
               <EmployeeElectronic setopendashboard={setopendashboard} />
             </div>
 

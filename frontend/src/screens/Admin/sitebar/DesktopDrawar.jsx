@@ -26,14 +26,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../../assets/logo.jpeg';
-import logo1 from '../../../assets/logo1.jpeg';
+
 import f1 from '../../../assets/f1.png';
 import f2 from '../../../assets/f2.png';
 import f3 from '../../../assets/f3.png';
 import f4 from '../../../assets/f4.png';
 import f5 from '../../../assets/f5.png';
 import f6 from '../../../assets/f6.png';
+import logo1 from '../../../assets/logo1.png';
 import croppedlogo from '../../../assets/croppedlogo.png';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import image19 from '../../../assets/image19.png';
@@ -318,7 +318,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
             <>
               <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
                 <img
-                  src={image19}
+                  src={logo1}
                   style={{
                     width: '50px',
                     height: '50px',
@@ -367,37 +367,40 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
               />
             </StyledListItemButton>
           </Tooltip>
-
-          <Tooltip title="System" placement="left-end">
-            <StyledListItemButton
-              selected={activeTabId === 20}
-              onClick={() => {
-                setActiveTabId(20);
-                handleDrawerClose();
-                navigate('/admin-panel/system');
-              }}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.2,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                }}
-              >
-                <img src={f3} alt="f6" style={{ width: '25px' }} />
-              </ListItemIcon>
-              <ListItemText
-                classes={{ root: stylesag.ListText }}
-                primary="System"
-                sx={{ opacity: open ? 1 : 0, ml: 0.8 }}
-              />
-            </StyledListItemButton>
-          </Tooltip>
+          {userrole === 1 && (
+            <>
+              <Tooltip title="System" placement="left-end">
+                <StyledListItemButton
+                  selected={activeTabId === 20}
+                  onClick={() => {
+                    setActiveTabId(20);
+                    handleDrawerClose();
+                    navigate('/admin-panel/system');
+                  }}
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.2,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <img src={f3} alt="f6" style={{ width: '25px' }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    classes={{ root: stylesag.ListText }}
+                    primary="System"
+                    sx={{ opacity: open ? 1 : 0, ml: 0.8 }}
+                  />
+                </StyledListItemButton>
+              </Tooltip>
+            </>
+          )}
         </ListItem>
         <Divider style={{ padding: '5px 0px' }} />
 

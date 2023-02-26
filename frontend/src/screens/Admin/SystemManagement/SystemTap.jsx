@@ -63,38 +63,6 @@ const SystemTap = ({ setopendashboard }) => {
               Assing voucher
             </NavLink>
           </div>
-
-          {/* <div className="content-tabs">
-            <div
-              className={
-                toggleState === 1 ? 'content  active-content' : 'content'
-              }
-            >
-              <UserManagement setopendashboard={setopendashboard} />
-            </div>
-
-            <div
-              className={
-                toggleState === 2 ? 'content  active-content' : 'content'
-              }
-            >
-              <RoleManagement setopendashboard={setopendashboard} />
-            </div>
-            <div
-              className={
-                toggleState === 3 ? 'content  active-content' : 'content'
-              }
-            >
-              <VoucherManagement setopendashboard={setopendashboard} />
-            </div>
-            <div
-              className={
-                toggleState === 4 ? 'content  active-content' : 'content'
-              }
-            >
-              <Assign setopendashboard={setopendashboard} />
-            </div>
-          </div> */}
         </div>
       </div>
     </>

@@ -205,7 +205,7 @@ const Cheque = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
     if (searchvalue) {
       const res = await axios.get(
-        `${backendApiUrl}admin/search-online-cheque?search=${searchvalue}`,
+        `${backendApiUrl}admin/search-online-cheque?search=${searchvalue}&type=Cheque`,
       );
 
       console.log('ss', res.data.data);

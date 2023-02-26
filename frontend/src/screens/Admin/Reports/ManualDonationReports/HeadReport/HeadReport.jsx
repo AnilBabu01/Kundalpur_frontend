@@ -21,6 +21,7 @@ import ExportPdf from '../../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../../assets/ExportExcel.png';
 import Edit from '../../../../../assets/Edit.png';
 import eye from '../../../../../assets/eye.png';
+import ManualDonationTap from '../ManualDonationTap';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -171,7 +172,8 @@ const HeadReport = ({ setopendashboard }) => {
 
   return (
     <>
-      <div>
+      <ManualDonationTap setopendashboard={setopendashboard} />
+      <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
         <div>
           <div className="search-header">
             <div className="search-inner-div-reports">

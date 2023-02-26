@@ -39,7 +39,7 @@ import InputBase from '@mui/material/InputBase';
 import PrintElectronic from '../../../compoments/PrintElectronic';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-
+import DonationReportTap from '../DonationReportTap';
 import './ManualCash.css';
 
 const Search = styled('div')(({ theme }) => ({
@@ -348,8 +348,8 @@ const ManualCash = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
-
-      <div>
+      <DonationReportTap setopendashboard={setopendashboard} />
+      <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
         <div className="search-header ">
           <div className="search-inner-div-reports">
             <div className="Center_main_dic_filetr">

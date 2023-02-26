@@ -45,6 +45,7 @@ import IconButton from '@mui/material/IconButton';
 
 import axios from 'axios';
 import { backendApiUrl } from '../../../../../config/config';
+import ManualDonationTap from '../ManualDonationTap';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -379,7 +380,8 @@ const ManualElectronic = ({ setopendashboard }) => {
         </Fade>
       </Modal>
 
-      <div>
+      <ManualDonationTap setopendashboard={setopendashboard} />
+      <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
         <div className="search-header">
           <div className="search-inner-div-reports">
             <div className="Center_main_dic_filetr">

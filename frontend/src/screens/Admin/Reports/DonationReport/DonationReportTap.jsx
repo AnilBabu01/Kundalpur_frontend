@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Electornic from './Electornic/Electornic';
-import ManualCash from './manualCash/ManualCash';
-import ManualCheque from './ManualCheque/ManualCheque';
-import Itemdonation from './Itemdonation/Itemdonation';
-import HeadReport from './HeadReport/HeadReport';
-import Consolidated from './Consolidated/Consolidated';
 import f1 from '../../../../assets/f4.png';
+import { NavLink, useNavigate } from 'react-router-dom';
 const DonationReportTap = ({ setopendashboard }) => {
   const [toggleState, setToggleState] = useState(1);
 
@@ -22,9 +17,9 @@ const DonationReportTap = ({ setopendashboard }) => {
       <div className="mobilewidth dashboarmain">
         <div className="container1">
           <div className="bloc-tabs1">
-            <button
-              className={toggleState === 1 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(1)}
+            <NavLink
+              to="/admin-panel/electronic/report/cash"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
               <img
                 style={{ marginRight: '4%', width: '20px' }}
@@ -32,10 +27,10 @@ const DonationReportTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Cash Report
-            </button>
-            <button
-              className={toggleState === 2 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(2)}
+            </NavLink>
+            <NavLink
+              to="/admin-panel/electronic/report/elec"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
               <img
                 style={{ marginRight: '4%', width: '20px' }}
@@ -43,10 +38,10 @@ const DonationReportTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Electronic Report
-            </button>
-            <button
-              className={toggleState === 3 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(3)}
+            </NavLink>
+            <NavLink
+              to="/admin-panel/electronic/report/cheque"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
               <img
                 style={{ marginRight: '4%', width: '20px' }}
@@ -54,10 +49,10 @@ const DonationReportTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Cheque Report
-            </button>
-            <button
-              className={toggleState === 4 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(4)}
+            </NavLink>
+            <NavLink
+              to="/admin-panel/electronic/report/item"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
               <img
                 style={{ marginRight: '4%', width: '20px' }}
@@ -65,10 +60,10 @@ const DonationReportTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Item Report
-            </button>
-            <button
-              className={toggleState === 5 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(5)}
+            </NavLink>
+            <NavLink
+              to="/admin-panel/electronic/report/headreport"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
               <img
                 style={{ marginRight: '4%', width: '20px' }}
@@ -76,10 +71,10 @@ const DonationReportTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Head Report
-            </button>
-            <button
-              className={toggleState === 6 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(6)}
+            </NavLink>
+            <NavLink
+              to="/admin-panel/electronic/report/consolidated"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
               <img
                 style={{ marginRight: '4%', width: '20px' }}
@@ -87,10 +82,10 @@ const DonationReportTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Consolidated
-            </button>
+            </NavLink>
           </div>
 
-          <div className="content-tabs">
+          {/* <div className="content-tabs">
             <div
               className={
                 toggleState === 1 ? 'content  active-content' : 'content'
@@ -134,7 +129,7 @@ const DonationReportTap = ({ setopendashboard }) => {
             >
               <Consolidated setopendashboard={setopendashboard} />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

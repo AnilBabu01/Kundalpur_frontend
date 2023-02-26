@@ -27,6 +27,26 @@ import RoomBookingTap from '../screens/Admin/RoomBooking/RoomBookingTap';
 import ProfileAdminAndEmp from '../screens/Admin/Profile/ProfileAdminAndEmp';
 import ParticularUserVoucher from '../screens/Admin/SystemManagement/VoucherManagement/ParticularUserVoucher';
 import SystemTap from '../screens/Admin/SystemManagement/SystemTap';
+///electronic donation routes
+import ManualCash from '../screens/Admin/Reports/DonationReport/manualCash/ManualCash';
+import Itemdonation from '../screens/Admin/Reports/DonationReport/Itemdonation/Itemdonation';
+import Consolidated from '../screens/Admin/Reports/DonationReport/Consolidated/Consolidated';
+import Electornic from '../screens/Admin/Reports/DonationReport/Electornic/Electornic';
+import ManualCheque from '../screens/Admin/Reports/DonationReport/ManualCheque/ManualCheque';
+import HeadReport from '../screens/Admin/Reports/DonationReport/HeadReport/HeadReport';
+/// manual donation routes
+import Consolidated1 from '../screens/Admin/Reports/ManualDonationReports/Consolidated/Consolidated';
+import HeadReport1 from '../screens/Admin/Reports/ManualDonationReports/HeadReport/HeadReport';
+import ManualReports from '../screens/Admin/Reports/ManualDonationReports/ManaulReport/ManualReports';
+import ManualCash1 from '../screens/Admin/Reports/ManualDonationReports/ManualCash/ManualCash';
+import ManualElectronic from '../screens/Admin/Reports/ManualDonationReports/ManualElectronic/ManualElectronic';
+import ManualItem1 from '../screens/Admin/Reports/ManualDonationReports/ManualItem/ManualItem';
+
+///online donation routes
+
+import Cheque from '../screens/Admin/Reports/OnlineDonations/Cheque/Cheque';
+import Online from '../screens/Admin/Reports/OnlineDonations/Online/Online';
+
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   const [addleftmargin, setaddleftmargin] = useState(false);
   return (
@@ -262,6 +282,132 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <Signature setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/electronic/report/cash"
+          element={
+            <Adminprivateroute>
+              <ManualCash setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/electronic/report/elec"
+          element={
+            <Adminprivateroute>
+              <Electornic setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/electronic/report/item"
+          element={
+            <Adminprivateroute>
+              <Itemdonation setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/electronic/report/cheque"
+          element={
+            <Adminprivateroute>
+              <ManualCheque setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/electronic/report/headreport"
+          element={
+            <Adminprivateroute>
+              <HeadReport setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/electronic/report/consolidated"
+          element={
+            <Adminprivateroute>
+              <Consolidated setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/manual/report/cash"
+          element={
+            <Adminprivateroute>
+              <ManualCash1 setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/manual/report/item"
+          element={
+            <Adminprivateroute>
+              <ManualItem1 setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/manual/report/elec"
+          element={
+            <Adminprivateroute>
+              <ManualElectronic setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/manual/report/cheque"
+          element={
+            <Adminprivateroute>
+              <ManualReports setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/manual/report/headreport"
+          element={
+            <Adminprivateroute>
+              <HeadReport1 setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/manual/report/consolidated"
+          element={
+            <Adminprivateroute>
+              <Consolidated1 setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/online/report/online"
+          element={
+            <Adminprivateroute>
+              <Online setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/online/report/cheque"
+          element={
+            <Adminprivateroute>
+              <Cheque setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

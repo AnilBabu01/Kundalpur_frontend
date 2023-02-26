@@ -161,7 +161,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         {
           id: 4.5,
           name: 'Donation',
-          link: 'electronicReports',
+          link: 'electronic/report/cash',
           active: false,
           icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
@@ -169,7 +169,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         {
           id: 4.1,
           name: 'Manual Donation',
-          link: 'manualReports',
+          link: 'manual/report/cash',
           active: false,
           icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
@@ -177,7 +177,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         {
           id: 4.9,
           name: 'Online donation',
-          link: 'OnlineReports',
+          link: 'online/report/online',
           active: false,
           icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
@@ -249,7 +249,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         {
           id: 4.5,
           name: 'Donation',
-          link: 'electronicReports',
+          link: 'electronic/report/cash',
           active: false,
           icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
@@ -257,7 +257,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         {
           id: 4.1,
           name: 'Manual Donation',
-          link: 'manualReports',
+          link: 'manual/report/cash',
           active: false,
           icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
@@ -265,7 +265,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
         {
           id: 4.9,
           name: 'Online donation',
-          link: 'OnlineReports',
+          link: 'online/report/online',
           active: false,
           icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
           subTabs: [],
@@ -375,7 +375,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
                   onClick={() => {
                     setActiveTabId(20);
                     handleDrawerClose();
-                    navigate('/admin-panel/system');
+                    navigate('/admin-panel/usermanagement');
                   }}
                   sx={{
                     minHeight: 48,

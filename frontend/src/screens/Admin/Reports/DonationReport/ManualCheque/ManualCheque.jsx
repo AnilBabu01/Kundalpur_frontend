@@ -38,7 +38,7 @@ import InputBase from '@mui/material/InputBase';
 import PrintElectronic from '../../../compoments/PrintElectronic';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-
+import DonationReportTap from '../DonationReportTap';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -340,359 +340,369 @@ const ManualCheque = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
-      <div className="search-header ">
-        <div className="search-inner-div-reports">
-          <div className="Center_main_dic_filetr">
-            <label>From Date</label>
-            <input
-              style={{ width: '220px' }}
-              type="date"
-              placeholder="From"
-              value={datefrom}
-              name="datefrom"
-              onChange={(e) => {
-                setdatefrom(e.target.value);
-              }}
-            />
-          </div>
-          <div className="Center_main_dic_filetr">
-            <label>To Date</label>
-            <input
-              style={{ width: '220px' }}
-              type="date"
-              placeholder="From"
-              value={dateto}
-              name="dateto"
-              onChange={(e) => {
-                setdateto(e.target.value);
-              }}
-            />
-          </div>
-          <div className="Center_main_dic_filetr">
-            <label>From Voucher</label>
-            <input
-              style={{ width: '220px' }}
-              type="text"
-              placeholder="From"
-              value={voucherfrom}
-              name="voucherfrom"
-              onChange={(e) => {
-                setvoucherfrom(e.target.value);
-              }}
-            />
-          </div>
-          <div className="Center_main_dic_filetr">
-            <label>To Voucher</label>
-            <input
-              style={{ width: '220px' }}
-              type="text"
-              placeholder="From"
-              value={voucherto}
-              name="voucherto"
-              onChange={(e) => {
-                setvoucherto(e.target.value);
-              }}
-            />
-          </div>
-
-          <div className="Center_main_dic_filetr">
-            <label>&nbsp;</label>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-                value={searchvalue}
-                name="searchvalue"
-                onChange={(e) => setsearchvalue(e.target.value)}
+      <DonationReportTap setopendashboard={setopendashboard} />
+      <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
+        <div className="search-header ">
+          <div className="search-inner-div-reports">
+            <div className="Center_main_dic_filetr">
+              <label>From Date</label>
+              <input
+                style={{ width: '220px' }}
+                type="date"
+                placeholder="From"
+                value={datefrom}
+                name="datefrom"
+                onChange={(e) => {
+                  setdatefrom(e.target.value);
+                }}
               />
-            </Search>
-          </div>
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>To Date</label>
+              <input
+                style={{ width: '220px' }}
+                type="date"
+                placeholder="From"
+                value={dateto}
+                name="dateto"
+                onChange={(e) => {
+                  setdateto(e.target.value);
+                }}
+              />
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>From Voucher</label>
+              <input
+                style={{ width: '220px' }}
+                type="text"
+                placeholder="From"
+                value={voucherfrom}
+                name="voucherfrom"
+                onChange={(e) => {
+                  setvoucherfrom(e.target.value);
+                }}
+              />
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>To Voucher</label>
+              <input
+                style={{ width: '220px' }}
+                type="text"
+                placeholder="From"
+                value={voucherto}
+                name="voucherto"
+                onChange={(e) => {
+                  setvoucherto(e.target.value);
+                }}
+              />
+            </div>
 
-          <div className="Center_main_dic_filetr">
-            <label>&nbsp;</label>
-            <button onClick={() => filterdata()}>Search</button>
-          </div>
-          <div className="Center_main_dic_filetr">
-            <label>&nbsp;</label>
-            <button onClick={() => getall_donation()}>Reset</button>
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ 'aria-label': 'search' }}
+                  value={searchvalue}
+                  name="searchvalue"
+                  onChange={(e) => setsearchvalue(e.target.value)}
+                />
+              </Search>
+            </div>
+
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <button onClick={() => filterdata()}>Search</button>
+            </div>
+            <div className="Center_main_dic_filetr">
+              <label>&nbsp;</label>
+              <button onClick={() => getall_donation()}>Reset</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="search-header-print">
-        <div
-          className="search-header-print"
-          style={{
-            borderBottom: '1px  solid gray',
-            width: '100%',
-            borderTop: ' 1px solid gray',
-            paddingTop: '1%',
-          }}
-        >
-          <Tooltip title="Export Excel File">
-            <IconButton>
-              <img
-                onClick={() => ExportToExcel()}
-                src={ExportExcel}
-                alt="cc"
-                style={{ width: '30px', marginLeft: '0rem' }}
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Export Pdf File">
-            <IconButton>
-              <img
-                onClick={() => ExportPdfmanul(isData, 'Report')}
-                src={ExportPdf}
-                alt="cc"
-                style={{ width: '30px' }}
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Print Report">
-            <IconButton>
-              <img
-                style={{ width: '30px' }}
-                onClick={() => handleOpen5()}
-                src={Print}
-                alt=" Print"
-              />
-            </IconButton>
-          </Tooltip>
-          &nbsp;&nbsp;
+        <div className="search-header-print">
+          <div
+            className="search-header-print"
+            style={{
+              borderBottom: '1px  solid gray',
+              width: '100%',
+              borderTop: ' 1px solid gray',
+              paddingTop: '1%',
+            }}
+          >
+            <Tooltip title="Export Excel File">
+              <IconButton>
+                <img
+                  onClick={() => ExportToExcel()}
+                  src={ExportExcel}
+                  alt="cc"
+                  style={{ width: '30px', marginLeft: '0rem' }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Export Pdf File">
+              <IconButton>
+                <img
+                  onClick={() => ExportPdfmanul(isData, 'Report')}
+                  src={ExportPdf}
+                  alt="cc"
+                  style={{ width: '30px' }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Print Report">
+              <IconButton>
+                <img
+                  style={{ width: '30px' }}
+                  onClick={() => handleOpen5()}
+                  src={Print}
+                  alt=" Print"
+                />
+              </IconButton>
+            </Tooltip>
+            &nbsp;&nbsp;
+          </div>
         </div>
-      </div>
-      <div className="table-div-maain">
-        <Table sx={{ minWidth: 650, width: '100%' }} aria-label="simple table">
-          <TableHead style={{ background: '#FFEEE0' }}>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>ReceiptNo</TableCell>
-              <TableCell>VoucherNo</TableCell>
-              <TableCell>Phone No</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Address</TableCell>
-              <TableCell>Head/Item</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>User</TableCell>
-              <TableCell>Remark</TableCell>
-              <TableCell>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableCell>
-              <input
-                className="cuolms_search"
-                type="text"
-                placeholder="Search Date"
-              />
-            </TableCell>
-            <TableCell>
-              <input
-                className="cuolms_search"
-                type="text"
-                placeholder="Search Receipt"
-              />
-            </TableCell>
-            <TableCell>
-              <input
-                className="cuolms_search"
-                type="text"
-                placeholder="Search Voucher"
-              />
-            </TableCell>
-            <TableCell>
-              <input
-                className="cuolms_search"
-                type="text"
-                placeholder="Search Phone"
-              />
-            </TableCell>
-            <TableCell>
-              <input type="text" className="cuolms_search" placeholder="Name" />
-            </TableCell>
-            <TableCell>
-              <input
-                className="cuolms_search"
-                type="text"
-                placeholder="Search Address"
-              />
-            </TableCell>
-            <TableCell>
-              <input
-                type="text"
-                className="cuolms_search"
-                placeholder="Search Head"
-              />
-            </TableCell>
-            <TableCell>
-              <input
-                className="cuolms_search"
-                type="text"
-                placeholder="Search Amount"
-              />
-            </TableCell>
-            <TableCell>
-              <select name="cars" id="cars" className="cuolms_search">
-                <option>Select user</option>
-                {donationTypes.map((item, idx) => {
-                  return <option value={item.id}>{item.type_hi}</option>;
-                })}
-              </select>
-            </TableCell>
-            <TableCell>
-              <input
-                className="cuolms_search"
-                type="text"
-                placeholder="Remark"
-              />
-            </TableCell>
-            <TableCell>&nbsp;</TableCell>
-            {isData ? (
-              <>
-                {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
-                    }}
-                  >
-                    <TableCell>
-                      {Moment(row.donation_date).format('DD/MM/YYYY')}
-                    </TableCell>
-                    <TableCell>{row.ReceiptNo}</TableCell>
-                    <TableCell>{row.voucherNo}</TableCell>
-                    <TableCell>{row.phoneNo}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell> {row.address}</TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return (
-                          <li style={{ listStyle: 'none' }}>{row.type}</li>
-                        );
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.reduce(
-                        (n, { amount }) => parseFloat(n) + parseFloat(amount),
-                        0,
-                      )}
-                    </TableCell>
-                    <TableCell>&nbsp;</TableCell>
-                    <TableCell>
-                      {row.elecItemDetails.map((row) => {
-                        return (
-                          <li style={{ listStyle: 'none' }}>{row.remark} </li>
-                        );
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      <img
-                        onClick={() =>
-                          navigation(`/admin-panel/infoElectronic/${row.id}`)
-                        }
-                        src={eye}
-                        alt="print"
-                        style={{ width: '20px', marginRight: '2px' }}
-                      />
-
-                      {userrole === 1 && (
+        <div className="table-div-maain">
+          <Table
+            sx={{ minWidth: 650, width: '100%' }}
+            aria-label="simple table"
+          >
+            <TableHead style={{ background: '#FFEEE0' }}>
+              <TableRow>
+                <TableCell>Date</TableCell>
+                <TableCell>ReceiptNo</TableCell>
+                <TableCell>VoucherNo</TableCell>
+                <TableCell>Phone No</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Address</TableCell>
+                <TableCell>Head/Item</TableCell>
+                <TableCell>Amount</TableCell>
+                <TableCell>User</TableCell>
+                <TableCell>Remark</TableCell>
+                <TableCell>Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableCell>
+                <input
+                  className="cuolms_search"
+                  type="text"
+                  placeholder="Search Date"
+                />
+              </TableCell>
+              <TableCell>
+                <input
+                  className="cuolms_search"
+                  type="text"
+                  placeholder="Search Receipt"
+                />
+              </TableCell>
+              <TableCell>
+                <input
+                  className="cuolms_search"
+                  type="text"
+                  placeholder="Search Voucher"
+                />
+              </TableCell>
+              <TableCell>
+                <input
+                  className="cuolms_search"
+                  type="text"
+                  placeholder="Search Phone"
+                />
+              </TableCell>
+              <TableCell>
+                <input
+                  type="text"
+                  className="cuolms_search"
+                  placeholder="Name"
+                />
+              </TableCell>
+              <TableCell>
+                <input
+                  className="cuolms_search"
+                  type="text"
+                  placeholder="Search Address"
+                />
+              </TableCell>
+              <TableCell>
+                <input
+                  type="text"
+                  className="cuolms_search"
+                  placeholder="Search Head"
+                />
+              </TableCell>
+              <TableCell>
+                <input
+                  className="cuolms_search"
+                  type="text"
+                  placeholder="Search Amount"
+                />
+              </TableCell>
+              <TableCell>
+                <select name="cars" id="cars" className="cuolms_search">
+                  <option>Select user</option>
+                  {donationTypes.map((item, idx) => {
+                    return <option value={item.id}>{item.type_hi}</option>;
+                  })}
+                </select>
+              </TableCell>
+              <TableCell>
+                <input
+                  className="cuolms_search"
+                  type="text"
+                  placeholder="Remark"
+                />
+              </TableCell>
+              <TableCell>&nbsp;</TableCell>
+              {isData ? (
+                <>
+                  {(rowsPerPage > 0
+                    ? isData.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                    : isData
+                  ).map((row, index) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell>
+                        {Moment(row.donation_date).format('DD/MM/YYYY')}
+                      </TableCell>
+                      <TableCell>{row.ReceiptNo}</TableCell>
+                      <TableCell>{row.voucherNo}</TableCell>
+                      <TableCell>{row.phoneNo}</TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell> {row.address}</TableCell>
+                      <TableCell>
+                        {row.elecItemDetails.map((row) => {
+                          return (
+                            <li style={{ listStyle: 'none' }}>{row.type}</li>
+                          );
+                        })}
+                      </TableCell>
+                      <TableCell>
+                        {row.elecItemDetails.reduce(
+                          (n, { amount }) => parseFloat(n) + parseFloat(amount),
+                          0,
+                        )}
+                      </TableCell>
+                      <TableCell>&nbsp;</TableCell>
+                      <TableCell>
+                        {row.elecItemDetails.map((row) => {
+                          return (
+                            <li style={{ listStyle: 'none' }}>{row.remark} </li>
+                          );
+                        })}
+                      </TableCell>
+                      <TableCell>
                         <img
-                          onClick={() => upadteOpen(row)}
-                          src={Edit}
+                          onClick={() =>
+                            navigation(`/admin-panel/infoElectronic/${row.id}`)
+                          }
+                          src={eye}
                           alt="print"
                           style={{ width: '20px', marginRight: '2px' }}
                         />
-                      )}
 
-                      <img
-                        onClick={() =>
-                          navigation('/admin-panel/reports/printcontent', {
-                            state: {
-                              data: row,
-                            },
-                          })
-                        }
-                        src={Print}
-                        alt="print"
-                        style={{ width: '20px', marginRight: '2px' }}
-                      />
-                      {row.isActive ? (
-                        <DownloadIcon
-                          onClick={() => {
-                            printreceipt(row);
-                          }}
+                        {userrole === 1 && (
+                          <img
+                            onClick={() => upadteOpen(row)}
+                            src={Edit}
+                            alt="print"
+                            style={{ width: '20px', marginRight: '2px' }}
+                          />
+                        )}
+
+                        <img
+                          onClick={() =>
+                            navigation('/admin-panel/reports/printcontent', {
+                              state: {
+                                data: row,
+                              },
+                            })
+                          }
+                          src={Print}
+                          alt="print"
+                          style={{ width: '20px', marginRight: '2px' }}
                         />
-                      ) : (
-                        <ClearIcon />
-                      )}
-                      {userrole === 1 && (
-                        <CancelIcon onClick={() => handleOpen(row.id)} />
-                      )}
+                        {row.isActive ? (
+                          <DownloadIcon
+                            onClick={() => {
+                              printreceipt(row);
+                            }}
+                          />
+                        ) : (
+                          <ClearIcon />
+                        )}
+                        {userrole === 1 && (
+                          <CancelIcon onClick={() => handleOpen(row.id)} />
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  <TableRow>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell>Total Amount</TableCell>
+                    <TableCell>
+                      <ElectronicTotal data={isData} />
+                    </TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                    <TableCell> &nbsp;</TableCell>
+                  </TableRow>
+                </>
+              ) : (
+                <>
+                  <TableRow>
+                    <TableCell colSpan={12} align="center">
+                      <CircularProgress />
                     </TableCell>
                   </TableRow>
-                ))}
-                <TableRow>
-                  <TableCell> &nbsp;</TableCell>
-                  <TableCell> &nbsp;</TableCell>
-                  <TableCell> &nbsp;</TableCell>
-                  <TableCell> &nbsp;</TableCell>
-                  <TableCell> &nbsp;</TableCell>
-                  <TableCell> &nbsp;</TableCell>
-                  <TableCell>Total Amount</TableCell>
-                  <TableCell>
-                    <ElectronicTotal data={isData} />
-                  </TableCell>
-                  <TableCell> &nbsp;</TableCell>
-                  <TableCell> &nbsp;</TableCell>
-                  <TableCell> &nbsp;</TableCell>
-                </TableRow>
-              </>
-            ) : (
-              <>
-                <TableRow>
-                  <TableCell colSpan={12} align="center">
-                    <CircularProgress />
-                  </TableCell>
-                </TableRow>
-              </>
-            )}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                count={isData.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                rowsPerPageOptions={[5, 10, 25]}
-                labelRowsPerPage={<span>Rows:</span>}
-                labelDisplayedRows={({ page }) => {
-                  return `Page: ${page}`;
-                }}
-                backIconButtonProps={{
-                  color: 'secondary',
-                }}
-                nextIconButtonProps={{ color: 'secondary' }}
-                SelectProps={{
-                  inputProps: {
-                    'aria-label': 'page number',
-                  },
-                }}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
+                </>
+              )}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  count={isData.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  rowsPerPageOptions={[5, 10, 25]}
+                  labelRowsPerPage={<span>Rows:</span>}
+                  labelDisplayedRows={({ page }) => {
+                    return `Page: ${page}`;
+                  }}
+                  backIconButtonProps={{
+                    color: 'secondary',
+                  }}
+                  nextIconButtonProps={{ color: 'secondary' }}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'page number',
+                    },
+                  }}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </div>
       </div>
     </>
   );

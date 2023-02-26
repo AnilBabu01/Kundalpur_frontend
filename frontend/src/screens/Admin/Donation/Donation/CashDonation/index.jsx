@@ -221,12 +221,13 @@ const CashDonation = ({
         donationItems[0].type &&
         mobileNo
       ) {
+        try {
+        } catch (error) {}
         const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
           name: fullName,
           gender: newMember ? genderp1 : genderp,
           phoneNo: mobileNo,
           address: address,
-          prefix: 'CASH',
           new_member: newMember,
           modeOfDonation: 2,
           donation_date: donationDate,

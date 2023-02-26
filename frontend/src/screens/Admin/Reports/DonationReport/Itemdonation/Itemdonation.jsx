@@ -230,7 +230,7 @@ const Itemdonation = ({ setopendashboard }) => {
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.get(
-        `${backendApiUrl}admin/search-electric?search=${searchvalue}&modeOfDonation=${4}`,
+        `${backendApiUrl}admin/search-electric?search=${searchvalue}&type=${4}`,
       );
 
       console.log('ss', res.data.data);

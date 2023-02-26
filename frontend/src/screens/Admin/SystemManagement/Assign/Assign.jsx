@@ -42,10 +42,6 @@ const Assign = ({ setopendashboard }) => {
   const handleClose = () => setOpen(false);
   const navigation = useNavigate();
   console.log('ass', isData);
-  useEffect(() => {
-    setopendashboard(true);
-    getall_donation();
-  }, [open]);
 
   const getall_donation = () => {
     serverInstance('user/get-req-voucher', 'get').then((res) => {
@@ -66,6 +62,11 @@ const Assign = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  useEffect(() => {
+    setopendashboard(true);
+    getall_donation();
+  }, [open]);
   return (
     <>
       <Modal

@@ -13,7 +13,7 @@ const SystemTap = ({ setopendashboard }) => {
 
   useEffect(() => {
     setopendashboard(true);
-  }, []);
+  }, [toggleState]);
 
   return (
     <>

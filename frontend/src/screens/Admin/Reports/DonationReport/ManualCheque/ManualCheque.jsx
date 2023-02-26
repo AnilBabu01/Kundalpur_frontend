@@ -230,7 +230,7 @@ const ManualCheque = ({ setopendashboard }) => {
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.get(
-        `${backendApiUrl}admin/search-electric?search=${searchvalue}&modeOfDonation=${3}`,
+        `${backendApiUrl}admin/search-electric?search=${searchvalue}&type=${3}`,
       );
 
       console.log('ss', res.data.data);

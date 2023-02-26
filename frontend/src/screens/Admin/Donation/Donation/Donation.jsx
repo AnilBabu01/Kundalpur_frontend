@@ -304,14 +304,18 @@ const Donation = ({ setopendashboard }) => {
 
     const role = Number(sessionStorage.getItem('userrole'));
     if (role === 3) {
-      serverInstance('user/check-voucher', 'get').then((res) => {
-        console.log('check couchcer not is ', res);
+      try {
+        serverInstance('user/check-voucher', 'get').then((res) => {
+          console.log('check couchcer not is ', res);
 
-        if (res.status === false) {
-          handleOpen3();
-          setOpen(false);
-        }
-      });
+          if (res.status === false) {
+            handleOpen3();
+            setOpen(false);
+          }
+        });
+      } catch (error) {
+        console.log('sss', error.response);
+      }
     }
   }, [open]);
 
@@ -692,10 +696,12 @@ const Donation = ({ setopendashboard }) => {
                 {isData ? (
                   <>
                     {(rowsPerPage > 0
-                      ? isData.slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage,
-                        )
+                      ? isData
+                          .reverse()
+                          .slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage,
+                          )
                       : isData
                     ).map((row, index) => (
                       <TableRow

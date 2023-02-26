@@ -53,10 +53,6 @@ const VoucherManagement = ({ setopendashboard }) => {
   const handleClose = () => setOpen(false);
   const navigation = useNavigate();
   console.log('asss', isData);
-  useEffect(() => {
-    setopendashboard(true);
-    getall_donation();
-  }, []);
 
   const getall_donation = () => {
     serverInstance('user/add-voucher-user', 'get').then((res) => {
@@ -77,6 +73,11 @@ const VoucherManagement = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  useEffect(() => {
+    setopendashboard(true);
+    getall_donation();
+  }, []);
   return (
     <>
       <Modal
@@ -159,10 +160,12 @@ const VoucherManagement = ({ setopendashboard }) => {
                 </TableHead>
                 <TableBody>
                   {(rowsPerPage > 0
-                    ? isData.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage,
-                      )
+                    ? isData
+                        .reverse()
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
                     : isData
                   ).map((row, index) => (
                     <TableRow
@@ -193,6 +196,31 @@ const VoucherManagement = ({ setopendashboard }) => {
                           className="Accepted_btn"
                         >
                           View
+                        </button>
+                        <button
+                          onClick={() =>
+                            navigate('/admin-panel/uservoucher', {
+                              state: {
+                                userdata: row,
+                              },
+                            })
+                          }
+                          className="Accepted_btn"
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            navigate('/admin-panel/uservoucher', {
+                              state: {
+                                userdata: row,
+                              },
+                            })
+                          }
+                          className="Accepted_btn"
+                        >
+                          Delete
                         </button>
                       </TableCell>
                     </TableRow>

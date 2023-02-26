@@ -41,6 +41,7 @@ import InputBase from '@mui/material/InputBase';
 import PrintOnline from '../../../compoments/PrintOnline';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import OnlineTap from '../OnlineTap';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -280,8 +281,8 @@ const Cheque = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
-
-      <div>
+      <OnlineTap setopendashboard={setopendashboard} />
+      <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
         <div className="search-header">
           <div className="search-inner-div-reports">
             <div className="Center_main_dic_filetr">

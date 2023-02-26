@@ -41,6 +41,7 @@ const ManualDonationTap = ({ setopendashboard }) => {
               Manual Electronic Report
             </NavLink>
             <NavLink
+              style={{ width: '17%' }}
               to="/admin-panel/manual/report/cheque"
               className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >

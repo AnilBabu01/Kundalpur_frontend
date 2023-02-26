@@ -42,6 +42,7 @@ import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 
 import Fade from '@mui/material/Fade';
+import OnlineTap from '../OnlineTap';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -275,7 +276,8 @@ const Online = ({ setopendashboard }) => {
         </DialogActions>
       </Dialog>
 
-      <div>
+      <OnlineTap setopendashboard={setopendashboard} />
+      <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
         <div className="search-header">
           <div className="search-inner-div-reports">
             <div className="Center_main_dic_filetr">

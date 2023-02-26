@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import f1 from '../../../assets/f3.png';
-import UserManagement from './UserManagement/UserManagement';
-import RoleManagement from './RoleManagement/RoleManagement';
-import VoucherManagement from './VoucherManagement/VoucherManagement';
-import Assign from './Assign/Assign';
+import { NavLink, useNavigate } from 'react-router-dom';
 const SystemTap = ({ setopendashboard }) => {
   const [toggleState, setToggleState] = useState(1);
 
@@ -20,9 +17,9 @@ const SystemTap = ({ setopendashboard }) => {
       <div className="mobilewidth dashboarmain">
         <div className="container1">
           <div className="bloc-tabs1">
-            <button
-              className={toggleState === 1 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(1)}
+            <NavLink
+              to="/admin-panel/usermanagement"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
               <img
                 style={{ marginRight: '4%', width: '20px' }}
@@ -30,11 +27,11 @@ const SystemTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Add staff
-            </button>
+            </NavLink>
 
-            <button
-              className={toggleState === 2 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(2)}
+            <NavLink
+              to="/admin-panel/rolemanagement"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
               <img
                 style={{ marginRight: '4%', width: '20px' }}
@@ -42,10 +39,10 @@ const SystemTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Add role
-            </button>
-            <button
-              className={toggleState === 3 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(3)}
+            </NavLink>
+            <NavLink
+              to="/admin-panel/vouchermanagement"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
               <img
                 style={{ marginRight: '4%', width: '20px' }}
@@ -53,10 +50,10 @@ const SystemTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Generate voucher
-            </button>
-            <button
-              className={toggleState === 4 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(4)}
+            </NavLink>
+            <NavLink
+              to="/admin-panel/assign"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
               <img
                 style={{ marginRight: '4%', width: '20px' }}
@@ -64,10 +61,10 @@ const SystemTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Assing voucher
-            </button>
+            </NavLink>
           </div>
 
-          <div className="content-tabs">
+          {/* <div className="content-tabs">
             <div
               className={
                 toggleState === 1 ? 'content  active-content' : 'content'
@@ -97,7 +94,7 @@ const SystemTap = ({ setopendashboard }) => {
             >
               <Assign setopendashboard={setopendashboard} />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

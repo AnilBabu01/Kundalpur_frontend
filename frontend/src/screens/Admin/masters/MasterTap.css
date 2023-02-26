@@ -45,6 +45,10 @@
   padding-right: 1rem;
   margin-bottom: 1rem;
 }
+
+.bloc-tabs1 a{
+  list-style: none;
+}
 .tabs1 {
   width: 194px;
   height: 60px;
@@ -60,6 +64,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
 }
 
 .tabs2 {
@@ -78,6 +83,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
 }
 
 button {

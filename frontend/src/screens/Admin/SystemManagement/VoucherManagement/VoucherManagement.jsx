@@ -28,7 +28,8 @@ import Moment from 'moment-js';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format } from 'date-fns';
-
+import SystemTap from '../SystemTap';
+import UpdateVoucher from './AddVoucherToUser/UpdateVoucher';
 const style = {
   position: 'absolute',
   top: '27%',
@@ -47,10 +48,23 @@ const VoucherManagement = ({ setopendashboard }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
+  const [data, setdata] = useState('');
+
+  const [data2, setdata2] = useState('');
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
   const [showAnPartularEmpVoucher, setshowAnPartularEmpVoucher] =
     useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleOpen1 = (data) => {
+    setOpen1(true);
+
+    setdata(data);
+  };
+  const handleClose1 = () => setOpen1(false);
   const navigation = useNavigate();
   console.log('asss', isData);
 
@@ -77,7 +91,7 @@ const VoucherManagement = ({ setopendashboard }) => {
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
-  }, []);
+  }, [open, open1]);
   return (
     <>
       <Modal
@@ -101,7 +115,28 @@ const VoucherManagement = ({ setopendashboard }) => {
         </Fade>
       </Modal>
 
-      <div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open1}
+        onClose={handleClose1}
+        closeAfterTransition
+      >
+        <Fade in={open1}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div-user-add">
+                <h2 clssName="add_text_only">Update Voucher</h2>
+                <CloseIcon onClick={() => handleClose1()} />
+              </div>
+
+              <UpdateVoucher setOpen={setOpen1} data={data} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+      <SystemTap setopendashboard={setopendashboard} />
+      <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
         {showAnPartularEmpVoucher ? (
           <>
             <h2>view</h2>
@@ -185,7 +220,7 @@ const VoucherManagement = ({ setopendashboard }) => {
                         {row.status ? 'Allocated' : 'Not Used'}
                       </TableCell>
                       <TableCell align="center">
-                        <button
+                        <img
                           onClick={() =>
                             navigate('/admin-panel/uservoucher', {
                               state: {
@@ -193,24 +228,18 @@ const VoucherManagement = ({ setopendashboard }) => {
                               },
                             })
                           }
-                          className="Accepted_btn"
-                        >
-                          View
-                        </button>
-                        <button
-                          onClick={() =>
-                            navigate('/admin-panel/uservoucher', {
-                              state: {
-                                userdata: row,
-                              },
-                            })
-                          }
-                          className="Accepted_btn"
-                        >
-                          Edit
-                        </button>
+                          src={eye}
+                          alt="s"
+                          style={{ width: '25px', marginRight: '0.3rem' }}
+                        />
 
-                        <button
+                        <img
+                          onClick={() => handleOpen1(row)}
+                          src={Edit}
+                          alt="s"
+                          style={{ width: '25px', marginRight: '0.3rem' }}
+                        />
+                        <img
                           onClick={() =>
                             navigate('/admin-panel/uservoucher', {
                               state: {
@@ -218,10 +247,10 @@ const VoucherManagement = ({ setopendashboard }) => {
                               },
                             })
                           }
-                          className="Accepted_btn"
-                        >
-                          Delete
-                        </button>
+                          src={Delete}
+                          alt="s"
+                          style={{ width: '25px' }}
+                        />
                       </TableCell>
                     </TableRow>
                   ))}

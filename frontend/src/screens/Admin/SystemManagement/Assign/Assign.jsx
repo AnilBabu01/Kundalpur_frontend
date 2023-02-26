@@ -17,6 +17,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import AcceptRequest from './AcceptRequest';
+import SystemTap from '../SystemTap';
 import './Assign.css';
 const style = {
   position: 'absolute',
@@ -89,72 +90,74 @@ const Assign = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
-
-      <div className="table-div-maain">
-        <Table sx={{ width: '100%' }} aria-label="simple table">
-          <TableHead style={{ background: '#F1F0F0' }}>
-            <TableRow>
-              <TableCell>EmpId</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? isData.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage,
-                )
-              : isData
-            ).map((row, index) => (
-              <TableRow
-                key={index}
-                sx={{
-                  '&:last-child td, &:last-child th': { border: 0 },
-                }}
-              >
-                <TableCell> {row.id}</TableCell>
-                <TableCell>{row.Username}</TableCell>
-                <TableCell> {row.Role}</TableCell>
-
-                <TableCell>
-                  <button
-                    onClick={() => handleOpen(row)}
-                    className="Accepted_btn"
-                  >
-                    Accepted
-                  </button>
-                </TableCell>
+      <SystemTap setopendashboard={setopendashboard} />
+      <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
+        <div className="table-div-maain">
+          <Table sx={{ width: '100%' }} aria-label="simple table">
+            <TableHead style={{ background: '#F1F0F0' }}>
+              <TableRow>
+                <TableCell>EmpId</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Role</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                count={isData.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                rowsPerPageOptions={[5, 10, 25]}
-                labelRowsPerPage={<span>Rows:</span>}
-                labelDisplayedRows={({ page }) => {
-                  return `Page: ${page}`;
-                }}
-                backIconButtonProps={{
-                  color: 'secondary',
-                }}
-                nextIconButtonProps={{ color: 'secondary' }}
-                SelectProps={{
-                  inputProps: {
-                    'aria-label': 'page number',
-                  },
-                }}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? isData.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage,
+                  )
+                : isData
+              ).map((row, index) => (
+                <TableRow
+                  key={index}
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                  }}
+                >
+                  <TableCell> {row.id}</TableCell>
+                  <TableCell>{row.Username}</TableCell>
+                  <TableCell> {row.Role}</TableCell>
+
+                  <TableCell>
+                    <button
+                      onClick={() => handleOpen(row)}
+                      className="Accepted_btn"
+                    >
+                      Accepted
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  count={isData.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  rowsPerPageOptions={[5, 10, 25]}
+                  labelRowsPerPage={<span>Rows:</span>}
+                  labelDisplayedRows={({ page }) => {
+                    return `Page: ${page}`;
+                  }}
+                  backIconButtonProps={{
+                    color: 'secondary',
+                  }}
+                  nextIconButtonProps={{ color: 'secondary' }}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'page number',
+                    },
+                  }}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </div>
       </div>
     </>
   );

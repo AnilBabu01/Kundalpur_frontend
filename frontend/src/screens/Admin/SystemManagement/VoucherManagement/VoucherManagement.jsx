@@ -30,6 +30,12 @@ import 'jspdf-autotable';
 import { format } from 'date-fns';
 import SystemTap from '../SystemTap';
 import UpdateVoucher from './AddVoucherToUser/UpdateVoucher';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 const style = {
   position: 'absolute',
   top: '27%',
@@ -50,10 +56,32 @@ const VoucherManagement = ({ setopendashboard }) => {
   const [open, setOpen] = React.useState(false);
   const [open1, setOpen1] = React.useState(false);
   const [data, setdata] = useState('');
+  const [deleteId, setdeleteId] = useState('');
+  const [open2, setOpen2] = React.useState(false);
 
-  const [data2, setdata2] = useState('');
-  const handleOpen2 = () => setOpen2(true);
-  const handleClose2 = () => setOpen2(false);
+  const handleClickOpen = (id) => {
+    setOpen2(true);
+    setdeleteId(id);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+    serverInstance(`admin/add-voucher?id=${deleteId}`, 'delete').then((res) => {
+      console.log(res);
+      if (res.status === true) {
+        Swal.fire('Great!', 'Voucher deleted successfully', 'success');
+        setrefetch(true);
+      } else {
+        Swal('Error', 'somthing went  wrong', 'error');
+      }
+      console.log(res);
+    });
+  };
+
+  const handleClose3 = () => {
+    setOpen2(false);
+  };
+
   const [showAnPartularEmpVoucher, setshowAnPartularEmpVoucher] =
     useState(false);
   const handleOpen = () => setOpen(true);
@@ -91,9 +119,30 @@ const VoucherManagement = ({ setopendashboard }) => {
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
-  }, [open, open1]);
+  }, [open, open1, open2]);
   return (
     <>
+      <Dialog
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {'Do you want to delete'}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            After delete you cannot get again
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose3}>Disagree</Button>
+          <Button onClick={handleClose2} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -230,26 +279,20 @@ const VoucherManagement = ({ setopendashboard }) => {
                           }
                           src={eye}
                           alt="s"
-                          style={{ width: '25px', marginRight: '0.3rem' }}
+                          style={{ width: '20px', marginRight: '0.3rem' }}
                         />
 
                         <img
                           onClick={() => handleOpen1(row)}
                           src={Edit}
                           alt="s"
-                          style={{ width: '25px', marginRight: '0.3rem' }}
+                          style={{ width: '20px', marginRight: '0.3rem' }}
                         />
                         <img
-                          onClick={() =>
-                            navigate('/admin-panel/uservoucher', {
-                              state: {
-                                userdata: row,
-                              },
-                            })
-                          }
+                          onClick={() => handleClickOpen(row.id)}
                           src={Delete}
                           alt="s"
-                          style={{ width: '25px' }}
+                          style={{ width: '20px' }}
                         />
                       </TableCell>
                     </TableRow>

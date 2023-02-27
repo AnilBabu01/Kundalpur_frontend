@@ -207,8 +207,8 @@ const AddFacilities = ({ setopendashboard }) => {
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
                 <TableCell>S.No</TableCell>
-                <TableCell>Facilities</TableCell>
-                <TableCell>Comments</TableCell>
+                <TableCell>Facility in hindi</TableCell>
+                <TableCell>Facility in english</TableCell>
 
                 <TableCell>Action</TableCell>
               </TableRow>
@@ -230,8 +230,8 @@ const AddFacilities = ({ setopendashboard }) => {
                       }}
                     >
                       <TableCell>{row.ReceiptNo}</TableCell>
-                      <TableCell>{row.voucherNo}</TableCell>
 
+                      <TableCell> {row.address}</TableCell>
                       <TableCell> {row.address}</TableCell>
                       <TableCell>
                         {/* <Tooltip title="View">

@@ -206,6 +206,7 @@ const AddRoom = ({ setopendashboard }) => {
           >
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
+                <TableCell>S.No</TableCell>
                 <TableCell>Dharamashala</TableCell>
                 <TableCell>Category Name</TableCell>
                 <TableCell>No of Rooms </TableCell>
@@ -232,6 +233,7 @@ const AddRoom = ({ setopendashboard }) => {
                         '&:last-child td, &:last-child th': { border: 0 },
                       }}
                     >
+                      <TableCell>{row.ReceiptNo}</TableCell>
                       <TableCell>{row.ReceiptNo}</TableCell>
                       <TableCell>{row.voucherNo}</TableCell>
                       <TableCell>{row.phoneNo}</TableCell>

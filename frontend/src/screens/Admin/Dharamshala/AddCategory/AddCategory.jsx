@@ -206,13 +206,14 @@ const AddCategory = ({ setopendashboard }) => {
           >
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
+                <TableCell>S.No</TableCell>
                 <TableCell>Dharamashala</TableCell>
                 <TableCell>Category Name</TableCell>
                 <TableCell>Rate </TableCell>
                 <TableCell>Advance Amount</TableCell>
                 <TableCell>Check in Time</TableCell>
                 <TableCell>Check out Time</TableCell>
-                <TableCell>Comments</TableCell>
+
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -234,10 +235,11 @@ const AddCategory = ({ setopendashboard }) => {
                     >
                       <TableCell>{row.ReceiptNo}</TableCell>
                       <TableCell>{row.voucherNo}</TableCell>
+                      <TableCell>{row.voucherNo}</TableCell>
                       <TableCell>{row.phoneNo}</TableCell>
                       <TableCell>{row.name}</TableCell>
                       <TableCell>{row.phoneNo}</TableCell>
-                      <TableCell>{row.name}</TableCell>
+
                       <TableCell> {row.address}</TableCell>
                       <TableCell>
                         <Tooltip title="View">

@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { backendApiUrl } from '../../../../config/config';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
-
+import { ReactTransliterate } from 'react-transliterate';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+
+const custominput = {
+  width: '100%',
+  height: '33px',
+  borderRadius: '5px',
+  paddingLeft: '0.5rem',
+};
 function UpdateDonationType({ data, handleClose3 }) {
   const location = useLocation();
 
@@ -13,6 +20,7 @@ function UpdateDonationType({ data, handleClose3 }) {
   const [isData, setisData] = React.useState([]);
   const [donationtype_in_hindi, setdonationtype_in_hindi] = useState('');
   const [donationtype_in_eng, setdonationtype_in_eng] = useState('');
+  const [text, settext] = useState('');
   const [id, setid] = useState('');
   console.log('aaa', data.type_en);
   const handlesubmit = async () => {
@@ -50,22 +58,27 @@ function UpdateDonationType({ data, handleClose3 }) {
     <>
       <div className="main_uodate_div">
         <div className="update-form">
-          <div className="main-input-div1">
+          <div className="main-input-di">
             <div className="inner-input-div-donations">
               <label htmlFor="donationtype_in_hindi">
                 Enter donation type in hindi 
               </label>
-              <input
-                type="text"
-                id="donationtype_in_hindi"
+              <ReactTransliterate
+                style={custominput}
+                id="full-name"
+                required
                 value={donationtype_in_hindi}
-                name="donationtype_in_hindi"
+                onChangeText={(donationtype_in_hindi) => {
+                  setdonationtype_in_hindi(donationtype_in_hindi);
+                }}
                 onChange={(e) => setdonationtype_in_hindi(e.target.value)}
+                lang="hi"
               />
               <label htmlFor="donationtype_in_eng">
                 Enter donation type in english 
               </label>
               <input
+                style={custominput}
                 type="text"
                 id="donationtype_in_eng"
                 value={donationtype_in_eng}

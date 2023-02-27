@@ -20,6 +20,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { ReactTransliterate } from 'react-transliterate';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -38,6 +39,7 @@ function IntemMaster() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isData, setisData] = React.useState([]);
+  const [text, settext] = useState('');
   const [refetch, setrefetch] = useState(false);
   const [donationtype_in_hindi, setdonationtype_in_hindi] = useState('');
   const [donationtype_in_eng, setdonationtype_in_eng] = useState('');
@@ -168,14 +170,19 @@ function IntemMaster() {
                     <label htmlFor="donationtype_in_hindi">
                       Enter donation item in hindi 
                     </label>
-                    <input
-                      type="text"
+
+                    <ReactTransliterate
+                      // style={custumstyle}
+                      id="full-name"
                       required
-                      id="donationtype_in_hindi"
-                      value={donationtype_in_hindi}
-                      name="donationtype_in_hindi"
+                      value={text}
+                      onChangeText={(text) => {
+                        settext(text);
+                      }}
                       onChange={(e) => setdonationtype_in_hindi(e.target.value)}
+                      lang="hi"
                     />
+
                     <label htmlFor="donationtype_in_eng">
                       Enter donation item in english 
                     </label>

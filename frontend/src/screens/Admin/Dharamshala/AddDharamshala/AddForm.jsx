@@ -8,11 +8,11 @@ function AddForm({ setOpen }) {
           <div className="form-div">
             <div className="form-input-div_add_user">
               <div className="inner-input-div2">
-                <label htmlFor="fromNo">Dharamshala</label>
+                <label htmlFor="fromNo">dharamshala in english</label>
                 <input
                   type="text"
                   id="fromNo"
-                  placeholder="enter category name"
+                  placeholder="enter the dharamshala name in english"
                   className="forminput_add_user"
                   //   value={fromNo}
                   //   name="fromNo"
@@ -21,12 +21,12 @@ function AddForm({ setOpen }) {
               </div>
 
               <div className="inner-input-div2">
-                <label htmlFor="toNo">Category Name</label>
+                <label htmlFor="toNo">dharamshala in hindi</label>
                 <input
                   id="text"
                   className="forminput_add_user"
                   type="text"
-                  placeholder="enter category name"
+                  placeholder="enter the dharamshala name in hindi"
                   //   value={toNo}
                   //   name="toNo"
                   //   onChange={(e) => settoNo(e.target.value)}

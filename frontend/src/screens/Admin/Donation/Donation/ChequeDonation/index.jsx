@@ -524,11 +524,11 @@ const ChequeDonation = ({
                 <>
                   <ReactTransliterate
                     style={custumstyle}
-                    required
                     id="address"
+                    required
                     value={address}
                     onChangeText={(address) => {
-                      setAddress(addresss);
+                      setAddress(address);
                     }}
                     onChange={(e) => setAddress(e.target.value)}
                     lang="hi"

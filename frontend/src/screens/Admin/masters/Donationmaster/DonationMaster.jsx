@@ -18,6 +18,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import IconButton from '@mui/material/IconButton';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { ReactTransliterate } from 'react-transliterate';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -183,14 +184,17 @@ function DonationMaster() {
                     <label htmlFor="donationtype_in_hindi">
                       Enter donation type in hindi 
                     </label>
-                    <input
-                      className="input_add_donation_type"
-                      type="text"
-                      id="donationtype_in_hindi"
+
+                    <ReactTransliterate
+                      // style={custominput}
+                      id="full-name"
                       required
                       value={donationtype_in_hindi}
-                      name="donationtype_in_hindi"
+                      onChangeText={(donationtype_in_hindi) => {
+                        setdonationtype_in_hindi(donationtype_in_hindi);
+                      }}
                       onChange={(e) => setdonationtype_in_hindi(e.target.value)}
+                      lang="hi"
                     />
                     <label htmlFor="donationtype_in_eng">
                       Enter donation type in english 

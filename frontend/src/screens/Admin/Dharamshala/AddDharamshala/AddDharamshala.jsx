@@ -209,8 +209,8 @@ const AddDharamshala = ({ setopendashboard }) => {
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
                 <TableCell>S.No</TableCell>
-                <TableCell>Dharmshala Name</TableCell>
-                <TableCell>Comments</TableCell>
+                <TableCell>Dharamshala Name in hindi</TableCell>
+                <TableCell>Dharamshala Name in english</TableCell>
 
                 <TableCell>Action</TableCell>
               </TableRow>

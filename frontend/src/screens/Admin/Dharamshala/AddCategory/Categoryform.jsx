@@ -109,7 +109,7 @@ function Categoryform({ setOpen }) {
                 </select>
               </div>
 
-              <div className="inner-input-div2">
+              {/* <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
                   Comments
                 </label>
@@ -122,7 +122,7 @@ function Categoryform({ setOpen }) {
                   //   name="toNo"
                   //   onChange={(e) => settoNo(e.target.value)}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
 

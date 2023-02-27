@@ -18,6 +18,7 @@ import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import AcceptRequest from './AcceptRequest';
 import SystemTap from '../SystemTap';
+import IconButton from '@mui/material/IconButton';
 import './Assign.css';
 const style = {
   position: 'absolute',
@@ -82,7 +83,9 @@ const Assign = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div1222">
                 <h2>Generate Voucher</h2>
-                <CloseIcon onClick={() => handleClose()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose()} />
+                </IconButton>
               </div>
 
               <AcceptRequest setOpen={setOpen} empdata={empdata} />
@@ -104,10 +107,9 @@ const Assign = ({ setopendashboard }) => {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? isData.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage,
-                  )
+                ? isData
+                    .reverse()
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : isData
               ).map((row, index) => (
                 <TableRow

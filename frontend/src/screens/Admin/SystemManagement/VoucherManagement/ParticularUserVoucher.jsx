@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
@@ -100,7 +100,9 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div1">
                 <h2>Cancel Voucher no</h2>
-                <CloseIcon onClick={() => handleClose()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose()} />
+                </IconButton>
               </div>
               <CancelVoucher
                 row={cancelData}
@@ -131,7 +133,9 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                   <TableCell align="center">Empoyee Name</TableCell>
 
                   <TableCell align="center">Voucher Number</TableCell>
+
                   <TableCell align="center">Status</TableCell>
+                  <TableCell align="center">Remark</TableCell>
                   <TableCell align="center">Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -155,7 +159,9 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                         <TableCell align="center">{row?.name}</TableCell>
 
                         <TableCell align="center">{row?.voucherNo}</TableCell>
+
                         <TableCell align="center">{row.status}</TableCell>
+                        <TableCell align="center">-</TableCell>
                         <TableCell align="center">
                           {row.status === 'unallocated' && (
                             <>

@@ -29,7 +29,7 @@ const SystemTap = ({ setopendashboard }) => {
               Add staff
             </NavLink>
 
-            <NavLink
+            {/* <NavLink
               to="/admin-panel/rolemanagement"
               className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
             >
@@ -39,7 +39,7 @@ const SystemTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Add role
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to="/admin-panel/vouchermanagement"
               className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}

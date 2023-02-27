@@ -10,6 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
+import IconButton from '@mui/material/IconButton';
 import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -116,6 +117,56 @@ const VoucherManagement = ({ setopendashboard }) => {
     setPage(0);
   };
 
+  const ExportPdfUVocher = (fileName) => {
+    const doc = new jsPDF();
+
+    const tableColumn = [
+      'EmpoyeeName',
+      'VoucherFrom',
+      'voucherTo',
+      'voucherNumber',
+    ];
+
+    const tableRows = [];
+
+    isData.forEach((item) => {
+      const ticketData = [
+        item?.name,
+        item?.from,
+        item?.to,
+        item?.voucher,
+        format(new Date(item.createdAt), 'yyyy-MM-dd'),
+      ];
+
+      tableRows.push(ticketData);
+    });
+
+    doc.autoTable(tableColumn, tableRows, { startY: 20 });
+    const date = Date().split(' ');
+
+    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+
+    doc.text(`Report of ${fileName}`, 8, 9);
+    doc.setFont('Lato-Regular', 'normal');
+    doc.setFontSize(28);
+    doc.save(`${fileName}_${dateStr}.pdf`);
+  };
+  const ExportToExcel = () => {
+    const fileName = 'voucherreport';
+    const exportType = 'xls';
+    var data = [];
+
+    isData.map((item, index) => {
+      data.push({
+        EmpoyeeName: item?.name,
+        VoucherFrom: item?.from,
+        voucherTo: item?.to,
+        voucherNumber: item?.voucher,
+      });
+    });
+
+    exportFromJSON({ data, fileName, exportType });
+  };
   useEffect(() => {
     setopendashboard(true);
     getall_donation();
@@ -155,7 +206,9 @@ const VoucherManagement = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div-user-add">
                 <h2 clssName="add_text_only">Generate Voucher</h2>
-                <CloseIcon onClick={() => handleClose()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose()} />
+                </IconButton>
               </div>
 
               <AddVoucherToUser setOpen={setOpen} />
@@ -176,7 +229,9 @@ const VoucherManagement = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div-user-add">
                 <h2 clssName="add_text_only">Update Voucher</h2>
-                <CloseIcon onClick={() => handleClose1()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose1()} />
+                </IconButton>
               </div>
 
               <UpdateVoucher setOpen={setOpen1} data={data} />
@@ -205,7 +260,7 @@ const VoucherManagement = ({ setopendashboard }) => {
 
                   <Tooltip title="Export Excel File">
                     <img
-                      // onClick={() => ExportToExcel()}
+                      onClick={() => ExportToExcel()}
                       src={ExportExcel}
                       style={{
                         width: '30px',
@@ -216,7 +271,7 @@ const VoucherManagement = ({ setopendashboard }) => {
                   </Tooltip>
                   <Tooltip title="Export Pdf File">
                     <img
-                      // onClick={() => ExportPdfmanul('Employee_list')}
+                      onClick={() => ExportPdfUVocher('VoucherReport')}
                       src={ExportPdf}
                       style={{
                         width: '30px',

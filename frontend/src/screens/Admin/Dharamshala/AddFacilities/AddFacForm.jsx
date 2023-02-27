@@ -8,11 +8,11 @@ function AddFacForm({ setOpen }) {
           <div className="form-div">
             <div className="form-input-div_add_user">
               <div className="inner-input-div2">
-                <label htmlFor="fromNo">Facilities*</label>
+                <label htmlFor="fromNo">Facility in english</label>
                 <input
                   type="text"
                   id="fromNo"
-                  placeholder="enter facilities"
+                  placeholder="enter the facility in english"
                   className="forminput_add_user"
                   //   value={fromNo}
                   //   name="fromNo"
@@ -21,12 +21,12 @@ function AddFacForm({ setOpen }) {
               </div>
 
               <div className="inner-input-div2">
-                <label htmlFor="toNo">Comments</label>
+                <label htmlFor="toNo">Facility in hindi</label>
                 <input
                   id="text"
                   className="forminput_add_user"
                   type="text"
-                  placeholder="enter comments"
+                  placeholder="enter the facility in hindi"
                   //   value={toNo}
                   //   name="toNo"
                   //   onChange={(e) => settoNo(e.target.value)}

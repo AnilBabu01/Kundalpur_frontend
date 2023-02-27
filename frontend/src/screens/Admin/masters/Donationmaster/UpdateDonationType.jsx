@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { backendApiUrl } from "../../../../config/config";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { backendApiUrl } from '../../../../config/config';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { ReactTransliterate } from 'react-transliterate';
 function UpdateDonationType({ data, handleClose3 }) {
   const location = useLocation();
 
   const navigation = useNavigate();
   const [isData, setisData] = React.useState([]);
-  const [donationtype_in_hindi, setdonationtype_in_hindi] = useState("");
-  const [donationtype_in_eng, setdonationtype_in_eng] = useState("");
-  const [id, setid] = useState("");
-  console.log("aaa", data.type_en);
+  const [donationtype_in_hindi, setdonationtype_in_hindi] = useState('');
+  const [donationtype_in_eng, setdonationtype_in_eng] = useState('');
+  const [id, setid] = useState('');
+  console.log('aaa', data.type_en);
   const handlesubmit = async () => {
     try {
       axios.defaults.headers.put[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("token")}`;
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
       const res = await axios.put(`${backendApiUrl}admin/donation-type`, {
         id: id,
         modeOfType: 1,
@@ -25,12 +26,12 @@ function UpdateDonationType({ data, handleClose3 }) {
       });
       console.log(res);
       if (res.data.status === true) {
-        Swal.fire("Great!", "User Added Successfully", "success");
+        Swal.fire('Great!', 'User Added Successfully', 'success');
 
         handleClose3();
       }
     } catch (error) {
-      Swal.fire("Error!", error.response.data.message, "error");
+      Swal.fire('Error!', error.response.data.message, 'error');
       handleClose3();
     }
   };
@@ -52,12 +53,16 @@ function UpdateDonationType({ data, handleClose3 }) {
               <label htmlFor="donationtype_in_hindi">
                 Enter donation type in hindi 
               </label>
-              <input
-                type="text"
-                id="donationtype_in_hindi"
+              <ReactTransliterate
+                // style={custominput}
+                id="full-name"
+                required
                 value={donationtype_in_hindi}
-                name="donationtype_in_hindi"
+                onChangeText={(donationtype_in_hindi) => {
+                  setdonationtype_in_hindi(donationtype_in_hindi);
+                }}
                 onChange={(e) => setdonationtype_in_hindi(e.target.value)}
+                lang="hi"
               />
               <label htmlFor="donationtype_in_eng">
                 Enter donation type in english 
@@ -74,7 +79,7 @@ function UpdateDonationType({ data, handleClose3 }) {
 
           <div className="save-div-btn">
             <button onClick={() => handlesubmit()} className="save-btn1">
-              Update{" "}
+              Update{' '}
             </button>
           </div>
         </div>

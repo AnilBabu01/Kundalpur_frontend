@@ -109,7 +109,6 @@ const UpdateEmployee = ({ setOpen, empdata }) => {
                     htmlFor="password"
                     text="password"
                     id="password"
-                    required
                     name="password"
                     value={password}
                     onChange={(e) => setpassword(e.target.value)}

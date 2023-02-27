@@ -4,13 +4,12 @@ import badebaba from '../../../assets/badebaba.jpg';
 import { displayRazorpay } from '../../../RazorPay/RazorPay';
 import PaymentSuccessfull from './PaymentSuccessfull/PaymentSuccessfull';
 import ChequeSuccessfull from './chequeSuccessfull/ChequeSuccessfull';
-import { backendApiUrl } from '../../../config/config';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadUser } from '../../../Redux/redux/action/AuthAction';
 import donationLeft from '../../../assets/donation-left.png';
 import donationRight from '../../../assets/donation-right.png';
-
+import { backendApiUrl } from '../../../config/config';
 import axios from 'axios';
 import {
   Box,

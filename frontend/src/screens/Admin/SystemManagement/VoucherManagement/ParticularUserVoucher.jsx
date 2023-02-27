@@ -161,7 +161,9 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                         <TableCell align="center">{row?.voucherNo}</TableCell>
 
                         <TableCell align="center">{row.status}</TableCell>
-                        <TableCell align="center">-</TableCell>
+                        <TableCell align="center">
+                          {row?.rsn ? row?.rsn : '-'}
+                        </TableCell>
                         <TableCell align="center">
                           {row.status === 'unallocated' && (
                             <>

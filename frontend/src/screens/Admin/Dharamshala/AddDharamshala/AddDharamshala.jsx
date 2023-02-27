@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { serverInstance } from '../../../../API/ServerInstance';
-import Swal from 'sweetalert2';
 import { useNavigate, Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -28,7 +27,12 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { format } from 'date-fns';
 import AddForm from './AddForm';
+import Updatedharmshala from './Updatedharmshala';
+import ViewDharamshala from './ViewDharamshala';
 import './AddDharamshala.css';
 const style = {
   position: 'absolute',
@@ -51,6 +55,19 @@ const AddDharamshala = ({ setopendashboard }) => {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const handleOepn = () => setOpen(true);
+  const [updatedata, setupdatedata] = useState('');
+  const [open1, setOpen1] = React.useState(false);
+  const handleClose1 = () => setOpen1(false);
+  const handleOepn1 = (data) => {
+    setOpen1(true);
+    setupdatedata(data);
+  };
+  const [open2, setOpen2] = React.useState(false);
+  const handleClose2 = () => setOpen2(false);
+  const handleOepn2 = (data) => {
+    setOpen2(true);
+    setupdatedata(data);
+  };
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
   var today = new Date();
   const currDate = today
@@ -62,15 +79,9 @@ const AddDharamshala = ({ setopendashboard }) => {
     hour12: true,
   });
   const getall_donation = () => {
-    serverInstance('user/add-elecDonation', 'get').then((res) => {
-      if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
-
-        setisData(filterData);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
-      }
-      console.log(res);
+    serverInstance('room/dharmashala', 'get').then((res) => {
+      console.log('dara', res.data);
+      setisData(res.data);
     });
   };
 
@@ -84,31 +95,48 @@ const AddDharamshala = ({ setopendashboard }) => {
   };
 
   const ExportToExcel = () => {
-    const fileName = 'ManualCashReport';
+    const fileName = 'DharamshalList';
     const exportType = 'xls';
     var data = [];
     isData.map((item, index) => {
       data.push({
-        Date: Moment(item.donation_date).format('DD-MM-YYYY'),
-        'Receipt No': item?.ReceiptNo,
-        'Voucher No': item?.voucherNo,
-        'Phone No': item?.phoneNo,
-        name: item?.name,
-        Address: item?.address,
-        'Head/Item': item?.elecItemDetails.map((row) => {
-          return row.type;
-        }),
-        Amount: item?.elecItemDetails.reduce(
-          (n, { amount }) => parseFloat(n) + parseFloat(amount),
-          0,
-        ),
-        remark: item?.elecItemDetails.map((row) => {
-          return row.remark;
-        }),
+        SNo: index + 1,
+        nameinHindi: item?.nameH,
+        nameinEnglish: item?.name,
+
         'Created Date': Moment(item?.created_at).format('DD-MM-YYYY'),
       });
     });
     exportFromJSON({ data, fileName, exportType });
+  };
+  const ExportPdfmanul = (fileName) => {
+    const doc = new jsPDF();
+
+    const tableColumn = ['s.no', 'nameinHindi', 'nameinEnglish'];
+
+    const tableRows = [];
+
+    isData.forEach((item, index) => {
+      const ticketData = [
+        index + 1,
+        item?.nameH,
+        item?.name,
+
+        format(new Date(item.createdAt), 'yyyy-MM-dd'),
+      ];
+
+      tableRows.push(ticketData);
+    });
+
+    doc.autoTable(tableColumn, tableRows, { startY: 20 });
+    const date = Date().split(' ');
+
+    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+
+    doc.text(`Report of ${fileName}`, 8, 9);
+    doc.setFont('Lato-Regular', 'normal');
+    doc.setFontSize(28);
+    doc.save(`${fileName}_${dateStr}.pdf`);
   };
 
   useEffect(() => {
@@ -116,7 +144,7 @@ const AddDharamshala = ({ setopendashboard }) => {
     setopendashboard(true);
 
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, [open]);
+  }, [open, open1]);
 
   return (
     <>
@@ -148,6 +176,64 @@ const AddDharamshala = ({ setopendashboard }) => {
         </Fade>
       </Modal>
 
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open1}
+        onClose={handleClose1}
+        closeAfterTransition
+      >
+        <Fade in={open1}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div">
+                <div>
+                  <h2 style={{ marginBottom: '0.5rem' }}>Update Dharamshala</h2>
+                  <Typography variant="body2" color="primary">
+                    {currDate} / {currTime}
+                  </Typography>
+                </div>
+
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose1()} />
+                </IconButton>
+              </div>
+              <Updatedharmshala setOpen={setOpen1} updatedata={updatedata} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open2}
+        onClose={handleClose2}
+        closeAfterTransition
+      >
+        <Fade in={open2}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div">
+                <div>
+                  <h2 style={{ marginBottom: '0.5rem' }}>
+                    Dharamshala details
+                  </h2>
+                  <Typography variant="body2" color="primary">
+                    {currDate} / {currTime}
+                  </Typography>
+                </div>
+
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose2()} />
+                </IconButton>
+              </div>
+              <ViewDharamshala setOpen={setOpen2} updatedata={updatedata} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+
       <div>
         <div className="search-header-print">
           <div
@@ -162,7 +248,7 @@ const AddDharamshala = ({ setopendashboard }) => {
             <Tooltip title="Export Excel File">
               <IconButton>
                 <img
-                  //   onClick={() => ExportToExcel()}
+                  onClick={() => ExportToExcel()}
                   src={ExportExcel}
                   alt="cc"
                   style={{ width: '30px', marginLeft: '0rem' }}
@@ -172,7 +258,7 @@ const AddDharamshala = ({ setopendashboard }) => {
             <Tooltip title="Export Pdf File">
               <IconButton>
                 <img
-                  //   onClick={() => ExportPdfmanul(isData, 'Report')}
+                  onClick={() => ExportPdfmanul('Dharamshalalist')}
                   src={ExportPdf}
                   alt="cc"
                   style={{ width: '30px' }}
@@ -231,13 +317,14 @@ const AddDharamshala = ({ setopendashboard }) => {
                         '&:last-child td, &:last-child th': { border: 0 },
                       }}
                     >
-                      <TableCell>{row.ReceiptNo}</TableCell>
-                      <TableCell>{row.voucherNo}</TableCell>
-                      <TableCell>{row.phoneNo}</TableCell>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{row.nameH}</TableCell>
+                      <TableCell>{row.name}</TableCell>
 
                       <TableCell>
                         <Tooltip title="View">
                           <img
+                            onClick={() => handleOepn2(row)}
                             src={eye}
                             alt="eye"
                             style={{ width: '20px', marginRight: '0.5rem' }}
@@ -246,6 +333,7 @@ const AddDharamshala = ({ setopendashboard }) => {
 
                         <Tooltip title="Edit">
                           <img
+                            onClick={() => handleOepn1(row)}
                             src={Edit}
                             alt="eye"
                             style={{ width: '20px', marginRight: '0.5rem' }}

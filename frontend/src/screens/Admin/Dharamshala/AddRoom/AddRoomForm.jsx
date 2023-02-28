@@ -18,7 +18,35 @@ function AddRoomForm({ setOpen }) {
 
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Category Name
+                  Room Number
+                </label>
+                <input
+                  style={{ width: '280px', height: '35px' }}
+                  id="text"
+                  className="forminput_add_user"
+                  type="text"
+                  placeholder="enter category name"
+                  //   value={toNo}
+                  //   name="toNo"
+                  //   onChange={(e) => settoNo(e.target.value)}
+                />
+              </div>
+
+              <div className="inner-input-div2">
+                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                  Facilities
+                </label>
+                <select className="select_optionssss">
+                  <option>ss</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="form-div" style={{ marginBottom: '1rem' }}>
+            <div className="form-input-div_add_user">
+              <div className="inner-input-div2">
+                <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                  Category
                 </label>
                 <select className="select_optionssss">
                   <option>ss</option>
@@ -27,9 +55,26 @@ function AddRoomForm({ setOpen }) {
 
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Room Number
+                  Rate
                 </label>
                 <input
+                  style={{ width: '280px', height: '35px' }}
+                  id="text"
+                  className="forminput_add_user"
+                  type="text"
+                  placeholder="enter category name"
+                  //   value={toNo}
+                  //   name="toNo"
+                  //   onChange={(e) => settoNo(e.target.value)}
+                />
+              </div>
+
+              <div className="inner-input-div2">
+                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                  Advance Amount
+                </label>
+                <input
+                  style={{ width: '280px', height: '35px' }}
                   id="text"
                   className="forminput_add_user"
                   type="text"
@@ -45,55 +90,27 @@ function AddRoomForm({ setOpen }) {
             <div className="form-input-div_add_user">
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
-                  Rate
+                  Check Out Time
                 </label>
                 <input
-                  type="text"
-                  id="fromNo"
-                  placeholder="enter rate"
+                  style={{ width: '280px', height: '35px' }}
+                  id="text"
                   className="forminput_add_user"
-                  //   value={fromNo}
-                  //   name="fromNo"
-                  //   onChange={(e) => setfromNo(e.target.value)}
+                  type="time"
+                  placeholder="enter category name"
+                  //   value={toNo}
+                  //   name="toNo"
+                  //   onChange={(e) => settoNo(e.target.value)}
                 />
               </div>
 
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Advance Amount
+                  Room Type
                 </label>
                 <select className="select_optionssss">
-                  <option>ss</option>
-                </select>
-              </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Linked Account
-                </label>
-                <select className="select_optionssss">
-                  <option>ss</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div className="form-div" style={{ marginBottom: '1rem' }}>
-            <div className="form-input-div_add_user">
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
-                  Facilities
-                </label>
-                <select className="select_optionssss">
-                  <option>ss</option>
-                </select>
-              </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Check Out Type
-                </label>
-                <select className="select_optionssss">
-                  <option>ss</option>
+                  <option>Online</option>
+                  <option>Offline</option>
                 </select>
               </div>
 
@@ -102,7 +119,8 @@ function AddRoomForm({ setOpen }) {
                   Status
                 </label>
                 <select className="select_optionssss">
-                  <option>ss</option>
+                  <option>Enable</option>
+                  <option>Disable</option>
                 </select>
               </div>
             </div>

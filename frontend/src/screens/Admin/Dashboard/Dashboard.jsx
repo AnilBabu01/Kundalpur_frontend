@@ -8,6 +8,8 @@ import { serverInstance } from '../../../API/ServerInstance';
 import DonationTotal from '../TotalDashboardFun/DonationTotal';
 import ManaulTotal from '../TotalDashboardFun/ManaulTotal';
 import OnlineTotal from '../TotalDashboardFun/OnlineTotal';
+import EmpelecTotal from '../TotalDashboardFun/EmpelecTotal';
+import EmpmanulTotal from '../TotalDashboardFun/EmpmanulTotal';
 import './Dashboard.css';
 
 const Dashboard = ({ setopendashboard }) => {
@@ -39,14 +41,14 @@ const Dashboard = ({ setopendashboard }) => {
   };
 
   const getallempelec = () => {
-    serverInstance('admin/dash-employee-total-manual', 'get').then((res) => {
+    serverInstance('admin/dash-employee-total-elec', 'get').then((res) => {
       console.log('ele data', res.data.data);
       setisData4(res.data.data);
     });
   };
 
   const getallempmanual = () => {
-    serverInstance('admin/dash-employee-total-online', 'get').then((res) => {
+    serverInstance('admin/dash-employee-total-manual', 'get').then((res) => {
       console.log('ele data', res.data.data);
       setisData5(res.data.data);
     });
@@ -79,7 +81,7 @@ const Dashboard = ({ setopendashboard }) => {
             <>
               <div
                 className="main_card_amount"
-                style={{ background: '#48a828', color: 'white' }}
+                style={{ background: '#FE0000', color: 'white' }}
               >
                 <p>Donation</p>
                 <div className="main_repue_img">
@@ -89,7 +91,7 @@ const Dashboard = ({ setopendashboard }) => {
               </div>
               <div
                 className="main_card_amount"
-                style={{ background: '#e96d00', color: 'white' }}
+                style={{ background: '#FECE00', color: 'white' }}
               >
                 <p>Manual Donation</p>
                 <div className="main_repue_img">
@@ -99,7 +101,7 @@ const Dashboard = ({ setopendashboard }) => {
               </div>
               <div
                 className="main_card_amount"
-                style={{ background: '#1C82AD', color: 'white' }}
+                style={{ background: '#009430', color: 'white' }}
               >
                 <p>Online Donation</p>
                 <div className="main_repue_img">
@@ -109,7 +111,7 @@ const Dashboard = ({ setopendashboard }) => {
               </div>
               <div
                 className="main_card_amount"
-                style={{ background: '#1C53BC', color: 'white' }}
+                style={{ background: '#3C5FFE', color: 'white' }}
               >
                 <p>Room Booking</p>
                 <div className="main_repue_img">
@@ -119,7 +121,7 @@ const Dashboard = ({ setopendashboard }) => {
               </div>
               <div
                 className="main_card_amount"
-                style={{ background: '#9F2B68', color: 'white' }}
+                style={{ background: '#FF6332', color: 'white' }}
               >
                 <p>Online Room Booking</p>
                 <div className="main_repue_img">
@@ -142,28 +144,28 @@ const Dashboard = ({ setopendashboard }) => {
             <>
               <div
                 className="main_card_amount"
-                style={{ background: '#48a828', color: 'white' }}
+                style={{ background: '#FE0000', color: 'white' }}
               >
                 <p>Donation</p>
                 <div className="main_repue_img">
-                  <p>₹ 10,000</p>
+                  <EmpelecTotal data={isData4} />
                   <img src={Group225} alt="dd" />
                 </div>
               </div>
               <div
                 className="main_card_amount"
-                style={{ background: '#e96d00', color: 'white' }}
+                style={{ background: '#FECE00', color: 'white' }}
               >
                 <p>Manual Donation</p>
                 <div className="main_repue_img">
-                  <p>₹ 10,000</p>
+                  <EmpmanulTotal data={isData5} />
                   <img src={Group225} alt="dd" />
                 </div>
               </div>
 
               <div
                 className="main_card_amount"
-                style={{ background: '#1C82AD', color: 'white' }}
+                style={{ background: '#3C5FFE', color: 'white' }}
               >
                 <p>Room Booking</p>
                 <div className="main_repue_img">

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
-import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -37,6 +36,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
 const style = {
   position: 'absolute',
   top: '27%',
@@ -298,60 +299,72 @@ const VoucherManagement = ({ setopendashboard }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {(rowsPerPage > 0
-                    ? isData
-                        .reverse()
-                        .slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage,
-                        )
-                    : isData
-                  ).map((row, index) => (
-                    <TableRow
-                      key={index}
-                      sx={{
-                        '&:last-child td, &:last-child th': { border: 0 },
-                      }}
-                    >
-                      <TableCell align="center"> {index + 1}</TableCell>
-                      <TableCell align="center">{row?.name}</TableCell>
-                      <TableCell align="center">
-                        {' '}
-                        {`${row.from} to ${row.to}`}
-                      </TableCell>
-                      <TableCell align="center">{row?.voucher}</TableCell>
-                      <TableCell align="center">
-                        {row.status ? 'Allocated' : 'Not Used'}
-                      </TableCell>
-                      <TableCell align="center">
-                        <img
-                          onClick={() =>
-                            navigate('/admin-panel/uservoucher', {
-                              state: {
-                                userdata: row,
-                              },
-                            })
-                          }
-                          src={eye}
-                          alt="s"
-                          style={{ width: '20px', marginRight: '0.3rem' }}
-                        />
+                  {isData ? (
+                    <>
+                      {(rowsPerPage > 0
+                        ? isData
+                            .reverse()
+                            .slice(
+                              page * rowsPerPage,
+                              page * rowsPerPage + rowsPerPage,
+                            )
+                        : isData
+                      ).map((row, index) => (
+                        <TableRow
+                          key={index}
+                          sx={{
+                            '&:last-child td, &:last-child th': { border: 0 },
+                          }}
+                        >
+                          <TableCell align="center"> {index + 1}</TableCell>
+                          <TableCell align="center">{row?.name}</TableCell>
+                          <TableCell align="center">
+                            {' '}
+                            {`${row.from} to ${row.to}`}
+                          </TableCell>
+                          <TableCell align="center">{row?.voucher}</TableCell>
+                          <TableCell align="center">
+                            {row.status ? 'Allocated' : 'Not Used'}
+                          </TableCell>
+                          <TableCell align="center">
+                            <img
+                              onClick={() =>
+                                navigate('/admin-panel/uservoucher', {
+                                  state: {
+                                    userdata: row,
+                                  },
+                                })
+                              }
+                              src={eye}
+                              alt="s"
+                              style={{ width: '20px', marginRight: '0.3rem' }}
+                            />
 
-                        <img
-                          onClick={() => handleOpen1(row)}
-                          src={Edit}
-                          alt="s"
-                          style={{ width: '20px', marginRight: '0.3rem' }}
-                        />
-                        <img
-                          onClick={() => handleClickOpen(row.id)}
-                          src={Delete}
-                          alt="s"
-                          style={{ width: '20px' }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                            <img
+                              onClick={() => handleOpen1(row)}
+                              src={Edit}
+                              alt="s"
+                              style={{ width: '20px', marginRight: '0.3rem' }}
+                            />
+                            <img
+                              onClick={() => handleClickOpen(row.id)}
+                              src={Delete}
+                              alt="s"
+                              style={{ width: '20px' }}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      <TableRow>
+                        <TableCell colSpan={6} align="center">
+                          <ReactSpinner />
+                        </TableCell>
+                      </TableRow>
+                    </>
+                  )}
                 </TableBody>
                 <TableFooter>
                   <TableRow>

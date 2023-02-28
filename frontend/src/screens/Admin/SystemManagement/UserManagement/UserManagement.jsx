@@ -35,6 +35,8 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format } from 'date-fns';
 import SystemTap from '../SystemTap';
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
 import './UserManagement.css';
 
 const style = {
@@ -346,60 +348,77 @@ const UserManagement = ({ setopendashboard }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(rowsPerPage > 0
-                  ? isData
-                      .reverse()
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage,
-                      )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell> {row.Mobile}</TableCell>
-                    <TableCell>{row.Username}</TableCell>
-                    <TableCell> {row.Address}</TableCell>
-                    <TableCell>{row.Email}</TableCell>
-                    <TableCell>{row.Role}</TableCell>
-                    <TableCell>{row.Status ? 'Active' : 'De-Active'}</TableCell>
+                {isData ? (
+                  <>
+                    {(rowsPerPage > 0
+                      ? isData
+                          .reverse()
+                          .slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage,
+                          )
+                      : isData
+                    ).map((row, index) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          '&:last-child td, &:last-child th': { border: 0 },
+                        }}
+                      >
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell> {row.Mobile}</TableCell>
+                        <TableCell>{row.Username}</TableCell>
+                        <TableCell> {row.Address}</TableCell>
+                        <TableCell>{row.Email}</TableCell>
+                        <TableCell>{row.Role}</TableCell>
+                        <TableCell>
+                          {row.Status ? 'Active' : 'De-Active'}
+                        </TableCell>
 
-                    <TableCell>
-                      <Tooltip title="View Details">
-                        <img
-                          onClick={() =>
-                            navigate('/admin-panel/masters/employeeUserInfo', {
-                              state: {
-                                userdata: row,
-                              },
-                            })
-                          }
-                          src={eye}
-                          style={{ width: '20px', marginRight: '0.2rem' }}
-                        />
-                      </Tooltip>
-                      <Tooltip title="Edit Employee">
-                        <img
-                          onClick={() => handleClickOpen3(row)}
-                          src={Edit}
-                          style={{ width: '20px', marginRight: '0.2rem' }}
-                        />
-                      </Tooltip>
-                      <Tooltip title="Delete Employee">
-                        <img
-                          onClick={() => handleClickOpen1(row.id)}
-                          src={Delete}
-                          style={{ width: '20px', marginRight: '0.2rem' }}
-                        />
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                        <TableCell>
+                          <Tooltip title="View Details">
+                            <img
+                              onClick={() =>
+                                navigate(
+                                  '/admin-panel/masters/employeeUserInfo',
+                                  {
+                                    state: {
+                                      userdata: row,
+                                    },
+                                  },
+                                )
+                              }
+                              src={eye}
+                              style={{ width: '20px', marginRight: '0.2rem' }}
+                            />
+                          </Tooltip>
+                          <Tooltip title="Edit Employee">
+                            <img
+                              onClick={() => handleClickOpen3(row)}
+                              src={Edit}
+                              style={{ width: '20px', marginRight: '0.2rem' }}
+                            />
+                          </Tooltip>
+                          <Tooltip title="Delete Employee">
+                            <img
+                              onClick={() => handleClickOpen1(row.id)}
+                              src={Delete}
+                              style={{ width: '20px', marginRight: '0.2rem' }}
+                            />
+                          </Tooltip>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <TableRow>
+                      <TableCell colSpan={8} align="center">
+                        <ReactSpinner />
+                      </TableCell>
+                    </TableRow>
+                  </>
+                )}
               </TableBody>
               <TableFooter>
                 <TableRow>

@@ -122,8 +122,14 @@ const Donation = () => {
               style={{ width: '30px', marginRight: '2rem' }}
             />
           </Tooltip>
-          <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p>Donation(दान)</p>
+          <div
+            style={{
+              width: '95%',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <p style={{ color: '#FE0000' }}>Donation(दान)</p>
           </div>
         </div>
 

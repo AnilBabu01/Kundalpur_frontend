@@ -131,7 +131,7 @@ const AddFacilities = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Add Category</h2>
+                  <h2 style={{ marginBottom: '0.5rem' }}>Add Facilities</h2>
                   <Typography variant="body2" color="primary">
                     {currDate} / {currTime}
                   </Typography>

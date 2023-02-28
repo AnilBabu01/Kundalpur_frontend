@@ -18,26 +18,27 @@ function Categoryform({ setOpen }) {
 
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Category Name
-                </label>
-                <input
-                  id="text"
-                  className="forminput_add_user"
-                  type="text"
-                  placeholder="enter category name"
-                  //   value={toNo}
-                  //   name="toNo"
-                  //   onChange={(e) => settoNo(e.target.value)}
-                />
-              </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Linked Account
+                  Facilities
                 </label>
                 <select className="select_optionssss">
                   <option>ss</option>
                 </select>
+              </div>
+
+              <div className="inner-input-div2">
+                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                  Category
+                </label>
+                <input
+                  style={{ width: '280px', height: '35px' }}
+                  type="text"
+                  id="fromNo"
+                  placeholder="enter rate"
+                  className="forminput_add_user"
+                  //   value={fromNo}
+                  //   name="fromNo"
+                  //   onChange={(e) => setfromNo(e.target.value)}
+                />
               </div>
             </div>
           </div>
@@ -48,6 +49,7 @@ function Categoryform({ setOpen }) {
                   Rate
                 </label>
                 <input
+                  style={{ width: '280px', height: '35px' }}
                   type="text"
                   id="fromNo"
                   placeholder="enter rate"
@@ -60,39 +62,13 @@ function Categoryform({ setOpen }) {
 
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Facilities
-                </label>
-                <select className="select_optionssss">
-                  <option>ss</option>
-                </select>
-              </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
                   Advance Amount
                 </label>
                 <input
-                  id="text"
-                  className="forminput_add_user"
-                  type="text"
-                  placeholder="enter advance amount"
-                  //   value={toNo}
-                  //   name="toNo"
-                  //   onChange={(e) => settoNo(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="form-div" style={{ marginBottom: '1rem' }}>
-            <div className="form-input-div_add_user">
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
-                  Online Room Availavble
-                </label>
-                <input
+                  style={{ width: '280px', height: '35px' }}
                   type="text"
                   id="fromNo"
-                  placeholder="enter rooms availavble"
+                  placeholder="enter rate"
                   className="forminput_add_user"
                   //   value={fromNo}
                   //   name="fromNo"
@@ -102,27 +78,44 @@ function Categoryform({ setOpen }) {
 
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Check Out Type
+                  online availability
                 </label>
                 <select className="select_optionssss">
-                  <option>ss</option>
+                  <option>None</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="form-div" style={{ marginBottom: '1rem' }}>
+            <div className="form-input-div_add_user">
+              <div className="inner-input-div2">
+                <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                  offline availability
+                </label>
+                <select className="select_optionssss">
+                  <option>None</option>
+                  <option>Yes</option>
+                  <option>No</option>
                 </select>
               </div>
 
-              {/* <div className="inner-input-div2">
+              <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Comments
+                  Check Out Time
                 </label>
                 <input
-                  id="text"
+                  style={{ width: '280px', height: '35px' }}
+                  type="time"
+                  id="fromNo"
+                  placeholder="enter rate"
                   className="forminput_add_user"
-                  type="text"
-                  placeholder="enter comments"
-                  //   value={toNo}
-                  //   name="toNo"
-                  //   onChange={(e) => settoNo(e.target.value)}
+                  //   value={fromNo}
+                  //   name="fromNo"
+                  //   onChange={(e) => setfromNo(e.target.value)}
                 />
-              </div> */}
+              </div>
             </div>
           </div>
 

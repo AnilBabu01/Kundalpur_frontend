@@ -104,15 +104,10 @@ function AddForm({ setOpen }) {
                 </div>
               </div>
             </div>
-            <div>
-              <label
-                style={{ marginBottom: '1rem', marginTop: '1rem' }}
-                htmlFor="fromNo"
-              >
-                Discription
-              </label>
+            <div style={{ marginTop: '0.2rem' }}>
+              <label htmlFor="fromNo">Discription</label>
               <input
-                style={{ width: '100%' }}
+                style={{ width: '100%', marginTop: '0.2rem' }}
                 type="textarea"
                 id="fromNo"
                 placeholder="enter the dharamshala name in english"
@@ -137,8 +132,8 @@ function AddForm({ setOpen }) {
                     <div className="cemera_inear_div">
                       <img
                         style={{
-                          width: '278px',
-                          height: '98px',
+                          width: '100%',
+                          height: '100%',
                           borderRadius: '5px',
                         }}
                         src={previewprofile1 ? previewprofile1 : camera}
@@ -169,8 +164,8 @@ function AddForm({ setOpen }) {
                     <div className="cemera_inear_div">
                       <img
                         style={{
-                          width: '278px',
-                          height: '98px',
+                          width: '100%',
+                          height: '100%',
                           borderRadius: '5px',
                         }}
                         src={previewprofile2 ? previewprofile2 : camera}
@@ -204,8 +199,8 @@ function AddForm({ setOpen }) {
                     <div className="cemera_inear_div">
                       <img
                         style={{
-                          width: '278px',
-                          height: '98px',
+                          width: '100%',
+                          height: '100%',
                           borderRadius: '5px',
                         }}
                         src={previewprofile3 ? previewprofile3 : camera}
@@ -236,8 +231,8 @@ function AddForm({ setOpen }) {
                     <div className="cemera_inear_div">
                       <img
                         style={{
-                          width: '278px',
-                          height: '98px',
+                          width: '100%',
+                          height: '100%',
                           borderRadius: '5px',
                         }}
                         src={previewprofile4 ? previewprofile4 : camera}

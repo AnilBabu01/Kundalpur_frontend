@@ -127,7 +127,7 @@ const ManualDonation = () => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p>Manual Donation (दान)</p>
+            <p style={{ color: '#FECE00' }}>Manual Donation (दान)</p>
           </div>
         </div>
 

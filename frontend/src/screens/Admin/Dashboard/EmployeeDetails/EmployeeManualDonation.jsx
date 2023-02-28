@@ -46,7 +46,6 @@ const EmployeeManualDonation = () => {
     var data = [];
     isData.map((item, index) => {
       data.push({
-        employee_name: item?.employee_name,
         cash_amount: item?.cash_amount,
         bank_amount: item?.bank_amount,
         cheque_amount: item?.cheque_amount,
@@ -56,16 +55,15 @@ const EmployeeManualDonation = () => {
     exportFromJSON({ data, fileName, exportType });
   };
 
-  const ExportPdff = (isData, fileName) => {
+  const ExportPdff = (fileName) => {
     const doc = new jsPDF();
 
-    const tableColumn = ['Staff name', 'Cash', 'bank', 'Cheque', 'Total'];
+    const tableColumn = ['Cash', 'bank', 'Cheque', 'Total'];
 
     const tableRows = [];
 
     isData.forEach((item) => {
       const ticketData = [
-        item?.employee_name,
         item?.cash_amount,
         item?.bank_amount,
         item?.cheque_amount,
@@ -101,7 +99,7 @@ const EmployeeManualDonation = () => {
         >
           <Tooltip title="Export Excel File">
             <img
-              // onClick={() => ExportToExcel()}
+              onClick={() => ExportToExcel()}
               src={ExportExcel}
               alt="cc"
               style={{ width: '30px' }}
@@ -110,7 +108,7 @@ const EmployeeManualDonation = () => {
           &nbsp;&nbsp;
           <Tooltip title="Export Pdf File">
             <img
-              // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+              onClick={() => ExportPdff('TodayManualDonation')}
               src={ExportPdf}
               alt="cc"
               style={{ width: '30px', marginRight: '2rem' }}
@@ -125,7 +123,7 @@ const EmployeeManualDonation = () => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p>Manual Donation(दान)</p>
+            <p style={{ color: '#FECE00' }}>Manual Donation(दान)</p>
           </div>
         </div>
 
@@ -142,39 +140,37 @@ const EmployeeManualDonation = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell>&nbsp;</TableCell>
+              {isData && (
+                <>
+                  {(rowsPerPage > 0
+                    ? isData &&
+                      isData.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                    : isData && isData
+                  ).map((row, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell> &nbsp;</TableCell>
 
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
+                      <TableCell>{row.cash_amount}</TableCell>
 
-              {/* {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
+                      <TableCell>{row.bank_amount}</TableCell>
+                      <TableCell>{row.cheque_amount}</TableCell>
 
-                    <TableCell>{row.NAME}</TableCell>
-
-                    <TableCell>
-                      <RemoveRedEyeIcon />
-                      <DeleteForeverIcon />
-                    </TableCell>
-                  </TableRow>
-                ))} */}
+                      <TableCell>{row.total}</TableCell>
+                    </TableRow>
+                  ))}
+                </>
+              )}
             </TableBody>
             <TableFooter>
-              <TableRow>
+              {/* <TableRow>
                 <TableCell
                   style={{
                     fontSize: '15px',
@@ -215,7 +211,7 @@ const EmployeeManualDonation = () => {
                 >
                   0
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
               <TableRow>
                 <TablePagination
                   count={isData.length}

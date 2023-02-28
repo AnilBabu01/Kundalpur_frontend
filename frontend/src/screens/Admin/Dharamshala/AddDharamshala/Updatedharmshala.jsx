@@ -78,26 +78,41 @@ function Updatedharmshala({ setOpen, updatedata }) {
             <div className="form-div">
               <div className="form-input-div_add_user">
                 <div className="inner-input-div2">
+                  <label htmlFor="fromNo">Online</label>
+                  <select className="forminput_add_user">
+                    <option>None</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div className="inner-input-div2">
+                  <label htmlFor="fromNo">Offline</label>
+                  <select className="forminput_add_user">
+                    <option>None</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div className="inner-input-div2">
                   <label htmlFor="fromNo">dharamshala in english</label>
                   <input
                     type="text"
                     id="fromNo"
                     placeholder="enter the dharamshala name in english"
-                    className="forminput_add_user"
+                    style={custumstyle}
                     value={nameinEnglish}
                     name="nameinEnglish"
                     onChange={(e) => setnameinEnglish(e.target.value)}
                   />
                 </div>
-
                 <div className="inner-input-div2">
                   <label htmlFor="toNo">dharamshala in hindi</label>
 
                   <ReactTransliterate
                     style={custumstyle}
                     id="full-name"
-                    placeholder="enter the dharamshala name in hindi"
                     required
+                    placeholder="enter the dharamshala name in hindi"
                     value={nameinHindi}
                     onChangeText={(nameinHindi) => {
                       setnameinHindi(nameinHindi);
@@ -108,145 +123,187 @@ function Updatedharmshala({ setOpen, updatedata }) {
                 </div>
               </div>
             </div>
-            <div className="main_upload_sharam">
-              <div className="cemera_inear_div">
-                <img
-                  style={{
-                    width: '278px',
-                    height: '98px',
-                    borderRadius: '5px',
-                  }}
-                  src={
-                    previewprofile1
-                      ? previewprofile1
-                      : img1
-                      ? `${backendUrl}uploads/images/${img1}`
-                      : camera
-                  }
-                  alt="ss"
-                />
-              </div>
-              <div className="selctimg_div">
-                <label htmlFor="img5">Image 1 </label>
-                <input
-                  id="img5"
-                  className="forminput_add_user"
-                  type="file"
-                  placeholder="enter category name"
-                  name="img5"
-                  onChange={(e) => {
-                    setimg5(e.target.files[0]);
+            <div style={{ marginTop: '0.2rem' }}>
+              <label htmlFor="fromNo">Discription</label>
+              <input
+                style={{ width: '100%', marginTop: '0.2rem' }}
+                type="textarea"
+                id="fromNo"
+                placeholder="enter the dharamshala name in english"
+                className="forminput_add_user10"
+                value={nameinEnglish}
+                name="nameinEnglish"
+                onChange={(e) => setnameinEnglish(e.target.value)}
+              />
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: '100%',
+                flexDirection: 'column',
+              }}
+            >
+              <div className="form-div">
+                <div className="form-input-div_add_user">
+                  <div className="main_upload_sharam">
+                    <div className="cemera_inear_div">
+                      <img
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '5px',
+                        }}
+                        src={
+                          previewprofile1
+                            ? previewprofile1
+                            : img1
+                            ? `${backendUrl}uploads/images/${img1}`
+                            : camera
+                        }
+                        alt="ss"
+                      />
+                    </div>
+                    <div className="selctimg_div">
+                      <label htmlFor="img5">Image 1 </label>
+                      <input
+                        style={{ marginRight: '2rem' }}
+                        id="img5"
+                        className="forminput_add_user10"
+                        type="file"
+                        placeholder="enter category name"
+                        name="img5"
+                        onChange={(e) => {
+                          setimg5(e.target.files[0]);
 
-                    setpreviewprofile1(URL.createObjectURL(e.target.files[0]));
-                  }}
-                />
+                          setpreviewprofile1(
+                            URL.createObjectURL(e.target.files[0]),
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="main_upload_sharam">
+                    <div className="cemera_inear_div">
+                      <img
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '5px',
+                        }}
+                        src={
+                          previewprofile2
+                            ? previewprofile2
+                            : img2
+                            ? `${backendUrl}uploads/images/${img2}`
+                            : camera
+                        }
+                        alt="ss"
+                      />
+                    </div>
+                    <div className="selctimg_div">
+                      <label htmlFor="img6">Image 2 </label>
+                      <input
+                        id="img6"
+                        className="forminput_add_user10"
+                        type="file"
+                        placeholder="enter category name"
+                        name="img6"
+                        onChange={(e) => {
+                          setimg6(e.target.files[0]);
+
+                          setpreviewprofile2(
+                            URL.createObjectURL(e.target.files[0]),
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-div">
+                <div className="form-input-div_add_user">
+                  <div className="main_upload_sharam">
+                    <div className="cemera_inear_div">
+                      <img
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '5px',
+                        }}
+                        src={
+                          previewprofile3
+                            ? previewprofile3
+                            : img3
+                            ? `${backendUrl}uploads/images/${img3}`
+                            : camera
+                        }
+                        alt="ss"
+                      />
+                    </div>
+                    <div className="selctimg_div">
+                      <label htmlFor="img7">Image 3 </label>
+                      <input
+                        style={{ marginRight: '2rem' }}
+                        id="img7"
+                        className="forminput_add_user10"
+                        type="file"
+                        placeholder="enter category name"
+                        name="img7"
+                        onChange={(e) => {
+                          setimg7(e.target.files[0]);
+
+                          setpreviewprofile3(
+                            URL.createObjectURL(e.target.files[0]),
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="main_upload_sharam">
+                    <div className="cemera_inear_div">
+                      <img
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '5px',
+                        }}
+                        src={
+                          previewprofile4
+                            ? previewprofile4
+                            : img4
+                            ? `${backendUrl}uploads/images/${img4}`
+                            : camera
+                        }
+                        alt="ss"
+                      />
+                    </div>
+                    <div className="selctimg_div">
+                      <label htmlFor="img8">Image 4 </label>
+                      <input
+                        id="img8"
+                        className="forminput_add_user10"
+                        type="file"
+                        placeholder="enter category name"
+                        name="img8"
+                        onChange={(e) => {
+                          setimg8(e.target.files[0]);
+
+                          setpreviewprofile4(
+                            URL.createObjectURL(e.target.files[0]),
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="main_upload_sharam">
-              <div className="cemera_inear_div">
-                <img
-                  style={{
-                    width: '278px',
-                    height: '98px',
-                    borderRadius: '5px',
-                  }}
-                  src={
-                    previewprofile2
-                      ? previewprofile2
-                      : img2
-                      ? `${backendUrl}uploads/images/${img2}`
-                      : camera
-                  }
-                  alt="ss"
-                />
-              </div>
-              <div className="selctimg_div">
-                <label htmlFor="img6">Image 2 </label>
-                <input
-                  id="img6"
-                  className="forminput_add_user"
-                  type="file"
-                  placeholder="enter category name"
-                  name="img6"
-                  onChange={(e) => {
-                    setimg6(e.target.files[0]);
-
-                    setpreviewprofile2(URL.createObjectURL(e.target.files[0]));
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="main_upload_sharam">
-              <div className="cemera_inear_div">
-                <img
-                  style={{
-                    width: '278px',
-                    height: '98px',
-                    borderRadius: '5px',
-                  }}
-                  src={
-                    previewprofile3
-                      ? previewprofile3
-                      : img3
-                      ? `${backendUrl}uploads/images/${img3}`
-                      : camera
-                  }
-                  alt="ss"
-                />
-              </div>
-              <div className="selctimg_div">
-                <label htmlFor="img7">Image 3 </label>
-                <input
-                  id="img7"
-                  className="forminput_add_user"
-                  type="file"
-                  placeholder="enter category name"
-                  name="img7"
-                  onChange={(e) => {
-                    setimg7(e.target.files[0]);
-
-                    setpreviewprofile3(URL.createObjectURL(e.target.files[0]));
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="main_upload_sharam">
-              <div className="cemera_inear_div">
-                <img
-                  style={{
-                    width: '278px',
-                    height: '98px',
-                    borderRadius: '5px',
-                  }}
-                  src={
-                    previewprofile4
-                      ? previewprofile4
-                      : img4
-                      ? `${backendUrl}uploads/images/${img4}`
-                      : camera
-                  }
-                  alt="ss"
-                />
-              </div>
-              <div className="selctimg_div">
-                <label htmlFor="img8">Image 4 </label>
-                <input
-                  id="img8"
-                  className="forminput_add_user"
-                  type="file"
-                  placeholder="enter category name"
-                  name="img8"
-                  onChange={(e) => {
-                    setimg8(e.target.files[0]);
-
-                    setpreviewprofile4(URL.createObjectURL(e.target.files[0]));
-                  }}
-                />
-              </div>
-            </div>
             <div className="save-div-btn">
               <button className="save-div-btn-btn">Save</button>
               <button

@@ -85,7 +85,7 @@ const GuestInRoom = ({ setopendashboard }) => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p>Guest In Room(यात्री संख्या)</p>
+            <p style={{ color: '#808080' }}>Guest In Room(यात्री संख्या)</p>
           </div>
         </div>
 

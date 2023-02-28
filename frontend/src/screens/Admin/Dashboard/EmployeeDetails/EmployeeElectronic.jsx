@@ -36,7 +36,8 @@ const EmployeeElectronic = () => {
   };
 
   const getallelec = () => {
-    serverInstance('admin/dash-employee-total-manual', 'get').then((res) => {
+    serverInstance('admin/dash-employee-total-elec', 'get').then((res) => {
+      console.log('emp', res.data.data);
       setisData(res.data.data);
     });
   };
@@ -47,7 +48,6 @@ const EmployeeElectronic = () => {
     var data = [];
     isData.map((item, index) => {
       data.push({
-        employee_name: item?.employee_name,
         cash_amount: item?.cash_amount,
         bank_amount: item?.bank_amount,
         cheque_amount: item?.cheque_amount,
@@ -57,16 +57,15 @@ const EmployeeElectronic = () => {
     exportFromJSON({ data, fileName, exportType });
   };
 
-  const ExportPdff = (isData, fileName) => {
+  const ExportPdff = (fileName) => {
     const doc = new jsPDF();
 
-    const tableColumn = ['Staff name', 'Cash', 'bank', 'Cheque', 'Total'];
+    const tableColumn = ['Cash', 'bank', 'Cheque', 'Total'];
 
     const tableRows = [];
 
     isData.forEach((item) => {
       const ticketData = [
-        item?.employee_name,
         item?.cash_amount,
         item?.bank_amount,
         item?.cheque_amount,
@@ -102,7 +101,7 @@ const EmployeeElectronic = () => {
         >
           <Tooltip title="Export Excel File">
             <img
-              // onClick={() => ExportToExcel()}
+              onClick={() => ExportToExcel()}
               src={ExportExcel}
               alt="cc"
               style={{ width: '30px' }}
@@ -111,7 +110,7 @@ const EmployeeElectronic = () => {
           &nbsp;&nbsp;
           <Tooltip title="Export Pdf File">
             <img
-              // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+              onClick={() => ExportPdff('TodayManualDonation')}
               src={ExportPdf}
               alt="cc"
               style={{ width: '30px', marginRight: '2rem' }}
@@ -126,7 +125,7 @@ const EmployeeElectronic = () => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p>Donation(दान)</p>
+            <p style={{ color: '#FE0000' }}>Donation(दान)</p>
           </div>
         </div>
 
@@ -145,39 +144,37 @@ const EmployeeElectronic = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell> &nbsp;</TableCell>
+              {isData && (
+                <>
+                  {(rowsPerPage > 0
+                    ? isData &&
+                      isData.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                    : isData && isData
+                  ).map((row, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell> &nbsp;</TableCell>
 
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
+                      <TableCell>{row.cash_amount}</TableCell>
 
-              {/* {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
+                      <TableCell>{row.bank_amount}</TableCell>
+                      <TableCell>{row.cheque_amount}</TableCell>
 
-                    <TableCell>{row.NAME}</TableCell>
-
-                    <TableCell>
-                      <RemoveRedEyeIcon />
-                      <DeleteForeverIcon />
-                    </TableCell>
-                  </TableRow>
-                ))} */}
+                      <TableCell>{row.total}</TableCell>
+                    </TableRow>
+                  ))}
+                </>
+              )}
             </TableBody>
             <TableFooter>
-              <TableRow>
+              {/* <TableRow>
                 <TableCell
                   style={{
                     fontSize: '15px',
@@ -192,7 +189,13 @@ const EmployeeElectronic = () => {
                     color: '#05313C',
                   }}
                 >
-                  0
+                {isData
+                    ? isData.reduce(
+                        (n, { cash_amount }) =>
+                          parseFloat(n) + parseFloat(cash_amount),
+                        0,
+                      )
+                    : '0'}
                 </TableCell>
                 <TableCell
                   style={{
@@ -200,7 +203,13 @@ const EmployeeElectronic = () => {
                     color: '#05313C',
                   }}
                 >
-                  0
+                    {isData
+                    ? isData.reduce(
+                        (n, { cash_amount }) =>
+                          parseFloat(n) + parseFloat(cash_amount),
+                        0,
+                      )
+                    : '0'}
                 </TableCell>
                 <TableCell
                   style={{
@@ -208,7 +217,13 @@ const EmployeeElectronic = () => {
                     color: '#05313C',
                   }}
                 >
-                  0
+                   {isData
+                    ? isData.reduce(
+                        (n, { cash_amount }) =>
+                          parseFloat(n) + parseFloat(cash_amount),
+                        0,
+                      )
+                    : '0'}
                 </TableCell>
                 <TableCell
                   style={{
@@ -216,9 +231,15 @@ const EmployeeElectronic = () => {
                     color: '#05313C',
                   }}
                 >
-                  0
+                 {isData
+                    ? isData.reduce(
+                        (n, { cash_amount }) =>
+                          parseFloat(n) + parseFloat(cash_amount),
+                        0,
+                      )
+                    : '0'}
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
               <TableRow>
                 <TablePagination
                   count={isData.length}

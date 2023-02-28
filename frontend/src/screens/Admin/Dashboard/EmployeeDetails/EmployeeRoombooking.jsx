@@ -86,7 +86,7 @@ const EmployeeRoombooking = ({ setopendashboard }) => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p>ROOM BOOKING (आवास)</p>
+            <p style={{ color: '#3C5FFE' }}>ROOM BOOKING (आवास)</p>
           </div>
         </div>
 

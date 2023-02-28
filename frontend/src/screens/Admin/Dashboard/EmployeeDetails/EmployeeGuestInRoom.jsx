@@ -86,7 +86,7 @@ const EmployeeGuestInRoom = ({ setopendashboard }) => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p>GUEST IN ROOM(दान)</p>
+            <p style={{ color: '#808080' }}>GUEST IN ROOM(दान)</p>
           </div>
         </div>
 

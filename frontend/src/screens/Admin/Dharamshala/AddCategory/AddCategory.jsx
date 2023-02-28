@@ -208,12 +208,13 @@ const AddCategory = ({ setopendashboard }) => {
               <TableRow>
                 <TableCell>S.No</TableCell>
                 <TableCell>Dharamashala</TableCell>
+                <TableCell>Facility</TableCell>
                 <TableCell>Category Name</TableCell>
                 <TableCell>Rate </TableCell>
                 <TableCell>Advance Amount</TableCell>
-                <TableCell>Check in Time</TableCell>
+                <TableCell>online availability</TableCell>
+                <TableCell>offline availability</TableCell>
                 <TableCell>Check out Time</TableCell>
-
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -237,6 +238,8 @@ const AddCategory = ({ setopendashboard }) => {
                       <TableCell>{row.voucherNo}</TableCell>
                       <TableCell>{row.voucherNo}</TableCell>
                       <TableCell>{row.phoneNo}</TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.name}</TableCell>
                       <TableCell>{row.name}</TableCell>
                       <TableCell>{row.phoneNo}</TableCell>
 

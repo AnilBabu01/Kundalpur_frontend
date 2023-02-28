@@ -10,10 +10,12 @@ function AddFacForm({ setOpen }) {
               <div className="inner-input-div2">
                 <label htmlFor="fromNo">Facility in english</label>
                 <input
+                  style={{ width: '280px', height: '35px' }}
                   type="text"
                   id="fromNo"
                   placeholder="enter the facility in english"
                   className="forminput_add_user"
+
                   //   value={fromNo}
                   //   name="fromNo"
                   //   onChange={(e) => setfromNo(e.target.value)}
@@ -23,6 +25,7 @@ function AddFacForm({ setOpen }) {
               <div className="inner-input-div2">
                 <label htmlFor="toNo">Facility in hindi</label>
                 <input
+                  style={{ width: '280px', height: '35px' }}
                   id="text"
                   className="forminput_add_user"
                   type="text"

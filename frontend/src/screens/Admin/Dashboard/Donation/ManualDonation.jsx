@@ -48,6 +48,17 @@ const ManualDonation = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const getallmanual = () => {
+    serverInstance('admin/dash-admin-total-manual', 'get').then((res) => {
+      setisData(res.data.data);
+    });
+  };
+
+  useEffect(() => {
+    getallmanual();
+  }, []);
+
   return (
     <>
       <div className="main_dash_daily_main" style={{ background: '#e96d00' }}>
@@ -105,36 +116,37 @@ const ManualDonation = ({ setopendashboard }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell style={{ fontWeight: '600' }}>Anil Babu</TableCell>
+              {isData && (
+                <>
+                  {(rowsPerPage > 0
+                    ? isData &&
+                      isData.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                    : isData && isData
+                  ).map((row, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell>{row?.employee_name}</TableCell>
 
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
+                      <TableCell>{row?.cash_amount}</TableCell>
+                      <TableCell>{row?.bank_amount}</TableCell>
+                      <TableCell>{row?.cheque_amount}</TableCell>
+                      <TableCell>{row?.total}</TableCell>
 
-              {/* {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
-
-                    <TableCell>{row.NAME}</TableCell>
-
-                    <TableCell>
-                      <RemoveRedEyeIcon />
-                      <DeleteForeverIcon />
-                    </TableCell>
-                  </TableRow>
-                ))} */}
+                      {/* <TableCell>
+                    <RemoveRedEyeIcon />
+                    <DeleteForeverIcon />
+                  </TableCell> */}
+                    </TableRow>
+                  ))}
+                </>
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>
@@ -152,7 +164,13 @@ const ManualDonation = ({ setopendashboard }) => {
                     color: '#05313C',
                   }}
                 >
-                  0
+                  {isData
+                    ? isData.reduce(
+                        (n, { cash_amount }) =>
+                          parseFloat(n) + parseFloat(cash_amount),
+                        0,
+                      )
+                    : '0'}
                 </TableCell>
                 <TableCell
                   style={{
@@ -160,7 +178,13 @@ const ManualDonation = ({ setopendashboard }) => {
                     color: '#05313C',
                   }}
                 >
-                  0
+                  {isData
+                    ? isData.reduce(
+                        (n, { bank_amount }) =>
+                          parseFloat(n) + parseFloat(bank_amount),
+                        0,
+                      )
+                    : '0'}
                 </TableCell>
                 <TableCell
                   style={{
@@ -168,7 +192,13 @@ const ManualDonation = ({ setopendashboard }) => {
                     color: '#05313C',
                   }}
                 >
-                  0
+                  {isData
+                    ? isData.reduce(
+                        (n, { cheque_amount }) =>
+                          parseFloat(n) + parseFloat(cheque_amount),
+                        0,
+                      )
+                    : '0'}
                 </TableCell>
                 <TableCell
                   style={{
@@ -176,7 +206,12 @@ const ManualDonation = ({ setopendashboard }) => {
                     color: '#05313C',
                   }}
                 >
-                  0
+                  {isData
+                    ? isData.reduce(
+                        (n, { total }) => parseFloat(n) + parseFloat(total),
+                        0,
+                      )
+                    : '0'}
                 </TableCell>
               </TableRow>
               <TableRow>

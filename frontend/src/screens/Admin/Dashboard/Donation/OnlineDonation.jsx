@@ -48,6 +48,17 @@ const OnlineDonation = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const getallonline = () => {
+    serverInstance('admin/dash-admin-total-online', 'get').then((res) => {
+      console.log('ele data', res.data.data);
+      setisData(res.data.data);
+    });
+  };
+
+  useEffect(() => {
+    getallonline();
+  }, []);
   return (
     <>
       <div className="main_dash_daily_main" style={{ background: '#1C82AD' }}>

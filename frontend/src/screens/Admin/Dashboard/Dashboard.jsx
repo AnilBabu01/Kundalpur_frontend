@@ -1,17 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import DashbordTap from './DashbordTap';
-import CardAmount from './CardAmount/CardAmount';
 import Group224 from '../../../assets/Group224.png';
 import Group225 from '../../../assets/Group225.png';
 import Group227 from '../../../assets/Group227.png';
 import Group228 from '../../../assets/Group228.png';
+import { serverInstance } from '../../../API/ServerInstance';
+import DonationTotal from '../TotalDashboardFun/DonationTotal';
 import './Dashboard.css';
 
 const Dashboard = ({ setopendashboard }) => {
   const [userrole, setuserrole] = useState('');
+  const [isData1, setisData1] = useState('');
+  const [isData2, setisData2] = useState('');
+  const [isData3, setisData3] = useState('');
+  const [isData4, setisData4] = useState('');
+  const [isData5, setisData5] = useState('');
+  const getallelec = () => {
+    serverInstance('admin/dash-admin-total-elec', 'get').then((res) => {
+      console.log('ele data', res.data.data);
+      setisData1(res.data.data);
+    });
+  };
+
+  const getallmanual = () => {
+    serverInstance('admin/dash-admin-total-manual', 'get').then((res) => {
+      console.log('ele data', res.data.data);
+      setisData2(res.data.data);
+    });
+  };
+
+  const getallonline = () => {
+    serverInstance('admin/dash-admin-total-online', 'get').then((res) => {
+      console.log('ele data', res.data.data);
+      setisData3(res.data.data);
+    });
+  };
+
+  const getallempelec = () => {
+    serverInstance('admin/dash-employee-total-manual', 'get').then((res) => {
+      console.log('ele data', res.data.data);
+      setisData4(res.data.data);
+    });
+  };
+
+  const getallempmanual = () => {
+    serverInstance('admin/dash-employee-total-online', 'get').then((res) => {
+      console.log('ele data', res.data.data);
+      setisData5(res.data.data);
+    });
+  };
+
   useEffect(() => {
     setopendashboard(true);
     setuserrole(Number(sessionStorage.getItem('userrole')));
+    getallelec(),
+      getallmanual(),
+      getallonline(),
+      getallempelec(),
+      getallempmanual();
   }, []);
 
   return (
@@ -35,7 +81,7 @@ const Dashboard = ({ setopendashboard }) => {
               >
                 <p>Donation</p>
                 <div className="main_repue_img">
-                  <p>₹ 10,000</p>
+                  <DonationTotal data={isData1} />
                   <img src={Group225} alt="dd" />
                 </div>
               </div>

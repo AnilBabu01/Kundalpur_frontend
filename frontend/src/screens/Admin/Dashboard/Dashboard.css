@@ -27,9 +27,7 @@ margin-top: 4rem;
   align-items: center;
   padding-left: 3rem;
 }
-.main_card_amount{
-  
-}
+
 .totalcardscontaoner {
   display: flex;
   flex-wrap: wrap;
@@ -103,6 +101,27 @@ margin-top: 4rem;
   justify-content: center;
   align-items: center;
 }
+
+
+.main_card_amount {
+  width: 15%;
+  height: 81px;
+  background: #f1dac6;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.main_repue_img {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.main_repue_img img {
+  width: 30px;
+}
+
+
 @media screen and (max-width: 780px) {
   .dashboarddiv {
     margin-left: 0px;

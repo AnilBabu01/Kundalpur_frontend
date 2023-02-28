@@ -18,7 +18,8 @@ import Moment from 'moment-js';
 import { backendApiUrl } from '../../../../../config/config';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
 import { ExportPdfmanul } from '../../../compoments/ExportPdf';
 import Print from '../../../../../assets/Print.png';
 import ExportPdf from '../../../../../assets/ExportPdf.png';
@@ -286,9 +287,9 @@ const Consolidated = ({ setopendashboard }) => {
               </>
             ) : (
               <>
-                {/* <TableCell colSpan={8} align="center">
-                      <CircularProgress />
-                    </TableCell> */}
+                <TableCell colSpan={8} align="center">
+                  <ReactSpinner />
+                </TableCell>
               </>
             )}
           </TableBody>

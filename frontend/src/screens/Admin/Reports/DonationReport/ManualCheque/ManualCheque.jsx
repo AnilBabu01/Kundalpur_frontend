@@ -30,7 +30,8 @@ import ExportPdf from '../../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../../assets/ExportExcel.png';
 import Edit from '../../../../../assets/Edit.png';
 import eye from '../../../../../assets/eye.png';
-
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
 import ElectronicTotal from '../../../compoments/ElectronicTotal';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
@@ -670,7 +671,7 @@ const ManualCheque = ({ setopendashboard }) => {
                 <>
                   <TableRow>
                     <TableCell colSpan={12} align="center">
-                      <CircularProgress />
+                      <ReactSpinner />
                     </TableCell>
                   </TableRow>
                 </>

@@ -14,13 +14,9 @@ import exportFromJSON from 'export-from-json';
 import Tooltip from '@mui/material/Tooltip';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { format } from 'date-fns';
-import f1 from '../../../../assets/f4.png';
-import IconButton from '@mui/material/IconButton';
 import { useReactToPrint } from 'react-to-print';
-import Moment from 'moment-js';
 import './DonationStyle.css';
-const Donation = ({ setopendashboard }) => {
+const Donation = () => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -41,27 +37,39 @@ const Donation = ({ setopendashboard }) => {
   };
 
   const ExportToExcel = () => {
-    const fileName = 'Todaydonation';
+    const fileName = 'TodayElectronicDonation';
     const exportType = 'xls';
     var data = [];
-    // isData.map((item, index) => {
-    //   data.push({});
-    // });
+    isData.map((item, index) => {
+      data.push({
+        employee_name: item?.employee_name,
+        cash_amount: item?.cash_amount,
+        bank_amount: item?.bank_amount,
+        cheque_amount: item?.cheque_amount,
+        total: item?.total,
+      });
+    });
     exportFromJSON({ data, fileName, exportType });
   };
 
   const ExportPdff = (isData, fileName) => {
     const doc = new jsPDF();
 
-    const tableColumn = ['Staff name', 'Phone', 'bank', 'Cheque'];
+    const tableColumn = ['Staff name', 'Cash', 'bank', 'Cheque', 'Total'];
 
     const tableRows = [];
 
-    // isData.forEach((item) => {
-    //   const ticketData = [format(new Date(item.createdAt), 'yyyy-MM-dd')];
+    isData.forEach((item) => {
+      const ticketData = [
+        item?.employee_name,
+        item?.cash_amount,
+        item?.bank_amount,
+        item?.cheque_amount,
+        item?.total,
+      ];
 
-    //   tableRows.push(ticketData);
-    // });
+      tableRows.push(ticketData);
+    });
 
     doc.autoTable(tableColumn, tableRows, { startY: 20 });
     const date = Date().split(' ');
@@ -100,7 +108,7 @@ const Donation = ({ setopendashboard }) => {
           &nbsp;&nbsp;
           <Tooltip title="Export Pdf File">
             <img
-              onClick={() => ExportPdff(isData, 'TodayDonation')}
+              onClick={() => ExportPdff(isData, 'TodayElectronic')}
               src={ExportPdf}
               alt="cc"
               style={{ width: '30px', marginRight: '2rem' }}
@@ -120,7 +128,6 @@ const Donation = ({ setopendashboard }) => {
         </div>
 
         <div className="table-div-maai" ref={componentRef}>
-          {/* <TableContainer component={Paper}> */}
           <Table
             sx={{ minWidth: 650, width: '100%' }}
             aria-label="simple table"
@@ -157,11 +164,6 @@ const Donation = ({ setopendashboard }) => {
                       <TableCell>{row?.bank_amount}</TableCell>
                       <TableCell>{row?.cheque_amount}</TableCell>
                       <TableCell>{row?.total}</TableCell>
-
-                      {/* <TableCell>
-                    <RemoveRedEyeIcon />
-                    <DeleteForeverIcon />
-                  </TableCell> */}
                     </TableRow>
                   ))}
                 </>
@@ -254,16 +256,10 @@ const Donation = ({ setopendashboard }) => {
                       'aria-label': 'page number',
                     },
                   }}
-                  // showFirstButton={true}
-                  // showLastButton={true}
-                  //ActionsComponent={TablePaginationActions}
-                  //component={Box}
-                  //sx and classes prop discussed in styling section
                 />
               </TableRow>
             </TableFooter>
           </Table>
-          {/* </TableContainer> */}
         </div>
       </div>
     </>

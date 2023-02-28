@@ -32,17 +32,6 @@ const DharamshalaTap = ({ setopendashboard }) => {
               Dharamshala
             </button>
             <button
-              className={toggleState === 2 ? 'tabs2 ' : 'tabs1'}
-              onClick={() => toggleTab(2)}
-            >
-              <img
-                style={{ marginRight: '4%', width: '20px' }}
-                src={f1}
-                alt="fast"
-              />
-              Category
-            </button>
-            <button
               className={toggleState === 3 ? 'tabs2 ' : 'tabs1'}
               onClick={() => toggleTab(3)}
             >
@@ -53,6 +42,18 @@ const DharamshalaTap = ({ setopendashboard }) => {
               />
               Facilities
             </button>
+            <button
+              className={toggleState === 2 ? 'tabs2 ' : 'tabs1'}
+              onClick={() => toggleTab(2)}
+            >
+              <img
+                style={{ marginRight: '4%', width: '20px' }}
+                src={f1}
+                alt="fast"
+              />
+              Category
+            </button>
+
             <button
               className={toggleState === 4 ? 'tabs2 ' : 'tabs1'}
               onClick={() => toggleTab(4)}

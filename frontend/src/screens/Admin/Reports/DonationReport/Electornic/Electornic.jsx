@@ -41,6 +41,8 @@ import PrintElectronic from '../../../compoments/PrintElectronic';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import DonationReportTap from '../DonationReportTap';
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
 import './Electornic.css';
 
 const Search = styled('div')(({ theme }) => ({
@@ -683,8 +685,8 @@ const Electornic = ({ setopendashboard }) => {
               ) : (
                 <>
                   <TableRow>
-                    <TableCell colSpan={8} align="center">
-                      <CircularProgress />
+                    <TableCell colSpan={12} align="center">
+                      <ReactSpinner />
                     </TableCell>
                   </TableRow>
                 </>

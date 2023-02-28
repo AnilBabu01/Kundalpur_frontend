@@ -42,7 +42,8 @@ import InputBase from '@mui/material/InputBase';
 import PrintManual from '../../../compoments/PrintManual';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
 import axios from 'axios';
 import { backendApiUrl } from '../../../../../config/config';
 import ManualDonationTap from '../ManualDonationTap';
@@ -708,7 +709,7 @@ const ManualCash = ({ setopendashboard }) => {
                 <>
                   <TableRow>
                     <TableCell colSpan={13} align="center">
-                      <CircularProgress />
+                      <ReactSpinner />
                     </TableCell>
                   </TableRow>
                 </>

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { serverInstance } from '../../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import { useNavigate, Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import EditIcon from '@mui/icons-material/Edit';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -25,7 +22,6 @@ import Moment from 'moment-js';
 import CashDonation from '../../../Donation/Donation/CashDonation';
 import { backendApiUrl } from '../../../../../config/config';
 import axios from 'axios';
-import CircularProgress from '@mui/material/CircularProgress';
 import { ExportPdfmanul } from '../../../compoments/ExportPdf';
 import Print from '../../../../../assets/Print.png';
 import ExportPdf from '../../../../../assets/ExportPdf.png';
@@ -40,6 +36,8 @@ import PrintElectronic from '../../../compoments/PrintElectronic';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import DonationReportTap from '../DonationReportTap';
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
 import './ManualCash.css';
 
 const Search = styled('div')(({ theme }) => ({
@@ -134,14 +132,9 @@ const ManualCash = ({ setopendashboard }) => {
   const [updateData, setupdateData] = useState('');
   const [openupdate, setopenupdate] = useState(false);
   const [showUpdateBtn, setshowUpdateBtn] = useState(true);
-  const [phone, setphone] = useState('');
-  const [date, setdate] = useState('');
-  const [name, setname] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [updateId, setupdateId] = useState('');
-  const [typeid, settypeid] = useState('');
   const [userrole, setuserrole] = useState('');
-  const [type, settype] = useState('');
   const [datefrom, setdatefrom] = useState('');
   const [dateto, setdateto] = useState('');
   const [voucherfrom, setvoucherfrom] = useState('');
@@ -689,7 +682,7 @@ const ManualCash = ({ setopendashboard }) => {
                 <>
                   <TableRow>
                     <TableCell colSpan={12} align="center">
-                      <CircularProgress />
+                      <ReactSpinner />
                     </TableCell>
                   </TableRow>
                 </>

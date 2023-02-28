@@ -36,7 +36,8 @@ import ExportPdf from '../../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../../assets/ExportExcel.png';
 import Edit from '../../../../../assets/Edit.png';
 import eye from '../../../../../assets/eye.png';
-
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
 import ManualTotal from '../../../compoments/ManualTotal';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
@@ -709,7 +710,7 @@ const ManualReports = ({ setopendashboard }) => {
                 <>
                   <TableRow>
                     <TableCell colSpan={13} align="center">
-                      <CircularProgress />
+                      <ReactSpinner />
                     </TableCell>
                   </TableRow>
                 </>

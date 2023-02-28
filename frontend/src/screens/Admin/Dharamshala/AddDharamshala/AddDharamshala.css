@@ -31,6 +31,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 2rem;
 }
 
 .selctimg_div {
@@ -39,4 +40,12 @@
   align-items: center;
   flex-direction: column;
  
+}
+.forminput_add_user10 {
+  width: 100%;
+  height: 35px;
+  background: #FFFFFF;
+  border: 1px solid #C5BFBF;
+  border-radius: 7px;
+  padding-left: 0.5rem;
 }

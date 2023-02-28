@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import React, { useEffect, useState, useRef } from 'react';
 import { serverInstance } from '../../../../API/ServerInstance';
-import Swal from 'sweetalert2';
-import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,33 +7,25 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import { Box } from '@mui/material';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import CloseIcon from '@mui/icons-material/Close';
 import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
-import Edit from '../../../../assets/Edit.png';
-import eye from '../../../../assets/eye.png';
-import Delete from '../../../../assets/Delete.png';
 import exportFromJSON from 'export-from-json';
+import { useReactToPrint } from 'react-to-print';
 import Tooltip from '@mui/material/Tooltip';
-import Moment from 'moment-js';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { format } from 'date-fns';
-import f1 from '../../../../assets/f4.png';
+
 const OnlineDonation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
-  const [open1, setOpen1] = React.useState(false);
-  const handleOpen1 = () => setOpen1(true);
+  const componentRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -55,7 +42,48 @@ const OnlineDonation = ({ setopendashboard }) => {
       setisData(res.data.data);
     });
   };
+  const ExportToExcel = () => {
+    const fileName = 'TodayOnlineDonation';
+    const exportType = 'xls';
+    var data = [];
 
+    isData.map((item, index) => {
+      data.push({
+        bank_amount: item?.Online_amount,
+        cheque_amount: item?.Cheque_amount,
+        total: item?.total,
+      });
+    });
+    exportFromJSON({ data, fileName, exportType });
+  };
+
+  const ExportPdff = (isData, fileName) => {
+    const doc = new jsPDF();
+
+    const tableColumn = ['Online', 'Cheque', 'Total'];
+
+    const tableRows = [];
+
+    isData.forEach((item) => {
+      const ticketData = [
+        item?.Online_amount,
+        item?.Cheque_amount,
+        item?.total,
+      ];
+
+      tableRows.push(ticketData);
+    });
+
+    doc.autoTable(tableColumn, tableRows, { startY: 20 });
+    const date = Date().split(' ');
+
+    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+
+    doc.text(`Report of ${fileName}`, 8, 9);
+    doc.setFont('Lato-Regular', 'normal');
+    doc.setFontSize(28);
+    doc.save(`${fileName}_${dateStr}.pdf`);
+  };
   useEffect(() => {
     getallonline();
   }, []);
@@ -72,7 +100,7 @@ const OnlineDonation = ({ setopendashboard }) => {
         >
           <Tooltip title="Export Excel File">
             <img
-              // onClick={() => ExportToExcel()}
+              onClick={() => ExportToExcel()}
               src={ExportExcel}
               alt="cc"
               style={{ width: '30px' }}
@@ -81,7 +109,7 @@ const OnlineDonation = ({ setopendashboard }) => {
           &nbsp;&nbsp;
           <Tooltip title="Export Pdf File">
             <img
-              // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+              onClick={() => ExportPdff(isData, 'TodayOnlineDonation')}
               src={ExportPdf}
               alt="cc"
               style={{ width: '30px', marginRight: '2rem' }}
@@ -89,7 +117,7 @@ const OnlineDonation = ({ setopendashboard }) => {
           </Tooltip>
           <Tooltip title="Print">
             <img
-              // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+              onClick={() => handlePrint()}
               src={Print}
               alt="cc"
               style={{ width: '30px', marginRight: '2rem' }}
@@ -100,16 +128,21 @@ const OnlineDonation = ({ setopendashboard }) => {
           </div>
         </div>
 
-        <div className="table-div-maai">
-          {/* <TableContainer component={Paper}> */}
+        <div className="table-div-maai" ref={componentRef}>
           <Table
             sx={{ minWidth: 650, width: '100%' }}
             aria-label="simple table"
           >
             <TableHead>
               <TableRow>
-                <TableCell>Staff Name</TableCell>
-
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  &nbsp;
+                </TableCell>
                 <TableCell>Bank</TableCell>
                 <TableCell>Cheque</TableCell>
                 <TableCell>Total</TableCell>
@@ -132,17 +165,18 @@ const OnlineDonation = ({ setopendashboard }) => {
                         '&:last-child td, &:last-child th': { border: 0 },
                       }}
                     >
-                      <TableCell>{row?.employee_name}</TableCell>
-
+                      <TableCell
+                        style={{
+                          fontSize: '15px',
+                          color: '#05313C',
+                        }}
+                      >
+                        &nbsp;
+                      </TableCell>
                       <TableCell>{row?.Online_amount}</TableCell>
 
                       <TableCell>{row?.Cheque_amount}</TableCell>
                       <TableCell>{row?.total}</TableCell>
-
-                      {/* <TableCell>
-                    <RemoveRedEyeIcon />
-                    <DeleteForeverIcon />
-                  </TableCell> */}
                     </TableRow>
                   ))}
                 </>
@@ -222,16 +256,10 @@ const OnlineDonation = ({ setopendashboard }) => {
                       'aria-label': 'page number',
                     },
                   }}
-                  // showFirstButton={true}
-                  // showLastButton={true}
-                  //ActionsComponent={TablePaginationActions}
-                  //component={Box}
-                  //sx and classes prop discussed in styling section
                 />
               </TableRow>
             </TableFooter>
           </Table>
-          {/* </TableContainer> */}
         </div>
       </div>
     </>

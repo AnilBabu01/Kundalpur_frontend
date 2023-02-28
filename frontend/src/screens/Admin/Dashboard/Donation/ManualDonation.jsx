@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import React, { useEffect, useState, useRef } from 'react';
 import { serverInstance } from '../../../../API/ServerInstance';
-import Swal from 'sweetalert2';
-import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,33 +7,24 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import { Box } from '@mui/material';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import CloseIcon from '@mui/icons-material/Close';
 import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
-import Edit from '../../../../assets/Edit.png';
-import eye from '../../../../assets/eye.png';
-import Delete from '../../../../assets/Delete.png';
 import exportFromJSON from 'export-from-json';
 import Tooltip from '@mui/material/Tooltip';
-import Moment from 'moment-js';
+import { useReactToPrint } from 'react-to-print';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { format } from 'date-fns';
-import f1 from '../../../../assets/f4.png';
-const ManualDonation = ({ setopendashboard }) => {
+const ManualDonation = () => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
-  const [open1, setOpen1] = React.useState(false);
-  const handleOpen1 = () => setOpen1(true);
+  const componentRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -55,6 +41,51 @@ const ManualDonation = ({ setopendashboard }) => {
     });
   };
 
+  const ExportToExcel = () => {
+    const fileName = 'TodayManualDonation';
+    const exportType = 'xls';
+    var data = [];
+    isData.map((item, index) => {
+      data.push({
+        employee_name: item?.employee_name,
+        cash_amount: item?.cash_amount,
+        bank_amount: item?.bank_amount,
+        cheque_amount: item?.cheque_amount,
+        total: item?.total,
+      });
+    });
+    exportFromJSON({ data, fileName, exportType });
+  };
+
+  const ExportPdff = (isData, fileName) => {
+    const doc = new jsPDF();
+
+    const tableColumn = ['Staff name', 'Cash', 'bank', 'Cheque', 'Total'];
+
+    const tableRows = [];
+
+    isData.forEach((item) => {
+      const ticketData = [
+        item?.employee_name,
+        item?.cash_amount,
+        item?.bank_amount,
+        item?.cheque_amount,
+        item?.total,
+      ];
+
+      tableRows.push(ticketData);
+    });
+
+    doc.autoTable(tableColumn, tableRows, { startY: 20 });
+    const date = Date().split(' ');
+
+    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+
+    doc.text(`Report of ${fileName}`, 8, 9);
+    doc.setFont('Lato-Regular', 'normal');
+    doc.setFontSize(28);
+    doc.save(`${fileName}_${dateStr}.pdf`);
+  };
   useEffect(() => {
     getallmanual();
   }, []);
@@ -72,7 +103,7 @@ const ManualDonation = ({ setopendashboard }) => {
         >
           <Tooltip title="Export Excel File">
             <img
-              // onClick={() => ExportToExcel()}
+              onClick={() => ExportToExcel()}
               src={ExportExcel}
               alt="cc"
               style={{ width: '30px' }}
@@ -81,7 +112,7 @@ const ManualDonation = ({ setopendashboard }) => {
           &nbsp;&nbsp;
           <Tooltip title="Print">
             <img
-              // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+              onClick={() => ExportPdff(isData, 'TodayManualDonation')}
               src={ExportPdf}
               alt="cc"
               style={{ width: '30px', marginRight: '2rem' }}
@@ -89,7 +120,7 @@ const ManualDonation = ({ setopendashboard }) => {
           </Tooltip>
           <Tooltip title="Export Pdf File">
             <img
-              // onClick={() => ExportPdfmanul(isData, 'ManualCashReport')}
+              onClick={() => handlePrint()}
               src={Print}
               alt="cc"
               style={{ width: '30px', marginRight: '2rem' }}
@@ -100,8 +131,7 @@ const ManualDonation = ({ setopendashboard }) => {
           </div>
         </div>
 
-        <div className="table-div-maai">
-          {/* <TableContainer component={Paper}> */}
+        <div className="table-div-maai" ref={componentRef}>
           <Table
             sx={{ minWidth: 650, width: '100%' }}
             aria-label="simple table"
@@ -138,11 +168,6 @@ const ManualDonation = ({ setopendashboard }) => {
                       <TableCell>{row?.bank_amount}</TableCell>
                       <TableCell>{row?.cheque_amount}</TableCell>
                       <TableCell>{row?.total}</TableCell>
-
-                      {/* <TableCell>
-                    <RemoveRedEyeIcon />
-                    <DeleteForeverIcon />
-                  </TableCell> */}
                     </TableRow>
                   ))}
                 </>
@@ -235,16 +260,10 @@ const ManualDonation = ({ setopendashboard }) => {
                       'aria-label': 'page number',
                     },
                   }}
-                  // showFirstButton={true}
-                  // showLastButton={true}
-                  //ActionsComponent={TablePaginationActions}
-                  //component={Box}
-                  //sx and classes prop discussed in styling section
                 />
               </TableRow>
             </TableFooter>
           </Table>
-          {/* </TableContainer> */}
         </div>
       </div>
     </>

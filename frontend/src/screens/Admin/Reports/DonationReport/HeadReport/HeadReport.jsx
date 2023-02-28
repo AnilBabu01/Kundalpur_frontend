@@ -22,33 +22,8 @@ import ExportExcel from '../../../../../assets/ExportExcel.png';
 import Edit from '../../../../../assets/Edit.png';
 import eye from '../../../../../assets/eye.png';
 import DonationReportTap from '../DonationReportTap';
-const style = {
-  position: 'absolute',
-  top: '40%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '30%',
-  bgcolor: 'background.paper',
-  p: 2,
-  boxShadow: 24,
-  borderRadius: '5px',
-};
-
-const openupadtestyle = {
-  position: 'absolute',
-  top: '40%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '30%',
-  bgcolor: 'background.paper',
-  p: 2,
-  boxShadow: 24,
-  borderRadius: '5px',
-};
-
-const donationColorTheme = {
-  cash: '#48a828',
-};
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
 
 const HeadReport = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState('');
@@ -411,7 +386,7 @@ const HeadReport = ({ setopendashboard }) => {
                   ) : (
                     <>
                       <TableCell colSpan={8} align="center">
-                        <CircularProgress />
+                        <ReactSpinner />
                       </TableCell>
                     </>
                   )}

@@ -25,6 +25,8 @@ import Edit from '../../../../../assets/Edit.png';
 import eye from '../../../../../assets/eye.png';
 import { ExportPdfmanul } from '../../../compoments/ExportPdf';
 import ManualDonationTap from '../ManualDonationTap';
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -289,9 +291,9 @@ const Consolidated = ({ setopendashboard }) => {
                 </>
               ) : (
                 <>
-                  {/* <TableCell colSpan={8} align="center">
-                      <CircularProgress />
-                    </TableCell> */}
+                  <TableCell colSpan={8} align="center">
+                    <ReactSpinner />
+                  </TableCell>
                 </>
               )}
             </TableBody>

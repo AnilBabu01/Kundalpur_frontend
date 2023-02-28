@@ -50,7 +50,7 @@ const ManualDonation = ({ setopendashboard }) => {
   };
   return (
     <>
-      <div className="main_dash_daily_main">
+      <div className="main_dash_daily_main" style={{ background: '#e96d00' }}>
         <div
           className="search-header-print"
           style={{
@@ -146,9 +146,30 @@ const ManualDonation = ({ setopendashboard }) => {
                 >
                   Total
                 </TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  0
+                </TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  0
+                </TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  0
+                </TableCell>
                 <TableCell
                   style={{
                     fontSize: '15px',

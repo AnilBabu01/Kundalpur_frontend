@@ -50,7 +50,7 @@ const OnlineDonation = ({ setopendashboard }) => {
   };
   return (
     <>
-      <div className="main_dash_daily_main">
+      <div className="main_dash_daily_main" style={{ background: '#1C82AD' }}>
         <div
           className="search-header-print"
           style={{

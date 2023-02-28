@@ -14,63 +14,6 @@ const Dashboard = ({ setopendashboard }) => {
     setuserrole(Number(sessionStorage.getItem('userrole')));
   }, []);
 
-  const data = [
-    {
-      id: 1,
-      title: 'Donation',
-      img: <img src={Group225} alt="dd" />,
-    },
-    {
-      id: 2,
-      title: 'Manual Donation',
-      img: <img src={Group225} alt="dd" />,
-    },
-    {
-      id: 3,
-      title: 'Online Donation',
-      img: <img src={Group224} alt="dd" />,
-    },
-    {
-      id: 4,
-      title: 'Room Booking',
-      img: <img src={Group227} alt="dd" />,
-    },
-    {
-      id: 5,
-      title: 'Online Room Booking',
-      img: <img src={Group227} alt="dd" />,
-    },
-    {
-      id: 6,
-      title: 'Guest in Room',
-      img: <img src={Group228} alt="dd" />,
-    },
-  ];
-
-  const data1 = [
-    {
-      id: 1,
-      title: 'Donation',
-      img: <img src={Group225} alt="dd" />,
-    },
-    {
-      id: 2,
-      title: 'Manual Donation',
-      img: <img src={Group225} alt="dd" />,
-    },
-
-    {
-      id: 3,
-      title: 'Room Booking',
-      img: <img src={Group227} alt="dd" />,
-    },
-
-    {
-      id: 3,
-      title: 'Guest in Room',
-      img: <img src={Group228} alt="dd" />,
-    },
-  ];
   return (
     <>
       <div style={{ position: 'fixed', width: '100%', paddingTop: '0.5rem' }}>
@@ -86,15 +29,111 @@ const Dashboard = ({ setopendashboard }) => {
         >
           {userrole === 1 ? (
             <>
-              {data.map((item) => {
-                return <CardAmount key={item.id} item={item} />;
-              })}
+              <div
+                className="main_card_amount"
+                style={{ background: '#48a828', color: 'white' }}
+              >
+                <p>Donation</p>
+                <div className="main_repue_img">
+                  <p>₹ 10,000</p>
+                  <img src={Group225} alt="dd" />
+                </div>
+              </div>
+              <div
+                className="main_card_amount"
+                style={{ background: '#e96d00', color: 'white' }}
+              >
+                <p>Manual Donation</p>
+                <div className="main_repue_img">
+                  <p>₹ 10,000</p>
+                  <img src={Group225} alt="dd" />
+                </div>
+              </div>
+              <div
+                className="main_card_amount"
+                style={{ background: '#1C82AD', color: 'white' }}
+              >
+                <p>Online Donation</p>
+                <div className="main_repue_img">
+                  <p>₹ 10,000</p>
+                  <img src={Group224} alt="dd" />
+                </div>
+              </div>
+              <div
+                className="main_card_amount"
+                style={{ background: '#1C53BC', color: 'white' }}
+              >
+                <p>Room Booking</p>
+                <div className="main_repue_img">
+                  <p>₹ 10,000</p>
+                  <img src={Group227} alt="dd" />
+                </div>
+              </div>
+              <div
+                className="main_card_amount"
+                style={{ background: '#9F2B68', color: 'white' }}
+              >
+                <p>Online Room Booking</p>
+                <div className="main_repue_img">
+                  <p>₹ 10,000</p>
+                  <img src={Group225} alt="dd" />
+                </div>
+              </div>
+              <div
+                className="main_card_amount"
+                style={{ background: '#808080', color: 'white' }}
+              >
+                <p>Guest in Room</p>
+                <div className="main_repue_img">
+                  <p>10,000</p>
+                  <img src={Group228} alt="dd" />
+                </div>
+              </div>
             </>
           ) : (
             <>
-              {data1.map((item) => {
-                return <CardAmount key={item.id} item={item} />;
-              })}
+              <div
+                className="main_card_amount"
+                style={{ background: '#48a828', color: 'white' }}
+              >
+                <p>Donation</p>
+                <div className="main_repue_img">
+                  <p>₹ 10,000</p>
+                  <img src={Group225} alt="dd" />
+                </div>
+              </div>
+              <div
+                className="main_card_amount"
+                style={{ background: '#e96d00', color: 'white' }}
+              >
+                <p>Manual Donation</p>
+                <div className="main_repue_img">
+                  <p>₹ 10,000</p>
+                  <img src={Group225} alt="dd" />
+                </div>
+              </div>
+
+              <div
+                className="main_card_amount"
+                style={{ background: '#1C82AD', color: 'white' }}
+              >
+                <p>Room Booking</p>
+                <div className="main_repue_img">
+                  <p>₹ 10,000</p>
+                  <img src={Group227} alt="dd" />
+                </div>
+              </div>
+
+              <div
+                className="main_card_amount"
+                style={{ background: '#808080', color: 'white' }}
+              >
+                <p>Guest in Room</p>
+                <div className="main_repue_img">
+                  <p>10,000</p>
+                  <img src={Group228} alt="dd" />
+                </div>
+              </div>
             </>
           )}
         </div>

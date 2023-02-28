@@ -75,7 +75,7 @@ const Donation = ({ setopendashboard }) => {
   };
   return (
     <>
-      <div className="main_dash_daily_main">
+      <div className="main_dash_daily_main" style={{ background: '#48a828' }}>
         <div className="main_dash_daily">
           <Tooltip title="Export Excel File">
             <img
@@ -164,9 +164,30 @@ const Donation = ({ setopendashboard }) => {
                 >
                   Total
                 </TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  0
+                </TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  0
+                </TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  0
+                </TableCell>
                 <TableCell
                   style={{
                     fontSize: '15px',

@@ -95,7 +95,7 @@ const EmployeeManualDonation = ({ setopendashboard }) => {
           <Table sx={{ width: '100%' }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Staff Name</TableCell>
+                <TableCell>&nbsp;</TableCell>
                 <TableCell>Cash</TableCell>
                 <TableCell>Bank</TableCell>
                 <TableCell>Cheque</TableCell>
@@ -103,7 +103,7 @@ const EmployeeManualDonation = ({ setopendashboard }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell style={{ fontWeight: '600' }}>Anil Babu</TableCell>
+              <TableCell>&nbsp;</TableCell>
 
               <TableCell>0</TableCell>
               <TableCell>0</TableCell>
@@ -144,9 +144,30 @@ const EmployeeManualDonation = ({ setopendashboard }) => {
                 >
                   Total
                 </TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  0
+                </TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  0
+                </TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  0
+                </TableCell>
                 <TableCell
                   style={{
                     fontSize: '15px',

@@ -87,7 +87,7 @@ const Donation = ({ setopendashboard }) => {
 
   return (
     <>
-      <div className="main_dash_daily_main" style={{ background: '#48a828' }}>
+      <div className="main_dash_daily_main">
         <div className="main_dash_daily">
           <Tooltip title="Export Excel File">
             <img

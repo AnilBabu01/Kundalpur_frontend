@@ -51,7 +51,7 @@ const OnlineDonation = ({ setopendashboard }) => {
 
   const getallonline = () => {
     serverInstance('admin/dash-admin-total-online', 'get').then((res) => {
-      console.log('ele data', res.data.data);
+      console.log('online data', res.data.data);
       setisData(res.data.data);
     });
   };
@@ -61,7 +61,7 @@ const OnlineDonation = ({ setopendashboard }) => {
   }, []);
   return (
     <>
-      <div className="main_dash_daily_main" style={{ background: '#1C82AD' }}>
+      <div className="main_dash_daily_main">
         <div
           className="search-header-print"
           style={{
@@ -116,35 +116,37 @@ const OnlineDonation = ({ setopendashboard }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell style={{ fontWeight: '600' }}>Anil Babu</TableCell>
+              {isData && (
+                <>
+                  {(rowsPerPage > 0
+                    ? isData &&
+                      isData.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                    : isData && isData
+                  ).map((row, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell>{row?.employee_name}</TableCell>
 
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
+                      <TableCell>{row?.Online_amount}</TableCell>
 
-              {/* {(rowsPerPage > 0
-                  ? isData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : isData
-                ).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
+                      <TableCell>{row?.Cheque_amount}</TableCell>
+                      <TableCell>{row?.total}</TableCell>
 
-                    <TableCell>{row.NAME}</TableCell>
-
-                    <TableCell>
-                      <RemoveRedEyeIcon />
-                      <DeleteForeverIcon />
-                    </TableCell>
-                  </TableRow>
-                ))} */}
+                      {/* <TableCell>
+                    <RemoveRedEyeIcon />
+                    <DeleteForeverIcon />
+                  </TableCell> */}
+                    </TableRow>
+                  ))}
+                </>
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>
@@ -156,15 +158,47 @@ const OnlineDonation = ({ setopendashboard }) => {
                 >
                   Total
                 </TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
                 <TableCell
                   style={{
                     fontSize: '15px',
                     color: '#05313C',
                   }}
                 >
-                  0
+                  {isData
+                    ? isData.reduce(
+                        (n, { Online_amount }) =>
+                          parseFloat(n) + parseFloat(Online_amount),
+                        0,
+                      )
+                    : '0'}
+                </TableCell>
+
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  {isData
+                    ? isData.reduce(
+                        (n, { Cheque_amount }) =>
+                          parseFloat(n) + parseFloat(Cheque_amount),
+                        0,
+                      )
+                    : '0'}
+                </TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  {isData
+                    ? isData.reduce(
+                        (n, { total }) => parseFloat(n) + parseFloat(total),
+                        0,
+                      )
+                    : '0'}
                 </TableCell>
               </TableRow>
               <TableRow>

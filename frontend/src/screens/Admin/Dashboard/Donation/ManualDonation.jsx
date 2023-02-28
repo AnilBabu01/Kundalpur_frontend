@@ -61,7 +61,7 @@ const ManualDonation = ({ setopendashboard }) => {
 
   return (
     <>
-      <div className="main_dash_daily_main" style={{ background: '#e96d00' }}>
+      <div className="main_dash_daily_main">
         <div
           className="search-header-print"
           style={{

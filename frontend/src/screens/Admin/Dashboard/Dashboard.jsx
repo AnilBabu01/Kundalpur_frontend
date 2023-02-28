@@ -6,6 +6,8 @@ import Group227 from '../../../assets/Group227.png';
 import Group228 from '../../../assets/Group228.png';
 import { serverInstance } from '../../../API/ServerInstance';
 import DonationTotal from '../TotalDashboardFun/DonationTotal';
+import ManaulTotal from '../TotalDashboardFun/ManaulTotal';
+import OnlineTotal from '../TotalDashboardFun/OnlineTotal';
 import './Dashboard.css';
 
 const Dashboard = ({ setopendashboard }) => {
@@ -91,7 +93,7 @@ const Dashboard = ({ setopendashboard }) => {
               >
                 <p>Manual Donation</p>
                 <div className="main_repue_img">
-                  <p>₹ 10,000</p>
+                  <ManaulTotal data={isData2} />
                   <img src={Group225} alt="dd" />
                 </div>
               </div>
@@ -101,7 +103,7 @@ const Dashboard = ({ setopendashboard }) => {
               >
                 <p>Online Donation</p>
                 <div className="main_repue_img">
-                  <p>₹ 10,000</p>
+                  <OnlineTotal data={isData3} />
                   <img src={Group224} alt="dd" />
                 </div>
               </div>

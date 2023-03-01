@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -32,7 +31,6 @@ const Request = ({ setopendashboard }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const navigation = useNavigate();
 
   useEffect(() => {
     setopendashboard(true);

@@ -18,13 +18,14 @@ import CheckIcon from '@mui/icons-material/Check';
 import IconButton from '@mui/material/IconButton';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { ReactTransliterate } from 'react-transliterate';
 const style = {
   position: 'absolute',
   top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '30%',
+  width: '50%',
   bgcolor: 'background.paper',
   borderRadius: 3,
   boxShadow: 24,
@@ -39,11 +40,10 @@ function DonationMaster() {
   const [refetch, setrefetch] = useState(false);
   const [donationtype_in_hindi, setdonationtype_in_hindi] = useState('');
   const [donationtype_in_eng, setdonationtype_in_eng] = useState('');
-  const [open1, setOpen1] = React.useState(false);
-  const [deleteId, setdeleteId] = useState('');
   const [open3, setOpen3] = React.useState(false);
   const [data, setdata] = useState('');
   const [manageActivation, setmanageActivation] = useState(false);
+  const [showloader, setshowloader] = useState(false);
   let status;
   const handleOpen3 = (data) => {
     setOpen3(true);
@@ -51,24 +51,6 @@ function DonationMaster() {
   };
   const handleClose3 = () => setOpen3(false);
 
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
-
-  const handleClose2 = () => {
-    setOpen1(false);
-    serverInstance(`admin/donation-type?id=${deleteId}`, 'delete').then(
-      (res) => {
-        if (res.status === true) {
-          Swal.fire('Great!', 'User delete successfully', 'success');
-          setrefetch(!refetch);
-        } else {
-          Swal('Error', 'somthing went  wrong', 'error');
-        }
-        console.log(res);
-      },
-    );
-  };
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -83,6 +65,7 @@ function DonationMaster() {
 
   const handlesubmit = async (e) => {
     try {
+      setshowloader(true);
       e.preventDefault();
       axios.defaults.headers.post[
         'Authorization'
@@ -93,6 +76,7 @@ function DonationMaster() {
         type_hi: donationtype_in_hindi,
       });
       if (data.status === true) {
+        setshowloader(false);
         Swal.fire('Great!', 'Item Head Added Successfully', 'success');
         handleClose();
         setdonationtype_in_eng('');
@@ -176,17 +160,19 @@ function DonationMaster() {
               <form onSubmit={handlesubmit}>
                 <div className="add-div-close-div">
                   <h2>Add New Donation Type</h2>
-                  <CloseIcon onClick={() => handleClose()} />
+                  <IconButton>
+                    <CloseIcon onClick={() => handleClose()} />
+                  </IconButton>
                 </div>
 
-                <div className="main-input-div1">
-                  <div className="inner-input-div-donations">
+                <div className="main_add_Head_hai_na">
+                  <div className="inner-input-div1">
                     <label htmlFor="donationtype_in_hindi">
-                      Enter donation type in hindi 
+                      Enter donation item in hindi 
                     </label>
 
                     <ReactTransliterate
-                      // style={custominput}
+                      // style={custumstyle}
                       id="full-name"
                       required
                       value={donationtype_in_hindi}
@@ -196,11 +182,13 @@ function DonationMaster() {
                       onChange={(e) => setdonationtype_in_hindi(e.target.value)}
                       lang="hi"
                     />
+                  </div>
+                  <div className="inner-input-div1">
                     <label htmlFor="donationtype_in_eng">
-                      Enter donation type in english 
+                      Enter donation item in english 
                     </label>
                     <input
-                      className="input_add_donation_type"
+                      className="inner-input-div120"
                       type="text"
                       required
                       id="donationtype_in_eng"
@@ -212,8 +200,23 @@ function DonationMaster() {
                 </div>
 
                 <div className="save-div-btn">
-                  <button className="save-btn1">Add </button>
-                  <button onClick={() => handleClose()} className="calcel-btn">
+                  <button className="save-div-btn-btn">
+                    {showloader ? (
+                      <CircularProgress
+                        style={{
+                          width: '21px',
+                          height: '21px',
+                          color: '#FE7600',
+                        }}
+                      />
+                    ) : (
+                      'Add User'
+                    )}
+                  </button>
+                  <button
+                    onClick={() => handleClose()}
+                    className="save-div-btn-btn-cancel"
+                  >
                     Cancel
                   </button>
                 </div>

@@ -1,18 +1,13 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
 import { serverInstance } from '../../../../../API/ServerInstance';
-
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { alpha } from '@mui/material/styles';
-
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -24,20 +19,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
-import { typesOfDonation } from '../common/Data';
 import TotalAmountRow from '../common/TotalAmountRow';
-
-const UpdateTtem = ({
-  setshowalert,
-  handleClose,
-  themeColor,
-  updateData,
-  showUpdateBtn,
-  handleOpen4,
-}) => {
+import CircularProgress from '@material-ui/core/CircularProgress';
+const UpdateTtem = ({ handleClose, themeColor, updateData, showUpdateBtn }) => {
   const theme = createTheme({
     typography: {
       fontFamily: 'Poppins',
@@ -48,20 +35,17 @@ const UpdateTtem = ({
       },
     },
   });
-  const navigation = useNavigate();
 
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
-  const [transactionNo, setTransactionNo] = useState('');
-  const [bankName, setBankName] = useState('');
   const [newMember, setNewMember] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
-  const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
+  const [showloader, setshowloader] = useState(false);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -179,6 +163,7 @@ const UpdateTtem = ({
 
   const addElectronicDonation = async (e) => {
     try {
+      setshowloader(true);
       e.preventDefault();
 
       axios.defaults.headers.put[
@@ -206,6 +191,7 @@ const UpdateTtem = ({
 
       console.log('update Item', res.data.status);
       if (res.data.status === true) {
+        setshowloader(false);
         handleClose();
       } else {
         Swal.fire('Error!', 'Somthing went wrong!!', 'error');
@@ -761,7 +747,17 @@ const UpdateTtem = ({
                 variant="contained"
                 type="submit"
               >
-                Update
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Update'
+                )}
               </Button>
             ) : (
               <Button
@@ -773,7 +769,17 @@ const UpdateTtem = ({
                 variant="contained"
                 type="submit"
               >
-                Save
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
               </Button>
             )}
             <Button

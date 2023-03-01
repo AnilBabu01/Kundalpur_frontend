@@ -18,12 +18,12 @@ import activate from '../../../../assets/activate.png';
 import deacivate from '../../../../assets/deacivate.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
-import Print from '../../../../assets/Print.png';
 import Edit from '../../../../assets/Edit.png';
 import eye from '../../../../assets/eye.png';
 import Tooltip from '@mui/material/Tooltip';
 import Updateuser from './Updateuser';
 import Userinfo from './Userinfo';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -37,6 +37,7 @@ const style = {
   p: 4,
 };
 import './UserMaster.css';
+
 function UserMaster() {
   const [isData, setisData] = React.useState([]);
   const [open, setOpen] = useState(false);
@@ -53,6 +54,7 @@ function UserMaster() {
   const [manageActivation, setmanageActivation] = useState(false);
   const [searchName, setsearchName] = useState('');
   const [searchPhonne, setsearchPhonne] = useState('');
+  const [showloader, setshowloader] = useState(false);
   let status;
 
   const handleOpen = () => setOpen(true);
@@ -82,6 +84,7 @@ function UserMaster() {
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
+      setshowloader(true);
       const { data } = await axios.post(`${backendApiUrl}user/create-account`, {
         fullname: name,
         mobileno: phone,
@@ -89,6 +92,7 @@ function UserMaster() {
         password: password,
       });
       if (data.status === true) {
+        setshowloader(false);
         Swal.fire('Great!', 'User Added Successfully', 'success');
         handleClose();
         setemail('');
@@ -232,7 +236,19 @@ function UserMaster() {
                 </div>
 
                 <div className="save-div-btn">
-                  <button className="save-div-btn-btn">Add User</button>
+                  <button className="save-div-btn-btn">
+                    {showloader ? (
+                      <CircularProgress
+                        style={{
+                          width: '21px',
+                          height: '21px',
+                          color: '#FE7600',
+                        }}
+                      />
+                    ) : (
+                      'Add User'
+                    )}
+                  </button>
                   <button
                     onClick={() => handleClose()}
                     className="save-div-btn-btn-cancel"
@@ -406,7 +422,7 @@ function UserMaster() {
             <TableFooter>
               <TableRow>
                 <TablePagination
-                  // count={isData.length}
+                  count={isData.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}
@@ -425,11 +441,6 @@ function UserMaster() {
                       'aria-label': 'page number',
                     },
                   }}
-                  // showFirstButton={true}
-                  // showLastButton={true}
-                  //ActionsComponent={TablePaginationActions}
-                  //component={Box}
-                  //sx and classes prop discussed in styling section
                 />
               </TableRow>
             </TableFooter>

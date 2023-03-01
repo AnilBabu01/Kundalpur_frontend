@@ -4,7 +4,7 @@ import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { ReactTransliterate } from 'react-transliterate';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const custominput = {
   width: '100%',
   height: '33px',
@@ -12,10 +12,7 @@ const custominput = {
   paddingLeft: '0.5rem',
 };
 function UpdateDonationType({ data, handleClose3 }) {
-  const location = useLocation();
-
-  console.log('data', data);
-
+  const [showloader, setshowloader] = useState(false);
   const navigation = useNavigate();
   const [isData, setisData] = React.useState([]);
   const [donationtype_in_hindi, setdonationtype_in_hindi] = useState('');
@@ -25,6 +22,7 @@ function UpdateDonationType({ data, handleClose3 }) {
   console.log('aaa', data.type_en);
   const handlesubmit = async () => {
     try {
+      setshowloader(true);
       axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -36,7 +34,8 @@ function UpdateDonationType({ data, handleClose3 }) {
       });
       console.log(res);
       if (res.data.status === true) {
-        Swal.fire('Great!', 'User Added Successfully', 'success');
+        setshowloader(false);
+        Swal.fire('Great!', 'Donation Item Updated Successfully', 'success');
 
         handleClose3();
       }
@@ -58,13 +57,14 @@ function UpdateDonationType({ data, handleClose3 }) {
     <>
       <div className="main_uodate_div">
         <div className="update-form">
-          <div className="main-input-di">
-            <div className="inner-input-div-donations">
+          <div className="main_add_Head_hai_na">
+            <div className="inner-input-div1">
               <label htmlFor="donationtype_in_hindi">
-                Enter donation type in hindi 
+                Enter donation item in hindi 
               </label>
+
               <ReactTransliterate
-                style={custominput}
+                // style={custumstyle}
                 id="full-name"
                 required
                 value={donationtype_in_hindi}
@@ -74,12 +74,15 @@ function UpdateDonationType({ data, handleClose3 }) {
                 onChange={(e) => setdonationtype_in_hindi(e.target.value)}
                 lang="hi"
               />
+            </div>
+            <div className="inner-input-div1">
               <label htmlFor="donationtype_in_eng">
-                Enter donation type in english 
+                Enter donation item in english 
               </label>
               <input
-                style={custominput}
+                className="inner-input-div120"
                 type="text"
+                required
                 id="donationtype_in_eng"
                 value={donationtype_in_eng}
                 name="donationtype_in_eng"
@@ -89,8 +92,24 @@ function UpdateDonationType({ data, handleClose3 }) {
           </div>
 
           <div className="save-div-btn">
-            <button onClick={() => handlesubmit()} className="save-btn1">
-              Update{' '}
+            <button onClick={() => handlesubmit()} className="save-div-btn-btn">
+              {showloader ? (
+                <CircularProgress
+                  style={{
+                    width: '21px',
+                    height: '21px',
+                    color: '#FE7600',
+                  }}
+                />
+              ) : (
+                'Add User'
+              )}
+            </button>
+            <button
+              onClick={() => handleClose3()}
+              className="save-div-btn-btn-cancel"
+            >
+              Cancel
             </button>
           </div>
         </div>

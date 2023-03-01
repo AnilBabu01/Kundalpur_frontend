@@ -26,6 +26,7 @@ import TotalAmountRow from '../common/TotalAmountRow';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import { ReactTransliterate } from 'react-transliterate';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const CashDonation = ({
   handleClose,
   themeColor,
@@ -74,6 +75,7 @@ const CashDonation = ({
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
+  const [showloader, setshowloader] = useState(false);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -177,6 +179,7 @@ const CashDonation = ({
     setfetchuserdetail(false);
   }
   const addCashDonation = async (e) => {
+    setshowloader(true);
     axios.defaults.headers.post[
       'Authorization'
     ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -208,13 +211,12 @@ const CashDonation = ({
 
         if (res.data.status === true) {
           handleClose();
+          setshowloader(false);
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
         }
       }
     } else {
-      console.log('clicked');
-
       if (
         fullName &&
         donationItems[0].amount &&
@@ -246,6 +248,7 @@ const CashDonation = ({
         console.log('donnn added ', res.data.data.data);
         if (res.data.status === true) {
           handleClose();
+          setshowloader(false);
           navigation('/reciept', {
             state: {
               userdata: res.data.data.data,
@@ -793,7 +796,17 @@ const CashDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Update
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Update'
+                )}
               </Button>
             ) : (
               <Button
@@ -805,7 +818,17 @@ const CashDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Save
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
               </Button>
             )}
 

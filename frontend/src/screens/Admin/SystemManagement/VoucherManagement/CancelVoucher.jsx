@@ -10,7 +10,6 @@ function CancelVoucher({
   setrefetchdata,
   refetchdata,
 }) {
-  const navigate = useNavigate();
   const [paymentId, setpaymentId] = useState('');
 
   const handlesubmit = async () => {

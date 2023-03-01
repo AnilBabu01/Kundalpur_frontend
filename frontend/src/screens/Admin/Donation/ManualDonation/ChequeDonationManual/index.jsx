@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
 import { serverInstance } from '../../../../../API/ServerInstance';
-
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -24,11 +23,10 @@ import Select from '@mui/material/Select';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
 import { ReactTransliterate } from 'react-transliterate';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const custumstyle = {
   width: '100%',
   borderRadius: 6,
@@ -81,6 +79,7 @@ const ChequeDonation = ({
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
+  const [showloader, setshowloader] = useState(false);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -188,6 +187,7 @@ const ChequeDonation = ({
 
   const addChequeDonation = async (e) => {
     try {
+      setshowloader(true);
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -225,6 +225,7 @@ const ChequeDonation = ({
 
         if (res.data.status === true) {
           setshowalert(true);
+          setshowloader(false);
           handleClose();
           sendsms(totalamount);
           navigation('/manualreceipt', {
@@ -234,10 +235,12 @@ const ChequeDonation = ({
           });
           console.log('donationItems', donationItems);
         } else {
+          setshowloader(false);
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
         }
       }
     } catch (error) {
+      setshowloader(false);
       Swal.fire('Error!', 'Somthing went wrong!!', 'error');
     }
   };
@@ -808,7 +811,17 @@ const ChequeDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Update
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Update'
+                )}
               </Button>
             ) : (
               <Button
@@ -820,7 +833,17 @@ const ChequeDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Save
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
               </Button>
             )}
 

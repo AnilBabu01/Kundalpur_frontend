@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
 import { serverInstance } from '../../../../../API/ServerInstance';
-
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -23,12 +22,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import Moment from 'moment-js';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
 import { ReactTransliterate } from 'react-transliterate';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const custumstyle = {
   width: '100%',
   borderRadius: 6,
@@ -84,6 +82,7 @@ const CashDonation = ({
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
+  const [showloader, setshowloader] = useState(false);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -186,53 +185,58 @@ const CashDonation = ({
   );
 
   const addCashDonation = async (e) => {
-    axios.defaults.headers.post[
-      'Authorization'
-    ] = `Bearer ${sessionStorage.getItem('token')}`;
+    try {
+      setshowloader(true);
+      axios.defaults.headers.post[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-    e.preventDefault();
+      e.preventDefault();
 
-    if (
-      fullName &&
-      donationItems[0].amount &&
-      donationItems[0].type &&
-      mobileNo
-    ) {
-      const res = await axios.post(`${backendApiUrl}admin/manual-donation`, {
-        name: fullName,
-        gender: newMember ? genderp1 : genderp,
-        phoneNo: mobileNo,
-        address: address,
-        ReceiptNo: receiptNo,
-        new_member: newMember,
-        modeOfDonation: 2,
-        donation_date: donationDate,
-        donation_time: donationTime,
-        donation_item: donationItems,
-      });
-
-      let totalamount = donationItems?.amount
-        ? donationItems?.amount
-        : donationItems &&
-          donationItems.reduce(
-            (n, { amount }) => parseFloat(n) + parseFloat(amount),
-            0,
-          );
-
-      console.log('added', res);
-      if (res.data.status === true) {
-        navigation('/manualreceipt', {
-          state: {
-            userdata: res.data.data.data,
-          },
+      if (
+        fullName &&
+        donationItems[0].amount &&
+        donationItems[0].type &&
+        mobileNo
+      ) {
+        const res = await axios.post(`${backendApiUrl}admin/manual-donation`, {
+          name: fullName,
+          gender: newMember ? genderp1 : genderp,
+          phoneNo: mobileNo,
+          address: address,
+          ReceiptNo: receiptNo,
+          new_member: newMember,
+          modeOfDonation: 2,
+          donation_date: donationDate,
+          donation_time: donationTime,
+          donation_item: donationItems,
         });
-        handleClose();
 
-        sendsms(totalamount);
-      } else {
-        Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+        let totalamount = donationItems?.amount
+          ? donationItems?.amount
+          : donationItems &&
+            donationItems.reduce(
+              (n, { amount }) => parseFloat(n) + parseFloat(amount),
+              0,
+            );
+
+        console.log('added', res);
+        if (res.data.status === true) {
+          setshowloader(false);
+          navigation('/manualreceipt', {
+            state: {
+              userdata: res.data.data.data,
+            },
+          });
+          handleClose();
+
+          sendsms(totalamount);
+        } else {
+          setshowloader(false);
+          Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+        }
       }
-    }
+    } catch (error) {}
   };
 
   const sendsms = async (totalamount) => {
@@ -734,7 +738,17 @@ const CashDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Update
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Upadte'
+                )}
               </Button>
             ) : (
               <Button
@@ -746,7 +760,17 @@ const CashDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Save
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
               </Button>
             )}
 

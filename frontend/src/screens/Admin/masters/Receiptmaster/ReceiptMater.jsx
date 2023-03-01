@@ -12,8 +12,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-// import CheckIcon from "@mui/icons-material/Check";
-// import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CloseIcon from '@mui/icons-material/RadioButtonChecked';
 import './ReceiptMater.css';
@@ -32,13 +30,10 @@ function ReceiptMater() {
   const [onlineChequeReceipts, setonlineChequeReceipts] = useState([]);
 
   const [isData, setisData] = useState([]);
-  const [refetch, setrefetch] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [manageActivation, setmanageActivation] = useState(false);
-  let status;
-  // console.log(chequeReceipts, itemReceipts, CashReceipts, eleReceipts);
-  console.log(isData);
+
   const handleSubmit = async (type) => {
     try {
       axios.defaults.headers.post[

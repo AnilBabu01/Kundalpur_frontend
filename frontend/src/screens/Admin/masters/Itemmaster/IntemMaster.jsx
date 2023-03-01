@@ -11,7 +11,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import { backendApiUrl } from '../../../../config/config';
 import UpdateDonationType from './UpdateDonationType';
@@ -20,13 +19,15 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import './IntemMaster.css';
 import { ReactTransliterate } from 'react-transliterate';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const style = {
   position: 'absolute',
   top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '30%',
+  width: '50%',
   bgcolor: 'background.paper',
   borderRadius: 3,
   boxShadow: 24,
@@ -34,7 +35,6 @@ const style = {
 };
 
 function IntemMaster() {
-  const naviagte = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -46,6 +46,7 @@ function IntemMaster() {
   const [open3, setOpen3] = React.useState(false);
   const [data, setdata] = useState('');
   const [manageActivation, setmanageActivation] = useState(false);
+  const [showloader, setshowloader] = useState(false);
   let status;
   const handleOpen3 = (data) => {
     setOpen3(true);
@@ -67,6 +68,7 @@ function IntemMaster() {
 
   const handlesubmit = async (e) => {
     try {
+      setshowloader(true);
       e.preventDefault();
       axios.defaults.headers.post[
         'Authorization'
@@ -77,6 +79,7 @@ function IntemMaster() {
         itemType_hi: donationtype_in_hindi,
       });
       if (data.status === true) {
+        setshowloader(false);
         Swal.fire('Great!', 'Item Head Added Successfully', 'success');
         handleClose();
         setdonationtype_in_eng('');
@@ -159,13 +162,13 @@ function IntemMaster() {
             <div>
               <form onSubmit={handlesubmit}>
                 <div className="add-div-close-div">
-                  <h2>Add New Donation Type</h2>
+                  <h2>Add New Donation Item</h2>
                   <IconButton>
                     <CloseIcon onClick={() => handleClose()} />
                   </IconButton>
                 </div>
 
-                <div className="main-input-div1">
+                <div className="main_add_Head_hai_na">
                   <div className="inner-input-div1">
                     <label htmlFor="donationtype_in_hindi">
                       Enter donation item in hindi 
@@ -175,18 +178,20 @@ function IntemMaster() {
                       // style={custumstyle}
                       id="full-name"
                       required
-                      value={text}
-                      onChangeText={(text) => {
-                        settext(text);
+                      value={donationtype_in_hindi}
+                      onChangeText={(donationtype_in_hindi) => {
+                        setdonationtype_in_hindi(donationtype_in_hindi);
                       }}
                       onChange={(e) => setdonationtype_in_hindi(e.target.value)}
                       lang="hi"
                     />
-
+                  </div>
+                  <div className="inner-input-div1">
                     <label htmlFor="donationtype_in_eng">
                       Enter donation item in english 
                     </label>
                     <input
+                      className="inner-input-div120"
                       type="text"
                       required
                       id="donationtype_in_eng"
@@ -198,8 +203,23 @@ function IntemMaster() {
                 </div>
 
                 <div className="save-div-btn">
-                  <button className="save-btn1">Add </button>
-                  <button onClick={() => handleClose()} className="calcel-btn">
+                  <button className="save-div-btn-btn">
+                    {showloader ? (
+                      <CircularProgress
+                        style={{
+                          width: '21px',
+                          height: '21px',
+                          color: '#FE7600',
+                        }}
+                      />
+                    ) : (
+                      'Add User'
+                    )}
+                  </button>
+                  <button
+                    onClick={() => handleClose()}
+                    className="save-div-btn-btn-cancel"
+                  >
                     Cancel
                   </button>
                 </div>

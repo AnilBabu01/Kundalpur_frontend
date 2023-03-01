@@ -3,6 +3,7 @@ import { backendApiUrl } from '../../../../../config/config';
 import { serverInstance } from '../../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './AddVoucherToUser.css';
 
 const AddVoucherToUser = ({ setOpen }) => {
@@ -11,11 +12,12 @@ const AddVoucherToUser = ({ setOpen }) => {
   const [toNo, settoNo] = useState('');
   const [assingTo, setassingTo] = useState();
   const [empname, setempname] = useState('');
-
+  const [showloader, setshowloader] = useState(false);
   console.log(empname, assingTo);
 
   const handlesubmit = async () => {
     try {
+      setshowloader(true);
       if (!fromNo && !toNo && !assingTo) {
         Swal.fire('Error!', 'All fields required', 'error');
       }
@@ -30,17 +32,13 @@ const AddVoucherToUser = ({ setOpen }) => {
         name: empname,
       });
 
-      console.log(res.data.data);
       if (res.data.data.message) {
+        setshowloader(false);
         Swal.fire('Great!', 'VOUCHER GENERATED SUCCESSFULLY', 'success');
         setOpen(false);
       }
-      // if (res.data.status === false) {
-      //   Swal.fire("Error!", res.data.message, "error");
-      //   setOpen(false);
-      // }
     } catch (error) {
-      // Swal.fire("Error!", error.response.data.message, "error");
+      setshowloader(false);
       setOpen(false);
     }
   };
@@ -124,7 +122,17 @@ const AddVoucherToUser = ({ setOpen }) => {
 
           <div className="save-div-btn">
             <button onClick={() => handlesubmit()} className="save-div-btn-btn">
-              Save
+              {showloader ? (
+                <CircularProgress
+                  style={{
+                    width: '21px',
+                    height: '21px',
+                    color: '#FE7600',
+                  }}
+                />
+              ) : (
+                'Save'
+              )}
             </button>
             <button
               onClick={() => setOpen(false)}

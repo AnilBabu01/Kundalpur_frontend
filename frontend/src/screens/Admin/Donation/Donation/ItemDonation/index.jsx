@@ -25,7 +25,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
 import { ReactTransliterate } from 'react-transliterate';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const custumstyle = {
   width: '100%',
   borderRadius: 6,
@@ -72,6 +72,7 @@ const ItemDonation = ({
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
+  const [showloader, setshowloader] = useState(false);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -196,6 +197,7 @@ const ItemDonation = ({
 
   const addItemDonation = async (e) => {
     try {
+      setshowloader(true);
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -237,6 +239,7 @@ const ItemDonation = ({
 
             if (res.data.status === true) {
               handleClose();
+              setshowloader(false);
             } else {
               Swal.fire('Error!', 'Somthing went wrong!!', 'error');
             }
@@ -284,6 +287,7 @@ const ItemDonation = ({
 
           if (res.data.status === true) {
             handleClose();
+            setshowloader(false);
             sendsms(totalamount);
             navigation('/reciept', {
               state: {
@@ -291,6 +295,8 @@ const ItemDonation = ({
               },
             });
           } else {
+            handleClose();
+            setshowloader(false);
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');
           }
         }
@@ -298,13 +304,6 @@ const ItemDonation = ({
     } catch (error) {
       Swal.fire('Error!', 'Somthing went wrong!!', 'error');
     }
-  };
-  const validate = (name, amount, phoneNo, donationtype) => {
-    const errors = {};
-    if (!name) {
-      errors.name = 'Please enter name';
-    }
-    return errors;
   };
 
   const getall_donatiions = () => {
@@ -941,7 +940,17 @@ const ItemDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Update
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Update'
+                )}
               </Button>
             ) : (
               <Button
@@ -953,7 +962,17 @@ const ItemDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Save
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
               </Button>
             )}
             <Button

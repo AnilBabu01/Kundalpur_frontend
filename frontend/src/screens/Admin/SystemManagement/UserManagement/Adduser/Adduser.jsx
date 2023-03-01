@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
-import { serverInstance } from '../../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './Adduser.css';
 
 const Adduser = ({ setOpen }) => {
@@ -13,9 +13,10 @@ const Adduser = ({ setOpen }) => {
   const [address, setaddress] = useState('');
   const [role, setrole] = useState('');
   const [status, setstatus] = useState(false);
-
+  const [showloader, setshowloader] = useState(false);
   const handlesubmit = async (e) => {
     try {
+      setshowloader(true);
       e.preventDefault();
       axios.defaults.headers.post[
         'Authorization'
@@ -33,17 +34,20 @@ const Adduser = ({ setOpen }) => {
         });
         console.log(res.data);
         if (res.data.status === true) {
+          setshowloader(false);
           Swal.fire('Great!', res.data.message, 'success');
           setOpen(false);
         }
         if (res.data.status === false) {
           Swal.fire('Error!', res.data.message, 'error');
           setOpen(false);
+          setshowloader(false);
         }
       }
     } catch (error) {
       Swal.fire('Error!', error.response.data.message, 'error');
       setOpen(false);
+      setshowloader(false);
     }
   };
 
@@ -167,7 +171,19 @@ const Adduser = ({ setOpen }) => {
             </div>
 
             <div className="save-div-btn">
-              <button className="save-div-btn-btn">Save</button>
+              <button className="save-div-btn-btn">
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: '#FE7600',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
+              </button>
               <button
                 onClick={() => setOpen(false)}
                 className="save-div-btn-btn-cancel"

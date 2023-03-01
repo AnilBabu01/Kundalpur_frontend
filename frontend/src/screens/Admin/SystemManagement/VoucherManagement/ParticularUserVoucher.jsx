@@ -14,20 +14,6 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import './VoucherManagement.css';
-import Print from '../../../../assets/Print.png';
-import ExportPdf from '../../../../assets/ExportPdf.png';
-import ExportExcel from '../../../../assets/ExportExcel.png';
-import Edit from '../../../../assets/Edit.png';
-import eye from '../../../../assets/eye.png';
-import Delete from '../../../../assets/Delete.png';
-import exportFromJSON from 'export-from-json';
-import Tooltip from '@mui/material/Tooltip';
-import Moment from 'moment-js';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import axios from 'axios';
-import { backendApiUrl } from '../../../../config/config';
-import { format } from 'date-fns';
 import CancelVoucher from './CancelVoucher';
 const style = {
   position: 'absolute',
@@ -122,7 +108,6 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
           </div>
 
           <div className="table-div-maain">
-            {/* <TableContainer component={Paper}> */}
             <Table
               sx={{ minWidth: 650, width: '97%', marginTop: '3rem' }}
               aria-label="simple table"
@@ -217,16 +202,10 @@ const ParticularUserVoucher = ({ setopendashboard }) => {
                         'aria-label': 'page number',
                       },
                     }}
-                    // showFirstButton={true}
-                    // showLastButton={true}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
-                    //sx and classes prop discussed in styling section
                   />
                 </TableRow>
               </TableFooter>
             </Table>
-            {/* </TableContainer> */}
           </div>
         </div>
       </div>

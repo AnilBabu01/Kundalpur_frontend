@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
-import { serverInstance } from '../../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import './Adduser.css';

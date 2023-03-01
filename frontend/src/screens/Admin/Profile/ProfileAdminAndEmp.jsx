@@ -5,6 +5,7 @@ import { backendApiUrl } from '../../../config/config';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import './ProfileAdminAndEmp.css';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const formData = new FormData();
 function ProfileAdminAndEmp({ setOpen4 }) {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function ProfileAdminAndEmp({ setOpen4 }) {
   const [profile_image, setprofile_image] = useState('');
   const [previewprofile, setpreviewprofile] = useState('');
   const [profileimg, setprofileimg] = useState('');
-
+  const [showloader, setshowloader] = useState(false);
   const adminprofile = async () => {
     axios.defaults.headers.get[
       'Authorization'
@@ -49,6 +50,7 @@ function ProfileAdminAndEmp({ setOpen4 }) {
 
   const submitHandler = async () => {
     try {
+      setshowloader(true);
       if (userrole === 1) {
         formData.set('name', name);
         formData.set('mobile', mobile);
@@ -72,6 +74,7 @@ function ProfileAdminAndEmp({ setOpen4 }) {
 
         console.log(res.data.data);
         if (res.data.data.status) {
+          setshowloader(true);
           Swal.fire('Great!', res.data.data.message, 'success');
           setOpen4(false);
         }
@@ -99,11 +102,13 @@ function ProfileAdminAndEmp({ setOpen4 }) {
         if (res.data.data.status) {
           Swal.fire('Great!', res.data.data.message, 'success');
           setOpen4(false);
+          setshowloader(true);
         }
       }
     } catch (error) {
       Swal.fire('Error!', error.response.data.message, 'error');
       setOpen4(false);
+      setshowloader(true);
     }
   };
   console.log('url', profileimg);
@@ -225,7 +230,17 @@ function ProfileAdminAndEmp({ setOpen4 }) {
 
         <div className="save-div-btn">
           <button onClick={() => submitHandler()} className="save-div-btn-btn">
-            Update
+            {showloader ? (
+              <CircularProgress
+                style={{
+                  width: '21px',
+                  height: '21px',
+                  color: '#FA7401',
+                }}
+              />
+            ) : (
+              'Update'
+            )}
           </button>
           <button
             onClick={() => setOpen4(false)}

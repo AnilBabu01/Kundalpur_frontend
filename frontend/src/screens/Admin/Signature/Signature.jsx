@@ -3,18 +3,20 @@ import { backendApiUrl } from '../../../config/config';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const formData = new FormData();
 import './Signature.css';
 function Signature({ setOpen3 }) {
-  const navigate = useNavigate();
   const [sign, setsign] = useState('');
-
+  const [showloader, setshowloader] = useState(false);
   const [userrole, setuserrole] = React.useState('');
   const submitHandler = async () => {
     try {
+      setshowloader(true);
       if (!sign) {
         Swal.fire('Error!', 'please select signature', 'error');
+        setOpen3(false);
+        setshowloader(false);
       }
       formData.set('sign', sign);
 
@@ -35,6 +37,7 @@ function Signature({ setOpen3 }) {
 
         if (res.data.status) {
           setOpen3(false);
+          setshowloader(false);
           Swal.fire('Great!', res.data.msg, 'success');
         }
       }
@@ -47,12 +50,11 @@ function Signature({ setOpen3 }) {
 
         if (res.data.status) {
           setOpen3(false);
+          setshowloader(false);
           Swal.fire('Great!', res.data.msg, 'success');
         }
       }
-    } catch (error) {
-      //   Swal.fire('Error!', error.response.data.message, 'error');
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -73,7 +75,17 @@ function Signature({ setOpen3 }) {
 
       <div className="save-div-btn">
         <button onClick={() => submitHandler()} className="save-div-btn-btn">
-          Upload
+          {showloader ? (
+            <CircularProgress
+              style={{
+                width: '21px',
+                height: '21px',
+                color: '#FA7401',
+              }}
+            />
+          ) : (
+            'Upload'
+          )}
         </button>
         <button
           onClick={() => setOpen3(false)}

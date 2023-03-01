@@ -24,9 +24,9 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { typesOfDonation } from '../common/Data';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
-import { useActionData, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ReactTransliterate } from 'react-transliterate';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const custumstyle = {
   width: '100%',
   borderRadius: 6,
@@ -72,6 +72,7 @@ const ElectronicDonation = ({
   const [mobileNo, setMobileNo] = useState('');
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
+  const [showloader, setshowloader] = useState(false);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -180,6 +181,7 @@ const ElectronicDonation = ({
 
   const addElectronicDonation = async (e) => {
     try {
+      setshowloader(true);
       e.preventDefault();
       axios.defaults.headers.post[
         'Authorization'
@@ -212,13 +214,12 @@ const ElectronicDonation = ({
 
           if (res.data.status === true) {
             handleClose();
+            setshowloader(false);
           } else {
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');
           }
         }
       } else {
-        console.log('clicked');
-
         if (
           fullName &&
           donationItems[0].amount &&
@@ -251,6 +252,7 @@ const ElectronicDonation = ({
           console.log('rr', res);
           if (res.data.status === true) {
             handleClose();
+            setshowloader(false);
             sendsms(totalamount);
 
             navigation('/reciept', {
@@ -262,15 +264,10 @@ const ElectronicDonation = ({
         }
       }
     } catch (error) {
+      setshowloader(false);
+      handleClose();
       Swal.fire('Error!', 'Somthing went wrong!!', 'error');
     }
-  };
-  const validate = (name, amount, phoneNo, donationtype) => {
-    const errors = {};
-    if (!name) {
-      errors.name = 'Please enter name';
-    }
-    return errors;
   };
 
   const getall_donatiions = () => {
@@ -857,7 +854,17 @@ const ElectronicDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Update
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Update'
+                )}
               </Button>
             ) : (
               <Button
@@ -869,7 +876,17 @@ const ElectronicDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Save
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
               </Button>
             )}
             <Button

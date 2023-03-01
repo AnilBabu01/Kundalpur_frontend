@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../config/config';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const AcceptRequest = ({ setOpen, empdata }) => {
   const [fromNo, setfromNo] = useState('');
   const [toNo, settoNo] = useState('');
   const [assingTo, setassingTo] = useState();
   const [empname, setempname] = useState('');
-
-  console.log(empname, assingTo);
+  const [showloader, setshowloader] = useState(false);
 
   const handlesubmit = async () => {
     try {
+      setshowloader(true);
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -26,15 +27,12 @@ const AcceptRequest = ({ setOpen, empdata }) => {
 
       console.log(res.data.data);
       if (res.data.data.message) {
+        setshowloader(false);
         Swal.fire('Great!', 'VOUCHER GENERATED SUCCESSFULLY', 'success');
         setOpen(false);
       }
-      // if (res.data.status === false) {
-      //   Swal.fire("Error!", res.data.message, "error");
-      //   setOpen(false);
-      // }
     } catch (error) {
-      // Swal.fire("Error!", error.response.data.message, "error");
+      setshowloader(false);
       setOpen(false);
     }
   };
@@ -95,7 +93,17 @@ const AcceptRequest = ({ setOpen, empdata }) => {
 
           <div className="save-div-btn">
             <button onClick={() => handlesubmit()} className="save-div-btn-btn">
-              Save
+              {showloader ? (
+                <CircularProgress
+                  style={{
+                    width: '21px',
+                    height: '21px',
+                    color: '#FE7600',
+                  }}
+                />
+              ) : (
+                'Save'
+              )}
             </button>
             <button
               onClick={() => setOpen(false)}

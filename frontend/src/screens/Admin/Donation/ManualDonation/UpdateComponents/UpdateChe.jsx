@@ -1,8 +1,6 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
 import { serverInstance } from '../../../../../API/ServerInstance';
-
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -11,7 +9,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { alpha } from '@mui/material/styles';
-
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -23,11 +20,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const UpdateChe = ({
   setshowalert,
   handleClose,
@@ -57,6 +53,7 @@ const UpdateChe = ({
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
+  const [showloader, setshowloader] = useState(false);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -156,6 +153,7 @@ const UpdateChe = ({
 
   const addChequeDonation = async (e) => {
     try {
+      setshowloader(true);
       axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -189,6 +187,7 @@ const UpdateChe = ({
 
           if (res.data.status === true) {
             handleClose();
+            setshowloader(false);
           } else {
             Swal.fire('Error!', 'Somthing went wrong!!', 'error');
           }
@@ -703,7 +702,17 @@ const UpdateChe = ({
                 variant="contained"
                 type="submit"
               >
-                Update
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Update'
+                )}
               </Button>
             ) : (
               <Button
@@ -715,7 +724,17 @@ const UpdateChe = ({
                 variant="contained"
                 type="submit"
               >
-                Save
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
               </Button>
             )}
 

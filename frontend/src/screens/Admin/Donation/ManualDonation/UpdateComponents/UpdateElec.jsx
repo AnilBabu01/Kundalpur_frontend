@@ -2,17 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
 import { serverInstance } from '../../../../../API/ServerInstance';
-
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { alpha } from '@mui/material/styles';
-
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -28,7 +24,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { typesOfDonation } from '../common/Data';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const UpdateElec = ({ handleClose, themeColor, updateData, showUpdateBtn }) => {
   const theme = createTheme({
     typography: {
@@ -50,6 +46,7 @@ const UpdateElec = ({ handleClose, themeColor, updateData, showUpdateBtn }) => {
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
+  const [showloader, setshowloader] = useState(false);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -149,6 +146,7 @@ const UpdateElec = ({ handleClose, themeColor, updateData, showUpdateBtn }) => {
 
   const addElectronicDonation = async (e) => {
     try {
+      setshowloader(true);
       e.preventDefault();
 
       axios.defaults.headers.put[
@@ -176,6 +174,7 @@ const UpdateElec = ({ handleClose, themeColor, updateData, showUpdateBtn }) => {
 
       if (res.data.status === true) {
         handleClose();
+        setshowloader(false);
       } else {
         Swal.fire('Error!', 'Somthing went wrong!!', 'error');
       }
@@ -680,7 +679,17 @@ const UpdateElec = ({ handleClose, themeColor, updateData, showUpdateBtn }) => {
                 variant="contained"
                 type="submit"
               >
-                Update
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Update'
+                )}
               </Button>
             ) : (
               <Button
@@ -692,7 +701,17 @@ const UpdateElec = ({ handleClose, themeColor, updateData, showUpdateBtn }) => {
                 variant="contained"
                 type="submit"
               >
-                Save
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
               </Button>
             )}
             <Button

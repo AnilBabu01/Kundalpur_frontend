@@ -2,17 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
 import { serverInstance } from '../../../../../API/ServerInstance';
-
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { alpha } from '@mui/material/styles';
-
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -27,10 +23,9 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
-import { typesOfDonation } from '../common/Data';
 import TotalAmountRow from '../common/TotalAmountRow';
 import { ReactTransliterate } from 'react-transliterate';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const custumstyle = {
   width: '100%',
   borderRadius: 6,
@@ -83,6 +78,7 @@ const ItemDonation = ({
   const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
+  const [showloader, setshowloader] = useState(false);
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
   const [donationItems, setDonationItems] = useState([
     {
@@ -209,6 +205,7 @@ const ItemDonation = ({
 
   const addItemDonation = async (e) => {
     try {
+      setshowloader(true);
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -253,6 +250,7 @@ const ItemDonation = ({
         if (res.data.status === true) {
           setshowalert(true);
           handleClose();
+          setshowloader(false);
           sendsms(totalamount);
           navigation('/manualreceipt', {
             state: {
@@ -260,10 +258,12 @@ const ItemDonation = ({
             },
           });
         } else {
+          setshowloader(false);
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
         }
       }
     } catch (error) {
+      setshowloader(false);
       Swal.fire('Error!', 'Somthing went wrong!!', 'error');
     }
   };
@@ -873,7 +873,17 @@ const ItemDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Update
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Update'
+                )}
               </Button>
             ) : (
               <Button
@@ -885,7 +895,17 @@ const ItemDonation = ({
                 variant="contained"
                 type="submit"
               >
-                Save
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
               </Button>
             )}
             <Button

@@ -1,18 +1,13 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
 import { serverInstance } from '../../../../../API/ServerInstance';
-
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { alpha } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -24,12 +19,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import Moment from 'moment-js';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
 import { ReactTransliterate } from 'react-transliterate';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const custumstyle = {
   width: '100%',
   borderRadius: 6,
@@ -49,12 +43,10 @@ const custommStyleInputTable = {
   padding: 9.5,
 };
 const UpdateCommon = ({
-  setshowalert,
   handleClose,
   themeColor,
   updateData,
   showUpdateBtn,
-  handleOpen4,
 }) => {
   console.log('upadte data is', updateData);
   const theme = createTheme({
@@ -67,23 +59,17 @@ const UpdateCommon = ({
       },
     },
   });
-  const navigation = useNavigate();
-  const [text, setText] = useState('');
-  const [addText, setaddText] = useState('');
-  const [hindiremark, sethindiremark] = useState('');
+
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
-  const [voucher, setvoucher] = useState('');
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
-  const [transactionNo, setTransactionNo] = useState('');
-  const [bankName, setBankName] = useState('');
   const [newMember, setNewMember] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
   const [fetchuserdetail, setfetchuserdetail] = useState(true);
-  const [formerror, setFormerror] = useState({});
   const [genderp, setgenderp] = useState('श्री');
   const [genderp1, setgenderp1] = useState('SHRI');
+  const [showloader, setshowloader] = useState(false);
   const [donationItems, setDonationItems] = useState([
     {
       type: '',
@@ -173,12 +159,12 @@ const UpdateCommon = ({
     hour12: true,
   });
 
-  // var date = today.toISOString().substring(0, 10);
   const [donationDate, setDonationDate] = useState('');
 
   const [donationTime, setDonationTime] = useState('');
 
   const addCashDonation = async (e) => {
+    setshowloader(true);
     axios.defaults.headers.put[
       'Authorization'
     ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -211,6 +197,7 @@ const UpdateCommon = ({
 
         console.log('update', res.data);
         if (res.data.status === true) {
+          setshowloader(false);
           handleClose();
         } else {
           Swal.fire('Error!', 'Somthing went wrong!!', 'error');
@@ -723,7 +710,17 @@ const UpdateCommon = ({
                 variant="contained"
                 type="submit"
               >
-                Update
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Update'
+                )}
               </Button>
             ) : (
               <Button
@@ -735,7 +732,17 @@ const UpdateCommon = ({
                 variant="contained"
                 type="submit"
               >
-                Save
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
               </Button>
             )}
 

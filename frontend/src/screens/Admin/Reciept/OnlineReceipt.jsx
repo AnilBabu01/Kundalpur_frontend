@@ -62,14 +62,14 @@ const OnlineReceipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   return (
     <>
       <div>
-        {/* <div
+        <div
           className="button_div_print_download"
           style={{ marginBottom: '1rem' }}
         >
-          <button onClick={() => navigation('/')}>Back</button>
+          <button onClick={() => navigation(-1)}>Back</button>
 
           <div />
-        </div> */}
+        </div>
         <div
           className="main-certificate"
           id="receipt"
@@ -805,7 +805,7 @@ const OnlineReceipt = ({ setopendashboard, setshowreciept, onlineId }) => {
       </div>
       <div className="button_div_print_download">
         <button onClick={() => down()}>Download</button>
-        <button onClick={() => printDiv()}>Print</button>
+        <p>&nbsp;</p>
       </div>
     </>
   );

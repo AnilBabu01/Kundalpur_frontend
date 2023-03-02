@@ -10,9 +10,11 @@ import ManaulTotal from '../TotalDashboardFun/ManaulTotal';
 import OnlineTotal from '../TotalDashboardFun/OnlineTotal';
 import EmpelecTotal from '../TotalDashboardFun/EmpelecTotal';
 import EmpmanulTotal from '../TotalDashboardFun/EmpmanulTotal';
+import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 
 const Dashboard = ({ setopendashboard }) => {
+  const navigate = useNavigate();
   const [userrole, setuserrole] = useState('');
   const [isData1, setisData1] = useState('');
   const [isData2, setisData2] = useState('');
@@ -80,6 +82,7 @@ const Dashboard = ({ setopendashboard }) => {
           {userrole === 1 ? (
             <>
               <div
+                onClick={() => navigate('/admin-panel/donation')}
                 className="main_card_amount"
                 style={{ background: '#FE0000', color: 'white' }}
               >
@@ -90,6 +93,7 @@ const Dashboard = ({ setopendashboard }) => {
                 </div>
               </div>
               <div
+                onClick={() => navigate('/admin-panel/manualdonation')}
                 className="main_card_amount"
                 style={{ background: '#FECE00', color: 'white' }}
               >
@@ -100,6 +104,7 @@ const Dashboard = ({ setopendashboard }) => {
                 </div>
               </div>
               <div
+                onClick={() => navigate('/admin-panel/online/report/online')}
                 className="main_card_amount"
                 style={{ background: '#009430', color: 'white' }}
               >
@@ -143,6 +148,7 @@ const Dashboard = ({ setopendashboard }) => {
           ) : (
             <>
               <div
+                onClick={() => navigate('/admin-panel/donation')}
                 className="main_card_amount"
                 style={{ background: '#FE0000', color: 'white' }}
               >
@@ -153,6 +159,7 @@ const Dashboard = ({ setopendashboard }) => {
                 </div>
               </div>
               <div
+                onClick={() => navigate('/admin-panel/manualdonation')}
                 className="main_card_amount"
                 style={{ background: '#FECE00', color: 'white' }}
               >

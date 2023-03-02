@@ -528,8 +528,8 @@ const ItemDonation = ({
                     id="full-name"
                     required
                     value={fullName}
-                    onChangeText={(text) => {
-                      setText(text);
+                    onChangeText={(fullName) => {
+                      setFullName(fullName);
                     }}
                     onChange={(e) => setFullName(e.target.value)}
                     lang="hi"

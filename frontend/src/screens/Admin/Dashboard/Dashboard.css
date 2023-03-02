@@ -120,8 +120,18 @@ margin-top: 4rem;
 .main_repue_img img {
   width: 30px;
 }
+.print_all_today{
+  display: flex;
+  flex-direction: row-reverse;
 
-
+}
+.print_all_today_iner{
+  display: flex;
+  margin-bottom: 1rem;
+}
+.print_all_today_iner p{
+  margin-right: 1rem;
+}
 @media screen and (max-width: 780px) {
   .dashboarddiv {
     margin-left: 0px;

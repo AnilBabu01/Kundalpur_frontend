@@ -111,6 +111,7 @@ function AddRoomForm({ setOpen }) {
                 <select className="select_optionssss">
                   <option>Online</option>
                   <option>Offline</option>
+                  <option>Both</option>
                 </select>
               </div>
 

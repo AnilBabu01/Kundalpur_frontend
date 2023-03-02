@@ -79,27 +79,31 @@ function RoomAvailability({ setshowRoomOptions }) {
             <div className="input_div_room_main">
               <div className="input_div_room">
                 <label>Select Place of Stay</label>
-                <input type="text" placeholder="Select" />
+                <input
+                  style={{ width: '100%' }}
+                  type="text"
+                  placeholder="Select"
+                />
               </div>
               <div className="input_div_room">
                 <label>Departure Date </label>
-                <input type="date" />
+                <input style={{ width: '100%' }} type="date" />
               </div>
             </div>
             <div className="input_div_room_main">
               <div className="input_div_room">
                 <label>Arrival Date </label>
-                <input type="date" />
+                <input style={{ width: '100%' }} type="date" />
               </div>
               <div className="input_div_room">
                 <label>Departure Time </label>
-                <input type="time" />
+                <input style={{ width: '100%' }} type="time" />
               </div>
             </div>
             <div className="input_div_room_main">
               <div className="input_div_room">
                 <label>Arrival Time </label>
-                <input type="time" />
+                <input style={{ width: '100%' }} type="time" />
               </div>
               <button>Check Availability</button>
             </div>

@@ -16,6 +16,9 @@ const custumstyle = {
 function AddForm({ setOpen }) {
   const [nameinHindi, setnameinHindi] = useState('');
   const [nameinEnglish, setnameinEnglish] = useState('');
+  const [description, setdescription] = useState('');
+  const [isonline, setisonline] = useState(true);
+  const [isoffline, setisoffline] = useState(true);
   const [img1, setimg1] = useState('');
   const [img2, setimg2] = useState('');
   const [img3, setimg3] = useState('');
@@ -33,6 +36,9 @@ function AddForm({ setOpen }) {
       formData.set('image2', img2);
       formData.set('image3', img3);
       formData.set('image4', img4);
+      formData.set('desc', description);
+      formData.set('isOffline', isoffline);
+      formData.set('isOnline', isonline);
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -60,18 +66,22 @@ function AddForm({ setOpen }) {
               <div className="form-input-div_add_user">
                 <div className="inner-input-div2">
                   <label htmlFor="fromNo">Online</label>
-                  <select className="forminput_add_user">
-                    <option>None</option>
-                    <option>Yes</option>
-                    <option>No</option>
+                  <select
+                    onChange={(e) => setisonline(e.target.value)}
+                    className="forminput_add_user"
+                  >
+                    <option value={true}>Yes</option>
+                    <option value={false}>No</option>
                   </select>
                 </div>
                 <div className="inner-input-div2">
                   <label htmlFor="fromNo">Offline</label>
-                  <select className="forminput_add_user">
-                    <option>None</option>
-                    <option>Yes</option>
-                    <option>No</option>
+                  <select
+                    onClick={(e) => setisoffline(e.target.value)}
+                    className="forminput_add_user"
+                  >
+                    <option value={true}>Yes</option>
+                    <option value={false}>No</option>
                   </select>
                 </div>
                 <div className="inner-input-div2">
@@ -110,11 +120,11 @@ function AddForm({ setOpen }) {
                 style={{ width: '100%', marginTop: '0.2rem' }}
                 type="textarea"
                 id="fromNo"
-                placeholder="enter the dharamshala name in english"
+                placeholder="enter the description"
                 className="forminput_add_user10"
-                value={nameinEnglish}
-                name="nameinEnglish"
-                onChange={(e) => setnameinEnglish(e.target.value)}
+                value={description}
+                name="description"
+                onChange={(e) => setdescription(e.target.value)}
               />
             </div>
             <div

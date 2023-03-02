@@ -159,6 +159,14 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
       icon: <img src={f2} alt="f2" style={{ width: '25px' }} />,
       subTabs: [
         {
+          id: 4.6,
+          name: 'All Reports',
+          link: 'allreport/allhead',
+          active: false,
+          icon: <img src={f4} alt="f2" style={{ width: '25px' }} />,
+          subTabs: [],
+        },
+        {
           id: 4.5,
           name: 'Donation',
           link: 'electronic/report/cash',

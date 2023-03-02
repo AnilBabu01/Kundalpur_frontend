@@ -331,6 +331,9 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
     if (!amount) {
       errors.amount = 'Please enter amount';
     }
+    if (!values.address) {
+      errors.address = 'Please enter address';
+    }
 
     if (values.donationtype === 'Please Select') {
       errors.donationtype = 'Please selection donation type';
@@ -708,6 +711,9 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                         value={donationdata.address}
                         onChange={onChange}
                       />
+                      <p style={{ color: 'red', marginTop: '5px' }}>
+                        {formerror.donationtype}
+                      </p>
                     </Grid>
 
                     <Grid item md={6} xs={12}>

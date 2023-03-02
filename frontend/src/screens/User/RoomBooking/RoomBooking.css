@@ -118,6 +118,7 @@
 }
 .input_div_room input {
   height: 35px;
+  width: 100%;
   border: 0.8px solid rgba(197, 191, 191, 0.5);
   border-radius: 5px;
 }

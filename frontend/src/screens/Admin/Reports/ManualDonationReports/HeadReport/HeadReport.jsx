@@ -22,6 +22,7 @@ import ExportExcel from '../../../../../assets/ExportExcel.png';
 import Edit from '../../../../../assets/Edit.png';
 import eye from '../../../../../assets/eye.png';
 import ManualDonationTap from '../ManualDonationTap';
+
 const style = {
   position: 'absolute',
   top: '40%',
@@ -141,11 +142,11 @@ const HeadReport = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}admin/donation-report?user=${empId}&fromDate=${datefrom}&toDate=${dateto}`,
+      `${backendApiUrl}admin/centralized-report?user=${empId}&fromDate=${datefrom}&toDate=${dateto}`,
     );
-    console.log('filter data is now', res.data.data);
-    if (res.data.status) {
-      setisData(res.data.data);
+    console.log('filter data is now', res.data.data[0].donations);
+    if (res.data.data[0].donations) {
+      setisData(res.data.data[0].donations);
     }
   };
 
@@ -174,6 +175,7 @@ const HeadReport = ({ setopendashboard }) => {
     <>
       <ManualDonationTap setopendashboard={setopendashboard} />
       <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
+        <p>Electronic Head Report</p>
         <div>
           <div className="search-header">
             <div className="search-inner-div-reports">
@@ -209,15 +211,20 @@ const HeadReport = ({ setopendashboard }) => {
                   ))}
               </select>
               <button onClick={() => filterdata()}>Search</button>
-              <button onClick={() => getall_donation()}>Reset</button>
-
+              <button onClick={() => resetbutn()}>Reset</button>
+              <img
+                onClick={() => ExportPdfmanul(isData, 'HeadReport')}
+                src={Print}
+                alt="ss"
+                style={{ width: '30px' }}
+              />
               <img
                 onClick={() => ExportToExcel()}
                 src={ExportExcel}
                 alt="s"
                 style={{ width: '30px' }}
               />
-              <label>&nbsp;</label>
+
               <img
                 onClick={() => ExportPdfmanul(isData, 'HeadReport')}
                 src={ExportPdf}
@@ -280,7 +287,9 @@ const HeadReport = ({ setopendashboard }) => {
                         {' '}
                         {row.cash_amount ? row.cash_amount : '0'}
                       </TableCell>
-                      <TableCell>{row.total_amount}</TableCell>
+                      <TableCell>
+                        {row.total_amount ? row.total_amount : '0'}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </>
@@ -292,8 +301,50 @@ const HeadReport = ({ setopendashboard }) => {
                 </>
               )}
               <TableRow>
-                <TableCell rowSpan={5}>Total</TableCell>
-                <TableCell rowSpan={5}>0</TableCell>
+                <TableCell> &nbsp;</TableCell>
+
+                <TableCell>Total</TableCell>
+                <TableCell>
+                  {isData
+                    ? isData.reduce(
+                        (n, { cheque_amount }) => parseFloat(n) + cheque_amount,
+                        0,
+                      )
+                    : '0'}
+                </TableCell>
+                <TableCell>
+                  {isData
+                    ? isData.reduce(
+                        (n, { electric_amount }) =>
+                          parseFloat(n) + electric_amount,
+                        0,
+                      )
+                    : '0'}
+                </TableCell>
+                <TableCell>
+                  {isData
+                    ? isData.reduce(
+                        (n, { item_amount }) => parseFloat(n) + item_amount,
+                        0,
+                      )
+                    : '0'}
+                </TableCell>
+                <TableCell>
+                  {isData
+                    ? isData.reduce(
+                        (n, { cash_amount }) => parseFloat(n) + cash_amount,
+                        0,
+                      )
+                    : '0'}
+                </TableCell>
+                <TableCell>
+                  {isData
+                    ? isData.reduce(
+                        (n, { total_amount }) => parseFloat(n) + total_amount,
+                        0,
+                      )
+                    : '0'}
+                </TableCell>
               </TableRow>
             </TableBody>
             <TableFooter>
@@ -327,11 +378,23 @@ const HeadReport = ({ setopendashboard }) => {
         {SearchHead && (
           <>
             <div>
-              <h2 className="Cheque_text">Head Report</h2>
-
-              <SimCardAlertIcon onClick={() => ExportToExcel1()} />
-              <PictureAsPdfIcon
+              <p className="Cheque_text">Head Report</p>
+              <img
+                src={Print}
+                alt="jj"
+                style={{ width: '25px', marginRight: '2rem' }}
+              />
+              <img
+                onClick={() => ExportToExcel1()}
+                src={ExportExcel}
+                alt="jj"
+                style={{ width: '25px', marginRight: '2rem' }}
+              />
+              <img
                 onClick={() => ExportPdfmanul(isData, 'HeadReport')}
+                src={ExportPdf}
+                alt="jj"
+                style={{ width: '25px', marginRight: '1rem' }}
               />
             </div>
             <div className="table-div-">
@@ -411,7 +474,7 @@ const HeadReport = ({ setopendashboard }) => {
                   ) : (
                     <>
                       <TableCell colSpan={8} align="center">
-                        <CircularProgress />
+                        <ReactSpinner />
                       </TableCell>
                     </>
                   )}

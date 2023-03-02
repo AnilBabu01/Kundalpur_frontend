@@ -364,7 +364,7 @@ const AddDharamshala = ({ setopendashboard }) => {
             <TableFooter>
               <TableRow>
                 <TablePagination
-                  count={isData.length}
+                  count={isData && isData.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}

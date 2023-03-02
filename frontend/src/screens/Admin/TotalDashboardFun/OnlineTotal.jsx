@@ -4,12 +4,12 @@ function OnlineTotal({ data }) {
   console.log('total calculate total', data);
   return (
     <>
-      <p>
+      <span>
         ₹
         {data
           ? data.reduce((n, { total }) => parseFloat(n) + parseFloat(total), 0)
           : '0'}
-      </p>
+      </span>
     </>
   );
 }

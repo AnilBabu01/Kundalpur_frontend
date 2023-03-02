@@ -15,7 +15,6 @@ import Assign from '../screens/Admin/SystemManagement/Assign/Assign';
 import Chequeinfo from '../screens/Admin/Reports/OnlineDonations/Cheque/Chequeinfo';
 import Request from '../screens/Admin/SystemManagement/Request/Request';
 import PrintContent from '../screens/Admin/compoments/PrintContent';
-import AllReport from '../screens/Admin/Reports/AllReport/AllReport';
 import PrintContentManul from '../screens/Admin/compoments/PrintContentManual';
 import ManualDonation from '../screens/Admin/Donation/ManualDonation/ManualDonation';
 import Signature from '../screens/Admin/Signature/Signature';
@@ -47,6 +46,10 @@ import ManualItem1 from '../screens/Admin/Reports/ManualDonationReports/ManualIt
 import Cheque from '../screens/Admin/Reports/OnlineDonations/Cheque/Cheque';
 import Online from '../screens/Admin/Reports/OnlineDonations/Online/Online';
 
+/// all report routes
+import AllReportTap from '../screens/Admin/Reports/AllReport/AllReportTap';
+import AllHead from '../screens/Admin/Reports/AllReport/AllHead';
+import AllConsolidated from '../screens/Admin/Reports/AllReport/AllConsolidated';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   const [addleftmargin, setaddleftmargin] = useState(false);
   return (
@@ -233,18 +236,6 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
         />
 
         <Route
-          path="/admin-panel/reports/allreport"
-          element={
-            <Adminprivateroute>
-              <AllReport
-                setopendashboard={setopendashboard}
-                setshowreciept={setshowreciept}
-              />
-            </Adminprivateroute>
-          }
-        />
-
-        <Route
           path="/admin-panel/reports/changeStatus/:id"
           element={
             <Adminprivateroute>
@@ -408,6 +399,31 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <Cheque setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        {/* <Route
+          path="/admin-panel/allreport/head"
+          element={
+            <Adminprivateroute>
+              <AllReportTap setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        /> */}
+        <Route
+          path="/admin-panel/allreport/allhead"
+          element={
+            <Adminprivateroute>
+              <AllHead setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/allreport/allconsolidated"
+          element={
+            <Adminprivateroute>
+              <AllConsolidated setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

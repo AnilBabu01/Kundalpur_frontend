@@ -133,7 +133,9 @@
   .form_div_absolute_form {
     height: 88%;
   }
-
+.input_div_room input{
+  width: 100%;
+}
   .room_book_card_form_main {
     padding-top: 43%;
   }

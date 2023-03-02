@@ -46,6 +46,18 @@ const style = {
   borderRadius: '5px',
 };
 
+const style1 = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '41.3%',
+  bgcolor: 'background.paper',
+  p: 1,
+  boxShadow: 24,
+  borderRadius: '5px',
+};
+
 const AddDharamshala = ({ setopendashboard }) => {
   const navigation = useNavigate();
   const [isData, setisData] = React.useState('');
@@ -212,7 +224,7 @@ const AddDharamshala = ({ setopendashboard }) => {
         closeAfterTransition
       >
         <Fade in={open2}>
-          <Box sx={style}>
+          <Box sx={style1}>
             <div>
               <div className="add-div-close-div">
                 <div>

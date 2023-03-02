@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import camera from '../../../../assets/camera.png';
 import Swal from 'sweetalert2';
 import { backendApiUrl, backendUrl } from '../../../../config/config';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import { ReactTransliterate } from 'react-transliterate';
 const formData = new FormData();
@@ -17,6 +17,9 @@ const custumstyle = {
 function Updatedharmshala({ setOpen, updatedata }) {
   const [nameinHindi, setnameinHindi] = useState('');
   const [nameinEnglish, setnameinEnglish] = useState('');
+  const [description, setdescription] = useState('');
+  const [isonline, setisonline] = useState(true);
+  const [isoffline, setisoffline] = useState(true);
   const [img1, setimg1] = useState('');
   const [img2, setimg2] = useState('');
   const [img3, setimg3] = useState('');
@@ -29,15 +32,20 @@ function Updatedharmshala({ setOpen, updatedata }) {
   const [previewprofile2, setpreviewprofile2] = useState('');
   const [previewprofile3, setpreviewprofile3] = useState('');
   const [previewprofile4, setpreviewprofile4] = useState('');
+  const [showloader, setshowloader] = useState(false);
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
+      setshowloader(true);
       formData.set('name', nameinEnglish);
       formData.set('nameH', nameinHindi);
       formData.set('image1', img5);
       formData.set('image2', img6);
       formData.set('image3', img7);
       formData.set('image4', img8);
+      formData.set('desc', description);
+      formData.set('isOffline', isoffline);
+      formData.set('isOnline', isonline);
       formData.set('id', updatedata?.id);
       axios.defaults.headers.put[
         'Authorization'
@@ -52,6 +60,7 @@ function Updatedharmshala({ setOpen, updatedata }) {
       console.log(res.data);
       if (res.data.status) {
         setOpen(false);
+        setshowloader(false);
         Swal.fire('Great!', res.data.message, 'success');
       }
     } catch (error) {
@@ -67,6 +76,9 @@ function Updatedharmshala({ setOpen, updatedata }) {
       setimg2(updatedata?.image2);
       setimg3(updatedata?.image3);
       setimg4(updatedata?.image4);
+      setdescription(updatedata?.desc);
+      setisoffline(updatedata?.isoffline);
+      setisonline(updatedata?.isonline);
     }
   }, []);
 
@@ -79,18 +91,22 @@ function Updatedharmshala({ setOpen, updatedata }) {
               <div className="form-input-div_add_user">
                 <div className="inner-input-div2">
                   <label htmlFor="fromNo">Online</label>
-                  <select className="forminput_add_user">
-                    <option>None</option>
-                    <option>Yes</option>
-                    <option>No</option>
+                  <select
+                    onChange={(e) => setisonline(e.target.value)}
+                    className="forminput_add_user"
+                  >
+                    <option value={true}>Yes</option>
+                    <option value={false}>No</option>
                   </select>
                 </div>
                 <div className="inner-input-div2">
                   <label htmlFor="fromNo">Offline</label>
-                  <select className="forminput_add_user">
-                    <option>None</option>
-                    <option>Yes</option>
-                    <option>No</option>
+                  <select
+                    onClick={(e) => setisoffline(e.target.value)}
+                    className="forminput_add_user"
+                  >
+                    <option value={true}>Yes</option>
+                    <option value={false}>No</option>
                   </select>
                 </div>
                 <div className="inner-input-div2">
@@ -131,9 +147,9 @@ function Updatedharmshala({ setOpen, updatedata }) {
                 id="fromNo"
                 placeholder="enter the dharamshala name in english"
                 className="forminput_add_user10"
-                value={nameinEnglish}
-                name="nameinEnglish"
-                onChange={(e) => setnameinEnglish(e.target.value)}
+                value={description}
+                name="description"
+                onChange={(e) => setdescription(e.target.value)}
               />
             </div>
             <div
@@ -305,7 +321,19 @@ function Updatedharmshala({ setOpen, updatedata }) {
             </div>
 
             <div className="save-div-btn">
-              <button className="save-div-btn-btn">Save</button>
+              <button className="save-div-btn-btn">
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Update'
+                )}
+              </button>
               <button
                 onClick={() => setOpen(false)}
                 className="save-div-btn-btn-cancel"

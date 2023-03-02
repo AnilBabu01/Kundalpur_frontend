@@ -1,23 +1,24 @@
-import { useState } from "react";
-import "./NewLogin.scss";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../../../../assets/sideimg.jpeg";
-import OtpVerify from "./OtpVerify";
-import { useDispatch } from "react-redux";
+import { useState } from 'react';
+import './NewLogin.scss';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../../../assets/sideimg.jpeg';
+import OtpVerify from './OtpVerify';
+import { useDispatch } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {
   LoginwithOtp,
   VerifyOtp,
-} from "../../../../Redux/redux/action/AuthAction";
-import { toast } from "react-toastify";
-import Swal from "sweetalert2";
-import { useAuth } from "../../../../Context/AuthContext";
-import { useJwt } from "react-jwt";
+} from '../../../../Redux/redux/action/AuthAction';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
+import { useAuth } from '../../../../Context/AuthContext';
+import { useJwt } from 'react-jwt';
 
 const VivekPLogin = () => {
   const [verify, setVerify] = useState(false);
-  const [mobileNo, setMobileNo] = useState("");
-
+  const [mobileNo, setMobileNo] = useState('');
+  const [showalert, setshowalert] = useState(true);
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
@@ -25,13 +26,13 @@ const VivekPLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setshowalert(true);
     if (!mobileNo) {
-      Swal.fire("Error!", "please enter mobile no.", "error");
+      Swal.fire('Error!', 'please enter mobile no.', 'error');
       return false;
     }
     if (mobileNo.length !== 10) {
-      Swal.fire("Error!", "please enter valid mobile no.", "error");
+      Swal.fire('Error!', 'please enter valid mobile no.', 'error');
       return false;
     }
     setVerify(true);
@@ -40,35 +41,37 @@ const VivekPLogin = () => {
       LoginwithOtp({ mobile_no: mobileNo }, (res) => {
         console.log(res);
         if (res.status === 1) {
-          Swal.fire("Great!", "OTP Sent Successfully", "success");
+          Swal.fire('Great!', 'OTP Sent Successfully', 'success');
           setVerify(true);
           setMobileNo(mobileNo);
+          setshowalert(false);
         } else {
-          Swal.fire("Error!", res.message, "error");
+          Swal.fire('Error!', res.message, 'error');
         }
-      })
+      }),
     );
   };
 
   const handleVerify = (otp) => {
     dispatch(
       VerifyOtp({ username: mobileNo, otp: otp }, (res) => {
-        console.log(res);
-        if (res) {
-          var decoded = jwt_decode(res.tokens.access.token);
+        if (res.user) {
+          console.log('res login with otp', res.tokens.access.token);
+          // var decoded = jwt_decode(res.tokens.access.token);
 
-          sessionStorage.setItem("userrole", decoded.role);
-          sessionStorage.setItem("token", res.tokens.access.token);
+          // sessionStorage.setItem('userrole', decoded.role);
+          sessionStorage.setItem('token', res.tokens.access.token);
           auth.setUser(res.tokens.access.token);
 
-          navigation("/donation");
-          Swal.fire("Great!", res.msg, "success");
-          setMobileNo("");
-          window.location.reload();
-        } else {
-          Swal.fire("Error!", res.message, "error");
+          Swal.fire('Great!', 'You Have Login Successfully', 'success');
+          navigation('/donation');
+
+          setMobileNo('');
         }
-      })
+        if (res.message) {
+          Swal.fire('Error!', res.message, 'error');
+        }
+      }),
     );
   };
 
@@ -125,8 +128,8 @@ const VivekPLogin = () => {
         <MoNumberInput />
       ) : (
         <OtpVerify
-          title={"Login"}
-          description={"We have send the OTP to your mobile number"}
+          title={'Login'}
+          description={'We have send the OTP to your mobile number'}
           handleVerify={handleVerify}
           mobileNo={mobileNo}
         />

@@ -142,7 +142,7 @@ const HeadReport = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}admin/centralized-report?user=${empId}&fromDate=${datefrom}&toDate=${dateto}`,
+      `${backendApiUrl}aapi/user//manual-search-donation ?user=${empId}&fromDate=${datefrom}&toDate=${dateto}`,
     );
     console.log('filter data is now', res.data.data[0].donations);
     if (res.data.data[0].donations) {

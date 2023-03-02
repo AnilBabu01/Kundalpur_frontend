@@ -10,6 +10,7 @@ import { loadUser } from '../../../Redux/redux/action/AuthAction';
 import donationLeft from '../../../assets/donation-left.png';
 import donationRight from '../../../assets/donation-right.png';
 import { backendApiUrl } from '../../../config/config';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import {
   Box,
@@ -170,7 +171,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
   const [isData, setisData] = React.useState([]);
   const [cheqing, setcheqing] = useState('');
   const [genderp, setgenderp] = useState('श्री');
-
+  const [showloader, setshowloader] = useState(false);
   const [donationdata, setDonationdata] = useState({
     name: '',
     chequeno: '',
@@ -198,7 +199,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
     },
   ];
   console.log(isData);
-  const handleOpen = () => setOpen(true);
+
   const handleClose = () => setOpen(false);
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
@@ -221,6 +222,10 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
   const currTime = `${h}:${m}:${s}`;
   const handlesubmit = async (e) => {
     setFormerror(validate(donationdata));
+
+    if (!formerror) {
+      setshowloader(true);
+    }
     formData.set(
       'NAME',
       donationdata.selected === 'yes1' && user.name
@@ -276,6 +281,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
       }).then((res) => {
         console.log('rers of online', res);
         if (res.status === true) {
+          setshowloader(false);
           window.location.href =
             'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
             res.data.id;
@@ -309,6 +315,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
 
       if (res.data.status === true) {
         handleOpen1();
+        setshowloader(false);
         sendsms();
       } else {
         Swal.fire('Error!', 'Mobile number already exist!!', 'error');
@@ -700,6 +707,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                         {formerror.donationtype}
                       </p>
                     </Grid>
+
                     <Grid item md={6} xs={12}>
                       <CustomInputLabel htmlFor="address">
                         Address
@@ -712,7 +720,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                         onChange={onChange}
                       />
                       <p style={{ color: 'red', marginTop: '5px' }}>
-                        {formerror.donationtype}
+                        {formerror.address}
                       </p>
                     </Grid>
 
@@ -743,17 +751,6 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                             placeholder="Amount"
                             value={amount}
                             onChange={(e) => setamount(e.target.value)}
-                            // startAdornment={
-                            //   <InputAdornment position="start" sx={{
-                            //     color: '#000',
-                            //     padding: ' 14px',
-                            //     backgroundColor: primaryColor
-                            //   }}>
-                            //     <CurrencyRupeeIcon fontSize='small' sx={{
-                            //       color:'#fff'
-                            //     }} />
-                            //   </InputAdornment>
-                            // }
                           />
 
                           <p style={{ color: 'red', marginTop: '5px' }}>
@@ -887,7 +884,33 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
                         }}
                         onClick={handlesubmit}
                       >
-                        {mode === 'Cheque' ? 'Submit' : 'Donate now'}
+                        {mode === 'Cheque' ? (
+                          showloader ? (
+                            <>
+                              <CircularProgress
+                                style={{
+                                  width: '21px',
+                                  height: '21px',
+                                  color: 'white',
+                                }}
+                              />
+                            </>
+                          ) : (
+                            'Submit'
+                          )
+                        ) : showloader ? (
+                          <>
+                            <CircularProgress
+                              style={{
+                                width: '21px',
+                                height: '21px',
+                                color: 'white',
+                              }}
+                            />
+                          </>
+                        ) : (
+                          'Donation Now'
+                        )}
                       </Button>
                     </Grid>
                   </>

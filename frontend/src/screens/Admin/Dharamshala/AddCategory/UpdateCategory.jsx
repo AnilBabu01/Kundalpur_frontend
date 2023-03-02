@@ -43,7 +43,7 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-function Categoryform({ setOpen }) {
+function UpdateCategory({ setOpen, updatedata }) {
   const [facility, setfacility] = useState('');
   const [Dharamshala, setDharamshala] = useState('');
   const [dharamshalaname, setdharamshalaname] = useState('');
@@ -69,6 +69,7 @@ function Categoryform({ setOpen }) {
         isOffline: isoffline,
         isOnline: isonline,
         checkoutTime: checkout,
+        id: updatedata?.id,
       };
       axios.defaults.headers.post[
         'Authorization'
@@ -106,6 +107,17 @@ function Categoryform({ setOpen }) {
   useEffect(() => {
     getalldharamshala();
     getallfacility();
+
+    if (updatedata) {
+      //   setdharamshalaname(updatedata?.dharamshalaname);
+      setcategoryname(updatedata?.Name);
+      setrate(updatedata?.Rate);
+      //   setfacilityname(updatedata?.Facilities);
+      setadvncerate(updatedata?.advance);
+      setisoffline(updatedata?.isOffline);
+      setisonline(updatedata?.isOnline);
+      setcheckout(updatedata?.checkoutTime);
+    }
   }, []);
 
   return (
@@ -384,4 +396,4 @@ function Categoryform({ setOpen }) {
   );
 }
 
-export default Categoryform;
+export default UpdateCategory;

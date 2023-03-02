@@ -1,21 +1,33 @@
-import { useState } from "react";
-import VerifyForgot from "./verifyForgot";
-import logo from "../../../../assets/sideimg.jpeg";
-import "./forgot.scss";
+import { useState } from 'react';
+import VerifyForgot from './verifyForgot';
+import logo from '../../../../assets/sideimg.jpeg';
+import axios from 'axios';
+import { backendApiUrl } from '../../../../config/config';
+import './forgot.scss';
 const Forgot = () => {
-  const [verify, setVerify] = useState(false) ;
-  const [email, setEmail] = useState("");
+  const [verify, setVerify] = useState(false);
+  const [email, setEmail] = useState('');
 
   const handleInputChange = (e) => {
     setEmail(e.target.value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setVerify(true);
+    const { data } = await axios.post(`${backendApiUrl}user/forgot-password`, {
+      email: email,
+    });
+
+    console.log('forget password', data);
+    // setVerify(true);
   };
 
-  const handleVerify = (otp) => {
+  const handleVerify = async (otp) => {
     setVerify(false);
+
+    const { data } = await axios.post(`${backendApiUrl}user/forgot-password`, {
+      email: email,
+    });
+
     setEmail(emailAddress);
   };
 
@@ -59,7 +71,7 @@ const Forgot = () => {
         <EmailInput />
       ) : (
         <VerifyForgot
-          title={"Verification required"}
+          title={'Verification required'}
           description={
             "To continue, complete this verification step. We've sent an OTP to the email"
           }

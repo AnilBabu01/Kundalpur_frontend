@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import { ReactTransliterate } from 'react-transliterate';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
 const custumstyle = {
   width: '280px',
   height: '35px',
@@ -12,30 +12,28 @@ const custumstyle = {
   borderRadius: '7px',
   paddingLeft: '0.5rem',
 };
-function AddFacForm({ setOpen }) {
+function UpdateFac({ updatedata, setOpen }) {
   const [facilityInHindi, setfacilityInHindi] = useState('');
   const [facilityInEnglish, setfacilityInEnglish] = useState('');
-  const [showloader, setshowloader] = useState(false);
+
   const handlesubmit = async () => {
     try {
-      setshowloader(true);
-      axios.defaults.headers.post[
+      axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-      const res = await axios.post(`${backendApiUrl}room/facility`, {
+      const res = await axios.put(`${backendApiUrl}room/facility`, {
         name: facilityInEnglish,
         nameh: facilityInHindi,
+        id: updatedata?.id,
       });
 
       console.log(res.data.data);
       if (res.data.data.status === true) {
-        setshowloader(false);
         setOpen(false);
         Swal.fire('Great!', res.data.data.message, 'success');
       }
       if (res.data.data.status === false) {
-        setshowloader(false);
         setOpen(false);
         Swal.fire('Great!', res.data.data.message, 'success');
       }
@@ -43,6 +41,14 @@ function AddFacForm({ setOpen }) {
       Swal.fire('Error!', error, 'error');
     }
   };
+
+  useEffect(() => {
+    if (updatedata) {
+      setfacilityInEnglish(updatedata?.name);
+      setfacilityInHindi(updatedata?.nameh);
+    }
+  }, []);
+
   return (
     <>
       <div className="cash-donation-div">
@@ -65,7 +71,6 @@ function AddFacForm({ setOpen }) {
 
               <div className="inner-input-div2">
                 <label htmlFor="toNo">Facility in hindi</label>
-
                 <ReactTransliterate
                   style={custumstyle}
                   id="full-name"
@@ -84,17 +89,7 @@ function AddFacForm({ setOpen }) {
 
           <div className="save-div-btn">
             <button onClick={() => handlesubmit()} className="save-div-btn-btn">
-              {showloader ? (
-                <CircularProgress
-                  style={{
-                    width: '21px',
-                    height: '21px',
-                    color: 'white',
-                  }}
-                />
-              ) : (
-                'Update'
-              )}
+              Save
             </button>
             <button
               onClick={() => setOpen(false)}
@@ -109,4 +104,4 @@ function AddFacForm({ setOpen }) {
   );
 }
 
-export default AddFacForm;
+export default UpdateFac;

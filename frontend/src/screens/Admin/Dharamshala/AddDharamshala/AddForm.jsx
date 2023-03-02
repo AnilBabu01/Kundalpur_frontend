@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import { ReactTransliterate } from 'react-transliterate';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const formData = new FormData();
 const custumstyle = {
   width: '280px',
@@ -27,9 +28,11 @@ function AddForm({ setOpen }) {
   const [previewprofile2, setpreviewprofile2] = useState('');
   const [previewprofile3, setpreviewprofile3] = useState('');
   const [previewprofile4, setpreviewprofile4] = useState('');
+  const [showloader, setshowloader] = useState(false);
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
+      setshowloader(true);
       formData.set('name', nameinEnglish);
       formData.set('nameH', nameinHindi);
       formData.set('image1', img1);
@@ -51,6 +54,7 @@ function AddForm({ setOpen }) {
 
       if (res.data.data.status) {
         setOpen(false);
+        setshowloader(false);
         Swal.fire('Great!', res.data.data.message, 'success');
       }
     } catch (error) {
@@ -272,7 +276,19 @@ function AddForm({ setOpen }) {
             </div>
 
             <div className="save-div-btn">
-              <button className="save-div-btn-btn">Save</button>
+              <button className="save-div-btn-btn">
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
+              </button>
               <button
                 onClick={() => setOpen(false)}
                 className="save-div-btn-btn-cancel"

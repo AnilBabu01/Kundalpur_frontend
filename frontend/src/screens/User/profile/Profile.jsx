@@ -67,8 +67,10 @@ function Profile() {
       setaddress(user?.address);
       setemail(user?.email);
       setmobile(user?.mobileNo);
-      setanniversary_date(user?.anniversary_date);
-      setdob(user?.dob);
+      setanniversary_date(
+        new Date(user?.anniversary_date).toISOString().substring(0, 10),
+      );
+      setdob(new Date(user?.dob).toISOString().substring(0, 10));
       setprofileimg(`${backendUrl}uploads/images/${user?.profile_image}`);
     }
   }, []);
@@ -99,7 +101,7 @@ function Profile() {
                       src={
                         previewprofile
                           ? previewprofile
-                          : profileimg
+                          : user?.profile_image
                           ? profileimg
                           : profileimgs
                       }

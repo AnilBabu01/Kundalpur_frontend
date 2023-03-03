@@ -41,7 +41,7 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-function AddRoomForm({ setOpen }) {
+function UpdateRoom({ setOpen, updatedata }) {
   const [facility, setfacility] = useState('');
   const [Dharamshala, setDharamshala] = useState('');
   const [category, setcategory] = useState('');
@@ -68,12 +68,13 @@ function AddRoomForm({ setOpen }) {
         advance: advncerate,
         Facilities: facilityname,
         coTime: checkout,
+        id: updatedata?.id,
       };
-      axios.defaults.headers.post[
+      axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-      const res = await axios.post(`${backendApiUrl}room`, data);
+      const res = await axios.put(`${backendApiUrl}room`, data);
 
       if (res.data.data.status) {
         setOpen(false);
@@ -116,6 +117,25 @@ function AddRoomForm({ setOpen }) {
     getalldharamshala();
     getallfacility();
     getallcategory();
+
+    if (updatedata) {
+      //   RoomNo: roomno,
+      //   Rate: rate,
+      //   dharmasala: dharamshalaname,
+      //   category: categroyname,
+      //   status: roomstatus,
+      //   roomType: roomtype,
+      //   advance: advncerate,
+      //   Facilities: facilityname,
+      //   coTime: checkout,
+
+      setroomno(updatedata?.RoomNo);
+      setrate(updatedata?.Rate);
+      setroomstatus(updatedata?.status);
+      setroomtype(updatedata?.roomType);
+      setadvncerate(updatedata?.advance);
+      setcheckout(updatedata?.coTime);
+    }
   }, []);
 
   return (
@@ -439,4 +459,4 @@ function AddRoomForm({ setOpen }) {
   );
 }
 
-export default AddRoomForm;
+export default UpdateRoom;

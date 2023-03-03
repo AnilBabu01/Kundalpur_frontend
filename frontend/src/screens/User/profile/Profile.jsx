@@ -5,6 +5,7 @@ import { backendUrl, backendApiUrl } from '../../../config/config';
 import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadUser } from '../../../Redux/redux/action/AuthAction';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import './Profile.css';
 const formData = new FormData();
@@ -21,11 +22,12 @@ function Profile() {
   const [previewprofile, setpreviewprofile] = useState('');
   const [profileimg, setprofileimg] = useState('');
   const [signature, setsignature] = useState('');
-
+  const [showloader, setshowloader] = useState(false);
   const { user } = useSelector((state) => state.userReducer);
   console.log(user);
   const submitHandler = async (e) => {
     try {
+      setshowloader(true);
       e.preventDefault();
 
       formData.set('name', name);
@@ -55,9 +57,11 @@ function Profile() {
       if (res.data.status) {
         Swal.fire('Great!', res.data.msg, 'success');
         dispatch(loadUser());
+        setshowloader(false);
       }
     } catch (error) {
       Swal.fire('Error!', error.response.data.message, 'error');
+      setshowloader(false);
     }
   };
   console.log('url', profileimg);
@@ -210,7 +214,20 @@ function Profile() {
             </div>
 
             <div className="save-btn-profile-div">
-              <button className="save-btn-profile">Save</button>
+              <button className="save-btn-profile">
+                {' '}
+                {showloader ? (
+                  <CircularProgress
+                    style={{
+                      width: '21px',
+                      height: '21px',
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  'Save'
+                )}
+              </button>
             </div>
           </form>
         </div>

@@ -76,7 +76,7 @@ const AddCategory = ({ setopendashboard }) => {
   const handleClose5 = () => setOpen3(false);
   const handleClose4 = () => {
     setOpen3(false);
-    serverInstance(`room/facility?id=${deleteId}`, 'delete').then((res) => {
+    serverInstance(`room/category?id=${deleteId}`, 'delete').then((res) => {
       if (res.data.status === true) {
         setOpen(false);
         Swal.fire('Great!', res.data.message, 'success');
@@ -148,7 +148,7 @@ const AddCategory = ({ setopendashboard }) => {
     setopendashboard(true);
 
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, [open]);
+  }, [open, open1, open3]);
 
   return (
     <>
@@ -344,6 +344,7 @@ const AddCategory = ({ setopendashboard }) => {
 
                         <Tooltip title="Delete">
                           <img
+                            onClick={() => handleClickOpen3(row.id)}
                             src={Delete}
                             alt="eye"
                             style={{ width: '20px' }}

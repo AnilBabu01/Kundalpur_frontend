@@ -1,4 +1,87 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { serverInstance } from '../../../../API/ServerInstance';
+import InputBase from '@mui/material/InputBase';
+import InputLabel from '@mui/material/InputLabel';
+import { backendApiUrl } from '../../../../config/config';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import {
+  Box,
+  Button,
+  ButtonBase,
+  FormControlLabel,
+  Grid,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  Typography,
+} from '@mui/material';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+
+export const CustomInput = styled(InputBase)(({ theme }) => ({
+  width: '280px',
+  fontFamily: 'Poppins',
+  backgroundColor: '#fff',
+  borderRadius: 6,
+  '& .MuiInputBase-input': {
+    border: '1px solid #B8B8B8',
+    borderRadius: 6,
+    width: '100%',
+    fontSize: 15,
+    padding: 8,
+    paddingLeft: 12,
+    transition: theme.transitions.create([
+      'border-color',
+      'background-color',
+      'box-shadow',
+    ]),
+    '&:focus': {
+      // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}));
+
+const statelist = [
+  { id: 1, state: 'Andhra Pradesh' },
+  { id: 2, state: 'Arunachal Pradesh' },
+  { id: 3, state: 'Assam' },
+  { id: 4, state: 'Bihar' },
+  { id: 5, state: 'Chhattisgarh' },
+  { id: 6, state: 'Goa' },
+  { id: 7, state: 'Gujarat' },
+  { id: 8, state: 'Haryana' },
+  { id: 9, state: 'Himachal Pradesh' },
+  { id: 10, state: 'Jammu and Kashmir' },
+  { id: 11, state: 'Jharkhand' },
+  { id: 12, state: 'Karnataka' },
+  { id: 13, state: 'Kerala' },
+  { id: 14, state: 'Madhya Pradesh' },
+  { id: 15, state: 'Maharashtra' },
+  { id: 16, state: 'Manipur' },
+  { id: 17, state: 'Meghalaya' },
+  { id: 18, state: 'Mizoram' },
+  { id: 19, state: 'Nagaland' },
+  { id: 20, state: 'Odisha' },
+  { id: 21, state: 'Punjab' },
+  { id: 22, state: 'Rajasthan' },
+  { id: 23, state: 'Sikkim' },
+  { id: 24, state: 'Tamil Nadu' },
+  { id: 25, state: 'Telangana' },
+  { id: 26, state: 'Tripura' },
+  { id: 27, state: 'Uttar Pradesh' },
+  { id: 28, state: 'Uttarakhand' },
+  { id: 29, state: 'West Bengal' },
+];
+
+const idproff = [
+  { id: 1, doc: 'Voter ID' },
+  { id: 2, doc: 'Driving Licence' },
+  { id: 3, doc: 'Aadhar Card' },
+  { id: 4, doc: 'PAN Card' },
+  { id: 5, doc: 'Other' },
+];
 
 function CheckinForm({ setOpen }) {
   return (
@@ -11,27 +94,72 @@ function CheckinForm({ setOpen }) {
               <div className="date_and_time_div">
                 <div className="inpur_div_room">
                   <label>Date</label>
-                  <input className="date_and_time_divinput" type="date" />
+                  <CustomInput
+                    style={{ width: '95%' }}
+                    type="date"
+                    required
+                    id="advncerate"
+                    name="advncerate"
+                    // placeholder="Enter the rate"
+                    // value={advncerate}
+                    // onChange={(e) => setadvncerate(e.target.value)}
+                  />
                 </div>
 
                 <div className="inpur_div_room">
                   <label>Time</label>
-                  <input className="date_and_time_divinput" type="time" />
+                  <CustomInput
+                    style={{ width: '95%', marginLeft: '5%' }}
+                    id="advncerate"
+                    type="time"
+                    required
+                    name="advncerate"
+                    // placeholder="Enter the rate"
+                    // value={advncerate}
+                    // onChange={(e) => setadvncerate(e.target.value)}
+                  />
                 </div>
               </div>
 
               <div className="minddle_div_room">
                 <div className="minddle_div_room_innear">
                   <label>Full Name</label>
-                  <input type="text" />
+                  <CustomInput
+                    id="advncerate"
+                    type="text"
+                    name="advncerate"
+                    required
+
+                    // placeholder="Enter the rate"
+                    // value={advncerate}
+                    // onChange={(e) => setadvncerate(e.target.value)}
+                  />
                 </div>
                 <div className="minddle_div_room_innear">
                   <label>Email</label>
-                  <input type="text" />
+                  <CustomInput
+                    id="advncerate"
+                    type="text"
+                    name="advncerate"
+                    required
+
+                    // placeholder="Enter the rate"
+                    // value={advncerate}
+                    // onChange={(e) => setadvncerate(e.target.value)}
+                  />
                 </div>
                 <div className="minddle_div_room_innear">
                   <label>Mobile Number</label>
-                  <input type="text" />
+                  <CustomInput
+                    id="advncerate"
+                    type="text"
+                    name="advncerate"
+                    required
+
+                    // placeholder="Enter the rate"
+                    // value={advncerate}
+                    // onChange={(e) => setadvncerate(e.target.value)}
+                  />
                 </div>
               </div>
 
@@ -56,7 +184,20 @@ function CheckinForm({ setOpen }) {
                   >
                     <label>State</label>
                     <select>
-                      <option>ss</option>
+                      {statelist &&
+                        statelist.map((item) => {
+                          return (
+                            <option
+                              // sx={{
+                              //   fontSize: 14,
+                              // }}
+                              key={item.id}
+                              value={item.state}
+                            >
+                              {item.state}
+                            </option>
+                          );
+                        })}
                     </select>
                   </div>
 
@@ -69,17 +210,72 @@ function CheckinForm({ setOpen }) {
               <div className="minddle_div_room">
                 <div className="minddle_div_room_innear">
                   <label>Id Proof</label>
-                  <select className="select_optionssss">
-                    <option>ss</option>
-                  </select>
+                  <Select
+                    id="categroyname"
+                    required
+                    sx={{
+                      width: '280px',
+                      fontSize: 14,
+                      '& .MuiSelect-select': {
+                        // borderColor: !!formerror.donationtype ? 'red' : '',
+                        padding: '10px 0px 10px 10px',
+                        background: '#fff',
+                      },
+                    }}
+                    // value={categroyname}
+                    // name="categroyname"
+                    // onChange={(e) => setcategroyname(e.target.value)}
+                    displayEmpty
+                  >
+                    <MenuItem
+                      sx={{
+                        fontSize: 14,
+                      }}
+                      value={''}
+                    >
+                      Please select
+                    </MenuItem>
+                    {idproff &&
+                      idproff.map((item) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 14,
+                            }}
+                            key={item.id}
+                            value={item.doc}
+                          >
+                            {item.doc}
+                          </MenuItem>
+                        );
+                      })}
+                  </Select>
                 </div>
                 <div className="minddle_div_room_innear">
                   <label>Id Proof Number</label>
-                  <input type="text" />
+                  <CustomInput
+                    id="advncerate"
+                    type="text"
+                    name="advncerate"
+                    required
+
+                    // placeholder="Enter the rate"
+                    // value={advncerate}
+                    // onChange={(e) => setadvncerate(e.target.value)}
+                  />
                 </div>
                 <div className="minddle_div_room_innear">
                   <label>Stay Days</label>
-                  <input type="text" />
+                  <CustomInput
+                    id="advncerate"
+                    type="text"
+                    name="advncerate"
+                    required
+
+                    // placeholder="Enter the rate"
+                    // value={advncerate}
+                    // onChange={(e) => setadvncerate(e.target.value)}
+                  />
                 </div>
               </div>
             </div>

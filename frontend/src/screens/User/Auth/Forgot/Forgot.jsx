@@ -3,6 +3,7 @@ import VerifyForgot from './verifyForgot';
 import logo from '../../../../assets/sideimg.jpeg';
 import axios from 'axios';
 import { backendApiUrl } from '../../../../config/config';
+import Swal from 'sweetalert2';
 import './forgot.scss';
 const Forgot = () => {
   const [verify, setVerify] = useState(false);
@@ -17,8 +18,9 @@ const Forgot = () => {
       email: email,
     });
 
-    console.log('forget password', data);
-    // setVerify(true);
+    if (data.status) {
+      Swal.fire('Great!', data.message, 'success');
+    }
   };
 
   const handleVerify = async (otp) => {
@@ -45,6 +47,7 @@ const Forgot = () => {
                 <label htmlFor="email">Email Address</label>
                 <input
                   required
+                  className="remove_underline"
                   name="email"
                   type="email"
                   id="email"

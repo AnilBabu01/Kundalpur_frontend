@@ -28,7 +28,15 @@ import IconButton from '@mui/material/IconButton';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import AddRoomForm from './AddRoomForm';
+import UpdateRoom from './UpdateRoom';
 import Typography from '@mui/material/Typography';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 const style = {
   position: 'absolute',
   top: '40%',
@@ -50,6 +58,34 @@ const AddRoom = ({ setopendashboard }) => {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const handleOepn = () => setOpen(true);
+  const [updatedata, setupdatedata] = useState('');
+  const [open1, setOpen1] = React.useState(false);
+  const handleClose1 = () => setOpen1(false);
+  const handleOepn1 = (data) => {
+    setOpen1(true);
+    setupdatedata(data);
+  };
+  const [deleteId, setdeleteId] = useState('');
+  const [open3, setOpen3] = React.useState(false);
+
+  const handleClickOpen3 = (id) => {
+    setOpen3(true);
+    setdeleteId(id);
+  };
+  const handleClose5 = () => setOpen3(false);
+  const handleClose4 = () => {
+    setOpen3(false);
+    serverInstance(`room?id=${deleteId}`, 'delete').then((res) => {
+      if (res.data.status === true) {
+        setOpen(false);
+        Swal.fire('Great!', res.data.message, 'success');
+      }
+      if (res.data.status === false) {
+        setOpen(false);
+        Swal.fire('Great!', res.data.message, 'success');
+      }
+    });
+  };
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
   var today = new Date();
   const currDate = today
@@ -60,16 +96,13 @@ const AddRoom = ({ setopendashboard }) => {
     minute: 'numeric',
     hour12: true,
   });
-  const getall_donation = () => {
-    serverInstance('user/add-elecDonation', 'get').then((res) => {
-      if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
 
-        setisData(filterData);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
+  const getall_donation = () => {
+    serverInstance('room', 'get').then((res) => {
+      console.log(res.data);
+      if (res.data) {
+        setisData(res.data);
       }
-      console.log(res);
     });
   };
 
@@ -115,10 +148,31 @@ const AddRoom = ({ setopendashboard }) => {
     setopendashboard(true);
 
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, [open]);
+  }, [open, open1, open3]);
 
   return (
     <>
+      <Dialog
+        open={open3}
+        onClose={handleClose5}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {'Do you want to delete'}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            After delete you cannot get again
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose5}>Disagree</Button>
+          <Button onClick={handleClose4} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -145,7 +199,32 @@ const AddRoom = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
-
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open1}
+        onClose={handleClose1}
+        closeAfterTransition
+      >
+        <Fade in={open1}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div">
+                <div>
+                  <h2 style={{ marginBottom: '0.5rem' }}>Add Facilities</h2>
+                  <Typography variant="body2" color="primary">
+                    {currDate} / {currTime}
+                  </Typography>
+                </div>
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose1()} />
+                </IconButton>
+              </div>
+              <UpdateRoom setOpen={setOpen1} updatedata={updatedata} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
       <div>
         <div className="search-header-print">
           <div
@@ -237,16 +316,18 @@ const AddRoom = ({ setopendashboard }) => {
                         '&:last-child td, &:last-child th': { border: 0 },
                       }}
                     >
-                      <TableCell>{row.ReceiptNo}</TableCell>
-                      <TableCell>{row.ReceiptNo}</TableCell>
-                      <TableCell>{row.voucherNo}</TableCell>
-                      <TableCell>{row.phoneNo}</TableCell>
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell>{row.phoneNo}</TableCell>
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell> {row.address}</TableCell>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{row.dharmasala}</TableCell>
+                      <TableCell>{row.RoomNo}</TableCell>
+                      <TableCell>{row.Facilities}</TableCell>
+                      <TableCell>{row.category}</TableCell>
+                      <TableCell>{row.Rate}</TableCell>
+                      <TableCell>{row.advance}</TableCell>
+                      <TableCell>{row.coTime}</TableCell>
+                      <TableCell>{row.roomType}</TableCell>
+                      <TableCell>
+                        {row.status ? 'Enable' : 'disabled'}
+                      </TableCell>
                       <TableCell>
                         <Tooltip title="View">
                           <img
@@ -258,6 +339,7 @@ const AddRoom = ({ setopendashboard }) => {
 
                         <Tooltip title="Edit">
                           <img
+                            onClick={() => handleOepn1(row)}
                             src={Edit}
                             alt="eye"
                             style={{ width: '20px', marginRight: '0.5rem' }}
@@ -266,6 +348,7 @@ const AddRoom = ({ setopendashboard }) => {
 
                         <Tooltip title="Delete">
                           <img
+                            onClick={() => handleClickOpen3(row.id)}
                             src={Delete}
                             alt="eye"
                             style={{ width: '20px' }}

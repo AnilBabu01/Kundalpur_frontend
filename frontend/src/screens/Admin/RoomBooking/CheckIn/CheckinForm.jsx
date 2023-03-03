@@ -84,6 +84,76 @@ const idproff = [
 ];
 
 function CheckinForm({ setOpen }) {
+  const [fullname, setfullname] = useState('');
+  const [email, setemail] = useState('');
+  const [phoneno, setphoneno] = useState('');
+  const [address, setaddress] = useState('');
+  const [city, setcity] = useState('');
+  const [state, setstate] = useState('');
+  const [pincode, setpincode] = useState('');
+  const [idproffname, setidproffname] = useState('');
+  const [idproffno, setidproffno] = useState('');
+  const [staydays, setstaydays] = useState('');
+  const [maleno, setmaleno] = useState('');
+  const [femaleno, setfemaleno] = useState('');
+  const [Children, setChildren] = useState('');
+  const [TotalMember, setTotalMember] = useState();
+
+  var options = { year: 'numeric', month: 'short', day: '2-digit' };
+  var today = new Date();
+
+  var datee = today.toISOString().substring(0, 10);
+  const [date, setdate] = useState(datee);
+
+  const [time, settime] = useState(
+    today.toLocaleTimeString('it-IT', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    }),
+  );
+
+  const handlesubmit = async () => {
+    try {
+      console.log('click');
+
+      const data = {
+        date: date,
+        time: time,
+        contactNo: phoneno,
+        name: fullname,
+        // Fname: Fname,
+        email: email,
+        address: address,
+        city: city,
+        state: state,
+        pin: pincode,
+        stayD: staydays,
+        proof: idproffname,
+        idNumber: idproffno,
+        male: maleno,
+        female: femaleno,
+        child: Children,
+        // img: upload,
+      };
+      axios.defaults.headers.post[
+        'Authorization'
+      ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+      const res = await axios.post(`${backendApiUrl}room/checkin`, data);
+
+      console.log('checkin', res);
+      // if (res.data.data.status) {
+      //   setOpen(false);
+
+      //   Swal.fire('Great!', res.data.data.message, 'success');
+      // }
+    } catch (error) {
+      // Swal.fire('Error!', error, 'error');
+    }
+  };
+
   return (
     <>
       <div className="cash-donation-div">
@@ -93,80 +163,83 @@ function CheckinForm({ setOpen }) {
             <div>
               <div className="date_and_time_div">
                 <div className="inpur_div_room">
-                  <label>Date</label>
+                  <label htmlFor="date">Date</label>
                   <CustomInput
-                    style={{ width: '95%' }}
+                    style={{ width: '80%' }}
                     type="date"
                     required
-                    id="advncerate"
-                    name="advncerate"
-                    // placeholder="Enter the rate"
-                    // value={advncerate}
-                    // onChange={(e) => setadvncerate(e.target.value)}
+                    id="date"
+                    name="date"
+                    value={date}
+                    onChange={(e) => setdate(e.target.value)}
                   />
                 </div>
 
                 <div className="inpur_div_room">
-                  <label>Time</label>
+                  <label htmlFor="time">Time</label>
                   <CustomInput
-                    style={{ width: '95%', marginLeft: '5%' }}
-                    id="advncerate"
+                    style={{ width: '94%' }}
+                    id="time"
                     type="time"
                     required
-                    name="advncerate"
-                    // placeholder="Enter the rate"
-                    // value={advncerate}
-                    // onChange={(e) => setadvncerate(e.target.value)}
+                    name="time"
+                    value={time}
+                    onChange={(e) => settime(e.target.value)}
                   />
                 </div>
               </div>
 
               <div className="minddle_div_room">
                 <div className="minddle_div_room_innear">
-                  <label>Full Name</label>
+                  <label htmlFor="fullname">Full Name</label>
                   <CustomInput
-                    id="advncerate"
+                    id="fullname"
                     type="text"
-                    name="advncerate"
+                    name="fullname"
                     required
-
-                    // placeholder="Enter the rate"
-                    // value={advncerate}
-                    // onChange={(e) => setadvncerate(e.target.value)}
+                    placeholder="Enter the full name"
+                    value={fullname}
+                    onChange={(e) => setfullname(e.target.value)}
                   />
                 </div>
                 <div className="minddle_div_room_innear">
-                  <label>Email</label>
+                  <label htmlFor="email">Email</label>
                   <CustomInput
-                    id="advncerate"
-                    type="text"
-                    name="advncerate"
+                    id="email"
+                    type="email"
+                    name="email"
                     required
-
-                    // placeholder="Enter the rate"
-                    // value={advncerate}
-                    // onChange={(e) => setadvncerate(e.target.value)}
+                    placeholder="Enter the email"
+                    value={email}
+                    onChange={(e) => setemail(e.target.value)}
                   />
                 </div>
                 <div className="minddle_div_room_innear">
-                  <label>Mobile Number</label>
+                  <label htmlFor="phoneno">Mobile Number</label>
                   <CustomInput
-                    id="advncerate"
+                    id="phoneno"
                     type="text"
-                    name="advncerate"
+                    name="phoneno"
                     required
-
-                    // placeholder="Enter the rate"
-                    // value={advncerate}
-                    // onChange={(e) => setadvncerate(e.target.value)}
+                    placeholder="Enter the mobile number"
+                    value={phoneno}
+                    onChange={(e) => setphoneno(e.target.value)}
                   />
                 </div>
               </div>
 
               <div className="minddle_div_room">
                 <div className="minddle_div_room_innear_adddress">
-                  <label>Full Name</label>
-                  <input type="text" />
+                  <label htmlFor="address">Address</label>
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    required
+                    placeholder="Enter the Address"
+                    value={address}
+                    onChange={(e) => setaddress(e.target.value)}
+                  />
                 </div>
 
                 <div className="date_and_time_div_add">
@@ -174,8 +247,16 @@ function CheckinForm({ setOpen }) {
                     className="inpur_div_room_add"
                     style={{ marginRight: '1.1rem' }}
                   >
-                    <label>City</label>
-                    <input type="text" />
+                    <label htmlFor="city">City</label>
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      required
+                      placeholder="City"
+                      value={city}
+                      onChange={(e) => setcity(e.target.value)}
+                    />
                   </div>
 
                   <div
@@ -183,7 +264,10 @@ function CheckinForm({ setOpen }) {
                     style={{ marginRight: '1.1rem' }}
                   >
                     <label>State</label>
-                    <select>
+                    <select
+                      value={state}
+                      onChange={(e) => setstate(e.target.value)}
+                    >
                       {statelist &&
                         statelist.map((item) => {
                           return (
@@ -202,8 +286,16 @@ function CheckinForm({ setOpen }) {
                   </div>
 
                   <div className="inpur_div_room_add">
-                    <label>Pincode</label>
-                    <input type="text" />
+                    <label htmlFor="pincode">Pincode</label>
+                    <input
+                      type="text"
+                      id="pincode"
+                      name="pincode"
+                      required
+                      placeholder="pincode"
+                      value={pincode}
+                      onChange={(e) => setpincode(e.target.value)}
+                    />
                   </div>
                 </div>
               </div>
@@ -222,9 +314,9 @@ function CheckinForm({ setOpen }) {
                         background: '#fff',
                       },
                     }}
-                    // value={categroyname}
-                    // name="categroyname"
-                    // onChange={(e) => setcategroyname(e.target.value)}
+                    value={idproffname}
+                    name="idproffname"
+                    onChange={(e) => setidproffname(e.target.value)}
                     displayEmpty
                   >
                     <MenuItem
@@ -252,29 +344,27 @@ function CheckinForm({ setOpen }) {
                   </Select>
                 </div>
                 <div className="minddle_div_room_innear">
-                  <label>Id Proof Number</label>
+                  <label htmlFor="idproffno">Id Proof Number</label>
                   <CustomInput
-                    id="advncerate"
+                    id="idproffno"
                     type="text"
-                    name="advncerate"
+                    name="idproffno"
                     required
-
-                    // placeholder="Enter the rate"
-                    // value={advncerate}
-                    // onChange={(e) => setadvncerate(e.target.value)}
+                    placeholder="Enter the idproff no"
+                    value={idproffno}
+                    onChange={(e) => setidproffno(e.target.value)}
                   />
                 </div>
                 <div className="minddle_div_room_innear">
                   <label>Stay Days</label>
                   <CustomInput
-                    id="advncerate"
+                    id="staydays"
                     type="text"
-                    name="advncerate"
+                    name="staydays"
                     required
-
-                    // placeholder="Enter the rate"
-                    // value={advncerate}
-                    // onChange={(e) => setadvncerate(e.target.value)}
+                    placeholder="Enter the stay days"
+                    value={staydays}
+                    onChange={(e) => setstaydays(e.target.value)}
                   />
                 </div>
               </div>
@@ -286,28 +376,64 @@ function CheckinForm({ setOpen }) {
             <div className="main_Btotn_check_div">
               <div className="main_ddsh_div">
                 <div className="main_Btotn_check_div_input">
-                  <label>Male</label>
-                  <input type="text" />
+                  <label htmlFor='"maleno'>Male</label>
+                  <input
+                    id="maleno"
+                    type="text"
+                    name="maleno"
+                    required
+                    placeholder="Male member "
+                    value={maleno}
+                    onChange={(e) => {
+                      setmaleno(e.target.value);
+                    }}
+                  />
                 </div>
                 <div className="main_Btotn_check_div_input">
-                  <label>Female</label>
-                  <input type="text" />
+                  <label htmlFor="femaleno">Female</label>
+                  <input
+                    id="femaleno"
+                    type="text"
+                    name="femaleno"
+                    required
+                    placeholder="Female member"
+                    value={femaleno}
+                    onChange={(e) => setfemaleno(e.target.value)}
+                  />
                 </div>
                 <div className="main_Btotn_check_div_input">
-                  <label>Children</label>
-                  <input type="text" />
+                  <label htmlFor="Children">Children</label>
+                  <input
+                    id="Children"
+                    type="text"
+                    name="Children"
+                    required
+                    placeholder="Children member"
+                    value={Children}
+                    onChange={(e) => setChildren(e.target.value)}
+                  />
                 </div>
               </div>
               <div>
                 <div className="number_inera_div">
-                  <label>Total Member</label>
-                  <input type="text" />
+                  <label htmlFor="TotalMember">Total Member</label>
+                  <input
+                    id="TotalMember"
+                    type="text"
+                    name="TotalMember"
+                    required
+                    placeholder="Total members"
+                    value={TotalMember}
+                    onChange={(e) => setTotalMember(e.target.value)}
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div className="save-div-btn">
-            <button className="save-div-btn-btn">Save</button>
+            <button onClick={() => handlesubmit()} className="save-div-btn-btn">
+              Save
+            </button>
             <button
               onClick={() => setOpen(false)}
               className="save-div-btn-btn-cancel"

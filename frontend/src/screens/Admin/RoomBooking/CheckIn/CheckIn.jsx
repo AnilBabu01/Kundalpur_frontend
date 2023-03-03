@@ -28,6 +28,7 @@ import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import CheckinForm from './CheckinForm';
+import { Select, MenuItem } from '@mui/material';
 import './Checkin.css';
 const style = {
   position: 'absolute',
@@ -148,6 +149,52 @@ const CheckIn = ({ setopendashboard }) => {
       </Modal>
 
       <div>
+        <div className="main_amin_gain">
+          <div className="main_amin_gain1">Total Guest : 265</div>
+          <div className="main_amin_gain2">Total Advance : 112050</div>
+          <Select
+            id="donation-type"
+            required
+            sx={{
+              width: '280px',
+              fontSize: 14,
+              '& .MuiSelect-select': {
+                // borderColor: !!formerror.donationtype ? 'red' : '',
+                padding: '10px 0px 10px 10px',
+                background: '#fff',
+              },
+            }}
+            // value={isoffline}
+            // name="isoffline"
+            // onChange={(e) => setisoffline(e.target.value)}
+            // displayEmpty
+          >
+            <MenuItem
+              sx={{
+                fontSize: 14,
+              }}
+              value={'Currently Stay'}
+            >
+              Currently Stay
+            </MenuItem>
+            <MenuItem
+              sx={{
+                fontSize: 14,
+              }}
+              value={true}
+            >
+              Please select
+            </MenuItem>
+            <MenuItem
+              sx={{
+                fontSize: 14,
+              }}
+              value={false}
+            >
+              No
+            </MenuItem>
+          </Select>
+        </div>
         <div className="search-header-print">
           <div
             className="search-header-print"

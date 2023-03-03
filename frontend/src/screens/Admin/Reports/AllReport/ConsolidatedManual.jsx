@@ -14,16 +14,18 @@ import { ExportPdfmanul } from '../../compoments/ExportPdf';
 import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
-import AllReportTap from '../AllReport/AllReportTap';
 import { ReactSpinner } from 'react-spinning-wheel';
 import { useReactToPrint } from 'react-to-print';
 import 'react-spinning-wheel/dist/style.css';
-import ConsolidatedManual from './ConsolidatedManual';
-const AllConsolidated = ({ setopendashboard }) => {
+
+const ConsolidatedManual = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [empylist, setempylist] = useState('');
+  const [showalert, setshowalert] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [openupdate, setopenupdate] = useState(false);
+  const [empmanuldonation, setempmanuldonation] = useState('');
   const [userrole, setuserrole] = useState('');
 
   const handleChangePage = (event, newPage) => {
@@ -34,12 +36,12 @@ const AllConsolidated = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const componentRef1 = useRef();
 
-  const handlePrint1 = useReactToPrint({
-    content: () => componentRef1.current,
+  const componentRef2 = useRef();
+
+  const handlePrint2 = useReactToPrint({
+    content: () => componentRef2.current,
   });
-
   const ExportToExcel = () => {
     const fileName = 'ManualCashReport';
     const exportType = 'xls';
@@ -68,36 +70,32 @@ const AllConsolidated = ({ setopendashboard }) => {
     exportFromJSON({ data, fileName, exportType });
   };
 
-  const getAllDonationDetails = () => {
-    serverInstance('admin/user-report?user=1   ', 'get').then((res) => {
+  const getAllManualDonationDetails = () => {
+    serverInstance('admin/user-manual-report   ', 'get').then((res) => {
       console.log('report', res.data);
-      setempylist(res.data);
+      setempmanuldonation(res.data);
     });
   };
-
   useEffect(() => {
-    getAllDonationDetails();
+    getAllManualDonationDetails();
 
     setopendashboard(true);
 
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, []);
+  }, [showalert, openupdate, open]);
 
   return (
     <>
-      <AllReportTap setopendashboard={setopendashboard} />
       <div
         style={{ marginLeft: '5rem', marginRight: '1rem', marginTop: '1rem' }}
       >
         <div className="search-header">
           <div className="search-inner-div-reports">
             <div style={{ width: '80%' }}>
-              <h2 style={{ marginBottom: '1rem' }}>
-                Electornic Donation Details
-              </h2>
+              <h2 style={{ marginBottom: '1rem' }}>Manual Donation Details</h2>
             </div>
             <img
-              onClick={() => handlePrint1()}
+              onClick={() => handlePrint2()}
               src={Print}
               alt="s"
               style={{ width: '30px' }}
@@ -120,7 +118,7 @@ const AllConsolidated = ({ setopendashboard }) => {
         </div>
       </div>
 
-      <div className="table-div-maain" ref={componentRef1}>
+      <div className="table-div-maain" ref={componentRef2}>
         <Table sx={{ minWidth: 650, width: '100%' }} aria-label="simple table">
           <TableHead style={{ background: '#FFEEE0' }}>
             <TableRow>
@@ -131,16 +129,16 @@ const AllConsolidated = ({ setopendashboard }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {empylist ? (
+            {empmanuldonation ? (
               <>
                 {(rowsPerPage > 0
-                  ? empylist
+                  ? empmanuldonation
                       .reverse()
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
                       )
-                  : empylist
+                  : empmanuldonation
                 ).map((row, index) => (
                   <TableRow
                     key={row.id}
@@ -160,8 +158,8 @@ const AllConsolidated = ({ setopendashboard }) => {
                 <TableCell>&nbsp;</TableCell>
                 <TableCell>Total Amount</TableCell>
                 <TableCell>
-                  {empylist
-                    ? empylist.reduce(
+                  {empmanuldonation
+                    ? empmanuldonation.reduce(
                         (n, { totalDonationAmount }) =>
                           parseFloat(n) + parseInt(totalDonationAmount),
                         0,
@@ -180,7 +178,7 @@ const AllConsolidated = ({ setopendashboard }) => {
           <TableFooter>
             <TableRow>
               <TablePagination
-                count={empylist.length}
+                count={empmanuldonation.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -204,9 +202,8 @@ const AllConsolidated = ({ setopendashboard }) => {
           </TableFooter>
         </Table>
       </div>
-      <ConsolidatedManual setopendashboard={setopendashboard} />
     </>
   );
 };
 
-export default AllConsolidated;
+export default ConsolidatedManual;

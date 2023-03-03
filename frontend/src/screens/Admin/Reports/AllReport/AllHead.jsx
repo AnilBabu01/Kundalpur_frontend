@@ -25,6 +25,7 @@ import AllReportTap from '../AllReport/AllReportTap';
 import { ReactSpinner } from 'react-spinning-wheel';
 import 'react-spinning-wheel/dist/style.css';
 
+import HeadManualReport from './HeadManualReport';
 const AllHead = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
@@ -491,6 +492,8 @@ const AllHead = ({ setopendashboard }) => {
           </>
         )}
       </div>
+
+      <HeadManualReport setopendashboard={setopendashboard} />
     </>
   );
 };

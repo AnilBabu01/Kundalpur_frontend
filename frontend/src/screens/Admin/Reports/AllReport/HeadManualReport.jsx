@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { serverInstance } from '../../../../../API/ServerInstance';
+import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,16 +12,15 @@ import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
-import { backendApiUrl } from '../../../../../config/config';
+import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
-import { ExportPdfmanul } from '../../../compoments/ExportPdf';
-import Print from '../../../../../assets/Print.png';
-import ExportPdf from '../../../../../assets/ExportPdf.png';
-import ExportExcel from '../../../../../assets/ExportExcel.png';
-import Edit from '../../../../../assets/Edit.png';
-import eye from '../../../../../assets/eye.png';
-import ManualDonationTap from '../ManualDonationTap';
+import { ExportPdfmanul } from '../../compoments/ExportPdf';
+import Print from '../../../../assets/Print.png';
+import ExportPdf from '../../../../assets/ExportPdf.png';
+import ExportExcel from '../../../../assets/ExportExcel.png';
+import Edit from '../../../../assets/Edit.png';
+import eye from '../../../../assets/eye.png';
 
 const style = {
   position: 'absolute',
@@ -51,7 +50,7 @@ const donationColorTheme = {
   cash: '#48a828',
 };
 
-const HeadReport = ({ setopendashboard }) => {
+const HeadManualReport = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -173,9 +172,8 @@ const HeadReport = ({ setopendashboard }) => {
 
   return (
     <>
-      <ManualDonationTap setopendashboard={setopendashboard} />
       <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
-        <p>Electronic Head Report</p>
+        <p>Manual Head Report</p>
         <div>
           <div className="search-header">
             <div className="search-inner-div-reports">
@@ -407,6 +405,7 @@ const HeadReport = ({ setopendashboard }) => {
                     <TableCell>Date</TableCell>
                     <TableCell>ReceiptNo</TableCell>
 
+                    <TableCell>VoucherNo</TableCell>
                     <TableCell>Phone No</TableCell>
                     <TableCell>Name</TableCell>
                     <TableCell>Address</TableCell>
@@ -437,11 +436,12 @@ const HeadReport = ({ setopendashboard }) => {
                           </TableCell>
                           <TableCell>{row.ReceiptNo}</TableCell>
 
+                          <TableCell>{row.voucherNo}</TableCell>
                           <TableCell>{row.phoneNo}</TableCell>
                           <TableCell>{row.name}</TableCell>
                           <TableCell> {row.address}</TableCell>
                           <TableCell>
-                            {row.manualItemDetails.map((row) => {
+                            {row.elecItemDetails.map((row) => {
                               return (
                                 <li style={{ listStyle: 'none' }}>
                                   {row.type}
@@ -450,7 +450,7 @@ const HeadReport = ({ setopendashboard }) => {
                             })}
                           </TableCell>
                           <TableCell>
-                            {row.manualItemDetails.reduce(
+                            {row.elecItemDetails.reduce(
                               (n, { amount }) =>
                                 parseFloat(n) + parseFloat(amount),
                               0,
@@ -458,7 +458,7 @@ const HeadReport = ({ setopendashboard }) => {
                           </TableCell>
 
                           <TableCell>
-                            {row.manualItemDetails.map((row) => {
+                            {row.elecItemDetails.map((row) => {
                               return (
                                 <li style={{ listStyle: 'none' }}>
                                   {row.remark}{' '}
@@ -511,4 +511,4 @@ const HeadReport = ({ setopendashboard }) => {
   );
 };
 
-export default HeadReport;
+export default HeadManualReport;

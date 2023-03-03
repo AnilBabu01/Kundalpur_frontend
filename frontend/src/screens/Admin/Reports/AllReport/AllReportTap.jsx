@@ -10,7 +10,7 @@ const AllReportTap = ({ setopendashboard }) => {
     <>
       <div className="mobilewidth dashboarmain">
         <div className="container1">
-          <div className="bloc-tabs1">
+          <div className="bloc-tabsonline">
             <NavLink
               style={{ width: '20rem' }}
               to="/admin-panel/allreport/allhead"
@@ -34,30 +34,6 @@ const AllReportTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Consolidated(Electornic)
-            </NavLink>
-            <NavLink
-              style={{ width: '20rem' }}
-              to="/admin-panel/allreport/allhead"
-              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
-            >
-              <img
-                style={{ marginRight: '4%', width: '20px' }}
-                src={f1}
-                alt="fast"
-              />
-              Head Report(Manual)
-            </NavLink>
-            <NavLink
-              style={{ width: '20rem' }}
-              to="/admin-panel/allreport/allconsolidated"
-              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
-            >
-              <img
-                style={{ marginRight: '4%', width: '20px' }}
-                src={f1}
-                alt="fast"
-              />
-              Consolidated(Manual)
             </NavLink>
           </div>
         </div>

@@ -720,7 +720,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
           </StyledListItemButton>
         </Tooltip>
       </ListItem>
-      {userrole === 1 && (
+      {/* {userrole === 1 && (
         <>
           <ListItem disablePadding sx={{ display: 'block' }}>
             <Tooltip title="donated users" placement="left-end">
@@ -755,7 +755,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
             </Tooltip>
           </ListItem>
         </>
-      )}
+      )} */}
 
       <List>
         {userrole === 1

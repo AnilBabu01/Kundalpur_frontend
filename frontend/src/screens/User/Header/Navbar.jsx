@@ -181,9 +181,14 @@ const Navbar = ({ showRoomOptions }) => {
                 </NavLink>
               </li>
               <li>
-                <a href="#roomsss" className={style.about}>
+                <NavLink
+                  to="/roombooking"
+                  className={({ isActive }) =>
+                    isActive ? style.active : style.about
+                  }
+                >
                   Room Booking
-                </a>
+                </NavLink>
               </li>
               <li>
                 <NavLink

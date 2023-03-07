@@ -15,11 +15,8 @@ import AboutUs from '../screens/User/Aboutus/AboutUs';
 import PaymentStatusPage from '../screens/User/PaymentStatusPage/PaymentStatusPage';
 import Reciept from '../screens/Admin/Reciept/Reciept';
 import ReceiptManual from '../screens/Admin/Reciept/RecieptManual';
-import RoomAvailability from '../screens/User/RoomBooking/RoomAvailability/RoomAvailability';
-import TheAccommodation from '../screens/User/RoomBooking/TheAccommodation/TheAccommodation';
-import ServicesandFacilities from '../screens/User/RoomBooking/Services&Facilities/ServicesandFacilities';
-import TariffsandPolicies from '../screens/User/RoomBooking/Tariffs&Policies/TariffsandPolicies';
 import OnlineReceipt from '../screens/Admin/Reciept/OnlineReceipt';
+import RoomBooking from '../screens/User/roombookings/RoomBooking';
 function MainRoutes({
   setopendashboard,
   setshowreciept,
@@ -126,47 +123,7 @@ function MainRoutes({
           path="/roombooking"
           element={
             <PrivateRoutes>
-              <RoomAvailability
-                setopendashboard={setopendashboard}
-                setshowreciept={setshowreciept}
-                setshowRoomOptions={setshowRoomOptions}
-              />
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          path="/roombooking/theaccommodation"
-          element={
-            <PrivateRoutes>
-              <TheAccommodation
-                setopendashboard={setopendashboard}
-                setshowreciept={setshowreciept}
-                setshowRoomOptions={setshowRoomOptions}
-              />
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          path="/roombooking/servicesandfacilities"
-          element={
-            <PrivateRoutes>
-              <ServicesandFacilities
-                setopendashboard={setopendashboard}
-                setshowreciept={setshowreciept}
-                setshowRoomOptions={setshowRoomOptions}
-              />
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          path="/roombooking/tariffsandpolicies"
-          element={
-            <PrivateRoutes>
-              <TariffsandPolicies
-                setopendashboard={setopendashboard}
-                setshowreciept={setshowreciept}
-                setshowRoomOptions={setshowRoomOptions}
-              />
+              <RoomBooking />
             </PrivateRoutes>
           }
         />

@@ -27,12 +27,15 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
+import RoomShiftForm from './RoomShiftForm';
+import Typography from '@mui/material/Typography';
+import './RoomShift.css';
 const style = {
   position: 'absolute',
-  top: '40%',
+  top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '30%',
+  width: '70%',
   bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
@@ -70,7 +73,16 @@ const RoomShift = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  var options = { year: 'numeric', month: 'short', day: '2-digit' };
+  var today = new Date();
+  const currDate = today
+    .toLocaleDateString('en-IN', options)
+    .replace(/-/g, ' ');
+  const currTime = today.toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
   const ExportToExcel = () => {
     const fileName = 'ManualCashReport';
     const exportType = 'xls';
@@ -118,11 +130,18 @@ const RoomShift = ({ setopendashboard }) => {
         <Fade in={open}>
           <Box sx={style}>
             <div>
-              <div className="add-div-close-div1">
-                <h2>form modal</h2>
-                <CloseIcon onClick={() => handleClose()} />
+              <div className="add-div-close-div">
+                <div>
+                  <h2 style={{ marginBottom: '0.5rem' }}>Room Shift</h2>
+                  <Typography variant="body2" color="primary">
+                    {currDate} / {currTime}
+                  </Typography>
+                </div>
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose()} />
+                </IconButton>
               </div>
-              <h2>form model</h2>
+              <RoomShiftForm setOpen={setOpen} />
             </div>
           </Box>
         </Fade>
@@ -169,14 +188,14 @@ const RoomShift = ({ setopendashboard }) => {
                 />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Add Dharamshala">
+            {/* <Tooltip title="Add Dharamshala">
               <Button
                 onClick={() => handleOepn()}
                 className="add_btn_main_dhara"
               >
                 + Add
               </Button>
-            </Tooltip>
+            </Tooltip> */}
             &nbsp;&nbsp;
           </div>
         </div>
@@ -218,29 +237,12 @@ const RoomShift = ({ setopendashboard }) => {
                       <TableCell>{row.name}</TableCell>
                       <TableCell> {row.address}</TableCell>
                       <TableCell>
-                        <Tooltip title="View">
-                          <img
-                            src={eye}
-                            alt="eye"
-                            style={{ width: '20px', marginRight: '0.5rem' }}
-                          />
-                        </Tooltip>
-
-                        <Tooltip title="Edit">
-                          <img
-                            src={Edit}
-                            alt="eye"
-                            style={{ width: '20px', marginRight: '0.5rem' }}
-                          />
-                        </Tooltip>
-
-                        <Tooltip title="Delete">
-                          <img
-                            src={Delete}
-                            alt="eye"
-                            style={{ width: '20px' }}
-                          />
-                        </Tooltip>
+                        <button
+                          onClick={() => handleOepn()}
+                          className="chaneRoom"
+                        >
+                          Change Room
+                        </button>
                       </TableCell>
                     </TableRow>
                   ))}

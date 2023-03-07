@@ -206,12 +206,14 @@ const Hold = ({ setopendashboard }) => {
           >
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>ReceiptNo</TableCell>
-                <TableCell>VoucherNo</TableCell>
-                <TableCell>Phone No</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Action</TableCell>
+                <TableCell>S.No</TableCell>
+                <TableCell>Holder Mobile No</TableCell>
+                <TableCell>Room holder Name</TableCell>
+                <TableCell>Hold Since</TableCell>
+                <TableCell>Dharamshala</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Hold Approved By</TableCell>
+                <TableCell>Remarks</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -234,32 +236,10 @@ const Hold = ({ setopendashboard }) => {
                       <TableCell>{row.voucherNo}</TableCell>
                       <TableCell>{row.phoneNo}</TableCell>
                       <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.name}</TableCell>
                       <TableCell> {row.address}</TableCell>
-                      <TableCell>
-                        <Tooltip title="View">
-                          <img
-                            src={eye}
-                            alt="eye"
-                            style={{ width: '20px', marginRight: '0.5rem' }}
-                          />
-                        </Tooltip>
-
-                        <Tooltip title="Edit">
-                          <img
-                            src={Edit}
-                            alt="eye"
-                            style={{ width: '20px', marginRight: '0.5rem' }}
-                          />
-                        </Tooltip>
-
-                        <Tooltip title="Delete">
-                          <img
-                            src={Delete}
-                            alt="eye"
-                            style={{ width: '20px' }}
-                          />
-                        </Tooltip>
-                      </TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell> {row.address}</TableCell>
                     </TableRow>
                   ))}
                 </>

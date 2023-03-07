@@ -87,7 +87,7 @@ const idproff = [
   { id: 5, doc: 'Other' },
 ];
 
-function CheckinForm({ setOpen }) {
+function RoomShiftForm({ setOpen }) {
   const [fullname, setfullname] = useState('');
   const [email, setemail] = useState('');
   const [phoneno, setphoneno] = useState('');
@@ -208,7 +208,7 @@ function CheckinForm({ setOpen }) {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Room Availability</h2>
+                  <h2 style={{ marginBottom: '0.5rem' }}>Change Room</h2>
                   <Typography variant="body2" color="primary">
                     {currDate} / {currTime}
                   </Typography>
@@ -518,4 +518,4 @@ function CheckinForm({ setOpen }) {
   );
 }
 
-export default CheckinForm;
+export default RoomShiftForm;

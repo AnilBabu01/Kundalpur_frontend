@@ -1,0 +1,40 @@
+.sjilder_main_div{
+    height: 400px;
+    margin: 1rem;
+}
+.view_all_main_div{
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding-left: 5%;
+padding-right: 5%;
+margin-bottom: 2%;
+}
+.view_all_main_div p{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 52px;
+    /* identical to box height */
+    
+    
+    color: #613916;
+}
+
+.view_all_main_div button{
+    width: 92px;
+    height: 35px;
+    left: 1288px;
+    top: 582px;
+    font-weight: 500;
+font-size: 14px;
+line-height: 21px;
+/* identical to box height */
+
+
+color: #FA7401;
+
+    background: rgba(250, 116, 1, 0.22);
+    border-radius: 5px;
+}

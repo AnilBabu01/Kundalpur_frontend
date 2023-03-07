@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { serverInstance } from '../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
 import Table from '@mui/material/Table';
@@ -8,35 +8,36 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import SimCardAlertIcon from '@mui/icons-material/SimCardAlert';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import exportFromJSON from 'export-from-json';
 import Moment from 'moment-js';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
-import CircularProgress from '@mui/material/CircularProgress';
 import { ExportPdfmanul } from '../../compoments/ExportPdf';
 import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
-import Edit from '../../../../assets/Edit.png';
-import eye from '../../../../assets/eye.png';
 import AllReportTap from '../AllReport/AllReportTap';
 import { ReactSpinner } from 'react-spinning-wheel';
 import 'react-spinning-wheel/dist/style.css';
+import { useReactToPrint } from 'react-to-print';
 
-import HeadManualReport from './HeadManualReport';
 const AllHead = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [empylist, setempylist] = useState('');
+  const [headlist, setheadlist] = useState('');
   const [userrole, setuserrole] = useState('');
   const [empId, setempId] = useState('');
+  const [type, settype] = useState('');
   const [datefrom, setdatefrom] = useState('');
   const [dateto, setdateto] = useState('');
   const [SearchHead, setSearchHead] = useState('');
+  const componentRef2 = useRef();
 
+  const handlePrint2 = useReactToPrint({
+    content: () => componentRef2.current,
+  });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -50,6 +51,16 @@ const AllHead = ({ setopendashboard }) => {
     serverInstance('admin/add-employee', 'get').then((res) => {
       if (res.status) {
         setempylist(res.data);
+      } else {
+        Swal('Error', 'somthing went  wrong', 'error');
+      }
+    });
+  };
+
+  const gettypehead = () => {
+    serverInstance('admin/donation-type?type=1', 'get').then((res) => {
+      if (res.status) {
+        setheadlist(res.data);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
@@ -117,11 +128,11 @@ const AllHead = ({ setopendashboard }) => {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const res = await axios.get(
-      `${backendApiUrl}admin/donation-report?user=${empId}&fromDate=${datefrom}&toDate=${dateto}`,
+      `${backendApiUrl}admin/centralized-report?user=${empId}&fromDate=${datefrom}&toDate=${dateto}&type=${type}`,
     );
-    console.log('filter data is now', res.data.data[0].donations);
-    if (res.data.data[0].donations) {
-      setisData(res.data.data[0].donations);
+    console.log('filter data is now', res.data.data);
+    if (res.data.data) {
+      setisData(res.data.data);
     }
   };
 
@@ -142,7 +153,7 @@ const AllHead = ({ setopendashboard }) => {
   useEffect(() => {
     setopendashboard(true);
     getAllEmp();
-
+    gettypehead();
     setuserrole(Number(sessionStorage.getItem('userrole')));
   }, []);
 
@@ -158,7 +169,7 @@ const AllHead = ({ setopendashboard }) => {
       <AllReportTap setopendashboard={setopendashboard} />
 
       <div style={{ marginLeft: '5rem', marginRight: '1rem' }}>
-        <p>Electronic Head Report</p>
+        <p>All Head Report</p>
         <div>
           <div className="search-header">
             <div className="search-inner-div-reports">
@@ -181,6 +192,21 @@ const AllHead = ({ setopendashboard }) => {
                 }}
               />
               <select
+                style={{ width: '14%' }}
+                value={type}
+                name="type"
+                onChange={(e) => settype(e.target.value)}
+              >
+                <option>Type/Head</option>
+                {headlist &&
+                  headlist.map((item, index) => (
+                    <option key={index} value={item.type_hi}>
+                      {item.type_hi}
+                    </option>
+                  ))}
+              </select>
+              <select
+                style={{ width: '14%' }}
                 value={empId}
                 name="empId"
                 onChange={(e) => setempId(e.target.value)}
@@ -196,7 +222,7 @@ const AllHead = ({ setopendashboard }) => {
               <button onClick={() => filterdata()}>Search</button>
               <button onClick={() => resetbutn()}>Reset</button>
               <img
-                onClick={() => ExportPdfmanul(isData, 'HeadReport')}
+                onClick={() => handlePrint2()}
                 src={Print}
                 alt="ss"
                 style={{ width: '30px' }}
@@ -219,15 +245,18 @@ const AllHead = ({ setopendashboard }) => {
           </div>
         </div>
 
-        <div className="table-div-maain">
+        <div className="table-div-maain" ref={componentRef2}>
           <Table
             sx={{ minWidth: 650, width: '100%' }}
             aria-label="simple table"
           >
             <TableHead style={{ background: '#FFEEE0' }}>
               <TableRow>
+                <TableCell>&nbsp; </TableCell>
                 <TableCell>Head Name</TableCell>
-                <TableCell>Count </TableCell>
+                <TableCell>Type</TableCell>
+                <TableCell>Online</TableCell>
+                <TableCell>Cheque</TableCell>
                 <TableCell>Amount Cheque</TableCell>
                 <TableCell>Amount Electronic</TableCell>
                 <TableCell>Amount Item</TableCell>
@@ -248,30 +277,47 @@ const AllHead = ({ setopendashboard }) => {
                     : isData
                   ).map((row, index) => (
                     <TableRow
-                      key={row.id}
+                      key={index}
                       sx={{
                         '&:last-child td, &:last-child th': { border: 0 },
                       }}
                     >
+                      {' '}
+                      <TableCell>&nbsp;</TableCell>
                       <TableCell onClick={() => filterHead(row.type)}>
-                        {row.type}
-                      </TableCell>
-                      <TableCell>{row.count}</TableCell>
-                      <TableCell>
-                        {row.cheque_amount ? row.cheque_amount : '0'}
+                        {row.type ? row.type : row.TYPE}
                       </TableCell>
                       <TableCell>
-                        {row.electric_amount ? row.electric_amount : '0'}
+                        {row.MODE_OF_DONATION
+                          ? row.MODE_OF_DONATION + ' ' + 'donation'
+                          : row.donationType + ' ' + 'donation'}
                       </TableCell>
                       <TableCell>
-                        {row.item_amount ? row.item_amount : '0'}
+                        {row.MODE_OF_DONATION ? row.TOTAL_AMOUNT : '-'}
                       </TableCell>
                       <TableCell>
-                        {' '}
-                        {row.cash_amount ? row.cash_amount : '0'}
+                        {row.MODE_OF_DONATION ? row.TOTAL_AMOUNT : '-'}
                       </TableCell>
                       <TableCell>
-                        {row.total_amount ? row.total_amount : '0'}
+                        {row.MODE_OF_DONATION ? '-' : row.TOTAL_AMOUNT}
+                      </TableCell>
+                      <TableCell>
+                        {row.MODE_OF_DONATION ? '-' : row.TOTAL_AMOUNT}
+                      </TableCell>
+                      <TableCell>
+                        {row.MODE_OF_DONATION ? '-' : row.TOTAL_AMOUNT}
+                      </TableCell>
+                      <TableCell>
+                        {row.MODE_OF_DONATION ? '-' : row.TOTAL_AMOUNT}
+                      </TableCell>
+                      <TableCell>
+                        {/* {row
+                          ? row.reduce(
+                              (n, { TOTAL_AMOUNT }) =>
+                                parseFloat(n) + TOTAL_AMOUNT,
+                              0,
+                            )
+                          : '0'} */}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -316,6 +362,14 @@ const AllHead = ({ setopendashboard }) => {
                   {isData
                     ? isData.reduce(
                         (n, { cash_amount }) => parseFloat(n) + cash_amount,
+                        0,
+                      )
+                    : '0'}
+                </TableCell>
+                <TableCell>
+                  {isData
+                    ? isData.reduce(
+                        (n, { total_amount }) => parseFloat(n) + total_amount,
                         0,
                       )
                     : '0'}
@@ -492,8 +546,6 @@ const AllHead = ({ setopendashboard }) => {
           </>
         )}
       </div>
-
-      <HeadManualReport setopendashboard={setopendashboard} />
     </>
   );
 };

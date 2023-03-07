@@ -17,6 +17,7 @@ import Reciept from '../screens/Admin/Reciept/Reciept';
 import ReceiptManual from '../screens/Admin/Reciept/RecieptManual';
 import OnlineReceipt from '../screens/Admin/Reciept/OnlineReceipt';
 import RoomBooking from '../screens/User/roombookings/RoomBooking';
+import DharamDetails from '../screens/User/roombookings/DharamDetails/DharamDetails';
 function MainRoutes({
   setopendashboard,
   setshowreciept,
@@ -124,6 +125,15 @@ function MainRoutes({
           element={
             <PrivateRoutes>
               <RoomBooking />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/Dharamshala/Details"
+          element={
+            <PrivateRoutes>
+              <DharamDetails />
             </PrivateRoutes>
           }
         />

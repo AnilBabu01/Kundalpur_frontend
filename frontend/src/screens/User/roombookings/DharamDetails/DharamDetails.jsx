@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import homee from '../../../../assets/homee.jpeg';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import dharam1 from '../../../../assets/dharam1.jpeg';
+import room1 from '../../../../assets/room1.jpeg';
+import room2 from '../../../../assets/room2.jpeg';
+import room3 from '../../../../assets/room3.jpeg';
+import room4 from '../../../../assets/room4.jpeg';
+import RoomCard from '../AllAcards/RoomCard';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import {
   Box,
@@ -17,7 +23,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { width } from '@mui/system';
+import MoreSlider from '../MoreSlider/MoreSlider';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -455,6 +461,53 @@ function DharamDetails() {
           </form>
         </div>
       </div>
+
+      <div className="details-div_dhar">
+        <img src={dharam1} alt=" dharam1" />
+        <div className="right_div_deta_dhram">
+          <h2>Lala Umrav Singh Jain Dharmshala</h2>
+          <h2 className="main_text_deltails">Description</h2>
+          <p>
+            Shri Mahaveer Ji has been delightfully decorated to help you feel
+            the warmth of a home in its comfortable atmosphere. Tastefully
+            designed and elegantly appointed rooms, having their own individual
+            character and furnishings.
+          </p>
+          <div className="dharamshal_arc_main_name_div10">
+            <img src={homee} alt="dd" />
+            <p>Kundalpur</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="details-div_dhar">
+        <RoomCard img={room1} />
+        <RoomCard img={room2} />
+        <RoomCard img={room3} />
+        <RoomCard img={room4} />
+      </div>
+
+      <div className="imp_info_super_div">
+        <div className="imp_info">
+          <div className="imp_info_ine_p">
+            <p> Important information</p>
+          </div>
+          <div className="imp_info_ine_innear_div_p">
+            <p>. Guests with fever are not allowed</p>
+            <p>
+              . Office ID and Non-Govt IDs are not accepted as ID proof(s)
+              Passport
+            </p>
+            <p>
+              . Passport, Aadhar, Driving License and Govt. ID are accepted as
+              ID proof(s)
+            </p>
+            <p>. Property staff is trained on hygiene guidelines</p>
+          </div>
+        </div>
+      </div>
+
+      <MoreSlider />
     </>
   );
 }

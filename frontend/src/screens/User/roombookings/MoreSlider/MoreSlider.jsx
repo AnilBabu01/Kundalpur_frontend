@@ -1,9 +1,8 @@
 import React from 'react';
 import DharamshalaCard from '../AllAcards/DharamshalaCard';
 import Carousel from 'react-multi-carousel';
-
 import 'react-multi-carousel/lib/styles.css';
-import './Dharanshalaslider.css';
+import './MoreSlider.css';
 
 const responsive = {
   desktop: {
@@ -22,12 +21,12 @@ const responsive = {
     slidesToSlide: 1, // optional, default to 1.
   },
 };
-function Dharanshalaslider() {
+function MoreSlider() {
   return (
     <>
       <div className="sjilder_main_div">
         <div className="view_all_main_div">
-          <p>Kundalpur Dharamshala</p>
+          <p>Other Dharmshala</p>
           <button> View all</button>
         </div>
         <Carousel
@@ -66,4 +65,4 @@ function Dharanshalaslider() {
   );
 }
 
-export default Dharanshalaslider;
+export default MoreSlider;

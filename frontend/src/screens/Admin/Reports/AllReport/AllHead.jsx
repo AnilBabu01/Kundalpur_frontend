@@ -311,13 +311,13 @@ const AllHead = ({ setopendashboard }) => {
                         {row.MODE_OF_DONATION ? '-' : row.TOTAL_AMOUNT}
                       </TableCell>
                       <TableCell>
-                        {/* {row
+                        {row
                           ? row.reduce(
                               (n, { TOTAL_AMOUNT }) =>
                                 parseFloat(n) + TOTAL_AMOUNT,
                               0,
                             )
-                          : '0'} */}
+                          : '0'}
                       </TableCell>
                     </TableRow>
                   ))}

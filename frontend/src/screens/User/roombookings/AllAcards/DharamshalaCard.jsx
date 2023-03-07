@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import dharam1 from '../../../../assets/dharam1.jpeg';
 import homee from '../../../../assets/homee.jpeg';
 import './DharamshalaCard.css';
 function DharamshalaCard() {
+  const navigate = useNavigate();
   return (
     <>
       <div className="dharamshal_arc_main">
@@ -17,7 +19,12 @@ function DharamshalaCard() {
             <p>₹850 Per Night</p>
             <p>rating</p>
           </div>
-          <button className="detail_more_btn">Details</button>
+          <button
+            onClick={() => navigate('/Dharamshala/Details')}
+            className="detail_more_btn"
+          >
+            Details
+          </button>
         </div>
       </div>
     </>

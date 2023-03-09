@@ -20,7 +20,12 @@ import AllReportTap from '../AllReport/AllReportTap';
 import { ReactSpinner } from 'react-spinning-wheel';
 import 'react-spinning-wheel/dist/style.css';
 import { useReactToPrint } from 'react-to-print';
-
+import OnlineTotal from '../AllReport/Totals/OnlineTotal';
+import ChequeTotal from '../AllReport/Totals/ChequeTotal';
+import Chequestotal from '../AllReport/Totals/ChequeTotal';
+import Cashtotal from '../AllReport/Totals/Cashtotal';
+import ElecTotal from '../AllReport/Totals/ElecTotal';
+import Itemtotal from '../AllReport/Totals/Itemtotal';
 const AllConsolidated = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
@@ -261,7 +266,6 @@ const AllConsolidated = ({ setopendashboard }) => {
                 <TableCell>Amount Electronic</TableCell>
                 <TableCell>Amount Item</TableCell>
                 <TableCell>Amount Cash</TableCell>
-                <TableCell>Total</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -288,36 +292,39 @@ const AllConsolidated = ({ setopendashboard }) => {
                         {row.employeeName ? row.employeeName : '-'}
                       </TableCell>
                       <TableCell>
-                        {row.MODE_OF_DONATION
+                        {row.TYPE
                           ? row.MODE_OF_DONATION + ' ' + 'donation'
                           : row.donationType + ' ' + 'donation'}
                       </TableCell>
                       <TableCell>
-                        {row.MODE_OF_DONATION ? row.TOTAL_AMOUNT : '-'}
+                        {row.ONLINE_TOTAL_AMOUNT
+                          ? row.ONLINE_TOTAL_AMOUNT
+                          : '-'}
                       </TableCell>
                       <TableCell>
-                        {row.MODE_OF_DONATION ? row.TOTAL_AMOUNT : '-'}
+                        {row.CHEQUE_TOTAL_AMOUNT
+                          ? row.CHEQUE_TOTAL_AMOUNT
+                          : '-'}
                       </TableCell>
                       <TableCell>
-                        {row.MODE_OF_DONATION ? '-' : row.TOTAL_AMOUNT}
+                        {row.elec_cheque_TOTAL_AMOUNT
+                          ? row.elec_cheque_TOTAL_AMOUNT
+                          : row.manual_cheque_TOTAL_AMOUNT}
                       </TableCell>
                       <TableCell>
-                        {row.MODE_OF_DONATION ? '-' : row.TOTAL_AMOUNT}
+                        {row.manual_bank_TOTAL_AMOUNT
+                          ? row.manual_bank_TOTAL_AMOUNT
+                          : row.elec_bank_TOTAL_AMOUNT}
                       </TableCell>
                       <TableCell>
-                        {row.MODE_OF_DONATION ? '-' : row.TOTAL_AMOUNT}
+                        {row.manual_item_TOTAL_AMOUNT
+                          ? row.manual_item_TOTAL_AMOUNT
+                          : row.elec_item_TOTAL_AMOUNT}
                       </TableCell>
                       <TableCell>
-                        {row.MODE_OF_DONATION ? '-' : row.TOTAL_AMOUNT}
-                      </TableCell>
-                      <TableCell>
-                        {/* {row
-                          ? row.reduce(
-                              (n, { TOTAL_AMOUNT }) =>
-                                parseFloat(n) + TOTAL_AMOUNT,
-                              0,
-                            )
-                          : '0'} */}
+                        {row.manual_cash_TOTAL_AMOUNT
+                          ? row.manual_cash_TOTAL_AMOUNT
+                          : row.elec_cash_TOTAL_AMOUNT}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -331,57 +338,16 @@ const AllConsolidated = ({ setopendashboard }) => {
               )}
               <TableRow>
                 <TableCell> &nbsp;</TableCell>
-
+                <TableCell> &nbsp;</TableCell>
                 <TableCell>Total</TableCell>
-                <TableCell>
-                  {isData
-                    ? isData.reduce(
-                        (n, { cheque_amount }) => parseFloat(n) + cheque_amount,
-                        0,
-                      )
-                    : '0'}
-                </TableCell>
-                <TableCell>
-                  {isData
-                    ? isData.reduce(
-                        (n, { electric_amount }) =>
-                          parseFloat(n) + electric_amount,
-                        0,
-                      )
-                    : '0'}
-                </TableCell>
-                <TableCell>
-                  {isData
-                    ? isData.reduce(
-                        (n, { item_amount }) => parseFloat(n) + item_amount,
-                        0,
-                      )
-                    : '0'}
-                </TableCell>
-                <TableCell>
-                  {isData
-                    ? isData.reduce(
-                        (n, { cash_amount }) => parseFloat(n) + cash_amount,
-                        0,
-                      )
-                    : '0'}
-                </TableCell>
-                <TableCell>
-                  {isData
-                    ? isData.reduce(
-                        (n, { total_amount }) => parseFloat(n) + total_amount,
-                        0,
-                      )
-                    : '0'}
-                </TableCell>
-                <TableCell>
-                  {isData
-                    ? isData.reduce(
-                        (n, { total_amount }) => parseFloat(n) + total_amount,
-                        0,
-                      )
-                    : '0'}
-                </TableCell>
+                <TableCell>{<OnlineTotal data={isData} />}</TableCell>
+                <TableCell>{<ChequeTotal data={isData} />}</TableCell>
+                <TableCell>{<Chequestotal data={isData} />}</TableCell>
+
+                <TableCell>{<ElecTotal data={isData} />}</TableCell>
+                <TableCell>{<Itemtotal data={isData} />}</TableCell>
+
+                <TableCell>{<Cashtotal data={isData} />}</TableCell>
               </TableRow>
             </TableBody>
             <TableFooter>

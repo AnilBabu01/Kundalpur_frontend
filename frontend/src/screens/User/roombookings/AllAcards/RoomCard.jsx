@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import homee from '../../../../assets/homee.jpeg';
 import './RoomCard.css';
 function RoomCard({ img }) {
+  const navigate = useNavigate();
   return (
     <>
       <div className="room_card_main_div">
@@ -21,7 +23,7 @@ function RoomCard({ img }) {
           <div>
             <p> Rating </p>
           </div>
-          <button> Book Now</button>
+          <button onClick={() => navigate('/room/booking')}> Book Now</button>
         </div>
       </div>
     </>

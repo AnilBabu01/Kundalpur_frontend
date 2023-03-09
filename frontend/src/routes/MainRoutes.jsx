@@ -18,6 +18,8 @@ import ReceiptManual from '../screens/Admin/Reciept/RecieptManual';
 import OnlineReceipt from '../screens/Admin/Reciept/OnlineReceipt';
 import RoomBooking from '../screens/User/roombookings/RoomBooking';
 import DharamDetails from '../screens/User/roombookings/DharamDetails/DharamDetails';
+import RoomBookingscreen from '../screens/User/roombookings/RoomBookingscreen/RoomBookingscreen';
+import PaymentSuccess from '../screens/User/roombookings/PaymentSuccess/PaymentSuccess';
 function MainRoutes({
   setopendashboard,
   setshowreciept,
@@ -134,6 +136,24 @@ function MainRoutes({
           element={
             <PrivateRoutes>
               <DharamDetails />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/room/booking"
+          element={
+            <PrivateRoutes>
+              <RoomBookingscreen />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/room/paymentsuccessfuly"
+          element={
+            <PrivateRoutes>
+              <PaymentSuccess />
             </PrivateRoutes>
           }
         />

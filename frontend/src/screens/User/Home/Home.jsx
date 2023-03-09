@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import logo from '../../../assets/sideimg.jpeg';
 import money from '../../../assets/money.jpeg';
 import Aboutus from '../about/Aboutus';
-import RoomBooking from '../RoomBooking/RoomBooking';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 const Home = ({ setshowRoomOptions }) => {
@@ -56,7 +55,6 @@ const Home = ({ setshowRoomOptions }) => {
         </div>
       </div>
       <Aboutus />
-      <RoomBooking />
     </>
   );
 };

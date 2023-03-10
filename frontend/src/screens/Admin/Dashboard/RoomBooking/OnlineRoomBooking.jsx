@@ -85,7 +85,15 @@ const OnlineRoomBooking = ({ setopendashboard }) => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p style={{ color: '#FF6332' }}>Online Room Booking(आवास)</p>
+            <p
+              style={{
+                color: '#FF6332',
+                marginTop: '0px',
+                marginBottom: '0px',
+              }}
+            >
+              Online Room Booking(आवास)
+            </p>
           </div>
         </div>
 

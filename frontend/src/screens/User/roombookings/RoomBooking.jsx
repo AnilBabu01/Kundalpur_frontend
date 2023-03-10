@@ -35,7 +35,7 @@ const style = {
   borderRadius: '15px',
 };
 export const CustomInput = styled(InputBase)(({ theme }) => ({
-  width: '167px',
+  width: '200px',
   height: '26px',
   paddingLeft: '0.5rem',
   background: 'linear-gradient(180deg, #F2EEEB 0%, #EDEDED 100%);',
@@ -316,7 +316,7 @@ function RoomBooking({}) {
                   <Select
                     required
                     sx={{
-                      width: '167px',
+                      width: '200px',
                       height: '26px',
                       paddingLeft: '0.5rem',
                       background:
@@ -366,7 +366,7 @@ function RoomBooking({}) {
                   <Select
                     required
                     sx={{
-                      width: '167px',
+                      width: '200px',
                       height: '26px',
                       paddingLeft: '0.5rem',
 

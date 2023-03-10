@@ -129,7 +129,15 @@ const Donation = () => {
               alignItems: 'center',
             }}
           >
-            <p style={{ color: '#FE0000' }}>Donation(दान)</p>
+            <p
+              style={{
+                color: '#FE0000',
+                marginTop: '0px',
+                marginBottom: '0px',
+              }}
+            >
+              Donation(दान)
+            </p>
           </div>
         </div>
 

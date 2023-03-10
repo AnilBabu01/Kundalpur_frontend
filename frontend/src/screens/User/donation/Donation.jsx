@@ -470,7 +470,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
               maxWidth={'sm'}
               width={'100%'}
               margin={'auto 2rem auto auto'}
-              marginY={5}
+              marginY={1}
               sx={{
                 background: 'rgba(255, 255, 255, 0.7)',
                 backdropFilter: 'blur(2px)',

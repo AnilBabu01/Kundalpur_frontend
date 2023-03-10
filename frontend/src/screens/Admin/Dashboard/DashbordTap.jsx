@@ -61,7 +61,9 @@ const DashbordTap = ({ setopendashboard }) => {
                   onClick={() => handleOpen5()}
                   className="print_all_today_iner"
                 >
-                  <p>Print All</p>
+                  <p style={{ marginTop: '0px', marginBottom: '0px' }}>
+                    Print All
+                  </p>
                   <img src={Print} alt="dd" style={{ width: '25px' }} />
                 </div>
               </div>
@@ -93,7 +95,9 @@ const DashbordTap = ({ setopendashboard }) => {
                   onClick={() => handleOpen5()}
                   className="print_all_today_iner"
                 >
-                  <p>Print All</p>
+                  <p style={{ marginTop: '0px', marginBottom: '0px' }}>
+                    Print All
+                  </p>
                   <img src={Print} alt="dd" style={{ width: '25px' }} />
                 </div>
               </div>

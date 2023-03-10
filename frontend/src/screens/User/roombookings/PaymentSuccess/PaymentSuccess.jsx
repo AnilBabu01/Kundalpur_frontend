@@ -34,8 +34,8 @@ function PaymentSuccess() {
             </div>
           </div>
           <div className="payment_btn_duvvvvvv">
-            <button className="payment_btn_duvvvvvv10">Print </button>
-            <button className="payment_btn_duvvvvvv11">Close</button>
+            <button className="payment_btn_duvvvvvv10">Confirmation</button>
+            <button className="payment_btn_duvvvvvv11">Booking history</button>
           </div>
         </div>
       </div>

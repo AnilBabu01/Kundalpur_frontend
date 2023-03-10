@@ -105,12 +105,17 @@ margin-top: 4rem;
 
 .main_card_amount {
   width: 15%;
-  height: 81px;
+
   background: #f1dac6;
   border-radius: 10px;
   padding: 0.5rem;
 }
 
+.main_card_amount p{
+  font-size: 12x;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
 .main_repue_img {
   display: flex;
   justify-content: space-between;
@@ -118,8 +123,10 @@ margin-top: 4rem;
 }
 
 .main_repue_img img {
-  width: 30px;
+  width: 25px;
 }
+
+
 .print_all_today{
   display: flex;
   flex-direction: row-reverse;

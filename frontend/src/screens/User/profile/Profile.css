@@ -1,5 +1,5 @@
 .Profile-main-div {
-  padding-top: 8rem;
+  padding-top: 1rem;
   height: 813px;
   background: linear-gradient(
     90.42deg,
@@ -193,7 +193,7 @@
   }
 
   .Profile-main-div {
-    padding-top: 6rem;
+    padding-top: 1rem;
     height: 100%;
 
     padding-left: 0rem;

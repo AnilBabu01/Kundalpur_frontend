@@ -124,7 +124,15 @@ const OnlineDonation = ({ setopendashboard }) => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p style={{ color: '#009430' }}>Online Donation(दान)</p>
+            <p
+              style={{
+                color: '#009430',
+                marginTop: '0px',
+                marginBottom: '0px',
+              }}
+            >
+              Online Donation(दान)
+            </p>
           </div>
         </div>
 

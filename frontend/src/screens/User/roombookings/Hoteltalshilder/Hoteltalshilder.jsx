@@ -23,7 +23,7 @@ const responsive = {
 function Hoteltalshilder() {
   return (
     <>
-      <div className="sjilder_main_div" style={{ marginTop: '8rem' }}>
+      <div className="sjilder_main_div" style={{ marginTop: '10rem' }}>
         <div className="view_all_main_div">
           <p>Kundalpur Hotels</p>
           <button> View all</button>

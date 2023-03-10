@@ -123,7 +123,15 @@ const EmployeeManualDonation = () => {
             />
           </Tooltip>
           <div style={{ width: '95%', display: 'flex', alignItems: 'center' }}>
-            <p style={{ color: '#FECE00' }}>Manual Donation(दान)</p>
+            <p
+              style={{
+                color: '#FECE00',
+                marginTop: '0px',
+                marginBottom: '0px',
+              }}
+            >
+              Manual Donation(दान)
+            </p>
           </div>
         </div>
 

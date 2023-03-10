@@ -4,6 +4,8 @@ import DonationMaster from './Donationmaster/DonationMaster';
 import IntemMaster from './Itemmaster/IntemMaster';
 import ReceiptMater from './Receiptmaster/ReceiptMater';
 import UserMaster from './Usermaster/UserMaster';
+import AddCategory from '../masters/AddCategory/AddCategory';
+import AddFacilities from '../masters/AddFacilities/AddFacilities';
 import f1 from '../../../assets/f5.png';
 import './MasterTap.css';
 
@@ -67,6 +69,30 @@ const MasterTap = ({ setopendashboard }) => {
               />
               Receipt Master
             </button>
+
+            <button
+              className={toggleState === 5 ? 'tabs2 ' : 'tabs1'}
+              onClick={() => toggleTab(5)}
+            >
+              <img
+                style={{ marginRight: '4%', width: '20px' }}
+                src={f1}
+                alt="fast"
+              />
+              Category Master
+            </button>
+
+            <button
+              className={toggleState === 6 ? 'tabs2 ' : 'tabs1'}
+              onClick={() => toggleTab(6)}
+            >
+              <img
+                style={{ marginRight: '4%', width: '20px' }}
+                src={f1}
+                alt="fast"
+              />
+              Facility Master
+            </button>
           </div>
 
           <div className="content-tabs">
@@ -98,6 +124,20 @@ const MasterTap = ({ setopendashboard }) => {
               }
             >
               <ReceiptMater />
+            </div>
+            <div
+              className={
+                toggleState === 5 ? 'content  active-content' : 'content'
+              }
+            >
+              <AddCategory setopendashboard={setopendashboard} />
+            </div>
+            <div
+              className={
+                toggleState === 6 ? 'content  active-content' : 'content'
+              }
+            >
+              <AddFacilities setopendashboard={setopendashboard} />
             </div>
           </div>
         </div>

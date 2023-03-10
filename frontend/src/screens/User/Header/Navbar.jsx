@@ -31,6 +31,7 @@ const Navbar = ({ showRoomOptions }) => {
   const [isMobile, setisMobile] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
   const [profileimg, setprofileimg] = useState('');
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import MainAdmin from '../src/screens/Admin/MainAdmin/MainAdmin';
-import Navbar from './screens/User/Header/Navbar';
+import Navbar1 from './screens/User/Header/Navbar1';
 import Footer from './screens/User/Footer/Footer';
 import MainRoutes from './routes/MainRoutes';
 import AdminRoutes from './routes/AdminRoutes';
@@ -52,7 +52,7 @@ function App() {
         ) : (
           <>
             {!opendashboard || noHeaderFooter || userrole === 2 ? (
-              <Navbar showRoomOptions={showRoomOptions} />
+              <Navbar1 showRoomOptions={showRoomOptions} />
             ) : (
               ''
             )}

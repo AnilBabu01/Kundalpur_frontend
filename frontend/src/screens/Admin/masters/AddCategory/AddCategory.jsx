@@ -43,7 +43,7 @@ const style = {
   top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '63%',
+  width: '43%',
   bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
@@ -287,15 +287,8 @@ const AddCategory = ({ setopendashboard }) => {
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
                 <TableCell>S.No</TableCell>
-                <TableCell>Dharamashala</TableCell>
-                <TableCell>Facility</TableCell>
-                <TableCell>Category Name</TableCell>
-                <TableCell>Rate </TableCell>
-                <TableCell>Advance Amount</TableCell>
-                <TableCell>online availability</TableCell>
-                <TableCell>offline availability</TableCell>
-                <TableCell>Check out Time</TableCell>
-                <TableCell>Action</TableCell>
+                <TableCell>Category in hindi</TableCell>
+                <TableCell>Category in english</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -316,14 +309,7 @@ const AddCategory = ({ setopendashboard }) => {
                     >
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{row.dharmasala}</TableCell>
-                      <TableCell>{row.Facilities}</TableCell>
-                      <TableCell>{row.Name}</TableCell>
-                      <TableCell>{row.Rate}</TableCell>
-                      <TableCell>{row.advance}</TableCell>
-                      <TableCell>{row.isOnline ? 'Yes' : 'No'}</TableCell>
-                      <TableCell>{row.isOffline ? 'Yes' : 'No'}</TableCell>
 
-                      <TableCell> {row.checkoutTime}</TableCell>
                       <TableCell>
                         <Tooltip title="View">
                           <img

@@ -1,7 +1,7 @@
 .room_card_main_div {
   width: 48.3%;
   margin-top: 3%;
-  height: 211px;
+
   background: #ffffff;
   border: 1.5px solid #ffa75c;
   box-shadow: 0px 8px 16px rgb(0 0 0 / 16%);
@@ -24,6 +24,11 @@
     flex-direction: column;
     justify-content: space-between;
 }
+.main_room_div_deell p{
+  color: #070200d3;
+  font-size: 15px!important;
+  font-weight: 510;
+}
 .main_room_div_deell button {
   width: 126px;
   height: 30px;
@@ -41,6 +46,7 @@ color: #FFFFFF;
 }
 .dharamshal_arc_main_name_div13 {
   display: flex;
+  align-items: center;
 }
 
 .dharamshal_arc_main_name_div13img {

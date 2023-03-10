@@ -6,7 +6,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import CallIcon from '@mui/icons-material/Call';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Link } from 'react-router-dom';
-import Logo from '../../../assets/logo1.jpeg';
+
+import Logo from '../../../assets/croppedlogo.png';
 import './Footer.css';
 const Footer = () => {
   return (

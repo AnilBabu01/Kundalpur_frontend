@@ -292,57 +292,7 @@ function DharamDetails() {
               <Select
                 required
                 sx={{
-                  width: '167px',
-                  height: '26px',
-                  paddingLeft: '0.5rem',
-                  background:
-                    'linear-gradient(180deg, #F2EEEB 0%, #EDEDED 100%);',
-                  fontSize: 12,
-                  '& .MuiSelect-select': {
-                    padding: '1px',
-                  },
-                }}
-                value={typekundalpur}
-                onChange={(e) => settypekundalpur(e.target.value)}
-              >
-                <MenuItem
-                  sx={{
-                    fontSize: 12,
-                  }}
-                  value="Select"
-                >
-                  Select
-                </MenuItem>
-                {Kundalpurtype &&
-                  Kundalpurtype.map((item, idx) => {
-                    return (
-                      <MenuItem
-                        sx={{
-                          fontSize: 12,
-                        }}
-                        key={item.id}
-                        value={item.type}
-                      >
-                        {item.type}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </div>
-
-            <div className="main_div_select_div">
-              <label>
-                <img
-                  style={{ width: '8%', marginRight: '1%' }}
-                  src={homee}
-                  alt="dd"
-                />
-                Select Stay
-              </label>
-              <Select
-                required
-                sx={{
-                  width: '167px',
+                  width: '100%',
                   height: '26px',
                   paddingLeft: '0.5rem',
 

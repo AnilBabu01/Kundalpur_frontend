@@ -4,6 +4,7 @@ import Dashbord from './Dashbord/Dashbord';
 import CheckIn from './CheckIn/CheckIn';
 import Hold from './Hold/Hold';
 import RoomShift from './RoomShift/RoomShift';
+import RoomBooking from './RoomBooking';
 const RoomBookingTap = ({ setopendashboard }) => {
   const [toggleState, setToggleState] = useState(1);
 
@@ -80,7 +81,7 @@ const RoomBookingTap = ({ setopendashboard }) => {
                 toggleState === 2 ? 'content  active-content' : 'content'
               }
             >
-              <CheckIn setopendashboard={setopendashboard} />
+              <RoomBooking setopendashboard={setopendashboard} />
             </div>
             <div
               className={

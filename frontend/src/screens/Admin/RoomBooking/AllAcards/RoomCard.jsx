@@ -31,7 +31,9 @@ function RoomCard({ img }) {
               }}
             />
           </div>
-          <button onClick={() => navigate('/room/booking')}> Book Now</button>
+          <button onClick={() => navigate('/admin-panel/room/booking')}>
+            Book Now
+          </button>
         </div>
       </div>
     </>

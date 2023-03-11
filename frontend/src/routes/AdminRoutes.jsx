@@ -50,6 +50,12 @@ import Online from '../screens/Admin/Reports/OnlineDonations/Online/Online';
 import AllReportTap from '../screens/Admin/Reports/AllReport/AllReportTap';
 import AllHead from '../screens/Admin/Reports/AllReport/AllHead';
 import AllConsolidated from '../screens/Admin/Reports/AllReport/AllConsolidated';
+
+//dharamshala
+import DharamDetails from '../screens/Admin/RoomBooking/DharamDetails/DharamDetails';
+
+import RoomBookingscreen from '../screens/Admin/RoomBooking/RoomBookingscreen/RoomBookingscreen';
+// import PaymentSuccess from '../screens/User/roombookings/PaymentSuccess/PaymentSuccess';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   const [addleftmargin, setaddleftmargin] = useState(false);
   return (
@@ -424,6 +430,23 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <AllConsolidated setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/Dharamshala/Details"
+          element={
+            <Adminprivateroute>
+              <DharamDetails setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/room/booking"
+          element={
+            <Adminprivateroute>
+              <RoomBookingscreen setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

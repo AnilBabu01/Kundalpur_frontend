@@ -14,6 +14,7 @@ const custumstyle = {
   borderRadius: '7px',
   paddingLeft: '0.5rem',
 };
+
 function AddForm({ setOpen }) {
   const [nameinHindi, setnameinHindi] = useState('');
   const [nameinEnglish, setnameinEnglish] = useState('');
@@ -66,63 +67,23 @@ function AddForm({ setOpen }) {
       <div className="cash-donation-div">
         <div className="cash-donation-container-innser">
           <form onSubmit={handlesubmit}>
-            <div className="form-div">
-              <div className="form-input-div_add_user">
-                <div className="inner-input-div2">
-                  <label htmlFor="fromNo">Online</label>
-                  <select
-                    onChange={(e) => setisonline(e.target.value)}
-                    className="forminput_add_user"
-                  >
-                    <option value={true}>Yes</option>
-                    <option value={false}>No</option>
-                  </select>
-                </div>
-                <div className="inner-input-div2">
-                  <label htmlFor="fromNo">Offline</label>
-                  <select
-                    onClick={(e) => setisoffline(e.target.value)}
-                    className="forminput_add_user"
-                  >
-                    <option value={true}>Yes</option>
-                    <option value={false}>No</option>
-                  </select>
-                </div>
-                <div className="inner-input-div2">
-                  <label htmlFor="fromNo">dharamshala in english</label>
-                  <input
-                    type="text"
-                    id="fromNo"
-                    placeholder="enter the dharamshala name in english"
-                    style={custumstyle}
-                    value={nameinEnglish}
-                    name="nameinEnglish"
-                    onChange={(e) => setnameinEnglish(e.target.value)}
-                  />
-                </div>
-                <div className="inner-input-div2">
-                  <label htmlFor="toNo">dharamshala in hindi</label>
-
-                  <ReactTransliterate
-                    style={custumstyle}
-                    id="full-name"
-                    required
-                    placeholder="enter the dharamshala name in hindi"
-                    value={nameinHindi}
-                    onChangeText={(nameinHindi) => {
-                      setnameinHindi(nameinHindi);
-                    }}
-                    onChange={(e) => setnameinHindi(e.target.value)}
-                    lang="hi"
-                  />
-                </div>
-              </div>
-            </div>
             <div style={{ marginTop: '0.2rem' }}>
-              <label htmlFor="fromNo">Discription</label>
+              <label htmlFor="fromNo">Dharanshala Name</label>
               <input
                 style={{ width: '100%', marginTop: '0.2rem' }}
                 type="textarea"
+                id="fromNo"
+                placeholder="enter the description"
+                className="forminput_add_user10"
+                value={description}
+                name="description"
+                onChange={(e) => setdescription(e.target.value)}
+              />
+            </div>
+            <div style={{ marginTop: '1.2rem' }}>
+              <label htmlFor="fromNo">Dharamshala Description</label>
+              <textarea
+                style={{ width: '99.8%', marginTop: '0.2rem', height: '100px' }}
                 id="fromNo"
                 placeholder="enter the description"
                 className="forminput_add_user10"
@@ -140,138 +101,8 @@ function AddForm({ setOpen }) {
                 flexDirection: 'column',
               }}
             >
-              <div className="form-div">
-                <div className="form-input-div_add_user">
-                  <div className="main_upload_sharam">
-                    <div className="cemera_inear_div">
-                      <img
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          borderRadius: '5px',
-                        }}
-                        src={previewprofile1 ? previewprofile1 : camera}
-                        alt="ss"
-                      />
-                    </div>
-                    <div className="selctimg_div">
-                      <label htmlFor="img1">Image 1 </label>
-                      <input
-                        style={{ marginRight: '2rem' }}
-                        id="img1"
-                        className="forminput_add_user10"
-                        type="file"
-                        placeholder="enter category name"
-                        name="img1"
-                        onChange={(e) => {
-                          setimg1(e.target.files[0]);
-
-                          setpreviewprofile1(
-                            URL.createObjectURL(e.target.files[0]),
-                          );
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="main_upload_sharam">
-                    <div className="cemera_inear_div">
-                      <img
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          borderRadius: '5px',
-                        }}
-                        src={previewprofile2 ? previewprofile2 : camera}
-                        alt="ss"
-                      />
-                    </div>
-                    <div className="selctimg_div">
-                      <label htmlFor="img2">Image 2 </label>
-                      <input
-                        id="img2"
-                        className="forminput_add_user10"
-                        type="file"
-                        placeholder="enter category name"
-                        name="img2"
-                        onChange={(e) => {
-                          setimg2(e.target.files[0]);
-
-                          setpreviewprofile2(
-                            URL.createObjectURL(e.target.files[0]),
-                          );
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-div">
-                <div className="form-input-div_add_user">
-                  <div className="main_upload_sharam">
-                    <div className="cemera_inear_div">
-                      <img
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          borderRadius: '5px',
-                        }}
-                        src={previewprofile3 ? previewprofile3 : camera}
-                        alt="ss"
-                      />
-                    </div>
-                    <div className="selctimg_div">
-                      <label htmlFor="img3">Image 3 </label>
-                      <input
-                        style={{ marginRight: '2rem' }}
-                        id="img3"
-                        className="forminput_add_user10"
-                        type="file"
-                        placeholder="enter category name"
-                        name="img3"
-                        onChange={(e) => {
-                          setimg3(e.target.files[0]);
-
-                          setpreviewprofile3(
-                            URL.createObjectURL(e.target.files[0]),
-                          );
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="main_upload_sharam">
-                    <div className="cemera_inear_div">
-                      <img
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          borderRadius: '5px',
-                        }}
-                        src={previewprofile4 ? previewprofile4 : camera}
-                        alt="ss"
-                      />
-                    </div>
-                    <div className="selctimg_div">
-                      <label htmlFor="img4">Image 4 </label>
-                      <input
-                        id="img4"
-                        className="forminput_add_user10"
-                        type="file"
-                        placeholder="enter category name"
-                        name="img4"
-                        onChange={(e) => {
-                          setimg4(e.target.files[0]);
-
-                          setpreviewprofile4(
-                            URL.createObjectURL(e.target.files[0]),
-                          );
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
+              <div className="main_img_divvvv">
+                <img src={camera} />
               </div>
             </div>
 

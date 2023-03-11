@@ -103,6 +103,13 @@ const Childrencont = [
   { id: 8, type: 8 },
   { id: 9, type: 9 },
 ];
+
+const modes = [
+  { id: 1, type: 'Online' },
+  { id: 2, type: 'Offline' },
+  { id: 3, type: 'Both' },
+];
+
 function RoomBooking({}) {
   const [showresuilt, setshowresuilt] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -354,6 +361,57 @@ function RoomBooking({}) {
                       })}
                   </Select>
                 </div>
+
+                <div className="main_div_select_div">
+                  <label>
+                    <img
+                      style={{ width: '8%', marginRight: '1%' }}
+                      src={homee}
+                      alt="dd"
+                    />
+                    Mode
+                  </label>
+                  <Select
+                    required
+                    sx={{
+                      width: '100%',
+                      height: '26px',
+                      paddingLeft: '0.5rem',
+
+                      background:
+                        'linear-gradient(180deg, #F2EEEB 0%, #EDEDED 100%);',
+                      fontSize: 14,
+                      '& .MuiSelect-select': {
+                        padding: '1px',
+                      },
+                    }}
+                    value={dharamshalaname}
+                    onChange={(e) => setdharamshalaname(e.target.value)}
+                  >
+                    <MenuItem
+                      sx={{
+                        fontSize: 12,
+                      }}
+                      value="Select"
+                    >
+                      Select
+                    </MenuItem>
+                    {modes &&
+                      modes.map((item, idx) => {
+                        return (
+                          <MenuItem
+                            sx={{
+                              fontSize: 12,
+                            }}
+                            key={item.id}
+                            value={item.type}
+                          >
+                            {item.type}
+                          </MenuItem>
+                        );
+                      })}
+                  </Select>
+                </div>
                 <div className="main_div_select_div">
                   <label>
                     <img
@@ -452,7 +510,6 @@ function RoomBooking({}) {
               <DharamshalaCard />
             </div>
           </div>
-
           <ServicesandFacilities />
         </>
       )}

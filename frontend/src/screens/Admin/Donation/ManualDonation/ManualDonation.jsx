@@ -203,7 +203,7 @@ const ManualDonation = ({ setopendashboard }) => {
       if (res.status) {
         setisData(res.data);
 
-        console.log('this', typeof rowData);
+        console.log('this', res.data);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }

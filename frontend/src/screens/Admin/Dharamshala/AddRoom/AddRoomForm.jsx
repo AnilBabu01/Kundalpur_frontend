@@ -172,7 +172,7 @@ function AddRoomForm({ setOpen }) {
 
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="roomno">
-                  Room Number
+                  Room Range
                 </label>
                 <CustomInput
                   id="roomno"
@@ -283,7 +283,7 @@ function AddRoomForm({ setOpen }) {
 
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Rate
+                  Room Price
                 </label>
                 <CustomInput
                   id="rate"
@@ -326,7 +326,7 @@ function AddRoomForm({ setOpen }) {
 
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="roomtype">
-                  Room Type
+                  Mode
                 </label>
                 <Select
                   id="roomtype"
@@ -359,7 +359,7 @@ function AddRoomForm({ setOpen }) {
                     }}
                     value={1}
                   >
-                    Yes
+                    Online
                   </MenuItem>
                   <MenuItem
                     sx={{
@@ -367,57 +367,68 @@ function AddRoomForm({ setOpen }) {
                     }}
                     value={0}
                   >
-                    No
+                    Offline
                   </MenuItem>
                 </Select>
               </div>
 
               <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="roomstatus">
-                  Status
+                  Image 1
                 </label>
-                <Select
-                  id="roomstatus"
-                  required
-                  sx={{
-                    width: '280px',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      // borderColor: !!formerror.donationtype ? 'red' : '',
-                      padding: '10px 0px 10px 10px',
-                      background: '#fff',
-                    },
-                  }}
-                  value={roomstatus}
-                  name="roomstatus"
-                  onChange={(e) => setroomstatus(e.target.value)}
-                  displayEmpty
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={''}
-                  >
-                    Please select
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={true}
-                  >
-                    Enable
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={false}
-                  >
-                    Disable
-                  </MenuItem>
-                </Select>
+                <CustomInput
+                  type="file"
+                  id="roomno"
+                  name="roomno"
+                  placeholder="Enter the rate"
+                  value={roomno}
+                  onChange={(e) => setroomno(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="form-div" style={{ marginBottom: '1rem' }}>
+            <div className="form-input-div_add_user">
+              <div className="inner-input-div2">
+                <label style={{ marginBottom: '0.3rem' }} htmlFor="roomstatus">
+                  Image 2
+                </label>
+                <CustomInput
+                  type="file"
+                  id="roomno"
+                  name="roomno"
+                  placeholder="Enter the rate"
+                  value={roomno}
+                  onChange={(e) => setroomno(e.target.value)}
+                />
+              </div>
+              <div className="inner-input-div2">
+                <label style={{ marginBottom: '0.3rem' }} htmlFor="roomstatus">
+                  Image 3
+                </label>
+                <CustomInput
+                  type="file"
+                  id="roomno"
+                  name="roomno"
+                  placeholder="Enter the rate"
+                  value={roomno}
+                  onChange={(e) => setroomno(e.target.value)}
+                />
+              </div>
+
+              <div className="inner-input-div2">
+                <label style={{ marginBottom: '0.3rem' }} htmlFor="roomstatus">
+                  Image 4
+                </label>
+                <CustomInput
+                  type="file"
+                  id="roomno"
+                  name="roomno"
+                  placeholder="Enter the rate"
+                  value={roomno}
+                  onChange={(e) => setroomno(e.target.value)}
+                />
               </div>
             </div>
           </div>

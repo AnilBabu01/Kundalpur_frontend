@@ -39,7 +39,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '82.3%',
+  width: '488px',
   bgcolor: 'background.paper',
   p: 1,
   boxShadow: 24,

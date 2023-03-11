@@ -119,25 +119,25 @@ function Profile() {
             <div className="form-main-div-profile">
               <div>
                 <div className="input-group-profile">
-                  <label htmlFor="name">Full Name</label>
+                  <label htmlFor="mobile">Mobile Number</label>
                   <input
-                    type="name"
-                    id="name"
-                    name="name"
-                    placeholder="enter name"
-                    value={name}
-                    onChange={(e) => setname(e.target.value)}
+                    type="mobile"
+                    id="mobile"
+                    name="mobile"
+                    placeholder="enter phone"
+                    value={mobile}
+                    onChange={(e) => setmobile(e.target.value)}
                   />
                 </div>
                 <div className="input-group-profile">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="address">Address</label>
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="enter email"
-                    value={email}
-                    onChange={(e) => setemail(e.target.value)}
+                    type="address"
+                    id="address"
+                    name="address"
+                    placeholder="enter address"
+                    value={address}
+                    onChange={(e) => setaddress(e.target.value)}
                   />
                 </div>
                 <div className="input-group-profile">
@@ -166,25 +166,25 @@ function Profile() {
               <div>
                 <div>
                   <div className="input-group-profile">
-                    <label htmlFor="mobile">Mobile Number</label>
+                    <label htmlFor="name">Full Name</label>
                     <input
-                      type="mobile"
-                      id="mobile"
-                      name="mobile"
-                      placeholder="enter phone"
-                      value={mobile}
-                      onChange={(e) => setmobile(e.target.value)}
+                      type="name"
+                      id="name"
+                      name="name"
+                      placeholder="enter name"
+                      value={name}
+                      onChange={(e) => setname(e.target.value)}
                     />
                   </div>
                   <div className="input-group-profile">
-                    <label htmlFor="address">Address</label>
+                    <label htmlFor="email">Email</label>
                     <input
-                      type="address"
-                      id="address"
-                      name="address"
-                      placeholder="enter address"
-                      value={address}
-                      onChange={(e) => setaddress(e.target.value)}
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="enter email"
+                      value={email}
+                      onChange={(e) => setemail(e.target.value)}
                     />
                   </div>
                   <div className="input-group-profile">

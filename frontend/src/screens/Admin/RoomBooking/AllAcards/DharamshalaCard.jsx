@@ -29,7 +29,7 @@ function DharamshalaCard() {
             />
           </div>
           <button
-            onClick={() => navigate('/Dharamshala/Details')}
+            onClick={() => navigate('/admin-panel/Dharamshala/Details')}
             className="detail_more_btn"
           >
             Details

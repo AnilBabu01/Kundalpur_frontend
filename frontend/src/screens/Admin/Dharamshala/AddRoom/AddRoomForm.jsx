@@ -20,7 +20,7 @@ import {
   Typography,
 } from '@mui/material';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-
+const formData = new FormData();
 export const CustomInput = styled(InputBase)(({ theme }) => ({
   width: '280px',
   fontFamily: 'Poppins',
@@ -49,12 +49,12 @@ function AddRoomForm({ setOpen }) {
   const [Dharamshala, setDharamshala] = useState('');
   const [category, setcategory] = useState('');
   const [dharamshalaname, setdharamshalaname] = useState('');
-  const [facilityname, setfacilityname] = useState('');
+  const [facilityname, setfacilityname] = useState([]);
   const [rate, setrate] = useState('');
   const [advncerate, setadvncerate] = useState('');
   const [checkout, setcheckout] = useState('');
   const [roomtype, setroomtype] = useState(1);
-  const [categroyname, setcategroyname] = useState('');
+  const [categroyname, setcategroyname] = useState([]);
   const [fromroomno, setfromroomno] = useState('');
   const [toroomno, settoroomno] = useState('');
   const [img1, setimg1] = useState('');
@@ -65,28 +65,28 @@ function AddRoomForm({ setOpen }) {
   const [previewprofile2, setpreviewprofile2] = useState('');
   const [previewprofile3, setpreviewprofile3] = useState('');
   const [previewprofile4, setpreviewprofile4] = useState('');
+
   const handlesubmit = async () => {
     try {
-      const data = {
-        Rate: rate,
-        dharmasala_id: dharamshalaname,
-        category_id: [1, 2, 3],
-        FroomNo: fromroomno,
-        TroomNo: toroomno,
-        advance: advncerate,
-        roomType: roomtype,
-        facility_id: [1, 2, 3],
-        coTime: checkout,
-        image1: img1,
-        image2: img2,
-        image3: img3,
-        image4: img4,
-      };
+      formData.set('Rate', rate);
+      formData.set('dharmasala', dharamshalaname);
+      formData.set('category_id', JSON.stringify(facilityname));
+
+      formData.set('FroomNo', fromroomno);
+      formData.set('TroomNo', toroomno);
+      formData.set('advance', advncerate);
+      formData.set('roomType', roomtype);
+      formData.set('facility_id', JSON.stringify(categroyname));
+      formData.set('image1', img1);
+      formData.set('image2', img2);
+      formData.set('image3', img3);
+      formData.set('image4', img4);
+
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-      const res = await axios.post(`${backendApiUrl}room`, data);
+      const res = await axios.post(`${backendApiUrl}room`, formData);
 
       if (res.data.data.status) {
         setOpen(false);
@@ -131,6 +131,7 @@ function AddRoomForm({ setOpen }) {
     getallcategory();
   }, []);
 
+  console.log('categori ids', categroyname);
   return (
     <>
       <div className="cash-donation-div">
@@ -383,6 +384,7 @@ function AddRoomForm({ setOpen }) {
                       Category
                     </label>
                     <Select
+                      multiple
                       id="categroyname"
                       required
                       sx={{
@@ -395,7 +397,7 @@ function AddRoomForm({ setOpen }) {
                         },
                       }}
                       value={categroyname}
-                      name="categroyname"
+                      name="categroyname[]"
                       onChange={(e) => setcategroyname(e.target.value)}
                       displayEmpty
                     >
@@ -403,7 +405,7 @@ function AddRoomForm({ setOpen }) {
                         sx={{
                           fontSize: 14,
                         }}
-                        value={''}
+                        value={'Please select'}
                       >
                         Please select
                       </MenuItem>
@@ -461,6 +463,7 @@ function AddRoomForm({ setOpen }) {
                       Facilities
                     </label>
                     <Select
+                      multiple
                       id="donation-type"
                       required
                       sx={{
@@ -473,7 +476,7 @@ function AddRoomForm({ setOpen }) {
                         },
                       }}
                       value={facilityname}
-                      name="facilityname"
+                      name="facilityname[]"
                       onChange={(e) => setfacilityname(e.target.value)}
                       displayEmpty
                     >

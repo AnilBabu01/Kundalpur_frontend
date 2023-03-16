@@ -96,7 +96,7 @@ function Profile() {
                     name="profile"
                     onChange={(e) => {
                       setprofile_image(e.target.files[0]);
-                      console.log(e.target.files[0]);
+
                       setpreviewprofile(URL.createObjectURL(e.target.files[0]));
                     }}
                   />

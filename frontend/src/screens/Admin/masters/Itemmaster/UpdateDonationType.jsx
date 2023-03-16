@@ -102,7 +102,7 @@ function UpdateDonationType({ data, handleClose3 }) {
                   }}
                 />
               ) : (
-                'Add User'
+                'Update'
               )}
             </button>
             <button

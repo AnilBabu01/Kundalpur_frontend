@@ -22,7 +22,7 @@ import './Categoryform.css';
 import { ReactTransliterate } from 'react-transliterate';
 const custominput = {
   border: '1px solid #B8B8B8',
-  width: '280px',
+  width: '36rem',
   height: '39px',
   borderRadius: '5px',
   fontSize: '15px',
@@ -30,7 +30,7 @@ const custominput = {
   color: 'gray',
 };
 export const CustomInput = styled(InputBase)(({ theme }) => ({
-  width: '280px',
+  width: '37.2rem',
   fontFamily: 'Poppins',
   backgroundColor: '#fff',
   borderRadius: 6,
@@ -53,16 +53,16 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 function Categoryform({ setOpen }) {
-  const [categoryInhindi, setcategoryInhindi] = useState();
-  const [categoryInenglish, setcategoryInenglish] = useState('');
+  const [commentss, setcommentss] = useState('');
+  const [categoryname, setcategoryname] = useState('');
   const [showloader, setshowloader] = useState(false);
   const handlesubmit = async () => {
     try {
       setshowloader(true);
 
       const data = {
-        categoryInhindi: categoryInhindi,
-        categoryInenglish: categoryInenglish,
+        name: categoryname,
+        comment: commentss,
       };
       axios.defaults.headers.post[
         'Authorization'
@@ -89,43 +89,40 @@ function Categoryform({ setOpen }) {
               <div className="inner-input-div2">
                 <label
                   style={{ marginBottom: '0.3rem' }}
-                  htmlFor="categoryInhindi"
+                  htmlFor="categoryname"
                 >
-                  Category in hindi
-                </label>
-
-                <ReactTransliterate
-                  style={custominput}
-                  id="full-name"
-                  required
-                  placeholder="Enter the category in english"
-                  value={categoryInhindi}
-                  onChangeText={(categoryInhindi) => {
-                    setcategoryInhindi(categoryInhindi);
-                  }}
-                  onChange={(e) => setcategoryInhindi(e.target.value)}
-                  lang="hi"
-                />
-              </div>
-
-              <div className="inner-input-div2">
-                <label
-                  style={{ marginBottom: '0.3rem' }}
-                  htmlFor="categoryInenglish"
-                >
-                  Category in english
+                  Category Name
                 </label>
                 <CustomInput
-                  id="categoryInenglish"
-                  name="categoryInenglish"
-                  placeholder="Enter the category in english"
-                  value={categoryInenglish}
-                  onChange={(e) => setcategoryInenglish(e.target.value)}
+                  id="categoryname"
+                  name="categoryname"
+                  placeholder="Enter category name"
+                  value={categoryname}
+                  onChange={(e) => setcategoryname(e.target.value)}
                 />
               </div>
             </div>
           </div>
 
+          <div className="form-div" style={{ marginBottom: '1rem' }}>
+            <div className="form-input-div_add_user">
+              <div className="inner-input-div2">
+                <label
+                  style={{ marginBottom: '0.3rem', marginTop: '1rem' }}
+                  htmlFor="commentss"
+                >
+                  Comments
+                </label>
+                <CustomInput
+                  id="commentss"
+                  name="commentss"
+                  placeholder="Enter comments"
+                  value={commentss}
+                  onChange={(e) => setcommentss(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
           <div className="save-div-btn">
             <button onClick={() => handlesubmit()} className="save-div-btn-btn">
               Save

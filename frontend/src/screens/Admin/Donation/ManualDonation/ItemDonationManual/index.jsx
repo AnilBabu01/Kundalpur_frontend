@@ -221,8 +221,7 @@ const ItemDonation = ({
         const modifiedDonationItems = donationItems.map((donationItem) => {
           return {
             ...donationItem,
-            amount:
-              Number(donationItem.quantity) * Number(donationItem.approxValue),
+            amount: donationItem.approxValue,
           };
         });
 

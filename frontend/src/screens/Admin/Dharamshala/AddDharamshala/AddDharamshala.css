@@ -59,3 +59,16 @@
   align-items: center;
   justify-content: center;
 }
+
+.dharamshala_imgggg {
+  width: 100%;
+  height: 100%;
+}
+.formdivvv_imf {
+  position: absolute;
+}
+.formdivvv_imf input {
+  height: 200px;
+  width: 420px;
+  opacity: 0;
+}

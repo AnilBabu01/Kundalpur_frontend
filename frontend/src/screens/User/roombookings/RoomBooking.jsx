@@ -118,7 +118,9 @@ function RoomBooking({}) {
   const [chlidremc, setchlidremc] = useState(0);
   const [abcount, setabcount] = useState(0);
   const [roomcount, setroomcount] = useState(0);
+  const [checkouttime, setcheckouttime] = useState('');
 
+  console.log('check out time', checkouttime);
   const handleClieck = () => {
     console.log('ddddddd');
   };
@@ -355,7 +357,7 @@ function RoomBooking({}) {
                   </Select>
                 </div>
                 <div className="main_div_select_div">
-                  <label>
+                  <label htmlFor="checkouttime">
                     <img
                       style={{ width: '8%', marginRight: '1%' }}
                       src={homee}
@@ -364,16 +366,12 @@ function RoomBooking({}) {
                     Check In
                   </label>
                   <CustomInput
-                    id="name"
-                    name="name"
+                    id="checkouttime"
+                    name="checkouttime"
                     placeholder="Full name"
                     type="datetime-local"
-                    // onChange={onChange}
-                    // value={
-                    //   donationdata.selected === 'yes1' && user.name
-                    //     ? user.name
-                    //     : donationdata.name
-                    // }
+                    onChange={(e) => setcheckouttime(e.target.value)}
+                    value={checkouttime}
                   />
                 </div>
                 <div className="main_div_select_div">

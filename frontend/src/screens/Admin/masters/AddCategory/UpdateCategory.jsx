@@ -19,9 +19,8 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import './Categoryform.css';
-
 export const CustomInput = styled(InputBase)(({ theme }) => ({
-  width: '280px',
+  width: '37.2rem',
   fontFamily: 'Poppins',
   backgroundColor: '#fff',
   borderRadius: 6,
@@ -44,24 +43,30 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 function UpdateCategory({ setOpen, updatedata }) {
-  const [categoryInhindi, setcategoryInhindi] = useState();
-  const [categoryInenglish, setcategoryInenglish] = useState('');
+  const [commentss, setcommentss] = useState('');
+  const [categoryname, setcategoryname] = useState('');
   const [showloader, setshowloader] = useState(false);
   const handlesubmit = async () => {
     try {
       setshowloader(true);
 
       const data = {
-        categoryInhindi: categoryInhindi,
-        categoryInenglish: categoryInenglish,
+        name: categoryname,
+        comments: commentss,
+        category_id: updatedata?.category_id,
       };
-      axios.defaults.headers.post[
+      axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-      const res = await axios.post(`${backendApiUrl}room/category`, data);
+      const res = await axios.put(`${backendApiUrl}room/category`, data);
 
       if (res.data.data.status) {
+        setOpen(false);
+        setshowloader(false);
+        Swal.fire('Great!', res.data.data.message, 'success');
+      }
+      if (res.data.data.status === false) {
         setOpen(false);
         setshowloader(false);
         Swal.fire('Great!', res.data.data.message, 'success');
@@ -73,6 +78,8 @@ function UpdateCategory({ setOpen, updatedata }) {
 
   useEffect(() => {
     if (updatedata) {
+      setcategoryname(updatedata?.name);
+      setcommentss(updatedata?.comment);
     }
   }, []);
 
@@ -85,37 +92,40 @@ function UpdateCategory({ setOpen, updatedata }) {
               <div className="inner-input-div2">
                 <label
                   style={{ marginBottom: '0.3rem' }}
-                  htmlFor="categoryInhindi"
+                  htmlFor="categoryname"
                 >
-                  Category in hindi
+                  Category Name
                 </label>
                 <CustomInput
-                  id="categoryInhindi"
-                  name="categoryInhindi"
-                  placeholder="Enter the category in hindi"
-                  value={categoryInhindi}
-                  onChange={(e) => setcategoryInhindi(e.target.value)}
-                />
-              </div>
-
-              <div className="inner-input-div2">
-                <label
-                  style={{ marginBottom: '0.3rem' }}
-                  htmlFor="categoryInenglish"
-                >
-                  Category in english
-                </label>
-                <CustomInput
-                  id="categoryInenglish"
-                  name="categoryInenglish"
-                  placeholder="Enter the category in english"
-                  value={categoryInenglish}
-                  onChange={(e) => setcategoryInenglish(e.target.value)}
+                  id="categoryname"
+                  name="categoryname"
+                  placeholder="Enter category name"
+                  value={categoryname}
+                  onChange={(e) => setcategoryname(e.target.value)}
                 />
               </div>
             </div>
           </div>
 
+          <div className="form-div" style={{ marginBottom: '1rem' }}>
+            <div className="form-input-div_add_user">
+              <div className="inner-input-div2">
+                <label
+                  style={{ marginBottom: '0.3rem', marginTop: '1rem' }}
+                  htmlFor="commentss"
+                >
+                  Comments
+                </label>
+                <CustomInput
+                  id="commentss"
+                  name="commentss"
+                  placeholder="Enter comments"
+                  value={commentss}
+                  onChange={(e) => setcommentss(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
           <div className="save-div-btn">
             <button onClick={() => handlesubmit()} className="save-div-btn-btn">
               Save

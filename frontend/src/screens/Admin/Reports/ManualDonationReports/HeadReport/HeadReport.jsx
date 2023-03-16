@@ -54,7 +54,7 @@ const donationColorTheme = {
 const HeadReport = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
   const [empylist, setempylist] = useState('');
   const [userrole, setuserrole] = useState('');
   const [empId, setempId] = useState('');
@@ -485,7 +485,7 @@ const HeadReport = ({ setopendashboard }) => {
                       page={page}
                       onPageChange={handleChangePage}
                       onRowsPerPageChange={handleChangeRowsPerPage}
-                      rowsPerPageOptions={[5, 10, 25]}
+                      rowsPerPageOptions={[50, 100, 150]}
                       labelRowsPerPage={<span>Rows:</span>}
                       labelDisplayedRows={({ page }) => {
                         return `Page: ${page}`;

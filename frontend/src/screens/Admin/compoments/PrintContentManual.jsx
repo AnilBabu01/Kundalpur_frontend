@@ -40,9 +40,10 @@ function PrintContent({ setopendashboard, setshowreciept }) {
   return (
     <>
       <div style={{ paddingLeft: '4rem', paddingRight: '4rem' }}>
-        <div className="button_div_print_download">
+        <div className="button_div_print_download10">
           <button onClick={() => navigation(-1)}>Back</button>
-          <div style={{ width: '60%' }} />
+
+          <div />
         </div>
         <div className="super_main_divsss" ref={componentRef}>
           <div>
@@ -506,7 +507,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
             </div>
 
             <div className="gray-text-div extra_bottom_margin">
-              <p>( {empName ? empName : adminName})</p>
+              <p>({isData?.createdBy})</p>
             </div>
             <div>
               {isData?.active === '0' && (
@@ -962,7 +963,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
             </div>
 
             <div className="gray-text-div" style={{ marginTop: '5%' }}>
-              <p>( {empName ? empName : adminName})</p>
+              <p>({isData?.createdBy})</p>
             </div>
           </div>
         </div>

@@ -686,7 +686,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
                           {' '}
                           {isData && converter.toWords(isData?.AMOUNT)}{' '}
                         </span>
-                        , रूपये ऑनलाइन द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
+                        रूपये ऑनलाइन द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
                       </h2>
                     </>
                   )}
@@ -697,7 +697,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
                         <span className="font_bold_in_donation">
                           {isData && converter.toWords(isData?.AMOUNT)}
                         </span>
-                        , रूपये ऑनलाइन चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त
+                        रूपये ऑनलाइन चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त
                         हुये।
                       </h2>
                     </>
@@ -724,28 +724,28 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
                         )}
                       </h2>
                       {isData && isData?.modeOfDonation === '2' && (
-                        <h2>, रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।</h2>
+                        <h2> रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।</h2>
                       )}
                       {isData && isData?.modeOfDonation === 2 && (
-                        <h2>, रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।</h2>
+                        <h2> रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।</h2>
                       )}
                       {isData && isData?.modeOfDonation === '1' && (
                         <h2>
-                          , रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
+                          रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
                         </h2>
                       )}
 
                       {isData && isData?.modeOfDonation === 1 && (
                         <h2>
-                          , रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
+                          रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।
                         </h2>
                       )}
                       {isData && isData?.modeOfDonation === '3' && (
-                        <h2>, चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।</h2>
+                        <h2> चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।</h2>
                       )}
 
                       {isData && isData?.modeOfDonation === 3 && (
-                        <h2>, चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।</h2>
+                        <h2>चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।</h2>
                       )}
                     </>
                   )}
@@ -813,7 +813,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
                 </>
               )}
 
-              <p>हस्ताक्षर प्राप्तकर्ता,({adminName ? adminName : empName})</p>
+              <p>हस्ताक्षर प्राप्तकर्ता,({isData?.createdBy})</p>
             </div>
           </div>
         </div>

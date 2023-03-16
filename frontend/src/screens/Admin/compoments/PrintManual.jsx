@@ -1,14 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
+import React, { useRef } from 'react';
 import ManualTotal from '../compoments/ManualTotal';
 import { useReactToPrint } from 'react-to-print';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Moment from 'moment-js';
-import TableContainer from '@mui/material/TableContainer';
 function PrintManual({ isData, handleClose }) {
+  const navigation = useNavigate();
   const componentRef = useRef();
 
   const handlePrint = useReactToPrint({
@@ -20,6 +16,14 @@ function PrintManual({ isData, handleClose }) {
   return (
     <>
       <div style={{ maxHeight: 'calc(80vh - 4rem)', overflowY: 'auto' }}>
+        {/* <div
+          className="button_div_print_download10"
+          style={{ marginTop: '6%' }}
+        >
+          <button onClick={() => navigation(-1)}>Back</button>
+
+          <div />
+        </div> */}
         <div ref={componentRef}>
           <div>
             <p style={{ textAlign: 'center', marginTop: '1rem' }}>
@@ -33,7 +37,6 @@ function PrintManual({ isData, handleClose }) {
             >
               <th>Date</th>
               <th>ReceiptNo</th>
-
               <th>Phone No</th>
               <th>Name</th>
               <th>Address</th>

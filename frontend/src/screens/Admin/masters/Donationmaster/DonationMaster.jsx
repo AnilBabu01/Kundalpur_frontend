@@ -210,7 +210,7 @@ function DonationMaster() {
                         }}
                       />
                     ) : (
-                      'Add User'
+                      'Add'
                     )}
                   </button>
                   <button

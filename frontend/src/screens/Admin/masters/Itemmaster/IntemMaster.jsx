@@ -213,7 +213,7 @@ function IntemMaster() {
                         }}
                       />
                     ) : (
-                      'Add User'
+                      'Add'
                     )}
                   </button>
                   <button

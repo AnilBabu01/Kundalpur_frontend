@@ -33,6 +33,12 @@ import { format } from 'date-fns';
 import AddForm from './AddForm';
 import Updatedharmshala from './Updatedharmshala';
 import ViewDharamshala from './ViewDharamshala';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import './AddDharamshala.css';
 const style = {
   position: 'absolute',
@@ -79,6 +85,27 @@ const AddDharamshala = ({ setopendashboard }) => {
   const handleOepn2 = (data) => {
     setOpen2(true);
     setupdatedata(data);
+  };
+  const [deleteId, setdeleteId] = useState('');
+  const [open3, setOpen3] = React.useState(false);
+
+  const handleClickOpen3 = (id) => {
+    setOpen3(true);
+    setdeleteId(id);
+  };
+  const handleClose5 = () => setOpen3(false);
+  const handleClose4 = () => {
+    setOpen3(false);
+    serverInstance(`room/dharmashala?id=${deleteId}`, 'delete').then((res) => {
+      if (res.data.status === true) {
+        setOpen(false);
+        Swal.fire('Great!', res.data.message, 'success');
+      }
+      if (res.data.status === false) {
+        setOpen(false);
+        Swal.fire('Great!', res.data.message, 'success');
+      }
+    });
   };
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
   var today = new Date();
@@ -160,6 +187,27 @@ const AddDharamshala = ({ setopendashboard }) => {
 
   return (
     <>
+      <Dialog
+        open={open3}
+        onClose={handleClose5}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {'Do you want to delete'}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            After delete you cannot get again
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose5}>Disagree</Button>
+          <Button onClick={handleClose4} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -307,8 +355,8 @@ const AddDharamshala = ({ setopendashboard }) => {
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
                 <TableCell>S.No</TableCell>
-                <TableCell>Dharamshala Name in hindi</TableCell>
-                <TableCell>Dharamshala Name in english</TableCell>
+                <TableCell>Dharamshala</TableCell>
+                <TableCell>Description</TableCell>
 
                 <TableCell>Action</TableCell>
               </TableRow>
@@ -330,8 +378,8 @@ const AddDharamshala = ({ setopendashboard }) => {
                       }}
                     >
                       <TableCell>{index + 1}</TableCell>
-                      <TableCell>{row.nameH}</TableCell>
                       <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.desc.slice(0, 40)}</TableCell>
 
                       <TableCell>
                         <Tooltip title="View">
@@ -354,6 +402,7 @@ const AddDharamshala = ({ setopendashboard }) => {
 
                         <Tooltip title="Delete">
                           <img
+                            onClick={() => handleClickOpen3(row.dharmasala_id)}
                             src={Delete}
                             alt="eye"
                             style={{ width: '20px' }}

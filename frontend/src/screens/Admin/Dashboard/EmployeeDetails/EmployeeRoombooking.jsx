@@ -33,7 +33,7 @@ import IconButton from '@mui/material/IconButton';
 const EmployeeRoombooking = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -174,7 +174,7 @@ const EmployeeRoombooking = ({ setopendashboard }) => {
                   page={page}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
-                  rowsPerPageOptions={[10, 15, 25]}
+                  rowsPerPageOptions={[50, 100, 150]}
                   labelRowsPerPage={<span>Rows:</span>}
                   labelDisplayedRows={({ page }) => {
                     return `Page: ${page}`;

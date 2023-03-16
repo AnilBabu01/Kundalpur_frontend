@@ -29,7 +29,7 @@ import Itemtotal from '../AllReport/Totals/Itemtotal';
 const AllHead = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
   const [empylist, setempylist] = useState('');
   const [headlist, setheadlist] = useState('');
   const [userrole, setuserrole] = useState('');
@@ -494,7 +494,7 @@ const AllHead = ({ setopendashboard }) => {
                       page={page}
                       onPageChange={handleChangePage}
                       onRowsPerPageChange={handleChangeRowsPerPage}
-                      rowsPerPageOptions={[5, 10, 25]}
+                      rowsPerPageOptions={[50, 100, 150]}
                       labelRowsPerPage={<span>Rows:</span>}
                       labelDisplayedRows={({ page }) => {
                         return `Page: ${page}`;

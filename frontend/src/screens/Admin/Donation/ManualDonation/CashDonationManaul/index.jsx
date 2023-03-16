@@ -193,12 +193,7 @@ const CashDonation = ({
 
       e.preventDefault();
 
-      if (
-        fullName &&
-        donationItems[0].amount &&
-        donationItems[0].type &&
-        mobileNo
-      ) {
+      if (fullName && donationItems[0].amount && donationItems[0].type) {
         const res = await axios.post(`${backendApiUrl}admin/manual-donation`, {
           name: fullName,
           gender: newMember ? genderp1 : genderp,
@@ -388,7 +383,6 @@ const CashDonation = ({
                 Mobile Number
               </CustomInputLabel>
               <CustomInput
-                required
                 id="mobile-no"
                 value={mobileNo}
                 onChange={(e) => setMobileNo(e.target.value)}
@@ -649,7 +643,6 @@ const CashDonation = ({
                             <div className="centerMain_remove_item">
                               <ReactTransliterate
                                 style={custommStyleInputTable}
-                                required
                                 value={hindiremark}
                                 onChangeText={(hindiremark) => {
                                   sethindiremark(hindiremark);

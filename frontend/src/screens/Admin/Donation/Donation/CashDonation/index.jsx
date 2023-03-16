@@ -190,12 +190,7 @@ const CashDonation = ({
     if (showUpdateBtn) {
       console.log('upadte');
 
-      if (
-        fullName &&
-        donationItems[0].amount &&
-        donationItems[0].type &&
-        mobileNo
-      ) {
+      if (fullName && donationItems[0].amount && donationItems[0].type) {
         const res = await axios.put(`${backendApiUrl}user/edit-cash-donation`, {
           id: updateData?.id,
           name: fullName,
@@ -217,12 +212,7 @@ const CashDonation = ({
         }
       }
     } else {
-      if (
-        fullName &&
-        donationItems[0].amount &&
-        donationItems[0].type &&
-        mobileNo
-      ) {
+      if (fullName && donationItems[0].amount && donationItems[0].type) {
         try {
         } catch (error) {}
         const res = await axios.post(`${backendApiUrl}user/add-elecDonation`, {
@@ -270,7 +260,7 @@ const CashDonation = ({
       const res = await axios.post(`${backendApiUrl}user/sms`, {
         mobile: mobileNo,
         amount: totalamount,
-        url: '',
+        rno: 'receipt0101',
       });
       console.log('sent sms ', res);
     } catch (error) {}
@@ -402,7 +392,6 @@ const CashDonation = ({
                 Mobile Number
               </CustomInputLabel>
               <CustomInput
-                required
                 id="mobile-no"
                 value={mobileNo}
                 onChange={(e) => {
@@ -705,7 +694,6 @@ const CashDonation = ({
                               <div className="centerMain_remove_item">
                                 <ReactTransliterate
                                   style={custommStyleInputTable}
-                                  required
                                   value={hindiremark}
                                   onChangeText={(hindiremark) => {
                                     sethindiremark(hindiremark);

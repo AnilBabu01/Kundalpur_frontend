@@ -21,6 +21,11 @@ function PrintOnline({ isData, handleClose }) {
   return (
     <>
       <div style={{ maxHeight: 'calc(80vh - 4rem)', overflowY: 'auto' }}>
+        {/* <div className="button_div_print_download10">
+          <button onClick={() => navigation(-1)}>Back</button>
+
+          <div />
+        </div> */}
         <div ref={componentRef}>
           <div>
             <p style={{ textAlign: 'center', marginTop: '1rem' }}>

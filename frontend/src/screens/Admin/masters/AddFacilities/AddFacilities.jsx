@@ -291,9 +291,9 @@ const AddFacilities = ({ setopendashboard }) => {
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
                 <TableCell>S.No</TableCell>
-                <TableCell>Facility in hindi</TableCell>
-                <TableCell>Facility in english</TableCell>
 
+                <TableCell>Facility</TableCell>
+                <TableCell>Comment</TableCell>
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -315,8 +315,8 @@ const AddFacilities = ({ setopendashboard }) => {
                     >
                       <TableCell>{index + 1}</TableCell>
 
-                      <TableCell> {row.nameh}</TableCell>
                       <TableCell> {row.name}</TableCell>
+                      <TableCell> {row.comments}</TableCell>
                       <TableCell>
                         {/* <Tooltip title="View">
                           <img
@@ -337,7 +337,7 @@ const AddFacilities = ({ setopendashboard }) => {
 
                         <Tooltip title="Delete">
                           <img
-                            onClick={() => handleClickOpen3(row.id)}
+                            onClick={() => handleClickOpen3(row.facility_id)}
                             src={Delete}
                             alt="eye"
                             style={{ width: '20px' }}

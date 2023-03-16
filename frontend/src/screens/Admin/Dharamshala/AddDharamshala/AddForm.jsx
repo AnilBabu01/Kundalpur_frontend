@@ -16,33 +16,18 @@ const custumstyle = {
 };
 
 function AddForm({ setOpen }) {
-  const [nameinHindi, setnameinHindi] = useState('');
-  const [nameinEnglish, setnameinEnglish] = useState('');
+  const [dharamshalaname, setdharamshalaname] = useState('');
   const [description, setdescription] = useState('');
-  const [isonline, setisonline] = useState(true);
-  const [isoffline, setisoffline] = useState(true);
   const [img1, setimg1] = useState('');
-  const [img2, setimg2] = useState('');
-  const [img3, setimg3] = useState('');
-  const [img4, setimg4] = useState('');
   const [previewprofile1, setpreviewprofile1] = useState('');
-  const [previewprofile2, setpreviewprofile2] = useState('');
-  const [previewprofile3, setpreviewprofile3] = useState('');
-  const [previewprofile4, setpreviewprofile4] = useState('');
   const [showloader, setshowloader] = useState(false);
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
       setshowloader(true);
-      formData.set('name', nameinEnglish);
-      formData.set('nameH', nameinHindi);
+      formData.set('name', dharamshalaname);
       formData.set('image1', img1);
-      formData.set('image2', img2);
-      formData.set('image3', img3);
-      formData.set('image4', img4);
       formData.set('desc', description);
-      formData.set('isOffline', isoffline);
-      formData.set('isOnline', isonline);
       axios.defaults.headers.post[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -68,16 +53,16 @@ function AddForm({ setOpen }) {
         <div className="cash-donation-container-innser">
           <form onSubmit={handlesubmit}>
             <div style={{ marginTop: '0.2rem' }}>
-              <label htmlFor="fromNo">Dharanshala Name</label>
+              <label htmlFor="dharamshalaname">Dharanshala Name</label>
               <input
                 style={{ width: '100%', marginTop: '0.2rem' }}
                 type="textarea"
-                id="fromNo"
+                id="dharamshalaname"
                 placeholder="enter the description"
                 className="forminput_add_user10"
-                value={description}
-                name="description"
-                onChange={(e) => setdescription(e.target.value)}
+                value={dharamshalaname}
+                name="dharamshalaname"
+                onChange={(e) => setdharamshalaname(e.target.value)}
               />
             </div>
             <div style={{ marginTop: '1.2rem' }}>
@@ -101,8 +86,29 @@ function AddForm({ setOpen }) {
                 flexDirection: 'column',
               }}
             >
-              <div className="main_img_divvvv">
-                <img src={camera} />
+              {previewprofile1 ? (
+                <>
+                  <div className="main_img_divvvv">
+                    <img className="dharamshala_imgggg" src={previewprofile1} />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="main_img_divvvv">
+                    <img src={camera} />
+                  </div>
+                </>
+              )}
+
+              <div className="formdivvv_imf">
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    setimg1(e.target.files[0]);
+                    console.log(e.target.files[0]);
+                    setpreviewprofile1(URL.createObjectURL(e.target.files[0]));
+                  }}
+                />
               </div>
             </div>
 

@@ -172,12 +172,7 @@ const UpdateCommon = ({
     if (showUpdateBtn) {
       console.log('upadte');
 
-      if (
-        fullName &&
-        donationItems[0].amount &&
-        donationItems[0].type &&
-        mobileNo
-      ) {
+      if (fullName && donationItems[0].amount && donationItems[0].type) {
         const res = await axios.put(
           `${backendApiUrl}user/edit-manual-cash-donation`,
           {
@@ -356,7 +351,6 @@ const UpdateCommon = ({
                 Mobile Number
               </CustomInputLabel>
               <CustomInput
-                required
                 id="mobile-no"
                 value={mobileNo}
                 onChange={(e) => setMobileNo(e.target.value)}

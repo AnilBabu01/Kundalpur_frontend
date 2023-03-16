@@ -707,6 +707,7 @@ const ChequeDonation = ({
 
                     <TableCell align="center">
                       <CustomTableInput
+                        type="date"
                         required
                         value={item.ChequeDate}
                         onChange={(e) =>

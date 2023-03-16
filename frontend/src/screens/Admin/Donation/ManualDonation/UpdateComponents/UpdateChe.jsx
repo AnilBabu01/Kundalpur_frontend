@@ -24,6 +24,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CustomInput, CustomInputLabel, CustomTableInput } from '../common';
 import TotalAmountRow from '../common/TotalAmountRow';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
 const UpdateChe = ({
   setshowalert,
   handleClose,
@@ -97,7 +98,7 @@ const UpdateChe = ({
         remark: '',
         ChequeNo: '',
         BankName: '',
-        chequeDate: '',
+        ChequeDate: '',
       },
     ]);
   }
@@ -639,11 +640,12 @@ const UpdateChe = ({
                     <TableCell align="center">
                       <CustomTableInput
                         required
-                        value={item.chequeDate}
+                        type="date"
+                        value={item.ChequeDate}
                         onChange={(e) =>
                           handleDonationItemUpdate(
                             item,
-                            'chequeDate',
+                            'ChequeDate',
                             e.target.value,
                           )
                         }

@@ -125,7 +125,7 @@ const donationColorTheme = {
 const Donation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
   const [open, setOpen] = React.useState(true);
   const [open3, setOpen3] = React.useState(false);
   const [donationTypes, setDonationTypes] = useState([]);
@@ -611,88 +611,91 @@ const Donation = ({ setopendashboard }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Date"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Receipt"
-                  />
-                </TableCell>
+                <form>
+                  <TableCell>
+                    <input
+                      className="cuolms_search"
+                      type="text"
+                      placeholder="Search Date"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <input
+                      className="cuolms_search"
+                      type="text"
+                      placeholder="Search Receipt"
+                    />
+                  </TableCell>
 
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Voucher"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Phone"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    type="text"
-                    className="cuolms_search"
-                    placeholder="Name"
-                  />
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Address"
-                  />
-                </TableCell>
-                <TableCell>
-                  <select
-                    style={{ width: '100%' }}
-                    onChange={(e) => settype(e.target.value)}
-                    id="cars"
-                  >
-                    <option>Select option</option>
-                    {donationTypes.map((item, idx) => {
-                      return (
-                        <option value={item.type_hi}>{item.type_hi}</option>
-                      );
-                    })}
-                  </select>
-                </TableCell>
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Search Amount"
-                  />
-                </TableCell>
+                  <TableCell>
+                    <input
+                      className="cuolms_search"
+                      type="text"
+                      placeholder="Search Voucher"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <input
+                      className="cuolms_search"
+                      type="text"
+                      placeholder="Search Phone"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <input
+                      type="text"
+                      className="cuolms_search"
+                      placeholder="Name"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <input
+                      className="cuolms_search"
+                      type="text"
+                      placeholder="Search Address"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <select
+                      style={{ width: '100%' }}
+                      onChange={(e) => settype(e.target.value)}
+                      id="cars"
+                    >
+                      <option>Select option</option>
+                      {donationTypes.map((item, idx) => {
+                        return (
+                          <option value={item.type_hi}>{item.type_hi}</option>
+                        );
+                      })}
+                    </select>
+                  </TableCell>
+                  <TableCell>
+                    <input
+                      className="cuolms_search"
+                      type="text"
+                      placeholder="Search Amount"
+                    />
+                  </TableCell>
 
-                <TableCell>
-                  <select name="cars" id="cars" className="cuolms_search">
-                    <option>Select user</option>
-                    {donationTypes.map((item, idx) => {
-                      return <option value={item.id}>{item.type_hi}</option>;
-                    })}
-                  </select>
-                </TableCell>
+                  <TableCell>
+                    <select name="cars" id="cars" className="cuolms_search">
+                      <option>Select user</option>
+                      {donationTypes.map((item, idx) => {
+                        return <option value={item.id}>{item.type_hi}</option>;
+                      })}
+                    </select>
+                  </TableCell>
 
-                <TableCell>
-                  <input
-                    className="cuolms_search"
-                    type="text"
-                    placeholder="Remark"
-                  />
-                </TableCell>
-                <TableCell>&nbsp;</TableCell>
+                  <TableCell>
+                    <input
+                      className="cuolms_search"
+                      type="text"
+                      placeholder="Remark"
+                    />
+                  </TableCell>
+                  <TableCell>&nbsp;</TableCell>
+                </form>
+
                 {isData ? (
                   <>
                     {(rowsPerPage > 0
@@ -816,7 +819,7 @@ const Donation = ({ setopendashboard }) => {
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={[50, 100, 150]}
                     labelRowsPerPage={<span>Rows:</span>}
                     labelDisplayedRows={({ page }) => {
                       return `Page: ${page}`;

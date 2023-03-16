@@ -4,17 +4,34 @@ import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import { ReactTransliterate } from 'react-transliterate';
 import CircularProgress from '@material-ui/core/CircularProgress';
-const custumstyle = {
-  width: '280px',
-  height: '35px',
-  background: '#FFFFFF',
-  border: '1px solid #C5BFBF',
-  borderRadius: '7px',
-  paddingLeft: '0.5rem',
-};
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+export const CustomInput = styled(InputBase)(({ theme }) => ({
+  width: '37.2rem',
+  fontFamily: 'Poppins',
+  backgroundColor: '#fff',
+  borderRadius: 6,
+  '& .MuiInputBase-input': {
+    border: '1px solid #B8B8B8',
+    borderRadius: 6,
+    width: '100%',
+    fontSize: 15,
+    padding: 8,
+    paddingLeft: 12,
+    transition: theme.transitions.create([
+      'border-color',
+      'background-color',
+      'box-shadow',
+    ]),
+    '&:focus': {
+      // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}));
 function AddFacForm({ setOpen }) {
-  const [facilityInHindi, setfacilityInHindi] = useState('');
-  const [facilityInEnglish, setfacilityInEnglish] = useState('');
+  const [facilityname, setfacilityname] = useState('');
+  const [commentss, setcommentss] = useState('');
   const [showloader, setshowloader] = useState(false);
   const handlesubmit = async () => {
     try {
@@ -24,8 +41,8 @@ function AddFacForm({ setOpen }) {
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.post(`${backendApiUrl}room/facility`, {
-        name: facilityInEnglish,
-        nameh: facilityInHindi,
+        name: facilityname,
+        comment: commentss,
       });
 
       console.log(res.data.data);
@@ -47,36 +64,41 @@ function AddFacForm({ setOpen }) {
     <>
       <div className="cash-donation-div">
         <div className="cash-donation-container-innser">
-          <div className="form-div">
+          <div className="form-div" style={{ marginBottom: '1rem' }}>
             <div className="form-input-div_add_user">
               <div className="inner-input-div2">
-                <label htmlFor="fromNo">Facility in english</label>
-                <input
-                  style={{ width: '280px', height: '35px' }}
-                  type="text"
-                  id="fromNo"
-                  placeholder="enter the facility in english"
-                  className="forminput_add_user"
-                  value={facilityInEnglish}
-                  name="facilityInEnglish"
-                  onChange={(e) => setfacilityInEnglish(e.target.value)}
+                <label
+                  style={{ marginBottom: '0.3rem' }}
+                  htmlFor="facilityname"
+                >
+                  Facilities Name
+                </label>
+                <CustomInput
+                  id="facilityname"
+                  name="facilityname"
+                  placeholder="Enter facility name"
+                  value={facilityname}
+                  onChange={(e) => setfacilityname(e.target.value)}
                 />
               </div>
+            </div>
+          </div>
 
+          <div className="form-div" style={{ marginBottom: '1rem' }}>
+            <div className="form-input-div_add_user">
               <div className="inner-input-div2">
-                <label htmlFor="toNo">Facility in hindi</label>
-
-                <ReactTransliterate
-                  style={custumstyle}
-                  id="full-name"
-                  required
-                  placeholder="enter the dharamshala name in hindi"
-                  value={facilityInHindi}
-                  onChangeText={(facilityInHindi) => {
-                    setfacilityInHindi(facilityInHindi);
-                  }}
-                  onChange={(e) => setfacilityInHindi(e.target.value)}
-                  lang="hi"
+                <label
+                  style={{ marginBottom: '0.3rem', marginTop: '1rem' }}
+                  htmlFor="commentss"
+                >
+                  Comments
+                </label>
+                <CustomInput
+                  id="commentss"
+                  name="commentss"
+                  placeholder="Enter comments"
+                  value={commentss}
+                  onChange={(e) => setcommentss(e.target.value)}
                 />
               </div>
             </div>

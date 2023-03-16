@@ -19,7 +19,7 @@ import 'jspdf-autotable';
 const OnlineDonation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
 
   const componentRef = useRef();
 
@@ -250,7 +250,7 @@ const OnlineDonation = ({ setopendashboard }) => {
                   page={page}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
-                  rowsPerPageOptions={[10, 15, 25]}
+                  rowsPerPageOptions={[50, 100, 150]}
                   labelRowsPerPage={<span>Rows:</span>}
                   labelDisplayedRows={({ page }) => {
                     return `Page: ${page}`;

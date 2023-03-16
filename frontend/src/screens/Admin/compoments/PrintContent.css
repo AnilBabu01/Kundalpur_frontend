@@ -82,7 +82,7 @@ padding-right: 1.5rem;
 .super_main_divsss{
     padding: 2rem;
 
-    padding-top: 8rem;
+    padding-top: 2rem;
     position: relative;
 }
 
@@ -106,3 +106,23 @@ padding-right: 1.5rem;
     flex-wrap: wrap;
     padding-left: 24px;
 } 
+.button_div_print_download10{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 0.2rem;
+    margin-top: 4%;
+}
+
+
+.button_div_print_download10 button{
+    height: 31px;
+    background: blue;
+    border: navajowhite;
+    color: white;
+    width: 10%;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 1rem;
+}

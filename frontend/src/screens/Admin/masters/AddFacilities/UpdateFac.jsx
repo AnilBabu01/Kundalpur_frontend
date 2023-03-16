@@ -3,18 +3,34 @@ import Swal from 'sweetalert2';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import { ReactTransliterate } from 'react-transliterate';
-
-const custumstyle = {
-  width: '280px',
-  height: '35px',
-  background: '#FFFFFF',
-  border: '1px solid #C5BFBF',
-  borderRadius: '7px',
-  paddingLeft: '0.5rem',
-};
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+export const CustomInput = styled(InputBase)(({ theme }) => ({
+  width: '37.2rem',
+  fontFamily: 'Poppins',
+  backgroundColor: '#fff',
+  borderRadius: 6,
+  '& .MuiInputBase-input': {
+    border: '1px solid #B8B8B8',
+    borderRadius: 6,
+    width: '100%',
+    fontSize: 15,
+    padding: 8,
+    paddingLeft: 12,
+    transition: theme.transitions.create([
+      'border-color',
+      'background-color',
+      'box-shadow',
+    ]),
+    '&:focus': {
+      // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}));
 function UpdateFac({ updatedata, setOpen }) {
-  const [facilityInHindi, setfacilityInHindi] = useState('');
-  const [facilityInEnglish, setfacilityInEnglish] = useState('');
+  const [facilityname, setfacilityname] = useState('');
+  const [commentss, setcommentss] = useState('');
 
   const handlesubmit = async () => {
     try {
@@ -23,9 +39,9 @@ function UpdateFac({ updatedata, setOpen }) {
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.put(`${backendApiUrl}room/facility`, {
-        name: facilityInEnglish,
-        nameh: facilityInHindi,
-        id: updatedata?.id,
+        name: facilityname,
+        comment: commentss,
+        facility_id: updatedata.facility_id,
       });
 
       console.log(res.data.data);
@@ -44,8 +60,8 @@ function UpdateFac({ updatedata, setOpen }) {
 
   useEffect(() => {
     if (updatedata) {
-      setfacilityInEnglish(updatedata?.name);
-      setfacilityInHindi(updatedata?.nameh);
+      setfacilityname(updatedata?.name);
+      setcommentss(updatedata?.comments);
     }
   }, []);
 
@@ -53,35 +69,41 @@ function UpdateFac({ updatedata, setOpen }) {
     <>
       <div className="cash-donation-div">
         <div className="cash-donation-container-innser">
-          <div className="form-div">
+          <div className="form-div" style={{ marginBottom: '1rem' }}>
             <div className="form-input-div_add_user">
               <div className="inner-input-div2">
-                <label htmlFor="fromNo">Facility in english</label>
-                <input
-                  style={{ width: '280px', height: '35px' }}
-                  type="text"
-                  id="fromNo"
-                  placeholder="enter the facility in english"
-                  className="forminput_add_user"
-                  value={facilityInEnglish}
-                  name="facilityInEnglish"
-                  onChange={(e) => setfacilityInEnglish(e.target.value)}
+                <label
+                  style={{ marginBottom: '0.3rem' }}
+                  htmlFor="facilityname"
+                >
+                  Facilities Name
+                </label>
+                <CustomInput
+                  id="facilityname"
+                  name="facilityname"
+                  placeholder="Enter facility name"
+                  value={facilityname}
+                  onChange={(e) => setfacilityname(e.target.value)}
                 />
               </div>
+            </div>
+          </div>
 
+          <div className="form-div" style={{ marginBottom: '1rem' }}>
+            <div className="form-input-div_add_user">
               <div className="inner-input-div2">
-                <label htmlFor="toNo">Facility in hindi</label>
-                <ReactTransliterate
-                  style={custumstyle}
-                  id="full-name"
-                  required
-                  placeholder="enter the dharamshala name in hindi"
-                  value={facilityInHindi}
-                  onChangeText={(facilityInHindi) => {
-                    setfacilityInHindi(facilityInHindi);
-                  }}
-                  onChange={(e) => setfacilityInHindi(e.target.value)}
-                  lang="hi"
+                <label
+                  style={{ marginBottom: '0.3rem', marginTop: '1rem' }}
+                  htmlFor="commentss"
+                >
+                  Comments
+                </label>
+                <CustomInput
+                  id="commentss"
+                  name="commentss"
+                  placeholder="Enter comments"
+                  value={commentss}
+                  onChange={(e) => setcommentss(e.target.value)}
                 />
               </div>
             </div>

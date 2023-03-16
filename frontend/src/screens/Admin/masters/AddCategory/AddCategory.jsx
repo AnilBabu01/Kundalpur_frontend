@@ -287,8 +287,9 @@ const AddCategory = ({ setopendashboard }) => {
             <TableHead style={{ background: '#F1F0F0' }}>
               <TableRow>
                 <TableCell>S.No</TableCell>
-                <TableCell>Category in hindi</TableCell>
-                <TableCell>Category in english</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Comments</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -308,7 +309,8 @@ const AddCategory = ({ setopendashboard }) => {
                       }}
                     >
                       <TableCell>{index + 1}</TableCell>
-                      <TableCell>{row.dharmasala}</TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.comment}</TableCell>
 
                       <TableCell>
                         <Tooltip title="View">
@@ -330,7 +332,7 @@ const AddCategory = ({ setopendashboard }) => {
 
                         <Tooltip title="Delete">
                           <img
-                            onClick={() => handleClickOpen3(row.id)}
+                            onClick={() => handleClickOpen3(row.category_id)}
                             src={Delete}
                             alt="eye"
                             style={{ width: '20px' }}

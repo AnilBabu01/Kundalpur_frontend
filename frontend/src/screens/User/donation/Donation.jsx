@@ -280,17 +280,18 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
         TIME_OF_DAAN: currTime,
       }).then((res) => {
         console.log('rers of online', res);
-        if (res.status === true) {
-          setshowloader(false);
-          window.location.href =
-            'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
-            res.data.id;
-          // handleOpen();
-          // sendsms();
-          setonlineId(res.data.id);
-        } else {
-          Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-        }
+        sendsms();
+        // if (res.status === true) {
+        //   setshowloader(false);
+        //   window.location.href =
+        //     'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
+        //     res.data.id;
+        //   // handleOpen();
+        //   // sendsms();
+        //   setonlineId(res.data.id);
+        // } else {
+        //   Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+        // }
       });
     }
 
@@ -401,7 +402,7 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
       const res = await axios.post(`${backendApiUrl}user/sms`, {
         mobile: user?.mobileNo,
         amount: amount,
-        url: '',
+        // url: 'https://shreebadebaba-562bd.web.app/receipt/id=1',
       });
       console.log('sent sms ', res);
       if (res.data.status === true) {

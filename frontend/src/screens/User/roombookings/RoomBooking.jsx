@@ -165,6 +165,7 @@ function RoomBooking({}) {
               >
                 0
               </MenuItem>
+
               {roomCount &&
                 roomCount.map((item, idx) => {
                   return (
@@ -185,7 +186,7 @@ function RoomBooking({}) {
         <MenuItem>
           <div className="main_slelct_child">
             <div>
-              Adults{' '}
+              Adults
               <p style={{ color: ' #6C6A6A', fontSize: '12px' }}>
                 {' '}
                 (Above 12 Years)

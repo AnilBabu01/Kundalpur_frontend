@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InputBase from '@mui/material/InputBase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import ok from '../../../../assets/ok.png';
 import './PaymentSuccess.css';
+
 function PaymentSuccess() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isData, setisData] = useState('');
+
+  useEffect(() => {
+    if (location.state) {
+      setisData(location.state?.data);
+    }
+  }, []);
 
   return (
     <>
@@ -34,8 +43,24 @@ function PaymentSuccess() {
             </div>
           </div>
           <div className="payment_btn_duvvvvvv">
-            <button className="payment_btn_duvvvvvv10">Confirmation</button>
-            <button className="payment_btn_duvvvvvv11">Booking history</button>
+            <button
+              onClick={() =>
+                navigate('/room/booking/receipt', {
+                  state: {
+                    data: isData,
+                  },
+                })
+              }
+              className="payment_btn_duvvvvvv10"
+            >
+              Confirmation
+            </button>
+            <button
+              onClick={() => navigate('/bookinghistory')}
+              className="payment_btn_duvvvvvv11"
+            >
+              Booking history
+            </button>
           </div>
         </div>
       </div>

@@ -53,7 +53,7 @@ function AddRoomForm({ setOpen }) {
   const [rate, setrate] = useState('');
   const [advncerate, setadvncerate] = useState('');
   const [checkout, setcheckout] = useState('');
-  const [roomtype, setroomtype] = useState(1);
+  const [roomtype, setroomtype] = useState(0);
   const [categroyname, setcategroyname] = useState([]);
   const [fromroomno, setfromroomno] = useState('');
   const [toroomno, settoroomno] = useState('');
@@ -69,14 +69,14 @@ function AddRoomForm({ setOpen }) {
   const handlesubmit = async () => {
     try {
       formData.set('Rate', rate);
-      formData.set('dharmasala', dharamshalaname);
+      formData.set('dharmasala_id', dharamshalaname);
       formData.set('category_id', JSON.stringify(facilityname));
-
       formData.set('FroomNo', fromroomno);
       formData.set('TroomNo', toroomno);
       formData.set('advance', advncerate);
-      formData.set('roomType', roomtype);
+      formData.set('type', roomtype);
       formData.set('facility_id', JSON.stringify(categroyname));
+      formData.set('coTime', checkout);
       formData.set('image1', img1);
       formData.set('image2', img2);
       formData.set('image3', img3);
@@ -131,7 +131,7 @@ function AddRoomForm({ setOpen }) {
     getallcategory();
   }, []);
 
-  console.log('categori ids', categroyname);
+  console.log('categori ids', roomtype);
   return (
     <>
       <div className="cash-donation-div">
@@ -333,7 +333,7 @@ function AddRoomForm({ setOpen }) {
                                 fontSize: 14,
                               }}
                               key={item.dharmasala_id}
-                              value={item.name}
+                              value={item.dharmasala_id}
                             >
                               {item.name}
                             </MenuItem>
@@ -546,14 +546,6 @@ function AddRoomForm({ setOpen }) {
                       onChange={(e) => setroomtype(e.target.value)}
                       displayEmpty
                     >
-                      <MenuItem
-                        sx={{
-                          fontSize: 14,
-                        }}
-                        value={''}
-                      >
-                        Please select
-                      </MenuItem>
                       <MenuItem
                         sx={{
                           fontSize: 14,

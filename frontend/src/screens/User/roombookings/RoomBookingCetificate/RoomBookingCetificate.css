@@ -1,0 +1,57 @@
+.main_room_receipt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+}
+
+.main_room_receipt_innear{
+    border: 1px solid gray;
+    width: 95%;
+    margin-top: 1rem;
+}
+.print_ddd{
+   
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.yadda_text{
+    text-align: center;
+}
+
+.innear_div_texx{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.innear_div_texx_dd{
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+}
+.innear_div_texx_dd p{
+    margin-bottom: 10%;
+}
+.yyy_text_div{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2%;
+}
+.table_ddd{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    
+}
+.table_tddd{
+    border: 1px solid gray;
+    text-align: center;
+    padding: 8px;
+}

@@ -20,6 +20,9 @@ import RoomBooking from '../screens/User/roombookings/RoomBooking';
 import DharamDetails from '../screens/User/roombookings/DharamDetails/DharamDetails';
 import RoomBookingscreen from '../screens/User/roombookings/RoomBookingscreen/RoomBookingscreen';
 import PaymentSuccess from '../screens/User/roombookings/PaymentSuccess/PaymentSuccess';
+import DownloadReceipt from '../screens/Admin/Reciept/DownloadReceipt';
+import BookingHistory from '../screens/User/roombookings/BookingHistory/BookingHistory';
+import RoomBookingCetificate from '../screens/User/roombookings/RoomBookingCetificate/RoomBookingCetificate';
 function MainRoutes({
   setopendashboard,
   setshowreciept,
@@ -79,6 +82,18 @@ function MainRoutes({
           element={
             <PrivateRoutes>
               <DonationHistory
+                setopendashboard={setopendashboard}
+                setshowreciept={setshowreciept}
+                setHeaderFooter={setHeaderFooter}
+              />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/bookinghistory"
+          element={
+            <PrivateRoutes>
+              <BookingHistory
                 setopendashboard={setopendashboard}
                 setshowreciept={setshowreciept}
                 setHeaderFooter={setHeaderFooter}
@@ -154,6 +169,23 @@ function MainRoutes({
           element={
             <PrivateRoutes>
               <PaymentSuccess />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/room/booking/receipt"
+          element={
+            <PrivateRoutes>
+              <RoomBookingCetificate />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="downloadreceipt"
+          element={
+            <PrivateRoutes>
+              <DownloadReceipt />
             </PrivateRoutes>
           }
         />

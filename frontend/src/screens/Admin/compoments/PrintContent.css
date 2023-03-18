@@ -68,6 +68,10 @@ padding-right: 1.5rem;
     flex-wrap: wrap;
 }
 
+.common_margin_pp{
+    margin-bottom: 2rem;
+    font-size: 14px;
+}
 .gray-text_div{
     width: 13%;
 }

@@ -67,7 +67,7 @@ const AddRoom = ({ setopendashboard }) => {
   };
   const [deleteId, setdeleteId] = useState('');
   const [open3, setOpen3] = React.useState(false);
-
+  console.log('dharamss', isData);
   const handleClickOpen3 = (id) => {
     setOpen3(true);
     setdeleteId(id);
@@ -287,7 +287,8 @@ const AddRoom = ({ setopendashboard }) => {
               <TableRow>
                 <TableCell>S.No</TableCell>
                 <TableCell>Dharamashala</TableCell>
-                <TableCell>Room no </TableCell>
+                <TableCell>From Room</TableCell>
+                <TableCell>To Room</TableCell>
                 <TableCell>Facilities</TableCell>
                 <TableCell>Category Name</TableCell>
 
@@ -295,7 +296,6 @@ const AddRoom = ({ setopendashboard }) => {
                 <TableCell>Advance Amount </TableCell>
                 <TableCell>Check out Time</TableCell>
                 <TableCell>Room Type</TableCell>
-                <TableCell>Status</TableCell>
 
                 <TableCell>Action</TableCell>
               </TableRow>
@@ -318,16 +318,15 @@ const AddRoom = ({ setopendashboard }) => {
                     >
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{row.dharmasala}</TableCell>
-                      <TableCell>{row.RoomNo}</TableCell>
+                      <TableCell>{row.FroomNo}</TableCell>
+                      <TableCell>{row.TroomNo}</TableCell>
                       <TableCell>{row.Facilities}</TableCell>
                       <TableCell>{row.category}</TableCell>
                       <TableCell>{row.Rate}</TableCell>
                       <TableCell>{row.advance}</TableCell>
                       <TableCell>{row.coTime}</TableCell>
                       <TableCell>{row.roomType}</TableCell>
-                      <TableCell>
-                        {row.status ? 'Enable' : 'disabled'}
-                      </TableCell>
+
                       <TableCell>
                         <Tooltip title="View">
                           <img
@@ -348,7 +347,7 @@ const AddRoom = ({ setopendashboard }) => {
 
                         <Tooltip title="Delete">
                           <img
-                            onClick={() => handleClickOpen3(row.id)}
+                            onClick={() => handleClickOpen3(row.room_id)}
                             src={Delete}
                             alt="eye"
                             style={{ width: '20px' }}

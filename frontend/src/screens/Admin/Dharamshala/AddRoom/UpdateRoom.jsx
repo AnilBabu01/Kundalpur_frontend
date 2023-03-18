@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { serverInstance } from '../../../../API/ServerInstance';
 import InputBase from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
-import { backendApiUrl } from '../../../../config/config';
+import { backendApiUrl, backendUrl } from '../../../../config/config';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import camera from '../../../../assets/camera.png';
+import './AddRoom.css';
 import {
   Box,
   Button,
@@ -18,7 +20,7 @@ import {
   Typography,
 } from '@mui/material';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-
+const formData = new FormData();
 export const CustomInput = styled(InputBase)(({ theme }) => ({
   width: '280px',
   fontFamily: 'Poppins',
@@ -42,39 +44,50 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 function UpdateRoom({ setOpen, updatedata }) {
+  const [showsaveimg, setshowsaveimg] = useState(false);
   const [facility, setfacility] = useState('');
   const [Dharamshala, setDharamshala] = useState('');
   const [category, setcategory] = useState('');
   const [dharamshalaname, setdharamshalaname] = useState('');
-  const [facilityname, setfacilityname] = useState('');
+  const [facilityname, setfacilityname] = useState([]);
   const [rate, setrate] = useState('');
   const [advncerate, setadvncerate] = useState('');
   const [checkout, setcheckout] = useState('');
-  const [roomno, setroomno] = useState('');
-  const [roomtype, setroomtype] = useState(1);
-  const [roomstatus, setroomstatus] = useState(true);
-  const [categroyname, setcategroyname] = useState('');
+  const [roomtype, setroomtype] = useState(0);
+  const [categroyname, setcategroyname] = useState([]);
+  const [fromroomno, setfromroomno] = useState('');
+  const [toroomno, settoroomno] = useState('');
+  const [img1, setimg1] = useState('');
+  const [img2, setimg2] = useState('');
+  const [img3, setimg3] = useState('');
+  const [img4, setimg4] = useState('');
+  const [previewprofile1, setpreviewprofile1] = useState('');
+  const [previewprofile2, setpreviewprofile2] = useState('');
+  const [previewprofile3, setpreviewprofile3] = useState('');
+  const [previewprofile4, setpreviewprofile4] = useState('');
+
   const handlesubmit = async () => {
     try {
-      console.log('click');
+      formData.set('id', updatedata?.room_id);
+      formData.set('Rate', rate);
+      formData.set('dharmasala_id', dharamshalaname);
+      formData.set('category_id', JSON.stringify(facilityname));
+      formData.set('FroomNo', fromroomno);
+      formData.set('TroomNo', toroomno);
+      formData.set('advance', advncerate);
+      formData.set('type', roomtype);
+      formData.set('facility_id', JSON.stringify(categroyname));
+      formData.set('coTime', checkout);
+      formData.set('image1', img1);
+      formData.set('image2', img2);
+      formData.set('image3', img3);
+      formData.set('image4', img4);
 
-      const data = {
-        RoomNo: roomno,
-        Rate: rate,
-        dharmasala: dharamshalaname,
-        category: categroyname,
-        status: roomstatus,
-        roomType: roomtype,
-        advance: advncerate,
-        Facilities: facilityname,
-        coTime: checkout,
-        id: updatedata?.id,
-      };
       axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-      const res = await axios.put(`${backendApiUrl}room`, data);
+      const res = await axios.put(`${backendApiUrl}room`, formData);
 
       if (res.data.data.status) {
         setOpen(false);
@@ -117,342 +130,473 @@ function UpdateRoom({ setOpen, updatedata }) {
     getalldharamshala();
     getallfacility();
     getallcategory();
-
     if (updatedata) {
-      //   RoomNo: roomno,
-      //   Rate: rate,
-      //   dharmasala: dharamshalaname,
-      //   category: categroyname,
-      //   status: roomstatus,
-      //   roomType: roomtype,
-      //   advance: advncerate,
-      //   Facilities: facilityname,
-      //   coTime: checkout,
-
-      setroomno(updatedata?.RoomNo);
+      setfromroomno(updatedata?.FroomNo);
+      settoroomno(updatedata?.TroomNo);
       setrate(updatedata?.Rate);
-      setroomstatus(updatedata?.status);
-      setroomtype(updatedata?.roomType);
       setadvncerate(updatedata?.advance);
+      // setdharamshalaname(updatedata?.dharmasala_id);
+      setimg1(updatedata?.image1);
+      setimg2(updatedata?.image2);
+      setimg3(updatedata?.image3);
+      setimg4(updatedata?.image4);
       setcheckout(updatedata?.coTime);
     }
   }, []);
 
+  console.log('categori ids', categroyname);
   return (
     <>
       <div className="cash-donation-div">
         <div className="cash-donation-container-innser">
-          <div className="form-div" style={{ marginBottom: '1rem' }}>
-            <div className="form-input-div_add_user">
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
-                  Dharamshala
-                </label>
-                <Select
-                  id="donation-type"
-                  required
-                  sx={{
-                    width: '280px',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      // borderColor: !!formerror.donationtype ? 'red' : '',
-                      padding: '10px 0px 10px 10px',
-                      background: '#fff',
-                    },
-                  }}
-                  value={dharamshalaname}
-                  name="dharamshalaname"
-                  onChange={(e) => setdharamshalaname(e.target.value)}
-                  displayEmpty
+          {showsaveimg ? (
+            <>
+              <div>
+                <p>Add room image</p>
+                <div className="man_imgsss_div">
+                  <div>
+                    <div className="man_imgsss_div_inearr">
+                      <div className="main_img_divvvvrooomimgs">
+                        <img
+                          className="dharamshala_imgggg"
+                          src={
+                            previewprofile1
+                              ? previewprofile1
+                              : img1
+                              ? `${backendUrl}uploads/images/${img1}`
+                              : camera
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className="seee_dhhfdsh">
+                      <label>Image 1</label>
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          setimg1(e.target.files[0]);
+                          console.log(e.target.files[0]);
+                          setpreviewprofile1(
+                            URL.createObjectURL(e.target.files[0]),
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="man_imgsss_div_inearr">
+                      <div className="main_img_divvvvrooomimgs">
+                        <img
+                          className="dharamshala_imgggg"
+                          src={
+                            previewprofile2
+                              ? previewprofile2
+                              : img2
+                              ? `${backendUrl}uploads/images/${img2}`
+                              : camera
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className="seee_dhhfdsh">
+                      <label>Image 2</label>
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          setimg2(e.target.files[0]);
+                          console.log(e.target.files[0]);
+                          setpreviewprofile2(
+                            URL.createObjectURL(e.target.files[0]),
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="man_imgsss_div_inearr">
+                      <div className="main_img_divvvvrooomimgs">
+                        <img
+                          className="dharamshala_imgggg"
+                          src={
+                            previewprofile3
+                              ? previewprofile3
+                              : img3
+                              ? `${backendUrl}uploads/images/${img3}`
+                              : camera
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className="seee_dhhfdsh">
+                      <label>Image 3</label>
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          setimg3(e.target.files[0]);
+                          console.log(e.target.files[0]);
+                          setpreviewprofile3(
+                            URL.createObjectURL(e.target.files[0]),
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="man_imgsss_div_inearr">
+                      <div className="main_img_divvvvrooomimgs">
+                        <img
+                          className="dharamshala_imgggg"
+                          src={
+                            previewprofile4
+                              ? previewprofile4
+                              : img4
+                              ? `${backendUrl}uploads/images/${img4}`
+                              : camera
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="seee_dhhfdsh">
+                      <label>Image 4</label>
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          setimg4(e.target.files[0]);
+                          console.log(e.target.files[0]);
+                          setpreviewprofile4(
+                            URL.createObjectURL(e.target.files[0]),
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="save-div-btn">
+                <button
+                  style={{ marginRight: '1rem' }}
+                  onClick={() => setshowsaveimg(false)}
+                  className="save-div-btn-btn-cancel"
                 >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={''}
-                  >
-                    Please select
-                  </MenuItem>
-                  {Dharamshala &&
-                    Dharamshala.map((item) => {
-                      return (
-                        <MenuItem
-                          sx={{
-                            fontSize: 14,
-                          }}
-                          key={item.name}
-                          value={item.name}
-                        >
-                          {item.name}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-              </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="roomno">
-                  Room Number
-                </label>
-                <CustomInput
-                  id="roomno"
-                  name="roomno"
-                  placeholder="Enter the rate"
-                  value={roomno}
-                  onChange={(e) => setroomno(e.target.value)}
-                />
-              </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Facilities
-                </label>
-                <Select
-                  id="donation-type"
-                  required
-                  sx={{
-                    width: '280px',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      // borderColor: !!formerror.donationtype ? 'red' : '',
-                      padding: '10px 0px 10px 10px',
-                      background: '#fff',
-                    },
-                  }}
-                  value={facilityname}
-                  name="facilityname"
-                  onChange={(e) => setfacilityname(e.target.value)}
-                  displayEmpty
+                  Back
+                </button>
+                <button
+                  onClick={() => handlesubmit()}
+                  className="save-div-btn-btn"
                 >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={''}
-                  >
-                    Please select
-                  </MenuItem>
-                  {facility &&
-                    facility.map((item) => {
-                      return (
-                        <MenuItem
-                          sx={{
-                            fontSize: 14,
-                          }}
-                          key={item.name}
-                          value={item.name}
-                        >
-                          {item.name}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
+                  Update
+                </button>
               </div>
-            </div>
-          </div>
-          <div className="form-div" style={{ marginBottom: '1rem' }}>
-            <div className="form-input-div_add_user">
-              <div className="inner-input-div2">
-                <label
-                  style={{ marginBottom: '0.3rem' }}
-                  htmlFor="categroyname"
+            </>
+          ) : (
+            <>
+              <div className="form-div" style={{ marginBottom: '1rem' }}>
+                <div className="form-input-div_add_user">
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                      Dharamshala
+                    </label>
+                    <Select
+                      id="donation-type"
+                      required
+                      sx={{
+                        width: '280px',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          // borderColor: !!formerror.donationtype ? 'red' : '',
+                          padding: '10px 0px 10px 10px',
+                          background: '#fff',
+                        },
+                      }}
+                      value={dharamshalaname}
+                      name="dharamshalaname"
+                      onChange={(e) => setdharamshalaname(e.target.value)}
+                      displayEmpty
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={''}
+                      >
+                        Please select
+                      </MenuItem>
+                      {Dharamshala &&
+                        Dharamshala.map((item) => {
+                          return (
+                            <MenuItem
+                              sx={{
+                                fontSize: 14,
+                              }}
+                              key={item.dharmasala_id}
+                              value={item.dharmasala_id}
+                            >
+                              {item.name}
+                            </MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="fromroomno"
+                    >
+                      From Room Range
+                    </label>
+                    <CustomInput
+                      id="fromroomno"
+                      name="fromroomno"
+                      placeholder="Enter the from range"
+                      value={fromroomno}
+                      onChange={(e) => setfromroomno(e.target.value)}
+                    />
+                  </div>
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="toroomno"
+                    >
+                      To Room Range
+                    </label>
+                    <CustomInput
+                      id="toroomno"
+                      name="toroomno"
+                      placeholder="Enter the to room range"
+                      value={toroomno}
+                      onChange={(e) => settoroomno(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-div" style={{ marginBottom: '1rem' }}>
+                <div className="form-input-div_add_user">
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="categroyname"
+                    >
+                      Category
+                    </label>
+                    <Select
+                      multiple
+                      id="categroyname"
+                      required
+                      sx={{
+                        width: '280px',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          // borderColor: !!formerror.donationtype ? 'red' : '',
+                          padding: '10px 0px 10px 10px',
+                          background: '#fff',
+                        },
+                      }}
+                      value={categroyname}
+                      name="categroyname[]"
+                      onChange={(e) => setcategroyname(e.target.value)}
+                      displayEmpty
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={'Please select'}
+                      >
+                        Please select
+                      </MenuItem>
+                      {category &&
+                        category.map((item) => {
+                          return (
+                            <MenuItem
+                              sx={{
+                                fontSize: 14,
+                              }}
+                              key={item.category_id}
+                              value={item.category_id}
+                            >
+                              {item.name}
+                            </MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                      Room Price
+                    </label>
+                    <CustomInput
+                      id="rate"
+                      name="rate"
+                      placeholder="Enter the rate"
+                      value={rate}
+                      onChange={(e) => setrate(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="advncerate"
+                    >
+                      Advance Amount
+                    </label>
+                    <CustomInput
+                      id="advncerate"
+                      name="advncerate"
+                      placeholder="Enter the rate"
+                      value={advncerate}
+                      onChange={(e) => setadvncerate(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-div" style={{ marginBottom: '1rem' }}>
+                <div className="form-input-div_add_user">
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                      Facilities
+                    </label>
+                    <Select
+                      multiple
+                      id="donation-type"
+                      required
+                      sx={{
+                        width: '280px',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          // borderColor: !!formerror.donationtype ? 'red' : '',
+                          padding: '10px 0px 10px 10px',
+                          background: '#fff',
+                        },
+                      }}
+                      value={facilityname}
+                      name="facilityname[]"
+                      onChange={(e) => setfacilityname(e.target.value)}
+                      displayEmpty
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={''}
+                      >
+                        Please select
+                      </MenuItem>
+                      {facility &&
+                        facility.map((item) => {
+                          return (
+                            <MenuItem
+                              sx={{
+                                fontSize: 14,
+                              }}
+                              key={item.facility_id}
+                              value={item.facility_id}
+                            >
+                              {item.name}
+                            </MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="checkout"
+                    >
+                      Check Out Time
+                    </label>
+                    <CustomInput
+                      type="time"
+                      id="checkout"
+                      name="checkout"
+                      placeholder="Enter the rate"
+                      value={checkout}
+                      onChange={(e) => setcheckout(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="roomtype"
+                    >
+                      Mode
+                    </label>
+                    <Select
+                      id="roomtype"
+                      required
+                      sx={{
+                        width: '280px',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          // borderColor: !!formerror.donationtype ? 'red' : '',
+                          padding: '10px 0px 10px 10px',
+                          background: '#fff',
+                        },
+                      }}
+                      value={roomtype}
+                      name="roomtype"
+                      onChange={(e) => setroomtype(e.target.value)}
+                      displayEmpty
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={''}
+                      >
+                        Please select
+                      </MenuItem>
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={0}
+                      >
+                        Online
+                      </MenuItem>
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={1}
+                      >
+                        Offline
+                      </MenuItem>
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={2}
+                      >
+                        Both
+                      </MenuItem>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="save-div-btn">
+                <button
+                  style={{ marginRight: '1rem' }}
+                  onClick={() => setOpen(false)}
+                  className="save-div-btn-btn-cancel"
                 >
-                  Category
-                </label>
-                <Select
-                  id="categroyname"
-                  required
-                  sx={{
-                    width: '280px',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      // borderColor: !!formerror.donationtype ? 'red' : '',
-                      padding: '10px 0px 10px 10px',
-                      background: '#fff',
-                    },
-                  }}
-                  value={categroyname}
-                  name="categroyname"
-                  onChange={(e) => setcategroyname(e.target.value)}
-                  displayEmpty
+                  Cancel
+                </button>
+                <button
+                  onClick={() => setshowsaveimg(true)}
+                  className="save-div-btn-btn"
                 >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={''}
-                  >
-                    Please select
-                  </MenuItem>
-                  {category &&
-                    category.map((item) => {
-                      return (
-                        <MenuItem
-                          sx={{
-                            fontSize: 14,
-                          }}
-                          key={item.id}
-                          value={item.Name}
-                        >
-                          {item.Name}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
+                  Next
+                </button>
               </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Rate
-                </label>
-                <CustomInput
-                  id="rate"
-                  name="rate"
-                  placeholder="Enter the rate"
-                  value={rate}
-                  onChange={(e) => setrate(e.target.value)}
-                />
-              </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="advncerate">
-                  Advance Amount
-                </label>
-                <CustomInput
-                  id="advncerate"
-                  name="advncerate"
-                  placeholder="Enter the rate"
-                  value={advncerate}
-                  onChange={(e) => setadvncerate(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="form-div" style={{ marginBottom: '1rem' }}>
-            <div className="form-input-div_add_user">
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="checkout">
-                  Check Out Time
-                </label>
-                <CustomInput
-                  type="time"
-                  id="checkout"
-                  name="checkout"
-                  placeholder="Enter the rate"
-                  value={checkout}
-                  onChange={(e) => setcheckout(e.target.value)}
-                />
-              </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="roomtype">
-                  Room Type
-                </label>
-                <Select
-                  id="roomtype"
-                  required
-                  sx={{
-                    width: '280px',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      // borderColor: !!formerror.donationtype ? 'red' : '',
-                      padding: '10px 0px 10px 10px',
-                      background: '#fff',
-                    },
-                  }}
-                  value={roomtype}
-                  name="roomtype"
-                  onChange={(e) => setroomtype(e.target.value)}
-                  displayEmpty
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={''}
-                  >
-                    Please select
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={1}
-                  >
-                    Yes
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={0}
-                  >
-                    No
-                  </MenuItem>
-                </Select>
-              </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="roomstatus">
-                  Status
-                </label>
-                <Select
-                  id="roomstatus"
-                  required
-                  sx={{
-                    width: '280px',
-                    fontSize: 14,
-                    '& .MuiSelect-select': {
-                      // borderColor: !!formerror.donationtype ? 'red' : '',
-                      padding: '10px 0px 10px 10px',
-                      background: '#fff',
-                    },
-                  }}
-                  value={roomstatus}
-                  name="roomstatus"
-                  onChange={(e) => setroomstatus(e.target.value)}
-                  displayEmpty
-                >
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={''}
-                  >
-                    Please select
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={true}
-                  >
-                    Enable
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      fontSize: 14,
-                    }}
-                    value={false}
-                  >
-                    Disable
-                  </MenuItem>
-                </Select>
-              </div>
-            </div>
-          </div>
-
-          <div className="save-div-btn">
-            <button onClick={() => handlesubmit()} className="save-div-btn-btn">
-              Save
-            </button>
-            <button
-              onClick={() => setOpen(false)}
-              className="save-div-btn-btn-cancel"
-            >
-              Cancel
-            </button>
-          </div>
+            </>
+          )}
         </div>
       </div>
     </>

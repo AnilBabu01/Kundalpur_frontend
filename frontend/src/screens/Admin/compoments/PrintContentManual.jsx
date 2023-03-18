@@ -507,7 +507,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
             </div>
 
             <div className="gray-text-div extra_bottom_margin">
-              <p>({isData?.createdBy})</p>
+              <p>({isData?.CreatedBy})</p>
             </div>
             <div>
               {isData?.active === '0' && (
@@ -963,7 +963,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
             </div>
 
             <div className="gray-text-div" style={{ marginTop: '5%' }}>
-              <p>({isData?.createdBy})</p>
+              <p>({isData?.CreatedBy})</p>
             </div>
           </div>
         </div>

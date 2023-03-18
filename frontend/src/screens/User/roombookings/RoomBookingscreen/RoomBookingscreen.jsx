@@ -169,6 +169,21 @@ function RoomBookingscreen() {
   let totalRoomAmount = roomno * 1750;
   let alltotalamount = totalRoomAmount + totalofmattress;
   let totalmember = femaleno;
+  const data = {
+    fullname: fullname,
+    email: email,
+    mobile: mobile,
+    address: address,
+    city: city,
+    state: state,
+    idproffname: idproffname,
+    maleno: maleno,
+    femaleno: femaleno,
+    childrenno: childrenno,
+    roomno: roomno,
+    extraMattress: extraMattress,
+  };
+
   const handleclick = async () => {
     if (
       (fullname,
@@ -287,7 +302,13 @@ function RoomBookingscreen() {
                   </div>
                   <div className="now_payment_gateway_div">
                     <button
-                      onClick={() => navigate('/room/paymentsuccessfuly')}
+                      onClick={() =>
+                        navigate('/room/paymentsuccessfuly', {
+                          state: {
+                            data: data,
+                          },
+                        })
+                      }
                     >
                       Proceed To Payment Options
                     </button>

@@ -66,7 +66,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
               <div className="main_print_div">
                 <div>
-                  <p className="common_margin_p">
+                  <p className="common_margin_pp">
                     <span className="gray-text">
                       दान रसीद नं -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                     </span>
@@ -74,14 +74,14 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       ? isData?.RECEIPT_NO
                       : isData?.ReceiptNo}
                   </p>
-                  <p className="common_margin_p">
+                  <p className="common_margin_pp">
                     <span className="gray-text">
                       दान दातार - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                     </span>
                     {isData?.gender}&nbsp;
                     {isData?.NAME ? isData?.NAME : isData?.name}
                   </p>
-                  <p className="common_margin_p">
+                  <p className="common_margin_pp">
                     <span className="gray-text">
                       स्थान - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                       &nbsp; &nbsp; &nbsp;
@@ -90,7 +90,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   </p>
                   {isData && isData.CHEQUE_NO && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           दान का मद - &nbsp; &nbsp;
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -102,7 +102,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                   {isData && isData.CHEQUE_NO === '' && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           दान का मद - &nbsp; &nbsp;
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -123,7 +123,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     isData.elecItemDetails &&
                     isData.elecItemDetails[0].itemType && (
                       <>
-                        <p className="common_margin_p">
+                        <p className="common_margin_pp">
                           <span className="gray-text">
                             मद -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -133,7 +133,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                             isData.elecItemDetails[0].type}
                         </p>
 
-                        <p className="common_margin_p">
+                        <p className="common_margin_pp">
                           <span className="gray-text">
                             संख्या-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
@@ -142,7 +142,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                             isData.elecItemDetails &&
                             isData.elecItemDetails[0].quantity}
                         </p>
-                        <p className="common_margin_p">
+                        <p className="common_margin_pp">
                           <span className="gray-text">
                             वजन -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
@@ -154,7 +154,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     )}
                 </div>
                 <div>
-                  <p className="common_margin_p">
+                  <p className="common_margin_pp">
                     <span className="gray-text">
                       दिनांक - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                     </span>
@@ -174,7 +174,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </>
                     )}
                   </p>
-                  <p className="common_margin_p">
+                  <p className="common_margin_pp">
                     <span className="gray-text">
                       मोबाइल नं - &nbsp; &nbsp; &nbsp;
                     </span>
@@ -188,7 +188,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   </p>
                   {isData && isData.modeOfDonation === '2' && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           विवरण - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                           &nbsp;&nbsp;
@@ -201,7 +201,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   )}
                   {isData && isData.modeOfDonation === 2 && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           विवरण - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                           &nbsp;&nbsp;
@@ -214,7 +214,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   )}
                   {isData && isData.CHEQUE_NO && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">माध्यम -</span>
                         {isData?.CHEQUE_NO}
                         {isData?.NAME_OF_BANK}
@@ -223,7 +223,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   )}
                   {isData && isData.CHEQUE_NO && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">विवरण - &nbsp;</span>
                         {isData && isData?.REMARK}
                       </p>
@@ -231,7 +231,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   )}
                   {isData && isData.CHEQUE_NO === '' && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">विवरण - &nbsp;</span>
                         {isData && isData?.REMARK}
                       </p>
@@ -243,7 +243,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         isData.elecItemDetails &&
                         isData.elecItemDetails[0].ChequeNo && (
                           <>
-                            <p className="common_margin_p">
+                            <p className="common_margin_pp">
                               <span className="gray-text">
                                 माध्यम - &nbsp;&nbsp;&nbsp;&nbsp;
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -270,7 +270,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       isData.elecItemDetails &&
                       isData.elecItemDetails[0].BankName && (
                         <>
-                          <p className="common_margin_p">
+                          <p className="common_margin_pp">
                             <span className="gray-text">
                               माध्यम - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                               &nbsp; &nbsp; &nbsp;
@@ -287,7 +287,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   {isData &&
                     isData.elecItemDetails &&
                     isData.elecItemDetails[0].itemType && (
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">सामग्री का नाम -</span>
                         {isData &&
                           isData.elecItemDetails &&
@@ -297,7 +297,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                   {isData && isData?.modeOfDonation === '4' ? (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           विवरण - &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
                         </span>
@@ -332,7 +332,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                               isData.elecItemDetails &&
                               isData.elecItemDetails.map((item) => {
                                 return (
-                                  <p className="common_margin_p">
+                                  <p className="common_margin_pp">
                                     {' '}
                                     {item.type}-₹ {item.amount} /-
                                   </p>
@@ -344,7 +344,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     </div>
 
                     <div className="handle_display_div">
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           दान राशि अंको में - &nbsp;
                         </span>
@@ -362,7 +362,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === '3' && (
                         <>
-                          <p className="common_margin_p margin_left_is">
+                          <p className="common_margin_pp margin_left_is">
                             <span className="gray-text">
                               विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -376,7 +376,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === 3 && (
                         <>
-                          <p className="common_margin_p margin_left_is">
+                          <p className="common_margin_pp margin_left_is">
                             <span className="gray-text">
                               विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -390,7 +390,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === '1' && (
                         <>
-                          <p className="common_margin_p margin_left_is">
+                          <p className="common_margin_pp margin_left_is">
                             <span className="gray-text">विवरण - &nbsp;</span>
                             {isData && isData?.REMARK
                               ? isData?.REMARK
@@ -401,7 +401,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === 1 && (
                         <>
-                          <p className="common_margin_p margin_left_is">
+                          <p className="common_margin_pp margin_left_is">
                             <span className="gray-text">विवरण - &nbsp;</span>
                             {isData && isData?.REMARK
                               ? isData?.REMARK
@@ -410,7 +410,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         </>
                       )}
                     </div>
-                    <p className="common_margin_p">
+                    <p className="common_margin_pp">
                       <span className="gray-text">
                         दान राशि शब्दों में - &nbsp;
                       </span>
@@ -528,7 +528,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
               <div style={{ marginTop: '33%' }} className="main_print_div">
                 <div>
-                  <p className="common_margin_p">
+                  <p className="common_margin_pp">
                     <span className="gray-text">
                       दान रसीद नं -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                     </span>
@@ -536,14 +536,14 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       ? isData?.RECEIPT_NO
                       : isData?.ReceiptNo}
                   </p>
-                  <p className="common_margin_p">
+                  <p className="common_margin_pp">
                     <span className="gray-text">
                       दान दातार - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                     </span>
                     {isData?.gender}&nbsp;
                     {isData?.NAME ? isData?.NAME : isData?.name}
                   </p>
-                  <p className="common_margin_p">
+                  <p className="common_margin_pp">
                     <span className="gray-text">
                       स्थान - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                       &nbsp; &nbsp; &nbsp;
@@ -552,7 +552,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   </p>
                   {isData && isData.CHEQUE_NO && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           दान का मद - &nbsp; &nbsp;
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -564,7 +564,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                   {isData && isData.CHEQUE_NO === '' && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           दान का मद - &nbsp; &nbsp;
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -585,7 +585,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     isData.elecItemDetails &&
                     isData.elecItemDetails[0].itemType && (
                       <>
-                        <p className="common_margin_p">
+                        <p className="common_margin_pp">
                           <span className="gray-text">
                             मद -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -595,7 +595,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                             isData.elecItemDetails[0].type}
                         </p>
 
-                        <p className="common_margin_p">
+                        <p className="common_margin_pp">
                           <span className="gray-text">
                             संख्या-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
@@ -604,7 +604,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                             isData.elecItemDetails &&
                             isData.elecItemDetails[0].quantity}
                         </p>
-                        <p className="common_margin_p">
+                        <p className="common_margin_pp">
                           <span className="gray-text">
                             वजन -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
@@ -616,7 +616,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     )}
                 </div>
                 <div>
-                  <p className="common_margin_p">
+                  <p className="common_margin_pp">
                     <span className="gray-text">
                       दिनांक - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                     </span>
@@ -636,7 +636,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </>
                     )}
                   </p>
-                  <p className="common_margin_p">
+                  <p className="common_margin_pp">
                     <span className="gray-text">
                       मोबाइल नं - &nbsp; &nbsp; &nbsp;
                     </span>
@@ -650,7 +650,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   </p>
                   {isData && isData.modeOfDonation === '2' && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           विवरण - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                           &nbsp;&nbsp;
@@ -663,7 +663,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   )}
                   {isData && isData.modeOfDonation === 2 && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           विवरण - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                           &nbsp;&nbsp;
@@ -676,7 +676,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   )}
                   {isData && isData.CHEQUE_NO && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">माध्यम -</span>
                         {isData?.CHEQUE_NO}
                         {isData?.NAME_OF_BANK}
@@ -685,7 +685,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   )}
                   {isData && isData.CHEQUE_NO && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">विवरण - &nbsp;</span>
                         {isData && isData?.REMARK}
                       </p>
@@ -693,7 +693,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   )}
                   {isData && isData.CHEQUE_NO === '' && (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">विवरण - &nbsp;</span>
                         {isData && isData?.REMARK}
                       </p>
@@ -705,7 +705,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         isData.elecItemDetails &&
                         isData.elecItemDetails[0].ChequeNo && (
                           <>
-                            <p className="common_margin_p">
+                            <p className="common_margin_pp">
                               <span className="gray-text">
                                 माध्यम - &nbsp;&nbsp;&nbsp;&nbsp;
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -732,7 +732,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       isData.elecItemDetails &&
                       isData.elecItemDetails[0].BankName && (
                         <>
-                          <p className="common_margin_p">
+                          <p className="common_margin_pp">
                             <span className="gray-text">
                               माध्यम - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                               &nbsp; &nbsp; &nbsp;
@@ -749,7 +749,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                   {isData &&
                     isData.elecItemDetails &&
                     isData.elecItemDetails[0].itemType && (
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">सामग्री का नाम -</span>
                         {isData &&
                           isData.elecItemDetails &&
@@ -759,7 +759,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                   {isData && isData?.modeOfDonation === '4' ? (
                     <>
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           विवरण - &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
                         </span>
@@ -794,7 +794,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                               isData.elecItemDetails &&
                               isData.elecItemDetails.map((item) => {
                                 return (
-                                  <p className="common_margin_p">
+                                  <p className="common_margin_pp">
                                     {' '}
                                     {item.type}-₹ {item.amount} /-
                                   </p>
@@ -806,7 +806,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                     </div>
 
                     <div className="handle_display_div">
-                      <p className="common_margin_p">
+                      <p className="common_margin_pp">
                         <span className="gray-text">
                           दान राशि अंको में - &nbsp;
                         </span>
@@ -824,7 +824,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === '3' && (
                         <>
-                          <p className="common_margin_p margin_left_is">
+                          <p className="common_margin_pp margin_left_is">
                             <span className="gray-text">
                               विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -838,7 +838,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === 3 && (
                         <>
-                          <p className="common_margin_p margin_left_is">
+                          <p className="common_margin_pp margin_left_is">
                             <span className="gray-text">
                               विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -852,7 +852,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === '1' && (
                         <>
-                          <p className="common_margin_p margin_left_is">
+                          <p className="common_margin_pp margin_left_is">
                             <span className="gray-text">विवरण - &nbsp;</span>
                             {isData && isData?.REMARK
                               ? isData?.REMARK
@@ -863,7 +863,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === 1 && (
                         <>
-                          <p className="common_margin_p margin_left_is">
+                          <p className="common_margin_pp margin_left_is">
                             <span className="gray-text">विवरण - &nbsp;</span>
                             {isData && isData?.REMARK
                               ? isData?.REMARK
@@ -872,7 +872,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                         </>
                       )}
                     </div>
-                    <p className="common_margin_p">
+                    <p className="common_margin_pp">
                       <span className="gray-text">
                         दान राशि शब्दों में - &nbsp;
                       </span>

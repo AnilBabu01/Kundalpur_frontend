@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import homee from '../../../../assets/homee.jpeg';
 import Rating from '@mui/material/Rating';
+import { backendUrl } from '../../../../config/config';
 import './RoomCard.css';
-function RoomCard({ img }) {
+function RoomCard({ img, data }) {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(null > 2);
   return (
     <>
       <div className="room_card_main_div">
-        <img className="room_card_main_divimg" src={img} alt="dd" />
+        <img
+          className="room_card_main_divimg"
+          src={`${backendUrl}uploads/images/${data?.image1}`}
+          alt="dd"
+        />
         <div className="main_room_div_deell">
-          <p>Lala Umrav Singh Jain Dharmshala</p>
-          <p className="main_text_deltails">AC</p>
+          <p>{data?.name}</p>
+          <p className="main_text_deltails">{data?.facility_name}</p>
 
           <div className="dharamshal_arc_main_name_div13">
             <img

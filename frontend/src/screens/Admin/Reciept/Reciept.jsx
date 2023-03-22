@@ -256,9 +256,7 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
 
                 <span className="rightitems">
                   <h2>मोबाइल नं :</h2>
-                  <h2 className="font_bold_in_donation">
-                    {isData?.phoneNo ? isData?.phoneNo : user?.mobileNo}
-                  </h2>
+                  <h2 className="font_bold_in_donation">{isData?.phoneNo}</h2>
                 </span>
                 {isData && isData.CHEQUE_NO && (
                   <>

@@ -42,7 +42,7 @@ function AddFacForm({ setOpen }) {
 
       const res = await axios.post(`${backendApiUrl}room/facility`, {
         name: facilityname,
-        comment: commentss,
+        comments: commentss,
       });
 
       console.log(res.data.data);

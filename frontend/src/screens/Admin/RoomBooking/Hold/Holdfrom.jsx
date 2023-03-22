@@ -114,51 +114,6 @@ function Holdfrom({ setOpen }) {
           <div className="form-div" style={{ marginBottom: '1rem' }}>
             <div className="form-input-div_add_user">
               <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
-                  Room holder Name
-                </label>
-                <CustomInput
-                  id="categoryname"
-                  name="categoryname"
-                  placeholder="Enter Room holder Name"
-                  value={categoryname}
-                  onChange={(e) => setcategoryname(e.target.value)}
-                />
-              </div>
-
-              <div className="inner-input-div2">
-                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                  Holder Mobile No.
-                </label>
-                <CustomInput
-                  id="categoryname"
-                  name="categoryname"
-                  placeholder="Enter  Holder Mobile No."
-                  value={categoryname}
-                  onChange={(e) => setcategoryname(e.target.value)}
-                />
-              </div>
-
-              <div className="inner-input-div2">
-                <label
-                  style={{ marginBottom: '0.3rem' }}
-                  htmlFor="categoryname"
-                >
-                  Hold Since
-                </label>
-                <CustomInput
-                  id="categoryname"
-                  name="categoryname"
-                  placeholder="Enter  Hold Since"
-                  value={categoryname}
-                  onChange={(e) => setcategoryname(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="form-div" style={{ marginBottom: '1rem' }}>
-            <div className="form-input-div_add_user">
-              <div className="inner-input-div2">
                 <label style={{ marginBottom: '0.3rem' }} htmlFor="rate">
                   Dharamshala
                 </label>
@@ -262,6 +217,116 @@ function Holdfrom({ setOpen }) {
               </div>
             </div>
           </div>
+          <div className="tablescrollbarss">
+            <table className="table_ddd">
+              <tbody>
+                <tr>
+                  <td className="table_tddd">Booked</td>
+                  <td className="table_tddd">Room No</td>
+                  <td className="table_tddd">Room Rent</td>
+                  <td className="table_tddd">Advance Deposit</td>
+                  <td className="table_tddd">Dharamshala</td>
+                  <td className="table_tddd">Category</td>
+                  <td className="table_tddd">Facility</td>
+                  <td className="table_tddd">Time</td>
+                </tr>
+                <tr>
+                  <td className="table_tddd">
+                    <input type="checkbox" />
+                  </td>
+                  <td className="table_tddd">16</td>
+                  <td className="table_tddd">250.00</td>
+                  <td className="table_tddd">600.00</td>
+                  <td className="table_tddd">SADLAGA (सदलगा)</td>
+                  <td className="table_tddd">Single room</td>
+                  <td className="table_tddd">AC</td>
+                  <td className="table_tddd">Auto</td>
+                </tr>
+                <tr>
+                  <td className="table_tddd">
+                    <input type="checkbox" />
+                  </td>
+                  <td className="table_tddd">16</td>
+                  <td className="table_tddd">250.00</td>
+                  <td className="table_tddd">600.00</td>
+                  <td className="table_tddd">SADLAGA (सदलगा)</td>
+                  <td className="table_tddd">Single room</td>
+                  <td className="table_tddd">AC</td>
+                  <td className="table_tddd">Auto</td>
+                </tr>
+                <tr>
+                  <td className="table_tddd">
+                    <input type="checkbox" />
+                  </td>
+                  <td className="table_tddd">16</td>
+                  <td className="table_tddd">250.00</td>
+                  <td className="table_tddd">600.00</td>
+                  <td className="table_tddd">SADLAGA (सदलगा)</td>
+                  <td className="table_tddd">Single room</td>
+                  <td className="table_tddd">AC</td>
+                  <td className="table_tddd">Auto</td>
+                </tr>
+                <tr>
+                  <td className="table_tddd">
+                    <input type="checkbox" />
+                  </td>
+                  <td className="table_tddd">16</td>
+                  <td className="table_tddd">250.00</td>
+                  <td className="table_tddd">600.00</td>
+                  <td className="table_tddd">SADLAGA (सदलगा)</td>
+                  <td className="table_tddd">Single room</td>
+                  <td className="table_tddd">AC</td>
+                  <td className="table_tddd">Auto</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="form-div" style={{ marginBottom: '1rem' }}>
+            <div className="form-input-div_add_user">
+              <div className="inner-input-div2">
+                <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                  Room holder Name
+                </label>
+                <CustomInput
+                  id="categoryname"
+                  name="categoryname"
+                  placeholder="Enter Room holder Name"
+                  value={categoryname}
+                  onChange={(e) => setcategoryname(e.target.value)}
+                />
+              </div>
+
+              <div className="inner-input-div2">
+                <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                  Holder Mobile No.
+                </label>
+                <CustomInput
+                  id="categoryname"
+                  name="categoryname"
+                  placeholder="Enter  Holder Mobile No."
+                  value={categoryname}
+                  onChange={(e) => setcategoryname(e.target.value)}
+                />
+              </div>
+
+              <div className="inner-input-div2">
+                <label
+                  style={{ marginBottom: '0.3rem' }}
+                  htmlFor="categoryname"
+                >
+                  Hold Since
+                </label>
+                <CustomInput
+                  id="categoryname"
+                  name="categoryname"
+                  placeholder="Enter  Hold Since"
+                  value={categoryname}
+                  onChange={(e) => setcategoryname(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
           <div className="form-div" style={{ marginBottom: '1rem' }}>
             <div className="form-input-div_add_user">
               <div className="inner-input-div2">

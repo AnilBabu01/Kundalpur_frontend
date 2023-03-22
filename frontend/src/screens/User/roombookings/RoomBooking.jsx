@@ -3,23 +3,12 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import homee from '../../../assets/homee.jpeg';
-import Dharanshalaslider from './Dharanshalaslider/Dharanshalaslider';
 import DharamshalaCard from './AllAcards/DharamshalaCard';
-import DharamDetails from './DharamDetails/DharamDetails';
 import ServicesandFacilities from './Services&Facilities/ServicesandFacilities';
-import {
-  Box,
-  Button,
-  ButtonBase,
-  FormControlLabel,
-  Grid,
-  MenuItem,
-  Menu,
-  Radio,
-  RadioGroup,
-  Select,
-  Typography,
-} from '@mui/material';
+import { serverInstance } from '../../../API/ServerInstance';
+import Moment from 'moment-js';
+import moment from 'moment';
+import { MenuItem, Menu, Select } from '@mui/material';
 
 import './RoomBooking.css';
 import { width } from '@mui/system';
@@ -103,7 +92,7 @@ const Childrencont = [
   { id: 8, type: 8 },
   { id: 9, type: 9 },
 ];
-function RoomBooking({}) {
+function RoomBooking({ setroomfilterdata }) {
   const [showresuilt, setshowresuilt] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -113,19 +102,36 @@ function RoomBooking({}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const [typekundalpur, settypekundalpur] = useState('Select');
+  const [dharamshalalist, setdharamshalalist] = useState('');
   const [dharamshalaname, setdharamshalaname] = useState('Select');
   const [chlidremc, setchlidremc] = useState(0);
   const [abcount, setabcount] = useState(0);
   const [roomcount, setroomcount] = useState(0);
   const [checkouttime, setcheckouttime] = useState('');
 
-  console.log('check out time', checkouttime);
+  var options = { year: 'numeric', month: 'short', day: '2-digit' };
+  var today = new Date(checkouttime);
+  const checkoutcurrDate = Moment(today).format('YYYY-DD-MM');
+  const checkoutcurrTime = moment(today, 'HH:mm').format('hh:mm');
+
+  console.log('check out time', checkoutcurrDate, checkoutcurrTime);
+
   const handleClieck = () => {
     console.log('ddddddd');
   };
 
-  useEffect(() => {}, []);
+  const getALLdharamshala = () => {
+    serverInstance('room/dharmashala', 'get').then((res) => {
+      console.log('dharanmjhfkjhd', res.data);
+      setdharamshalalist(res.data);
+    });
+  };
+  useEffect(() => {
+    getALLdharamshala();
+  }, []);
+  const data = {
+    Childrencont: Childrencont,
+  };
 
   return (
     <>
@@ -285,176 +291,164 @@ function RoomBooking({}) {
         </MenuItem>
       </Menu>
 
-      {showresuilt ? (
-        <>
-          <DharamDetails />
-        </>
-      ) : (
-        <>
-          <div className="main_room_availabilty">
-            <div className="room_home_main_supper">
-              <div className="room_home_main">
-                <div className="room_home_main_overlay">
-                  <div>
-                    <h2 className="font_text_color">
-                      Fresh, quiet and <br /> peaceful Kundalpur Dharamshala &
-                      Hotels
-                    </h2>
-                  </div>
-                </div>
+      <div className="main_room_availabilty">
+        <div className="room_home_main_supper">
+          <div className="room_home_main">
+            <div className="room_home_main_overlay">
+              <div>
+                <h2 className="font_text_color">
+                  Fresh, quiet and <br /> peaceful Kundalpur Dharamshala &
+                  Hotels
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="form_div_absolute">
+          <form onSubmit={() => handleClieck()} className="form_btn_div">
+            <div className="main_div_select_div">
+              <label>
+                <img
+                  style={{ width: '8%', marginRight: '1%' }}
+                  src={homee}
+                  alt="dd"
+                />
+                Kundalpur
+              </label>
+              <Select
+                required
+                sx={{
+                  width: '100%',
+                  height: '26px',
+                  paddingLeft: '0.5rem',
+
+                  background:
+                    'linear-gradient(180deg, #F2EEEB 0%, #EDEDED 100%);',
+                  fontSize: 14,
+                  '& .MuiSelect-select': {
+                    padding: '1px',
+                  },
+                }}
+                value={dharamshalaname}
+                onChange={(e) => setdharamshalaname(e.target.value)}
+              >
+                <MenuItem
+                  sx={{
+                    fontSize: 12,
+                  }}
+                  value="Select"
+                >
+                  Select
+                </MenuItem>
+                {Dharamshalalist &&
+                  Dharamshalalist.map((item, idx) => {
+                    return (
+                      <MenuItem
+                        sx={{
+                          fontSize: 12,
+                        }}
+                        key={item.id}
+                        value={item.type}
+                      >
+                        {item.type}
+                      </MenuItem>
+                    );
+                  })}
+              </Select>
+            </div>
+            <div className="main_div_select_div">
+              <label htmlFor="checkouttime">
+                <img
+                  style={{ width: '8%', marginRight: '1%' }}
+                  src={homee}
+                  alt="dd"
+                />
+                Check In
+              </label>
+              <CustomInput
+                id="checkouttime"
+                name="checkouttime"
+                placeholder="Full name"
+                type="datetime-local"
+                onChange={(e) => setcheckouttime(e.target.value)}
+                value={checkouttime}
+              />
+            </div>
+            <div className="main_div_select_div">
+              <label>
+                <img
+                  style={{ width: '8%', marginRight: '1%' }}
+                  src={homee}
+                  alt="dd"
+                />
+                Check Out
+              </label>
+              <CustomInput
+                id="name"
+                name="name"
+                placeholder="Full name"
+                type="datetime-local"
+                // onChange={onChange}
+                // value={
+                //   donationdata.selected === 'yes1' && user.name
+                //     ? user.name
+                //     : donationdata.name
+                // }
+              />
+            </div>
+            <div className="main_div_select_div">
+              <label>
+                <img
+                  style={{ width: '8%', marginRight: '1%' }}
+                  src={homee}
+                  alt="dd"
+                />
+                Rooms For
+              </label>
+
+              <div onClick={handleClick} className="select_person_div">
+                Select
+                <svg
+                  width="12"
+                  height="7"
+                  viewBox="0 0 12 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 1L6 6L11 1"
+                    stroke="#333333"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </div>
             </div>
 
-            <div className="form_div_absolute">
-              <form onSubmit={() => handleClieck()} className="form_btn_div">
-                <div className="main_div_select_div">
-                  <label>
-                    <img
-                      style={{ width: '8%', marginRight: '1%' }}
-                      src={homee}
-                      alt="dd"
-                    />
-                    Kundalpur
-                  </label>
-                  <Select
-                    required
-                    sx={{
-                      width: '100%',
-                      height: '26px',
-                      paddingLeft: '0.5rem',
+            <button>
+              <SearchIcon />
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
 
-                      background:
-                        'linear-gradient(180deg, #F2EEEB 0%, #EDEDED 100%);',
-                      fontSize: 14,
-                      '& .MuiSelect-select': {
-                        padding: '1px',
-                      },
-                    }}
-                    value={dharamshalaname}
-                    onChange={(e) => setdharamshalaname(e.target.value)}
-                  >
-                    <MenuItem
-                      sx={{
-                        fontSize: 12,
-                      }}
-                      value="Select"
-                    >
-                      Select
-                    </MenuItem>
-                    {Dharamshalalist &&
-                      Dharamshalalist.map((item, idx) => {
-                        return (
-                          <MenuItem
-                            sx={{
-                              fontSize: 12,
-                            }}
-                            key={item.id}
-                            value={item.type}
-                          >
-                            {item.type}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                </div>
-                <div className="main_div_select_div">
-                  <label htmlFor="checkouttime">
-                    <img
-                      style={{ width: '8%', marginRight: '1%' }}
-                      src={homee}
-                      alt="dd"
-                    />
-                    Check In
-                  </label>
-                  <CustomInput
-                    id="checkouttime"
-                    name="checkouttime"
-                    placeholder="Full name"
-                    type="datetime-local"
-                    onChange={(e) => setcheckouttime(e.target.value)}
-                    value={checkouttime}
-                  />
-                </div>
-                <div className="main_div_select_div">
-                  <label>
-                    <img
-                      style={{ width: '8%', marginRight: '1%' }}
-                      src={homee}
-                      alt="dd"
-                    />
-                    Check Out
-                  </label>
-                  <CustomInput
-                    id="name"
-                    name="name"
-                    placeholder="Full name"
-                    type="datetime-local"
-                    // onChange={onChange}
-                    // value={
-                    //   donationdata.selected === 'yes1' && user.name
-                    //     ? user.name
-                    //     : donationdata.name
-                    // }
-                  />
-                </div>
-                <div className="main_div_select_div">
-                  <label>
-                    <img
-                      style={{ width: '8%', marginRight: '1%' }}
-                      src={homee}
-                      alt="dd"
-                    />
-                    Rooms For
-                  </label>
+      <div className="sjilder_main_div">
+        <div className="view_all_main_div">
+          <p>Kundalpur Dharamshala</p>
+          <button> View all</button>
+        </div>
+        <div className="center_wrap_hai_na">
+          {dharamshalalist &&
+            dharamshalalist.map((item, index) => {
+              return <DharamshalaCard data={item} data1={data} />;
+            })}
+        </div>
+      </div>
 
-                  <div onClick={handleClick} className="select_person_div">
-                    Select
-                    <svg
-                      width="12"
-                      height="7"
-                      viewBox="0 0 12 7"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M1 1L6 6L11 1"
-                        stroke="#333333"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </div>
-
-                <button>
-                  <SearchIcon />
-                  Search
-                </button>
-              </form>
-            </div>
-          </div>
-
-          <div className="sjilder_main_div">
-            <div className="view_all_main_div">
-              <p>Kundalpur Dharamshala</p>
-              <button> View all</button>
-            </div>
-            <div className="center_wrap_hai_na">
-              <DharamshalaCard />
-              <DharamshalaCard />
-              <DharamshalaCard />
-              <DharamshalaCard />
-              <DharamshalaCard />
-              <DharamshalaCard />
-              <DharamshalaCard />
-              <DharamshalaCard />
-            </div>
-          </div>
-
-          <ServicesandFacilities />
-        </>
-      )}
+      <ServicesandFacilities />
     </>
   );
 }

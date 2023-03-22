@@ -6,6 +6,7 @@ import Footer from './screens/User/Footer/Footer';
 import MainRoutes from './routes/MainRoutes';
 import AdminRoutes from './routes/AdminRoutes';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   loadUser,
   loadAdminprofile,
@@ -21,6 +22,7 @@ function App() {
   const [onlineId, setonlineId] = useState('');
   const [userrole, setuserrole] = useState('');
   const [showRoomOptions, setshowRoomOptions] = useState(false);
+  const [roomfilterdata, setroomfilterdata] = useState('');
   if (!sessionStorage.getItem('token')) {
   }
 
@@ -61,6 +63,8 @@ function App() {
 
         {opendashboard && <MainAdmin />}
         <MainRoutes
+          roomfilterdata={roomfilterdata}
+          setroomfilterdata={setroomfilterdata}
           setopendashboard={setopendashboard}
           setshowreciept={setshowreciept}
           setHeaderFooter={setHeaderFooter}
@@ -71,6 +75,8 @@ function App() {
           setshowRoomOptions={setshowRoomOptions}
         />
         <AdminRoutes
+          roomfilterdata={roomfilterdata}
+          setroomfilterdata={setroomfilterdata}
           setopendashboard={setopendashboard}
           setshowreciept={setshowreciept}
         />

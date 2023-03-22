@@ -88,6 +88,7 @@ const idproff = [
 ];
 
 function RoomShiftForm({ setOpen }) {
+  const [showchangeroom, setshowchangeroom] = useState(false);
   const [fullname, setfullname] = useState('');
   const [email, setemail] = useState('');
   const [phoneno, setphoneno] = useState('');
@@ -196,324 +197,445 @@ function RoomShiftForm({ setOpen }) {
   }, []);
   return (
     <>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open1}
-        onClose={handleClose1}
-        closeAfterTransition
-      >
-        <Fade in={open1}>
-          <Box sx={style}>
-            <div>
-              <div className="add-div-close-div">
-                <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Change Room</h2>
-                  <Typography variant="body2" color="primary">
-                    {currDate} / {currTime}
-                  </Typography>
-                </div>
-
-                <IconButton>
-                  <CloseIcon onClick={() => handleClose1()} />
-                </IconButton>
-              </div>
-              <CheckAvalability
-                facility={facility}
-                Dharamshala={Dharamshala}
-                setOpen1={setOpen1}
-              />
-            </div>
-          </Box>
-        </Fade>
-      </Modal>
-      <div className="cash-donation-div">
-        <div className="cash-donation-container-innser">
-          <div className="main_div_checkin_div">
-            <p>Details</p>
-            <div>
-              <div className="date_and_time_div">
-                <div className="inpur_div_room">
-                  <label htmlFor="date">Date</label>
-                  <CustomInput
-                    style={{ width: '80%' }}
-                    type="date"
-                    required
-                    id="date"
-                    name="date"
-                    value={date}
-                    onChange={(e) => setdate(e.target.value)}
-                  />
-                </div>
-
-                <div className="inpur_div_room">
-                  <label htmlFor="time">Time</label>
-                  <CustomInput
-                    style={{ width: '95%' }}
-                    id="time"
-                    type="time"
-                    required
-                    name="time"
-                    value={time}
-                    onChange={(e) => settime(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="minddle_div_room">
-                <div className="minddle_div_room_innear">
-                  <label htmlFor="phoneno">Mobile Number</label>
-                  <CustomInput
-                    id="phoneno"
-                    type="text"
-                    name="phoneno"
-                    required
-                    placeholder="Enter the mobile number"
-                    value={phoneno}
-                    onChange={(e) => setphoneno(e.target.value)}
-                  />
-                </div>
-                <div className="minddle_div_room_innear">
-                  <label htmlFor="email">Father's Name</label>
-                  <CustomInput
-                    id="email"
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="Enter the Father's Name"
-                    value={email}
-                    onChange={(e) => setemail(e.target.value)}
-                  />
-                </div>
-                <div className="minddle_div_room_innear">
-                  <label htmlFor="fullname">Full Name</label>
-                  <CustomInput
-                    id="fullname"
-                    type="text"
-                    name="fullname"
-                    required
-                    placeholder="Enter the full name"
-                    value={fullname}
-                    onChange={(e) => setfullname(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="minddle_div_room">
-                <div className="minddle_div_room_innear_adddress">
-                  <label htmlFor="address">Address</label>
-                  <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    required
-                    placeholder="Enter the Address"
-                    value={address}
-                    onChange={(e) => setaddress(e.target.value)}
-                  />
-                </div>
-
-                <div className="date_and_time_div_add">
-                  <div
-                    className="inpur_div_room_add"
-                    style={{ marginRight: '1.1rem' }}
-                  >
-                    <label htmlFor="city">City</label>
-                    <input
-                      type="text"
-                      id="city"
-                      name="city"
-                      required
-                      placeholder="City"
-                      value={city}
-                      onChange={(e) => setcity(e.target.value)}
+      {showchangeroom ? (
+        <>
+          <div className="cash-donation-div">
+            <div className="cash-donation-container-innser">
+              <div className="form-div" style={{ marginBottom: '1rem' }}>
+                <div className="form-input-div_add_user">
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                      Dharamshala
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      placeholder="Enter Room holder Name"
+                      // value={categoryname}
+                      // onChange={(e) => setcategoryname(e.target.value)}
                     />
                   </div>
 
-                  <div
-                    className="inpur_div_room_add"
-                    style={{ marginRight: '1.1rem' }}
-                  >
-                    <label>State</label>
-                    <select
-                      value={state}
-                      onChange={(e) => setstate(e.target.value)}
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                      Room No
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      placeholder="Enter  Holder Mobile No."
+                      // value={categoryname}
+                      // onChange={(e) => setcategoryname(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="categoryname"
                     >
-                      {statelist &&
-                        statelist.map((item) => {
-                          return (
-                            <option
-                              // sx={{
-                              //   fontSize: 14,
-                              // }}
-                              key={item.id}
-                              value={item.state}
-                            >
-                              {item.state}
-                            </option>
-                          );
-                        })}
-                    </select>
-                  </div>
-
-                  <div className="inpur_div_room_add">
-                    <label htmlFor="pincode">Pincode</label>
-                    <input
-                      type="text"
-                      id="pincode"
-                      name="pincode"
-                      required
-                      placeholder="pincode"
-                      value={pincode}
-                      onChange={(e) => setpincode(e.target.value)}
+                      Category
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      placeholder="Enter  Hold Since"
+                      // value={categoryname}
+                      // onChange={(e) => setcategoryname(e.target.value)}
                     />
                   </div>
                 </div>
               </div>
-              <div className="minddle_div_room">
-                <div className="minddle_div_room_innear">
-                  <label>Id Proof</label>
-                  <Select
-                    id="categroyname"
-                    required
-                    sx={{
-                      width: '280px',
-                      fontSize: 14,
-                      '& .MuiSelect-select': {
-                        // borderColor: !!formerror.donationtype ? 'red' : '',
-                        padding: '10px 0px 10px 10px',
-                        background: '#fff',
-                      },
-                    }}
-                    value={idproffname}
-                    name="idproffname"
-                    onChange={(e) => setidproffname(e.target.value)}
-                    displayEmpty
-                  >
-                    <MenuItem
+
+              <div className="form-div" style={{ marginBottom: '1rem' }}>
+                <div className="form-input-div_add_user">
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                      Facility
+                    </label>
+                    <CustomInput
+                      id="address"
+                      name="checkout"
+                      type="text"
+                      placeholder="   Hold Remain"
+                      // value={checkout}
+                      // onChange={(e) => setcheckout(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="checkout"
+                    >
+                      Room Rent
+                    </label>
+                    <CustomInput
+                      id="address"
+                      name="checkout"
+                      type="text"
+                      placeholder="Hold Approved By"
+                      // value={checkout}
+                      // onChange={(e) => setcheckout(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="checkout"
+                    >
+                      Advance Deposit
+                    </label>
+                    <CustomInput
+                      id="address"
+                      name="checkout"
+                      type="text"
+                      placeholder="Remarks"
+                      // value={checkout}
+                      // onChange={(e) => setcheckout(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <p>Room Shift to</p>
+              <div className="form-div" style={{ marginBottom: '1rem' }}>
+                <div className="form-input-div_add_user">
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="rate">
+                      Dharamshala
+                    </label>
+                    <Select
+                      id="donation-type"
+                      required
                       sx={{
+                        width: '280px',
                         fontSize: 14,
+                        '& .MuiSelect-select': {
+                          // borderColor: !!formerror.donationtype ? 'red' : '',
+                          padding: '10px 0px 10px 10px',
+                          background: '#fff',
+                        },
                       }}
-                      value={''}
+                      // value={isoffline}
+                      // name="isoffline"
+                      // onChange={(e) => setisoffline(e.target.value)}
+                      displayEmpty
                     >
-                      Please select
-                    </MenuItem>
-                    {idproff &&
-                      idproff.map((item) => {
-                        return (
-                          <MenuItem
-                            sx={{
-                              fontSize: 14,
-                            }}
-                            key={item.id}
-                            value={item.doc}
-                          >
-                            {item.doc}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                </div>
-                <div className="minddle_div_room_innear">
-                  <label htmlFor="idproffno">Id Proof Number</label>
-                  <CustomInput
-                    id="idproffno"
-                    type="text"
-                    name="idproffno"
-                    required
-                    placeholder="Enter the idproff no"
-                    value={idproffno}
-                    onChange={(e) => setidproffno(e.target.value)}
-                  />
-                </div>
-                <div className="minddle_div_room_innear">
-                  <label>Stay Days</label>
-                  <CustomInput
-                    id="staydays"
-                    type="text"
-                    name="staydays"
-                    required
-                    placeholder="Enter the stay days"
-                    value={staydays}
-                    onChange={(e) => setstaydays(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={''}
+                      >
+                        Please select
+                      </MenuItem>
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={true}
+                      >
+                        Please select
+                      </MenuItem>
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={false}
+                      >
+                        No
+                      </MenuItem>
+                    </Select>
+                  </div>
 
-          <div className="main_div_checkin_div1">
-            <p>Member Details</p>
-            <div className="main_Btotn_check_div">
-              <div className="main_ddsh_div">
-                <div className="main_Btotn_check_div_input">
-                  <label htmlFor='"maleno'>Male</label>
-                  <input
-                    id="maleno"
-                    type="text"
-                    name="maleno"
-                    required
-                    placeholder="Male member "
-                    value={maleno}
-                    onChange={(e) => {
-                      setmaleno(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="main_Btotn_check_div_input">
-                  <label htmlFor="femaleno">Female</label>
-                  <input
-                    id="femaleno"
-                    type="text"
-                    name="femaleno"
-                    required
-                    placeholder="Female member"
-                    value={femaleno}
-                    onChange={(e) => setfemaleno(e.target.value)}
-                  />
-                </div>
-                <div className="main_Btotn_check_div_input">
-                  <label htmlFor="Children">Children</label>
-                  <input
-                    id="Children"
-                    type="text"
-                    name="Children"
-                    required
-                    placeholder="Children member"
-                    value={Children}
-                    onChange={(e) => setChildren(e.target.value)}
-                  />
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="advncerate"
+                    >
+                      Category
+                    </label>
+                    <Select
+                      id="donation-type"
+                      required
+                      sx={{
+                        width: '280px',
+                        fontSize: 14,
+                        '& .MuiSelect-select': {
+                          // borderColor: !!formerror.donationtype ? 'red' : '',
+                          padding: '10px 0px 10px 10px',
+                          background: '#fff',
+                        },
+                      }}
+                      // value={isoffline}
+                      // name="isoffline"
+                      // onChange={(e) => setisoffline(e.target.value)}
+                      displayEmpty
+                    >
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={''}
+                      >
+                        Please select
+                      </MenuItem>
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={true}
+                      >
+                        Please select
+                      </MenuItem>
+                      <MenuItem
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        value={false}
+                      >
+                        No
+                      </MenuItem>
+                    </Select>
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                      &nbsp;
+                    </label>
+                    <button className="check_babbs_btn">
+                      {' '}
+                      Check Availability
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div>
-                <div className="number_inera_div">
-                  <label htmlFor="TotalMember">Total Member</label>
-                  <input
-                    id="TotalMember"
-                    type="text"
-                    name="TotalMember"
-                    required
-                    placeholder="Total members"
-                    value={TotalMember}
-                    onChange={(e) => setTotalMember(e.target.value)}
-                  />
-                </div>
+              <div className="tablescrollbarss">
+                <table className="table_ddd">
+                  <tbody>
+                    <tr>
+                      <td className="table_tddd">Booked</td>
+                      <td className="table_tddd">Room No</td>
+                      <td className="table_tddd">Room Rent</td>
+                      <td className="table_tddd">Advance Deposit</td>
+                      <td className="table_tddd">Dharamshala</td>
+                      <td className="table_tddd">Category</td>
+                      <td className="table_tddd">Facility</td>
+                      <td className="table_tddd">Time</td>
+                    </tr>
+                    <tr>
+                      <td className="table_tddd">
+                        <input type="checkbox" />
+                      </td>
+                      <td className="table_tddd">16</td>
+                      <td className="table_tddd">250.00</td>
+                      <td className="table_tddd">600.00</td>
+                      <td className="table_tddd">SADLAGA (सदलगा)</td>
+                      <td className="table_tddd">Single room</td>
+                      <td className="table_tddd">AC</td>
+                      <td className="table_tddd">Auto</td>
+                    </tr>
+                    <tr>
+                      <td className="table_tddd">
+                        <input type="checkbox" />
+                      </td>
+                      <td className="table_tddd">16</td>
+                      <td className="table_tddd">250.00</td>
+                      <td className="table_tddd">600.00</td>
+                      <td className="table_tddd">SADLAGA (सदलगा)</td>
+                      <td className="table_tddd">Single room</td>
+                      <td className="table_tddd">AC</td>
+                      <td className="table_tddd">Auto</td>
+                    </tr>
+                    <tr>
+                      <td className="table_tddd">
+                        <input type="checkbox" />
+                      </td>
+                      <td className="table_tddd">16</td>
+                      <td className="table_tddd">250.00</td>
+                      <td className="table_tddd">600.00</td>
+                      <td className="table_tddd">SADLAGA (सदलगा)</td>
+                      <td className="table_tddd">Single room</td>
+                      <td className="table_tddd">AC</td>
+                      <td className="table_tddd">Auto</td>
+                    </tr>
+                    <tr>
+                      <td className="table_tddd">
+                        <input type="checkbox" />
+                      </td>
+                      <td className="table_tddd">16</td>
+                      <td className="table_tddd">250.00</td>
+                      <td className="table_tddd">600.00</td>
+                      <td className="table_tddd">SADLAGA (सदलगा)</td>
+                      <td className="table_tddd">Single room</td>
+                      <td className="table_tddd">AC</td>
+                      <td className="table_tddd">Auto</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="save-div-btn">
+                <button
+                  onClick={() => handlesubmit()}
+                  className="save-div-btn-btn"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setOpen(false)}
+                  className="save-div-btn-btn-cancel"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
-          <div className="save-div-btn">
-            <button onClick={() => handleOepn1()} className="save-div-btn-btn">
-              Next
-            </button>
-            <button
-              onClick={() => setOpen(false)}
-              className="save-div-btn-btn-cancel"
-            >
-              Cancel
-            </button>
+        </>
+      ) : (
+        <>
+          <div className="cash-donation-div">
+            <div className="cash-donation-container-innser">
+              <div className="form-div" style={{ marginBottom: '1rem' }}>
+                <div className="form-input-div_add_user">
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                      Booking Id
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      value={'2022-15264253'}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                      Check in Time
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      placeholder="Enter  Holder Mobile No."
+                      value={'31/03/22  13:28 pm'}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="categoryname"
+                    >
+                      Mobile number
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      placeholder="Enter  Hold Since"
+                      value={'1253625632'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-div" style={{ marginBottom: '1rem' }}>
+                <div className="form-input-div_add_user">
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                      Name
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      value={'Pranay Shukla'}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                      Email id
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      value={'anil@gmail.com'}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="categoryname"
+                    >
+                      Id Proof number
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      value={'15263254789525'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-div" style={{ marginBottom: '1rem' }}>
+                <div className="form-input-div_add_user">
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                      Address
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      value={'pilibhit'}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                      Address
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      value={'up'}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="categoryname"
+                    >
+                      City
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      value={'Bisalpur'}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="save-div-btn">
+                <button
+                  style={{ marginRight: '2rem' }}
+                  onClick={() => setOpen(false)}
+                  className="save-div-btn-btn-cancel"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => setshowchangeroom(true)}
+                  className="save-div-btn-btn"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 }

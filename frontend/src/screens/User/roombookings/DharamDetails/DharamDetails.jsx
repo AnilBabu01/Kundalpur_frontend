@@ -1,34 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import homee from '../../../../assets/homee.jpeg';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import dharam1 from '../../../../assets/dharam1.jpeg';
 import room1 from '../../../../assets/room1.jpeg';
 import room2 from '../../../../assets/room2.jpeg';
 import room3 from '../../../../assets/room3.jpeg';
 import room4 from '../../../../assets/room4.jpeg';
 import RoomCard from '../AllAcards/RoomCard';
+import { serverInstance } from '../../../../API/ServerInstance';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import {
-  Box,
-  Button,
-  ButtonBase,
-  FormControlLabel,
-  Grid,
-  MenuItem,
-  Menu,
-  Radio,
-  RadioGroup,
-  Select,
-  Typography,
-} from '@mui/material';
-
+import { MenuItem, Menu, Select } from '@mui/material';
+import { backendUrl } from '../../../../config/config';
 import MoreSlider from '../MoreSlider/MoreSlider';
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
-
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   p: 2,
@@ -105,7 +93,8 @@ const Childrencont = [
   { id: 9, type: 9 },
 ];
 import './DharamDetails.css';
-function DharamDetails() {
+function DharamDetails({ roomfilterdata }) {
+  let { id } = useParams();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -114,11 +103,20 @@ function DharamDetails() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const [typekundalpur, settypekundalpur] = useState('Select');
   const [dharamshalaname, setdharamshalaname] = useState('Select');
   const [chlidremc, setchlidremc] = useState(0);
   const [abcount, setabcount] = useState(0);
   const [roomcount, setroomcount] = useState(0);
+  const [detailsofroons, setdetailsofroons] = useState('');
+  const getALLdharamshala = () => {
+    serverInstance(`room/dharmashala?id=${id}`, 'get').then((res) => {
+      console.log('dharsmshala detisls', res.data);
+      setdetailsofroons(res.data);
+    });
+  };
+  useEffect(() => {
+    getALLdharamshala();
+  }, [id]);
 
   return (
     <>
@@ -413,16 +411,16 @@ function DharamDetails() {
       </div>
 
       <div className="details-div_dhar">
-        <img src={dharam1} alt=" dharam1" />
+        <img
+          src={`${backendUrl}uploads/images/${
+            detailsofroons.dharmasala && detailsofroons.dharmasala?.image1
+          }`}
+          alt=" dharam1"
+        />
         <div className="right_div_deta_dhram">
-          <h2>Lala Umrav Singh Jain Dharmshala</h2>
+          <h2>{detailsofroons?.name}</h2>
           <h2 className="main_text_deltails">Description</h2>
-          <p>
-            Shri Mahaveer Ji has been delightfully decorated to help you feel
-            the warmth of a home in its comfortable atmosphere. Tastefully
-            designed and elegantly appointed rooms, having their own individual
-            character and furnishings.
-          </p>
+          <p>{detailsofroons?.desc}</p>
           <div className="dharamshal_arc_main_name_div10">
             <img src={homee} alt="dd" />
             <p>Kundalpur</p>
@@ -431,10 +429,10 @@ function DharamDetails() {
       </div>
 
       <div className="details-div_dhar">
-        <RoomCard img={room1} />
-        <RoomCard img={room2} />
-        <RoomCard img={room3} />
-        <RoomCard img={room4} />
+        {detailsofroons.availableRooms &&
+          detailsofroons.availableRooms.map((item) => {
+            return <RoomCard img={room1} data={item} />;
+          })}
       </div>
 
       <div className="imp_info_super_div">

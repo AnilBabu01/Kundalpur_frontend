@@ -3,21 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import dharam1 from '../../../../assets/dharam1.jpeg';
 import homee from '../../../../assets/homee.jpeg';
 import Rating from '@mui/material/Rating';
+import { backendUrl } from '../../../../config/config';
 import './DharamshalaCard.css';
-function DharamshalaCard() {
+function DharamshalaCard({ data, data1 }) {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(null > 2);
   console.log(value);
+  console.log('child count', data1);
   return (
     <>
       <div className="dharamshal_arc_main">
-        <img src={dharam1} alt="hh" />
+        <img src={`${backendUrl}uploads/images/${data?.image1}`} alt="hh" />
         <div className="dharamshal_arc_main_name_div_content">
           <div className="dharamshal_arc_main_name_div">
             <img src={homee} alt="dd" />
             <p>Kundalpur</p>
           </div>
-          <p>Lala Umrav Singh Jain Dharmshala</p>
+          <p>{data?.name}</p>
           <div className="rating_div">
             <p>₹850 Per Night</p>
             <Rating
@@ -29,7 +31,13 @@ function DharamshalaCard() {
             />
           </div>
           <button
-            onClick={() => navigate('/Dharamshala/Details')}
+            onClick={() =>
+              navigate(`/Dharamshala/Details/${data?.dharmasala_id}`, {
+                state: {
+                  checkindata: data1,
+                },
+              })
+            }
             className="detail_more_btn"
           >
             Details

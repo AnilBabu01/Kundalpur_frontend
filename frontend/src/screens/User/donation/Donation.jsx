@@ -281,17 +281,17 @@ function Donation({ setshowreciept, paymentId, setonlineId }) {
       }).then((res) => {
         console.log('rers of online', res);
         sendsms();
-        // if (res.status === true) {
-        //   setshowloader(false);
-        //   window.location.href =
-        //     'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
-        //     res.data.id;
-        //   // handleOpen();
-        //   // sendsms();
-        //   setonlineId(res.data.id);
-        // } else {
-        //   Swal.fire('Error!', 'Somthing went wrong!!', 'error');
-        // }
+        if (res.status === true) {
+          setshowloader(false);
+          window.location.href =
+            'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
+            res.data.id;
+          // handleOpen();
+          // sendsms();
+          setonlineId(res.data.id);
+        } else {
+          Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+        }
       });
     }
 

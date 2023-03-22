@@ -32,6 +32,8 @@ function MainRoutes({
   setonlineId,
   onlineId,
   setshowRoomOptions,
+  roomfilterdata,
+  setroomfilterdata,
 }) {
   return (
     <>
@@ -141,16 +143,16 @@ function MainRoutes({
           path="/roombooking"
           element={
             <PrivateRoutes>
-              <RoomBooking />
+              <RoomBooking setroomfilterdata={setroomfilterdata} />
             </PrivateRoutes>
           }
         />
 
         <Route
-          path="/Dharamshala/Details"
+          path="/Dharamshala/Details/:id"
           element={
             <PrivateRoutes>
-              <DharamDetails />
+              <DharamDetails roomfilterdata={roomfilterdata} />
             </PrivateRoutes>
           }
         />

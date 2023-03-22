@@ -211,7 +211,7 @@ const AddRoom = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Add Facilities</h2>
+                  <h2 style={{ marginBottom: '0.5rem' }}>Update room</h2>
                   <Typography variant="body2" color="primary">
                     {currDate} / {currTime}
                   </Typography>
@@ -317,11 +317,11 @@ const AddRoom = ({ setopendashboard }) => {
                       }}
                     >
                       <TableCell>{index + 1}</TableCell>
-                      <TableCell>{row.dharmasala}</TableCell>
+                      <TableCell>{row.dharmasala.name}</TableCell>
                       <TableCell>{row.FroomNo}</TableCell>
                       <TableCell>{row.TroomNo}</TableCell>
-                      <TableCell>{row.Facilities}</TableCell>
-                      <TableCell>{row.category}</TableCell>
+                      <TableCell>{row.facility_name}</TableCell>
+                      <TableCell>{row.category_name}</TableCell>
                       <TableCell>{row.Rate}</TableCell>
                       <TableCell>{row.advance}</TableCell>
                       <TableCell>{row.coTime}</TableCell>

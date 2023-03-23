@@ -4,24 +4,25 @@ import homee from '../../../../assets/homee.jpeg';
 import Rating from '@mui/material/Rating';
 import { backendUrl } from '../../../../config/config';
 import './RoomCard.css';
-function RoomCard({ img, data }) {
+function RoomCard1({ data }) {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(null > 2);
+
+  console.log('data is ', data);
   return (
     <>
       <div className="room_card_main_div">
         <img
           className="room_card_main_divimg"
-          src={`${backendUrl}uploads/images/${data?.image1}`}
+          src={`${backendUrl}uploads/images/${data?.roomImage1}`}
           alt="dd"
         />
         <div className="main_room_div_deell">
           <p>{data?.name}</p>
-          <p className="main_text_deltails">
-            {data?.facility_name.map((element) => (
-              <p className="main_text_deltails"> {element}</p>
-            ))}
-          </p>
+
+          {data?.facility_name.map((element) => (
+            <p className="main_text_deltails"> {element}</p>
+          ))}
 
           <div className="dharamshal_arc_main_name_div13">
             <img
@@ -47,4 +48,4 @@ function RoomCard({ img, data }) {
   );
 }
 
-export default RoomCard;
+export default RoomCard1;

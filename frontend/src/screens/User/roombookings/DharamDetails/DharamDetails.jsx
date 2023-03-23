@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { MenuItem, Menu, Select } from '@mui/material';
 import { backendUrl } from '../../../../config/config';
 import MoreSlider from '../MoreSlider/MoreSlider';
+import { useLocation } from 'react-router-dom';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -94,6 +95,7 @@ const Childrencont = [
 ];
 import './DharamDetails.css';
 function DharamDetails({ roomfilterdata }) {
+  const location = useLocation();
   let { id } = useParams();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -103,6 +105,7 @@ function DharamDetails({ roomfilterdata }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [isData, setisData] = useState('');
   const [dharamshalaname, setdharamshalaname] = useState('Select');
   const [chlidremc, setchlidremc] = useState(0);
   const [abcount, setabcount] = useState(0);
@@ -116,8 +119,11 @@ function DharamDetails({ roomfilterdata }) {
   };
   useEffect(() => {
     getALLdharamshala();
+    if (location.state) {
+      setisData(location.state?.checkindata);
+    }
   }, [id]);
-
+  console.log('child count from details screens', isData);
   return (
     <>
       <Menu

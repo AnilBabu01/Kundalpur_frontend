@@ -179,31 +179,41 @@
 .online_div_room_book {
   width: 100px;
   height: 30px;
-  color: white;
-  background: #fa7401;
+
+  top: 735px;
+
+  background: #fdc99c;
+  border: 1px solid #fa7401;
   border-radius: 5px;
-  margin-top: 0.5rem;
 }
 
 .cash_div_room_book {
   width: 100px;
   height: 30px;
-  color: white;
+  margin-right: 1rem;
+
+  background: #fdc99c;
+  border: 1px solid #fa7401;
+  border-radius: 5px;
+}
+
+.cash_div_room_book_disable {
+  width: 100px;
+  height: 30px;
+  margin-right: 1rem;
+
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+}
+.main_div_btn_continues {
+  width: 270px;
+  height: 45px;
   background: #fa7401;
   border-radius: 5px;
-  margin-right: 1rem;
-  margin-top: 0.5rem;
-}
-.main_div_btn_continues{
-  width: 270px;
-height: 45px;
-background: #FA7401;
-border-radius: 5px;
-font-style: normal;
-font-weight: 500;
-font-size: 18px;
-line-height: 27px;
-margin-top: 1rem;
-color: #FFFFFF;
-
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  margin-top: 1rem;
+  color: #ffffff;
 }

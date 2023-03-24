@@ -2,12 +2,6 @@ import React, { useState, useEffect } from 'react';
 import f1 from '../../../../assets/f4.png';
 import { NavLink, useNavigate } from 'react-router-dom';
 const DonationReportTap = ({ setopendashboard }) => {
-  const [toggleState, setToggleState] = useState(1);
-
-  const toggleTab = (index) => {
-    setToggleState(index);
-  };
-
   useEffect(() => {
     setopendashboard(true);
   }, []);

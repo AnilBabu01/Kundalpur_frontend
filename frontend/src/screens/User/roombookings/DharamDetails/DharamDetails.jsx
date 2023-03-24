@@ -3,10 +3,7 @@ import { useParams } from 'react-router-dom';
 import homee from '../../../../assets/homee.jpeg';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import room1 from '../../../../assets/room1.jpeg';
-import room2 from '../../../../assets/room2.jpeg';
-import room3 from '../../../../assets/room3.jpeg';
-import room4 from '../../../../assets/room4.jpeg';
+
 import RoomCard from '../AllAcards/RoomCard';
 import { serverInstance } from '../../../../API/ServerInstance';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';

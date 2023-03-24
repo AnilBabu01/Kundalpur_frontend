@@ -55,7 +55,15 @@ import AllConsolidated from '../screens/Admin/Reports/AllReport/AllConsolidated'
 import DharamDetails from '../screens/Admin/RoomBooking/DharamDetails/DharamDetails';
 
 import RoomBookingscreen from '../screens/Admin/RoomBooking/RoomBookingscreen/RoomBookingscreen';
-import PaymentSuccess from '../screens/User/roombookings/PaymentSuccess/PaymentSuccess';
+import PaymentSuccess from '../screens/Admin/RoomBooking/PaymentSuccess/PaymentSuccess';
+import RoomBookingCetificate from '../screens/Admin/RoomBooking/RoomBookingCetificate/RoomBookingCetificate';
+
+// room booking routes
+import Dashbords from '../screens/Admin/RoomBooking/Dashbord/Dashbord';
+import CheckIn from '../screens/Admin/RoomBooking/CheckIn/CheckIn';
+import Hold from '../screens/Admin/RoomBooking/Hold/Hold';
+import RoomShift from '../screens/Admin/RoomBooking/RoomShift/RoomShift';
+import RoomBooking from '../screens/Admin/RoomBooking/RoomBooking';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   const [addleftmargin, setaddleftmargin] = useState(false);
   return (
@@ -456,6 +464,55 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <PaymentSuccess setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/room/roombookingcetificate"
+          element={
+            <Adminprivateroute>
+              <RoomBookingCetificate setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/room/Dashboard"
+          element={
+            <Adminprivateroute>
+              <Dashbords setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/room/checkin "
+          element={
+            <Adminprivateroute>
+              <CheckIn setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/room/hold"
+          element={
+            <Adminprivateroute>
+              <Hold setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/room/roomshift"
+          element={
+            <Adminprivateroute>
+              <RoomShift setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+        <Route
+          path="/admin-panel/room/roombooking"
+          element={
+            <Adminprivateroute>
+              <RoomBooking setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

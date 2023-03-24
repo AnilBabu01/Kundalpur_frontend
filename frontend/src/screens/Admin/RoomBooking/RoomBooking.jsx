@@ -14,6 +14,7 @@ import RoomCard1 from '../RoomBooking/AllAcards/RoomCard1';
 import axios from 'axios';
 import './RoomBooking.css';
 import { width } from '@mui/system';
+import RoomBookingTap from '../RoomBooking/RoomBookingTap';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -96,7 +97,7 @@ const modes = [
   { id: 2, type: 'Offline' },
   { id: 3, type: 'Both' },
 ];
-function RoomBooking({ setroomfilterdata }) {
+function RoomBooking({ setopendashboard }) {
   const [showresuilt, setshowresuilt] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -160,12 +161,12 @@ function RoomBooking({ setroomfilterdata }) {
 
   const getALLdharamshala = () => {
     serverInstance('room/dharmashala', 'get').then((res) => {
-      console.log('dharanmjhfkjhd', res.data);
       setdharamshalalist(res.data);
     });
   };
   useEffect(() => {
     getALLdharamshala();
+    setopendashboard(true);
   }, []);
   const data = {
     dharamshalaname: dharamshalaname,
@@ -336,267 +337,269 @@ function RoomBooking({ setroomfilterdata }) {
           </div>
         </MenuItem>
       </Menu>
-
-      <div className="main_room_availabilty">
-        <div className="room_home_main_supper">
-          <div className="room_home_main">
-            <div className="room_home_main_overlay">
-              <div>
-                <h2 className="font_text_color">
-                  Fresh, quiet and <br /> peaceful Kundalpur Dharamshala &
-                  Hotels
-                </h2>
+      <RoomBookingTap setopendashboard={setopendashboard} />
+      <div style={{ marginLeft: '5rem', marginRight: '1.2rem' }}>
+        <div className="main_room_availabilty">
+          <div className="room_home_main_supper">
+            <div className="room_home_main">
+              <div className="room_home_main_overlay">
+                <div>
+                  <h2 className="font_text_color">
+                    Fresh, quiet and <br /> peaceful Kundalpur Dharamshala &
+                    Hotels
+                  </h2>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="form_div_absolute">
-          <form onSubmit={handleClieck} className="form_btn_div">
-            <div className="main_div_select_div">
-              <label>
-                <img
-                  style={{ width: '8%', marginRight: '1%' }}
-                  src={homee}
-                  alt="dd"
-                />
-                Kundalpur
-              </label>
-              <Select
-                required
-                sx={{
-                  width: '100%',
-                  height: '26px',
-                  paddingLeft: '0.5rem',
-
-                  background:
-                    'linear-gradient(180deg, #F2EEEB 0%, #EDEDED 100%);',
-                  fontSize: 14,
-                  '& .MuiSelect-select': {
-                    padding: '1px',
-                  },
-                }}
-                value={dharamshalaname}
-                onChange={(e) => setdharamshalaname(e.target.value)}
-              >
-                <MenuItem
-                  sx={{
-                    fontSize: 12,
-                  }}
-                  value="Select"
-                >
-                  Select
-                </MenuItem>
-                {dharamshalalist &&
-                  dharamshalalist.map((item, idx) => {
-                    return (
-                      <MenuItem
-                        sx={{
-                          fontSize: 12,
-                        }}
-                        key={item.dharmasala_id}
-                        value={item.dharmasala_id}
-                      >
-                        {item.name}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </div>
-
-            <div className="main_div_select_div">
-              <label>
-                <img
-                  style={{ width: '8%', marginRight: '1%' }}
-                  src={homee}
-                  alt="dd"
-                />
-                Mode
-              </label>
-              <Select
-                required
-                sx={{
-                  width: '100%',
-                  height: '26px',
-                  paddingLeft: '0.5rem',
-
-                  background:
-                    'linear-gradient(180deg, #F2EEEB 0%, #EDEDED 100%);',
-                  fontSize: 14,
-                  '& .MuiSelect-select': {
-                    padding: '1px',
-                  },
-                }}
-                value={mode}
-                onChange={(e) => setmode(e.target.value)}
-              >
-                <MenuItem
-                  sx={{
-                    fontSize: 12,
-                  }}
-                  value="Select"
-                >
-                  Select
-                </MenuItem>
-                {modes &&
-                  modes.map((item, idx) => {
-                    return (
-                      <MenuItem
-                        sx={{
-                          fontSize: 12,
-                        }}
-                        key={item.id}
-                        value={item.id}
-                      >
-                        {item.type}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </div>
-            <div className="main_div_select_div">
-              <label htmlFor="checkintime">
-                <img
-                  style={{ width: '8%', marginRight: '1%' }}
-                  src={homee}
-                  alt="dd"
-                />
-                Check In
-              </label>
-              <CustomInput
-                id="checkintime"
-                name="checkintime"
-                placeholder="Full name"
-                type="datetime-local"
-                onChange={(e) => setcheckintime(e.target.value)}
-                value={checkintime}
-              />
-            </div>
-            <div className="main_div_select_div">
-              <label htmlFor="checkouttime">
-                <img
-                  style={{ width: '8%', marginRight: '1%' }}
-                  src={homee}
-                  alt="dd"
-                />
-                Check Out
-              </label>
-              <CustomInput
-                id="checkouttime"
-                name="checkouttime"
-                placeholder="Full name"
-                type="datetime-local"
-                onChange={(e) => setcheckouttime(e.target.value)}
-                value={checkouttime}
-              />
-            </div>
-            <div className="main_div_select_div">
-              <label>
-                <img
-                  style={{ width: '8%', marginRight: '1%' }}
-                  src={homee}
-                  alt="dd"
-                />
-                Rooms For
-              </label>
-
-              <div onClick={handleClick} className="select_person_div">
-                Select
-                <svg
-                  width="12"
-                  height="7"
-                  viewBox="0 0 12 7"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 1L6 6L11 1"
-                    stroke="#333333"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+          <div className="form_div_absolute">
+            <form onSubmit={handleClieck} className="form_btn_div">
+              <div className="main_div_select_div">
+                <label>
+                  <img
+                    style={{ width: '8%', marginRight: '1%' }}
+                    src={homee}
+                    alt="dd"
                   />
-                </svg>
-              </div>
-            </div>
+                  Kundalpur
+                </label>
+                <Select
+                  required
+                  sx={{
+                    width: '100%',
+                    height: '26px',
+                    paddingLeft: '0.5rem',
 
-            <button>
-              <SearchIcon />
-              Search
-            </button>
-          </form>
+                    background:
+                      'linear-gradient(180deg, #F2EEEB 0%, #EDEDED 100%);',
+                    fontSize: 14,
+                    '& .MuiSelect-select': {
+                      padding: '1px',
+                    },
+                  }}
+                  value={dharamshalaname}
+                  onChange={(e) => setdharamshalaname(e.target.value)}
+                >
+                  <MenuItem
+                    sx={{
+                      fontSize: 12,
+                    }}
+                    value="Select"
+                  >
+                    Select
+                  </MenuItem>
+                  {dharamshalalist &&
+                    dharamshalalist.map((item, idx) => {
+                      return (
+                        <MenuItem
+                          sx={{
+                            fontSize: 12,
+                          }}
+                          key={item.dharmasala_id}
+                          value={item.dharmasala_id}
+                        >
+                          {item.name}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </div>
+
+              <div className="main_div_select_div">
+                <label>
+                  <img
+                    style={{ width: '8%', marginRight: '1%' }}
+                    src={homee}
+                    alt="dd"
+                  />
+                  Mode
+                </label>
+                <Select
+                  required
+                  sx={{
+                    width: '100%',
+                    height: '26px',
+                    paddingLeft: '0.5rem',
+
+                    background:
+                      'linear-gradient(180deg, #F2EEEB 0%, #EDEDED 100%);',
+                    fontSize: 14,
+                    '& .MuiSelect-select': {
+                      padding: '1px',
+                    },
+                  }}
+                  value={mode}
+                  onChange={(e) => setmode(e.target.value)}
+                >
+                  <MenuItem
+                    sx={{
+                      fontSize: 12,
+                    }}
+                    value="Select"
+                  >
+                    Select
+                  </MenuItem>
+                  {modes &&
+                    modes.map((item, idx) => {
+                      return (
+                        <MenuItem
+                          sx={{
+                            fontSize: 12,
+                          }}
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.type}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </div>
+              <div className="main_div_select_div">
+                <label htmlFor="checkintime">
+                  <img
+                    style={{ width: '8%', marginRight: '1%' }}
+                    src={homee}
+                    alt="dd"
+                  />
+                  Check In
+                </label>
+                <CustomInput
+                  id="checkintime"
+                  name="checkintime"
+                  placeholder="Full name"
+                  type="datetime-local"
+                  onChange={(e) => setcheckintime(e.target.value)}
+                  value={checkintime}
+                />
+              </div>
+              <div className="main_div_select_div">
+                <label htmlFor="checkouttime">
+                  <img
+                    style={{ width: '8%', marginRight: '1%' }}
+                    src={homee}
+                    alt="dd"
+                  />
+                  Check Out
+                </label>
+                <CustomInput
+                  id="checkouttime"
+                  name="checkouttime"
+                  placeholder="Full name"
+                  type="datetime-local"
+                  onChange={(e) => setcheckouttime(e.target.value)}
+                  value={checkouttime}
+                />
+              </div>
+              <div className="main_div_select_div">
+                <label>
+                  <img
+                    style={{ width: '8%', marginRight: '1%' }}
+                    src={homee}
+                    alt="dd"
+                  />
+                  Rooms For
+                </label>
+
+                <div onClick={handleClick} className="select_person_div">
+                  Select
+                  <svg
+                    width="12"
+                    height="7"
+                    viewBox="0 0 12 7"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1L6 6L11 1"
+                      stroke="#333333"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <button>
+                <SearchIcon />
+                Search
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
 
-      {showresuilt ? (
-        <>
-          <div className="details-div_dhar">
-            <img
-              src={`${backendUrl}uploads/images/${
-                filterdata[0].dharmasala && filterdata[0].dharmasala?.image
-              }`}
-              alt=" dharam1"
-            />
-            <div className="right_div_deta_dhram">
-              <h2>
-                {filterdata[0].dharmasala && filterdata[0].dharmasala?.name}
-              </h2>
-              <h2 className="main_text_deltails">Description</h2>
-              <p>
-                {filterdata[0].dharmasala && filterdata[0].dharmasala?.desc}
-              </p>
-              <div className="dharamshal_arc_main_name_div10">
-                <img src={homee} alt="dd" />
-                <p>Kundalpur</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="details-div_dhar">
-            {filterdata &&
-              filterdata.map((item) => {
-                return <RoomCard1 data={item} isData={data} />;
-              })}
-          </div>
-
-          <div className="imp_info_super_div">
-            <div className="imp_info">
-              <div className="imp_info_ine_p">
-                <p> Important information</p>
-              </div>
-              <div className="imp_info_ine_innear_div_p">
-                <p>. Guests with fever are not allowed</p>
+        {showresuilt ? (
+          <>
+            <div className="details-div_dhar">
+              <img
+                src={`${backendUrl}uploads/images/${
+                  filterdata[0].dharmasala && filterdata[0].dharmasala?.image
+                }`}
+                alt=" dharam1"
+              />
+              <div className="right_div_deta_dhram">
+                <h2>
+                  {filterdata[0].dharmasala && filterdata[0].dharmasala?.name}
+                </h2>
+                <h2 className="main_text_deltails">Description</h2>
                 <p>
-                  . Office ID and Non-Govt IDs are not accepted as ID proof(s)
-                  Passport
+                  {filterdata[0].dharmasala && filterdata[0].dharmasala?.desc}
                 </p>
-                <p>
-                  . Passport, Aadhar, Driving License and Govt. ID are accepted
-                  as ID proof(s)
-                </p>
-                <p>. Property staff is trained on hygiene guidelines</p>
+                <div className="dharamshal_arc_main_name_div10">
+                  <img src={homee} alt="dd" />
+                  <p>Kundalpur</p>
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="sjilder_main_div">
-            <div className="view_all_main_div">
-              <p>Kundalpur Dharamshala</p>
-              <button> View all</button>
-            </div>
-            <div className="center_wrap_hai_na">
-              {dharamshalalist &&
-                dharamshalalist.map((item, index) => {
-                  return <DharamshalaCard data={item} data1={data} />;
+
+            <div className="details-div_dhar">
+              {filterdata &&
+                filterdata.map((item) => {
+                  return <RoomCard1 data={item} isData={data} />;
                 })}
             </div>
-          </div>
-        </>
-      )}
 
-      <ServicesandFacilities />
+            <div className="imp_info_super_div">
+              <div className="imp_info">
+                <div className="imp_info_ine_p">
+                  <p> Important information</p>
+                </div>
+                <div className="imp_info_ine_innear_div_p">
+                  <p>. Guests with fever are not allowed</p>
+                  <p>
+                    . Office ID and Non-Govt IDs are not accepted as ID proof(s)
+                    Passport
+                  </p>
+                  <p>
+                    . Passport, Aadhar, Driving License and Govt. ID are
+                    accepted as ID proof(s)
+                  </p>
+                  <p>. Property staff is trained on hygiene guidelines</p>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="sjilder_main_div">
+              <div className="view_all_main_div">
+                <p>Kundalpur Dharamshala</p>
+                <button> View all</button>
+              </div>
+              <div className="center_wrap_hai_na">
+                {dharamshalalist &&
+                  dharamshalalist.map((item, index) => {
+                    return <DharamshalaCard data={item} data1={data} />;
+                  })}
+              </div>
+            </div>
+          </>
+        )}
+
+        <ServicesandFacilities />
+      </div>
     </>
   );
 }

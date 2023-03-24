@@ -29,6 +29,8 @@ import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import Holdfrom from './Holdfrom';
 import Typography from '@mui/material/Typography';
+import RoomBookingTap from '../RoomBookingTap';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -52,15 +54,11 @@ const Hold = ({ setopendashboard }) => {
   const handleOepn = () => setOpen(true);
 
   const getall_donation = () => {
-    serverInstance('user/add-elecDonation', 'get').then((res) => {
-      if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
-
-        setisData(filterData);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
+    serverInstance('room/hold', 'get').then((res) => {
+      console.log('hold rooms', res.data);
+      if (res.data) {
+        setisData(res.data);
       }
-      console.log(res);
     });
   };
 
@@ -145,8 +143,9 @@ const Hold = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
+      <RoomBookingTap setopendashboard={setopendashboard} />
 
-      <div>
+      <div style={{ marginLeft: '5rem', marginRight: '1.2rem' }}>
         <div className="search-header-print">
           <div
             className="search-header-print"
@@ -210,10 +209,10 @@ const Hold = ({ setopendashboard }) => {
                 <TableCell>Holder Mobile No</TableCell>
                 <TableCell>Room holder Name</TableCell>
                 <TableCell>Hold Since</TableCell>
-                <TableCell>Dharamshala</TableCell>
-                <TableCell>Category</TableCell>
+                <TableCell>Hold Remain</TableCell>
                 <TableCell>Hold Approved By</TableCell>
                 <TableCell>Remarks</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -232,14 +231,47 @@ const Hold = ({ setopendashboard }) => {
                         '&:last-child td, &:last-child th': { border: 0 },
                       }}
                     >
-                      <TableCell>{row.ReceiptNo}</TableCell>
-                      <TableCell>{row.voucherNo}</TableCell>
-                      <TableCell>{row.phoneNo}</TableCell>
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell> {row.address}</TableCell>
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell> {row.address}</TableCell>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{row?.mobile}</TableCell>
+                      <TableCell>{row?.name}</TableCell>
+                      <TableCell>
+                        {Moment(row?.since).format('DD-MM-YYYY')}
+                      </TableCell>
+                      <TableCell>
+                        {' '}
+                        {Moment(row?.remain).format('DD-MM-YYYY')}
+                      </TableCell>
+
+                      <TableCell>{row?.approvedBy}</TableCell>
+                      <TableCell> {row?.remarks}</TableCell>
+                      <TableCell>
+                        <Tooltip title="View">
+                          <img
+                            // onClick={() => handleOepn2(row)}
+                            src={eye}
+                            alt="eye"
+                            style={{ width: '20px', marginRight: '0.5rem' }}
+                          />
+                        </Tooltip>
+
+                        <Tooltip title="Edit">
+                          <img
+                            // onClick={() => handleOepn1(row)}
+                            src={Edit}
+                            alt="eye"
+                            style={{ width: '20px', marginRight: '0.5rem' }}
+                          />
+                        </Tooltip>
+
+                        <Tooltip title="Delete">
+                          <img
+                            // onClick={() => handleClickOpen3(row.dharmasala_id)}
+                            src={Delete}
+                            alt="eye"
+                            style={{ width: '20px' }}
+                          />
+                        </Tooltip>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </>

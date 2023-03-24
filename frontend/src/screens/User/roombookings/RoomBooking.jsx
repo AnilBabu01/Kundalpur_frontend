@@ -124,6 +124,9 @@ function RoomBooking({ setroomfilterdata }) {
 
   const handleClieck = async (e) => {
     e.preventDefault();
+    if (!checkintime || !checkouttime || !dharamshalaname) {
+      return;
+    }
     axios.defaults.headers.post[
       'Authorization'
     ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -143,6 +146,7 @@ function RoomBooking({ setroomfilterdata }) {
     console.log('filter data', res.data.data[0]);
     if (res.data.data) {
       setfilterdata(res.data.data);
+      setshowresuilt(true);
     }
   };
 
@@ -165,7 +169,7 @@ function RoomBooking({ setroomfilterdata }) {
     checkincurrDate: checkincurrDate,
     checkincurrTime: checkincurrTime,
     checkintime: checkintime,
-    checkouttime: checkintime,
+    checkouttime: checkouttime,
   };
 
   return (
@@ -229,7 +233,6 @@ function RoomBooking({ setroomfilterdata }) {
             <div>
               Adults
               <p style={{ color: ' #6C6A6A', fontSize: '12px' }}>
-                {' '}
                 (Above 12 Years)
               </p>
             </div>
@@ -466,7 +469,7 @@ function RoomBooking({ setroomfilterdata }) {
         </div>
       </div>
 
-      {filterdata ? (
+      {showresuilt ? (
         <>
           <div className="details-div_dhar">
             <img
@@ -493,7 +496,7 @@ function RoomBooking({ setroomfilterdata }) {
           <div className="details-div_dhar">
             {filterdata &&
               filterdata.map((item) => {
-                return <RoomCard1 data={item} />;
+                return <RoomCard1 data={item} isData={data} />;
               })}
           </div>
 

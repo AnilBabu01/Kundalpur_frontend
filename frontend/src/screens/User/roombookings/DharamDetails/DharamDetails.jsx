@@ -182,9 +182,8 @@ function DharamDetails({ roomfilterdata }) {
         <MenuItem>
           <div className="main_slelct_child">
             <div>
-              Adults{' '}
+              Adults
               <p style={{ color: ' #6C6A6A', fontSize: '12px' }}>
-                {' '}
                 (Above 12 Years)
               </p>
             </div>
@@ -437,7 +436,7 @@ function DharamDetails({ roomfilterdata }) {
       <div className="details-div_dhar">
         {detailsofroons.availableRooms &&
           detailsofroons.availableRooms.map((item) => {
-            return <RoomCard img={room1} data={item} />;
+            return <RoomCard data={item} isData={isData} />;
           })}
       </div>
 

@@ -124,8 +124,8 @@ function BookingHistory({ setopendashboard, setshowreciept, setHeaderFooter }) {
         <div className="table-div-maain-donation-table-main">
           <div className="center_search_client">
             <div className="donation-history-text">
-              <h2>DONATIONS</h2>
-              <p>All Donations History</p>
+              <h2>Booking</h2>
+              <p>Room Booking History</p>
             </div>
           </div>
 
@@ -134,18 +134,17 @@ function BookingHistory({ setopendashboard, setshowreciept, setHeaderFooter }) {
               <thead style={{ background: '#F1F0F0' }}>
                 <tr>
                   <th align="left">DATE</th>
-                  <th align="left">Receipt No</th>
-                  <th align="left">Mobile No</th>
-                  <th align="left">NAME</th>
+                  <th align="left">MObile NO</th>
+                  <th align="left">Name</th>
+                  <th align="left">Father's name</th>
                   <th align="left">Address</th>
-                  <th align="left">Donation Type</th>
-                  <th align="left">Amount</th>
-                  <th align="left">Cheque No.</th>
-                  <th align="left">Date Of submission</th>
-                  <th align="left">Name of Bank</th>
+                  <th align="left">Male</th>
+                  <th align="left">Female</th>
+                  <th align="left">Children</th>
+                  <th align="left">No of Rooom</th>
                   <th align="left">Payment id</th>
                   <th align="left">Status</th>
-                  <th align="left">certificate</th>
+                  <th align="left">Receipt</th>
                 </tr>
               </thead>
               <tbody>
@@ -173,9 +172,7 @@ function BookingHistory({ setopendashboard, setshowreciept, setHeaderFooter }) {
                           <td align="left">
                             {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : '-'}
                           </td>
-                          <td align="left">
-                            {row.NAME_OF_BANK ? row.NAME_OF_BANK : '-'}
-                          </td>
+
                           <td align="left">
                             {row.PAYMENT_ID ? row.PAYMENT_ID : '-'}
                           </td>

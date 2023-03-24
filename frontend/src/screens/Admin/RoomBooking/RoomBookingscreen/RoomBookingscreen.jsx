@@ -287,7 +287,9 @@ function RoomBookingscreen() {
                   </div>
                   <div className="now_payment_gateway_div">
                     <button
-                      onClick={() => navigate('/room/paymentsuccessfuly')}
+                      onClick={() =>
+                        navigate('/admin-panel/room/paymentsuccess')
+                      }
                     >
                       Proceed To Payment Options
                     </button>

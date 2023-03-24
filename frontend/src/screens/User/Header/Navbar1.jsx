@@ -129,7 +129,7 @@ function Navbar1() {
           </ListItemIcon>
           Donation History
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => navigate('/bookinghistory')}>
           <ListItemIcon>
             <BookmarkAddedIcon fontSize="small" />
           </ListItemIcon>

@@ -365,7 +365,7 @@ function RoomBookingscreen() {
                       onClick={() => {
                         window.location.href =
                           'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
-                          88;
+                          5;
                         // handleOpen();
                         // sendsms();
                         // navigate('/room/paymentsuccessfuly', {

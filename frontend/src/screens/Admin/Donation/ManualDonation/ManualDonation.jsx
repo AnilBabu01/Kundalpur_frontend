@@ -37,6 +37,7 @@ import { ExportPdfmanulElectronic } from '../../compoments/ExportPdf';
 import axios from 'axios';
 import { backendApiUrl } from '../../../../config/config';
 import './Donation.css';
+import { CircularProgress } from '@mui/material';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -123,6 +124,7 @@ const donationColorTheme = {
 
 const ManualDonation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
+  const [isDataDummy, setisDataDummy] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
   const [open1, setOpen1] = React.useState(false);
@@ -150,8 +152,6 @@ const ManualDonation = ({ setopendashboard }) => {
   const handleOpen4 = () => setOpen4(true);
   const handleClose4 = () => setOpen4(false);
 
-  console.log('check data ', isData);
-
   const filterdata = async () => {
     if (searchvalue) {
       axios.defaults.headers.get[
@@ -161,21 +161,19 @@ const ManualDonation = ({ setopendashboard }) => {
       const res = await axios.get(
         `${backendApiUrl}/admin/search-manual?search=${searchvalue}`,
       );
-
-      console.log('ss', res.data.data);
-
       if (res.data.status) {
         setisData(res.data.data);
+        setisDataDummy(res.data.data);
       }
     } else {
       serverInstance(
         `user/manual-searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromReceipt=${voucherfrom}&toReceipt=${voucherto}',
         'get`,
       ).then((res) => {
-        console.log('filter data is', res.data);
-
         if (res.data) {
           setisData(res.data);
+          setisDataDummy(res.data);
+
         }
       });
     }
@@ -202,8 +200,7 @@ const ManualDonation = ({ setopendashboard }) => {
     serverInstance('admin/manual-donation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
-
-        console.log('this', res.data);
+        setisDataDummy(res.data);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
@@ -235,7 +232,6 @@ const ManualDonation = ({ setopendashboard }) => {
         ([res, item]) => {
           if (res.status) {
             setDonationTypes(res.data);
-            console.log(res.data);
           } else {
             Swal.fire('Error', 'somthing went  wrong', 'error');
           }
@@ -254,7 +250,6 @@ const ManualDonation = ({ setopendashboard }) => {
       data.push({
         Date: Moment(item.donation_date).format('DD-MM-YYYY'),
         'Receipt No': item?.ReceiptNo,
-
         'Phone No': item?.phoneNo,
         name: item?.name,
         Address: item?.address,
@@ -344,6 +339,41 @@ const ManualDonation = ({ setopendashboard }) => {
     ],
     [],
   );
+
+  const onSearchByDate = (e) => {
+    if (e.target.value) {
+      setisData(isData?.filter(dt => Moment(dt?.donation_date).format('YYYY-MM-DD') == e.target.value));
+    } else {
+      setisData(isDataDummy)
+    }
+  }
+
+  const onSearchByOther = (e, type) => {
+    if (type === 'Receipt') {
+      setisData(isData?.filter(dt => dt?.ReceiptNo.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1));
+    }
+    if (type === 'Phone') {
+      setisData(isData?.filter(dt => dt?.phoneNo.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1));
+    }
+    if (type === 'Name') {
+      setisData(isData?.filter(dt => dt?.name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1));
+    }
+    if (type === 'Address') {
+      setisData(isData?.filter(dt => dt?.address.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1));
+    }
+    if (type === 'type') {
+      var filtered = isData?.map(item => {
+        if (item?.manualItemDetails?.find(typ => typ.type == e.target.value)) {
+          return item
+        } else {
+          return
+        }
+      })
+      filtered = filtered?.filter(x => x !== undefined);
+      setisData(filtered)
+
+    }
+  }
 
   return (
     <>
@@ -556,8 +586,7 @@ const ManualDonation = ({ setopendashboard }) => {
               <TableHead style={{ background: '#FFEEE0' }}>
                 <TableRow>
                   <TableCell>Date</TableCell>
-                  <TableCell>ReceiptNo</TableCell>
-
+                  <TableCell>Receipt No</TableCell>
                   <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Address</TableCell>
@@ -572,7 +601,8 @@ const ManualDonation = ({ setopendashboard }) => {
                 <TableCell>
                   <input
                     className="cuolms_search"
-                    type="text"
+                    type="date"
+                    onChange={onSearchByDate}
                     placeholder="Search Date"
                   />
                 </TableCell>
@@ -580,6 +610,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
+                    onChange={(e) => onSearchByOther(e, "Receipt")}
                     placeholder="Search Receipt"
                   />
                 </TableCell>
@@ -588,6 +619,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
+                    onChange={(e) => onSearchByOther(e, "Phone")}
                     placeholder="Search Phone"
                   />
                 </TableCell>
@@ -595,6 +627,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     type="text"
                     className="cuolms_search"
+                    onChange={(e) => onSearchByOther(e, "Name")}
                     placeholder="Name"
                   />
                 </TableCell>
@@ -602,16 +635,17 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
+                    onChange={(e) => onSearchByOther(e, "Address")}
                     placeholder="Search Address"
                   />
                 </TableCell>
                 <TableCell>
                   <select
                     className="cuolms_search"
-                    onChange={(e) => settype(e.target.value)}
-                    id="cars"
+                    onChange={(e) => onSearchByOther(e, "type")}
                   >
-                    <option>Select option</option>
+                    <option value="">Select option</option>
+
                     {donationTypes.map((item, idx) => {
                       return (
                         <option value={item.type_hi}>{item.type_hi}</option>
@@ -623,6 +657,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
+                    onChange={(e) => onSearchByOther(e, "Amount")}
                     placeholder="Search Amount"
                   />
                 </TableCell>
@@ -643,13 +678,13 @@ const ManualDonation = ({ setopendashboard }) => {
                   />
                 </TableCell>
                 <TableCell>&nbsp;</TableCell>
-                {isData ? (
+                {isData && isData?.length > 0 ? (
                   <>
                     {(rowsPerPage > 0
                       ? isData.slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage,
-                        )
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
                       : isData.reverse()
                     ).map((row, index) => (
                       <TableRow
@@ -754,7 +789,8 @@ const ManualDonation = ({ setopendashboard }) => {
                   <>
                     <TableRow>
                       <TableCell colSpan={13} align="center">
-                        <CircularProgress />
+                        {/* <CircularProgress /> */}
+                        <p>No Data Found!</p>
                       </TableCell>
                     </TableRow>
                   </>

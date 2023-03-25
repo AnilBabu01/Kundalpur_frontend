@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import './RoomBookingCetificate.css';
-function RoomBookingCetificate() {
+function RoomBookingCetificate({ setopendashboard }) {
   const navigate = useNavigate();
   const location = useLocation();
   const componentRef = useRef();
@@ -25,6 +25,7 @@ function RoomBookingCetificate() {
     if (location.state) {
       setisData(location.state?.data);
     }
+    setopendashboard(true);
   }, []);
   return (
     <>

@@ -4,9 +4,10 @@ import homee from '../../../../assets/homee.jpeg';
 import Rating from '@mui/material/Rating';
 import { backendUrl } from '../../../../config/config';
 import './RoomCard.css';
-function RoomCard({ img, data }) {
+function RoomCard({ data, isData }) {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(null > 2);
+
   return (
     <>
       <div className="room_card_main_div">
@@ -17,7 +18,11 @@ function RoomCard({ img, data }) {
         />
         <div className="main_room_div_deell">
           <p>{data?.name}</p>
-          <p className="main_text_deltails">{data?.facility_name}</p>
+          <p className="main_text_deltails">
+            {data?.facility_name.map((element) => (
+              <p className="main_text_deltails"> {element}</p>
+            ))}
+          </p>
 
           <div className="dharamshal_arc_main_name_div13">
             <img
@@ -36,7 +41,18 @@ function RoomCard({ img, data }) {
               }}
             />
           </div>
-          <button onClick={() => navigate('/room/booking')}> Book Now</button>
+          <button
+            onClick={() =>
+              navigate('/room/booking', {
+                state: {
+                  roomdata: data,
+                  checkindata: isData,
+                },
+              })
+            }
+          >
+            Book Now
+          </button>
         </div>
       </div>
     </>

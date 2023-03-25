@@ -30,6 +30,7 @@ import axios from 'axios';
 import RoomShiftForm from './RoomShiftForm';
 import Typography from '@mui/material/Typography';
 import './RoomShift.css';
+import RoomBookingTap from '../RoomBookingTap';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -146,8 +147,8 @@ const RoomShift = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
-
-      <div>
+      <RoomBookingTap setopendashboard={setopendashboard} />
+      <div style={{ marginLeft: '5rem', marginRight: '1.2rem' }}>
         <div className="search-header-print">
           <div
             className="search-header-print"

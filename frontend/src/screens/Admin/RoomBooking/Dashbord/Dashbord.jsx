@@ -1,7 +1,11 @@
 import React from 'react';
-
-function Dashbord() {
-  return <div>Dashbord</div>;
+import RoomBookingTap from '../RoomBookingTap';
+function Dashbord({ setopendashboard }) {
+  return (
+    <>
+      <RoomBookingTap setopendashboard={setopendashboard} />
+    </>
+  );
 }
 
 export default Dashbord;

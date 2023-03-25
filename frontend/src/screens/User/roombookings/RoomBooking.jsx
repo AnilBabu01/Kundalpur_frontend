@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import homee from '../../../assets/homee.jpeg';
@@ -9,7 +9,9 @@ import { serverInstance } from '../../../API/ServerInstance';
 import Moment from 'moment-js';
 import moment from 'moment';
 import { MenuItem, Menu, Select } from '@mui/material';
-
+import { backendApiUrl, backendUrl } from '../../../config/config';
+import RoomCard1 from '../roombookings/AllAcards/RoomCard1';
+import axios from 'axios';
 import './RoomBooking.css';
 import { width } from '@mui/system';
 const style = {
@@ -48,10 +50,6 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-const Kundalpurtype = [
-  { id: 1, type: 'Dharamshala' },
-  { id: 2, type: 'Hotel' },
-];
 
 const Dharamshalalist = [
   { id: 1, type: 'Lala Umrav Singh Jain' },
@@ -102,22 +100,54 @@ function RoomBooking({ setroomfilterdata }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [filterdata, setfilterdata] = useState('');
   const [dharamshalalist, setdharamshalalist] = useState('');
   const [dharamshalaname, setdharamshalaname] = useState('Select');
   const [chlidremc, setchlidremc] = useState(0);
   const [abcount, setabcount] = useState(0);
   const [roomcount, setroomcount] = useState(0);
   const [checkouttime, setcheckouttime] = useState('');
+  const [checkintime, setcheckintime] = useState('');
 
-  var options = { year: 'numeric', month: 'short', day: '2-digit' };
   var today = new Date(checkouttime);
   const checkoutcurrDate = Moment(today).format('YYYY-DD-MM');
   const checkoutcurrTime = moment(today, 'HH:mm').format('hh:mm');
 
-  console.log('check out time', checkoutcurrDate, checkoutcurrTime);
+  var today1 = new Date(checkintime);
+  const checkincurrDate = Moment(today1).format('YYYY-DD-MM');
+  const checkincurrTime = moment(today1, 'HH:mm').format('hh:mm');
 
-  const handleClieck = () => {
-    console.log('ddddddd');
+  console.log('check out time', checkoutcurrDate, checkoutcurrTime);
+  console.log('check out time', checkincurrDate, checkincurrTime);
+  console.log('dharamshala name ', dharamshalaname);
+
+  const handleClieck = async (e) => {
+    e.preventDefault();
+    if (!checkintime || !checkouttime || !dharamshalaname) {
+      return;
+    }
+    axios.defaults.headers.post[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
+
+    const data = {
+      hotelName: dharamshalaname,
+      checkinDate: checkincurrDate,
+      checkinTime: checkincurrTime,
+      checkoutDate: checkoutcurrDate,
+      checkoutTime: checkoutcurrTime,
+      numMale: chlidremc,
+      numFemale: roomcount,
+      numChildren: chlidremc,
+    };
+    const res = await axios.post(`${backendApiUrl}room/check-room`, data);
+
+    console.log('filter data', res.data.data[0]);
+    if (res.data.data) {
+      setfilterdata(res.data.data);
+      setshowresuilt(true);
+    }
   };
 
   const getALLdharamshala = () => {
@@ -130,7 +160,16 @@ function RoomBooking({ setroomfilterdata }) {
     getALLdharamshala();
   }, []);
   const data = {
-    Childrencont: Childrencont,
+    dharamshalaname: dharamshalaname,
+    chlidremc: chlidremc,
+    roomcount: roomcount,
+    abcount: abcount,
+    checkoutcurrDate: checkoutcurrDate,
+    checkoutcurrTime: checkoutcurrTime,
+    checkincurrDate: checkincurrDate,
+    checkincurrTime: checkincurrTime,
+    checkintime: checkintime,
+    checkouttime: checkouttime,
   };
 
   return (
@@ -194,7 +233,6 @@ function RoomBooking({ setroomfilterdata }) {
             <div>
               Adults
               <p style={{ color: ' #6C6A6A', fontSize: '12px' }}>
-                {' '}
                 (Above 12 Years)
               </p>
             </div>
@@ -306,7 +344,7 @@ function RoomBooking({ setroomfilterdata }) {
         </div>
 
         <div className="form_div_absolute">
-          <form onSubmit={() => handleClieck()} className="form_btn_div">
+          <form onSubmit={handleClieck} className="form_btn_div">
             <div className="main_div_select_div">
               <label>
                 <img
@@ -341,24 +379,24 @@ function RoomBooking({ setroomfilterdata }) {
                 >
                   Select
                 </MenuItem>
-                {Dharamshalalist &&
-                  Dharamshalalist.map((item, idx) => {
+                {dharamshalalist &&
+                  dharamshalalist.map((item, idx) => {
                     return (
                       <MenuItem
                         sx={{
                           fontSize: 12,
                         }}
-                        key={item.id}
-                        value={item.type}
+                        key={item.dharmasala_id}
+                        value={item.dharmasala_id}
                       >
-                        {item.type}
+                        {item.name}
                       </MenuItem>
                     );
                   })}
               </Select>
             </div>
             <div className="main_div_select_div">
-              <label htmlFor="checkouttime">
+              <label htmlFor="checkintime">
                 <img
                   style={{ width: '8%', marginRight: '1%' }}
                   src={homee}
@@ -367,16 +405,16 @@ function RoomBooking({ setroomfilterdata }) {
                 Check In
               </label>
               <CustomInput
-                id="checkouttime"
-                name="checkouttime"
+                id="checkintime"
+                name="checkintime"
                 placeholder="Full name"
                 type="datetime-local"
-                onChange={(e) => setcheckouttime(e.target.value)}
-                value={checkouttime}
+                onChange={(e) => setcheckintime(e.target.value)}
+                value={checkintime}
               />
             </div>
             <div className="main_div_select_div">
-              <label>
+              <label htmlFor="checkouttime">
                 <img
                   style={{ width: '8%', marginRight: '1%' }}
                   src={homee}
@@ -385,16 +423,12 @@ function RoomBooking({ setroomfilterdata }) {
                 Check Out
               </label>
               <CustomInput
-                id="name"
-                name="name"
+                id="checkouttime"
+                name="checkouttime"
                 placeholder="Full name"
                 type="datetime-local"
-                // onChange={onChange}
-                // value={
-                //   donationdata.selected === 'yes1' && user.name
-                //     ? user.name
-                //     : donationdata.name
-                // }
+                onChange={(e) => setcheckouttime(e.target.value)}
+                value={checkouttime}
               />
             </div>
             <div className="main_div_select_div">
@@ -435,18 +469,73 @@ function RoomBooking({ setroomfilterdata }) {
         </div>
       </div>
 
-      <div className="sjilder_main_div">
-        <div className="view_all_main_div">
-          <p>Kundalpur Dharamshala</p>
-          <button> View all</button>
-        </div>
-        <div className="center_wrap_hai_na">
-          {dharamshalalist &&
-            dharamshalalist.map((item, index) => {
-              return <DharamshalaCard data={item} data1={data} />;
-            })}
-        </div>
-      </div>
+      {showresuilt ? (
+        <>
+          <div className="details-div_dhar">
+            <img
+              src={`${backendUrl}uploads/images/${
+                filterdata[0].dharmasala && filterdata[0].dharmasala?.image
+              }`}
+              alt=" dharam1"
+            />
+            <div className="right_div_deta_dhram">
+              <h2>
+                {filterdata[0].dharmasala && filterdata[0].dharmasala?.name}
+              </h2>
+              <h2 className="main_text_deltails">Description</h2>
+              <p>
+                {filterdata[0].dharmasala && filterdata[0].dharmasala?.desc}
+              </p>
+              <div className="dharamshal_arc_main_name_div10">
+                <img src={homee} alt="dd" />
+                <p>Kundalpur</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="details-div_dhar">
+            {filterdata &&
+              filterdata.map((item) => {
+                return <RoomCard1 data={item} isData={data} />;
+              })}
+          </div>
+
+          <div className="imp_info_super_div">
+            <div className="imp_info">
+              <div className="imp_info_ine_p">
+                <p> Important information</p>
+              </div>
+              <div className="imp_info_ine_innear_div_p">
+                <p>. Guests with fever are not allowed</p>
+                <p>
+                  . Office ID and Non-Govt IDs are not accepted as ID proof(s)
+                  Passport
+                </p>
+                <p>
+                  . Passport, Aadhar, Driving License and Govt. ID are accepted
+                  as ID proof(s)
+                </p>
+                <p>. Property staff is trained on hygiene guidelines</p>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="sjilder_main_div">
+            <div className="view_all_main_div">
+              <p>Kundalpur Dharamshala</p>
+              <button> View all</button>
+            </div>
+            <div className="center_wrap_hai_na">
+              {dharamshalalist &&
+                dharamshalalist.map((item, index) => {
+                  return <DharamshalaCard data={item} data1={data} />;
+                })}
+            </div>
+          </div>
+        </>
+      )}
 
       <ServicesandFacilities />
     </>

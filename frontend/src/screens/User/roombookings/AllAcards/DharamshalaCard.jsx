@@ -9,7 +9,7 @@ function DharamshalaCard({ data, data1 }) {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(null > 2);
   console.log(value);
-  console.log('child count', data1);
+
   return (
     <>
       <div className="dharamshal_arc_main">

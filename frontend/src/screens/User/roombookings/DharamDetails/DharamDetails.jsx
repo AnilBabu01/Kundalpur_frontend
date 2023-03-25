@@ -3,16 +3,14 @@ import { useParams } from 'react-router-dom';
 import homee from '../../../../assets/homee.jpeg';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import room1 from '../../../../assets/room1.jpeg';
-import room2 from '../../../../assets/room2.jpeg';
-import room3 from '../../../../assets/room3.jpeg';
-import room4 from '../../../../assets/room4.jpeg';
+
 import RoomCard from '../AllAcards/RoomCard';
 import { serverInstance } from '../../../../API/ServerInstance';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { MenuItem, Menu, Select } from '@mui/material';
 import { backendUrl } from '../../../../config/config';
 import MoreSlider from '../MoreSlider/MoreSlider';
+import { useLocation } from 'react-router-dom';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -94,6 +92,7 @@ const Childrencont = [
 ];
 import './DharamDetails.css';
 function DharamDetails({ roomfilterdata }) {
+  const location = useLocation();
   let { id } = useParams();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -103,6 +102,7 @@ function DharamDetails({ roomfilterdata }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [isData, setisData] = useState('');
   const [dharamshalaname, setdharamshalaname] = useState('Select');
   const [chlidremc, setchlidremc] = useState(0);
   const [abcount, setabcount] = useState(0);
@@ -116,8 +116,11 @@ function DharamDetails({ roomfilterdata }) {
   };
   useEffect(() => {
     getALLdharamshala();
+    if (location.state) {
+      setisData(location.state?.checkindata);
+    }
   }, [id]);
-
+  console.log('child count from details screens', isData);
   return (
     <>
       <Menu
@@ -176,9 +179,8 @@ function DharamDetails({ roomfilterdata }) {
         <MenuItem>
           <div className="main_slelct_child">
             <div>
-              Adults{' '}
+              Adults
               <p style={{ color: ' #6C6A6A', fontSize: '12px' }}>
-                {' '}
                 (Above 12 Years)
               </p>
             </div>
@@ -431,7 +433,7 @@ function DharamDetails({ roomfilterdata }) {
       <div className="details-div_dhar">
         {detailsofroons.availableRooms &&
           detailsofroons.availableRooms.map((item) => {
-            return <RoomCard img={room1} data={item} />;
+            return <RoomCard data={item} isData={isData} />;
           })}
       </div>
 

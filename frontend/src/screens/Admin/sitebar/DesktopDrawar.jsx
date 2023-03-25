@@ -695,7 +695,7 @@ const DesktopDrawar = ({ open, handleDrawerClose, handleDrawerOpen }) => {
             onClick={() => {
               setActiveTabId(11);
               handleDrawerClose();
-              navigate('/admin-panel/roombooking');
+              navigate('/admin-panel/room/Dashboard');
             }}
             sx={{
               minHeight: 48,

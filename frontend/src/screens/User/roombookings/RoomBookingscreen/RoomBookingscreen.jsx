@@ -170,31 +170,34 @@ function RoomBookingscreen() {
     ] = `Bearer ${sessionStorage.getItem('token')}`;
 
     const data = {
-      modeOfBooking: 2,
+      date: '2023-02-02',
+      time: checkindata.checkincurrTime,
+      coutDate: '2023-02-02',
+      coutTime: checkindata.checkoutcurrTime,
       contactNo: mobile,
       name: fullname,
-      email: email,
       Fname: fathers,
+      email: email,
       address: address,
-      nRoom: roomno,
+      stayD: 3,
+      pin: 555555,
       city: city,
       state: state,
-      coutDate: isData?.checkoutcurrDate,
-      coutTime: isData?.checkoutcurrTime,
       proof: idproffname,
       idNumber: idproffnumber,
       male: maleno,
       female: femaleno,
       child: childrenno,
-      extraM: extraMattress,
+      dharmasala: checkindata.dharamshalaname,
+      modeOfBooking: 2,
+      RoomNo: 77,
     };
-
     const res = await axios.post(`${backendApiUrl}room/checkin`, data);
 
     console.log('booking responce', res);
   };
 
-  const handleclick = () => {
+  const handleclick = async () => {
     setFormerror(validate());
     if (
       fullname &&

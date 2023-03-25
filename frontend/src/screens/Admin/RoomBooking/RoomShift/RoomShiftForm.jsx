@@ -88,7 +88,15 @@ const idproff = [
   { id: 5, doc: 'Other' },
 ];
 
-function RoomShiftForm({ setOpen }) {
+function RoomShiftForm({ setOpen, changedata }) {
+  const [dharamshalid, setdharamshalid] = useState('');
+  const [dateTime, setDateTime] = useState(getCurrentDateTime());
+  const [dharamshalanameroom, setdharamshalanameroom] = useState('');
+  const [categoryroom, setcategoryroom] = useState('');
+  const [rate, setrate] = useState('');
+  const [advancerate, setadvancerate] = useState('');
+  const [facilityname, setfacilityname] = useState('');
+  const [bookingid, setbookingid] = useState('');
   const [roomnumber, setroomnumber] = useState('');
   const [roomlist, setroomlist] = useState('');
   const [showchangeroom, setshowchangeroom] = useState(false);
@@ -105,6 +113,7 @@ function RoomShiftForm({ setOpen }) {
   const [state, setstate] = useState('');
   const [pincode, setpincode] = useState('');
   const [idproffname, setidproffname] = useState('');
+  const [idproffnumber, setidproffnumber] = useState('');
   const [idproffno, setidproffno] = useState('');
   const [staydays, setstaydays] = useState('');
   const [maleno, setmaleno] = useState('');
@@ -136,31 +145,30 @@ function RoomShiftForm({ setOpen }) {
       console.log('click');
 
       const data = {
-        date: date,
-        time: time,
+        id: changedata?.id,
         contactNo: phoneno,
         name: fullname,
-        // Fname: Fname,
         email: email,
         address: address,
+        stayD: 3,
+        pin: 555555,
         city: city,
         state: state,
-        pin: pincode,
-        stayD: staydays,
         proof: idproffname,
-        idNumber: idproffno,
+        idNumber: idproffnumber,
         male: maleno,
         female: femaleno,
-        child: Children,
-        // img: upload,
+        dharmasala: dharamshalid,
+        modeOfBooking: changedata?.modeOfBooking,
+        RoomNo: roomnumber,
       };
-      axios.defaults.headers.post[
+      axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-      const res = await axios.post(`${backendApiUrl}room/checkin`, data);
+      const res = await axios.put(`${backendApiUrl}room/checkin`, data);
 
-      console.log('checkin', res);
+      console.log('room shift', res);
       // if (res.data.data.status) {
       //   setOpen(false);
 
@@ -170,6 +178,7 @@ function RoomShiftForm({ setOpen }) {
       // Swal.fire('Error!', error, 'error');
     }
   };
+
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
   var today = new Date();
   const currDate = today
@@ -180,7 +189,14 @@ function RoomShiftForm({ setOpen }) {
     minute: 'numeric',
     hour12: true,
   });
-
+  function getCurrentDateTime() {
+    const currentDate = new Date().toISOString().substr(0, 10);
+    const currentTime = new Date().toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    return `${currentDate}  ${currentTime}`;
+  }
   const getalldharamshala = () => {
     serverInstance('room/dharmashala', 'get').then((res) => {
       console.log('dharmshala', res.data);
@@ -217,7 +233,25 @@ function RoomShiftForm({ setOpen }) {
   useEffect(() => {
     getalldharamshala();
     getallcategory();
+    if (changedata) {
+      setbookingid(changedata?.booking_id);
+      setphoneno(changedata?.contactNo);
+      setfullname(changedata?.holderName);
+      setemail(changedata?.email);
+      setidproffnumber(changedata?.idNumber);
+      setaddress(changedata?.address);
+      setstate(changedata?.state);
+      setcity(changedata?.city);
+      setroomnumber(changedata?.RoomNo);
+      setdharamshalanameroom(changedata?.name);
+      setcategoryroom(changedata?.category_name);
+      setfacilityname(changedata?.facility_name);
+      setrate(changedata?.Rate);
+      setadvancerate(changedata?.advance);
+    }
   }, []);
+
+  console.log('change data ', changedata);
   return (
     <>
       {showchangeroom ? (
@@ -227,44 +261,50 @@ function RoomShiftForm({ setOpen }) {
               <div className="form-div" style={{ marginBottom: '1rem' }}>
                 <div className="form-input-div_add_user">
                   <div className="inner-input-div2">
-                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="dharamshalanameroom"
+                    >
                       Dharamshala
                     </label>
                     <CustomInput
-                      id="categoryname"
-                      name="categoryname"
+                      id="dharamshalanameroom"
+                      name="dharamshalanameroom"
                       placeholder="Enter Room holder Name"
-                      // value={categoryname}
-                      // onChange={(e) => setcategoryname(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="inner-input-div2">
-                    <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                      Room No
-                    </label>
-                    <CustomInput
-                      id="categoryname"
-                      name="categoryname"
-                      placeholder="Enter  Holder Mobile No."
-                      // value={categoryname}
-                      // onChange={(e) => setcategoryname(e.target.value)}
+                      value={dharamshalanameroom}
+                      onChange={(e) => setdharamshalanameroom(e.target.value)}
                     />
                   </div>
 
                   <div className="inner-input-div2">
                     <label
                       style={{ marginBottom: '0.3rem' }}
-                      htmlFor="categoryname"
+                      htmlFor="roomnumber"
+                    >
+                      Room No
+                    </label>
+                    <CustomInput
+                      id="roomnumber"
+                      name="roomnumber"
+                      placeholder="Enter  Holder Mobile No."
+                      value={roomnumber}
+                      onChange={(e) => setroomnumber(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="categoryroom"
                     >
                       Category
                     </label>
                     <CustomInput
-                      id="categoryname"
-                      name="categoryname"
+                      id="categoryroom"
+                      name="categoryroom"
                       placeholder="Enter  Hold Since"
-                      // value={categoryname}
-                      // onChange={(e) => setcategoryname(e.target.value)}
+                      value={categoryroom}
+                      onChange={(e) => setcategoryroom(e.target.value)}
                     />
                   </div>
                 </div>
@@ -273,50 +313,50 @@ function RoomShiftForm({ setOpen }) {
               <div className="form-div" style={{ marginBottom: '1rem' }}>
                 <div className="form-input-div_add_user">
                   <div className="inner-input-div2">
-                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="facilityname"
+                    >
                       Facility
                     </label>
                     <CustomInput
-                      id="address"
-                      name="checkout"
+                      id="facilityname"
+                      name="facilityname"
                       type="text"
                       placeholder="   Hold Remain"
-                      // value={checkout}
-                      // onChange={(e) => setcheckout(e.target.value)}
+                      value={facilityname}
+                      onChange={(e) => setfacilityname(e.target.value)}
                     />
                   </div>
 
                   <div className="inner-input-div2">
-                    <label
-                      style={{ marginBottom: '0.3rem' }}
-                      htmlFor="checkout"
-                    >
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="rate">
                       Room Rent
                     </label>
                     <CustomInput
-                      id="address"
-                      name="checkout"
+                      id="rate"
+                      name="rate"
                       type="text"
                       placeholder="Hold Approved By"
-                      // value={checkout}
-                      // onChange={(e) => setcheckout(e.target.value)}
+                      value={rate}
+                      onChange={(e) => setrate(e.target.value)}
                     />
                   </div>
 
                   <div className="inner-input-div2">
                     <label
                       style={{ marginBottom: '0.3rem' }}
-                      htmlFor="checkout"
+                      htmlFor="advancerate"
                     >
                       Advance Deposit
                     </label>
                     <CustomInput
-                      id="address"
-                      name="checkout"
+                      id="advancerate"
+                      name="advancerate"
                       type="text"
                       placeholder="Remarks"
-                      // value={checkout}
-                      // onChange={(e) => setcheckout(e.target.value)}
+                      value={advancerate}
+                      onChange={(e) => setadvancerate(e.target.value)}
                     />
                   </div>
                 </div>
@@ -458,13 +498,19 @@ function RoomShiftForm({ setOpen }) {
                         {roomlist &&
                           roomlist.map((item, index) => {
                             return (
-                              <tr>
+                              <tr key={item?.id}>
                                 <td className="table_tddd">
                                   <input
                                     type="checkbox"
-                                    onClick={() =>
-                                      setroomnumber(item?.roomNumber)
-                                    }
+                                    onClick={() => {
+                                      setroomnumber(item?.roomNumber);
+                                      setdharamshalanameroom(item?.name);
+                                      setcategoryroom(item?.category_name);
+                                      setfacilityname(item?.facility_name);
+                                      setrate(item?.Rate);
+                                      setadvancerate(item?.advance);
+                                      setdharamshalid(item?.dharmasala_id);
+                                    }}
                                   />
                                 </td>
                                 <td className="table_tddd">
@@ -519,13 +565,17 @@ function RoomShiftForm({ setOpen }) {
               <div className="form-div" style={{ marginBottom: '1rem' }}>
                 <div className="form-input-div_add_user">
                   <div className="inner-input-div2">
-                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="bookingid"
+                    >
                       Booking Id
                     </label>
                     <CustomInput
-                      id="categoryname"
-                      name="categoryname"
-                      value={'2022-15264253'}
+                      id="bookingid"
+                      name="bookingid"
+                      value={bookingid}
+                      onChange={(e) => setbookingid(e.target.value)}
                     />
                   </div>
 
@@ -534,25 +584,23 @@ function RoomShiftForm({ setOpen }) {
                       Check in Time
                     </label>
                     <CustomInput
+                      type="text"
                       id="categoryname"
                       name="categoryname"
                       placeholder="Enter  Holder Mobile No."
-                      value={'31/03/22  13:28 pm'}
+                      value={dateTime}
                     />
                   </div>
 
                   <div className="inner-input-div2">
-                    <label
-                      style={{ marginBottom: '0.3rem' }}
-                      htmlFor="categoryname"
-                    >
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="phoneno">
                       Mobile number
                     </label>
                     <CustomInput
-                      id="categoryname"
-                      name="categoryname"
-                      placeholder="Enter  Hold Since"
-                      value={'1253625632'}
+                      id="phoneno"
+                      name="phoneno"
+                      value={phoneno}
+                      onChange={(e) => setphoneno(e.target.value)}
                     />
                   </div>
                 </div>
@@ -560,38 +608,46 @@ function RoomShiftForm({ setOpen }) {
               <div className="form-div" style={{ marginBottom: '1rem' }}>
                 <div className="form-input-div_add_user">
                   <div className="inner-input-div2">
-                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="fullname"
+                    >
                       Name
                     </label>
                     <CustomInput
-                      id="categoryname"
-                      name="categoryname"
-                      value={'Pranay Shukla'}
+                      id="fullname"
+                      name="fullname"
+                      value={fullname}
+                      onChange={(e) => setfullname(e.target.value)}
                     />
                   </div>
 
                   <div className="inner-input-div2">
-                    <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="email">
                       Email id
                     </label>
                     <CustomInput
-                      id="categoryname"
-                      name="categoryname"
-                      value={'anil@gmail.com'}
+                      type="text"
+                      id="email"
+                      name="email"
+                      value={email}
+                      onChange={(e) => setemail(e.target.value)}
                     />
                   </div>
 
                   <div className="inner-input-div2">
                     <label
                       style={{ marginBottom: '0.3rem' }}
-                      htmlFor="categoryname"
+                      htmlFor="idproffnumber"
                     >
                       Id Proof number
                     </label>
                     <CustomInput
-                      id="categoryname"
-                      name="categoryname"
-                      value={'15263254789525'}
+                      type="text"
+                      id="idproffnumber"
+                      name="idproffnumber"
+                      value={idproffnumber}
+                      onChange={(e) => setidproffnumber(e.target.value)}
                     />
                   </div>
                 </div>
@@ -599,38 +655,41 @@ function RoomShiftForm({ setOpen }) {
               <div className="form-div" style={{ marginBottom: '1rem' }}>
                 <div className="form-input-div_add_user">
                   <div className="inner-input-div2">
-                    <label style={{ marginBottom: '0.3rem' }} htmlFor="fromNo">
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="address">
                       Address
                     </label>
                     <CustomInput
-                      id="categoryname"
-                      name="categoryname"
-                      value={'pilibhit'}
+                      type="text"
+                      id="address"
+                      name="address"
+                      value={address}
+                      onChange={(e) => setaddress(e.target.value)}
                     />
                   </div>
 
                   <div className="inner-input-div2">
-                    <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
-                      Address
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="state">
+                      State
                     </label>
                     <CustomInput
-                      id="categoryname"
-                      name="categoryname"
-                      value={'up'}
+                      type="text"
+                      id="state"
+                      name="state"
+                      value={state}
+                      onChange={(e) => setstate(e.target.value)}
                     />
                   </div>
 
                   <div className="inner-input-div2">
-                    <label
-                      style={{ marginBottom: '0.3rem' }}
-                      htmlFor="categoryname"
-                    >
+                    <label style={{ marginBottom: '0.3rem' }} htmlFor="city">
                       City
                     </label>
                     <CustomInput
-                      id="categoryname"
-                      name="categoryname"
-                      value={'Bisalpur'}
+                      type="text"
+                      id="city"
+                      name="city"
+                      value={city}
+                      onChange={(e) => setcity(e.target.value)}
                     />
                   </div>
                 </div>

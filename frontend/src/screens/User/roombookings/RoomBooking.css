@@ -474,16 +474,19 @@
   .form_btn_div {
     width: 100%;
     display: flex;
-    padding-right: 14%;
+    padding-right: 0%;
     height: 100%;
     flex-direction: column;
   }
   .form_div_absolute {
-    width: 100%;
+    width: 93%;
     height: 87%;
     top: 50%;
-    left: 0%;
+    left: 0.6rem;
+    padding-left: 0%;
+    border-radius: 12px!important;
   }
+  
   .input_div_room_main {
     width: 100%;
   }

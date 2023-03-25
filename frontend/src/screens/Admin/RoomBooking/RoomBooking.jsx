@@ -127,7 +127,7 @@ function RoomBooking({ setopendashboard }) {
   const checkincurrTime = moment(today1, 'HH:mm').format('hh:mm');
 
   console.log('check out time', checkoutcurrDate, checkoutcurrTime);
-  console.log('check out time', checkincurrDate, checkincurrTime);
+  console.log('date and time', dateTime);
   console.log('dharamshala name ', dharamshalaname);
   function getCurrentDateTime() {
     const currentDate = new Date().toISOString().substr(0, 10);
@@ -135,7 +135,7 @@ function RoomBooking({ setopendashboard }) {
       hour: '2-digit',
       minute: '2-digit',
     });
-    return `${currentDate}T${currentTime}`;
+    return `${currentDate}  ${currentTime}`;
   }
   const handleClieck = async (e) => {
     e.preventDefault();
@@ -363,7 +363,7 @@ function RoomBooking({ setopendashboard }) {
           <div className="form_div_absolute">
             <form onSubmit={handleClieck} className="form_btn_div">
               <div className="main_div_select_div">
-                <label>
+                <label className="labbelddd">
                   <img
                     style={{ width: '8%', marginRight: '1%' }}
                     src={homee}
@@ -414,7 +414,7 @@ function RoomBooking({ setopendashboard }) {
               </div>
 
               <div className="main_div_select_div">
-                <label>
+                <label className="labbelddd">
                   <img
                     style={{ width: '8%', marginRight: '1%' }}
                     src={homee}
@@ -464,7 +464,7 @@ function RoomBooking({ setopendashboard }) {
                 </Select>
               </div>
               <div className="main_div_select_div">
-                <label htmlFor="checkintime">
+                <label className="labbelddd" htmlFor="checkintime">
                   <img
                     style={{ width: '8%', marginRight: '1%' }}
                     src={homee}
@@ -473,16 +473,14 @@ function RoomBooking({ setopendashboard }) {
                   Check In
                 </label>
                 <CustomInput
+                  disabled={true}
                   id="checkintime"
                   name="checkintime"
-                  placeholder="Full name"
-                  type="datetime-local"
-                  onChange={(e) => setcheckintime(e.target.value)}
                   value={dateTime}
                 />
               </div>
               <div className="main_div_select_div">
-                <label htmlFor="checkouttime">
+                <label className="labbelddd" htmlFor="checkouttime">
                   <img
                     style={{ width: '8%', marginRight: '1%' }}
                     src={homee}
@@ -491,6 +489,7 @@ function RoomBooking({ setopendashboard }) {
                   Check Out
                 </label>
                 <CustomInput
+                  min={new Date()}
                   id="checkouttime"
                   name="checkouttime"
                   placeholder="Full name"
@@ -500,7 +499,7 @@ function RoomBooking({ setopendashboard }) {
                 />
               </div>
               <div className="main_div_select_div">
-                <label>
+                <label className="labbelddd">
                   <img
                     style={{ width: '8%', marginRight: '1%' }}
                     src={homee}

@@ -277,7 +277,7 @@ function DharamDetails({ roomfilterdata }) {
         </MenuItem>
       </Menu>
 
-      <div className="main_div_head_tyopeeee">
+      {/* <div className="main_div_head_tyopeeee">
         <div className="form_div_absolute10">
           <form className="form_btn_div">
             <div className="main_div_select_div">
@@ -410,7 +410,7 @@ function DharamDetails({ roomfilterdata }) {
             </button>
           </form>
         </div>
-      </div>
+      </div> */}
 
       <div className="details-div_dhar">
         <img
@@ -431,10 +431,26 @@ function DharamDetails({ roomfilterdata }) {
       </div>
 
       <div className="details-div_dhar">
-        {detailsofroons.availableRooms &&
-          detailsofroons.availableRooms.map((item) => {
-            return <RoomCard data={item} isData={isData} />;
-          })}
+        {detailsofroons.availableRooms && (
+          <>
+            <RoomCard
+              image={detailsofroons.availableRooms[0].image1}
+              data={detailsofroons.availableRooms[0]}
+            />
+            <RoomCard
+              image={detailsofroons.availableRooms[0].image2}
+              data={detailsofroons.availableRooms[0]}
+            />
+            <RoomCard
+              image={detailsofroons.availableRooms[0].image3}
+              data={detailsofroons.availableRooms[0]}
+            />
+            <RoomCard
+              image={detailsofroons.availableRooms[0].image4}
+              data={detailsofroons.availableRooms[0]}
+            />
+          </>
+        )}
       </div>
 
       <div className="imp_info_super_div">

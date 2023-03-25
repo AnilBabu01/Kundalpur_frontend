@@ -149,7 +149,7 @@ function Navbar1() {
       </div>
 
       <nav className={navbar ? 'main_div_header_scroll' : 'main_div_header'}>
-        <NavLink to="/">
+        <NavLink to="/" onClick={() => setisMobile(false)}>
           <div>
             <img src={croppedlogo} alt="ss" />
           </div>
@@ -315,7 +315,8 @@ function Navbar1() {
         <div className="mobile_navber_hide_INear_main">
           <HomeIcon />
           <NavLink
-            className="link_direct mobile_navber_hide_INear_maina"
+            className="link_directs mobile_navber_hide_INear_maina"
+            style={{ marginBottom: '0.5rem' }}
             to="/*"
           >
             श्री बड़े बाबा
@@ -330,7 +331,7 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -339,7 +340,7 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -348,19 +349,19 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
               अतिशय
             </NavLink>
-            <NavLink className="link_direct" to="/">
+            <NavLink className="link_directs" to="/">
               नित्य कार्यक्रम
             </NavLink>
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -369,7 +370,7 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -386,20 +387,20 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
               आवास व्यवस्था
             </NavLink>
-            <NavLink className="link_direct" to="/">
+            <NavLink className="link_directs" to="/">
               अन्य सुविधाएं
             </NavLink>
           </div>
           <NavLink
             onClick={() => setisMobile(!isMobile)}
             className={({ isActive }) =>
-              isActive ? 'link_directActive' : 'link_direct'
+              isActive ? 'link_directActive' : 'link_directs'
             }
             to="/*"
           >
@@ -415,7 +416,7 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -424,7 +425,7 @@ function Navbar1() {
             <a
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -433,7 +434,7 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -443,7 +444,7 @@ function Navbar1() {
           <NavLink
             onClick={() => setisMobile(!isMobile)}
             className={({ isActive }) =>
-              isActive ? 'link_directActive' : 'link_direct'
+              isActive ? 'link_directActive' : 'link_directs'
             }
             to="/*"
           >
@@ -459,7 +460,7 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -468,7 +469,7 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -477,7 +478,7 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -486,7 +487,7 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
@@ -495,26 +496,25 @@ function Navbar1() {
             <NavLink
               onClick={() => setisMobile(!isMobile)}
               className={({ isActive }) =>
-                isActive ? 'link_directActive' : 'link_direct'
+                isActive ? 'link_directActive' : 'link_directs'
               }
               to="/*"
             >
               आर्य का संघ
             </NavLink>
           </div>
-          &nbsp;&nbsp; &nbsp;&nbsp;
           <NavLink
             onClick={() => setisMobile(!isMobile)}
             className={({ isActive }) =>
-              isActive ? 'link_directActive' : 'link_direct'
+              isActive ? 'link_directActive' : 'link_directs'
             }
             to="/*"
           >
             वीडियो गैलरी
           </NavLink>
-          &nbsp;&nbsp; &nbsp;&nbsp;
           <NavLink
             onClick={() => setisMobile(!isMobile)}
+            style={{ marginBottom: '0.5rem' }}
             className={({ isActive }) =>
               isActive ? 'link_directActive' : 'link_direct'
             }
@@ -522,9 +522,10 @@ function Navbar1() {
           >
             दान
           </NavLink>
-          &nbsp;&nbsp; &nbsp;&nbsp;
+
           <NavLink
             onClick={() => setisMobile(!isMobile)}
+            style={{ marginBottom: '0.5rem' }}
             className={({ isActive }) =>
               isActive ? 'link_directActive' : 'link_direct'
             }
@@ -532,49 +533,48 @@ function Navbar1() {
           >
             आवास
           </NavLink>
-          &nbsp;&nbsp; &nbsp;&nbsp;
           <NavLink
             onClick={() => setisMobile(!isMobile)}
+            style={{ marginBottom: '0.5rem' }}
             className={({ isActive }) =>
-              isActive ? 'link_directActive' : 'link_direct'
+              isActive ? 'link_directActive' : 'link_directs'
             }
             to="/*"
           >
             संपर्क
           </NavLink>
-          &nbsp;&nbsp; &nbsp;&nbsp;
           {sessionStorage.getItem('token') ? (
             <>
               <NavLink
                 onClick={() => setisMobile(!isMobile)}
                 to="/profile"
                 className={({ isActive }) =>
-                  isActive ? 'link_directActive' : 'link_direct'
+                  isActive ? 'link_directActive' : 'link_directs'
                 }
               >
                 Profile
               </NavLink>
-              &nbsp;&nbsp; &nbsp;&nbsp;
+
               <NavLink
                 onClick={() => setisMobile(!isMobile)}
                 to="/changepassword"
                 className={({ isActive }) =>
-                  isActive ? 'link_directActive' : 'link_direct'
+                  isActive ? 'link_directActive' : 'link_directs'
                 }
               >
                 Change password
               </NavLink>
-              &nbsp;&nbsp; &nbsp;&nbsp;
+
               <NavLink
                 onClick={() => setisMobile(!isMobile)}
                 to="/donationhistory"
                 className={({ isActive }) =>
-                  isActive ? 'link_directActive' : 'link_direct'
+                  isActive ? 'link_directActive' : 'link_directs'
                 }
               >
                 Donation History
               </NavLink>
-              &nbsp;&nbsp; &nbsp;&nbsp;
+
               <p
                 onClick={() => {
                   setisMobile(!isMobile);
@@ -587,12 +587,14 @@ function Navbar1() {
             </>
           ) : (
             <>
-              &nbsp;&nbsp; &nbsp;&nbsp;
               <NavLink
-                onClick={() => setshowmenu1(!showmenu1)}
+                onClick={() => {
+                  setisMobile(!isMobile);
+                  setshowmenu1(!showmenu1);
+                }}
                 to="/login"
                 className={({ isActive }) =>
-                  isActive ? 'link_directActive' : 'link_direct'
+                  isActive ? 'link_directActive' : 'link_directs'
                 }
               >
                 Login

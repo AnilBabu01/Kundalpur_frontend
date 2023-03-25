@@ -29,6 +29,7 @@ import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import RoomShiftForm from './RoomShiftForm';
 import Typography from '@mui/material/Typography';
+import moment from 'moment';
 import './RoomShift.css';
 import RoomBookingTap from '../RoomBookingTap';
 const style = {
@@ -50,19 +51,19 @@ const RoomShift = ({ setopendashboard }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [userrole, setuserrole] = useState('');
   const [open, setOpen] = React.useState(false);
+  const [changedata, setchangedata] = useState('');
   const handleClose = () => setOpen(false);
-  const handleOepn = () => setOpen(true);
+  const handleOepn = (data) => {
+    setOpen(true);
+    setchangedata(data);
+  };
 
   const getall_donation = () => {
-    serverInstance('user/add-elecDonation', 'get').then((res) => {
-      if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
-
-        setisData(filterData);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
+    serverInstance('room/checkin', 'get').then((res) => {
+      console.log('bookede rooms', res.data);
+      if (res.data) {
+        setisData(res.data);
       }
-      console.log(res);
     });
   };
 
@@ -142,11 +143,12 @@ const RoomShift = ({ setopendashboard }) => {
                   <CloseIcon onClick={() => handleClose()} />
                 </IconButton>
               </div>
-              <RoomShiftForm setOpen={setOpen} />
+              <RoomShiftForm setOpen={setOpen} changedata={changedata} />
             </div>
           </Box>
         </Fade>
       </Modal>
+
       <RoomBookingTap setopendashboard={setopendashboard} />
       <div style={{ marginLeft: '5rem', marginRight: '1.2rem' }}>
         <div className="search-header-print">
@@ -210,9 +212,13 @@ const RoomShift = ({ setopendashboard }) => {
               <TableRow>
                 <TableCell>S.No</TableCell>
                 <TableCell>Booking Id</TableCell>
-                <TableCell>Dharamshala - Category (Room No)</TableCell>
+                <TableCell>Mobile</TableCell>
                 <TableCell>Customer Name</TableCell>
-
+                <TableCell>Checkin Date</TableCell>
+                <TableCell>Checkin Time</TableCell>
+                <TableCell>Checkout Date</TableCell>
+                <TableCell>Checkout Time</TableCell>
+                <TableCell>Room No</TableCell>
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -232,14 +238,27 @@ const RoomShift = ({ setopendashboard }) => {
                         '&:last-child td, &:last-child th': { border: 0 },
                       }}
                     >
-                      <TableCell>{row.ReceiptNo}</TableCell>
-                      <TableCell>{row.voucherNo}</TableCell>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{row?.booking_id}</TableCell>
+                      <TableCell>{row?.contactNo}</TableCell>
+                      <TableCell>{row?.holderName}</TableCell>
+                      <TableCell>
+                        {Moment(row?.date).format('YYYY-MM-DD')}
+                      </TableCell>
+                      <TableCell>
+                        {moment(row?.time, 'HH:mm').format('hh:mm')}
+                      </TableCell>
+                      <TableCell>
+                        {Moment(row?.date).format('YYYY-MM-DD')}
+                      </TableCell>
+                      <TableCell>
+                        {moment(row?.time, 'HH:mm').format('hh:mm')}
+                      </TableCell>
 
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell> {row.address}</TableCell>
+                      <TableCell> {row?.RoomNo}</TableCell>
                       <TableCell>
                         <button
-                          onClick={() => handleOepn()}
+                          onClick={() => handleOepn(row)}
                           className="chaneRoom"
                         >
                           Change Room

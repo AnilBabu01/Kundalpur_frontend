@@ -35,7 +35,7 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
   borderRadius: 6,
   '& .MuiInputBase-input': {
     borderRadius: 6,
-    width: '167px',
+    width: '100%',
     height: '26px',
     fontSize: 15,
 
@@ -111,11 +111,11 @@ function RoomBooking({ setroomfilterdata }) {
   const [checkintime, setcheckintime] = useState('');
 
   var today = new Date(checkouttime);
-  const checkoutcurrDate = Moment(today).format('YYYY-DD-MM');
+  const checkoutcurrDate = Moment(today).format('YYYY-MM-DD');
   const checkoutcurrTime = moment(today, 'HH:mm').format('hh:mm');
 
   var today1 = new Date(checkintime);
-  const checkincurrDate = Moment(today1).format('YYYY-DD-MM');
+  const checkincurrDate = Moment(today1).format('YYYY-MM-DD');
   const checkincurrTime = moment(today1, 'HH:mm').format('hh:mm');
 
   console.log('check out time', checkoutcurrDate, checkoutcurrTime);
@@ -346,7 +346,7 @@ function RoomBooking({ setroomfilterdata }) {
         <div className="form_div_absolute">
           <form onSubmit={handleClieck} className="form_btn_div">
             <div className="main_div_select_div">
-              <label>
+              <label className="labbelddd">
                 <img
                   style={{ width: '8%', marginRight: '1%' }}
                   src={homee}
@@ -396,7 +396,7 @@ function RoomBooking({ setroomfilterdata }) {
               </Select>
             </div>
             <div className="main_div_select_div">
-              <label htmlFor="checkintime">
+              <label className="labbelddd" htmlFor="checkintime">
                 <img
                   style={{ width: '8%', marginRight: '1%' }}
                   src={homee}
@@ -405,6 +405,7 @@ function RoomBooking({ setroomfilterdata }) {
                 Check In
               </label>
               <CustomInput
+                min={new Date()}
                 id="checkintime"
                 name="checkintime"
                 placeholder="Full name"
@@ -414,7 +415,7 @@ function RoomBooking({ setroomfilterdata }) {
               />
             </div>
             <div className="main_div_select_div">
-              <label htmlFor="checkouttime">
+              <label className="labbelddd" htmlFor="checkouttime">
                 <img
                   style={{ width: '8%', marginRight: '1%' }}
                   src={homee}
@@ -423,6 +424,7 @@ function RoomBooking({ setroomfilterdata }) {
                 Check Out
               </label>
               <CustomInput
+                min={new Date()}
                 id="checkouttime"
                 name="checkouttime"
                 placeholder="Full name"
@@ -432,7 +434,7 @@ function RoomBooking({ setroomfilterdata }) {
               />
             </div>
             <div className="main_div_select_div">
-              <label>
+              <label className="labbelddd">
                 <img
                   style={{ width: '8%', marginRight: '1%' }}
                   src={homee}

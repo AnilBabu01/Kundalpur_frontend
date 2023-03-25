@@ -441,10 +441,26 @@ function DharamDetails({ setopendashboard }) {
         </div>
 
         <div className="details-div_dhar">
-          {detailsofroons.availableRooms &&
-            detailsofroons.availableRooms.map((item) => {
-              return <RoomCard data={item} isData={isData} />;
-            })}
+          {detailsofroons.availableRooms && (
+            <>
+              <RoomCard
+                image={detailsofroons.availableRooms[0].image1}
+                data={detailsofroons.availableRooms[0]}
+              />
+              <RoomCard
+                image={detailsofroons.availableRooms[0].image2}
+                data={detailsofroons.availableRooms[0]}
+              />
+              <RoomCard
+                image={detailsofroons.availableRooms[0].image3}
+                data={detailsofroons.availableRooms[0]}
+              />
+              <RoomCard
+                image={detailsofroons.availableRooms[0].image4}
+                data={detailsofroons.availableRooms[0]}
+              />
+            </>
+          )}
         </div>
 
         <div className="imp_info_super_div">

@@ -28,7 +28,7 @@ function PaymentSuccess({ setopendashboard }) {
                 <p>Transaction id</p>
               </div>
               <div className="name_of_divvsssssv10">
-                <p>UPI</p>
+                <p>Cash</p>
                 <p>HDFC</p>
                 <p>3625362532</p>
                 <p>anilb@gmail.com</p>

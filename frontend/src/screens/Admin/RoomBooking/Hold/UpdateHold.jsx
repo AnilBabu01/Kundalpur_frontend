@@ -45,7 +45,7 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-function Holdfrom({ setOpen }) {
+function UpdateHold({ setOpen, data }) {
   const [roomnumber, setroomnumber] = useState('');
   const [roomlist, setroomlist] = useState('');
   const [Dharamshala, setDharamshala] = useState('');
@@ -70,10 +70,11 @@ function Holdfrom({ setOpen }) {
   const handlesubmit = async () => {
     try {
       setshowloader(true);
-      axios.defaults.headers.post[
+      axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
       const data = {
+        id: data?.id,
         name: holdername,
         mobile: holdermobile,
         since: sinceDate,
@@ -87,7 +88,7 @@ function Holdfrom({ setOpen }) {
         remarks: remarks,
       };
 
-      const res = await axios.post(`${backendApiUrl}room/hold`, data);
+      const res = await axios.put(`${backendApiUrl}room/hold`, data);
 
       if (res.data.data.status) {
         setOpen(false);
@@ -131,10 +132,16 @@ function Holdfrom({ setOpen }) {
     });
   };
 
-  console.log('room no', roomnumber);
+  console.log('update data', data);
   useEffect(() => {
     getalldharamshala();
     getallcategory();
+    if (data) {
+      setholdername(data?.name);
+      setholdermobile(data?.mobile);
+      setholdaprodeBy(data?.approvedBy);
+      setremarks(data?.remarks);
+    }
   }, []);
 
   return (
@@ -423,4 +430,4 @@ function Holdfrom({ setOpen }) {
   );
 }
 
-export default Holdfrom;
+export default UpdateHold;

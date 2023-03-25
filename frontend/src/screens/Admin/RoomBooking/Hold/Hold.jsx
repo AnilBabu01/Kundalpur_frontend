@@ -28,9 +28,15 @@ import IconButton from '@mui/material/IconButton';
 import { backendApiUrl } from '../../../../config/config';
 import axios from 'axios';
 import Holdfrom from './Holdfrom';
+import UpdateHold from './UpdateHold';
 import Typography from '@mui/material/Typography';
 import RoomBookingTap from '../RoomBookingTap';
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -53,6 +59,36 @@ const Hold = ({ setopendashboard }) => {
   const handleClose = () => setOpen(false);
   const handleOepn = () => setOpen(true);
 
+  const [open1, setOpen1] = React.useState(false);
+  const [updatedata, setupdatedata] = useState('');
+  const handleClose1 = () => setOpen1(false);
+  const handleOepn1 = (data) => {
+    setOpen1(true);
+
+    setupdatedata(data);
+  };
+
+  const [deleteId, setdeleteId] = useState('');
+  const [open3, setOpen3] = React.useState(false);
+
+  const handleClickOpen3 = (id) => {
+    setOpen3(true);
+    setdeleteId(id);
+  };
+  const handleClose5 = () => setOpen3(false);
+  const handleClose4 = () => {
+    setOpen3(false);
+    serverInstance(`room/hold?id=${deleteId}`, 'delete').then((res) => {
+      if (res.data.status === true) {
+        setOpen(false);
+        Swal.fire('Great!', res.data.message, 'success');
+      }
+      if (res.data.status === false) {
+        setOpen(false);
+        Swal.fire('Great!', res.data.message, 'success');
+      }
+    });
+  };
   const getall_donation = () => {
     serverInstance('room/hold', 'get').then((res) => {
       console.log('hold rooms', res.data);
@@ -113,10 +149,31 @@ const Hold = ({ setopendashboard }) => {
     setopendashboard(true);
 
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, [open]);
+  }, [open, open3]);
 
   return (
     <>
+      <Dialog
+        open={open3}
+        onClose={handleClose5}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {'Do you want to delete'}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            After delete you cannot get again
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose5}>Disagree</Button>
+          <Button onClick={handleClose4} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -139,6 +196,33 @@ const Hold = ({ setopendashboard }) => {
                 </IconButton>
               </div>
               <Holdfrom setOpen={setOpen} />
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open1}
+        onClose={handleClose1}
+        closeAfterTransition
+      >
+        <Fade in={open1}>
+          <Box sx={style}>
+            <div>
+              <div className="add-div-close-div">
+                <div>
+                  <h2 style={{ marginBottom: '0.5rem' }}>Update Hold Room</h2>
+                  <Typography variant="body2" color="primary">
+                    {currDate} / {currTime}
+                  </Typography>
+                </div>
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose1()} />
+                </IconButton>
+              </div>
+              <UpdateHold setOpen={setOpen1} data={updatedata} />
             </div>
           </Box>
         </Fade>
@@ -208,6 +292,7 @@ const Hold = ({ setopendashboard }) => {
                 <TableCell>S.No</TableCell>
                 <TableCell>Holder Mobile No</TableCell>
                 <TableCell>Room holder Name</TableCell>
+                <TableCell>Room No</TableCell>
                 <TableCell>Hold Since</TableCell>
                 <TableCell>Hold Remain</TableCell>
                 <TableCell>Hold Approved By</TableCell>
@@ -234,6 +319,7 @@ const Hold = ({ setopendashboard }) => {
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{row?.mobile}</TableCell>
                       <TableCell>{row?.name}</TableCell>
+                      <TableCell>{row?.roomNo}</TableCell>
                       <TableCell>
                         {Moment(row?.since).format('DD-MM-YYYY')}
                       </TableCell>
@@ -245,18 +331,9 @@ const Hold = ({ setopendashboard }) => {
                       <TableCell>{row?.approvedBy}</TableCell>
                       <TableCell> {row?.remarks}</TableCell>
                       <TableCell>
-                        <Tooltip title="View">
-                          <img
-                            // onClick={() => handleOepn2(row)}
-                            src={eye}
-                            alt="eye"
-                            style={{ width: '20px', marginRight: '0.5rem' }}
-                          />
-                        </Tooltip>
-
                         <Tooltip title="Edit">
                           <img
-                            // onClick={() => handleOepn1(row)}
+                            onClick={() => handleOepn1(row)}
                             src={Edit}
                             alt="eye"
                             style={{ width: '20px', marginRight: '0.5rem' }}
@@ -265,7 +342,7 @@ const Hold = ({ setopendashboard }) => {
 
                         <Tooltip title="Delete">
                           <img
-                            // onClick={() => handleClickOpen3(row.dharmasala_id)}
+                            onClick={() => handleClickOpen3(row.id)}
                             src={Delete}
                             alt="eye"
                             style={{ width: '20px' }}

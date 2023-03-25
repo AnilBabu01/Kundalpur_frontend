@@ -67,7 +67,7 @@ const AddRoom = ({ setopendashboard }) => {
   };
   const [deleteId, setdeleteId] = useState('');
   const [open3, setOpen3] = React.useState(false);
-  console.log('dharamss', isData);
+
   const handleClickOpen3 = (id) => {
     setOpen3(true);
     setdeleteId(id);

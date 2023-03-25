@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { serverInstance } from '../../../../API/ServerInstance';
 import InputBase from '@mui/material/InputBase';
 import { backendApiUrl } from '../../../../config/config';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { MenuItem, Select, Box, Typography } from '@mui/material';
@@ -10,7 +11,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import CheckAvalability from './CheckAvalability';
+
 const style = {
   position: 'absolute',
   top: '47%',
@@ -88,7 +89,14 @@ const idproff = [
 ];
 
 function RoomShiftForm({ setOpen }) {
+  const [roomnumber, setroomnumber] = useState('');
+  const [roomlist, setroomlist] = useState('');
   const [showchangeroom, setshowchangeroom] = useState(false);
+  const [category, setcategory] = useState('');
+  const [categoryname, setcategoryname] = useState('');
+  const [dharamshalaname, setdharamshalaname] = useState('');
+  const [showloader, setshowloader] = useState(false);
+  const [showloader1, setshowloader1] = useState(false);
   const [fullname, setfullname] = useState('');
   const [email, setemail] = useState('');
   const [phoneno, setphoneno] = useState('');
@@ -175,25 +183,40 @@ function RoomShiftForm({ setOpen }) {
 
   const getalldharamshala = () => {
     serverInstance('room/dharmashala', 'get').then((res) => {
+      console.log('dharmshala', res.data);
       if (res.data) {
         setDharamshala(res.data);
       }
     });
   };
 
-  const getallfacility = () => {
-    serverInstance('room/facility', 'get').then((res) => {
+  const getallcategory = () => {
+    serverInstance('room/category', 'get').then((res) => {
+      console.log('category', res.data);
       if (res.data) {
-        setfacility(res.data);
-      } else {
-        Swal('Error', 'somthing went  wrong', 'error');
+        setcategory(res.data);
+      }
+    });
+  };
+
+  const checkavailability = async () => {
+    setshowloader1(true);
+    serverInstance(
+      `room/check-room-catg?hotelName=${dharamshalaname}&category=${categoryname}`,
+      'get',
+    ).then((res) => {
+      console.log('roooms list', res.data);
+
+      if (res.data) {
+        setroomlist(res.data);
+        setshowloader1(false);
       }
     });
   };
 
   useEffect(() => {
     getalldharamshala();
-    getallfacility();
+    getallcategory();
   }, []);
   return (
     <>
@@ -299,6 +322,7 @@ function RoomShiftForm({ setOpen }) {
                 </div>
               </div>
               <p>Room Shift to</p>
+
               <div className="form-div" style={{ marginBottom: '1rem' }}>
                 <div className="form-input-div_add_user">
                   <div className="inner-input-div2">
@@ -317,9 +341,9 @@ function RoomShiftForm({ setOpen }) {
                           background: '#fff',
                         },
                       }}
-                      // value={isoffline}
-                      // name="isoffline"
-                      // onChange={(e) => setisoffline(e.target.value)}
+                      value={dharamshalaname}
+                      name="dharamshalaname"
+                      onChange={(e) => setdharamshalaname(e.target.value)}
                       displayEmpty
                     >
                       <MenuItem
@@ -330,22 +354,21 @@ function RoomShiftForm({ setOpen }) {
                       >
                         Please select
                       </MenuItem>
-                      <MenuItem
-                        sx={{
-                          fontSize: 14,
-                        }}
-                        value={true}
-                      >
-                        Please select
-                      </MenuItem>
-                      <MenuItem
-                        sx={{
-                          fontSize: 14,
-                        }}
-                        value={false}
-                      >
-                        No
-                      </MenuItem>
+                      {Dharamshala
+                        ? Dharamshala.map((item, index) => {
+                            return (
+                              <MenuItem
+                                sx={{
+                                  fontSize: 14,
+                                }}
+                                key={item?.dharmasala_id}
+                                value={item?.dharmasala_id}
+                              >
+                                {item?.name}
+                              </MenuItem>
+                            );
+                          })
+                        : ''}
                     </Select>
                   </div>
 
@@ -368,9 +391,9 @@ function RoomShiftForm({ setOpen }) {
                           background: '#fff',
                         },
                       }}
-                      // value={isoffline}
-                      // name="isoffline"
-                      // onChange={(e) => setisoffline(e.target.value)}
+                      value={categoryname}
+                      name="categoryname"
+                      onChange={(e) => setcategoryname(e.target.value)}
                       displayEmpty
                     >
                       <MenuItem
@@ -381,22 +404,20 @@ function RoomShiftForm({ setOpen }) {
                       >
                         Please select
                       </MenuItem>
-                      <MenuItem
-                        sx={{
-                          fontSize: 14,
-                        }}
-                        value={true}
-                      >
-                        Please select
-                      </MenuItem>
-                      <MenuItem
-                        sx={{
-                          fontSize: 14,
-                        }}
-                        value={false}
-                      >
-                        No
-                      </MenuItem>
+                      {category &&
+                        category.map((item) => {
+                          return (
+                            <MenuItem
+                              sx={{
+                                fontSize: 14,
+                              }}
+                              key={item?.category_id}
+                              value={item?.category_id}
+                            >
+                              {item?.name}
+                            </MenuItem>
+                          );
+                        })}
                     </Select>
                   </div>
 
@@ -404,77 +425,75 @@ function RoomShiftForm({ setOpen }) {
                     <label style={{ marginBottom: '0.3rem' }} htmlFor="toNo">
                       &nbsp;
                     </label>
-                    <button className="check_babbs_btn">
-                      {' '}
-                      Check Availability
+                    <button
+                      onClick={() => checkavailability()}
+                      className="check_babbs_btn"
+                    >
+                      {showloader1 ? (
+                        <CircularProgress
+                          style={{ width: '21px', height: '21px' }}
+                        />
+                      ) : (
+                        ' Check Availability'
+                      )}
                     </button>
                   </div>
                 </div>
               </div>
-              <div className="tablescrollbarss">
-                <table className="table_ddd">
-                  <tbody>
-                    <tr>
-                      <td className="table_tddd">Booked</td>
-                      <td className="table_tddd">Room No</td>
-                      <td className="table_tddd">Room Rent</td>
-                      <td className="table_tddd">Advance Deposit</td>
-                      <td className="table_tddd">Dharamshala</td>
-                      <td className="table_tddd">Category</td>
-                      <td className="table_tddd">Facility</td>
-                      <td className="table_tddd">Time</td>
-                    </tr>
-                    <tr>
-                      <td className="table_tddd">
-                        <input type="checkbox" />
-                      </td>
-                      <td className="table_tddd">16</td>
-                      <td className="table_tddd">250.00</td>
-                      <td className="table_tddd">600.00</td>
-                      <td className="table_tddd">SADLAGA (सदलगा)</td>
-                      <td className="table_tddd">Single room</td>
-                      <td className="table_tddd">AC</td>
-                      <td className="table_tddd">Auto</td>
-                    </tr>
-                    <tr>
-                      <td className="table_tddd">
-                        <input type="checkbox" />
-                      </td>
-                      <td className="table_tddd">16</td>
-                      <td className="table_tddd">250.00</td>
-                      <td className="table_tddd">600.00</td>
-                      <td className="table_tddd">SADLAGA (सदलगा)</td>
-                      <td className="table_tddd">Single room</td>
-                      <td className="table_tddd">AC</td>
-                      <td className="table_tddd">Auto</td>
-                    </tr>
-                    <tr>
-                      <td className="table_tddd">
-                        <input type="checkbox" />
-                      </td>
-                      <td className="table_tddd">16</td>
-                      <td className="table_tddd">250.00</td>
-                      <td className="table_tddd">600.00</td>
-                      <td className="table_tddd">SADLAGA (सदलगा)</td>
-                      <td className="table_tddd">Single room</td>
-                      <td className="table_tddd">AC</td>
-                      <td className="table_tddd">Auto</td>
-                    </tr>
-                    <tr>
-                      <td className="table_tddd">
-                        <input type="checkbox" />
-                      </td>
-                      <td className="table_tddd">16</td>
-                      <td className="table_tddd">250.00</td>
-                      <td className="table_tddd">600.00</td>
-                      <td className="table_tddd">SADLAGA (सदलगा)</td>
-                      <td className="table_tddd">Single room</td>
-                      <td className="table_tddd">AC</td>
-                      <td className="table_tddd">Auto</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              {roomlist ? (
+                <>
+                  <div className="tablescrollbarss">
+                    <table className="table_ddd">
+                      <tbody>
+                        <tr>
+                          <td className="table_tddd">Booked</td>
+                          <td className="table_tddd">Room No</td>
+                          <td className="table_tddd">Room Rent</td>
+                          <td className="table_tddd">Advance Deposit</td>
+                          <td className="table_tddd">Dharamshala</td>
+                          <td className="table_tddd">Category</td>
+                          <td className="table_tddd">Facility</td>
+                          <td className="table_tddd">Time</td>
+                        </tr>
+                        {roomlist &&
+                          roomlist.map((item, index) => {
+                            return (
+                              <tr>
+                                <td className="table_tddd">
+                                  <input
+                                    type="checkbox"
+                                    onClick={() =>
+                                      setroomnumber(item?.roomNumber)
+                                    }
+                                  />
+                                </td>
+                                <td className="table_tddd">
+                                  {item?.roomNumber}
+                                </td>
+                                <td className="table_tddd">{item?.Rate}</td>
+                                <td className="table_tddd">{item?.advance}</td>
+                                <td className="table_tddd">{item?.name}</td>
+                                <td className="table_tddd">
+                                  {item?.category_name}
+                                </td>
+                                <td className="table_tddd">
+                                  {item?.facility_name.map((element) => (
+                                    <span style={{ marginRight: '5px' }}>
+                                      {element}
+                                    </span>
+                                  ))}
+                                </td>
+                                <td className="table_tddd">Auto</td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              ) : (
+                ''
+              )}
 
               <div className="save-div-btn">
                 <button
@@ -484,10 +503,10 @@ function RoomShiftForm({ setOpen }) {
                   Save
                 </button>
                 <button
-                  onClick={() => setOpen(false)}
+                  onClick={() => setshowchangeroom(false)}
                   className="save-div-btn-btn-cancel"
                 >
-                  Cancel
+                  Back
                 </button>
               </div>
             </div>

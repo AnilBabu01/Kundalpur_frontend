@@ -164,9 +164,37 @@ function RoomBookingscreen() {
     extraMattress: extraMattress,
   };
 
-  const showpaymentoption = () => {};
+  const savedataIntodb = async () => {
+    axios.defaults.headers.post[
+      'Authorization'
+    ] = `Bearer ${sessionStorage.getItem('token')}`;
 
-  const handleclick = async () => {
+    const data = {
+      modeOfBooking: 2,
+      contactNo: mobile,
+      name: fullname,
+      email: email,
+      Fname: fathers,
+      address: address,
+      nRoom: roomno,
+      city: city,
+      state: state,
+      coutDate: isData?.checkoutcurrDate,
+      coutTime: isData?.checkoutcurrTime,
+      proof: idproffname,
+      idNumber: idproffnumber,
+      male: maleno,
+      female: femaleno,
+      child: childrenno,
+      extraM: extraMattress,
+    };
+
+    const res = await axios.post(`${backendApiUrl}room/checkin`, data);
+
+    console.log('booking responce', res);
+  };
+
+  const handleclick = () => {
     setFormerror(validate());
     if (
       fullname &&
@@ -178,31 +206,6 @@ function RoomBookingscreen() {
       childrenno &&
       roomno
     ) {
-      axios.defaults.headers.post[
-        'Authorization'
-      ] = `Bearer ${sessionStorage.getItem('token')}`;
-
-      // const data = {
-      //   modeOfBooking: 2,
-      //   contactNo: mobile,
-      //   name: fullname,
-      //   email: email,
-      //   address: address,
-      //   city: city,
-      //   state: state,
-      //   coutDate: isData?.checkoutcurrDate,
-      //   coutTime: isData?.checkoutcurrTime,
-      //   proof: idproffname,
-      //   idNumber: idproffnumber,
-      //   male: maleno,
-      //   female: femaleno,
-      //   child: childrenno,
-      //   extraM: extraMattress,
-      // };
-      // const res = await axios.post(`${backendApiUrl}room/checkin`, data);
-
-      // console.log('booking responce', res);
-
       setshowdata(true);
     }
   };
@@ -240,6 +243,7 @@ function RoomBookingscreen() {
 
     return errors;
   };
+
   useEffect(() => {
     if (location.state) {
       setisData(location.state?.roomdata);
@@ -361,20 +365,7 @@ function RoomBookingscreen() {
                     <p>₹ {alltotalamount}</p>
                   </div>
                   <div className="now_payment_gateway_div">
-                    <button
-                      onClick={() => {
-                        window.location.href =
-                          'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
-                          5;
-                        // handleOpen();
-                        // sendsms();
-                        // navigate('/room/paymentsuccessfuly', {
-                        //   state: {
-                        //     data: data,
-                        //   },
-                        // });
-                      }}
-                    >
+                    <button onClick={() => savedataIntodb()}>
                       Proceed To Payment Options
                     </button>
                   </div>

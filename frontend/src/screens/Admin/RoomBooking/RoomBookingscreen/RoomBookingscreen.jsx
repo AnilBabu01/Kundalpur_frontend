@@ -279,7 +279,19 @@ function RoomBookingscreen({ setopendashboard }) {
   console.log('room data from room booking screens', isData, checkindata);
   return (
     <>
-      <div style={{ marginLeft: '5rem', marginRight: '1.2rem' }}>
+      <div
+        style={{
+          marginLeft: '5rem',
+          marginRight: '1.2rem',
+          marginBottom: '5rem',
+        }}
+      >
+        <div
+          className="backebj_voucher"
+          style={{ marginTop: '4rem', zIndex: '5' }}
+        >
+          <button onClick={() => navigate(-1)}>Back</button>
+        </div>
         <div className="main_div_head_tyopeeeebook">
           <div className="form_div_absolutebook">
             <h2> Accommodation Details</h2>
@@ -320,6 +332,7 @@ function RoomBookingscreen({ setopendashboard }) {
                 </p>
               </div>
             </div>
+
             {showdata ? (
               <>
                 <div className="main_show_details_divs">

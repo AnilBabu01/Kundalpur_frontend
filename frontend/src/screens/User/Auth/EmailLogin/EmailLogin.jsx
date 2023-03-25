@@ -253,7 +253,6 @@ const EmailLogin = () => {
             </div>
             <div className="input-group">
               <button className="login-btn">
-                {' '}
                 {showprocess ? (
                   <CircularProgress style={{ width: '21px', height: '21px' }} />
                 ) : (

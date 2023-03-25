@@ -107,7 +107,7 @@ function RoomBooking({ setopendashboard }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const [dateTime, setDateTime] = useState(getCurrentDateTime());
   const [mode, setmode] = useState('Select');
   const [filterdata, setfilterdata] = useState('');
   const [dharamshalalist, setdharamshalalist] = useState('');
@@ -116,7 +116,7 @@ function RoomBooking({ setopendashboard }) {
   const [abcount, setabcount] = useState(0);
   const [roomcount, setroomcount] = useState(0);
   const [checkouttime, setcheckouttime] = useState('');
-  const [checkintime, setcheckintime] = useState('');
+  const [checkintime, setcheckintime] = useState(new Date());
 
   var today = new Date(checkouttime);
   const checkoutcurrDate = Moment(today).format('YYYY-DD-MM');
@@ -129,7 +129,14 @@ function RoomBooking({ setopendashboard }) {
   console.log('check out time', checkoutcurrDate, checkoutcurrTime);
   console.log('check out time', checkincurrDate, checkincurrTime);
   console.log('dharamshala name ', dharamshalaname);
-
+  function getCurrentDateTime() {
+    const currentDate = new Date().toISOString().substr(0, 10);
+    const currentTime = new Date().toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    return `${currentDate}T${currentTime}`;
+  }
   const handleClieck = async (e) => {
     e.preventDefault();
     if (!checkintime || !checkouttime || !dharamshalaname) {
@@ -471,7 +478,7 @@ function RoomBooking({ setopendashboard }) {
                   placeholder="Full name"
                   type="datetime-local"
                   onChange={(e) => setcheckintime(e.target.value)}
-                  value={checkintime}
+                  value={dateTime}
                 />
               </div>
               <div className="main_div_select_div">

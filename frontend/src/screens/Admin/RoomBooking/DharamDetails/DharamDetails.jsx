@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import homee from '../../../../assets/homee.jpeg';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
@@ -97,6 +97,7 @@ import './DharamDetails.css';
 function DharamDetails({ setopendashboard }) {
   const location = useLocation();
   let { id } = useParams();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -280,8 +281,13 @@ function DharamDetails({ setopendashboard }) {
           </div>
         </MenuItem>
       </Menu>
-      <div style={{ marginLeft: '5rem', marginRight: '1.2rem' }}>
-        <div className="main_div_head_tyopeeee">
+      <div
+        style={{ marginLeft: '5rem', marginRight: '1.2rem', marginTop: '4rem' }}
+      >
+        <div className="backebj_voucher">
+          <button onClick={() => navigate(-1)}>Back</button>
+        </div>
+        {/* <div className="main_div_head_tyopeeee">
           <div className="form_div_absolute10">
             <form className="form_btn_div">
               <div className="main_div_select_div">
@@ -414,9 +420,9 @@ function DharamDetails({ setopendashboard }) {
               </button>
             </form>
           </div>
-        </div>
+        </div> */}
 
-        <div className="details-div_dhar">
+        <div className="details-div_dhar" style={{ marginTop: '1rem' }}>
           <img
             src={`${backendUrl}uploads/images/${
               detailsofroons.dharmasala && detailsofroons.dharmasala?.image1

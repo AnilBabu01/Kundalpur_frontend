@@ -122,12 +122,12 @@ function RoomBooking({ setopendashboard }) {
   const checkoutcurrDate = Moment(today).format('YYYY-DD-MM');
   const checkoutcurrTime = moment(today, 'HH:mm').format('hh:mm');
 
-  var today1 = new Date(checkintime);
+  var today1 = new Date();
   const checkincurrDate = Moment(today1).format('YYYY-DD-MM');
   const checkincurrTime = moment(today1, 'HH:mm').format('hh:mm');
 
   console.log('check out time', checkoutcurrDate, checkoutcurrTime);
-  console.log('date and time', dateTime);
+  console.log('date in time', checkincurrDate, checkincurrTime);
   console.log('dharamshala name ', dharamshalaname);
 
   function getCurrentDateTime() {
@@ -448,20 +448,30 @@ function RoomBooking({ setopendashboard }) {
                   >
                     Select
                   </MenuItem>
-                  {modes &&
-                    modes.map((item, idx) => {
-                      return (
-                        <MenuItem
-                          sx={{
-                            fontSize: 12,
-                          }}
-                          key={item.id}
-                          value={item.id}
-                        >
-                          {item.type}
-                        </MenuItem>
-                      );
-                    })}
+                  <MenuItem
+                    sx={{
+                      fontSize: 14,
+                    }}
+                    value={0}
+                  >
+                    Online
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      fontSize: 14,
+                    }}
+                    value={1}
+                  >
+                    Offline
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      fontSize: 14,
+                    }}
+                    value={2}
+                  >
+                    Both
+                  </MenuItem>
                 </Select>
               </div>
               <div className="main_div_select_div">
@@ -474,13 +484,12 @@ function RoomBooking({ setopendashboard }) {
                   Check In
                 </label>
                 <CustomInput
-                  disabled={true}
                   id="checkintime"
                   name="checkintime"
                   value={dateTime}
                 />
               </div>
-              {console.log(dateTime,"current")}
+              {console.log(dateTime, 'current')}
               <div className="main_div_select_div">
                 <label className="labbelddd" htmlFor="checkouttime">
                   <img
@@ -491,7 +500,6 @@ function RoomBooking({ setopendashboard }) {
                   Check Out
                 </label>
                 <CustomInput
-                  min={new Date()}
                   id="checkouttime"
                   name="checkouttime"
                   placeholder="Full name"
@@ -538,9 +546,12 @@ function RoomBooking({ setopendashboard }) {
           </div>
         </div>
 
-        {showresuilt ? (
+        {filterdata.length > 0 ? (
           <>
-            <div className="details-div_dhar">
+            <div
+              className="details-div_dhar"
+              style={{ marginTop: '-6rem', marginBottom: '-2rem' }}
+            >
               <img
                 src={`${backendUrl}uploads/images/${
                   filterdata[0].dharmasala && filterdata[0].dharmasala?.image

@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import moment, { isDate } from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { serverInstance } from '../../../../API/ServerInstance';
-import { Container } from '@mui/system';
+import './BookingHistory.css';
 const style = {
   position: 'absolute',
   top: '40%',
@@ -120,8 +120,9 @@ function BookingHistory({ setopendashboard, setshowreciept, setHeaderFooter }) {
           </Box>
         </Fade>
       </Modal>
-      <div className="DonationHistory-main-div">
-        <div className="table-div-maain-donation-table-main">
+
+      <div className="amin_room_booking">
+        <div>
           <div className="center_search_client">
             <div className="donation-history-text">
               <h2>Booking</h2>

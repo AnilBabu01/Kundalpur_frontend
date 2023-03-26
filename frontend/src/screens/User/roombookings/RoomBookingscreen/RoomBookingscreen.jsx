@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import Moment from 'moment-js';
 import { backendApiUrl, backendUrl } from '../../../../config/config';
 import axios from 'axios';
+import { serverInstance } from '../../../../API/ServerInstance';
 import { MenuItem, Menu, Select } from '@mui/material';
 import './RoomBookingscreen.css';
 
@@ -149,38 +150,16 @@ function RoomBookingscreen() {
   let totalRoomAmount = roomno * isData?.Rate;
   let alltotalamount = totalRoomAmount + totalofmattress;
   let totalmember = femaleno;
-  const data = {
-    fullname: fullname,
-    email: email,
-    mobile: mobile,
-    address: address,
-    city: city,
-    state: state,
-    idproffname: idproffname,
-    maleno: maleno,
-    femaleno: femaleno,
-    childrenno: childrenno,
-    roomno: roomno,
-    extraMattress: extraMattress,
-  };
 
   const savedataIntodb = async () => {
-    axios.defaults.headers.post[
-      'Authorization'
-    ] = `Bearer ${sessionStorage.getItem('token')}`;
-
-    const data = {
-      date: '2023-02-02',
+    serverInstance('room/checkin', 'post', {
+      date: checkindata.checkintime,
       time: checkindata.checkincurrTime,
-      coutDate: '2023-02-02',
-      coutTime: checkindata.checkoutcurrTime,
       contactNo: mobile,
       name: fullname,
       Fname: fathers,
       email: email,
       address: address,
-      stayD: 3,
-      pin: 555555,
       city: city,
       state: state,
       proof: idproffname,
@@ -190,11 +169,33 @@ function RoomBookingscreen() {
       child: childrenno,
       dharmasala: checkindata.dharamshalaname,
       modeOfBooking: 2,
-      RoomNo: 77,
-    };
-    const res = await axios.post(`${backendApiUrl}room/checkin`, data);
+      RoomNo: isData?.roomNumber,
+      coutDate: checkindata.checkouttime,
+      coutTime: checkindata.checkoutcurrTime,
+      nRoom: roomno,
+      extraM: extraMattress,
+    }).then((res) => {
+      console.log('booking responce', res.data);
+      if (res.data.status === true) {
+        navigate('/room/paymentsuccessfuly', {
+          state: {
+            data: res.data,
+          },
+        });
+      }
 
-    console.log('booking responce', res);
+      // if (res.status === true) {
+      //   setshowloader(false);
+      //   window.location.href =
+      //     'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
+      //     res.data.id;
+      //   // handleOpen();
+      //   // sendsms();
+      //   setonlineId(res.data.id);
+      // } else {
+      //   Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+      // }
+    });
   };
 
   const handleclick = async () => {

@@ -9,10 +9,11 @@
     border: 1px solid gray;
     width: 95%;
     margin-top: 1rem;
+    padding-top: 1rem;
 }
 .print_ddd{
    
-    width: 60%;
+    width: 65%;
     display: flex;
     justify-content: center;
     align-items: center;

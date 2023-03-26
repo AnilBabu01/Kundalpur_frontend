@@ -405,7 +405,6 @@ function RoomBooking({ setroomfilterdata }) {
                 Check In
               </label>
               <CustomInput
-                min={new Date()}
                 id="checkintime"
                 name="checkintime"
                 placeholder="Full name"
@@ -424,7 +423,6 @@ function RoomBooking({ setroomfilterdata }) {
                 Check Out
               </label>
               <CustomInput
-                min={new Date()}
                 id="checkouttime"
                 name="checkouttime"
                 placeholder="Full name"
@@ -471,22 +469,28 @@ function RoomBooking({ setroomfilterdata }) {
         </div>
       </div>
 
-      {showresuilt ? (
+      {filterdata.length > 0 ? (
         <>
           <div className="details-div_dhar">
             <img
               src={`${backendUrl}uploads/images/${
-                filterdata[0].dharmasala && filterdata[0].dharmasala?.image
+                filterdata &&
+                filterdata[0].dharmasala &&
+                filterdata[0].dharmasala?.image
               }`}
               alt=" dharam1"
             />
             <div className="right_div_deta_dhram">
               <h2>
-                {filterdata[0].dharmasala && filterdata[0].dharmasala?.name}
+                {filterdata &&
+                  filterdata[0].dharmasala &&
+                  filterdata[0].dharmasala?.name}
               </h2>
               <h2 className="main_text_deltails">Description</h2>
               <p>
-                {filterdata[0].dharmasala && filterdata[0].dharmasala?.desc}
+                {filterdata &&
+                  filterdata[0].dharmasala &&
+                  filterdata[0].dharmasala?.desc}
               </p>
               <div className="dharamshal_arc_main_name_div10">
                 <img src={homee} alt="dd" />

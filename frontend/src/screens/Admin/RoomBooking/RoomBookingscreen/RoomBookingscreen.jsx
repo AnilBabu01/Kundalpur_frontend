@@ -126,7 +126,7 @@ const idproff = [
 function RoomBookingscreen({ setopendashboard }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [Paymode, setPaymode] = useState('Online');
+  const [Paymode, setPaymode] = useState('Cash');
   const [formerror, setFormerror] = useState({});
   const [isData, setisData] = useState('');
   const [checkindata, setcheckindata] = useState('');
@@ -165,51 +165,83 @@ function RoomBookingscreen({ setopendashboard }) {
     extraMattress: extraMattress,
   };
 
-  const showpaymentoption = () => {
+  const showpaymentoption = async () => {
     axios.defaults.headers.post[
       'Authorization'
     ] = `Bearer ${sessionStorage.getItem('token')}`;
     if (Paymode === 'Online') {
-      // const data = {
-      //   modeOfBooking: 2,
-      //   contactNo: mobile,
-      //   name: fullname,
-      //   email: email,
-      //   address: address,
-      //   city: city,
-      //   state: state,
-      //   coutDate: isData?.checkoutcurrDate,
-      //   coutTime: isData?.checkoutcurrTime,
-      //   proof: idproffname,
-      //   idNumber: idproffnumber,
-      //   male: maleno,
-      //   female: femaleno,
-      //   child: childrenno,
-      //   extraM: extraMattress,
-      // };
-      // const res = await axios.post(`${backendApiUrl}room/checkin`, data);
-      // console.log('booking responce', res);
+      serverInstance('room/checkin', 'post', {
+        date: checkindata.checkintime,
+        time: checkindata.checkincurrTime,
+        contactNo: mobile,
+        name: fullname,
+        Fname: fathers,
+        email: email,
+        address: address,
+        city: city,
+        state: state,
+        proof: idproffname,
+        idNumber: idproffnumber,
+        male: maleno,
+        female: femaleno,
+        child: childrenno,
+        dharmasala: checkindata.dharamshalaname,
+        modeOfBooking: 1,
+        RoomNo: isData?.roomNumber,
+        coutDate: checkindata.checkouttime,
+        coutTime: checkindata.checkoutcurrTime,
+        nRoom: roomno,
+        extraM: extraMattress,
+      }).then((res) => {
+        console.log('booking responce', res.data);
+        if (res.data.status === true) {
+          navigate('admin-panel/room/paymentsuccess', {
+            state: {
+              data: res.data,
+            },
+          });
+        }
+
+        // if (res.status === true) {
+        //   setshowloader(false);
+        //   window.location.href =
+        //     'https://paymentkundalpur.techjainsupport.co.in/about?order_id=' +
+        //     res.data.id;
+        //   // handleOpen();
+        //   // sendsms();
+        //   setonlineId(res.data.id);
+        // } else {
+        //   Swal.fire('Error!', 'Somthing went wrong!!', 'error');
+        // }
+      });
     }
+
     if (Paymode === 'Cash') {
-      // const data = {
-      //   modeOfBooking: 2,
-      //   contactNo: mobile,
-      //   name: fullname,
-      //   email: email,
-      //   address: address,
-      //   city: city,
-      //   state: state,
-      //   coutDate: isData?.checkoutcurrDate,
-      //   coutTime: isData?.checkoutcurrTime,
-      //   proof: idproffname,
-      //   idNumber: idproffnumber,
-      //   male: maleno,
-      //   female: femaleno,
-      //   child: childrenno,
-      //   extraM: extraMattress,
-      // };
-      // const res = await axios.post(`${backendApiUrl}room/checkin`, data);
-      // console.log('booking responce', res);
+      const data = {
+        date: checkindata.checkintime,
+        time: checkindata.checkincurrTime,
+        contactNo: mobile,
+        name: fullname,
+        Fname: fathers,
+        email: email,
+        address: address,
+        city: city,
+        state: state,
+        proof: idproffname,
+        idNumber: idproffnumber,
+        male: maleno,
+        female: femaleno,
+        child: childrenno,
+        dharmasala: checkindata.dharamshalaname,
+        modeOfBooking: 1,
+        RoomNo: isData?.roomNumber,
+        coutDate: checkindata.checkouttime,
+        coutTime: checkindata.checkoutcurrTime,
+        nRoom: roomno,
+        extraM: extraMattress,
+      };
+      const res = await axios.post(`${backendApiUrl}room/checkin`, data);
+      console.log('booking responce', res);
 
       navigate('/admin-panel/room/paymentsuccess', {
         state: {
@@ -218,7 +250,7 @@ function RoomBookingscreen({ setopendashboard }) {
       });
     }
   };
-
+  console.log(Paymode);
   const handleclick = async () => {
     setFormerror(validate());
     if (

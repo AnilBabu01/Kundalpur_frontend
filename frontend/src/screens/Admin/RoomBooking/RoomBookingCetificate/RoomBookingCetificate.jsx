@@ -27,6 +27,7 @@ function RoomBookingCetificate({ setopendashboard }) {
     }
     setopendashboard(true);
   }, []);
+  console.log('certificate', isData);
   return (
     <>
       <div className="main_room_receipt">

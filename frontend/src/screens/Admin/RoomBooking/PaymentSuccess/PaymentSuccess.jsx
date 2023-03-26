@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ok from '../../../../assets/ok.png';
+import { serverInstance } from '../../../../API/ServerInstance';
 import './PaymentSuccess.css';
 function PaymentSuccess({ setopendashboard }) {
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const [isData, setisData] = useState('');
+
   useEffect(() => {
+    if (location.state) {
+      console.log('Payment details', location.state?.data.id);
+      serverInstance(
+        `room/checkin-id?id=${location.state?.data.id}`,
+        'get',
+      ).then((res) => {
+        setisData(res.data);
+      });
+    }
     setopendashboard(true);
   }, []);
 
@@ -39,7 +52,11 @@ function PaymentSuccess({ setopendashboard }) {
             <div className="payment_btn_duvvvvvv">
               <button
                 onClick={() =>
-                  navigate('/admin-panel/room/roombookingcetificate')
+                  navigate('/admin-panel/room/roombookingcetificate', {
+                    state: {
+                      data: isData,
+                    },
+                  })
                 }
                 className="payment_btn_duvvvvvv10"
               >

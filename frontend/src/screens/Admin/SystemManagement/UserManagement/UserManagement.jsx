@@ -38,7 +38,7 @@ import SystemTap from '../SystemTap';
 import { ReactSpinner } from 'react-spinning-wheel';
 import 'react-spinning-wheel/dist/style.css';
 import './UserManagement.css';
-
+import LoadingSpinner from "../../../../components/Loading/LoadingSpinner";
 const style = {
   position: 'absolute',
   top: '48%',
@@ -52,6 +52,7 @@ const style = {
 };
 const UserManagement = ({ setopendashboard }) => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [isData, setisData] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -203,6 +204,7 @@ const UserManagement = ({ setopendashboard }) => {
     setopendashboard(true);
     getall_donation();
   }, [refetch, open, open1, open3]);
+
   return (
     <>
       <Dialog
@@ -352,11 +354,11 @@ const UserManagement = ({ setopendashboard }) => {
                   <>
                     {(rowsPerPage > 0
                       ? isData
-                          .reverse()
-                          .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage,
-                          )
+                        .reverse()
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
                       : isData
                     ).map((row, index) => (
                       <TableRow
@@ -449,6 +451,7 @@ const UserManagement = ({ setopendashboard }) => {
           </div>
         </div>
       </div>
+      {true ? <LoadingSpinner /> : <></>}
     </>
   );
 };

@@ -38,7 +38,7 @@ import SystemTap from '../SystemTap';
 import { ReactSpinner } from 'react-spinning-wheel';
 import 'react-spinning-wheel/dist/style.css';
 import './UserManagement.css';
-import LoadingSpinner from "../../../../components/Loading/LoadingSpinner";
+import LoadingSpinner from '../../../../components/Loading/LoadingSpinner';
 const style = {
   position: 'absolute',
   top: '48%',
@@ -99,13 +99,16 @@ const UserManagement = ({ setopendashboard }) => {
   const handleClose = () => setOpen(false);
 
   const getall_donation = () => {
+    setIsLoading(true);
     setname('');
     setphoneno('');
     serverInstance('admin/add-employee', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
+        setIsLoading(false);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
+        setIsLoading(false);
       }
       console.log(res);
     });
@@ -354,11 +357,11 @@ const UserManagement = ({ setopendashboard }) => {
                   <>
                     {(rowsPerPage > 0
                       ? isData
-                        .reverse()
-                        .slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage,
-                        )
+                          .reverse()
+                          .slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage,
+                          )
                       : isData
                     ).map((row, index) => (
                       <TableRow
@@ -451,7 +454,7 @@ const UserManagement = ({ setopendashboard }) => {
           </div>
         </div>
       </div>
-      {true ? <LoadingSpinner /> : <></>}
+      {isLoading ? <LoadingSpinner /> : <></>}
     </>
   );
 };

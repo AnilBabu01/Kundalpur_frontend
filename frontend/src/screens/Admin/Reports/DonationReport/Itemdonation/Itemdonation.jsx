@@ -122,6 +122,7 @@ const donationColorTheme = {
   item: '#d6cb00',
 };
 const Itemdonation = ({ setopendashboard }) => {
+  const [emplist, setemplist] = useState('');
   const [isData, setisData] = React.useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
@@ -271,7 +272,19 @@ const Itemdonation = ({ setopendashboard }) => {
       Swal.fire('Error!', error, 'error');
     }
   };
+  const getallemp_list = () => {
+    serverInstance('admin/add-employee', 'get').then((res) => {
+      if (res.status) {
+        setemplist(res.data);
+        console.log('empl list', res.data);
+      } else {
+        Swal('Error', 'somthing went  wrong', 'error');
+      }
+      console.log(res);
+    });
+  };
   useEffect(() => {
+    getallemp_list();
     getall_donation();
     setopendashboard(true);
     get_donation_tyeps();
@@ -531,11 +544,20 @@ const Itemdonation = ({ setopendashboard }) => {
                 />
               </TableCell>
               <TableCell>
-                <input
-                  type="text"
+                <select
                   className="cuolms_search"
-                  placeholder="Search Head"
-                />
+                  onChange={(e) => settype(e.target.value)}
+                  id="cars"
+                >
+                  <option>Select option</option>
+                  {donationTypes.map((item, idx) => {
+                    return (
+                      <option value={item.itemType_hi}>
+                        {item.itemType_hi}
+                      </option>
+                    );
+                  })}
+                </select>
               </TableCell>
               <TableCell>
                 <input
@@ -547,9 +569,10 @@ const Itemdonation = ({ setopendashboard }) => {
               <TableCell>
                 <select name="cars" id="cars" className="cuolms_search">
                   <option>Select user</option>
-                  {donationTypes.map((item, idx) => {
-                    return <option value={item.id}>{item.type_hi}</option>;
-                  })}
+                  {emplist &&
+                    emplist.map((item, idx) => {
+                      return <option value={item.id}>{item.Username}</option>;
+                    })}
                 </select>
               </TableCell>
               <TableCell>

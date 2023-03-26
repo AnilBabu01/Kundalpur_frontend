@@ -123,6 +123,7 @@ const donationColorTheme = {
 };
 
 const ManualDonation = ({ setopendashboard }) => {
+  const [emplist, setemplist] = useState('');
   const [isData, setisData] = React.useState([]);
   const [isDataDummy, setisDataDummy] = React.useState([]);
   const [page, setPage] = useState(0);
@@ -157,7 +158,6 @@ const ManualDonation = ({ setopendashboard }) => {
   const [remark, setRemark] = useState('');
   const [type, setType] = useState('');
 
-
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
 
@@ -185,7 +185,6 @@ const ManualDonation = ({ setopendashboard }) => {
         if (res.data) {
           setisData(res.data);
           setisDataDummy(res.data);
-
         }
       });
     }
@@ -291,7 +290,20 @@ const ManualDonation = ({ setopendashboard }) => {
     }
   };
 
+  const getallemp_list = () => {
+    serverInstance('admin/add-employee', 'get').then((res) => {
+      if (res.status) {
+        setemplist(res.data);
+        console.log('empl list', res.data);
+      } else {
+        Swal('Error', 'somthing went  wrong', 'error');
+      }
+      console.log(res);
+    });
+  };
+
   useEffect(() => {
+    getallemp_list();
     setopendashboard(true);
     getall_donation();
     get_donation_tyeps();
@@ -362,83 +374,85 @@ const ManualDonation = ({ setopendashboard }) => {
 
   const onSearchByOther = (e, type) => {
     if (type === 'Date') {
-      setDate(e.target.value)
+      setDate(e.target.value);
     }
     if (type === 'Receipt') {
-      setReceiptNo(e.target.value.toLowerCase())
+      setReceiptNo(e.target.value.toLowerCase());
     }
     if (type === 'Phone') {
-      setPhone(e.target.value.toLowerCase())
+      setPhone(e.target.value.toLowerCase());
     }
     if (type === 'Name') {
-      setName(e.target.value.toLowerCase())
+      setName(e.target.value.toLowerCase());
     }
     if (type === 'Address') {
-      setAddress(e.target.value.toLowerCase())
+      setAddress(e.target.value.toLowerCase());
     }
     if (type === 'Type') {
-      setType(e.target.value)
+      setType(e.target.value);
     }
     if (type === 'Amount') {
-      setAmount(e.target.value)
+      setAmount(e.target.value);
     }
     if (type === 'Remark') {
-      setRemark(e.target.value)
+      setRemark(e.target.value);
     }
-  }
+  };
   useEffect(() => {
-    var filtered = isDataDummy?.filter(dt =>
-      dt?.ReceiptNo.toLowerCase().indexOf(receiptNo) > -1
-      && dt?.phoneNo.toLowerCase().indexOf(phone) > -1
-      && Moment(dt?.donation_date).format('YYYY-MM-DD').indexOf(date) > -1
-      && dt?.name.toLowerCase().indexOf(name) > -1
-      && dt?.address.toLowerCase().indexOf(address) > -1
-      && dt?.address.toLowerCase().indexOf(address) > -1
-      && dt?.address.toLowerCase().indexOf(address) > -1
-    )
+    var filtered = isDataDummy?.filter(
+      (dt) =>
+        dt?.ReceiptNo.toLowerCase().indexOf(receiptNo) > -1 &&
+        dt?.phoneNo.toLowerCase().indexOf(phone) > -1 &&
+        Moment(dt?.donation_date).format('YYYY-MM-DD').indexOf(date) > -1 &&
+        dt?.name.toLowerCase().indexOf(name) > -1 &&
+        dt?.address.toLowerCase().indexOf(address) > -1 &&
+        dt?.address.toLowerCase().indexOf(address) > -1 &&
+        dt?.address.toLowerCase().indexOf(address) > -1,
+    );
 
     if (type) {
-      filtered = filtered?.map(item => {
-        if (item?.manualItemDetails?.find(typ => typ.type == type)) {
-          return item
+      filtered = filtered?.map((item) => {
+        if (item?.manualItemDetails?.find((typ) => typ.type == type)) {
+          return item;
         } else {
-          return
+          return;
         }
-      })
-      filtered = filtered?.filter(x => x !== undefined);
+      });
+      filtered = filtered?.filter((x) => x !== undefined);
     }
     if (amount) {
-
-      filtered = filtered?.map(item => {
-        console.log(item.manualItemDetails.reduce(
-          (n, { amount }) =>
-            parseFloat(n) + parseFloat(amount),
-          0,
-        ) );
-        if (item.manualItemDetails.reduce(
-          (n, { amount }) =>
-            parseFloat(n) + parseFloat(amount),
-          0,
-        ) == amount) {
-          return item
+      filtered = filtered?.map((item) => {
+        console.log(
+          item.manualItemDetails.reduce(
+            (n, { amount }) => parseFloat(n) + parseFloat(amount),
+            0,
+          ),
+        );
+        if (
+          item.manualItemDetails.reduce(
+            (n, { amount }) => parseFloat(n) + parseFloat(amount),
+            0,
+          ) == amount
+        ) {
+          return item;
         } else {
-          return
+          return;
         }
-      })
-      filtered = filtered?.filter(x => x !== undefined);
+      });
+      filtered = filtered?.filter((x) => x !== undefined);
     }
     if (remark) {
-      filtered = filtered?.map(item => {
-        if (item?.manualItemDetails?.find(typ => typ.remark == remark)) {
-          return item
+      filtered = filtered?.map((item) => {
+        if (item?.manualItemDetails?.find((typ) => typ.remark == remark)) {
+          return item;
         } else {
-          return
+          return;
         }
-      })
-      filtered = filtered?.filter(x => x !== undefined);
+      });
+      filtered = filtered?.filter((x) => x !== undefined);
     }
 
-    setisData(filtered)
+    setisData(filtered);
   }, [phone, receiptNo, date, name, address, type, amount, remark]);
 
   return (
@@ -668,7 +682,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="date"
-                    onChange={(e) => onSearchByOther(e, "Date")}
+                    onChange={(e) => onSearchByOther(e, 'Date')}
                     placeholder="Search Date"
                   />
                 </TableCell>
@@ -676,7 +690,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
-                    onChange={(e) => onSearchByOther(e, "Receipt")}
+                    onChange={(e) => onSearchByOther(e, 'Receipt')}
                     placeholder="Search Receipt"
                   />
                 </TableCell>
@@ -685,7 +699,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
-                    onChange={(e) => onSearchByOther(e, "Phone")}
+                    onChange={(e) => onSearchByOther(e, 'Phone')}
                     placeholder="Search Phone"
                   />
                 </TableCell>
@@ -693,7 +707,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     type="text"
                     className="cuolms_search"
-                    onChange={(e) => onSearchByOther(e, "Name")}
+                    onChange={(e) => onSearchByOther(e, 'Name')}
                     placeholder="Name"
                   />
                 </TableCell>
@@ -701,14 +715,14 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
-                    onChange={(e) => onSearchByOther(e, "Address")}
+                    onChange={(e) => onSearchByOther(e, 'Address')}
                     placeholder="Search Address"
                   />
                 </TableCell>
                 <TableCell>
                   <select
                     className="cuolms_search"
-                    onChange={(e) => onSearchByOther(e, "Type")}
+                    onChange={(e) => onSearchByOther(e, 'Type')}
                   >
                     <option value="">Select option</option>
 
@@ -723,16 +737,17 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
-                    onChange={(e) => onSearchByOther(e, "Amount")}
+                    onChange={(e) => onSearchByOther(e, 'Amount')}
                     placeholder="Search Amount"
                   />
                 </TableCell>
                 <TableCell>
                   <select name="cars" id="cars" className="cuolms_search">
                     <option>Select user</option>
-                    {donationTypes.map((item, idx) => {
-                      return <option value={item.id}>{item.type_hi}</option>;
-                    })}
+                    {emplist &&
+                      emplist.map((item, idx) => {
+                        return <option value={item.id}>{item.Username}</option>;
+                      })}
                   </select>
                 </TableCell>
 
@@ -741,8 +756,7 @@ const ManualDonation = ({ setopendashboard }) => {
                     className="cuolms_search"
                     type="text"
                     placeholder="Remark"
-                    onChange={(e) => onSearchByOther(e, "Remark")}
-
+                    onChange={(e) => onSearchByOther(e, 'Remark')}
                   />
                 </TableCell>
                 <TableCell>&nbsp;</TableCell>
@@ -750,9 +764,9 @@ const ManualDonation = ({ setopendashboard }) => {
                   <>
                     {(rowsPerPage > 0
                       ? isData.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage,
-                      )
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
                       : isData.reverse()
                     ).map((row, index) => (
                       <TableRow

@@ -157,6 +157,7 @@ const ManualDonation = ({ setopendashboard }) => {
   const [user, setUser] = useState('');
   const [remark, setRemark] = useState('');
   const [type, setType] = useState('');
+  const [userType, setUserType] = useState('');
 
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
@@ -397,6 +398,9 @@ const ManualDonation = ({ setopendashboard }) => {
     if (type === 'Remark') {
       setRemark(e.target.value);
     }
+    if (type === 'UserType') {
+      setUserType(e.target.value);
+    }
   };
   useEffect(() => {
     var filtered = isDataDummy?.filter(
@@ -406,8 +410,7 @@ const ManualDonation = ({ setopendashboard }) => {
         Moment(dt?.donation_date).format('YYYY-MM-DD').indexOf(date) > -1 &&
         dt?.name.toLowerCase().indexOf(name) > -1 &&
         dt?.address.toLowerCase().indexOf(address) > -1 &&
-        dt?.address.toLowerCase().indexOf(address) > -1 &&
-        dt?.address.toLowerCase().indexOf(address) > -1,
+        dt?.CreatedBy.toLowerCase().indexOf(userType) > -1
     );
 
     if (type) {
@@ -453,7 +456,7 @@ const ManualDonation = ({ setopendashboard }) => {
     }
 
     setisData(filtered);
-  }, [phone, receiptNo, date, name, address, type, amount, remark]);
+  }, [phone, receiptNo, date, name, address, type, amount, remark,userType]);
 
   return (
     <>
@@ -742,7 +745,8 @@ const ManualDonation = ({ setopendashboard }) => {
                   />
                 </TableCell>
                 <TableCell>
-                  <select name="cars" id="cars" className="cuolms_search">
+                   
+                  <select name="cars" id="cars" className="cuolms_search"  onChange={(e) => onSearchByOther(e, 'UserType')}> 
                     <option>Select user</option>
                     {emplist &&
                       emplist.map((item, idx) => {

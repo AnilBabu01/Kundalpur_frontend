@@ -598,7 +598,7 @@ const Donation = ({ setopendashboard }) => {
               <TableHead style={{ background: '#FFEEE0' }}>
                 <TableRow>
                   <TableCell>Date</TableCell>
-                  <TableCell>ReceiptNo</TableCell>
+                  <TableCell>Receipt No</TableCell>
                   <TableCell>VoucherNo</TableCell>
                   <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>

@@ -37,6 +37,7 @@ import { ExportPdfmanulElectronic } from '../../compoments/ExportPdf';
 import axios from 'axios';
 import { backendApiUrl } from '../../../../config/config';
 import './Donation.css';
+import { CircularProgress } from '@mui/material';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -123,6 +124,7 @@ const donationColorTheme = {
 
 const ManualDonation = ({ setopendashboard }) => {
   const [isData, setisData] = React.useState([]);
+  const [isDataDummy, setisDataDummy] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
   const [open1, setOpen1] = React.useState(false);
@@ -139,18 +141,28 @@ const ManualDonation = ({ setopendashboard }) => {
   const [open4, setOpen4] = useState(false);
   const [datefrom, setdatefrom] = useState('');
   const [dateto, setdateto] = useState('');
-  const [type, settype] = useState('');
   const [open5, setOpen5] = React.useState(false);
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
   const [searchvalue, setsearchvalue] = useState('');
+
+  const [date, setDate] = useState('');
+  const [receiptNo, setReceiptNo] = useState('');
+  const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [item, setItem] = useState('');
+  const [amount, setAmount] = useState('');
+  const [user, setUser] = useState('');
+  const [remark, setRemark] = useState('');
+  const [type, setType] = useState('');
+
+
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
 
   const handleOpen4 = () => setOpen4(true);
   const handleClose4 = () => setOpen4(false);
-
-  console.log('check data ', isData);
 
   const filterdata = async () => {
     if (searchvalue) {
@@ -161,21 +173,19 @@ const ManualDonation = ({ setopendashboard }) => {
       const res = await axios.get(
         `${backendApiUrl}/admin/search-manual?search=${searchvalue}`,
       );
-
-      console.log('ss', res.data.data);
-
       if (res.data.status) {
         setisData(res.data.data);
+        setisDataDummy(res.data.data);
       }
     } else {
       serverInstance(
         `user/manual-searchAllDonation?fromDate=${datefrom}&toDate=${dateto}&fromReceipt=${voucherfrom}&toReceipt=${voucherto}',
         'get`,
       ).then((res) => {
-        console.log('filter data is', res.data);
-
         if (res.data) {
           setisData(res.data);
+          setisDataDummy(res.data);
+
         }
       });
     }
@@ -202,8 +212,7 @@ const ManualDonation = ({ setopendashboard }) => {
     serverInstance('admin/manual-donation', 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
-
-        console.log('this', res.data);
+        setisDataDummy(res.data);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
@@ -235,7 +244,6 @@ const ManualDonation = ({ setopendashboard }) => {
         ([res, item]) => {
           if (res.status) {
             setDonationTypes(res.data);
-            console.log(res.data);
           } else {
             Swal.fire('Error', 'somthing went  wrong', 'error');
           }
@@ -254,7 +262,6 @@ const ManualDonation = ({ setopendashboard }) => {
       data.push({
         Date: Moment(item.donation_date).format('DD-MM-YYYY'),
         'Receipt No': item?.ReceiptNo,
-
         'Phone No': item?.phoneNo,
         name: item?.name,
         Address: item?.address,
@@ -344,6 +351,95 @@ const ManualDonation = ({ setopendashboard }) => {
     ],
     [],
   );
+
+  // const onSearchByDate = (e) => {
+  //   if (e.target.value) {
+  //     setisData(isData?.filter(dt => Moment(dt?.donation_date).format('YYYY-MM-DD') == e.target.value));
+  //   } else {
+  //     setisData(isDataDummy)
+  //   }
+  // }
+
+  const onSearchByOther = (e, type) => {
+    if (type === 'Date') {
+      setDate(e.target.value)
+    }
+    if (type === 'Receipt') {
+      setReceiptNo(e.target.value.toLowerCase())
+    }
+    if (type === 'Phone') {
+      setPhone(e.target.value.toLowerCase())
+    }
+    if (type === 'Name') {
+      setName(e.target.value.toLowerCase())
+    }
+    if (type === 'Address') {
+      setAddress(e.target.value.toLowerCase())
+    }
+    if (type === 'Type') {
+      setType(e.target.value)
+    }
+    if (type === 'Amount') {
+      setAmount(e.target.value)
+    }
+    if (type === 'Remark') {
+      setRemark(e.target.value)
+    }
+  }
+  useEffect(() => {
+    var filtered = isDataDummy?.filter(dt =>
+      dt?.ReceiptNo.toLowerCase().indexOf(receiptNo) > -1
+      && dt?.phoneNo.toLowerCase().indexOf(phone) > -1
+      && Moment(dt?.donation_date).format('YYYY-MM-DD').indexOf(date) > -1
+      && dt?.name.toLowerCase().indexOf(name) > -1
+      && dt?.address.toLowerCase().indexOf(address) > -1
+      && dt?.address.toLowerCase().indexOf(address) > -1
+      && dt?.address.toLowerCase().indexOf(address) > -1
+    )
+
+    if (type) {
+      filtered = filtered?.map(item => {
+        if (item?.manualItemDetails?.find(typ => typ.type == type)) {
+          return item
+        } else {
+          return
+        }
+      })
+      filtered = filtered?.filter(x => x !== undefined);
+    }
+    if (amount) {
+
+      filtered = filtered?.map(item => {
+        console.log(item.manualItemDetails.reduce(
+          (n, { amount }) =>
+            parseFloat(n) + parseFloat(amount),
+          0,
+        ) );
+        if (item.manualItemDetails.reduce(
+          (n, { amount }) =>
+            parseFloat(n) + parseFloat(amount),
+          0,
+        ) == amount) {
+          return item
+        } else {
+          return
+        }
+      })
+      filtered = filtered?.filter(x => x !== undefined);
+    }
+    if (remark) {
+      filtered = filtered?.map(item => {
+        if (item?.manualItemDetails?.find(typ => typ.remark == remark)) {
+          return item
+        } else {
+          return
+        }
+      })
+      filtered = filtered?.filter(x => x !== undefined);
+    }
+
+    setisData(filtered)
+  }, [phone, receiptNo, date, name, address, type, amount, remark]);
 
   return (
     <>
@@ -556,8 +652,7 @@ const ManualDonation = ({ setopendashboard }) => {
               <TableHead style={{ background: '#FFEEE0' }}>
                 <TableRow>
                   <TableCell>Date</TableCell>
-                  <TableCell>ReceiptNo</TableCell>
-
+                  <TableCell>Receipt No</TableCell>
                   <TableCell>Phone No</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Address</TableCell>
@@ -572,7 +667,8 @@ const ManualDonation = ({ setopendashboard }) => {
                 <TableCell>
                   <input
                     className="cuolms_search"
-                    type="text"
+                    type="date"
+                    onChange={(e) => onSearchByOther(e, "Date")}
                     placeholder="Search Date"
                   />
                 </TableCell>
@@ -580,6 +676,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
+                    onChange={(e) => onSearchByOther(e, "Receipt")}
                     placeholder="Search Receipt"
                   />
                 </TableCell>
@@ -588,6 +685,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
+                    onChange={(e) => onSearchByOther(e, "Phone")}
                     placeholder="Search Phone"
                   />
                 </TableCell>
@@ -595,6 +693,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     type="text"
                     className="cuolms_search"
+                    onChange={(e) => onSearchByOther(e, "Name")}
                     placeholder="Name"
                   />
                 </TableCell>
@@ -602,16 +701,17 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
+                    onChange={(e) => onSearchByOther(e, "Address")}
                     placeholder="Search Address"
                   />
                 </TableCell>
                 <TableCell>
                   <select
                     className="cuolms_search"
-                    onChange={(e) => settype(e.target.value)}
-                    id="cars"
+                    onChange={(e) => onSearchByOther(e, "Type")}
                   >
-                    <option>Select option</option>
+                    <option value="">Select option</option>
+
                     {donationTypes.map((item, idx) => {
                       return (
                         <option value={item.type_hi}>{item.type_hi}</option>
@@ -623,6 +723,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="text"
+                    onChange={(e) => onSearchByOther(e, "Amount")}
                     placeholder="Search Amount"
                   />
                 </TableCell>
@@ -640,16 +741,18 @@ const ManualDonation = ({ setopendashboard }) => {
                     className="cuolms_search"
                     type="text"
                     placeholder="Remark"
+                    onChange={(e) => onSearchByOther(e, "Remark")}
+
                   />
                 </TableCell>
                 <TableCell>&nbsp;</TableCell>
-                {isData ? (
+                {isData && isData?.length > 0 ? (
                   <>
                     {(rowsPerPage > 0
                       ? isData.slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage,
-                        )
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
                       : isData.reverse()
                     ).map((row, index) => (
                       <TableRow
@@ -754,7 +857,8 @@ const ManualDonation = ({ setopendashboard }) => {
                   <>
                     <TableRow>
                       <TableCell colSpan={13} align="center">
-                        <CircularProgress />
+                        {/* <CircularProgress /> */}
+                        <p>No Data Found!</p>
                       </TableCell>
                     </TableRow>
                   </>

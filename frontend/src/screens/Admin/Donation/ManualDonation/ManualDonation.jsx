@@ -141,11 +141,23 @@ const ManualDonation = ({ setopendashboard }) => {
   const [open4, setOpen4] = useState(false);
   const [datefrom, setdatefrom] = useState('');
   const [dateto, setdateto] = useState('');
-  const [type, settype] = useState('');
   const [open5, setOpen5] = React.useState(false);
   const [voucherfrom, setvoucherfrom] = useState('');
   const [voucherto, setvoucherto] = useState('');
   const [searchvalue, setsearchvalue] = useState('');
+
+  const [date, setDate] = useState('');
+  const [receiptNo, setReceiptNo] = useState('');
+  const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [item, setItem] = useState('');
+  const [amount, setAmount] = useState('');
+  const [user, setUser] = useState('');
+  const [remark, setRemark] = useState('');
+  const [type, setType] = useState('');
+
+
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
 
@@ -340,40 +352,94 @@ const ManualDonation = ({ setopendashboard }) => {
     [],
   );
 
-  const onSearchByDate = (e) => {
-    if (e.target.value) {
-      setisData(isData?.filter(dt => Moment(dt?.donation_date).format('YYYY-MM-DD') == e.target.value));
-    } else {
-      setisData(isDataDummy)
-    }
-  }
+  // const onSearchByDate = (e) => {
+  //   if (e.target.value) {
+  //     setisData(isData?.filter(dt => Moment(dt?.donation_date).format('YYYY-MM-DD') == e.target.value));
+  //   } else {
+  //     setisData(isDataDummy)
+  //   }
+  // }
 
   const onSearchByOther = (e, type) => {
+    if (type === 'Date') {
+      setDate(e.target.value)
+    }
     if (type === 'Receipt') {
-      setisData(isData?.filter(dt => dt?.ReceiptNo.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1));
+      setReceiptNo(e.target.value.toLowerCase())
     }
     if (type === 'Phone') {
-      setisData(isData?.filter(dt => dt?.phoneNo.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1));
+      setPhone(e.target.value.toLowerCase())
     }
     if (type === 'Name') {
-      setisData(isData?.filter(dt => dt?.name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1));
+      setName(e.target.value.toLowerCase())
     }
     if (type === 'Address') {
-      setisData(isData?.filter(dt => dt?.address.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1));
+      setAddress(e.target.value.toLowerCase())
     }
-    if (type === 'type') {
-      var filtered = isData?.map(item => {
-        if (item?.manualItemDetails?.find(typ => typ.type == e.target.value)) {
+    if (type === 'Type') {
+      setType(e.target.value)
+    }
+    if (type === 'Amount') {
+      setAmount(e.target.value)
+    }
+    if (type === 'Remark') {
+      setRemark(e.target.value)
+    }
+  }
+  useEffect(() => {
+    var filtered = isDataDummy?.filter(dt =>
+      dt?.ReceiptNo.toLowerCase().indexOf(receiptNo) > -1
+      && dt?.phoneNo.toLowerCase().indexOf(phone) > -1
+      && Moment(dt?.donation_date).format('YYYY-MM-DD').indexOf(date) > -1
+      && dt?.name.toLowerCase().indexOf(name) > -1
+      && dt?.address.toLowerCase().indexOf(address) > -1
+      && dt?.address.toLowerCase().indexOf(address) > -1
+      && dt?.address.toLowerCase().indexOf(address) > -1
+    )
+
+    if (type) {
+      filtered = filtered?.map(item => {
+        if (item?.manualItemDetails?.find(typ => typ.type == type)) {
           return item
         } else {
           return
         }
       })
       filtered = filtered?.filter(x => x !== undefined);
-      setisData(filtered)
-
     }
-  }
+    if (amount) {
+
+      filtered = filtered?.map(item => {
+        console.log(item.manualItemDetails.reduce(
+          (n, { amount }) =>
+            parseFloat(n) + parseFloat(amount),
+          0,
+        ) );
+        if (item.manualItemDetails.reduce(
+          (n, { amount }) =>
+            parseFloat(n) + parseFloat(amount),
+          0,
+        ) == amount) {
+          return item
+        } else {
+          return
+        }
+      })
+      filtered = filtered?.filter(x => x !== undefined);
+    }
+    if (remark) {
+      filtered = filtered?.map(item => {
+        if (item?.manualItemDetails?.find(typ => typ.remark == remark)) {
+          return item
+        } else {
+          return
+        }
+      })
+      filtered = filtered?.filter(x => x !== undefined);
+    }
+
+    setisData(filtered)
+  }, [phone, receiptNo, date, name, address, type, amount, remark]);
 
   return (
     <>
@@ -602,7 +668,7 @@ const ManualDonation = ({ setopendashboard }) => {
                   <input
                     className="cuolms_search"
                     type="date"
-                    onChange={onSearchByDate}
+                    onChange={(e) => onSearchByOther(e, "Date")}
                     placeholder="Search Date"
                   />
                 </TableCell>
@@ -642,7 +708,7 @@ const ManualDonation = ({ setopendashboard }) => {
                 <TableCell>
                   <select
                     className="cuolms_search"
-                    onChange={(e) => onSearchByOther(e, "type")}
+                    onChange={(e) => onSearchByOther(e, "Type")}
                   >
                     <option value="">Select option</option>
 
@@ -675,6 +741,8 @@ const ManualDonation = ({ setopendashboard }) => {
                     className="cuolms_search"
                     type="text"
                     placeholder="Remark"
+                    onChange={(e) => onSearchByOther(e, "Remark")}
+
                   />
                 </TableCell>
                 <TableCell>&nbsp;</TableCell>

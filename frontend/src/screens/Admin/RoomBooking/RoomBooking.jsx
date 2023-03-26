@@ -129,6 +129,7 @@ function RoomBooking({ setopendashboard }) {
   console.log('check out time', checkoutcurrDate, checkoutcurrTime);
   console.log('check out time', checkincurrDate, checkincurrTime);
   console.log('dharamshala name ', dharamshalaname);
+
   function getCurrentDateTime() {
     const currentDate = new Date().toISOString().substr(0, 10);
     const currentTime = new Date().toLocaleTimeString([], {
@@ -481,6 +482,7 @@ function RoomBooking({ setopendashboard }) {
                   value={dateTime}
                 />
               </div>
+              {console.log(dateTime,"current")}
               <div className="main_div_select_div">
                 <label htmlFor="checkouttime">
                   <img

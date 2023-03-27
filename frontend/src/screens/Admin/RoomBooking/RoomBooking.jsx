@@ -128,10 +128,6 @@ function RoomBooking({ setopendashboard }) {
   const checkincurrDate = Moment(today1).format('YYYY-DD-MM');
   const checkincurrTime = moment(today1, 'HH:mm').format('hh:mm');
 
-  console.log('check out time', checkoutcurrDate, checkoutcurrTime);
-  console.log('date in time', checkincurrDate, checkincurrTime);
-  console.log('dharamshala name ', dharamshalaname);
-
   function getCurrentDateTime() {
     const currentDate = new Date().toISOString().substr(0, 10);
     const currentTime = new Date().toLocaleTimeString([], {
@@ -164,7 +160,7 @@ function RoomBooking({ setopendashboard }) {
     };
     const res = await axios.post(`${backendApiUrl}room/check-room`, data);
 
-    console.log('filter data', res.data.data[0]);
+    console.log('filter data', res.data.data);
     if (res.data.data) {
       setfilterdata(res.data.data);
       setshowresuilt(true);
@@ -494,7 +490,7 @@ function RoomBooking({ setopendashboard }) {
                   value={dateTime}
                 />
               </div>
-              {console.log(dateTime, 'current')}
+
               <div className="main_div_select_div">
                 <label className="labbelddd" htmlFor="checkouttime">
                   <img

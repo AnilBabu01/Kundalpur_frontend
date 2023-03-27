@@ -8,20 +8,21 @@ function PaymentSuccess({ setopendashboard }) {
 
   const location = useLocation();
   const [isData, setisData] = useState('');
-
+  const [paymentmode, setpaymentmode] = useState('');
   useEffect(() => {
     if (location.state) {
-      console.log('Payment details', location.state?.data.id);
       serverInstance(
-        `room/checkin-id?id=${location.state?.data.id}`,
+        `room/checkin-id?id=${location.state?.data.data.id}`,
         'get',
       ).then((res) => {
         setisData(res.data);
       });
+
+      setpaymentmode(location.state?.Paymode);
     }
     setopendashboard(true);
   }, []);
-
+  console.log('Payment details', isData);
   return (
     <>
       <div style={{ marginLeft: '5rem', marginRight: '1.2rem' }}>
@@ -41,7 +42,7 @@ function PaymentSuccess({ setopendashboard }) {
                 <p>Transaction id</p>
               </div>
               <div className="name_of_divvsssssv10">
-                <p>Cash</p>
+                <p>{paymentmode}</p>
                 <p>HDFC</p>
                 <p>3625362532</p>
                 <p>anilb@gmail.com</p>
@@ -62,9 +63,7 @@ function PaymentSuccess({ setopendashboard }) {
               >
                 Confirmation
               </button>
-              <button className="payment_btn_duvvvvvv11">
-                Booking history
-              </button>
+              <button className="payment_btn_duvvvvvv11">Booking report</button>
             </div>
           </div>
         </div>

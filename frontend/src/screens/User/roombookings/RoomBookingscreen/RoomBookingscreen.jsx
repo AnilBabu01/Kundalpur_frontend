@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Moment from 'moment-js';
-import { backendApiUrl, backendUrl } from '../../../../config/config';
-import axios from 'axios';
 import { serverInstance } from '../../../../API/ServerInstance';
-import { MenuItem, Menu, Select } from '@mui/material';
+import { MenuItem, Select } from '@mui/material';
+import LoadingSpinner from '../../../../components/Loading/LoadingSpinner';
 import './RoomBookingscreen.css';
 
 const roomCount = [
@@ -127,6 +126,7 @@ const idproff = [
 function RoomBookingscreen() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [formerror, setFormerror] = useState({});
   const [isData, setisData] = useState('');
   const [checkindata, setcheckindata] = useState('');
@@ -152,6 +152,7 @@ function RoomBookingscreen() {
   let totalmember = femaleno;
 
   const savedataIntodb = async () => {
+    setIsLoading(true);
     serverInstance('room/checkin', 'post', {
       date: checkindata.checkintime,
       time: checkindata.checkincurrTime,
@@ -176,14 +177,14 @@ function RoomBookingscreen() {
       extraM: extraMattress,
     }).then((res) => {
       console.log('booking responce', res.data);
-      if (res.data.status === true) {
+      if (res.data && res.data.status === true) {
+        setIsLoading(false);
         navigate('/room/paymentsuccessfuly', {
           state: {
             data: res.data,
           },
         });
       }
-
       // if (res.status === true) {
       //   setshowloader(false);
       //   window.location.href =
@@ -195,6 +196,10 @@ function RoomBookingscreen() {
       // } else {
       //   Swal.fire('Error!', 'Somthing went wrong!!', 'error');
       // }
+      if (res.message) {
+        setIsLoading(false);
+        Swal.fire('Error!', res.message, 'error');
+      }
     });
   };
 
@@ -744,6 +749,7 @@ function RoomBookingscreen() {
           )}
         </div>
       </div>
+      {isLoading ? <LoadingSpinner /> : <></>}
     </>
   );
 }

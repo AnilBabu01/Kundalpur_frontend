@@ -14,6 +14,7 @@ import RoomCard1 from '../RoomBooking/AllAcards/RoomCard1';
 import axios from 'axios';
 import './RoomBooking.css';
 import { width } from '@mui/system';
+import LoadingSpinner from '../../../components/Loading/LoadingSpinner';
 import RoomBookingTap from '../RoomBooking/RoomBookingTap';
 const style = {
   position: 'absolute',
@@ -98,6 +99,7 @@ const modes = [
   { id: 3, type: 'Both' },
 ];
 function RoomBooking({ setopendashboard }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [showresuilt, setshowresuilt] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -139,8 +141,10 @@ function RoomBooking({ setopendashboard }) {
     return `${currentDate}  ${currentTime}`;
   }
   const handleClieck = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     if (!checkintime || !checkouttime || !dharamshalaname) {
+      setIsLoading(false);
       return;
     }
     axios.defaults.headers.post[
@@ -164,6 +168,7 @@ function RoomBooking({ setopendashboard }) {
     if (res.data.data) {
       setfilterdata(res.data.data);
       setshowresuilt(true);
+      setIsLoading(false);
     }
   };
 
@@ -550,7 +555,7 @@ function RoomBooking({ setopendashboard }) {
           <>
             <div
               className="details-div_dhar"
-              style={{ marginTop: '-6rem', marginBottom: '-2rem' }}
+              style={{ marginTop: '-3rem', marginBottom: '-1rem' }}
             >
               <img
                 src={`${backendUrl}uploads/images/${
@@ -616,7 +621,7 @@ function RoomBooking({ setopendashboard }) {
             </div>
           </>
         )}
-
+        {isLoading ? <LoadingSpinner /> : <></>}
         <ServicesandFacilities />
       </div>
     </>

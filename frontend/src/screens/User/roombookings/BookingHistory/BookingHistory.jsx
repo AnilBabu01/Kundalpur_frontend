@@ -48,22 +48,24 @@ function BookingHistory({ setopendashboard, setshowreciept, setHeaderFooter }) {
   }, []);
 
   const gettable = () => {
-    serverInstance('user/donation-list', 'get').then((res) => {
-      setisrow(res.donation);
+    serverInstance('room/checkin-user', 'get').then((res) => {
+      if (res.data) {
+        setisrow(res.data);
+
+        console.log('room history', res.data);
+      }
     });
   };
 
   const downloadrecept = (row) => {
-    if (row.active === '0') {
-      handleOpen1();
-      setuseindonationhistory(true);
-    } else if (row.PAYMENT_STATUS === false) {
+    if (row.paymentStatus === 0) {
       handleOpen1();
       setshowpaymentfailed(true);
+      status = 0;
     } else {
-      navigation('/onlinereceipt', {
+      navigate('/room/booking/receipt', {
         state: {
-          userdata: row,
+          data: row,
         },
       });
     }
@@ -160,25 +162,20 @@ function BookingHistory({ setopendashboard, setshowreciept, setHeaderFooter }) {
                           <td align="left">
                             {moment(row?.DATE_OF_DAAN).format('DD/MM/YYYY')}
                           </td>
-                          <td align="left">{row.RECEIPT_NO}</td>
-                          <td align="left"> {user?.mobileNo}</td>
+                          <td align="left">{row?.contactNo}</td>
+                          <td align="left"> {row?.holderName}</td>
 
-                          <td align="left">{row.NAME}</td>
-                          <td align="left">{row.ADDRESS}</td>
-                          <td align="left">{row.MODE_OF_DONATION}</td>
-                          <td align="left">{row.AMOUNT}</td>
+                          <td align="left">{row.Fname}</td>
+                          <td align="left">{row.address}</td>
+                          <td align="left">{row.male}</td>
+                          <td align="left">{row.female}</td>
+                          <td align="left">{row.child}</td>
+                          <td align="left">{row.nRoom}</td>
                           <td align="left">
-                            {row.CHEQUE_NO ? row.CHEQUE_NO : '-'}
+                            {row.paymentid ? row.paymentid : '-'}
                           </td>
                           <td align="left">
-                            {row.DATE_OF_CHEQUE ? row.DATE_OF_CHEQUE : '-'}
-                          </td>
-
-                          <td align="left">
-                            {row.PAYMENT_ID ? row.PAYMENT_ID : '-'}
-                          </td>
-                          <td align="left">
-                            {row.PAYMENT_STATUS === true
+                            {row.paymentStatus === 1
                               ? 'Payment succrssfull'
                               : 'Payment failed'}
                           </td>

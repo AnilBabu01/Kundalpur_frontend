@@ -28,7 +28,7 @@ function RoomBookingCetificate() {
       setisData(location.state?.data);
     }
   }, []);
-
+  const shareUrl = 'dddd';
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
   var today = new Date(isData?.date);
   const currDate = today
@@ -39,6 +39,7 @@ function RoomBookingCetificate() {
     minute: 'numeric',
     hour12: true,
   });
+
   return (
     <>
       <div className="main_room_receipt">
@@ -107,8 +108,8 @@ function RoomBookingCetificate() {
                     <td className="table_tddd">{isData?.category_name}</td>
                     <td className="table_tddd">
                       {isData &&
-                        isData?.facility_name.map((element) => (
-                          <span> {element}</span>
+                        isData?.facility_name.map((element, index) => (
+                          <span key={index}> {element}</span>
                         ))}
                     </td>
                     <td className="table_tddd">{isData?.RoomNo}</td>
@@ -125,6 +126,7 @@ function RoomBookingCetificate() {
       </div>
       <div className="button_div_print_download">
         <button onClick={() => down()}>Download</button>
+        <button onClick={() => navigate('/')}>Cancel</button>
       </div>
     </>
   );

@@ -28,8 +28,27 @@ function RoomBookingCetificate({ setopendashboard }) {
     setopendashboard(true);
   }, []);
   console.log('certificate', isData);
+
+  var options = { year: 'numeric', month: 'short', day: '2-digit' };
+  var today = new Date(isData?.date);
+  const currDate = today
+    .toLocaleDateString('en-IN', options)
+    .replace(/-/g, ' ');
+  const currTime = today.toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
   return (
     <>
+      <div
+        className="button_div_print_download10"
+        style={{ marginBottom: '-10rem' }}
+      >
+        <button onClick={() => navigate(-1)}>Back</button>
+
+        <div />
+      </div>
       <div className="main_room_receipt">
         <div className="print_ddd" id="receipt" ref={componentRef}>
           <div className="main_room_receipt_innear">
@@ -42,9 +61,9 @@ function RoomBookingCetificate({ setopendashboard }) {
                   <p>पिता/पति श्री-</p>
                 </div>
                 <div>
-                  <p>1234</p>
-                  <p>{isData?.fullname}</p>
-                  <p>........</p>
+                  <p>{isData?.RoomNo}</p>
+                  <p>{isData?.holderName}</p>
+                  <p>{isData?.Fname}</p>
                 </div>
               </div>
               <div className="innear_div_texx_dd">
@@ -54,18 +73,25 @@ function RoomBookingCetificate({ setopendashboard }) {
                   <p>पता-</p>
                 </div>
                 <div>
-                  <p>13-03-2023/10:45</p>
-                  <p>{isData?.mobile}</p>
-                  <p>{isData?.address}</p>
+                  <p>
+                    {currDate} / {currTime}
+                  </p>
+                  <p>{isData?.contactNo}</p>
+                  <p>{isData?.city}</p>
                 </div>
               </div>
             </div>
             <div className="yyy_text_div">
               <p>यात्री संख्या</p>
-              <p>Male: 1</p>
-              <p>Female: 1</p>
-              <p>Child: 1</p>
-              <p>Total:3</p>
+              <p>Male: {isData?.male}</p>
+              <p>Female: {isData?.female}</p>
+              <p>Child: {isData?.child}</p>
+              <p>
+                Total:{' '}
+                {Number(isData?.male) +
+                  Number(isData?.female) +
+                  Number(isData?.child)}
+              </p>
             </div>
 
             <div>
@@ -74,14 +100,30 @@ function RoomBookingCetificate({ setopendashboard }) {
                   <tr>
                     <td className="table_tddd">धर्मशाला नाम</td>
                     <td className="table_tddd">रूम टाईप</td>
+                    <td className="table_tddd">रूम सुंविधाएं</td>
                     <td className="table_tddd">रुम न.</td>
-                    <td className="table_tddd">सहयोग राशि</td>
+                    <td className="table_tddd">रूम की संख्या</td>
+                    <td className="table_tddd">
+                      सहयोग राशि{' '}
+                      <p>
+                        {isData?.nRoom} X {isData?.advance}
+                      </p>
+                    </td>
                   </tr>
                   <tr>
-                    <td className="table_tddd">अयोध्या</td>
-                    <td className="table_tddd">AC 2Bed</td>
-                    <td className="table_tddd">1</td>
-                    <td className="table_tddd">990.00 </td>
+                    <td className="table_tddd">{isData?.name}</td>
+                    <td className="table_tddd">{isData?.category_name}</td>
+                    <td className="table_tddd">
+                      {isData &&
+                        isData?.facility_name.map((element) => (
+                          <span> {element}</span>
+                        ))}
+                    </td>
+                    <td className="table_tddd">{isData?.RoomNo}</td>
+                    <td className="table_tddd">{isData?.nRoom}</td>
+                    <td className="table_tddd">
+                      {Number(isData?.advance) * Number(isData?.nRoom)}
+                    </td>
                   </tr>
                 </tbody>
               </table>

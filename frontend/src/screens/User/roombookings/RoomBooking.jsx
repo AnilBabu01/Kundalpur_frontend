@@ -11,6 +11,7 @@ import moment from 'moment';
 import { MenuItem, Menu, Select } from '@mui/material';
 import { backendApiUrl, backendUrl } from '../../../config/config';
 import RoomCard1 from '../roombookings/AllAcards/RoomCard1';
+import LoadingSpinner from '../../../components/Loading/LoadingSpinner';
 import axios from 'axios';
 import './RoomBooking.css';
 import { width } from '@mui/system';
@@ -91,6 +92,7 @@ const Childrencont = [
   { id: 9, type: 9 },
 ];
 function RoomBooking({ setroomfilterdata }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [showresuilt, setshowresuilt] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -123,8 +125,10 @@ function RoomBooking({ setroomfilterdata }) {
   console.log('dharamshala name ', dharamshalaname);
 
   const handleClieck = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     if (!checkintime || !checkouttime || !dharamshalaname) {
+      setIsLoading(false);
       return;
     }
     axios.defaults.headers.post[
@@ -137,23 +141,24 @@ function RoomBooking({ setroomfilterdata }) {
       checkinTime: checkincurrTime,
       checkoutDate: checkoutcurrDate,
       checkoutTime: checkoutcurrTime,
-      numMale: chlidremc,
-      numFemale: roomcount,
+      numAdults: abcount,
       numChildren: chlidremc,
     };
     const res = await axios.post(`${backendApiUrl}room/check-room`, data);
-
-    console.log('filter data', res.data.data[0]);
     if (res.data.data) {
       setfilterdata(res.data.data);
       setshowresuilt(true);
+      setIsLoading(false);
     }
   };
 
   const getALLdharamshala = () => {
+    setIsLoading(true);
     serverInstance('room/dharmashala', 'get').then((res) => {
-      console.log('dharanmjhfkjhd', res.data);
-      setdharamshalalist(res.data);
+      if (res.data) {
+        setIsLoading(false);
+        setdharamshalalist(res.data);
+      }
     });
   };
   useEffect(() => {
@@ -542,7 +547,7 @@ function RoomBooking({ setroomfilterdata }) {
           </div>
         </>
       )}
-
+      {isLoading ? <LoadingSpinner /> : <></>}
       <ServicesandFacilities />
     </>
   );

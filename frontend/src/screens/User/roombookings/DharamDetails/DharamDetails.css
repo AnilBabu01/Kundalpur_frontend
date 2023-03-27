@@ -1,6 +1,6 @@
 .details-div_dhar {
   padding-left: 8%;
-  padding-top: 3%;
+
   padding-right: 8%;
   display: flex;
   justify-content: space-between;
@@ -101,3 +101,4 @@
     margin-bottom: 8px;
     color: #000000;
 }
+

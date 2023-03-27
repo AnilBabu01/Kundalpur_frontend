@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-share": "^4.4.1",
+    "react-spinning-wheel": "^2.1.0"
+  }
+}

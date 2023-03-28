@@ -539,7 +539,7 @@ function RoomBooking({ setopendashboard }) {
                 </div>
               </div>
 
-              <button>
+              <button className="form_btn_divbutton">
                 <SearchIcon />
                 Search
               </button>

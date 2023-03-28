@@ -56,3 +56,35 @@
     text-align: center;
     padding: 8px;
 }
+
+
+@media screen and (max-width: 780px) {
+    .main_room_receipt{
+        display: block;
+        margin-top: 29%;
+    }
+    
+    .main_room_receipt_innear {
+        border: 1px solid gray;
+        width: 172%!important;
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .table_tddd {
+        border: 1px solid gray;
+        text-align: center;
+        padding: 0px;
+        font-size: 10px;
+    }
+
+    .print_ddd {
+        width: 98%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 1%;
+        /* margin-right: 24%; */
+    }
+ 
+}

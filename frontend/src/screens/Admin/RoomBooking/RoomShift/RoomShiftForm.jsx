@@ -503,7 +503,7 @@ function RoomShiftForm({ setOpen, changedata }) {
                                   <input
                                     type="checkbox"
                                     onClick={() => {
-                                      setroomnumber(item?.roomNumber);
+                                      setroomnumber(item?.RoomNo);
                                       setdharamshalanameroom(item?.name);
                                       setcategoryroom(item?.category_name);
                                       setfacilityname(item?.facility_name);
@@ -513,12 +513,10 @@ function RoomShiftForm({ setOpen, changedata }) {
                                     }}
                                   />
                                 </td>
-                                <td className="table_tddd">
-                                  {item?.roomNumber}
-                                </td>
+                                <td className="table_tddd">{item?.RoomNo}</td>
                                 <td className="table_tddd">{item?.Rate}</td>
                                 <td className="table_tddd">{item?.advance}</td>
-                                <td className="table_tddd">{item?.name}</td>
+                                {item?.dharmasala && item?.dharmasala.name}
                                 <td className="table_tddd">
                                   {item?.category_name}
                                 </td>

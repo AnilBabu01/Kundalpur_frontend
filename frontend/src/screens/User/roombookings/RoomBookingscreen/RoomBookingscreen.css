@@ -80,7 +80,6 @@
 .Mattress_main_div {
   margin-top: 2rem;
   border-top: 1px solid gray;
-
 }
 
 .Mattress_main_div h2 {
@@ -176,4 +175,75 @@
   line-height: 24px;
   margin-top: 1rem;
   color: #ffffff;
+}
+.inpur_div_room_add select {
+ 
+  padding-left: 23%;
+}
+@media screen and (max-width: 780px) {
+  .width_ffull {
+    width: 100% !important;
+  }
+
+  .main_book_form_input_div_innear10 {
+    width: 82%;
+   
+}
+.Proceed_btn {
+  width: 100%!important;
+  height: 34px;
+  background: #fa7401;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  margin-right: 49px;
+  margin-bottom: 1rem;
+}
+
+.Proceed_btn_go {
+  width: 100%!important;
+  height: 34px!important;
+  border: 1px solid #fa7401;
+  border-radius: 4px;
+  color: #fa7401;
+}
+.inpur_div_room_add select {
+ 
+  padding-left: 23%;
+}
+
+.main_show_details_divs {
+  display: flex;
+  padding: 0rem;
+  flex-wrap: wrap;
+}
+.main_show_details_divs_inear {
+  width: 100%;
+}
+.main_show_details_divs_inear10 {
+  width: 100%;
+  border-left: 1px solid gray;
+  padding-left: 1rem;
+}
+
+
+.main_show_details_divs_inear p{
+    font-size: 15px;
+}
+
+.main_show_details_divs_inear_text10{
+    font-size: 10px!important;
+}
+.main_div_test22222 p{
+    font-size: 15px;
+}
+
+.main_div_head_tyopeeeebook {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 12rem;
+  background: #fdc99c;
+  margin-bottom: 229%;
+}
 }

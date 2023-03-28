@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Moment from 'moment-js';
 import { serverInstance } from '../../../../API/ServerInstance';
 import axios from 'axios';
@@ -63,7 +63,7 @@ const femalecont = [
 ];
 
 export const CustomInput = styled(InputBase)(({ theme }) => ({
-  width: '95%',
+  width: '100%',
   fontFamily: 'Poppins',
   backgroundColor: '#fff',
   borderRadius: 6,
@@ -558,7 +558,7 @@ function RoomBookingscreen({ setopendashboard }) {
                         id="state"
                         required
                         sx={{
-                          width: '95%',
+                          width: '100%',
                           fontSize: 14,
                           '& .MuiSelect-select': {
                             // borderColor: !!formerror.donationtype ? 'red' : '',
@@ -686,7 +686,7 @@ function RoomBookingscreen({ setopendashboard }) {
                         id="roomno"
                         required
                         sx={{
-                          width: '95%',
+                          width: '100%',
                           fontSize: 14,
                           '& .MuiSelect-select': {
                             // borderColor: !!formerror.donationtype ? 'red' : '',
@@ -733,7 +733,7 @@ function RoomBookingscreen({ setopendashboard }) {
                         id="categroyname"
                         required
                         sx={{
-                          width: '95%',
+                          width: '100%',
                           fontSize: 14,
                           '& .MuiSelect-select': {
                             // borderColor: !!formerror.donationtype ? 'red' : '',

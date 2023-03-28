@@ -150,7 +150,7 @@ const Dashboard = ({ setopendashboard }) => {
               <div
                 onClick={() => navigate('/admin-panel/donation')}
                 className="main_card_amount"
-                style={{ background: '#FE0000', color: 'white' }}
+                style={{ background: '#FE0000', color: 'white', width: '23%' }}
               >
                 <p>Donation</p>
                 <div className="main_repue_img">
@@ -161,7 +161,7 @@ const Dashboard = ({ setopendashboard }) => {
               <div
                 onClick={() => navigate('/admin-panel/manualdonation')}
                 className="main_card_amount"
-                style={{ background: '#FECE00', color: 'white' }}
+                style={{ background: '#FECE00', color: 'white', width: '23%' }}
               >
                 <p>Manual Donation</p>
                 <div className="main_repue_img">
@@ -172,7 +172,7 @@ const Dashboard = ({ setopendashboard }) => {
 
               <div
                 className="main_card_amount"
-                style={{ background: '#3C5FFE', color: 'white' }}
+                style={{ background: '#3C5FFE', color: 'white', width: '23%' }}
               >
                 <p>Room Booking</p>
                 <div className="main_repue_img">
@@ -183,7 +183,7 @@ const Dashboard = ({ setopendashboard }) => {
 
               <div
                 className="main_card_amount"
-                style={{ background: '#808080', color: 'white' }}
+                style={{ background: '#808080', color: 'white', width: '23%' }}
               >
                 <p>Guest in Room</p>
                 <div className="main_repue_img">

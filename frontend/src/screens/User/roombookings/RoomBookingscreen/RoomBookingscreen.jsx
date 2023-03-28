@@ -6,6 +6,7 @@ import Moment from 'moment-js';
 import { serverInstance } from '../../../../API/ServerInstance';
 import { MenuItem, Select } from '@mui/material';
 import LoadingSpinner from '../../../../components/Loading/LoadingSpinner';
+import Swal from 'sweetalert2';
 import './RoomBookingscreen.css';
 
 const roomCount = [
@@ -184,6 +185,11 @@ function RoomBookingscreen() {
             data: res.data,
           },
         });
+
+        if (res.message) {
+          setIsLoading(false);
+          Swal.fire('Error!', res.message, 'error');
+        }
       }
       // if (res.status === true) {
       //   setshowloader(false);
@@ -319,7 +325,7 @@ function RoomBookingscreen() {
                   <p>
                     Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;
-                    <span className="main_show_details_divs_inear_text">
+                    <span className="main_show_details_divs_inear_text main_show_details_divs_inear_text10">
                       {email}
                     </span>
                   </p>
@@ -388,6 +394,7 @@ function RoomBookingscreen() {
                   <div className="main_book_form_input_div_innear">
                     <label htmlFor="mobile">Mobile number</label>
                     <CustomInput
+                      className="width_ffull"
                       type="text"
                       id="mobile"
                       name="mobile"
@@ -400,6 +407,7 @@ function RoomBookingscreen() {
                   <div className="main_book_form_input_div_innear">
                     <label htmlFor="fullname"> Full Name</label>
                     <CustomInput
+                      className="width_ffull"
                       type="text"
                       id="fullname"
                       name="fullname"
@@ -412,6 +420,7 @@ function RoomBookingscreen() {
                   <div className="main_book_form_input_div_innear">
                     <label htmlFor="fathers">Father's name</label>
                     <CustomInput
+                      className="width_ffull"
                       type="text"
                       id="fathers"
                       name="fathers"
@@ -427,6 +436,7 @@ function RoomBookingscreen() {
                   <div className="main_book_form_input_div_innear">
                     <label htmlFor="address">Address</label>
                     <CustomInput
+                      className="width_ffull"
                       type="text"
                       id="address"
                       name="address"
@@ -439,6 +449,7 @@ function RoomBookingscreen() {
                   <div className="main_book_form_input_div_innear">
                     <label htmlFor="city">City</label>
                     <CustomInput
+                      className="width_ffull"
                       type="text"
                       id="city"
                       placeholder="Enter city"
@@ -451,6 +462,7 @@ function RoomBookingscreen() {
                   <div className="main_book_form_input_div_innear">
                     <label htmlFor="state">State</label>
                     <Select
+                      className="width_ffull"
                       id="state"
                       required
                       sx={{
@@ -498,6 +510,7 @@ function RoomBookingscreen() {
                   <div className="main_book_form_input_div_innear">
                     <label htmlFor="email">Email</label>
                     <CustomInput
+                      className="width_ffull"
                       type="email"
                       id="email"
                       name="email"
@@ -579,6 +592,7 @@ function RoomBookingscreen() {
                   <div className="main_book_form_input_div_innear">
                     <label htmlFor="roomno">No of room</label>
                     <Select
+                      className="width_ffull"
                       id="roomno"
                       required
                       sx={{
@@ -626,6 +640,7 @@ function RoomBookingscreen() {
                   <div className="main_book_form_input_div_innear">
                     <label>ID Proof</label>
                     <Select
+                      className="width_ffull"
                       id="categroyname"
                       required
                       sx={{
@@ -670,6 +685,7 @@ function RoomBookingscreen() {
                   <div className="main_book_form_input_div_innear">
                     <label htmlFor="idproffnumber">ID Number</label>
                     <CustomInput
+                      className="width_ffull"
                       type="text"
                       id="idproffnumber"
                       name="idproffnumber"

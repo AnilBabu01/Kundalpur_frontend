@@ -106,17 +106,12 @@ const EmployeeRoombooking = ({ setopendashboard }) => {
           >
             <TableHead>
               <TableRow>
-                <TableCell>Staff Name</TableCell>
                 <TableCell>Cash</TableCell>
                 <TableCell>Bank</TableCell>
-                <TableCell>Cheque</TableCell>
                 <TableCell>Total</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell style={{ fontWeight: '600' }}>Anil Babu</TableCell>
-
-              <TableCell>0</TableCell>
               <TableCell>0</TableCell>
               <TableCell>0</TableCell>
               <TableCell>0</TableCell>
@@ -146,27 +141,6 @@ const EmployeeRoombooking = ({ setopendashboard }) => {
                 ))} */}
             </TableBody>
             <TableFooter>
-              <TableRow>
-                <TableCell
-                  style={{
-                    fontSize: '15px',
-                    color: '#05313C',
-                  }}
-                >
-                  Total
-                </TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell
-                  style={{
-                    fontSize: '15px',
-                    color: '#05313C',
-                  }}
-                >
-                  0
-                </TableCell>
-              </TableRow>
               <TableRow>
                 <TablePagination
                   count={isData.length}

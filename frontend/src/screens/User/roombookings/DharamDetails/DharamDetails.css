@@ -102,3 +102,45 @@
     color: #000000;
 }
 
+.details-div_dhar10 {
+    padding-left: 3%!important;
+    padding-right: 3%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 3%;
+}
+
+@media screen and (max-width: 780px) {
+  .details-div_dhar {
+    padding-left: 3%!important;
+    padding-right: 8%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 52%;
+}
+
+.right_div_deta_dhram {
+  width: 100%!important;
+
+}
+
+.details-div_dhar10{
+  padding-left: 3%!important;
+  padding-right: 3%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 3%;
+}
+.imp_info_ine_p p {
+  color: white;
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  font-size: 15px;
+}
+}
+
+

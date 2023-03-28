@@ -106,18 +106,11 @@ const EmployeeGuestInRoom = ({ setopendashboard }) => {
           >
             <TableHead>
               <TableRow>
-                <TableCell>Staff Name</TableCell>
-                <TableCell>Cash</TableCell>
-                <TableCell>Bank</TableCell>
-                <TableCell>Cheque</TableCell>
-                <TableCell>Total</TableCell>
+                <TableCell>Gender</TableCell>
+                <TableCell>Quantity</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell style={{ fontWeight: '600' }}>Anil Babu</TableCell>
-
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
               <TableCell>0</TableCell>
               <TableCell>0</TableCell>
 
@@ -155,9 +148,7 @@ const EmployeeGuestInRoom = ({ setopendashboard }) => {
                 >
                   Total
                 </TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
-                <TableCell> &nbsp;</TableCell>
+
                 <TableCell
                   style={{
                     fontSize: '15px',

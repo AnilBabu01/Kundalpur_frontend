@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import InputBase from '@mui/material/InputBase';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import ok from '../../../../assets/ok.png';
 import { serverInstance } from '../../../../API/ServerInstance';
 import './PaymentSuccess.css';
@@ -10,8 +8,6 @@ function PaymentSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isData, setisData] = useState('');
-  const [id, setid] = useState('');
-
   useEffect(() => {
     if (location.state) {
       serverInstance(
@@ -22,9 +18,6 @@ function PaymentSuccess() {
       });
     }
   }, []);
-
-  console.log('ddd', isData);
-
   return (
     <>
       <div className="main_div_head_tyopeeeebook">

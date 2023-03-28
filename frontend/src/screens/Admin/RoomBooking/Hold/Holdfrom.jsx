@@ -277,13 +277,15 @@ function Holdfrom({ setOpen }) {
                             <td className="table_tddd">
                               <input
                                 type="checkbox"
-                                onClick={() => setroomnumber(item?.roomNumber)}
+                                onClick={() => setroomnumber(item?.RoomNo)}
                               />
                             </td>
-                            <td className="table_tddd">{item?.roomNumber}</td>
+                            <td className="table_tddd">{item?.RoomNo}</td>
                             <td className="table_tddd">{item?.Rate}</td>
                             <td className="table_tddd">{item?.advance}</td>
-                            <td className="table_tddd">{item?.name}</td>
+                            <td className="table_tddd">
+                              {item?.dharmasala && item?.dharmasala.name}
+                            </td>
                             <td className="table_tddd">
                               {item?.category_name}
                             </td>

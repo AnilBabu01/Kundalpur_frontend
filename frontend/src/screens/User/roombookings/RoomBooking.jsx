@@ -176,7 +176,10 @@ function RoomBooking({ setroomfilterdata }) {
     checkintime: checkintime,
     checkouttime: checkouttime,
   };
-
+  const yesterday = moment().subtract(1, 'day');
+  const disablePastDt = (current) => {
+    return current.isAfter(yesterday);
+  };
   return (
     <>
       <Menu
@@ -410,6 +413,7 @@ function RoomBooking({ setroomfilterdata }) {
                 Check In
               </label>
               <CustomInput
+                isValidDate={disablePastDt}
                 id="checkintime"
                 name="checkintime"
                 placeholder="Full name"
@@ -428,6 +432,7 @@ function RoomBooking({ setroomfilterdata }) {
                 Check Out
               </label>
               <CustomInput
+                isValidDate={disablePastDt}
                 id="checkouttime"
                 name="checkouttime"
                 placeholder="Full name"
@@ -466,7 +471,7 @@ function RoomBooking({ setroomfilterdata }) {
               </div>
             </div>
 
-            <button>
+            <button className="form_btn_divbutton">
               <SearchIcon />
               Search
             </button>
@@ -504,7 +509,7 @@ function RoomBooking({ setroomfilterdata }) {
             </div>
           </div>
 
-          <div className="details-div_dhar">
+          <div className="details-div_dhar10">
             {filterdata &&
               filterdata.map((item) => {
                 return <RoomCard1 data={item} isData={data} />;

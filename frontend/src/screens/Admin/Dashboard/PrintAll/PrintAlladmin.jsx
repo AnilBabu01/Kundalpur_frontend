@@ -265,15 +265,23 @@ function PrintAlladmin({ handleClose }) {
                 <>
                   <div
                     className="main_card_amount"
-                    style={{ background: '#FE0000', color: 'white' }}
+                    style={{
+                      background: '#FE0000',
+                      color: 'white',
+                      width: '23%',
+                    }}
                   >
-                    <p style={{ marginTop: '1rem', fontSize: '9px' }}>
+                    <p
+                      style={{
+                        fontSize: '14px',
+                      }}
+                    >
                       Donation
                     </p>
                     <div className="main_repue_img">
                       <p
                         style={{
-                          fontSize: '9px',
+                          fontSize: '14px',
                         }}
                       >
                         <EmpelecTotal data={isData4} />
@@ -290,15 +298,17 @@ function PrintAlladmin({ handleClose }) {
                   </div>
                   <div
                     className="main_card_amount"
-                    style={{ background: '#FECE00', color: 'white' }}
+                    style={{
+                      background: '#FECE00',
+                      color: 'white',
+                      width: '23%',
+                    }}
                   >
-                    <p style={{ marginTop: '1rem', fontSize: '9px' }}>
-                      Manual Donation
-                    </p>
+                    <p style={{ fontSize: '14px' }}>Manual Donation</p>
                     <div className="main_repue_img">
                       <p
                         style={{
-                          fontSize: '9px',
+                          fontSize: '14px',
                         }}
                       >
                         <EmpmanulTotal data={isData5} />
@@ -316,15 +326,17 @@ function PrintAlladmin({ handleClose }) {
 
                   <div
                     className="main_card_amount"
-                    style={{ background: '#3C5FFE', color: 'white' }}
+                    style={{
+                      background: '#3C5FFE',
+                      color: 'white',
+                      width: '23%',
+                    }}
                   >
-                    <p style={{ marginTop: '1rem', fontSize: '9px' }}>
-                      Room Booking
-                    </p>
+                    <p style={{ fontSize: '14px' }}>Room Booking</p>
                     <div className="main_repue_img">
                       <p
                         style={{
-                          fontSize: '9px',
+                          fontSize: '14px',
                         }}
                       >
                         ₹ 10,000
@@ -341,15 +353,17 @@ function PrintAlladmin({ handleClose }) {
 
                   <div
                     className="main_card_amount"
-                    style={{ background: '#808080', color: 'white' }}
+                    style={{
+                      background: '#808080',
+                      color: 'white',
+                      width: '23%',
+                    }}
                   >
-                    <p style={{ marginTop: '1rem', fontSize: '9px' }}>
-                      Guest in Room
-                    </p>
+                    <p style={{ fontSize: '14px' }}>Guest in Room</p>
                     <div className="main_repue_img">
                       <p
                         style={{
-                          fontSize: '9px',
+                          fontSize: '14px',
                         }}
                       >
                         10,000
@@ -369,7 +383,13 @@ function PrintAlladmin({ handleClose }) {
           </div>
           {userrole === 1 ? (
             <>
-              <p style={{ color: '#FE0000', marginTop: '1rem' }}>
+              <p
+                style={{
+                  color: '#FE0000',
+                  marginTop: '1rem',
+                  marginBottom: '1rem',
+                }}
+              >
                 Donation(दान)
               </p>
               <table>
@@ -446,7 +466,13 @@ function PrintAlladmin({ handleClose }) {
                   </th>
                 </tr>
               </table>
-              <p style={{ color: '#FECE00', marginTop: '1rem' }}>
+              <p
+                style={{
+                  color: '#FECE00',
+                  marginTop: '1rem',
+                  marginBottom: '1rem',
+                }}
+              >
                 Manual Donation (दान)
               </p>
               <table>
@@ -523,7 +549,13 @@ function PrintAlladmin({ handleClose }) {
                   </th>
                 </tr>
               </table>
-              <p style={{ color: '#009430', marginTop: '1rem' }}>
+              <p
+                style={{
+                  color: '#009430',
+                  marginTop: '1rem',
+                  marginBottom: '1rem',
+                }}
+              >
                 Online Donation(दान)
               </p>
               <table>
@@ -585,22 +617,47 @@ function PrintAlladmin({ handleClose }) {
                   </th>
                 </tr>
               </table>
-              <p style={{ color: '#3C5FFE' }}>Room Booking(आवास)</p>
+              <p
+                style={{
+                  color: '#3C5FFE',
+                  marginBottom: '1rem',
+                  marginTop: '1rem',
+                }}
+              >
+                Room Booking(आवास)
+              </p>
               <table>
                 <tr
                   className="margintop_add"
                   style={{ borderBottom: '1px solid gray' }}
                 >
                   <th>Staff Name</th>
-                  <th>Amount</th>
+                  <th>Bank</th>
+                  <th>Cash</th>
+                  <th>Total</th>
                 </tr>
                 <tr className="margintop_add">
-                  <th>anil</th>
-
+                  <td>anil</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr className="margintop_add">
+                  <th>Total</th>
+                  <th>0</th>
+                  <th>0</th>
                   <th>0</th>
                 </tr>
               </table>
-              <p style={{ color: '#FF6332' }}>Online Room Booking(आवास)</p>
+              <p
+                style={{
+                  color: '#FF6332',
+                  marginBottom: '1rem',
+                  marginTop: '1rem',
+                }}
+              >
+                Online Room Booking(आवास)
+              </p>
               <table>
                 <tr
                   className="margintop_add"
@@ -609,13 +666,22 @@ function PrintAlladmin({ handleClose }) {
                   <th>User Name</th>
                   <th>Amout</th>
                 </tr>
-                <tr className="margintop_add">
+                <tr>
                   <td>Anil Babu</td>
-
                   <td>0</td>
                 </tr>
+                <tr>
+                  <th>Total</th>
+                  <th>0</th>
+                </tr>
               </table>
-              <p style={{ color: '#808080', marginTop: '1rem' }}>
+              <p
+                style={{
+                  color: '#808080',
+                  marginTop: '1rem',
+                  marginBottom: '1rem',
+                }}
+              >
                 Guest In Room(यात्री संख्या)
               </p>
               <table>
@@ -628,14 +694,23 @@ function PrintAlladmin({ handleClose }) {
                 </tr>
                 <tr>
                   <td>Male</td>
-
                   <td>10</td>
+                </tr>
+                <tr>
+                  <th>Total</th>
+                  <th>10</th>
                 </tr>
               </table>
             </>
           ) : (
             <>
-              <p style={{ color: '#FE0000', marginTop: '1rem' }}>
+              <p
+                style={{
+                  color: '#FE0000',
+                  marginTop: '1rem',
+                  marginBottom: '1rem',
+                }}
+              >
                 Donation(दान)
               </p>
               <table>
@@ -668,7 +743,13 @@ function PrintAlladmin({ handleClose }) {
                   </>
                 )}
               </table>
-              <p style={{ color: '#FECE00', marginTop: '1rem' }}>
+              <p
+                style={{
+                  color: '#FECE00',
+                  marginTop: '1rem',
+                  marginBottom: '1rem',
+                }}
+              >
                 Manual Donation (दान)
               </p>
               <table>
@@ -702,67 +783,55 @@ function PrintAlladmin({ handleClose }) {
                 )}
               </table>
 
-              <p style={{ color: '#3C5FFE' }}>Room Booking(आवास)</p>
-              <table>
-                <tr
-                  className="margintop_add"
-                  style={{ borderBottom: '1px solid gray', fontSize: '14px' }}
-                >
-                  <th>Staff Name</th>
-                  <th>Cash</th>
-                  <th>Bank</th>
-                  <th>Cheque</th>
-                  <th>Total</th>
-                </tr>
-                <tr>
-                  <th>Date</th>
-                  <th>ReceiptNo</th>
-                  <th>VoucherNo</th>
-                  <th>Phone No</th>
-                  <th>Name</th>
-                </tr>
-                <tr
-                  className="margintop_add"
-                  style={{ borderBottom: '1px solid gray', fontSize: '14px' }}
-                >
-                  <th>Date</th>
-                  <th>ReceiptNo</th>
-                  <th>VoucherNo</th>
-                  <th>Phone No</th>
-                  <th>Name</th>
-                </tr>
-              </table>
-
-              <p style={{ color: '#808080', marginTop: '1rem' }}>
-                Guest In Room(यात्री संख्या)
+              <p
+                style={{
+                  color: '#3C5FFE',
+                  marginBottom: '1rem',
+                  marginTop: '1rem',
+                }}
+              >
+                Room Booking(आवास)
               </p>
               <table>
                 <tr
                   className="margintop_add"
                   style={{ borderBottom: '1px solid gray', fontSize: '14px' }}
                 >
-                  <th>Staff Name</th>
                   <th>Cash</th>
                   <th>Bank</th>
-                  <th>Cheque</th>
                   <th>Total</th>
                 </tr>
-                <tr>
-                  <th>Date</th>
-                  <th>ReceiptNo</th>
-                  <th>VoucherNo</th>
-                  <th>Phone No</th>
-                  <th>Name</th>
+                <tr style={{ borderBottom: '1px solid gray' }}>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
                 </tr>
+              </table>
+
+              <p
+                style={{
+                  color: '#808080',
+                  marginTop: '1rem',
+                  marginBottom: '1rem',
+                }}
+              >
+                Guest In Room(यात्री संख्या)
+              </p>
+              <table>
                 <tr
                   className="margintop_add"
-                  style={{ borderBottom: '1px solid gray', fontSize: '14px' }}
+                  style={{ borderBottom: '1px solid gray' }}
                 >
-                  <th>Date</th>
-                  <th>ReceiptNo</th>
-                  <th>VoucherNo</th>
-                  <th>Phone No</th>
-                  <th>Name</th>
+                  <th>Gender</th>
+                  <th>Quantity</th>
+                </tr>
+                <tr>
+                  <td>Male</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <th>Total</th>
+                  <th>10</th>
                 </tr>
               </table>
             </>

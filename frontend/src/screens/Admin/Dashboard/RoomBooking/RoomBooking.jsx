@@ -106,12 +106,14 @@ const RoomBooking = ({ setopendashboard }) => {
             <TableHead>
               <TableRow>
                 <TableCell>Staff Name</TableCell>
-                <TableCell>Amount</TableCell>
+                <TableCell>Bank</TableCell>
+                <TableCell>Cash</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableCell style={{ fontWeight: '600' }}>anil</TableCell>
 
+              <TableCell>0</TableCell>
               <TableCell>0</TableCell>
 
               {/* {(rowsPerPage > 0
@@ -147,6 +149,14 @@ const RoomBooking = ({ setopendashboard }) => {
                   }}
                 >
                   Total
+                </TableCell>
+                <TableCell
+                  style={{
+                    fontSize: '15px',
+                    color: '#05313C',
+                  }}
+                >
+                  0
                 </TableCell>
                 <TableCell
                   style={{

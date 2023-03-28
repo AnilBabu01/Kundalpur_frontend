@@ -430,7 +430,7 @@ function DharamDetails({ roomfilterdata }) {
         </div>
       </div>
 
-      <div className="details-div_dhar">
+      <div className="details-div_dhar10">
         {detailsofroons.availableRooms && (
           <>
             <RoomCard

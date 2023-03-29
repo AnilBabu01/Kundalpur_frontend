@@ -672,7 +672,7 @@ const Donation = ({ setopendashboard }) => {
                     onChange={(e) => settype(e.target.value)}
                     id="cars"
                   >
-                    <option>All Head</option>
+                    <option>Select option</option>
                     {donationTypes.map((item, idx) => {
                       return (
                         <option value={item.type_hi}>{item.type_hi}</option>
@@ -690,7 +690,7 @@ const Donation = ({ setopendashboard }) => {
 
                 <TableCell>
                   <select name="cars" id="cars" className="cuolms_search">
-                    <option>All ser</option>
+                    <option>Select user</option>
                     {emplist &&
                       emplist.map((item, idx) => {
                         return <option value={item.id}>{item.Username}</option>;

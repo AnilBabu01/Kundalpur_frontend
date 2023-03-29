@@ -76,7 +76,7 @@ function AddRoomForm({ setOpen }) {
       formData.set('advance', advncerate);
       formData.set('type', roomtype);
       formData.set('facility_id', JSON.stringify(facilityname));
-      formData.set('coTime', checkout);
+      formData.set('coTime', parseInt(checkout));
       formData.set('image1', img1);
       formData.set('image2', img2);
       formData.set('image3', img3);

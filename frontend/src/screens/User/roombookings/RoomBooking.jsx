@@ -92,6 +92,9 @@ const Childrencont = [
   { id: 9, type: 9 },
 ];
 function RoomBooking({ setroomfilterdata }) {
+  const [minDateTime, setMinDateTime] = useState(
+    new Date().toISOString().slice(0, 16),
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [showresuilt, setshowresuilt] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -412,11 +415,11 @@ function RoomBooking({ setroomfilterdata }) {
                 />
                 Check In
               </label>
-              <CustomInput
-                isValidDate={disablePastDt}
+              <input
+                className="checkindateandtime"
+                min={minDateTime}
                 id="checkintime"
                 name="checkintime"
-                placeholder="Full name"
                 type="datetime-local"
                 onChange={(e) => setcheckintime(e.target.value)}
                 value={checkintime}
@@ -431,11 +434,12 @@ function RoomBooking({ setroomfilterdata }) {
                 />
                 Check Out
               </label>
-              <CustomInput
-                isValidDate={disablePastDt}
+              <input
+                className="checkindateandtime"
+                disabled={checkintime ? false : true}
+                min={checkintime}
                 id="checkouttime"
                 name="checkouttime"
-                placeholder="Full name"
                 type="datetime-local"
                 onChange={(e) => setcheckouttime(e.target.value)}
                 value={checkouttime}

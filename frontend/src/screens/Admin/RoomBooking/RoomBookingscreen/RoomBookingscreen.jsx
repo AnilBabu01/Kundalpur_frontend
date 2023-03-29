@@ -5,8 +5,9 @@ import { styled } from '@mui/material/styles';
 import Moment from 'moment-js';
 import { serverInstance } from '../../../../API/ServerInstance';
 import axios from 'axios';
-import { MenuItem, Menu, Select } from '@mui/material';
 import LoadingSpinner from '../../../../components/Loading/LoadingSpinner';
+import { ReactTransliterate } from 'react-transliterate';
+import { Box, Button, MenuItem, Select, Typography } from '@mui/material';
 import Swal from 'sweetalert2';
 import './RoomBookingscreen.css';
 
@@ -128,6 +129,7 @@ const idproff = [
 function RoomBookingscreen({ setopendashboard }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const [lan, setlan] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [Paymode, setPaymode] = useState('Cash');
   const [formerror, setFormerror] = useState({});
@@ -344,6 +346,43 @@ function RoomBookingscreen({ setopendashboard }) {
         <div className="main_div_head_tyopeeeebook">
           <div className="form_div_absolutebook">
             <h2> Accommodation Details</h2>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+                my: 2,
+                ml: 2,
+              }}
+            >
+              <Typography variant="body1">Change language:</Typography>
+              <Button
+                variant={lan ? 'outlined' : 'contained'}
+                sx={{
+                  borderColor: '#C8C8C8',
+                  fontSize: 12,
+                  minWidth: 100,
+                  padding: 0.5,
+                  color: lan ? '#656565' : '#fff',
+                }}
+                onClick={() => setlan(false)}
+              >
+                Hindi
+              </Button>
+              <Button
+                onClick={() => setlan(true)}
+                variant={lan ? 'contained' : 'outlined'}
+                sx={{
+                  borderColor: '#C8C8C8',
+                  fontSize: 12,
+                  minWidth: 100,
+                  padding: 0.5,
+                  color: lan ? '#fff' : '#656565',
+                }}
+              >
+                English
+              </Button>
+            </Box>
             <div className="main_details_bro">
               <div>
                 <p className="main_details_bro_text"> Dharamshala </p>

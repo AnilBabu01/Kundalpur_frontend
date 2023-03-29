@@ -185,8 +185,14 @@ const AddRoom = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Add Room</h2>
-                  <Typography variant="body2" color="primary">
+                  <h2 style={{ marginBottom: '0.5rem', marginLeft: '1rem' }}>
+                    Add Room
+                  </h2>
+                  <Typography
+                    style={{ marginLeft: '1rem' }}
+                    variant="body2"
+                    color="primary"
+                  >
                     {currDate} / {currTime}
                   </Typography>
                 </div>
@@ -211,8 +217,14 @@ const AddRoom = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Update room</h2>
-                  <Typography variant="body2" color="primary">
+                  <h2 style={{ marginBottom: '0.5rem', marginLeft: '1rem' }}>
+                    Update room
+                  </h2>
+                  <Typography
+                    style={{ marginLeft: '1rem' }}
+                    variant="body2"
+                    color="primary"
+                  >
                     {currDate} / {currTime}
                   </Typography>
                 </div>
@@ -328,14 +340,6 @@ const AddRoom = ({ setopendashboard }) => {
                       <TableCell>{row.roomType}</TableCell>
 
                       <TableCell>
-                        <Tooltip title="View">
-                          <img
-                            src={eye}
-                            alt="eye"
-                            style={{ width: '20px', marginRight: '0.5rem' }}
-                          />
-                        </Tooltip>
-
                         <Tooltip title="Edit">
                           <img
                             onClick={() => handleOepn1(row)}

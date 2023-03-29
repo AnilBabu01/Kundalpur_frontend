@@ -220,8 +220,14 @@ const AddDharamshala = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Add Dharamshala</h2>
-                  <Typography variant="body2" color="primary">
+                  <h2 style={{ marginBottom: '0.5rem', marginLeft: '1rem' }}>
+                    Add Dharamshala
+                  </h2>
+                  <Typography
+                    style={{ marginLeft: '1rem' }}
+                    variant="body2"
+                    color="primary"
+                  >
                     {currDate} / {currTime}
                   </Typography>
                 </div>
@@ -248,8 +254,14 @@ const AddDharamshala = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Update Dharamshala</h2>
-                  <Typography variant="body2" color="primary">
+                  <h2 style={{ marginBottom: '0.5rem', marginLeft: '1rem' }}>
+                    Update Dharamshala
+                  </h2>
+                  <Typography
+                    style={{ marginLeft: '1rem' }}
+                    variant="body2"
+                    color="primary"
+                  >
                     {currDate} / {currTime}
                   </Typography>
                 </div>

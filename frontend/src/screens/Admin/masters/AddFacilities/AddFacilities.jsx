@@ -188,8 +188,14 @@ const AddFacilities = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Add Facilities</h2>
-                  <Typography variant="body2" color="primary">
+                  <h2 style={{ marginBottom: '0.5rem', marginLeft: '1rem' }}>
+                    Add Facility
+                  </h2>
+                  <Typography
+                    style={{ marginLeft: '1rem' }}
+                    variant="body2"
+                    color="primary"
+                  >
                     {currDate} / {currTime}
                   </Typography>
                 </div>
@@ -215,8 +221,14 @@ const AddFacilities = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Add Facilities</h2>
-                  <Typography variant="body2" color="primary">
+                  <h2 style={{ marginBottom: '0.5rem', marginLeft: '1rem' }}>
+                    Update Facility
+                  </h2>
+                  <Typography
+                    style={{ marginLeft: '1rem' }}
+                    variant="body2"
+                    color="primary"
+                  >
                     {currDate} / {currTime}
                   </Typography>
                 </div>

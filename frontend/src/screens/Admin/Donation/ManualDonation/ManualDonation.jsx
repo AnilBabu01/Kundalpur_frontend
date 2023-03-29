@@ -363,14 +363,6 @@ const ManualDonation = ({ setopendashboard }) => {
     [],
   );
 
-  // const onSearchByDate = (e) => {
-  //   if (e.target.value) {
-  //     setisData(isData?.filter(dt => Moment(dt?.donation_date).format('YYYY-MM-DD') == e.target.value));
-  //   } else {
-  //     setisData(isDataDummy)
-  //   }
-  // }
-
   const onSearchByOther = (e, type) => {
     if (type === 'Date') {
       setDate(e.target.value);
@@ -397,7 +389,7 @@ const ManualDonation = ({ setopendashboard }) => {
       setRemark(e.target.value);
     }
     if (type === 'UserType') {
-      setUserType(e.target.value);
+      setUserType(e.target.value.toLowerCase());
     }
   };
   useEffect(() => {
@@ -408,9 +400,9 @@ const ManualDonation = ({ setopendashboard }) => {
         Moment(dt?.donation_date).format('YYYY-MM-DD').indexOf(date) > -1 &&
         dt?.name.toLowerCase().indexOf(name) > -1 &&
         dt?.address.toLowerCase().indexOf(address) > -1 &&
-        dt?.CreatedBy.toLowerCase().indexOf(userType) > -1,
+        dt?.CreatedBy?.toLowerCase()?.indexOf(userType) > -1,
     );
-
+    console.log(filtered);
     if (type) {
       filtered = filtered?.map((item) => {
         if (item?.manualItemDetails?.find((typ) => typ.type == type)) {
@@ -421,6 +413,7 @@ const ManualDonation = ({ setopendashboard }) => {
       });
       filtered = filtered?.filter((x) => x !== undefined);
     }
+
     if (amount) {
       filtered = filtered?.map((item) => {
         console.log(
@@ -725,7 +718,7 @@ const ManualDonation = ({ setopendashboard }) => {
                     className="cuolms_search"
                     onChange={(e) => onSearchByOther(e, 'Type')}
                   >
-                    <option value="">Select option</option>
+                    <option value="">All Head</option>
 
                     {donationTypes.map((item, idx) => {
                       return (
@@ -749,10 +742,12 @@ const ManualDonation = ({ setopendashboard }) => {
                     className="cuolms_search"
                     onChange={(e) => onSearchByOther(e, 'UserType')}
                   >
-                    <option>Select user</option>
+                    <option value="">All user</option>
                     {emplist &&
                       emplist.map((item, idx) => {
-                        return <option value={item.id}>{item.Username}</option>;
+                        return (
+                          <option value={item.Username}>{item.Username}</option>
+                        );
                       })}
                   </select>
                 </TableCell>

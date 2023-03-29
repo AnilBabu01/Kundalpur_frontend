@@ -185,8 +185,14 @@ const AddCategory = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Add Category</h2>
-                  <Typography variant="body2" color="primary">
+                  <h2 style={{ marginBottom: '0.5rem', marginLeft: '1rem' }}>
+                    Add Category
+                  </h2>
+                  <Typography
+                    style={{ marginLeft: '1rem' }}
+                    variant="body2"
+                    color="primary"
+                  >
                     {currDate} / {currTime}
                   </Typography>
                 </div>
@@ -212,8 +218,14 @@ const AddCategory = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Add Facilities</h2>
-                  <Typography variant="body2" color="primary">
+                  <h2 style={{ marginBottom: '0.5rem', marginLeft: '1rem' }}>
+                    Update Category
+                  </h2>
+                  <Typography
+                    style={{ marginLeft: '1rem' }}
+                    variant="body2"
+                    color="primary"
+                  >
                     {currDate} / {currTime}
                   </Typography>
                 </div>

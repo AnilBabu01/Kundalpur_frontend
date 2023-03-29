@@ -5,16 +5,19 @@ import { backendApiUrl, backendUrl } from '../../../../config/config';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import { ReactTransliterate } from 'react-transliterate';
+import { Box, Button, Typography } from '@mui/material';
 const formData = new FormData();
 const custumstyle = {
-  width: '280px',
+  width: '100%',
   height: '35px',
   background: '#FFFFFF',
   border: '1px solid #C5BFBF',
   borderRadius: '7px',
   paddingLeft: '0.5rem',
+  marginBottom: '0.5rem',
 };
 function Updatedharmshala({ setOpen, updatedata }) {
+  const [lan, setlan] = useState(false);
   const [dharamshalaname, setdharamshalaname] = useState('');
   const [description, setdescription] = useState('');
   const [img1, setimg1] = useState('');
@@ -30,7 +33,7 @@ function Updatedharmshala({ setOpen, updatedata }) {
       formData.set('name', dharamshalaname);
       formData.set('image1', img1);
       formData.set('desc', description);
-      formData.set('dharmasala_id', updatedata?.dharmasala_id);
+      formData.set('id', updatedata?.dharmasala_id);
       axios.defaults.headers.put[
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
@@ -62,34 +65,112 @@ function Updatedharmshala({ setOpen, updatedata }) {
 
   return (
     <>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          my: 2,
+          ml: 2,
+        }}
+      >
+        <Typography variant="body1">Change language:</Typography>
+        <Button
+          variant={lan ? 'outlined' : 'contained'}
+          sx={{
+            borderColor: '#C8C8C8',
+            fontSize: 12,
+            minWidth: 100,
+            padding: 0.5,
+            color: lan ? '#656565' : '#fff',
+          }}
+          onClick={() => setlan(false)}
+        >
+          Hindi
+        </Button>
+        <Button
+          onClick={() => setlan(true)}
+          variant={lan ? 'contained' : 'outlined'}
+          sx={{
+            borderColor: '#C8C8C8',
+            fontSize: 12,
+            minWidth: 100,
+            padding: 0.5,
+            color: lan ? '#fff' : '#656565',
+          }}
+        >
+          English
+        </Button>
+      </Box>
       <div className="cash-donation-div">
         <div className="cash-donation-container-innser">
           <form onSubmit={handlesubmit}>
-            <div style={{ marginTop: '0.2rem' }}>
-              <label htmlFor="dharamshalaname">Dharanshala Name</label>
-              <input
-                style={{ width: '100%', marginTop: '0.2rem' }}
-                type="textarea"
-                id="dharamshalaname"
-                placeholder="enter the description"
-                className="forminput_add_user10"
-                value={dharamshalaname}
-                name="dharamshalaname"
-                onChange={(e) => setdharamshalaname(e.target.value)}
-              />
-            </div>
-            <div style={{ marginTop: '1.2rem' }}>
-              <label htmlFor="fromNo">Dharamshala Description</label>
-              <textarea
-                style={{ width: '99.8%', marginTop: '0.2rem', height: '100px' }}
-                id="fromNo"
-                placeholder="enter the description"
-                className="forminput_add_user10"
-                value={description}
-                name="description"
-                onChange={(e) => setdescription(e.target.value)}
-              />
-            </div>
+            {lan ? (
+              <>
+                <div style={{ marginTop: '0.2rem' }}>
+                  <label htmlFor="dharamshalaname">Dharanshala Name</label>
+                  <input
+                    style={{ width: '100%', marginTop: '0.2rem' }}
+                    type="textarea"
+                    id="dharamshalaname"
+                    placeholder="enter the description"
+                    className="forminput_add_user10"
+                    value={dharamshalaname}
+                    name="dharamshalaname"
+                    onChange={(e) => setdharamshalaname(e.target.value)}
+                  />
+                </div>
+                <div style={{ marginTop: '1.2rem' }}>
+                  <label htmlFor="fromNo">Dharamshala Description</label>
+                  <textarea
+                    style={{
+                      width: '99.8%',
+                      marginTop: '0.2rem',
+                      height: '100px',
+                    }}
+                    id="fromNo"
+                    placeholder="enter the description"
+                    className="forminput_add_user10"
+                    value={description}
+                    name="description"
+                    onChange={(e) => setdescription(e.target.value)}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={{ marginTop: '0.2rem' }}>
+                  <label htmlFor="dharamshalaname">Dharanshala Name</label>
+                  <ReactTransliterate
+                    placeholder="enter the description"
+                    style={custumstyle}
+                    id="full-name"
+                    required
+                    value={dharamshalaname}
+                    onChangeText={(dharamshalaname) => {
+                      setdharamshalaname(dharamshalaname);
+                    }}
+                    onChange={(e) => setdharamshalaname(e.target.value)}
+                    lang="hi"
+                  />
+                </div>
+                <div style={{ marginTop: '1.2rem' }}>
+                  <label htmlFor="fromNo">Dharamshala Description</label>
+                  <ReactTransliterate
+                    placeholder="enter the description"
+                    style={custumstyle}
+                    id="full-name"
+                    required
+                    value={description}
+                    onChangeText={(description) => {
+                      setdescription(description);
+                    }}
+                    onChange={(e) => setdescription(e.target.value)}
+                    lang="hi"
+                  />
+                </div>
+              </>
+            )}
             <div
               style={{
                 display: 'flex',

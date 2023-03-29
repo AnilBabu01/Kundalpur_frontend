@@ -27,6 +27,7 @@ const style = {
   boxShadow: 24,
   borderRadius: '15px',
 };
+
 export const CustomInput = styled(InputBase)(({ theme }) => ({
   width: '100%',
   height: '26px',
@@ -99,6 +100,9 @@ const modes = [
   { id: 3, type: 'Both' },
 ];
 function RoomBooking({ setopendashboard }) {
+  const [minDateTime, setMinDateTime] = useState(
+    new Date().toISOString().slice(0, 16),
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [showresuilt, setshowresuilt] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -136,6 +140,11 @@ function RoomBooking({ setopendashboard }) {
     });
     return `${currentDate}  ${currentTime}`;
   }
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const currentDateFormatted = currentDate.toISOString().substr(0, 10);
+  const currentTimeFormatted = moment(currentDate, 'HH:mm').format('hh:mm');
+  const currentDateTime = `${currentDateFormatted}T${currentTimeFormatted}`;
+  console.log('date', currentDateTime);
   const handleClieck = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -500,10 +509,11 @@ function RoomBooking({ setopendashboard }) {
                   />
                   Check Out
                 </label>
-                <CustomInput
+                <input
+                  className="checkindateandtime"
+                  min={currentDateTime}
                   id="checkouttime"
                   name="checkouttime"
-                  placeholder="Full name"
                   type="datetime-local"
                   onChange={(e) => setcheckouttime(e.target.value)}
                   value={checkouttime}

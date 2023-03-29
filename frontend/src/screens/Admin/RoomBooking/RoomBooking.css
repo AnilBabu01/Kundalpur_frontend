@@ -454,7 +454,12 @@
     padding-right: 4%;
   }
 }
-
+.checkindateandtime{
+ background: linear-gradient(180deg, #F2EEEB 0%, #EDEDED 100%);
+border-radius: 3px;
+border: none;
+height: 26px;
+}
 @media screen and (max-width: 780px) {
   .form_btn_div {
     width: 100%;

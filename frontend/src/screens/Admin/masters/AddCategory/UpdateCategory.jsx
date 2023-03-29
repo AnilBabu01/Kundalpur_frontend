@@ -3,6 +3,7 @@ import { serverInstance } from '../../../../API/ServerInstance';
 import InputBase from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
 import { backendApiUrl } from '../../../../config/config';
+import { ReactTransliterate } from 'react-transliterate';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import {
@@ -19,6 +20,16 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import './Categoryform.css';
+const custominput = {
+  border: '1px solid #B8B8B8',
+  width: '37rem',
+  height: '39px',
+  borderRadius: '5px',
+  fontSize: '15px',
+  paddingLeft: '0.5rem',
+  marginBottom: '0.5rem',
+  color: 'gray',
+};
 export const CustomInput = styled(InputBase)(({ theme }) => ({
   width: '37.2rem',
   fontFamily: 'Poppins',
@@ -43,6 +54,7 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 function UpdateCategory({ setOpen, updatedata }) {
+  const [lan, setlan] = useState(false);
   const [commentss, setcommentss] = useState('');
   const [categoryname, setcategoryname] = useState('');
   const [showloader, setshowloader] = useState(false);
@@ -52,8 +64,8 @@ function UpdateCategory({ setOpen, updatedata }) {
 
       const data = {
         name: categoryname,
-        comments: commentss,
-        category_id: updatedata?.category_id,
+        comment: commentss,
+        id: updatedata?.category_id,
       };
       axios.defaults.headers.put[
         'Authorization'
@@ -85,45 +97,136 @@ function UpdateCategory({ setOpen, updatedata }) {
 
   return (
     <>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          my: 2,
+          ml: 2,
+        }}
+      >
+        <Typography variant="body1">Change language:</Typography>
+        <Button
+          variant={lan ? 'outlined' : 'contained'}
+          sx={{
+            borderColor: '#C8C8C8',
+            fontSize: 12,
+            minWidth: 100,
+            padding: 0.5,
+            color: lan ? '#656565' : '#fff',
+          }}
+          onClick={() => setlan(false)}
+        >
+          Hindi
+        </Button>
+        <Button
+          onClick={() => setlan(true)}
+          variant={lan ? 'contained' : 'outlined'}
+          sx={{
+            borderColor: '#C8C8C8',
+            fontSize: 12,
+            minWidth: 100,
+            padding: 0.5,
+            color: lan ? '#fff' : '#656565',
+          }}
+        >
+          English
+        </Button>
+      </Box>
       <div className="cash-donation-div">
         <div className="cash-donation-container-innser">
           <div className="form-div" style={{ marginBottom: '1rem' }}>
             <div className="form-input-div_add_user">
-              <div className="inner-input-div2">
-                <label
-                  style={{ marginBottom: '0.3rem' }}
-                  htmlFor="categoryname"
-                >
-                  Category Name
-                </label>
-                <CustomInput
-                  id="categoryname"
-                  name="categoryname"
-                  placeholder="Enter category name"
-                  value={categoryname}
-                  onChange={(e) => setcategoryname(e.target.value)}
-                />
-              </div>
+              {lan ? (
+                <>
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="categoryname"
+                    >
+                      Category Name
+                    </label>
+                    <CustomInput
+                      id="categoryname"
+                      name="categoryname"
+                      placeholder="Enter category name"
+                      value={categoryname}
+                      onChange={(e) => setcategoryname(e.target.value)}
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="categoryname"
+                    >
+                      Category Name
+                    </label>
+                    <ReactTransliterate
+                      placeholder="Enter category name"
+                      style={custominput}
+                      id="full-name"
+                      required
+                      value={categoryname}
+                      onChangeText={(categoryname) => {
+                        setcategoryname(categoryname);
+                      }}
+                      onChange={(e) => setcategoryname(e.target.value)}
+                      lang="hi"
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
           <div className="form-div" style={{ marginBottom: '1rem' }}>
             <div className="form-input-div_add_user">
-              <div className="inner-input-div2">
-                <label
-                  style={{ marginBottom: '0.3rem', marginTop: '1rem' }}
-                  htmlFor="commentss"
-                >
-                  Comments
-                </label>
-                <CustomInput
-                  id="commentss"
-                  name="commentss"
-                  placeholder="Enter comments"
-                  value={commentss}
-                  onChange={(e) => setcommentss(e.target.value)}
-                />
-              </div>
+              {lan ? (
+                <>
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem', marginTop: '1rem' }}
+                      htmlFor="commentss"
+                    >
+                      Comments
+                    </label>
+                    <CustomInput
+                      id="commentss"
+                      name="commentss"
+                      placeholder="Enter comments"
+                      value={commentss}
+                      onChange={(e) => setcommentss(e.target.value)}
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="inner-input-div2">
+                    <label
+                      style={{ marginBottom: '0.3rem' }}
+                      htmlFor="categoryname"
+                    >
+                      Comments
+                    </label>
+                    <ReactTransliterate
+                      placeholder="Enter comments"
+                      style={custominput}
+                      id="full-name"
+                      required
+                      value={commentss}
+                      onChangeText={(commentss) => {
+                        setcommentss(commentss);
+                      }}
+                      onChange={(e) => setcommentss(e.target.value)}
+                      lang="hi"
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="save-div-btn">

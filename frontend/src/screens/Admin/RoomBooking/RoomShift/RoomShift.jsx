@@ -134,8 +134,14 @@ const RoomShift = ({ setopendashboard }) => {
             <div>
               <div className="add-div-close-div">
                 <div>
-                  <h2 style={{ marginBottom: '0.5rem' }}>Room Shift</h2>
-                  <Typography variant="body2" color="primary">
+                  <h2 style={{ marginBottom: '0.5rem', marginLeft: '1rem' }}>
+                    Room Shift
+                  </h2>
+                  <Typography
+                    style={{ marginLeft: '1rem' }}
+                    variant="body2"
+                    color="primary"
+                  >
                     {currDate} / {currTime}
                   </Typography>
                 </div>

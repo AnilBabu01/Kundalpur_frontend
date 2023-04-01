@@ -412,14 +412,14 @@ const AddDharamshala = ({ setopendashboard }) => {
                           />
                         </Tooltip>
 
-                        <Tooltip title="Delete">
+                        {/* <Tooltip title="Delete">
                           <img
                             onClick={() => handleClickOpen3(row.dharmasala_id)}
                             src={Delete}
                             alt="eye"
                             style={{ width: '20px' }}
                           />
-                        </Tooltip>
+                        </Tooltip> */}
                       </TableCell>
                     </TableRow>
                   ))}

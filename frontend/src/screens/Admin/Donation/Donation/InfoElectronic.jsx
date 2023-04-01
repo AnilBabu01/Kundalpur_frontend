@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { serverInstance } from "../../../../API/ServerInstance";
-import "./Donation.css";
+import React, { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { serverInstance } from '../../../../API/ServerInstance';
+import './Donation.css';
 function InfoElectronic({ setopendashboard }) {
   const { id } = useParams();
   const [isData, setisData] = React.useState(null);
-  console.log(isData);
+  const navigation = useNavigate();
   const getinfo = () => {
-    serverInstance(`user/get-elecdonation?id=${id}`, "get").then((res) => {
+    serverInstance(`user/get-elecdonation?id=${id}`, 'get').then((res) => {
       if (res.status) {
         setisData(res.data);
       } else {
-        Swal("Error", "somthing went  wrong", "error");
+        Swal('Error', 'somthing went  wrong', 'error');
       }
     });
   };
@@ -19,11 +19,11 @@ function InfoElectronic({ setopendashboard }) {
     getinfo();
     setopendashboard(true);
   }, []);
-  var d = new Date(isData ? isData.donation_date : "");
+  var d = new Date(isData ? isData.donation_date : '');
 
   var hours = d.getUTCHours();
   var minutes = d.getUTCMinutes();
-  var ampm = hours >= 12 ? "AM" : "PM";
+  var ampm = hours >= 12 ? 'AM' : 'PM';
   let day = d.getDate();
   let month = d.getMonth() + 1;
   let year = d.getFullYear();
@@ -35,31 +35,34 @@ function InfoElectronic({ setopendashboard }) {
   return (
     <>
       <div className="dashboarddiv">
-        <div className="center_info_main">
+        <div className="backebj_voucher">
+          <button onClick={() => navigation(-1)}>Back</button>
+        </div>
+        <div className="center_info_main" style={{ paddingTop: '3rem' }}>
           <div className="main_content_info">
             <div>
-              <p style={{ marginBottom: "1rem" }}>Personal Details</p>
-              <p>Name: {isData ? isData.name : ""}</p>
-              <p>Phone No: {isData ? isData.phoneNo.slice(3) : ""}</p>
-              <p>Address: {isData ? isData.address : ""}</p>
-              <p>Donation Date: {isData ? date : ""}</p>
-              <p>Donation Time: {isData ? time : ""}</p>
+              <p style={{ marginBottom: '1rem' }}>Personal Details</p>
+              <p>Name: {isData ? isData.name : ''}</p>
+              <p>Phone No: {isData ? isData.phoneNo.slice(3) : ''}</p>
+              <p>Address: {isData ? isData.address : ''}</p>
+              <p>Donation Date: {isData ? date : ''}</p>
+              <p>Donation Time: {isData ? time : ''}</p>
             </div>
             <div>
-              <p style={{ marginTop: "2rem", marginBottom: "1rem" }}>
+              <p style={{ marginTop: '2rem', marginBottom: '1rem' }}>
                 No Of Donations
               </p>
               <div className="table_scrol_barrr">
                 <table class="styled-table">
                   <thead>
                     <tr>
-                      <th style={{ textAlign: "center", width: "21rem" }}>
+                      <th style={{ textAlign: 'center', width: '21rem' }}>
                         Type of donation
                       </th>
-                      <th style={{ textAlign: "center", width: "27rem" }}>
+                      <th style={{ textAlign: 'center', width: '27rem' }}>
                         Amount
                       </th>
-                      <th style={{ textAlign: "center" }}>Remark</th>
+                      <th style={{ textAlign: 'center' }}>Remark</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -77,14 +80,14 @@ function InfoElectronic({ setopendashboard }) {
                     <tr>
                       <td>Total</td>
                       <td>
-                        {" "}
+                        {' '}
                         {isData?.AMOUNT
                           ? isData?.AMOUNT
                           : isData &&
                             isData.elecItemDetails.reduce(
                               (n, { amount }) =>
                                 parseFloat(n) + parseFloat(amount),
-                              0
+                              0,
                             )}
                       </td>
                       <td>-</td>

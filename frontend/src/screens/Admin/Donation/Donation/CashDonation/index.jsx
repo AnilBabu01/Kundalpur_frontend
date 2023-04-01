@@ -200,7 +200,7 @@ const CashDonation = ({
           new_member: newMember,
           modeOfDonation: 2,
           donation_date: updateData?.donation_date,
-          donation_time: updateData?.donation_date,
+          donation_time: updateData?.donation_time,
           donation_item: donationItems,
         });
 

@@ -71,7 +71,7 @@ function DonationMaster() {
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
       const { data } = await axios.post(`${backendApiUrl}admin/donation-type`, {
-        modeOfType: 1,
+        modeOfType: '1',
         type_en: donationtype_in_eng,
         type_hi: donationtype_in_hindi,
       });
@@ -173,7 +173,8 @@ function DonationMaster() {
 
                     <ReactTransliterate
                       // style={custumstyle}
-                      id="full-name"
+
+                      type="text"
                       required
                       value={donationtype_in_hindi}
                       onChangeText={(donationtype_in_hindi) => {

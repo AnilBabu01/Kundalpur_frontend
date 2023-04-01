@@ -48,40 +48,38 @@ function App() {
 
   return (
     <>
-      <Router>
-        {showreciept ? (
-          <></>
-        ) : (
-          <>
-            {!opendashboard || noHeaderFooter || userrole === 2 ? (
-              <Navbar1 showRoomOptions={showRoomOptions} />
-            ) : (
-              ''
-            )}
-          </>
-        )}
+      {showreciept ? (
+        <></>
+      ) : (
+        <>
+          {!opendashboard || noHeaderFooter || userrole === 2 ? (
+            <Navbar1 showRoomOptions={showRoomOptions} />
+          ) : (
+            ''
+          )}
+        </>
+      )}
 
-        {opendashboard && <MainAdmin />}
-        <MainRoutes
-          roomfilterdata={roomfilterdata}
-          setroomfilterdata={setroomfilterdata}
-          setopendashboard={setopendashboard}
-          setshowreciept={setshowreciept}
-          setHeaderFooter={setHeaderFooter}
-          paymentId={paymentId}
-          setpaymentId={setpaymentId}
-          onlineId={onlineId}
-          setonlineId={setonlineId}
-          setshowRoomOptions={setshowRoomOptions}
-        />
-        <AdminRoutes
-          roomfilterdata={roomfilterdata}
-          setroomfilterdata={setroomfilterdata}
-          setopendashboard={setopendashboard}
-          setshowreciept={setshowreciept}
-        />
-        {!opendashboard && !showreciept && !noHeaderFooter ? <Footer /> : ''}
-      </Router>
+      {opendashboard && <MainAdmin />}
+      <MainRoutes
+        roomfilterdata={roomfilterdata}
+        setroomfilterdata={setroomfilterdata}
+        setopendashboard={setopendashboard}
+        setshowreciept={setshowreciept}
+        setHeaderFooter={setHeaderFooter}
+        paymentId={paymentId}
+        setpaymentId={setpaymentId}
+        onlineId={onlineId}
+        setonlineId={setonlineId}
+        setshowRoomOptions={setshowRoomOptions}
+      />
+      <AdminRoutes
+        roomfilterdata={roomfilterdata}
+        setroomfilterdata={setroomfilterdata}
+        setopendashboard={setopendashboard}
+        setshowreciept={setshowreciept}
+      />
+      {!opendashboard && !showreciept && !noHeaderFooter ? <Footer /> : ''}
     </>
   );
 }

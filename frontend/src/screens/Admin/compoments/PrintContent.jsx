@@ -465,14 +465,14 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           )}
                           {isData && isData?.modeOfDonation === '1' && (
                             <span className="grasy-text">
-                              रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त
-                              हुये।{' '}
+                              &nbsp; रूपये बैंक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === 1 && (
                             <span className="grsay-text">
-                              रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त
-                              हुये।{' '}
+                              &nbsp; रूपये बैंक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === '3' && (
@@ -933,14 +933,14 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           )}
                           {isData && isData?.modeOfDonation === '1' && (
                             <span className="grsay-text">
-                              रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त
-                              हुये।{' '}
+                              &nbsp; रूपये बैंक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === 1 && (
                             <span className="gray-text">
-                              रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त
-                              हुये।{' '}
+                              &nbsp; रूपये बैंक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === '3' && (

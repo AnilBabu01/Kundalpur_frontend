@@ -129,6 +129,7 @@ const donationColorTheme = {
 const Electornic = ({ setopendashboard }) => {
   const [emplist, setemplist] = useState('');
   const [isData, setisData] = React.useState('');
+  const [isDataDummy, setisDataDummy] = React.useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
   const [showalert, setshowalert] = useState(false);
@@ -139,13 +140,9 @@ const Electornic = ({ setopendashboard }) => {
   const [updateData, setupdateData] = useState('');
   const [openupdate, setopenupdate] = useState(false);
   const [showUpdateBtn, setshowUpdateBtn] = useState(true);
-  const [phone, setphone] = useState('');
-  const [date, setdate] = useState('');
-  const [name, setname] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [updateId, setupdateId] = useState('');
   const [userrole, setuserrole] = useState('');
-  const [type, settype] = useState('');
   const [datefrom, setdatefrom] = useState('');
   const [dateto, setdateto] = useState('');
   const [voucherfrom, setvoucherfrom] = useState('');
@@ -154,6 +151,16 @@ const Electornic = ({ setopendashboard }) => {
   const [searchvalue, setsearchvalue] = useState('');
   const handleOpen5 = () => setOpen5(true);
   const handleClose5 = () => setOpen5(false);
+  const [voucherno, setVoucherno] = useState('');
+  const [date, setDate] = useState('');
+  const [receiptNo, setReceiptNo] = useState('');
+  const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [amount, setAmount] = useState('');
+  const [remark, setRemark] = useState('');
+  const [type, setType] = useState('');
+  const [userType, setUserType] = useState('');
   const handleOpen = (id) => {
     setOpen(true);
     setupdateId(id);
@@ -178,6 +185,7 @@ const Electornic = ({ setopendashboard }) => {
         let filterData = res.data.filter((item) => item.modeOfDonation === '1');
 
         setisData(filterData);
+        setisDataDummy(filterData);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
@@ -241,10 +249,9 @@ const Electornic = ({ setopendashboard }) => {
         `${backendApiUrl}admin/search-electric?search=${searchvalue}&type=${1}`,
       );
 
-      console.log('ss', res.data.data);
-
       if (res.data.status) {
         setisData(res.data.data);
+        setisDataDummy(res.data.data);
       }
     } else {
       axios.defaults.headers.get[
@@ -255,10 +262,9 @@ const Electornic = ({ setopendashboard }) => {
         `${backendApiUrl}user/search-donation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}&modeOfDonation=${1}`,
       );
 
-      console.log('ss', res.data.data);
-
       if (res.data.status) {
         setisData(res.data.data);
+        setisDataDummy(res.data.data);
       }
     }
   };
@@ -297,7 +303,106 @@ const Electornic = ({ setopendashboard }) => {
     get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
   }, [showalert, open, openupdate]);
+  const onSearchByOther = (e, type) => {
+    if (type === 'Date') {
+      setDate(e.target.value);
+    }
+    if (type === 'Voucher') {
+      setVoucherno(e.target.value);
+    }
+    if (type === 'Receipt') {
+      setReceiptNo(e.target.value.toLowerCase());
+    }
+    if (type === 'Phone') {
+      setPhone(e.target.value.toLowerCase());
+    }
+    if (type === 'Name') {
+      setName(e.target.value.toLowerCase());
+    }
+    if (type === 'Address') {
+      setAddress(e.target.value.toLowerCase());
+    }
+    if (type === 'Type') {
+      setType(e.target.value);
+    }
+    if (type === 'Amount') {
+      setAmount(e.target.value);
+    }
+    if (type === 'Remark') {
+      setRemark(e.target.value);
+    }
+    if (type === 'UserType') {
+      setUserType(e.target.value.toLowerCase());
+    }
+  };
+  useEffect(() => {
+    var filtered = isDataDummy?.filter(
+      (dt) =>
+        dt?.ReceiptNo.toLowerCase().indexOf(receiptNo) > -1 &&
+        dt?.phoneNo.toLowerCase().indexOf(phone) > -1 &&
+        Moment(dt?.donation_date).format('YYYY-MM-DD').indexOf(date) > -1 &&
+        dt?.name.toLowerCase().indexOf(name) > -1 &&
+        dt?.address.toLowerCase().indexOf(address) > -1 &&
+        dt?.createdBy?.toLowerCase()?.indexOf(userType) > -1 &&
+        dt?.voucherNo?.toLowerCase()?.indexOf(voucherno) > -1,
+    );
+    console.log(filtered);
+    if (type) {
+      filtered = filtered?.map((item) => {
+        if (item?.elecItemDetails?.find((typ) => typ.type == type)) {
+          return item;
+        } else {
+          return;
+        }
+      });
+      filtered = filtered?.filter((x) => x !== undefined);
+    }
 
+    if (amount) {
+      filtered = filtered?.map((item) => {
+        console.log(
+          item.elecItemDetails.reduce(
+            (n, { amount }) => parseFloat(n) + parseFloat(amount),
+            0,
+          ),
+        );
+        if (
+          item.elecItemDetails.reduce(
+            (n, { amount }) => parseFloat(n) + parseFloat(amount),
+            0,
+          ) == amount
+        ) {
+          return item;
+        } else {
+          return;
+        }
+      });
+      filtered = filtered?.filter((x) => x !== undefined);
+    }
+    if (remark) {
+      filtered = filtered?.map((item) => {
+        if (item?.elecItemDetails?.find((typ) => typ.remark == remark)) {
+          return item;
+        } else {
+          return;
+        }
+      });
+      filtered = filtered?.filter((x) => x !== undefined);
+    }
+
+    setisData(filtered);
+  }, [
+    phone,
+    receiptNo,
+    date,
+    name,
+    address,
+    type,
+    amount,
+    remark,
+    userType,
+    voucherno,
+  ]);
   return (
     <>
       <Modal
@@ -514,14 +619,17 @@ const Electornic = ({ setopendashboard }) => {
               <TableCell>
                 <input
                   className="cuolms_search"
-                  type="text"
+                  type="date"
+                  onChange={(e) => onSearchByOther(e, 'Date')}
                   placeholder="Search Date"
                 />
               </TableCell>
+
               <TableCell>
                 <input
                   className="cuolms_search"
                   type="text"
+                  onChange={(e) => onSearchByOther(e, 'Receipt')}
                   placeholder="Search Receipt"
                 />
               </TableCell>
@@ -529,6 +637,7 @@ const Electornic = ({ setopendashboard }) => {
                 <input
                   className="cuolms_search"
                   type="text"
+                  onChange={(e) => onSearchByOther(e, 'Voucher')}
                   placeholder="Search Voucher"
                 />
               </TableCell>
@@ -536,6 +645,7 @@ const Electornic = ({ setopendashboard }) => {
                 <input
                   className="cuolms_search"
                   type="text"
+                  onChange={(e) => onSearchByOther(e, 'Phone')}
                   placeholder="Search Phone"
                 />
               </TableCell>
@@ -543,6 +653,7 @@ const Electornic = ({ setopendashboard }) => {
                 <input
                   type="text"
                   className="cuolms_search"
+                  onChange={(e) => onSearchByOther(e, 'Name')}
                   placeholder="Name"
                 />
               </TableCell>
@@ -550,16 +661,17 @@ const Electornic = ({ setopendashboard }) => {
                 <input
                   className="cuolms_search"
                   type="text"
+                  onChange={(e) => onSearchByOther(e, 'Address')}
                   placeholder="Search Address"
                 />
               </TableCell>
               <TableCell>
                 <select
                   className="cuolms_search"
-                  onChange={(e) => settype(e.target.value)}
-                  id="cars"
+                  onChange={(e) => onSearchByOther(e, 'Type')}
                 >
-                  <option>Select option</option>
+                  <option value="">All Head</option>
+
                   {donationTypes.map((item, idx) => {
                     return <option value={item.type_hi}>{item.type_hi}</option>;
                   })}
@@ -569,23 +681,33 @@ const Electornic = ({ setopendashboard }) => {
                 <input
                   className="cuolms_search"
                   type="text"
+                  onChange={(e) => onSearchByOther(e, 'Amount')}
                   placeholder="Search Amount"
                 />
               </TableCell>
               <TableCell>
-                <select name="cars" id="cars" className="cuolms_search">
-                  <option>Select user</option>
+                <select
+                  name="cars"
+                  id="cars"
+                  className="cuolms_search"
+                  onChange={(e) => onSearchByOther(e, 'UserType')}
+                >
+                  <option value="">All user</option>
                   {emplist &&
                     emplist.map((item, idx) => {
-                      return <option value={item.id}>{item.Username}</option>;
+                      return (
+                        <option value={item.Username}>{item.Username}</option>
+                      );
                     })}
                 </select>
               </TableCell>
+
               <TableCell>
                 <input
                   className="cuolms_search"
                   type="text"
                   placeholder="Remark"
+                  onChange={(e) => onSearchByOther(e, 'Remark')}
                 />
               </TableCell>
               <TableCell>&nbsp;</TableCell>

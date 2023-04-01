@@ -444,39 +444,41 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                                   comma: true,
                                 },
                               )}
-                          ,
+
                           {isData && isData?.modeOfDonation === '2' && (
                             <span className="grjhjay-text">
                               {' '}
-                              रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                              &nbsp; रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === 2 && (
                             <span className="grssay-text">
                               {' '}
-                              रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                              &nbsp; रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === '1' && (
                             <span className="gssray-text">
-                              रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त
-                              हुये।{' '}
+                              &nbsp; रूपये बैंक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === 1 && (
                             <span className="gsray-text">
-                              रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त
-                              हुये।{' '}
+                              &nbsp; रूपये बैंक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === '3' && (
                             <span className="grsay-text">
-                              रूपये चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                              &nbsp; रूपये चैक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === 3 && (
                             <span className="gsray-text">
-                              रूपये चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                              &nbsp; रूपये चैक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                         </>
@@ -485,14 +487,14 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           {isData && isData?.MODE_OF_DONATION === 'ONLINE' && (
                             <span className="grsay-text">
                               {isData && converter.toWords(isData?.AMOUNT)},
-                              रूपये ऑनलाइन द्वारा दान स्वरूप सधन्यवाद प्राप्त
-                              हुये।
+                              &nbsp; रूपये ऑनलाइन द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।
                             </span>
                           )}
                           {isData && isData?.MODE_OF_DONATION === 'CHEQUE' && (
                             <span span className="grsay-text">
                               {isData && converter.toWords(isData?.AMOUNT)},
-                              रूपये ऑनलाइन चैक द्वारा दान स्वरूप सधन्यवाद
+                              &nbsp; रूपये ऑनलाइन चैक द्वारा दान स्वरूप सधन्यवाद
                               प्राप्त हुये।
                             </span>
                           )}
@@ -907,23 +909,23 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                                   comma: true,
                                 },
                               )}
-                          ,
+
                           {isData && isData?.modeOfDonation === '2' && (
                             <span className="grday-text">
                               {' '}
-                              रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                              &nbsp; रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === 2 && (
                             <span className="grday-text">
                               {' '}
-                              रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                              &nbsp; रूपये नगद दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === '1' && (
                             <span className="grdday-text">
-                              रूपये बैंक द्वारा दान स्वरूप सधन्यवाद प्राप्त
-                              हुये।{' '}
+                              &nbsp; रूपये बैंक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === 1 && (
@@ -934,12 +936,14 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           )}
                           {isData && isData?.modeOfDonation === '3' && (
                             <span className="gdray-text">
-                              रूपये चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                              &nbsp; रूपये चैक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                           {isData && isData?.modeOfDonation === 3 && (
                             <span className="grday-text">
-                              रूपये चैक द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।{' '}
+                              &nbsp; रूपये चैक द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।{' '}
                             </span>
                           )}
                         </>
@@ -948,14 +952,14 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           {isData && isData?.MODE_OF_DONATION === 'ONLINE' && (
                             <span className="grday-text">
                               {isData && converter.toWords(isData?.AMOUNT)},
-                              रूपये ऑनलाइन द्वारा दान स्वरूप सधन्यवाद प्राप्त
-                              हुये।
+                              &nbsp; रूपये ऑनलाइन द्वारा दान स्वरूप सधन्यवाद
+                              प्राप्त हुये।
                             </span>
                           )}
                           {isData && isData?.MODE_OF_DONATION === 'CHEQUE' && (
                             <span span className="grday-text">
                               {isData && converter.toWords(isData?.AMOUNT)},
-                              रूपये ऑनलाइन चैक द्वारा दान स्वरूप सधन्यवाद
+                              &nbsp; रूपये ऑनलाइन चैक द्वारा दान स्वरूप सधन्यवाद
                               प्राप्त हुये।
                             </span>
                           )}

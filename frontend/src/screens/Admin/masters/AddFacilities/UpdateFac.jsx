@@ -214,7 +214,7 @@ function UpdateFac({ updatedata, setOpen }) {
 
           <div className="save-div-btn">
             <button onClick={() => handlesubmit()} className="save-div-btn-btn">
-              Save
+              Update
             </button>
             <button
               onClick={() => setOpen(false)}

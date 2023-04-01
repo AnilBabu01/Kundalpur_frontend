@@ -218,7 +218,7 @@ function AddFacForm({ setOpen }) {
                   }}
                 />
               ) : (
-                'Update'
+                'Save'
               )}
             </button>
             <button

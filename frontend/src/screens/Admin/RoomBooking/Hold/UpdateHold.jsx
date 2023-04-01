@@ -3,22 +3,13 @@ import { serverInstance } from '../../../../API/ServerInstance';
 import InputBase from '@mui/material/InputBase';
 import { backendApiUrl } from '../../../../config/config';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { ReactTransliterate } from 'react-transliterate';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Moment from 'moment-js';
 import moment from 'moment';
-import {
-  Box,
-  Button,
-  ButtonBase,
-  FormControlLabel,
-  Grid,
-  MenuItem,
-  Select,
-  Typography,
-} from '@mui/material';
+import { Box, Button, MenuItem, Select, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { ReactTransliterate } from 'react-transliterate';
 import './Holdform.css';
 const custominput = {
   width: '280px',
@@ -54,7 +45,7 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-function UpdateHold({ setOpen, data }) {
+function UpdateHold({ setOpen, dataa }) {
   const [lan, setlan] = useState(false);
   const [roomnumber, setroomnumber] = useState('');
   const [roomlist, setroomlist] = useState('');
@@ -84,9 +75,9 @@ function UpdateHold({ setOpen, data }) {
         'Authorization'
       ] = `Bearer ${sessionStorage.getItem('token')}`;
       const data = {
-        id: data?.id,
-        name: holdername,
-        mobile: holdermobile,
+        id: dataa.id,
+        name: holdername ? holdername : dataa?.name,
+        mobile: holdermobile ? holdermobile : dataa?.mobile,
         since: sinceDate,
         sinceTime: sinceTime,
         remainTime: remainTime,
@@ -94,8 +85,8 @@ function UpdateHold({ setOpen, data }) {
         dharmasala: dharamshalaname,
         category: categoryname,
         roomNo: roomnumber,
-        approvedBy: holdaprodeBy,
-        remarks: remarks,
+        approvedBy: holdaprodeBy ? holdaprodeBy : dataa?.approvedBy,
+        remarks: remarks ? remarks : dataa?.remarks,
       };
 
       const res = await axios.put(`${backendApiUrl}room/hold`, data);
@@ -106,7 +97,7 @@ function UpdateHold({ setOpen, data }) {
         Swal.fire('Great!', res.data.data.message, 'success');
       }
     } catch (error) {
-      Swal.fire('Error!', error, 'error');
+      console.log(error);
     }
   };
   const getalldharamshala = () => {
@@ -142,15 +133,15 @@ function UpdateHold({ setOpen, data }) {
     });
   };
 
-  console.log('update data', data);
+  console.log('room no', dataa);
   useEffect(() => {
     getalldharamshala();
     getallcategory();
-    if (data) {
-      setholdername(data?.name);
-      setholdermobile(data?.mobile);
-      setholdaprodeBy(data?.approvedBy);
-      setremarks(data?.remarks);
+    if (dataa) {
+      setholdername(dataa?.name);
+      setholdermobile(dataa?.mobile);
+      setholdaprodeBy(dataa?.approvedBy);
+      setremarks(dataa?.remarks);
     }
   }, []);
 
@@ -330,14 +321,17 @@ function UpdateHold({ setOpen, data }) {
                           <tr>
                             <td className="table_tddd">
                               <input
-                                type="checkbox"
+                                type="radio"
+                                name="anil"
                                 onClick={() => setroomnumber(item?.RoomNo)}
                               />
                             </td>
                             <td className="table_tddd">{item?.RoomNo}</td>
                             <td className="table_tddd">{item?.Rate}</td>
                             <td className="table_tddd">{item?.advance}</td>
-                            {item?.dharmasala && item?.dharmasala.name}
+                            <td className="table_tddd">
+                              {item?.dharmasala && item?.dharmasala.name}
+                            </td>
                             <td className="table_tddd">
                               {item?.category_name}
                             </td>

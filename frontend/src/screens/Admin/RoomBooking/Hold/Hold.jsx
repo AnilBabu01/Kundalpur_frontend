@@ -149,7 +149,7 @@ const Hold = ({ setopendashboard }) => {
     setopendashboard(true);
 
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, [open, open3]);
+  }, [open, open1, open3]);
 
   return (
     <>
@@ -234,7 +234,7 @@ const Hold = ({ setopendashboard }) => {
                   <CloseIcon onClick={() => handleClose1()} />
                 </IconButton>
               </div>
-              <UpdateHold setOpen={setOpen1} data={updatedata} />
+              <UpdateHold setOpen={setOpen1} dataa={updatedata} />
             </div>
           </Box>
         </Fade>

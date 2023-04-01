@@ -325,14 +325,6 @@ const AddCategory = ({ setopendashboard }) => {
                       <TableCell>{row.comment}</TableCell>
 
                       <TableCell>
-                        <Tooltip title="View">
-                          <img
-                            src={eye}
-                            alt="eye"
-                            style={{ width: '20px', marginRight: '0.5rem' }}
-                          />
-                        </Tooltip>
-
                         <Tooltip title="Edit">
                           <img
                             onClick={() => handleOepn1(row)}

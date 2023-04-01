@@ -66,17 +66,19 @@ function UpdateRoom({ setOpen, updatedata }) {
   const [previewprofile3, setpreviewprofile3] = useState('');
   const [previewprofile4, setpreviewprofile4] = useState('');
 
+  console.log(facilityname, categroyname);
+
   const handlesubmit = async () => {
     try {
       formData.set('id', updatedata?.room_id);
       formData.set('Rate', rate);
       formData.set('dharmasala_id', dharamshalaname);
-      formData.set('category_id', JSON.stringify(facilityname));
+      formData.set('category_id', JSON.stringify(categroyname));
       formData.set('FroomNo', fromroomno);
       formData.set('TroomNo', toroomno);
       formData.set('advance', advncerate);
       formData.set('type', roomtype);
-      formData.set('facility_id', JSON.stringify(categroyname));
+      formData.set('facility_id', JSON.stringify(facilityname));
       formData.set('coTime', checkout);
       formData.set('image1', img1);
       formData.set('image2', img2);

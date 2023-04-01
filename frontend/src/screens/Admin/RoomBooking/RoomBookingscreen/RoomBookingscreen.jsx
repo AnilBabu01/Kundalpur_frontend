@@ -63,6 +63,14 @@ const femalecont = [
   { id: 9, type: 9 },
 ];
 
+const custumstyle = {
+  width: '100%',
+  height: '40px',
+  background: '#FFFFFF',
+  border: '1px solid #C5BFBF',
+  borderRadius: '7px',
+  paddingLeft: '0.5rem',
+};
 export const CustomInput = styled(InputBase)(({ theme }) => ({
   width: '100%',
   fontFamily: 'Poppins',
@@ -272,16 +280,7 @@ function RoomBookingscreen({ setopendashboard }) {
 
   const handleclick = async () => {
     setFormerror(validate());
-    if (
-      fullname &&
-      mobile &&
-      city &&
-      state &&
-      maleno &&
-      femaleno &&
-      childrenno &&
-      roomno
-    ) {
+    if (fullname && mobile && city && state && roomno) {
       setshowdata(true);
     }
   };
@@ -304,15 +303,6 @@ function RoomBookingscreen({ setopendashboard }) {
       errors.state = 'Sate is required';
     }
 
-    if (!maleno) {
-      errors.maleno = 'Required';
-    }
-    if (!femaleno) {
-      errors.femaleno = 'Required';
-    }
-    if (!childrenno) {
-      errors.childrenno = 'Required';
-    }
     if (!roomno) {
       errors.roomno = 'No of rooms is required';
     }
@@ -541,55 +531,139 @@ function RoomBookingscreen({ setopendashboard }) {
                       <p style={{ color: 'red' }}>{formerror.mobile}</p>
                     </div>
                     <div className="main_book_form_input_div_innear">
-                      <label htmlFor="fullname"> Full Name</label>
-                      <CustomInput
-                        type="text"
-                        id="fullname"
-                        name="fullname"
-                        placeholder="Full name"
-                        onChange={(e) => setfullname(e.target.value)}
-                        value={fullname}
-                      />
-                      <p style={{ color: 'red' }}>{formerror.name}</p>
+                      {lan ? (
+                        <>
+                          <label htmlFor="fullname"> Full Name</label>
+                          <CustomInput
+                            type="text"
+                            id="fullname"
+                            name="fullname"
+                            placeholder="Full name"
+                            onChange={(e) => setfullname(e.target.value)}
+                            value={fullname}
+                          />
+                          <p style={{ color: 'red' }}>{formerror.name}</p>
+                        </>
+                      ) : (
+                        <>
+                          <label htmlFor="fullname"> Full Name</label>
+                          <ReactTransliterate
+                            placeholder="Full name"
+                            style={custumstyle}
+                            id="full-name"
+                            required
+                            value={fullname}
+                            onChangeText={(fullname) => {
+                              setfullname(fullname);
+                            }}
+                            onChange={(e) => setfullname(e.target.value)}
+                            lang="hi"
+                          />
+                          <p style={{ color: 'red' }}>{formerror.name}</p>
+                        </>
+                      )}
                     </div>
                     <div className="main_book_form_input_div_innear">
-                      <label htmlFor="fathers">Father's name</label>
-                      <CustomInput
-                        type="text"
-                        id="fathers"
-                        name="fathers"
-                        placeholder="Enter father's name"
-                        value={fathers}
-                        onChange={(e) => setfathers(e.target.value)}
-                      />
-                      <p style={{ color: 'red' }}>{formerror.fathers}</p>
+                      {lan ? (
+                        <>
+                          <label htmlFor="fathers">Father's name</label>
+                          <CustomInput
+                            type="text"
+                            id="fathers"
+                            name="fathers"
+                            placeholder="Enter father's name"
+                            value={fathers}
+                            onChange={(e) => setfathers(e.target.value)}
+                          />
+                          <p style={{ color: 'red' }}>{formerror.fathers}</p>
+                        </>
+                      ) : (
+                        <>
+                          <label htmlFor="fathers">Father's name</label>
+                          <ReactTransliterate
+                            placeholder="Enter father's name"
+                            style={custumstyle}
+                            id="full-name"
+                            required
+                            value={fathers}
+                            onChangeText={(fathers) => {
+                              setfathers(fathers);
+                            }}
+                            onChange={(e) => setfathers(e.target.value)}
+                            lang="hi"
+                          />
+                          <p style={{ color: 'red' }}>{formerror.fathers}</p>
+                        </>
+                      )}
                     </div>
                   </div>
 
                   <div className="main_book_form_input_div">
                     <div className="main_book_form_input_div_innear">
-                      <label htmlFor="address">Address</label>
-                      <CustomInput
-                        type="text"
-                        id="address"
-                        name="address"
-                        placeholder="Enter address"
-                        value={address}
-                        onChange={(e) => setaddress(e.target.value)}
-                      />
-                      <p style={{ color: 'red' }}>{formerror.address}</p>
+                      {lan ? (
+                        <>
+                          <label htmlFor="address">Address</label>
+                          <CustomInput
+                            type="text"
+                            id="address"
+                            name="address"
+                            placeholder="Enter address"
+                            value={address}
+                            onChange={(e) => setaddress(e.target.value)}
+                          />
+                          <p style={{ color: 'red' }}>{formerror.address}</p>
+                        </>
+                      ) : (
+                        <>
+                          <label htmlFor="address">Address</label>
+                          <ReactTransliterate
+                            placeholder="Enter address"
+                            style={custumstyle}
+                            id="full-name"
+                            required
+                            value={address}
+                            onChangeText={(address) => {
+                              setaddress(address);
+                            }}
+                            onChange={(e) => setaddress(e.target.value)}
+                            lang="hi"
+                          />
+                          <p style={{ color: 'red' }}>{formerror.address}</p>
+                        </>
+                      )}
                     </div>
                     <div className="main_book_form_input_div_innear">
-                      <label htmlFor="city">City</label>
-                      <CustomInput
-                        type="text"
-                        id="city"
-                        placeholder="Enter city"
-                        name="city"
-                        value={city}
-                        onChange={(e) => setcity(e.target.value)}
-                      />
-                      <p style={{ color: 'red' }}>{formerror.city}</p>
+                      {lan ? (
+                        <>
+                          <label htmlFor="city">City</label>
+                          <CustomInput
+                            type="text"
+                            id="city"
+                            placeholder="Enter city"
+                            name="city"
+                            value={city}
+                            onChange={(e) => setcity(e.target.value)}
+                          />
+                          <p style={{ color: 'red' }}>{formerror.city}</p>
+                        </>
+                      ) : (
+                        <>
+                          <label htmlFor="city">City</label>
+                          <ReactTransliterate
+                            placeholder="Enter address"
+                            style={custumstyle}
+                            id="full-name"
+                            required
+                            value={city}
+                            onChangeText={(city) => {
+                              setcity(city);
+                            }}
+                            onChange={(e) => setcity(e.target.value)}
+                            lang="hi"
+                          />
+                          <p style={{ color: 'red' }}>{formerror.city}</p>
+                        </>
+                      )}
                     </div>
                     <div className="main_book_form_input_div_innear">
                       <label htmlFor="state">State</label>
@@ -674,7 +748,7 @@ function RoomBookingscreen({ setopendashboard }) {
                               );
                             })}
                         </select>
-                        <p style={{ color: 'red' }}>{formerror.maleno}</p>
+                        {/* <p style={{ color: 'red' }}>{formerror.maleno}</p> */}
                       </div>
                       <div
                         className="inpur_div_room_add"
@@ -716,7 +790,7 @@ function RoomBookingscreen({ setopendashboard }) {
                               );
                             })}
                         </select>
-                        <p style={{ color: 'red' }}>{formerror.childrenno}</p>
+                        {/* <p style={{ color: 'red' }}>{formerror.childrenno}</p> */}
                       </div>
                     </div>
                     <div className="main_book_form_input_div_innear">

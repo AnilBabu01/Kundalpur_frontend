@@ -37,9 +37,9 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '63%',
+  width: 'auto',
   bgcolor: 'background.paper',
-  p: 2,
+  p: 3,
   boxShadow: 24,
   borderRadius: '5px',
 };

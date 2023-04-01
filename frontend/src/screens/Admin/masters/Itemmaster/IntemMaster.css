@@ -22,12 +22,16 @@
   margin-left: 1rem;
 }
 .inner-input-div120 {
-  width: 280px;
-  height: 35px;
+  border: '1px solid #B8B8B8';
+  width: '37rem';
+  height: '39px';
+  border-radius: '5px';
+  font-size: '15px';
+  padding-left: '0.5rem';
+  margin-bottom: '0.5rem';
+  color: 'gray';
+  margin-left: 1rem;
 
-  background: #ffffff;
-  border: 1px solid #c5bfbf;
-  border-radius: 7px;
 }
 .main_center_header-update-donation {
   display: flex;

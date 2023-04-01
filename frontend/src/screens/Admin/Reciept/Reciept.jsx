@@ -43,19 +43,18 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   useEffect(() => {
     setopendashboard(true);
 
-    if (location.state) {
+    if (location.state?.userdata?.createdBy) {
       setisData(location.state?.userdata);
     } else {
-      serverInstance(`admin/donation-list?id=${onlineId}`, 'get').then(
-        (res) => {
-          if (res.status) {
-            setisData(res.data[0]);
-          }
-        },
-      );
+      serverInstance(
+        `user/add-elecDonation?id=${location.state?.userdata?.id}`,
+        'get',
+      ).then((res) => {
+        if (res.status) {
+          setisData(res.data.pop());
+        }
+      });
     }
-
-    console.log('data', isData);
   }, []);
 
   return (

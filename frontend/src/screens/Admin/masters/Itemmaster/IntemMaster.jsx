@@ -14,8 +14,10 @@ import TablePagination from '@mui/material/TablePagination';
 import EditIcon from '@mui/icons-material/Edit';
 import { backendApiUrl } from '../../../../config/config';
 import UpdateDonationType from './UpdateDonationType';
+import AddItemtype from './AddItemtype';
 import CheckIcon from '@mui/icons-material/Check';
 import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -27,7 +29,7 @@ const style = {
   top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '50%',
+  width: 'auto',
   bgcolor: 'background.paper',
   borderRadius: 3,
   boxShadow: 24,
@@ -148,6 +150,16 @@ function IntemMaster() {
       Swal('Error', error, 'error');
     }
   };
+  var options = { year: 'numeric', month: 'short', day: '2-digit' };
+  var today = new Date();
+  const currDate = today
+    .toLocaleDateString('en-IN', options)
+    .replace(/-/g, ' ');
+  const currTime = today.toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
   return (
     <>
       <Modal
@@ -159,72 +171,20 @@ function IntemMaster() {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <div>
-              <form onSubmit={handlesubmit}>
-                <div className="add-div-close-div">
-                  <h2>Add New Donation Item</h2>
-                  <IconButton>
-                    <CloseIcon onClick={() => handleClose()} />
-                  </IconButton>
-                </div>
-
-                <div className="main_add_Head_hai_na">
-                  <div className="inner-input-div1">
-                    <label htmlFor="donationtype_in_hindi">
-                      Enter donation item in hindi 
-                    </label>
-
-                    <ReactTransliterate
-                      // style={custumstyle}
-                      id="full-name"
-                      required
-                      value={donationtype_in_hindi}
-                      onChangeText={(donationtype_in_hindi) => {
-                        setdonationtype_in_hindi(donationtype_in_hindi);
-                      }}
-                      onChange={(e) => setdonationtype_in_hindi(e.target.value)}
-                      lang="hi"
-                    />
-                  </div>
-                  <div className="inner-input-div1">
-                    <label htmlFor="donationtype_in_eng">
-                      Enter donation item in english 
-                    </label>
-                    <input
-                      className="inner-input-div120"
-                      type="text"
-                      required
-                      id="donationtype_in_eng"
-                      value={donationtype_in_eng}
-                      name="donationtype_in_eng"
-                      onChange={(e) => setdonationtype_in_eng(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className="save-div-btn">
-                  <button className="save-div-btn-btn">
-                    {showloader ? (
-                      <CircularProgress
-                        style={{
-                          width: '21px',
-                          height: '21px',
-                          color: '#FE7600',
-                        }}
-                      />
-                    ) : (
-                      'Add'
-                    )}
-                  </button>
-                  <button
-                    onClick={() => handleClose()}
-                    className="save-div-btn-btn-cancel"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
+            <div className="add-div-close-div" style={{ paddingLeft: '1rem' }}>
+              <h2>Add Donation Item</h2>
+              <IconButton>
+                <CloseIcon onClick={() => handleClose()} />
+              </IconButton>
             </div>
+            <Typography
+              style={{ marginLeft: '1rem' }}
+              variant="body2"
+              color="primary"
+            >
+              {currDate} / {currTime}
+            </Typography>
+            <AddItemtype handleClose={handleClose} />
           </Box>
         </Fade>
       </Modal>
@@ -238,10 +198,22 @@ function IntemMaster() {
         <Fade in={open3}>
           <Box sx={style}>
             <div>
-              <div className="add-div-close-div">
+              <div
+                className="add-div-close-div"
+                style={{ paddingLeft: '1rem' }}
+              >
                 <h2>Update Donation Type</h2>
-                <CloseIcon onClick={() => handleClose3()} />
+                <IconButton>
+                  <CloseIcon onClick={() => handleClose3()} />
+                </IconButton>
               </div>
+              <Typography
+                style={{ marginLeft: '1rem' }}
+                variant="body2"
+                color="primary"
+              >
+                {currDate} / {currTime}
+              </Typography>
 
               <UpdateDonationType data={data} handleClose3={handleClose3} />
             </div>

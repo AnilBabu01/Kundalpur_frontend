@@ -8,7 +8,9 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Moment from 'moment-js';
 import moment from 'moment';
+import { serverInstance } from '../../../API/ServerInstance';
 import { backendUrl } from '../../../config/config';
+
 const converter = new Converter(hiIN);
 const CashRecipt = ({ setopendashboard, setshowreciept }) => {
   const location = useLocation();
@@ -55,14 +57,24 @@ const CashRecipt = ({ setopendashboard, setshowreciept }) => {
 
     return dateAndTime;
   };
+
   useEffect(() => {
     setopendashboard(true);
-    if (location.state) {
-      setisData(location.state?.userdata);
-    }
 
-    console.log(isData);
+    if (location.state?.userdata?.CreatedBy) {
+      if (location.state) {
+        setisData(location.state?.userdata);
+      }
+    } else {
+      serverInstance(
+        `admin/manual-donation?id=${location.state?.userdata.id}`,
+        'get',
+      ).then((res) => {
+        setisData(res.data[0]);
+      });
+    }
   }, []);
+
   return (
     <>
       <div>

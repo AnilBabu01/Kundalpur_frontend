@@ -21,21 +21,16 @@ import Print from '../../../../assets/Print.png';
 import ExportPdf from '../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../assets/ExportExcel.png';
 import Edit from '../../../../assets/Edit.png';
-import eye from '../../../../assets/eye.png';
 import Delete from '../../../../assets/Delete.png';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import { backendApiUrl } from '../../../../config/config';
-import axios from 'axios';
 import Categoryform from './Categoryform';
 import Typography from '@mui/material/Typography';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
 import UpdateCategory from './UpdateCategory';
 
 const style = {
@@ -43,7 +38,7 @@ const style = {
   top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '43%',
+  width: 'auto',
   bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,

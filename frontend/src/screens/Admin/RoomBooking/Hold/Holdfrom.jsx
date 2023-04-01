@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { serverInstance } from '../../../../API/ServerInstance';
 import InputBase from '@mui/material/InputBase';
+import InputLabel from '@mui/material/InputLabel';
 import { backendApiUrl } from '../../../../config/config';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { ReactTransliterate } from 'react-transliterate';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Moment from 'moment-js';
 import moment from 'moment';
-import { Box, Button, MenuItem, Select, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { ReactTransliterate } from 'react-transliterate';
+import {
+  Box,
+  Button,
+  ButtonBase,
+  FormControlLabel,
+  Grid,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  Typography,
+} from '@mui/material';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import './Holdform.css';
 const custominput = {
   width: '280px',
@@ -30,7 +42,7 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
     border: '1px solid #B8B8B8',
     borderRadius: 6,
-    width: '100%',
+    width: '265',
     fontSize: 15,
     padding: 8,
     paddingLeft: 12,
@@ -77,10 +89,10 @@ function Holdfrom({ setOpen }) {
       const data = {
         name: holdername,
         mobile: holdermobile,
-        since: sinceDate,
+        since: holdremain,
         sinceTime: sinceTime,
         remainTime: remainTime,
-        remain: remainDate,
+        remain: holdsince,
         dharmasala: dharamshalaname,
         category: categoryname,
         roomNo: roomnumber,
@@ -314,7 +326,8 @@ function Holdfrom({ setOpen }) {
                           <tr>
                             <td className="table_tddd">
                               <input
-                                type="checkbox"
+                                type="radio"
+                                name="anil"
                                 onClick={() => setroomnumber(item?.RoomNo)}
                               />
                             </td>

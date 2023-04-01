@@ -43,9 +43,9 @@ const style = {
   top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '43%',
+  width: 'auto',
   bgcolor: 'background.paper',
-  p: 2,
+  p: 3,
   boxShadow: 24,
   borderRadius: '5px',
 };

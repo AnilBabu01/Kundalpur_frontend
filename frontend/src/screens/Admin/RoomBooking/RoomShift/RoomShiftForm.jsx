@@ -19,20 +19,20 @@ const style = {
   transform: 'translate(-50%, -50%)',
 
   bgcolor: 'background.paper',
-  p: 2,
+  p: 3,
   boxShadow: 24,
   borderRadius: '5px',
 };
 
 export const CustomInput = styled(InputBase)(({ theme }) => ({
-  width: '280px',
+  width: '100%',
   fontFamily: 'Poppins',
   backgroundColor: '#fff',
   borderRadius: 6,
   '& .MuiInputBase-input': {
     border: '1px solid #B8B8B8',
     borderRadius: 6,
-    width: '100%',
+    width: '245px',
     fontSize: 15,
     padding: 8,
     paddingLeft: 12,
@@ -257,7 +257,7 @@ function RoomShiftForm({ setOpen, changedata }) {
       {showchangeroom ? (
         <>
           <div className="cash-donation-div">
-            <div className="cash-donation-container-innser">
+            <div className="cash-donation-container-innser10">
               <div className="form-div" style={{ marginBottom: '1rem' }}>
                 <div className="form-input-div_add_user">
                   <div className="inner-input-div2">
@@ -373,7 +373,7 @@ function RoomShiftForm({ setOpen, changedata }) {
                       id="donation-type"
                       required
                       sx={{
-                        width: '280px',
+                        width: '266px',
                         fontSize: 14,
                         '& .MuiSelect-select': {
                           // borderColor: !!formerror.donationtype ? 'red' : '',
@@ -423,7 +423,7 @@ function RoomShiftForm({ setOpen, changedata }) {
                       id="donation-type"
                       required
                       sx={{
-                        width: '280px',
+                        width: '266px',
                         fontSize: 14,
                         '& .MuiSelect-select': {
                           // borderColor: !!formerror.donationtype ? 'red' : '',
@@ -559,7 +559,7 @@ function RoomShiftForm({ setOpen, changedata }) {
       ) : (
         <>
           <div className="cash-donation-div">
-            <div className="cash-donation-container-innser">
+            <div className="cash-donation-container-innser10">
               <div className="form-div" style={{ marginBottom: '1rem' }}>
                 <div className="form-input-div_add_user">
                   <div className="inner-input-div2">

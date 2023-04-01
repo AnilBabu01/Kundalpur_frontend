@@ -117,7 +117,7 @@ function UpdateFac({ updatedata, setOpen }) {
         </Button>
       </Box>
       <div className="cash-donation-div">
-        <div className="cash-donation-container-innser">
+        <div className="cash-donation-container-innser10">
           <div className="form-div" style={{ marginBottom: '1rem' }}>
             <div className="form-input-div_add_user">
               {lan ? (

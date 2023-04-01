@@ -42,7 +42,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '63%',
+  width: 'auto',
   bgcolor: 'background.paper',
   p: 2,
   boxShadow: 24,
@@ -149,6 +149,10 @@ const Hold = ({ setopendashboard }) => {
     setopendashboard(true);
 
     setuserrole(Number(sessionStorage.getItem('userrole')));
+  }, [open, open1, open3]);
+
+  useEffect(() => {
+    getall_donation();
   }, [open, open1, open3]);
 
   return (

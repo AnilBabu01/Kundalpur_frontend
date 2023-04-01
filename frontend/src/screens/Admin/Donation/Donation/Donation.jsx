@@ -831,10 +831,12 @@ const Donation = ({ setopendashboard }) => {
                 {isData ? (
                   <>
                     {(rowsPerPage > 0
-                      ? isData.slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage,
-                        )
+                      ? isData
+                          .slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage,
+                          )
+                          .reverse()
                       : isData.reverse()
                     ).map((row, index) => (
                       <TableRow

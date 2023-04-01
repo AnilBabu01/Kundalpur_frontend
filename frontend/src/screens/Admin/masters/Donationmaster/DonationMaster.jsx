@@ -16,6 +16,7 @@ import { backendApiUrl } from '../../../../config/config';
 import UpdateDonationType from './UpdateDonationType';
 import CheckIcon from '@mui/icons-material/Check';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -25,7 +26,7 @@ const style = {
   top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '50%',
+  width: 'auto',
   bgcolor: 'background.paper',
   borderRadius: 3,
   boxShadow: 24,
@@ -145,6 +146,17 @@ function DonationMaster() {
       Swal('Error', error, 'error');
     }
   };
+  var options = { year: 'numeric', month: 'short', day: '2-digit' };
+  var today = new Date();
+  const currDate = today
+    .toLocaleDateString('en-IN', options)
+    .replace(/-/g, ' ');
+  const currTime = today.toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+
   return (
     <>
       <Modal
@@ -164,7 +176,13 @@ function DonationMaster() {
                     <CloseIcon onClick={() => handleClose()} />
                   </IconButton>
                 </div>
-
+                <Typography
+                  style={{ marginBottom: '1rem' }}
+                  variant="body2"
+                  color="primary"
+                >
+                  {currDate} / {currTime}
+                </Typography>
                 <div className="main_add_Head_hai_na">
                   <div className="inner-input-div1">
                     <label htmlFor="donationtype_in_hindi">
@@ -185,7 +203,10 @@ function DonationMaster() {
                     />
                   </div>
                   <div className="inner-input-div1">
-                    <label htmlFor="donationtype_in_eng">
+                    <label
+                      htmlFor="donationtype_in_eng"
+                      style={{ marginLeft: '1rem' }}
+                    >
                       Enter donation item in english 
                     </label>
                     <input
@@ -236,13 +257,22 @@ function DonationMaster() {
         <Fade in={open3}>
           <Box sx={style}>
             <div>
-              <div className="add-div-close-div">
+              <div
+                className="add-div-close-div"
+                style={{ paddingLeft: '1rem' }}
+              >
                 <h2>Update Donation Type</h2>
                 <IconButton>
                   <CloseIcon onClick={() => handleClose3()} />
                 </IconButton>
               </div>
-              <hr />
+              <Typography
+                style={{ marginLeft: '1rem' }}
+                variant="body2"
+                color="primary"
+              >
+                {currDate} / {currTime}
+              </Typography>
               <UpdateDonationType data={data} handleClose3={handleClose3} />
             </div>
           </Box>

@@ -65,7 +65,10 @@ function UpdateDonationType({ data, handleClose3 }) {
               />
             </div>
             <div className="inner-input-div1">
-              <label htmlFor="donationtype_in_eng">
+              <label
+                htmlFor="donationtype_in_eng"
+                style={{ marginLeft: '1rem' }}
+              >
                 Enter donation item in english 
               </label>
               <input

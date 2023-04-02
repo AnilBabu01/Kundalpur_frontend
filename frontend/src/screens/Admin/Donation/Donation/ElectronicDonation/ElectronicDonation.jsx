@@ -151,9 +151,12 @@ const ElectronicDonation = ({
     );
   };
 
-  if (mobileNo.length === 10 && fetchuserdetail === true) {
-    getDonatedUserDetails();
-    setfetchuserdetail(false);
+  if (showUpdateBtn) {
+  } else {
+    if (mobileNo.length === 10 && fetchuserdetail === true) {
+      getDonatedUserDetails();
+      setfetchuserdetail(false);
+    }
   }
 
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
@@ -355,8 +358,8 @@ const ElectronicDonation = ({
               sx={{
                 borderColor: '#C8C8C8',
                 fontSize: 12,
-                minWidth: 40,
-                padding: 0,
+                minWidth: 100,
+                padding: 0.5,
                 color: newMember ? '#656565' : '#fff',
               }}
               onClick={() => setNewMember(false)}
@@ -370,8 +373,8 @@ const ElectronicDonation = ({
               sx={{
                 borderColor: '#C8C8C8',
                 fontSize: 12,
-                minWidth: 40,
-                padding: 0,
+                minWidth: 100,
+                padding: 0.5,
                 color: newMember ? '#fff' : '#656565',
               }}
             >

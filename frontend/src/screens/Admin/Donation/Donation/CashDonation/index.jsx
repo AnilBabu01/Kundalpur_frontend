@@ -64,7 +64,7 @@ const CashDonation = ({
     fontSize: 14,
     padding: 9.5,
   };
-
+  const [role, setrole] = useState('');
   const [hindiremark, sethindiremark] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
   const [receiptNo, setReceiptNo] = useState('');
@@ -174,10 +174,14 @@ const CashDonation = ({
     );
   };
 
-  if (mobileNo.length === 10 && fetchuserdetail === true) {
-    getDonatedUserDetails();
-    setfetchuserdetail(false);
+  if (showUpdateBtn) {
+  } else {
+    if (mobileNo.length === 10 && fetchuserdetail === true) {
+      getDonatedUserDetails();
+      setfetchuserdetail(false);
+    }
   }
+
   const addCashDonation = async (e) => {
     setshowloader(true);
     axios.defaults.headers.post[
@@ -306,8 +310,7 @@ const CashDonation = ({
       setgenderp(updateData?.gender);
       setgenderp1(updateData?.gender);
     }
-
-    console.log(updateData);
+    setrole(Number(sessionStorage.getItem('userrole')));
   }, []);
 
   return (
@@ -338,8 +341,8 @@ const CashDonation = ({
               sx={{
                 borderColor: '#C8C8C8',
                 fontSize: 12,
-                minWidth: 40,
-                padding: 0,
+                minWidth: 100,
+                padding: 0.5,
                 color: newMember ? '#656565' : '#fff',
               }}
               onClick={() => setNewMember(false)}
@@ -353,8 +356,8 @@ const CashDonation = ({
               sx={{
                 borderColor: '#C8C8C8',
                 fontSize: 12,
-                minWidth: 40,
-                padding: 0,
+                minWidth: 100,
+                padding: 0.5,
                 color: newMember ? '#fff' : '#656565',
               }}
             >
@@ -366,6 +369,7 @@ const CashDonation = ({
             <Grid item xs={6} md={3}>
               <CustomInputLabel htmlFor="donation-date">Date</CustomInputLabel>
               <CustomInput
+                disabled={role === 3 ? true : false}
                 type="date"
                 id="donation-date"
                 value={donationDate}
@@ -379,6 +383,7 @@ const CashDonation = ({
             <Grid item xs={6} md={3}>
               <CustomInputLabel htmlFor="donation-time">Time</CustomInputLabel>
               <CustomInput
+                disabled={role === 3 ? true : false}
                 type="time"
                 id="donation-time"
                 value={donationTime}
@@ -388,7 +393,7 @@ const CashDonation = ({
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <CustomInputLabel required htmlFor="mobile-no">
+              <CustomInputLabel htmlFor="mobile-no">
                 Mobile Number
               </CustomInputLabel>
               <CustomInput

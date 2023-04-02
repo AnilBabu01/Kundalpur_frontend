@@ -764,13 +764,11 @@ const ManualDonation = ({ setopendashboard }) => {
                 {isData && isData?.length > 0 ? (
                   <>
                     {(rowsPerPage > 0
-                      ? isData
-                          .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage,
-                          )
-                          .reverse()
-                      : isData.reverse()
+                      ? isData.slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
+                      : isData
                     ).map((row, index) => (
                       <TableRow
                         key={row.id}

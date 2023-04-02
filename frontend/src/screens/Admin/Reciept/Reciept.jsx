@@ -15,11 +15,6 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
   const componentRef = useRef();
   const [isData, setisData] = React.useState(null);
   const navigation = useNavigate();
-  const { user } = useSelector((state) => state.userReducer);
-
-  const adminName = sessionStorage.getItem('adminName');
-
-  const empName = sessionStorage.getItem('empName');
 
   function printDiv() {
     navigation('/admin-panel/reports/printcontent', {
@@ -46,17 +41,15 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
     if (location.state?.userdata?.createdBy) {
       setisData(location.state?.userdata);
     } else {
-      serverInstance(
-        `user/add-elecDonation?id=${location.state?.userdata?.id}`,
-        'get',
-      ).then((res) => {
+      serverInstance(`user/add-elecDonation`, 'get').then((res) => {
         if (res.status) {
-          setisData(res.data.pop());
+          setisData(res.data[0]);
         }
       });
     }
   }, []);
 
+  console.log('dddd', isData);
   return (
     <>
       <div>
@@ -680,7 +673,6 @@ const CashRecipt = ({ setopendashboard, setshowreciept, onlineId }) => {
                     <>
                       <h2>
                         <span className="font_bold_in_donation">
-                          {' '}
                           {isData && converter.toWords(isData?.AMOUNT)}{' '}
                         </span>
                         रूपये ऑनलाइन द्वारा दान स्वरूप सधन्यवाद प्राप्त हुये।

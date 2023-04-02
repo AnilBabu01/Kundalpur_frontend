@@ -3,12 +3,6 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import f1 from '../../../../assets/f4.png';
 import './OnlineTap.css';
 const OnlineTap = ({ setopendashboard }) => {
-  const [toggleState, setToggleState] = useState(1);
-
-  const toggleTab = (index) => {
-    setToggleState(index);
-  };
-
   useEffect(() => {
     setopendashboard(true);
   }, []);
@@ -29,6 +23,18 @@ const OnlineTap = ({ setopendashboard }) => {
                 alt="fast"
               />
               Online Donation Report
+            </NavLink>
+            <NavLink
+              style={{ marginRight: '3rem', width: '17%' }}
+              to="/admin-panel/online/report/online-paymentfail"
+              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
+            >
+              <img
+                style={{ marginRight: '4%', width: '20px' }}
+                src={f1}
+                alt="fast"
+              />
+              Payment failed online
             </NavLink>
             <NavLink
               style={{ width: '17%' }}

@@ -121,23 +121,7 @@ const UpdateChe = ({
       ),
     );
   }
-  const getDonatedUserDetails = () => {
-    serverInstance(
-      `admin/getuser-by-num-manual?mobile=${mobileNo}`,
-      'get',
-    ).then((res) => {
-      if (res.status) {
-        setFullName(res.data.name);
-        setAddress(res.data.address);
-        setgenderp(res.data.gender);
-      }
-    });
-  };
 
-  if (mobileNo.length === 10 && fetchuserdetail === true) {
-    getDonatedUserDetails();
-    setfetchuserdetail(false);
-  }
   var options = { year: 'numeric', month: 'short', day: '2-digit' };
   var today = new Date();
   const currDate = today
@@ -290,8 +274,8 @@ const UpdateChe = ({
               sx={{
                 borderColor: '#C8C8C8',
                 fontSize: 12,
-                minWidth: 40,
-                padding: 0,
+                minWidth: 100,
+                padding: 0.5,
                 color: newMember ? '#656565' : '#fff',
               }}
               onClick={() => setNewMember(false)}
@@ -305,8 +289,8 @@ const UpdateChe = ({
               sx={{
                 borderColor: '#C8C8C8',
                 fontSize: 12,
-                minWidth: 40,
-                padding: 0,
+                minWidth: 100,
+                padding: 0.5,
                 color: newMember ? '#fff' : '#656565',
               }}
             >

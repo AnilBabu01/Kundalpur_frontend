@@ -811,6 +811,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       </p>
                       {isData && isData.modeOfDonation === '2' && (
                         <>
+                          <br />
                           <p className="common_margin_pp common_margin_pp margin_left_is">
                             <span className="gsray-text">
                               विवरण - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -824,6 +825,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                       )}
                       {isData && isData.modeOfDonation === 2 && (
                         <>
+                          <br />
                           <p className="common_margin_pp common_margin_pp margin_left_is">
                             <span className="grsay-text">
                               विवरण - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -835,8 +837,10 @@ function PrintContent({ setopendashboard, setshowreciept }) {
                           </p>
                         </>
                       )}
+
                       {isData && isData.modeOfDonation === '3' && (
                         <>
+                          <br />
                           <p className="common_margin_pp margin_left_is">
                             <span className="grsay-text">
                               विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
@@ -851,6 +855,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === 3 && (
                         <>
+                          <br />
                           <p className="common_margin_pp margin_left_is">
                             <span className="grsay-text">
                               विवरण - &nbsp;&nbsp;&nbsp;&nbsp;
@@ -865,6 +870,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === '1' && (
                         <>
+                          <br />
                           <p className="common_margin_pp margin_left_is">
                             <span className="grsay-text">विवरण - &nbsp;</span>
                             {isData && isData?.REMARK
@@ -876,6 +882,7 @@ function PrintContent({ setopendashboard, setshowreciept }) {
 
                       {isData && isData.modeOfDonation === 1 && (
                         <>
+                          <br />
                           <p className="common_margin_pp margin_left_is">
                             <span className="grsay-text">विवरण - &nbsp;</span>
                             {isData && isData?.REMARK

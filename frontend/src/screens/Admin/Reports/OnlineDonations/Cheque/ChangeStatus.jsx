@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { backendApiUrl } from '../../../../../config/config';
-import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 function ChangeStatus({ id, handleClose }) {
-  const navigate = useNavigate();
   const [paymentId, setpaymentId] = useState('');
   const [approvevalue, setapprovevalue] = useState('');
   console.log(id);
@@ -28,8 +26,6 @@ function ChangeStatus({ id, handleClose }) {
       console.log(res);
     } catch (error) {}
   };
-
-  useEffect(() => {}, []);
 
   return (
     <>

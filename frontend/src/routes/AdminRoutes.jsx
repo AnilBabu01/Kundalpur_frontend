@@ -33,6 +33,7 @@ import Consolidated from '../screens/Admin/Reports/DonationReport/Consolidated/C
 import Electornic from '../screens/Admin/Reports/DonationReport/Electornic/Electornic';
 import ManualCheque from '../screens/Admin/Reports/DonationReport/ManualCheque/ManualCheque';
 import HeadReport from '../screens/Admin/Reports/DonationReport/HeadReport/HeadReport';
+import CancelDonation from '../screens/Admin/Reports/DonationReport/CancelDonation/CancelDonation';
 /// manual donation routes
 import Consolidated1 from '../screens/Admin/Reports/ManualDonationReports/Consolidated/Consolidated';
 import HeadReport1 from '../screens/Admin/Reports/ManualDonationReports/HeadReport/HeadReport';
@@ -45,7 +46,7 @@ import ManualItem1 from '../screens/Admin/Reports/ManualDonationReports/ManualIt
 
 import Cheque from '../screens/Admin/Reports/OnlineDonations/Cheque/Cheque';
 import Online from '../screens/Admin/Reports/OnlineDonations/Online/Online';
-
+import OnlinepaymentFail from '../screens/Admin/Reports/OnlineDonations/OnlinepaymentFail/OnlinepaymentFail';
 /// all report routes
 import AllReportTap from '../screens/Admin/Reports/AllReport/AllReportTap';
 import AllHead from '../screens/Admin/Reports/AllReport/AllHead';
@@ -64,6 +65,9 @@ import CheckIn from '../screens/Admin/RoomBooking/CheckIn/CheckIn';
 import Hold from '../screens/Admin/RoomBooking/Hold/Hold';
 import RoomShift from '../screens/Admin/RoomBooking/RoomShift/RoomShift';
 import RoomBooking from '../screens/Admin/RoomBooking/RoomBooking';
+
+//online receipt
+import OnlineadminRecipt from '../screens/Admin/Reciept/OnlineadminRecipt';
 function AdminRoutes({ setopendashboard, setshowreciept }) {
   const [addleftmargin, setaddleftmargin] = useState(false);
   return (
@@ -308,6 +312,14 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
             </Adminprivateroute>
           }
         />
+        <Route
+          path="/admin-panel/electronic/report/cancel-donations"
+          element={
+            <Adminprivateroute>
+              <CancelDonation setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
 
         <Route
           path="/admin-panel/electronic/report/item"
@@ -417,6 +429,15 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           }
         />
 
+        <Route
+          path="/admin-panel/online/report/online-paymentfail"
+          element={
+            <Adminprivateroute>
+              <OnlinepaymentFail setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
         {/* <Route
           path="/admin-panel/allreport/head"
           element={
@@ -513,6 +534,15 @@ function AdminRoutes({ setopendashboard, setshowreciept }) {
           element={
             <Adminprivateroute>
               <RoomBooking setopendashboard={setopendashboard} />
+            </Adminprivateroute>
+          }
+        />
+
+        <Route
+          path="/admin-panel/room/online/recipt"
+          element={
+            <Adminprivateroute>
+              <OnlineadminRecipt setopendashboard={setopendashboard} />
             </Adminprivateroute>
           }
         />

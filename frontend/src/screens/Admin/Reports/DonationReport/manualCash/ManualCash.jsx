@@ -176,7 +176,9 @@ const ManualCash = ({ setopendashboard }) => {
     setsearchvalue('');
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
-        let filterData = res.data.filter((item) => item.modeOfDonation === '2');
+        let filterData = res.data.filter(
+          (item) => item.modeOfDonation === '2' && item.isActive === true,
+        );
 
         setisData(filterData);
         setisDataDummy(filterData);
@@ -245,8 +247,9 @@ const ManualCash = ({ setopendashboard }) => {
       );
 
       if (res.data.status) {
-        setisData(res.data.data);
-        setisDataDummy(res.data.data);
+        let filterData = res.data.data.filter((item) => item.isActive === true);
+        setisData(filterData);
+        setisDataDummy(filterData);
       }
     } else {
       axios.defaults.headers.get[
@@ -258,8 +261,9 @@ const ManualCash = ({ setopendashboard }) => {
       );
 
       if (res.data.status) {
-        setisData(res.data.data);
-        setisDataDummy(res.data.data);
+        let filterData = res.data.data.filter((item) => item.isActive === true);
+        setisData(filterData);
+        setisDataDummy(filterData);
       }
     }
   };

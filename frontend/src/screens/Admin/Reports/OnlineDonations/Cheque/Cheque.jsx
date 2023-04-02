@@ -159,7 +159,7 @@ const Cheque = ({ setopendashboard }) => {
   };
 
   const downloadrecept = (row) => {
-    navigation('/reciept', {
+    navigation('/admin-panel/room/online/recipt', {
       state: {
         userdata: row,
       },

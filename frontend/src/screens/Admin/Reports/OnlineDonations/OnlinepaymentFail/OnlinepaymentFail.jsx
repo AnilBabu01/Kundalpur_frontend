@@ -26,9 +26,6 @@ import { backendApiUrl } from '../../../../../config/config';
 import Print from '../../../../../assets/Print.png';
 import ExportPdf from '../../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../../assets/ExportExcel.png';
-import Edit from '../../../../../assets/Edit.png';
-import eye from '../../../../../assets/eye.png';
-import './Online.css';
 import { ExportPdfmanulElectronic } from '../../../compoments/ExportPdf';
 import OnlineTotal from '../../../compoments/OnlineTotal';
 import { styled, alpha } from '@mui/material/styles';
@@ -97,7 +94,7 @@ const style5 = {
   boxShadow: 24,
   borderRadius: '15px',
 };
-const Online = ({ setopendashboard }) => {
+const OnlinepaymentFail = ({ setopendashboard }) => {
   const navigation = useNavigate();
   const [isData, setisData] = React.useState('');
   const [filterstate, setfilterstate] = useState(false);
@@ -150,7 +147,8 @@ const Online = ({ setopendashboard }) => {
       if (res.status) {
         let filterData = res.data.filter(
           (item) =>
-            item.MODE_OF_DONATION === 'ONLINE' && item?.PAYMENT_STATUS === true,
+            item?.MODE_OF_DONATION === 'ONLINE' &&
+            item?.PAYMENT_STATUS === false,
         );
         setisData(filterData);
       } else {
@@ -214,7 +212,7 @@ const Online = ({ setopendashboard }) => {
 
       if (res.data.status) {
         let filterData = res.data.data.filter(
-          (item) => item?.PAYMENT_STATUS === true,
+          (item) => item?.PAYMENT_STATUS === false,
         );
         setisData(filterData);
       }
@@ -225,7 +223,7 @@ const Online = ({ setopendashboard }) => {
 
       if (res.data.status) {
         let filterData = res.data.data.filter(
-          (item) => item?.PAYMENT_STATUS === true,
+          (item) => item?.PAYMENT_STATUS === false,
         );
         setisData(filterData);
       }
@@ -352,7 +350,6 @@ const Online = ({ setopendashboard }) => {
               <button onClick={() => getall_donation()}>Reset</button>
             </div>
           </div>
-          {/* <div></div> */}
         </div>
 
         <div
@@ -407,7 +404,6 @@ const Online = ({ setopendashboard }) => {
         </div>
 
         <div className="table-div-maain">
-          {/* <TableContainer component={Paper}> */}
           <Table
             sx={{ minWidth: 650, width: '100%' }}
             aria-label="simple table"
@@ -419,10 +415,7 @@ const Online = ({ setopendashboard }) => {
                 <TableCell>Name </TableCell>
                 <TableCell>Donation Type</TableCell>
                 <TableCell>Amount</TableCell>
-
-                <TableCell>Payment id</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -451,30 +444,10 @@ const Online = ({ setopendashboard }) => {
                       <TableCell> {row?.MODE_OF_DONATION}</TableCell>
                       <TableCell> {row?.AMOUNT}</TableCell>
 
-                      <TableCell> {row?.PAYMENT_ID}</TableCell>
                       <TableCell align="left">
                         {row?.PAYMENT_STATUS === true
                           ? 'Payment succrssfull'
                           : 'Payment failed'}
-                      </TableCell>
-                      <TableCell>
-                        <img
-                          onClick={() =>
-                            navigation('/admin-panel/reports/printcontent', {
-                              state: {
-                                data: row,
-                              },
-                            })
-                          }
-                          src={Print}
-                          alt="print"
-                          style={{ width: '20px', marginRight: '2px' }}
-                        />
-                        <DownloadIcon
-                          onClick={() => {
-                            downloadrecept(row);
-                          }}
-                        />
                       </TableCell>
                     </TableRow>
                   ))}
@@ -486,8 +459,6 @@ const Online = ({ setopendashboard }) => {
                     <TableCell>
                       <OnlineTotal data={isData} />
                     </TableCell>
-                    <TableCell> &nbsp;</TableCell>
-                    <TableCell> &nbsp;</TableCell>
                     <TableCell> &nbsp;</TableCell>
                   </TableRow>
                 </>
@@ -537,4 +508,4 @@ const Online = ({ setopendashboard }) => {
   );
 };
 
-export default Online;
+export default OnlinepaymentFail;

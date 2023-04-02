@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { serverInstance } from '../../../../../API/ServerInstance';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,20 +18,16 @@ import Cancel from '../../../compoments/Cancel';
 import DownloadIcon from '@mui/icons-material/Download';
 import ClearIcon from '@mui/icons-material/Clear';
 import exportFromJSON from 'export-from-json';
-import ChequeDonation from '../../../Donation/Donation/ChequeDonation/index';
-import { backendApiUrl } from '../../../../../config/config';
-import CircularProgress from '@mui/material/CircularProgress';
-import axios from 'axios';
-import './ManualCheque.css';
 import Moment from 'moment-js';
+import CashDonation from '../../../Donation/Donation/CashDonation';
+import { backendApiUrl } from '../../../../../config/config';
+import axios from 'axios';
 import { ExportPdfmanul } from '../../../compoments/ExportPdf';
 import Print from '../../../../../assets/Print.png';
 import ExportPdf from '../../../../../assets/ExportPdf.png';
 import ExportExcel from '../../../../../assets/ExportExcel.png';
 import Edit from '../../../../../assets/Edit.png';
 import eye from '../../../../../assets/eye.png';
-import { ReactSpinner } from 'react-spinning-wheel';
-import 'react-spinning-wheel/dist/style.css';
 import ElectronicTotal from '../../../compoments/ElectronicTotal';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
@@ -40,6 +36,9 @@ import PrintElectronic from '../../../compoments/PrintElectronic';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import DonationReportTap from '../DonationReportTap';
+import { ReactSpinner } from 'react-spinning-wheel';
+import 'react-spinning-wheel/dist/style.css';
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -119,9 +118,11 @@ const openupadtestyle = {
 };
 
 const donationColorTheme = {
-  cheque: '#1C82AD',
+  cash: '#48a828',
 };
-const ManualCheque = ({ setopendashboard }) => {
+
+const CancelDonation = ({ setopendashboard }) => {
+  const navigation = useNavigate();
   const [emplist, setemplist] = useState('');
   const [isData, setisData] = React.useState('');
   const [isDataDummy, setisDataDummy] = React.useState([]);
@@ -129,13 +130,11 @@ const ManualCheque = ({ setopendashboard }) => {
   const [rowsPerPage, setRowsPerPage] = useState(50);
   const [showalert, setshowalert] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const navigation = useNavigate();
-  const [updateId, setupdateId] = useState('');
   const [updateData, setupdateData] = useState('');
   const [openupdate, setopenupdate] = useState(false);
   const [showUpdateBtn, setshowUpdateBtn] = useState(true);
-  const [typedonation, settypedonation] = useState('');
   const [donationTypes, setDonationTypes] = useState([]);
+  const [updateId, setupdateId] = useState('');
   const [userrole, setuserrole] = useState('');
   const [datefrom, setdatefrom] = useState('');
   const [dateto, setdateto] = useState('');
@@ -155,6 +154,11 @@ const ManualCheque = ({ setopendashboard }) => {
   const [remark, setRemark] = useState('');
   const [type, setType] = useState('');
   const [userType, setUserType] = useState('');
+  const handleOpen = (id) => {
+    setupdateId(id);
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
   const upadteClose = () => {
     setopenupdate(false);
   };
@@ -162,12 +166,6 @@ const ManualCheque = ({ setopendashboard }) => {
     setupdateData(row);
     setopenupdate(true);
   };
-
-  const handleOpen = (id) => {
-    setOpen(true);
-    setupdateId(id);
-  };
-  const handleClose = () => setOpen(false);
 
   const getall_donation = () => {
     setdatefrom('');
@@ -177,16 +175,13 @@ const ManualCheque = ({ setopendashboard }) => {
     setsearchvalue('');
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
-        let filterData = res.data.filter(
-          (item) => item.modeOfDonation === '3' && item.isActive === true,
-        );
+        let filterData = res.data.filter((item) => item.isActive === false);
 
         setisData(filterData);
         setisDataDummy(filterData);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
-      console.log(res);
     });
   };
 
@@ -198,6 +193,7 @@ const ManualCheque = ({ setopendashboard }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   const printreceipt = (row) => {
     if (row.active === '0') {
     } else {
@@ -210,7 +206,7 @@ const ManualCheque = ({ setopendashboard }) => {
   };
 
   const ExportToExcel = () => {
-    const fileName = 'ManualChequeReport';
+    const fileName = 'ManualCashReport';
     const exportType = 'xls';
     var data = [];
     isData.map((item, index) => {
@@ -236,6 +232,7 @@ const ManualCheque = ({ setopendashboard }) => {
     });
     exportFromJSON({ data, fileName, exportType });
   };
+
   const filterdata = async () => {
     if (searchvalue) {
       axios.defaults.headers.get[
@@ -243,13 +240,12 @@ const ManualCheque = ({ setopendashboard }) => {
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.get(
-        `${backendApiUrl}admin/search-electric?search=${searchvalue}&type=${3}`,
+        `${backendApiUrl}admin/search-electric?search=${searchvalue}&type=${2}`,
       );
 
       if (res.data.status) {
-        let filterData = res.data.data.filter((item) => item.isActive === true);
-        setisData(filterData);
-        setisDataDummy(filterData);
+        setisData(res.data.data);
+        setisDataDummy(res.data.data);
       }
     } else {
       axios.defaults.headers.get[
@@ -257,13 +253,12 @@ const ManualCheque = ({ setopendashboard }) => {
       ] = `Bearer ${sessionStorage.getItem('token')}`;
 
       const res = await axios.get(
-        `${backendApiUrl}user/search-donation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}&modeOfDonation=${3}`,
+        `${backendApiUrl}user/search-donation?fromDate=${datefrom}&toDate=${dateto}&fromVoucher=${voucherfrom}&toVoucher=${voucherto}&modeOfDonation=${2}`,
       );
 
       if (res.data.status) {
-        let filterData = res.data.data.filter((item) => item.isActive === true);
-        setisData(filterData);
-        setisDataDummy(filterData);
+        setisData(res.data.data);
+        setisDataDummy(res.data.data);
       }
     }
   };
@@ -301,7 +296,7 @@ const ManualCheque = ({ setopendashboard }) => {
     setopendashboard(true);
     get_donation_tyeps();
     setuserrole(Number(sessionStorage.getItem('userrole')));
-  }, [showalert, open, openupdate]);
+  }, [showalert, openupdate, open]);
   const onSearchByOther = (e, type) => {
     if (type === 'Date') {
       setDate(e.target.value);
@@ -417,6 +412,7 @@ const ManualCheque = ({ setopendashboard }) => {
           </Box>
         </Fade>
       </Modal>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -431,7 +427,7 @@ const ManualCheque = ({ setopendashboard }) => {
                 <h2>Cancel electronic donation </h2>
                 <CloseIcon onClick={() => handleClose()} />
               </div>
-              <Cancel handleClose={handleClose} updateId={updateId} type={3} />
+              <Cancel handleClose={handleClose} updateId={updateId} type={2} />
             </div>
           </Box>
         </Fade>
@@ -454,9 +450,9 @@ const ManualCheque = ({ setopendashboard }) => {
               },
             }}
           >
-            <ChequeDonation
+            <CashDonation
               handleClose={upadteClose}
-              themeColor={donationColorTheme.cheque}
+              themeColor={donationColorTheme.cash}
               updateData={updateData}
               showUpdateBtn={showUpdateBtn}
               setopendashboard={setopendashboard}
@@ -591,6 +587,7 @@ const ManualCheque = ({ setopendashboard }) => {
             &nbsp;&nbsp;
           </div>
         </div>
+
         <div className="table-div-maain">
           <Table
             sx={{ minWidth: 650, width: '100%' }}
@@ -752,36 +749,44 @@ const ManualCheque = ({ setopendashboard }) => {
                         })}
                       </TableCell>
                       <TableCell>
-                        <img
-                          onClick={() =>
-                            navigation(`/admin-panel/infoElectronic/${row.id}`)
-                          }
-                          src={eye}
-                          alt="print"
-                          style={{ width: '20px', marginRight: '2px' }}
-                        />
-
-                        {userrole === 1 && (
+                        <Tooltip title="Vew Details">
                           <img
-                            onClick={() => upadteOpen(row)}
-                            src={Edit}
+                            onClick={() =>
+                              navigation(
+                                `/admin-panel/infoElectronic/${row.id}`,
+                              )
+                            }
+                            src={eye}
                             alt="print"
                             style={{ width: '20px', marginRight: '2px' }}
                           />
+                        </Tooltip>
+
+                        {userrole === 1 && (
+                          <Tooltip title="Edit Donation">
+                            <img
+                              onClick={() => upadteOpen(row)}
+                              src={Edit}
+                              alt="print"
+                              style={{ width: '20px', marginRight: '2px' }}
+                            />
+                          </Tooltip>
                         )}
 
-                        <img
-                          onClick={() =>
-                            navigation('/admin-panel/reports/printcontent', {
-                              state: {
-                                data: row,
-                              },
-                            })
-                          }
-                          src={Print}
-                          alt="print"
-                          style={{ width: '20px', marginRight: '2px' }}
-                        />
+                        <Tooltip title="Print Certificate">
+                          <img
+                            onClick={() =>
+                              navigation('/admin-panel/reports/printcontent', {
+                                state: {
+                                  data: row,
+                                },
+                              })
+                            }
+                            src={Print}
+                            alt="print"
+                            style={{ width: '20px', marginRight: '2px' }}
+                          />
+                        </Tooltip>
                         {row.isActive ? (
                           <DownloadIcon
                             onClick={() => {
@@ -792,7 +797,9 @@ const ManualCheque = ({ setopendashboard }) => {
                           <ClearIcon />
                         )}
                         {userrole === 1 && (
-                          <CancelIcon onClick={() => handleOpen(row.id)} />
+                          <Tooltip title="Cancel Certificate">
+                            <CancelIcon onClick={() => handleOpen(row.id)} />
+                          </Tooltip>
                         )}
                       </TableCell>
                     </TableRow>
@@ -855,4 +862,4 @@ const ManualCheque = ({ setopendashboard }) => {
   );
 };
 
-export default ManualCheque;
+export default CancelDonation;

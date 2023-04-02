@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { backendUrl } from '../../../../../config/config';
 function Chequeinfo({ setopendashboard }) {
   const location = useLocation();
+  const navigation = useNavigate();
   const [data, setdata] = useState([]);
   console.log('cheque', data);
   useEffect(() => {
@@ -17,7 +18,10 @@ function Chequeinfo({ setopendashboard }) {
   return (
     <>
       <div className="dashboarddiv">
-        <div className="main_center_header1">
+        <div className="backebj_voucher">
+          <button onClick={() => navigation(-1)}>Back</button>
+        </div>
+        <div className="main_center_header1" style={{ paddingTop: '3rem' }}>
           <div className="cheque_main_info_div">
             <div className="cheque_img_div">
               <div className="left_info_cheque">

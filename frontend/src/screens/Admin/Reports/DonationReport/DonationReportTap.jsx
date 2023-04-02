@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import f1 from '../../../../assets/f4.png';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 const DonationReportTap = ({ setopendashboard }) => {
+  const [role, setrole] = useState('');
   useEffect(() => {
     setopendashboard(true);
+    setrole(Number(sessionStorage.getItem('userrole')));
   }, []);
 
   return (
@@ -55,75 +57,45 @@ const DonationReportTap = ({ setopendashboard }) => {
               />
               Item Report
             </NavLink>
-            <NavLink
-              to="/admin-panel/electronic/report/headreport"
-              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
-            >
-              <img
-                style={{ marginRight: '4%', width: '20px' }}
-                src={f1}
-                alt="fast"
-              />
-              Head Report
-            </NavLink>
-            <NavLink
-              to="/admin-panel/electronic/report/consolidated"
-              className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
-            >
-              <img
-                style={{ marginRight: '4%', width: '20px' }}
-                src={f1}
-                alt="fast"
-              />
-              Consolidated
-            </NavLink>
+
+            {role === 1 && (
+              <>
+                <NavLink
+                  to="/admin-panel/electronic/report/cancel-donations"
+                  className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
+                >
+                  <img
+                    style={{ marginRight: '4%', width: '20px' }}
+                    src={f1}
+                    alt="fast"
+                  />
+                  Cancelled donations
+                </NavLink>
+                <NavLink
+                  to="/admin-panel/electronic/report/headreport"
+                  className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
+                >
+                  <img
+                    style={{ marginRight: '4%', width: '20px' }}
+                    src={f1}
+                    alt="fast"
+                  />
+                  Head Report
+                </NavLink>
+                <NavLink
+                  to="/admin-panel/electronic/report/consolidated"
+                  className={({ isActive }) => (isActive ? 'tabs2' : 'tabs1')}
+                >
+                  <img
+                    style={{ marginRight: '4%', width: '20px' }}
+                    src={f1}
+                    alt="fast"
+                  />
+                  Consolidated
+                </NavLink>
+              </>
+            )}
           </div>
-
-          {/* <div className="content-tabs">
-            <div
-              className={
-                toggleState === 1 ? 'content  active-content' : 'content'
-              }
-            >
-              <ManualCash setopendashboard={setopendashboard} />
-            </div>
-
-            <div
-              className={
-                toggleState === 2 ? 'content  active-content' : 'content'
-              }
-            >
-              <Electornic setopendashboard={setopendashboard} />
-            </div>
-            <div
-              className={
-                toggleState === 3 ? 'content  active-content' : 'content'
-              }
-            >
-              <ManualCheque setopendashboard={setopendashboard} />
-            </div>
-            <div
-              className={
-                toggleState === 4 ? 'content  active-content' : 'content'
-              }
-            >
-              <Itemdonation setopendashboard={setopendashboard} />
-            </div>
-            <div
-              className={
-                toggleState === 5 ? 'content  active-content' : 'content'
-              }
-            >
-              <HeadReport setopendashboard={setopendashboard} />
-            </div>
-            <div
-              className={
-                toggleState === 6 ? 'content  active-content' : 'content'
-              }
-            >
-              <Consolidated setopendashboard={setopendashboard} />
-            </div>
-          </div> */}
         </div>
       </div>
     </>

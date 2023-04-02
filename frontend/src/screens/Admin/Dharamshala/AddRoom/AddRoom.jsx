@@ -329,15 +329,15 @@ const AddRoom = ({ setopendashboard }) => {
                       }}
                     >
                       <TableCell>{index + 1}</TableCell>
-                      <TableCell>{row.dharmasala.name}</TableCell>
-                      <TableCell>{row.FroomNo}</TableCell>
-                      <TableCell>{row.TroomNo}</TableCell>
-                      <TableCell>{row.facility_name}</TableCell>
-                      <TableCell>{row.category_name}</TableCell>
-                      <TableCell>{row.Rate}</TableCell>
-                      <TableCell>{row.advance}</TableCell>
-                      <TableCell>{row.coTime}</TableCell>
-                      <TableCell>{row.roomType}</TableCell>
+                      <TableCell>{row?.dharmasala?.name}</TableCell>
+                      <TableCell>{row?.FroomNo}</TableCell>
+                      <TableCell>{row?.TroomNo}</TableCell>
+                      <TableCell>{row?.facility_name}</TableCell>
+                      <TableCell>{row?.category_name}</TableCell>
+                      <TableCell>{row?.Rate}</TableCell>
+                      <TableCell>{row?.advance}</TableCell>
+                      <TableCell>{row?.coTime}</TableCell>
+                      <TableCell>{row?.roomType}</TableCell>
 
                       <TableCell>
                         <Tooltip title="Edit">

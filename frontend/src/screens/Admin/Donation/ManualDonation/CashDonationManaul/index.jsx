@@ -312,8 +312,8 @@ const CashDonation = ({
               sx={{
                 borderColor: '#C8C8C8',
                 fontSize: 12,
-                minWidth: 40,
-                padding: 0,
+                minWidth: 100,
+                padding: 0.5,
                 color: newMember ? '#656565' : '#fff',
               }}
               onClick={() => setNewMember(false)}
@@ -327,8 +327,8 @@ const CashDonation = ({
               sx={{
                 borderColor: '#C8C8C8',
                 fontSize: 12,
-                minWidth: 40,
-                padding: 0,
+                minWidth: 100,
+                padding: 0.5,
                 color: newMember ? '#fff' : '#656565',
               }}
             >

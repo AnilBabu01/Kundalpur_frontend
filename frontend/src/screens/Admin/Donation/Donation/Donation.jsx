@@ -232,8 +232,9 @@ const Donation = ({ setopendashboard }) => {
     setsearchvalue('');
     serverInstance('user/add-elecDonation', 'get').then((res) => {
       if (res.status) {
-        setisData(res.data);
-        setisDataDummy(res.data);
+        let filterData = res.data.filter((item) => item.isActive === true);
+        setisData(filterData);
+        setisDataDummy(filterData);
       } else {
         Swal('Error', 'somthing went  wrong', 'error');
       }
@@ -288,8 +289,9 @@ const Donation = ({ setopendashboard }) => {
       );
 
       if (res.data.status) {
-        setisData(res.data.data);
-        setisDataDummy(res.data.data);
+        let filterData = res.data.data.filter((item) => item.isActive === true);
+        setisData(filterData);
+        setisDataDummy(filterData);
       }
     } else {
       serverInstance(
@@ -297,8 +299,9 @@ const Donation = ({ setopendashboard }) => {
         'get`,
       ).then((res) => {
         if (res.data) {
-          setisData(res.data);
-          setisDataDummy(res.data);
+          let filterData = res.data.filter((item) => item.isActive === true);
+          setisData(filterData);
+          setisDataDummy(filterData);
         }
       });
     }
@@ -831,12 +834,10 @@ const Donation = ({ setopendashboard }) => {
                 {isData ? (
                   <>
                     {(rowsPerPage > 0
-                      ? isData
-                          .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage,
-                          )
-                          .reverse()
+                      ? isData.slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
                       : isData.reverse()
                     ).map((row, index) => (
                       <TableRow
